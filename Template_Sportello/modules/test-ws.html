@@ -1,0 +1,365 @@
+{% set CodiceModulo =  "PROVA" %}
+{% extends "base.html" %}
+{%- import 'build_service.html' as service with context %}
+{% block meta %}
+<meta campi_firma="Titolare_CodiceFiscale" campi_firma_label="il dichiarante" classi_modulo="Generale" codice_modulo="{{ CodiceModulo }}" descrizione="Trasmissione di comunicazioni o documenti generici dal cittadino alla Pubblica Amministrazione" destinatario_amministrazione="" destinatario_ufficio="" dinamico="SI" email_a="" ente_abilitato="TUTTI" filigrana="NO" firmare="P7M_ELETTRONICA" istruzioni_compilazione="ATTENZIONE: questo modulo deve essere compilato con i dati del richiedente, cambiare i dati di intestazione se necessario." istruzioni_invio="mail_pec" metodo_invio="mail" name="GLOBO_modulo" procura="NO,," tipo_modulo="principale" urlhelp="DomandeRisposte/FAQ" verifica_pagamento="NO" versione="1.0|01/01/2015"/>
+<meta codice_modulo_figlio="Incarico_procura" name="GLOBO_modulofiglio" numero="1" obbligatorio="DINAMICO"/>
+<meta codice_allegato="ALTRI-ALLEGATI" descrizione_estesa="Altri allegati" filename="Altri allegati.pdf" firmato="SI" istruzioni="/modulistica/moduli/ALTRI-ALLEGATI" name="GLOBO_allegato" numero="0" obbligatorio="DINAMICO" tipo_mime="application/pdf"/>
+<meta codice_allegato="ALTRI-ALLEGATI-ZIP" descrizione_estesa="Altri allegati in formato ZIP" filename="Altri allegati.zip" firmato="NO" istruzioni="/modulistica/moduli/ALTRI-ALLEGATI-ZIP" name="GLOBO_allegato" numero ="0" obbligatorio ="DINAMICO" tipo_mime ="application/zip"/>
+<meta codice_allegato="DAE-CDI" descrizione_estesa="Documento di identità" filename="Documento identita.pdf" firmato="SI" istruzioni="/modulistica/moduli/DAE-CDI" name="GLOBO_allegato" numero="1" obbligatorio="DINAMICO" tipo_mime="application/pdf"/>
+{% endblock meta %}
+
+{% block title %}
+Test WS
+{% endblock title %}
+
+{% block content %}
+
+{{ service.build_ws_request(
+  'getPersonaREST',
+  'Ricerca dati anagrafici di una persona sulla base del CF passato',
+  {
+    'codiceFiscale': 'codicefiscale',
+  },
+  {
+    'indirizzo': 'indirizzo',
+    'numeroCivico': 'numeroCivico',
+    'barra': 'barra',
+    'citta': 'citta',
+    'cap': 'cap',
+    'nome': 'nome',
+    'cognome': 'cognome',
+    'datanascita': 'datanascita',
+    'nazione': 'nazione',
+    'provincia': 'provincia',
+    'localita': 'localita',
+    'email': 'email',
+    'codiceFiscale': 'codiceFiscale',
+    'codiceFamiglia': 'codiceFamiglia',
+    'numeroPersoneFamiglia': 'numeroPersoneFamiglia',
+    'telefono_ufficio': 'telefono.ufficio',
+    'telefono_mobile': 'telefono.mobile',
+    'codice_via': 'codiceVia'
+  },
+  'test1',
+  sample = {
+    "codiceFiscale":"RCCCST72L09A952T"
+  }
+) }}
+
+
+
+{{ service.build_ws_request(
+  'getListaFamigliaREST',
+  'Ricerca dei componenti della famiglia di una persona sulla base del Codice famiglia',
+  {
+    'codiceFamiglia': 'codicefiscale',
+  },
+  {
+    'outputListaAsili': 'listaCodiceFiscale'
+  },
+  'test2',
+  types = { 'outputListaAsili': 'select' },
+  sample = {
+    'codiceFamiglia' : '110995'
+  }
+) }}
+
+
+{{ service.build_ws_request(
+  'getListaNidiDisponibili',
+  'Ricerca degli asili disponibili in base a indirizzo, tipo di servizio e Codice domanda (il codice
+domanda viene inserito se esiste una domanda presentata per quel tipo-servizio da aggiornare)',
+  {
+    'codiceVia': 'codice_via',
+    'numeroCivico': 'numero_civico',
+    'barraCivico': 'barra_civico',
+    'numeroDomanda': 'numero_domanda',
+    'tipoServizio': 'tipo_servizio'
+  },
+  {
+    'outputListaAsili': 'listaNidiDisponibili3'
+  },
+  'test3',
+  types = { 'outputListaAsili': 'select' },
+  sample = {
+    "codiceVia":"1400",
+    "numeroCivico":"65",
+    "barraCivico":"",
+    "numeroDomanda":"",
+    "tipoServizio":"PT"
+    }
+) }}
+
+
+
+{{ service.build_ws_request(
+  'getDomandaAttiva',
+  'Ricerca della domanda precedentemente presentata per un bambino e non ancora scaduta sulla base del CF (del bambino) passato e del tipo di servizio (tempo pieno o part time)',
+  {
+    'codiceFiscale': 'codicefiscale',
+    'tipoServizio': 'tipo_servizio'
+  },
+  {
+    'tipoServizio': 'tipoServizio',
+    'idDomanda': 'idDomanda',
+    'dtDomanda': 'dtDomanda',
+    'richiedente': 'richiedente',
+    'tipoOperazione': 'tipoOperazione',
+    'paternita': 'paternita',
+    'maternita': 'maternita',
+    'protocollo': 'protocollo'
+  },
+  'test4',
+  sample = {
+    "codiceFiscale":"BBAKVN02D21L378N",
+    "tipoServizio":"FT"
+  }
+) }}
+
+
+
+
+{{ service.build_ws_request(
+  'getIcef',
+  'Ricerca dati della situazione ICEF di un bambino',
+  {
+    'codiceFiscale': 'codicefiscale',
+  },
+  {
+    'codiceFiscaleRichiedente': 'codiceFiscaleRichiedente',
+    'nomeRichiedente': 'nomeRichiedente',
+    'cognomeRichiedente': 'cognomeRichiedente',
+    'coefficienteIcef': 'coefficienteIcef',
+    'dataCalcolo': 'dataCalcolo',
+  },
+  'test5',
+  sample = {"codiceFiscale":"MJSKNS15C26L378C"}
+) }}
+
+
+
+{{ service.build_ws_request(
+  'getListaAsiliREST',
+  'Ritorna una lista di asili sulla base di un nominativo',
+  {
+    'nominativo': 'Nominativo',
+  },
+  {
+    'outputListaAsili': 'listaAsili',
+  },
+  'test6',
+  types = { 'outputListaAsili': 'select' },
+  sample = {
+        "nominativo":"TOR"
+    }
+) }}
+
+
+
+{{ service.build_ws_request(
+  'verifica_particella',
+  'Verifica una particella catastale',
+  {
+    'num': 'num',
+    'tipo': 'tipo',
+    'com': 'com',
+  },
+  {
+    "esiste": "esiste",
+    "esiste_value": "esiste_value",
+    "particella": "particella",
+  },
+  'test7',
+  sample = {
+    'num': '1',
+    'tipo': 'E',
+    'com': '406',
+  }
+) }}
+
+<div style="display: none;">
+  <globo_fondo_pagina areaheight="150" scope="2">
+    {{ utils.firma() }}
+  </globo_fondo_pagina>
+
+  <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden"/>
+
+  <input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - comunicazione'" id="Oggetto" name="Oggetto" type="hidden"/>
+
+
+  {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+   <h1 class="Modulo">
+   Trasmissione di comunicazioni o documenti generici dal cittadino alla Pubblica Amministrazione
+  </h1>
+
+      <table class="Modulo" style="border:1px solid grey" mandatory_enabled="true">
+          <tbody>
+              <tr class="Rigaintestazioneridotta">
+                  <td>
+                      <p class="Labelcella">Ufficio destinatario</p>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <input class="inputNormal" id="UfficioDest" name="UfficioDest" style="width:100%;"/>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+
+  {{anagrafica.societa("Titolare", "Il sottoscritto", ["Persona fisica","Titolare", "Legale rappresentante", "Amministratore di condominio"], "Richiedente", "visibility:visibility", "cursor:pointer", "mail_ordinaria", "false")}}
+   <table class="Modulo" style="border:1px solid grey;">
+   <tbody>
+    <tr class="Rigaintestazione">
+     <td>
+      <p class="Labeltabella">
+       in relazione all'istanza
+      </p>
+     </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+     <td>
+      <p class="Labelcella">
+       Breve descrizione dell'istanza oggetto della comunicazione
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <input class="" id="Parametri_InrelazCorpoCom" label="Breve descrizione" name="Parametri_InrelazCorpoCom" style="width:100%;"/>
+     </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+     <td>
+      <p class="Labelcella">
+       Eventuali estremi identificativi (numero di protocollo, data di invio, ecc.)
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <input class="" id="Parametri_EstremiIdentificativi" label="Eventuali estremi identificativi" name="Parametri_EstremiIdentificativi" style="width:100%;"/>
+     </td>
+    </tr>
+    </tbody>
+  </table>
+
+   <globo_salto_pagina>
+  </globo_salto_pagina>
+
+  <h3 class="Modulo">
+   COMUNICA
+  </h3>
+
+  <table class="Modulo" style="border: 1px solid grey">
+   <tbody>
+    <tr class="Rigaintestazioneridotta">
+     <td>
+      <p class="Labelcella">
+       Corpo della comunicazione
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <textarea class="inputNormal" id="Parametri_CorpoCom" label="Corpo comunicazione" mandatory="true" name="Parametri_CorpoCom" style="width:100%;height:5cm;">
+      </textarea>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+
+  <br/>
+
+  <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+   <tbody>
+    <tr class="Rigaintestazione">
+     <td colspan="2">
+      <p style="text-align: center;">
+       <b>
+        Elenco degli allegati
+       </b>
+       <br/>
+       <span style="font-size:70%">
+        <i>
+         (barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)
+        </i>
+       </span>
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <td style="vertical-align: top;">
+      <input enabled="false" id="DAE-CDI" name="DAE-CDI" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;">
+      <p>
+       copia del documento d'identità
+       <br/>
+       <span style="font-size:70%">
+        <i>
+         (da non allegare se l’istanza è presentata in modalità telematica o se la firma autografa è apposta di fronte a un pubblico ufficiale)
+        </i>
+       </span>
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <td style="width:4%">
+      <input id="ALTRI-ALLEGATI" name="ALTRI-ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;">
+      <p>
+       altri allegati in formato P7M
+       <span style="font-size:70%">
+        (specificare)
+       </span>
+       <input class="" id="AltriAllegati" label="Altri allegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:65%;"/>
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <td style="width:4%">
+      <input id="ALTRI-ALLEGATI-ZIP" name="ALTRI-ALLEGATI-ZIP" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;">
+      <p>
+       altri allegati in formato ZIP
+       <span style="font-size:70%">
+        (specificare)
+       </span>
+       <input class="" id="AltriAllegatizip" label="Altri allegati informato ZIP" mandatory_enabled="#ALTRI_ALLEGATI_ZIP.checked()" name="AltriAllegatizip" style="width:66%;"/>
+      </p>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+
+  <br/>
+
+
+  {{ utils.firma_hidden() }}
+   <br/>
+
+  <p class="Modulo">
+   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+  </p>
+
+  <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+  <input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+  <input id="GLOBO_allegato_cALTRI-ALLEGATI-ZIP" name="GLOBO_allegato_cALTRI-ALLEGATI-ZIP" obbligatorio="#ALTRI_ALLEGATI_ZIP.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+  <input firmare="'P7M_ELETTRONICA'" id="GLOBO_modulofiglio_cIncarico_procura" name="GLOBO_modulofiglio_cIncarico_procura" type="hidden" value=""/>
+
+  <input id="GLOBO_allegato_cDAE-CDI" name="GLOBO_allegato_cDAE-CDI" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+  <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+
+  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+
+  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+</div>
+{% endblock content %}

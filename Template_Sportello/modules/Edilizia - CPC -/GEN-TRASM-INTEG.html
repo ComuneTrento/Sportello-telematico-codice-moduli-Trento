@@ -1,0 +1,409 @@
+{% set CodiceModulo = "GEN-TRASM-INTEG" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-TRASM-INTEG_v1.0" %}
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Trasmissione di documentazione integrativa"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016" />
+
+<meta codice_modulo_figlio="STU-EDI-INT-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="STU-EDI-INT-AU-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_allegato="DAE-CDI"
+descrizione_estesa="Copia del documento di identità del richiedente"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/DAE-CDI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Modulo_compilato_firma_autografa"
+descrizione_estesa="Modulo compilato e firmato manualmente"
+filename="Modulo_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Modulo_compilato_firma_elettronica"
+descrizione_estesa="Modulo compilato e firmato elettronicamente"
+filename="Modulo_compilato_firma_elettronica.pdf"
+firmato="SI"
+istruzioni="/modulistica/moduli/Modulo_compilato_firma_elettronica"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Integrazione_documentazione"
+descrizione_estesa="Documentazione integrativa richiesta"
+filename="Integrazione.pdf"
+firmato="SI"
+firmatari="Titolare1_CodiceFiscale"
+firmatari_label="Progettista"
+istruzioni="/modulistica/moduli/Integrazione_documentazione"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+/>
+
+<script type="text/javascript">
+var simpaticoEservice = "1"; //  the id corresponding to the e-service
+var simpaticoForm = "modulo_trasmissione_integrazione";
+var simpaticoCategory = "Edilizia"; // the general category of the e-service
+var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
+      var ERROR_LABELS = {
+          'block1' : 'Selezionare una delle opzioni',
+          'block2' : 'Inserire il nominativo del proprietario o soggetto avente titolo idoneo',
+          'block3' : 'Selezionare il ruolo',
+          'block5' : 'Inserire il nominativo del progettista',
+          'block6' : 'Inserire i riferimenti alla pratica per cui si sta trasmettendo una integrazione',
+          'block7' : 'Particella edilizia non valida',
+          'block8' : 'Indirizzo non inserito',
+          'block9' : 'Indirizzo non verificato',
+          'block10' : 'Selezionare una delle opzioni',
+          'block11' : 'Selezionare una delle opzioni',
+          'block13' : 'Selezionare una delle opzioni'
+          }
+</script>
+
+{% endblock meta %}
+
+{% block title %}M47011-TRASMISSIONE-DOCUMENTAZIONE-INTEGRATIVA{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+{{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Trasmissione documentazione integrativa'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+  Trasmissione documentazione integrativa
+</h1>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Proprietario dell'immobile o soggetto in possesso di titolo idoneo</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Progettista incaricato</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+{{anagrafica_trento.persona_trasmissione("Titolare","Il proprietario o soggetto in possesso di titolo idoneo",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer")}}
+<br>
+{{anagrafica_trento.professionista("Titolare1","Progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale") }}
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p>
+          <b>In riferimento all'istanza</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <p>Intestata a: <input class="" label="Intestatario" id="Intestatario_istanza" name="Intestatario_istanza" dynamic_value="'  ' + #Titolare_Cognome.value().toUpperCase() + ',' + #Titolare_Nome.value().toUpperCase()" style="width:89%;"/> </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td class="Labelcella">
+        <p style="font-size:75%;">Tipologia istanza</p>
+      </td>
+      <td class="Labelcella">
+        <p style="font-size:75%;">Num. Protocollo</p>
+      </td>
+      <td class="Labelcella">
+        <p style="font-size:75%;">Data</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <select class="inputNormal" id="Tipo_istanza" name="Tipo_istanza" style="width:100%" label="Tipo istanza" mandatory_enabled="true">
+          <option value=""></option>
+          <option value="Permesso di costruire">Permesso di costruire</option>
+          <option value="SCIA">SCIA</option>
+          <option value="Permesso di costruire in sanatoria">Permesso di costruire in sanatoria</option>
+          <option value="Provvedimento in sanatoria">Provvedimento in sanatoria</option>
+          <option value="Comunicazione">Comunicazione</option>
+          <option value="Pratica CPC" selected>Pratica CPC</option>
+        </select>
+      </td>
+      <td>
+        <input class="" label="Numero protocollo" id="Numero_protocollo" name="Numero_protocollo" mandatory_enabled="true" style="width:100%"/>
+      </td>
+      <td>
+        <input class="" label="Data protocollazione" id="Data_protocollazione" name="Data_protocollazione" format="date" mandatory_enabled="true" style="width:100%"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+<br>
+{{ immobili_trento.immobile_no_ult_part("Immobile", "Relativamente alla particella", disattivato="true") }}
+
+<br>
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+<p align="justify">
+  Valendosi della facolta' prevista dagli articoli 46 e 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445,
+  <br> consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445
+  <br> e dell'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsita' in atti,
+</p>
+<h1 class="Modulo">DICHIARA</h1>
+<p>di essere soggetto abilitato alla presentazione dell'istanza in quanto</p>
+<!-- Tabella dei titoli Inizio -->
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p>
+          <b>Titolo sottoscrivente (proprietario, comproprietario, ecc.)</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
+        <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Proprietario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Comproprietario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p>
+          <b>Esclusivita' del titolo</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_Titolo" name="Tassonomia_Titolo" label="Titolo sottoscrivente" mandatory_enabled="true"></div>
+        <input id="Tassonomia_Titolo1" name="Tassonomia_Titolo" type="radio" value="1" />
+      </td>
+      <td>
+        <p>intestatario unico</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tassonomia_Titolo2" name="Tassonomia_Titolo" type="radio" value="2" />
+      </td>
+      <td>
+        <p>primo intestatario di altri soggetti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p> <b>Trasmette la seguente documentazione</b> </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <textarea class="inputNormal" id="Documentazione_integrativa" name="Documentazione_integrativa" label="Documentazione_integrativa" style="width:100%;height:5cm" mandatory_enabled="true" maxlength="270">
+        </textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+{{anagrafica.domicilio_digitale(id_pec_personale="Titolare_EMailPEC",id_cognome_professionista="Titolare1_Cognome",id_nome_professionista="Titolare1_Nome",id_pec_professionista="Titolare1_EMailPEC",id_pec_societa="Titolare_APEC")}}
+<input id="Metadati_Dom_Digi" name="Metadati_Dom_Digi" dynamic_value="(#Tassonomia_DomDigi1.checked() ? #Titolare_EMailPEC.value() : 0 || #Tassonomia_DomDigi2.checked() ? #Titolare1_EMailPEC.value() : 0 || #Tassonomia_DomDigi3.checked() ? #Titolare_APEC.value() : 0)" type="hidden"/>
+</div>
+
+<br>
+
+<!--Parte degli allegati -->
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+          <br>
+          <span style="font-size:70%">
+            <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+          </span>
+        </p>
+      </td>
+    </tr>
+	  <tr>
+      <td>
+       <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>
+        Modulo compilato e firmato nella seguente modalità:
+        <br/>
+        <span style="font-size:70%">
+          (da allegare se la compilazione del modulo è stata eseguita dal professionista incaricato)
+        </span>
+       </p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:100%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
+          <option value=""></option>
+          <option value="A">Firma autografa</option>
+          <option value="E">Firma elettronica</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+     <td style="vertical-align: top; width:3%">
+       <input id="DAE-CDI" name="DAE-CDI" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" enabled="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          copia del documento d'identità del proprietario dell'immobile/soggetto in possesso di titolo idoneo
+        </p>
+      </td>
+    </tr>
+    <tr>
+     <td>
+      <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="STU-EDI-INT-TN" name="STU-EDI-INT-TN" type="checkbox" value="OBBLIGATORIO"/>
+      <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="STU-EDI-INT-AU-TN" name="STU-EDI-INT-AU-TN" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+      <p>
+       n°<input class="" format="number" id="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#STU_EDI_INT_TN.checked()" name="NschedeAllegateEl" size="1"/>soggetti coinvolti nel procedimento edilizio che firmano con firma elettronica
+      </p>
+	    <p>
+       n°<input class="" format="number" id="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#STU_EDI_INT_AU_TN.checked()" name="NschedeAllegateAu" size="1"/>soggetti coinvolti nel procedimento edilizio che firmano con firma autografa con allegata copia del documento di identità
+      </p>
+     </td>
+    </tr>
+    <tr>
+			<td style="width: 4%; vertical-align: top;">
+				<input id="Integrazione_documentazione" name="Integrazione_documentazione" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+				<p>Documentazione integrativa. <span>Inserire il numero di file che verranno allegati:  <input class="" format="number" id="Nintegr" label="Numero file integrativi" mandatory_enabled="true" name="Nintegr" size="1"/></span> <br><b>Attenzione!</b> Limite max di 20 MB per allegato
+        </p>
+			</td>
+		</tr>
+  </tbody>
+</table>
+
+<input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" dynamic_value="#NschedeAllegateAu.value()" type="hidden"/>
+<input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" dynamic_value="#NschedeAllegateEl.value()" type="hidden"/>
+
+<br>
+ {{ utils.firma_hidden() }}
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cIntegrazione_documentazione" name="GLOBO_allegato_cIntegrazione_documentazione" numero="#Nintegr.value()" obbligatorio="#Integrazione_documentazione.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cDAE-CDI" name="GLOBO_allegato_cDAE-CDI" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'A' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'E' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+{% endblock content %}

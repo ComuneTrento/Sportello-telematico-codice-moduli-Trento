@@ -1,0 +1,343 @@
+{% macro build_ws_request(name, description, ws_input, ws_output, prefix, types = {}, event = 'click', sample = {}) %}
+  <h1>{{ name }}</h1>
+  <p>{{ description }}</p>
+  <h3>Input</h3>
+  <table>
+    {% for key, value in ws_input.iteritems() %}
+    <tr>
+      <td>{{ key }}</td>
+      <td><input type="text" name="{{ prefix }}_{{ value }}" id="{{ prefix }}_{{ value }}" {% if key in sample %}value="{{ sample[key] }}"{% endif %} /></td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h3>Trigger</h3>
+  <button
+    type="button"
+    id="{{ prefix }}_trigger"
+    name="{{ prefix }}_trigger"
+    ws-name="{{ name }}"
+    ws-param-in="{%- for key, value in ws_input.iteritems() -%}{{ key }}={{ prefix }}_{{ value }}{% if not loop.last %};{% endif %}{%- endfor -%}"
+    ws-param-out="{%- for key, value in ws_output.iteritems() -%}{{ prefix }}_{{ key }}={{ value }}{% if not loop.last %};{% endif %}{%- endfor -%}"
+    ws-on="#{{ prefix }}_trigger:{{ event }}" >
+  Trigger {{ name }} WS Service
+  </button>
+
+  <h3>Output</h3>
+
+  <table>
+    {% for key, value in ws_output.iteritems() %}
+    <tr>
+      <td>{{ value }}</td>
+      <td>
+        {% if key in types %}
+          {% if types[key] == 'select' %}
+          <select name="{{ prefix }}_{{ key }}" id="{{ prefix }}_{{ key }}" />
+          {% endif %}
+        {% else %}
+          <input type="text" name="{{ prefix }}_{{ key }}" id="{{ prefix }}_{{ key }}" />
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <hr />
+{%- endmacro %}
+
+{% macro compose_ws_param(params = {}) %}
+  "{%- for key, value in params.iteritems() -%}{{ key }}={{ value }}{% if not loop.last %};{% endif %}{%- endfor -%}"
+{%- endmacro %}
+
+
+{% macro getPersonaREST(codice_fiscale_element, output, on) %}
+<div
+  ws-name="getPersonaREST"
+  ws-param-in={{ compose_ws_param({'codiceFiscale':codice_fiscale_element}) }}
+  ws-param-out={{ compose_ws_param(output) }}
+  ws-on="{{ on }}" >
+</div>
+{%- endmacro %}
+
+{% macro getListaFamigliaREST(codice_famiglia_element, select_output, on, id="lista_famiglia") %}
+<div
+  id="{{ id }}"
+  ws-name="getListaFamigliaREST"
+  ws-param-in={{ compose_ws_param({'codiceFamiglia': codice_famiglia_element}) }}
+  ws-param-out={{ compose_ws_param({select_output : 'listaCodiceFiscale'}) }}
+  ws-on="{{ on }}" >
+</div>
+{%- endmacro %}
+
+{% macro getDomandaAttiva(codice_fiscale_element, tipo_servizio, output, on) %}
+<div
+  ws-name="getDomandaAttiva"
+  ws-param-in={{ compose_ws_param({'codiceFiscale': codice_fiscale_element, 'tipoServizio': tipo_servizio }) }}
+  ws-param-out={{ compose_ws_param(output) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+
+{% macro getListaNidiDisponibili(codice_via, numero_civico, barra_civico, numero_domanda, tipo_servizio, lista_completa, lista_asili_element, on) %}
+<div
+  ws-name="getListaNidiDisponibili"
+  ws-param-in={{ compose_ws_param({
+    'codiceVia': codice_via,
+    'numeroCivico': numero_civico,
+    'barraCivico': barra_civico,
+    'numeroDomanda': numero_domanda,
+    'tipoServizio': tipo_servizio,
+	'listaCompleta': lista_completa
+  }) }}
+  ws-param-out={{ compose_ws_param({lista_asili_element: 'listaNidiDisponibili3'}) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+
+{% macro getServiziNido(codice_nido, lista_servizi_element,on, id="lista_servizi") %}
+<div
+  id="{{ id }}"
+  ws-name="getServiziNido"
+  ws-param-in={{ compose_ws_param({'codiceNido': codice_nido }) }}
+  ws-param-out={{ compose_ws_param({lista_servizi_element: 'listaServiziDisponibili'}) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{% macro getDettaglioServizioNido(codice_nido, codice_servizio, output, on) %}
+<div
+  ws-name="getDettaglioServizioNido"
+  ws-param-in={{ compose_ws_param({
+  'codiceNido':codice_nido,
+  'codiceServizio':codice_servizio
+  }) }}
+  ws-param-out={{ compose_ws_param(output) }}
+  ws-on="{{ on }}" >
+</div>
+{%- endmacro %}
+
+{% macro getIcef(codice_fiscale_element, output, on) %}
+<div
+  ws-name="getIcef"
+  ws-param-in={{ compose_ws_param({'codiceFiscale': codice_fiscale_element }) }}
+  ws-param-out={{ compose_ws_param(output) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{% macro verifica_particella(codice_catastale, numero, barra, tipo, output, on) %}
+<div
+  ws-name="verifica_particella"
+  ws-param-in={{ compose_ws_param({
+  'num': numero,
+  'tipo': tipo,
+  'com': codice_catastale,
+  'sub': subalterno
+  }) }}
+  ws-param-out={{ compose_ws_param(output) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{% macro lista_vie(codice_catastale, numero, barra, tipo, select_output, on) %}
+<div
+  ws-name="lista_vie"
+  ws-param-in={{ compose_ws_param({
+  'num': numero,
+  'com': codice_catastale,
+  'tipo': tipo,
+  'barra': barra
+  }) }}
+  ws-param-out={{ compose_ws_param({select_output : "lista_vie_particella"}) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{% macro lista_vie_stringa(nomevia, select_output, on) %}
+<div
+  ws-name="gis_lista_vie_stringa"
+  ws-param-in={{ compose_ws_param({
+  'nomevia': nomevia
+  }) }}
+  ws-param-out={{ compose_ws_param({select_output : "lista_vie"}) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{% macro verifica_civico(codvia, numero, barrato, output, on) %}
+<div
+  ws-name="gis_verifica_civico"
+  ws-param-in={{ compose_ws_param({
+  'codvia': codvia,
+  'numero': numero,
+  'barra': barrato,
+  }) }}
+    ws-param-out={{ compose_ws_param(output) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{% macro Tassonomia_Familiare(prefix) %}
+  {% set prefix = prefix|string %}
+          <tr class="Rigaintestazioneridotta">
+            <td colspan="6">
+              <p class="Labelcella">Anagrafica</p>
+
+                  {{ getPersonaREST('Parametri_CFFam' + prefix, {
+                  'Parametri_CognomeFam' + prefix: 'cognome',
+                  'Parametri_NomeFam' + prefix: 'nome',
+                  'Parametri_DataNas' + prefix: 'datanascita',
+				  'Parametri_SessoFam' + prefix: 'sesso',
+				  'Parametri_MatricolaAnagrafeFam' + prefix: 'matricola',
+				  'Parametri_CodiceFamigliaFam' + prefix: 'codiceFamiglia',
+				  'Parametri_CodiceComuneNascitaFam' + prefix: 'codiceComuneNascita',
+				  'Parametri_CodiceViaResidenzaFam' + prefix: 'codiceVia',
+				  'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
+				  'Parametri_BarraResidenzaFam' + prefix: 'barra',
+				  'Parametri_NazioneFam' + prefix: 'nazione',
+                   }, '#Parametri_CFFam' + prefix + ':change' )}}
+
+            </td>
+
+          </tr>
+          <tr class="Rigaintestazioneridotta">
+            <td>
+              <p class="Labelcella">Cognome</p>
+            </td>
+            <td>
+              <p class="Labelcella">Nome</p>
+            </td>
+            <td>
+              <p class="Labelcella">Codice fiscale</p>
+            </td>
+			<td>
+              <p class="Labelcella">Sesso</p>
+            </td>
+			<td>
+              <p class="Labelcella">Data nascita</p>
+            </td>
+            <td>
+              <p class="Labelcella">Grado parentela</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input class="inputNormal" id="Parametri_CognomeFam{{ prefix }}" name="Parametri_CognomeFam{{ prefix }}" style="width: 100%;" label="Cognome del familiare">
+            </td>
+            <td>
+              <input class="inputNormal" id="Parametri_NomeFam{{ prefix }}" name="Parametri_NomeFam{{ prefix }}" style="width: 100%;" label="Nome del familiare">
+            </td>
+            <td>
+              <input class="inputNormal" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" style="width: 100%;" label="Codice fiscale del familiare">
+            </td>
+			<td>
+                    <select class="inputNormal" id="Parametri_SessoFam{{ prefix }}" name="Parametri_SessoFam{{ prefix }}" style="width:100%;" label="Sesso">
+                        <option value=""></option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                </td>
+			<td>
+              <input class="inputNormal" id="Parametri_DataNas{{ prefix }}" name="Parametri_DataNas{{ prefix }}" format="date" style="width: 100%;" label="Data di nascita del familiare">
+            </td>
+            <td>
+                <select id="Parametri_GradoParFam{{ prefix }}" name="Parametri_GradoParFam{{ prefix }}" mandatory="#Parametri_CFFam{{ prefix }}.value() != ''">
+          <option value=""></option>
+          <option value="M">Madre/convivente</option>
+          <option value="P">Padre/convivente</option>
+          <option value="F">Fratello/sorella</option>
+		  <option value="I">Iscritto/a</option>
+          <option value="A">Altro</option>
+        </select>
+      </td>
+          </tr>
+
+{%- endmacro %}
+
+
+
+{% macro Tassonomia_ServizioAsilo1FT(codice_nido, prefix) %}
+
+  {% set prefix = prefix|string %}
+          
+                  {{ getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido1FT' + prefix, {
+                  'Parametri_DettaglioServizio1FT' + prefix: 'descrizione'
+                   }, '#Parametri_CodiceServizioNido1FT' + prefix + ':change' )}}
+
+           
+          <tr>
+			<td style="vertical-align: top; width: 4%;">
+				<input group="Tassonomia_ServiziPrimoNidoFT" id="Tassonomia_TipoSceltaServizioAsilo1FT{{ prefix }}"  name="Tassonomia_TipoSceltaServizioAsilo1FT{{ prefix }}" enabled="#Tassonomia_FullTime.checked() and !#Parametri_DettaglioServizio1FT{{ prefix }}.check_value(['']) and !#Tassonomia_TipoSceltaServizioAsilo1FT0.checked()" type="checkbox" value="{{ prefix }}" />
+			</td>
+			<td colspan="2">
+				<input class="inputNormal" id="Parametri_DettaglioServizio1FT{{ prefix }}" name="Parametri_DettaglioServizio1FT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto">
+            </td>
+           
+          </tr>
+
+{%- endmacro %}
+
+{% macro Tassonomia_ServizioAsilo2FT(codice_nido, prefix) %}
+  {% set prefix = prefix|string %}
+          
+                  {{ getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido2FT' + prefix, {
+                  'Parametri_DettaglioServizio2FT' + prefix: 'descrizione'
+                   }, '#Parametri_CodiceServizioNido2FT' + prefix + ':change' )}}
+
+           
+          <tr>
+			<td style="vertical-align: top; width: 4%;">
+				<input group="Tassonomia_ServiziSecondoNidoFT" id="Tassonomia_TipoSceltaServizioAsilo2FT{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo2FT{{ prefix }}" enabled="#Tassonomia_FullTime.checked() and #Tassonomia_SceltaSecondoFT2.checked() and !#Parametri_DettaglioServizio2FT{{ prefix }}.check_value(['']) and !#Tassonomia_TipoSceltaServizioAsilo2FT0.checked()" type="checkbox" value="{{ prefix }}" />
+			</td>
+			<td colspan="2">
+				<input class="inputNormal" id="Parametri_DettaglioServizio2FT{{ prefix }}" name="Parametri_DettaglioServizio2FT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto">
+            </td>
+           
+          </tr>
+
+{%- endmacro %}
+
+{% macro Tassonomia_ServizioAsilo1PT(codice_nido, prefix) %}
+    
+  {% set prefix = prefix|string %}
+          
+                  {{ getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido1PT' + prefix, {
+                  'Parametri_DettaglioServizio1PT' + prefix: 'descrizione'
+                   }, '#Parametri_CodiceServizioNido1PT' + prefix + ':change' )}}
+
+           
+          <tr>
+			<td style="vertical-align: top; width: 4%;">
+				<input group="Tassonomia_ServiziPrimoNidoPT" id="Tassonomia_TipoSceltaServizioAsilo1PT{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo1PT{{ prefix }}" enabled="#Tassonomia_PartTime.checked() and !#Parametri_DettaglioServizio1PT{{ prefix }}.check_value([''])  and !#Tassonomia_TipoSceltaServizioAsilo1PT0.checked()" type="checkbox" value="{{ prefix }}" />
+			</td>
+			<td colspan="2">
+				<input class="inputNormal" id="Parametri_DettaglioServizio1PT{{ prefix }}" name="Parametri_DettaglioServizio1PT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto">
+            </td>
+           
+          </tr>
+
+{%- endmacro %}
+
+{% macro Tassonomia_ServizioAsilo2PT(codice_nido, prefix) %}
+  {% set prefix = prefix|string %}
+          
+                  {{ getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido2PT' + prefix, {
+                  'Parametri_DettaglioServizio2PT' + prefix: 'descrizione'
+                   }, '#Parametri_CodiceServizioNido2PT' + prefix + ':change' )}}
+
+           
+          <tr>
+			<td style="vertical-align: top; width: 4%;">
+				<input group="Tassonomia_ServiziSecondoNidoPT" id="Tassonomia_TipoSceltaServizioAsilo2PT{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo2PT{{ prefix }}" enabled="#Tassonomia_PartTime.checked() and !#Parametri_DettaglioServizio2PT{{ prefix }}.check_value([''])  and !#Tassonomia_TipoSceltaServizioAsilo2PT0.checked()" type="checkbox" value="{{ prefix }}" />
+			</td>
+			<td colspan="2">
+				<input class="inputNormal" id="Parametri_DettaglioServizio2PT{{ prefix }}" name="Parametri_DettaglioServizio2PT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto">
+            </td>
+           
+          </tr>
+
+{%- endmacro %}
+
+

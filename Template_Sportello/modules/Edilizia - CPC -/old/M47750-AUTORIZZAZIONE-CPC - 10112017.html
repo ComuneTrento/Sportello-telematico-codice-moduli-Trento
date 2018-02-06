@@ -1,0 +1,644 @@
+{% set CodiceModulo = "M47750-AUTORIZZAZIONE-CPC" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC_v1.0" %}
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Istanza per il rilascio di autorizzazione paesaggistica e pareri obbligatori sulla qualita' architettonica degli interventi"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016" />
+
+<meta codice_modulo_figlio="Incarico_procura"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="Marca_Bollo-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M44750-A01-DATIINTERVENTO"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="STU-EDI-IMM-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="STU-EDI-INT-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="STU-EDI-INT-AU-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_allegato="RIC-DIR-SEG"
+descrizione_estesa="Ricevuta del pagamento di 71,00 euro per diritti di segreteria (16,00 euro) e di istruttoria della pratica (55,00 euro)"
+filename="Ricev. diritti segreteria.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/RIC-DIR-SEG"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="DAE-CDI"
+descrizione_estesa="Fotocopia dei documenti d’identità dei comproprietari"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/DAE-CDI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="ALTRI-ALLEGATI"
+descrizione_estesa="Altri allegati"
+filename="Altri allegati.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/ALTRI-ALLEGATI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+/>
+
+<script type="text/javascript">
+var simpaticoEservice = "1"; //  the id corresponding to the e-service
+var simpaticoForm = "main";
+var simpaticoCategory = "Edilizia"; // the general category of the e-service
+var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
+      var ERROR_LABELS = {
+          'block1' : 'Inserire il codice fiscale',
+          'block2' : 'Selezionare il ruolo',
+          'block4' : 'Selezionare la tipologia di autorizzazione/parere richiesta',
+          'block6' : 'Particella edilizia non valida',
+          'block7' : 'Indirizzo non verificato',
+          'block9' : 'Selezionare una delle opzioni',
+          'block10' : 'Definire il ruolo e selezionare una delle opzioni',
+          'block11' : 'Inserire il codice fiscale',
+          'block12' : 'Selezionare una delle opzioni'
+            }
+</script>
+
+{% endblock meta %}
+
+{% block title %}M47750-AUTORIZZAZIONE-CPC{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Rilascio di autorizzazione paesaggistica'" id="Oggetto" name="Oggetto" type="hidden" /> {{ intestazioni.intestazione_moduloprincipale_conbollo() }}
+
+<h1 class="Modulo">
+  Istanza per il rilascio di autorizzazione paesaggistica e pareri obbligatori sulla qualita' architettonica degli interventi
+</h1>
+
+<h2 class="Modulo">
+  Ai sensi della Legge urbanistica provinciale 04/08/2015, n. 15
+</h2>
+
+{{anagrafica_trento.societa("Titolare","Il sottoscritto",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+
+<!-- simpatico start -->
+<div class="simpatico-block simpatico-query-and-answer">
+<!-- simpatico end -->
+<h1 class="Modulo">CHIEDE</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p>
+          <b>il rilascio di</b>
+        </p>
+      </td>
+    </tr>
+    <!-- Tabella Documento Edilizio -->
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_DocEdi" name="Tassonomia_DocEdi" label="Tipo Documento Edilizio" mandatory_enabled="true"> </div>
+        <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi1" name="Tassonomia_DocEdi" type="radio" value="1" />
+      </td>
+      <td colspan="4">
+        <p>autorizzazione paesaggistica</p>
+        <p style="font-size:70%"><i>(articoli 64 e 7, comma 8, lettera a della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi2" name="Tassonomia_DocEdi" type="radio" value="2" />
+      </td>
+      <td colspan="4">
+        <p>variante ad autorizzazione paesaggistica </p>
+        <p style="font-size:70%"><i>(articoli 64 e 7, comma 8, lettera a della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi3" name="Tassonomia_DocEdi" type="radio" value="3" />
+      </td>
+      <td colspan="4">
+        <p>parere preventivo all'autorizzazione paesaggistica </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="10">
+        <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi4" name="Tassonomia_DocEdi" type="radio" value="4" />
+      </td>
+      <td colspan="4">
+        <p>parere obbligatorio sulla qualita' architettonica </p>
+      </td>
+    </tr>
+    <!-- Inizio rottura livello Tabella Parere -->
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_DocPar" name="Tassonomia_DocPar" mandatory_enabled="#Tassonomia_DocEdi4.checked()" label="Parere obbligatorio sulla qualita' architettonica"> </div>
+        <input group="Tassonomia_DocPar" id="Tassonomia_DocPar1" name="Tassonomia_DocPar" type="radio" value="1" />
+      </td>
+      <td colspan="3">
+        <p>sui piani attuativi </p>
+        <p style="font-size:70%"><i>(articolo 7, comma 8, lettera b, numero 1 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocPar" id="Tassonomia_DocPar2" name="Tassonomia_DocPar" type="radio" value="2" />
+      </td>
+      <td colspan="3">
+        <p>sugli interventi di ristrutturazione edilizia consistenti nella demolizione e ricostruzione e sulle varianti di progetto relative a tali interventi </p>
+        <p style="font-size:70%"><i>(articolo 7, comma 8, lettera b, numero 2 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocPar" id="Tassonomia_DocPar3" name="Tassonomia_DocPar" type="radio" value="3" />
+      </td>
+      <td colspan="3">
+        <p>sui progetti di opere pubbliche consistenti in interventi di nuova costruzione e ristrutturazione edilizia di edifici destinati a servizi e attrezzature pubbliche </p>
+        <p style="font-size:70%"><i>(articolo 7, comma 8, lettera b, numero 3 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocPar" id="Tassonomia_DocPar4" name="Tassonomia_DocPar" type="radio" value="4" />
+      </td>
+      <td colspan="3">
+        <p>su interventi di generale sistemazione degli spazi pubblici negli insediamenti storici </p>
+        <p style="font-size:70%"><i>(articolo 7, comma 8, lettera b, numero 3 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
+        <input group="Tassonomia_DocPar" id="Tassonomia_DocPar5" name="Tassonomia_DocPar" type="radio" value="5" />
+      </td>
+      <td colspan="3">
+        <p>su interventi soggetti a deroga urbanistica </p>
+        <p style="font-size:70%"><i>(articolo 7, comma 8, lettera b, numero 4 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <!-- Inizio Rottura di livello tabella Deroga Urbanistica -->
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_DocDerog" name="Tassonomia_DocDerog" mandatory_enabled="#Tassonomia_DocPar5.checked()" label="Tassonomia_DocDerog"> </div>
+        <input group="Tassonomia_DocDerog" id="Tassonomia_DocDerog1" name="Tassonomia_DocDerog" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p>per opere pubbliche di competenza delle comunità e dei comuni </p>
+        <p style="font-size:70%"><i>(articolo 97, comma 3 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocDerog" id="Tassonomia_DocDerog2" name="Tassonomia_DocDerog" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p>per opere d'interesse pubblico individuate dal regolamento urbanistico-edilizio provinciale </p>
+        <p style="font-size:70%"><i>(articolo 98, comma 2 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocDerog" id="Tassonomia_DocDerog3" name="Tassonomia_DocDerog" type="radio" value="3" />
+      </td>
+      <td colspan="2">
+        <p>in caso di contrasto di zona, per la realizzazione di opere per l'eliminazione delle barriere architettoniche </p>
+        <p style="font-size:70%"><i>(articolo 99, comma 1 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocDerog" id="Tassonomia_DocDerog4" name="Tassonomia_DocDerog" type="radio" value="4" />
+      </td>
+      <td colspan="2">
+        <p>in caso di contrasto di zona, per la realizzazione di parcheggi residenziali e commerciali </p>
+        <p style="font-size:70%"><i>(articolo 99, comma 1 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <!-- Fine Rottura di livello tabella Deroga Urbanistica -->
+    <!-- Fine Rottura livello Tabella Parere -->
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi5" name="Tassonomia_DocEdi" type="radio" value="5" />
+      </td>
+	  <td colspan="4">
+		<p>parere sulle varianti in corso d'opera riguardanti opere diverse dagli edifici </p>
+        <p style="font-size:70%"><i>(articolo 4, comma 2 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi6" name="Tassonomia_DocEdi" type="radio" value="6" />
+      </td>
+      <td colspan="4">
+        <p>parere per recupero degli insediamenti storici </p>
+        <p style="font-size:70%"><i>(articolo 105 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi7" name="Tassonomia_DocEdi" type="radio" value="7" />
+      </td>
+      <td colspan="4">
+        <p>parere per interventi di carattere straordinario riguardanti edifici storici</p>
+        <p style="font-size:70%"><i>(articolo 106 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi8" name="Tassonomia_DocEdi" type="radio" value="8" />
+      </td>
+      <td colspan="3">
+        <p>parere per riqualificazione di edifici residenziali e ricettivi in aree insediate </p>
+        <p style="font-size:70%"><i>(articolo 109, comma 5 della Legge urbanistica provinciale 04/08/2015, n. 15)</i></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- simpatico start -->
+</div>
+<!-- simpatico end -->
+<!--Fine Tabella Documento Edilizio -->
+<br>
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p> <b>per l'esecuzione dell'intervento di </b> </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="Per esecuzione intervento di:" style="width:100%;height:5cm" mandatory_enabled="true" >
+        </textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+
+    {{ immobili_trento.immobile_trento("Immobile", "Particelle", disattivato="true") }}
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+<h1 class="Modulo">COMUNICA</h1>
+<p>che sull'immobile</p>
+<!-- TITOLI ABITATIVI PAESAGGISTICI -INIZIO- -->
+<table class="Modulo" style="border: 1px solid grey" >
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_AbitativiPae" name="Tassonomia_AbitativiPae" label="Titoli abitativi paesaggistici" mandatory_enabled="true" > </div>
+        <input id="Tassonomia_AbitativiPaeNO" name="Tassonomia_AbitativiPae" type="radio" value="1" />
+      </td>
+      <td colspan="4">
+        <p>non sono stati rilasciati precedenti titoli paesaggistici</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="6">
+        <input id="Tassonomia_AbitativiPaeSI" name="Tassonomia_AbitativiPae" type="radio" dynamic_check="#Tassonomia_DocEdi2.checked()" value="2" />
+      </td>
+      <td colspan="4">
+        <p>sono stati rilasciati precedenti titoli paesaggistici </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="1" style="width: 30%;">
+        <p style="font-size:70%"> Tipo Provvedimento (autorizzazione paesaggistica,variante paesaggistica, parere,ecc)</p>
+      </td>
+      <td colspan="1" style="width: 15%;">
+        <p style="font-size:70%"> Numero/protocollo </p>
+      </td>
+      <td colspan="1" style="width: 15%;">
+        <p style="font-size:70%"> Data </p>
+      </td>
+	    <td colspan="1" style="width: 15%;">
+        <p style="font-size:70%"> Organo competente </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_TipProc1" name="Parametri_TipProc1" style="width: 100%;" label="Tipo Provvedimento1" mandatory_enabled="#Tassonomia_AbitativiPaeSI.checked()">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Numero1" name="Parametri_Numero1" style="width: 100%;" label="Numero Provvedimento1" mandatory_enabled="#Tassonomia_AbitativiPaeSI.checked()">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Data1" name="Parametri_Data1" style="width: 100%;" format="date" label="Data Provvedimento1" mandatory_enabled="#Tassonomia_AbitativiPaeSI.checked()">
+      </td>
+	    <td colspan="1">
+        <input class="inputNormal" id="Parametri_OrgComp1" name="Parametri_OrgComp1" style="width: 100%;" label="Organo Competente1" mandatory_enabled="#Tassonomia_AbitativiPaeSI.checked()">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_TipProc2" name="Parametri_TipProc2" style="width: 100%;" label="Tipo Provvedimento2" enabled="#Parametri_TipProc1.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Numero2" name="Parametri_Numero2" style="width: 100%;" label="Numero Provvedimento2" enabled="#Parametri_Numero1.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Data2" name="Parametri_Data2" style="width: 100%;" label="Data Provvedimento2" format="date" enabled="#Parametri_Data1.value() != ''">
+      </td>
+	    <td colspan="1">
+        <input class="inputNormal" id="Parametri_OrgComp2" name="Parametri_OrgComp2" style="width: 100%;" label="Organo Competente2" enabled="#Parametri_OrgComp1.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_TipProc3" name="Parametri_TipProc3" style="width: 100%;" label="Tipo Provvedimento3" enabled="#Parametri_TipProc2.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Numero3" name="Parametri_Numero3" style="width: 100%;" label="Numero Provvedimento3" enabled="#Parametri_Numero2.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Data3" name="Parametri_Data3" style="width: 100%;" label="Data Provvedimento3" format="date" enabled="#Parametri_Data2.value() != ''">
+      </td>
+	    <td colspan="1">
+        <input class="inputNormal" id="Parametri_OrgComp3" name="Parametri_OrgComp3" style="width: 100%;" label="Organo Competente3" enabled="#Parametri_OrgComp2.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_TipProc4" name="Parametri_TipProc4" style="width: 100%;" label="Tipo Provvedimento4" enabled="#Parametri_TipProc3.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Numero4" name="Parametri_Numero4" style="width: 100%;" label="Numero Provvedimento4" enabled="#Parametri_Numero3.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Data4" name="Parametri_Data4" style="width: 100%;" label="Data Provvedimento4" format="date" enabled="#Parametri_Data3.value() != ''">
+      </td>
+	    <td colspan="1">
+        <input class="inputNormal" id="Parametri_OrgComp4" name="Parametri_OrgComp4" style="width: 100%;" label="Organo Competente4" enabled="#Parametri_OrgComp3.value() != ''">
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- TITOLI ABITATIVI PAESAGGISTICI -FINE- -->
+<br>
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+<p align="justify">
+  Valendosi della facolta' prevista dagli articoli 46 e 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445,
+  <br> consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445
+  <br> e dell'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsita' in atti,
+</p>
+<h1 class="Modulo">DICHIARA</h1>
+<p>di essere soggetto abilitato alla presentazione dell'istanza in quanto</p>
+<!-- Tabella dei titoli Inizio -->
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">
+          Titolo sottoscrivente (proprietario, comproprietario, ecc.)
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="inputNormal" id="Parametri_Titolo1" name="Parametri_Titolo1" style="width: 100%;" label="Parametri titolo sottoscrivente " mandatory_enabled="true">
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">
+          Esclusivita' del titolo
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_Titolo" name="Tassonomia_Titolo" label="Titolo sottoscrivente" mandatory_enabled="true"></div>
+        <input id="Tassonomia_Titolo1" name="Tassonomia_Titolo" type="radio" value="1" />
+      </td>
+      <td>
+        <p>intestatario unico</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tassonomia_Titolo2" name="Tassonomia_Titolo" type="radio" value="2" />
+      </td>
+      <td>
+        <p>primo intestatario di altri soggetti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- Tabella dei titoli Fine -->
+<br>
+<input id="Titolare1_DatiProfessionistaObbligatori" name="Titolare1_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+<input id="Titolare1_DatiAlboProfessionistaObbligatori" name="Titolare1_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+{{anagrafica.professionista("Titolare1","progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+</div>
+<br>
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+{{anagrafica.domicilio_digitale(id_pec_personale="Titolare_EMailPEC",id_cognome_professionista="Titolare1_Cognome",id_nome_professionista="Titolare1_Nome",id_pec_professionista="Titolare1_EMailPEC",id_pec_societa="Titolare_APEC")}}
+</div>
+
+<br>
+<br>
+<br>
+<!--Parte degli allegati -->
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+          <br>
+          <span style="font-size:70%">
+            <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="M44750-A01-DATIINTERVENTO" name="M44750-A01-DATIINTERVENTO" dynamic_check="#Tassonomia_DocEdi1.checked() || #Tassonomia_DocEdi2.checked() || #Tassonomia_DocEdi4.checked() || #Tassonomia_DocEdi5.checked() || #Tassonomia_DocEdi6.checked() || #Tassonomia_DocEdi7.checked() || #Tassonomia_DocEdi8.checked()" type="checkbox" enabled="#Tassonomia_DocEdi1.checked() || #Tassonomia_DocEdi2.checked() || #Tassonomia_DocEdi4.checked() || #Tassonomia_DocEdi5.checked() || #Tassonomia_DocEdi6.checked() || #Tassonomia_DocEdi7.checked() || #Tassonomia_DocEdi8.checked()" enable="#Tassonomia_DocEdi1.checked() || #Tassonomia_DocEdi2.checked() || #Tassonomia_DocEdi4.checked() || #Tassonomia_DocEdi5.checked() || #Tassonomia_DocEdi6.checked() || #Tassonomia_DocEdi7.checked() || #Tassonomia_DocEdi8.checked()" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <span>dati tecnici di base dell'intervento</span> <span style="font-size:70%;">(da non allegare in caso di parere preventivo) </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="Marca_Bollo-TN" name="Marca_Bollo-TN" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>
+          pagamento dell'imposta di bollo per la richiesta di autorizzazione
+        </p>
+        <p style="font-size:70%;">
+          (da non allegare se l'istanza è presentata da ente pubblico)
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="RIC-DIR-SEG" name="RIC-DIR-SEG" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>
+          ricevuta dei diritti di segreteria/istruttoria e marca da bollo
+        </p>
+      </td>
+    </tr>
+    <tr>
+     <td>
+      <input dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" id="STU-EDI-IMM-TN" name="STU-EDI-IMM-TN" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;">
+      <p>
+       ulteriori particelle o subalterni oggetto del procedimento
+      </p>
+     </td>
+    </tr>
+	  <tr>
+     <td>
+      <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="STU-EDI-INT-TN" name="STU-EDI-INT-TN" type="checkbox" value="OBBLIGATORIO"/>
+      <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="STU-EDI-INT-AU-TN" name="STU-EDI-INT-AU-TN" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;">
+      <p>
+       n°<input class="" format="number" id="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#STU_EDI_INT_TN.checked()" name="NschedeAllegateEl" size="1"/>soggetti coinvolti nel procedimento edilizio che firmano con firma elettronica
+      </p>
+	    <p>
+       n°<input class="" format="number" id="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#STU_EDI_INT_AU_TN.checked()" name="NschedeAllegateAu" size="1"/>soggetti coinvolti nel procedimento edilizio che firmano con firma autografa con allegata copia del documento di identità
+      </p>
+     </td>
+    </tr>
+	  <tr>
+     <td style="vertical-align: top; width:3%">
+    <input id="DAE-CDI" name="DAE-CDI" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;">
+        <p>
+          copia del documento d'identità
+          <br/>
+          <span style="font-size:70%">
+            <i>
+             (da non allegare se l'istanza è presentata in modalità telematica o se la firma autografa è apposta di fronte a un pubblico ufficiale)
+            </i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+			<td>
+			 <input id="ALTRI-ALLEGATI" name="ALTRI-ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+			</td>
+			<td style="background-color: #eeeeee;">
+			  <p>
+			  altri allegati
+			  <span style="font-size:70%">
+			   (specificare)
+			  </span>
+			  <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:79%;"/>
+			 </p>
+			</td>
+	    </tr>
+  </tbody>
+</table>
+<br>
+<p>__________________________________</p>
+<p class="Modulo" style="font-size:70%"><b>1 persona fisica - titolare - legale rappresentante - amministratore del condominio</b></p>
+<p class="Modulo" style="font-size:70%"><b>2 ditta individuale - SNC - SAPA - SAS - SRL - SURL - SPA - ente pubblico - societa' cooperativa - SS - altro</b></p>
+<p class="Modulo" style="font-size:70%"><b>3 iscritto - in attesa di iscrizione - non tenuto all'iscrizione</b></p>
+<p class="Modulo" style="font-size:70%"><b>4 Unita' Immobiliare Urbana - Particella Terreni</b></p>
+<p class="Modulo" style="font-size:70%"><b>5 architetti, pianificatori, paesaggisti e conservatori - ingegneri - geologi -dottori agronomi e forestali - dottori commercialisti e esperti contabili - geometri - periti industriali</b></p>
+<br>
+<!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->
+ {{ utils.firma_hidden() }}
+ </div>
+<br>
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_modulofiglio_cIncarico_procura" name="GLOBO_modulofiglio_cIncarico_procura" type="hidden" value="" />
+
+<input id="GLOBO_modulofiglio_cMarca_Bollo-TN" name="GLOBO_modulofiglio_cMarca_Bollo-TN" obbligatorio="#Atti11s2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<!-- Calcolo numero di moduli da richiedere per ulteriori particelle -->
+<input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
+<input id="GLOBO_modulofiglio_cSTU-EDI-IMM-TN" name="GLOBO_modulofiglio_cSTU-EDI-IMM-TN" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#STU_EDI_IMM_TN.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_modulofiglio_cSTU-EDI-INT-TN" name="GLOBO_modulofiglio_cSTU-EDI-INT-TN" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cSTU-EDI-INT-AU-TN" name="GLOBO_modulofiglio_cSTU-EDI-INT-AU-TN" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+
+<input id="GLOBO_modulofiglio_cM44750-A01-DATIINTERVENTO" name="GLOBO_modulofiglio_cM44750-A01-DATIINTERVENTO" obbligatorio="#M44750_A01_DATIINTERVENTO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cDAE-CDI" name="GLOBO_allegato_cDAE-CDI" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cRIC-DIR-SEG" name="GLOBO_allegato_cRIC-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+
+
+
+
+{% endblock content %}
