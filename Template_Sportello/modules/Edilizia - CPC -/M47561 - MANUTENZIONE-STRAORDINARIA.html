@@ -1,0 +1,523 @@
+{% set CodiceModulo = "M47561-MANUTENZIONE-STRAORDINARIA" %}
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Istanza per la comunicazione di manutenzione straordinaria"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|09/02/2018" />
+
+<meta codice_modulo_figlio="Incarico_procura"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+/>
+
+{% endblock meta %}
+
+{% block title %}M47561-MANUTENZIONE-STRAORDINARIA{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Comunicazione manutenzione straordinaria'" id="Oggetto" name="Oggetto" type="hidden" />
+
+<!--{{ intestazioni.intestazione_moduloprincipale_conbollo() }}-->
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo" style="text-align: center;">
+  COMUNICAZIONE MANUTENZIONE STRAORDINARIA
+</h1>
+
+<p class="Modulo" style="text-align: center;">
+  (articolo 97, comma 1, lettera a bis) della legge provinciale del 4 marzo 2008, n. 1)
+</p>
+
+<h2 class="Modulo" style="text-align: center;">
+  Comunicazione per gli allacciamenti dei servizi all'utenza diretta, sottoservizi e impianti a rete in genere, con esclusione delle linee elettriche aeree
+</h2>
+
+<p class="Modulo" style="text-align: center;">
+  (articolo 97, comma 1, lettera c bis) della legge provinciale del 4 marzo 2008, n. 1)
+</p>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Titolare o soggetto in possesso di titolo idoneo alla presentazione dell'istanza</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Tecnico o professionista incaricato</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2 class="Modulo">
+  Ai sensi della Legge urbanistica provinciale 04/08/2015, n. 15
+</h2>
+
+{{anagrafica_trento.societa("Titolare","Il titolare o soggetto in possesso di titolo idoneo",["Persona fisica","Legale rappresentante","Procuratore"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+
+
+<h1 class="Modulo">COMUNICA</h1>
+
+<br>
+<p class="Modulo"><b>A. </b>che in data <input class="" format="date" id="Data_inizio_lavori" name="Data_inizio_lavori" label="Data di inizio lavori" mandatory_enabled="true" size="2"/> avranno inizio i lavori di:</p>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_lavori" name="Tipo_lavori" label="Tipo lavori" mandatory_enabled="true"> </div>
+        <input group="Tipo_lavori" id="Tipo_lavori1" name="Tipo_lavori" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Manutenzione straordinaria
+        <span style="font-size:80%;"><i> (di cui all'art. 99, comma 1, lettera b, della l.p. 1/2008)</i></span></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_lavori" id="Tipo_lavori2" name="Tipo_lavori" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Allacciamenti dei servizi all'utenza diretta, sottoservizi e impianti a rete in genere, con esclusione delle linee elettriche aeree</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo"><b>B. </b>che, nel caso di manutenzione straordinaria, i lavori:</p>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_manutenzione" name="Tipo_manutenzione" label="Tipo manutenzione" mandatory_enabled="true"> </div>
+        <input id="Tipo_manutenzione1" group="Tipo_manutenzione" name="Tipo_manutenzione" type="radio" value="1" />
+      </td>
+      <td>
+        <p>non interessano le parti esterne dell'edificio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_manutenzione2" group="Tipo_manutenzione" name="Tipo_manutenzione" type="radio" value="2" />
+      </td>
+      <td>
+        <p>interessano le parti esterne dell'edificio e non sono utilizzati materiali o tinteggiature diversi da quelli esistenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <textarea class="inputNormal" id="Descrizione_lavori" name="Descrizione_lavori" label="Descrizione lavori di manutenzione" style="width:100%;height:5cm" mandatory_enabled="true" >
+        </textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+
+    {{ immobili_trento.immobile_trento("Immobile", "Particelle", disattivato="true") }}
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+<h1 class="Modulo">COMUNICA</h1>
+<p>che sull'immobile</p>
+<!-- TITOLI ABITATIVI PAESAGGISTICI -INIZIO- -->
+<table class="Modulo" style="border: 1px solid grey" >
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_AbitativiPae" name="Tassonomia_AbitativiPae" label="Titoli abitativi paesaggistici" mandatory_enabled="true" > </div>
+        <input id="Tassonomia_AbitativiPaeNO" name="Tassonomia_AbitativiPae" type="radio" value="1" />
+      </td>
+      <td colspan="4">
+        <p>non sono stati rilasciati precedenti titoli paesaggistici</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="6">
+        <input id="Tassonomia_AbitativiPaeSI" name="Tassonomia_AbitativiPae" type="radio" dynamic_check="#Tassonomia_DocEdi2.checked()" value="2" />
+      </td>
+      <td colspan="4">
+        <p>sono stati rilasciati precedenti titoli paesaggistici </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="1" style="width: 30%;">
+        <p style="font-size:70%"> Tipo Provvedimento (autorizzazione paesaggistica,variante paesaggistica, parere,ecc)</p>
+      </td>
+      <td colspan="1" style="width: 15%;">
+        <p style="font-size:70%"> Numero/protocollo </p>
+      </td>
+      <td colspan="1" style="width: 15%;">
+        <p style="font-size:70%"> Data </p>
+      </td>
+	    <td colspan="1" style="width: 15%;">
+        <p style="font-size:70%"> Organo competente </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_TipProc1" name="Parametri_TipProc1" style="width: 100%;" label="Tipo Provvedimento1" mandatory_enabled="#Tassonomia_AbitativiPaeSI.checked()">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Numero1" name="Parametri_Numero1" style="width: 100%;" label="Numero Provvedimento1" mandatory_enabled="#Tassonomia_AbitativiPaeSI.checked()">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Data1" name="Parametri_Data1" style="width: 100%;" format="date" label="Data Provvedimento1" mandatory_enabled="#Tassonomia_AbitativiPaeSI.checked()">
+      </td>
+	    <td colspan="1">
+        <input class="inputNormal" id="Parametri_OrgComp1" name="Parametri_OrgComp1" style="width: 100%;" label="Organo Competente1" mandatory_enabled="#Tassonomia_AbitativiPaeSI.checked()">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_TipProc2" name="Parametri_TipProc2" style="width: 100%;" label="Tipo Provvedimento2" enabled="#Parametri_TipProc1.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Numero2" name="Parametri_Numero2" style="width: 100%;" label="Numero Provvedimento2" enabled="#Parametri_Numero1.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Data2" name="Parametri_Data2" style="width: 100%;" label="Data Provvedimento2" format="date" enabled="#Parametri_Data1.value() != ''">
+      </td>
+	    <td colspan="1">
+        <input class="inputNormal" id="Parametri_OrgComp2" name="Parametri_OrgComp2" style="width: 100%;" label="Organo Competente2" enabled="#Parametri_OrgComp1.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_TipProc3" name="Parametri_TipProc3" style="width: 100%;" label="Tipo Provvedimento3" enabled="#Parametri_TipProc2.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Numero3" name="Parametri_Numero3" style="width: 100%;" label="Numero Provvedimento3" enabled="#Parametri_Numero2.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Data3" name="Parametri_Data3" style="width: 100%;" label="Data Provvedimento3" format="date" enabled="#Parametri_Data2.value() != ''">
+      </td>
+	    <td colspan="1">
+        <input class="inputNormal" id="Parametri_OrgComp3" name="Parametri_OrgComp3" style="width: 100%;" label="Organo Competente3" enabled="#Parametri_OrgComp2.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_TipProc4" name="Parametri_TipProc4" style="width: 100%;" label="Tipo Provvedimento4" enabled="#Parametri_TipProc3.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Numero4" name="Parametri_Numero4" style="width: 100%;" label="Numero Provvedimento4" enabled="#Parametri_Numero3.value() != ''">
+      </td>
+      <td colspan="1">
+        <input class="inputNormal" id="Parametri_Data4" name="Parametri_Data4" style="width: 100%;" label="Data Provvedimento4" format="date" enabled="#Parametri_Data3.value() != ''">
+      </td>
+	    <td colspan="1">
+        <input class="inputNormal" id="Parametri_OrgComp4" name="Parametri_OrgComp4" style="width: 100%;" label="Organo Competente4" enabled="#Parametri_OrgComp3.value() != ''">
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- TITOLI ABITATIVI PAESAGGISTICI -FINE- -->
+<br>
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+<p align="justify">
+  Valendosi della facolta' prevista dagli articoli 46 e 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445,
+  <br> consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445
+  <br> e dell'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsita' in atti,
+</p>
+<h1 class="Modulo">DICHIARA</h1>
+<p>di essere soggetto abilitato alla presentazione dell'istanza in quanto</p>
+<!-- Tabella dei titoli Inizio -->
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p>
+          <b>Titolo sottoscrivente (proprietario, comproprietario, ecc.)</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
+        <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Proprietario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Comproprietario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p>
+          <b>Esclusivita' del titolo</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_Titolo" name="Tassonomia_Titolo" label="Titolo sottoscrivente" mandatory_enabled="true"></div>
+        <input id="Tassonomia_Titolo1" name="Tassonomia_Titolo" type="radio" value="1" />
+      </td>
+      <td>
+        <p>intestatario unico</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tassonomia_Titolo2" name="Tassonomia_Titolo" type="radio" value="2" />
+      </td>
+      <td>
+        <p>primo intestatario di altri soggetti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Tabella dei titoli Fine -->
+<br>
+<input id="Titolare1_DatiProfessionistaObbligatori" name="Titolare1_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+<input id="Titolare1_DatiAlboProfessionistaObbligatori" name="Titolare1_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+{{anagrafica.professionista("Titolare1","progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+</div>
+<br>
+
+<!-- simpatico start --><div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->
+{{anagrafica.domicilio_digitale(id_pec_personale="Titolare_EMailPEC",id_cognome_professionista="Titolare1_Cognome",id_nome_professionista="Titolare1_Nome",id_pec_professionista="Titolare1_EMailPEC",id_pec_societa="Titolare_APEC")}}
+<input id="Metadati_Dom_Digi" name="Metadati_Dom_Digi" dynamic_value="(#Tassonomia_DomDigi1.checked() ? #Titolare_EMailPEC.value() : 0 || #Tassonomia_DomDigi2.checked() ? #Titolare1_EMailPEC.value() : 0 || #Tassonomia_DomDigi3.checked() ? #Titolare_APEC.value() : 0)" type="hidden"/>
+</div>
+
+<br>
+<br>
+<br>
+<!--Parte degli allegati -->
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+          <br>
+          <span style="font-size:70%">
+            <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="M44750-A01-DATIINTERVENTO" name="M44750-A01-DATIINTERVENTO" dynamic_check="#Tassonomia_DocEdi1.checked() || #Tassonomia_DocEdi2.checked() || #Tassonomia_DocEdi4.checked() || #Tassonomia_DocEdi6.checked() || #Tassonomia_DocEdi7.checked() || #Tassonomia_DocEdi8.checked()" type="checkbox" enabled="#Tassonomia_DocEdi1.checked() || #Tassonomia_DocEdi2.checked() || #Tassonomia_DocEdi4.checked() || #Tassonomia_DocEdi6.checked() || #Tassonomia_DocEdi7.checked() || #Tassonomia_DocEdi8.checked()" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <span>dati tecnici di base dell'intervento</span> <span style="font-size:70%;">(da non allegare in caso di parere preventivo) </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="Marca_Bollo_CPC" name="Marca_Bollo_CPC" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          pagamento dell'imposta di bollo per la richiesta di autorizzazione
+        </p>
+        <p style="font-size:70%;">
+          (da non allegare se l'istanza è presentata da ente pubblico)
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="RIC-DIR-SEG" name="RIC-DIR-SEG" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          ricevuta dei diritti di segreteria/istruttoria e marca da bollo
+        </p>
+      </td>
+    </tr>
+    <tr>
+     <td>
+      <input dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" id="STU-EDI-IMM-TN" name="STU-EDI-IMM-TN" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+      <p>
+       ulteriori particelle o subalterni oggetto del procedimento
+      </p>
+     </td>
+    </tr>
+	  <tr>
+     <td>
+      <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="STU-EDI-INT-TN" name="STU-EDI-INT-TN" type="checkbox" value="OBBLIGATORIO"/>
+      <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="STU-EDI-INT-AU-TN" name="STU-EDI-INT-AU-TN" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+      <p>
+       n°<input class="" format="number" id="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#STU_EDI_INT_TN.checked()" name="NschedeAllegateEl" size="1"/>soggetti coinvolti nel procedimento edilizio che firmano con firma elettronica
+      </p>
+	    <p>
+       n°<input class="" format="number" id="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#STU_EDI_INT_AU_TN.checked()" name="NschedeAllegateAu" size="1"/>soggetti coinvolti nel procedimento edilizio che firmano con firma autografa con allegata copia del documento di identità
+      </p>
+     </td>
+    </tr>
+	  <tr>
+      <td>
+       <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>
+        Modulo compilato e firmato nella seguente modalità:
+        <br/>
+        <span style="font-size:70%">
+          (da allegare se la compilazione del modulo è stata eseguita dal professionista incaricato)
+        </span>
+       </p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:100%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
+          <option value=""></option>
+          <option value="A">Firma autografa</option>
+          <option value="E">Firma elettronica</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+     <td style="vertical-align: top; width:3%">
+       <input id="DAE-CDI" name="DAE-CDI" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" enabled="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          copia del documento d'identità del proprietario dell'immobile/soggetto in possesso di titolo idoneo
+        </p>
+      </td>
+    </tr>
+    <tr>
+			<td>
+			 <input id="ALTRI-ALLEGATI" name="ALTRI-ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+			  <p>
+			  altri allegati
+			  <span style="font-size:70%">
+			   (specificare)
+			  </span>
+			  <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:79%;"/>
+			 </p>
+			</td>
+	    </tr>
+  </tbody>
+</table>
+
+<input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" dynamic_value="#NschedeAllegateAu.value()" type="hidden"/>
+<input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" dynamic_value="#NschedeAllegateEl.value()" type="hidden"/>
+
+<br>
+
+<!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->
+ {{ utils.firma_hidden() }}
+ </div>
+<br>
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_modulofiglio_cIncarico_procura" name="GLOBO_modulofiglio_cIncarico_procura" type="hidden" value="" />
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
+
+<input firmare="'NO'" id="GLOBO_modulofiglio_cMarca_Bollo_CPC" name="GLOBO_modulofiglio_cMarca_Bollo_CPC" obbligatorio="#Marca_Bollo_CPC.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<!-- Calcolo numero di moduli da richiedere per ulteriori particelle -->
+<input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
+<input id="GLOBO_modulofiglio_cSTU-EDI-IMM-TN" name="GLOBO_modulofiglio_cSTU-EDI-IMM-TN" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#STU_EDI_IMM_TN.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_modulofiglio_cSTU-EDI-INT-TN" name="GLOBO_modulofiglio_cSTU-EDI-INT-TN" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cSTU-EDI-INT-AU-TN" name="GLOBO_modulofiglio_cSTU-EDI-INT-AU-TN" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+
+<input id="GLOBO_modulofiglio_cM44750-A01-DATIINTERVENTO" name="GLOBO_modulofiglio_cM44750-A01-DATIINTERVENTO" obbligatorio="#M44750_A01_DATIINTERVENTO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cDAE-CDI" name="GLOBO_allegato_cDAE-CDI" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cRIC-DIR-SEG" name="GLOBO_allegato_cRIC-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'A' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'E' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+{% endblock content %}
