@@ -1,4 +1,4 @@
-{% set CodiceModulo = "M47561-MANUTENZIONE-STRAORDINARIA" %}
+{% set CodiceModulo = "M47005-COMUNICAZIONE-INIZIO-LAVORI" %}
 {% extends "base_trento.html" %}
 
 {% block meta %}
@@ -7,7 +7,7 @@
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
-descrizione="Istanza per la comunicazione di manutenzione straordinaria"
+descrizione="Istanza per la comunicazione di inizio lavori"
 destinatario_amministrazione=""
 destinatario_ufficio="OE7NEF"
 dinamico="SI"
@@ -34,46 +34,37 @@ obbligatorio="DINAMICO"/>
 generate_on="sending"
 name="GLOBO_report"/>
 
-<!-- Allegato DOCUMENTAZIONE FOTOGRAFICA -->
-<meta codice_allegato="Documentazione_fotografica"
-descrizione_estesa="Documentazione fotografica"
+<!-- Allegato COPIA NOTIFICA PRELIMINARE -->
+<meta codice_allegato="Copia_notifica_preliminare"
+descrizione_estesa="Copia notifica preliminare"
 filename="Documentazione_fotografica.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/Documentazione_fotografica"
+istruzioni="/modulistica/moduli/Copia_notifica_preliminare"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<!-- Allegato PLANIMETRIA FIRMATA DAL TECNICO -->
-<meta codice_allegato="Planimetria"
-descrizione_estesa="Planimetria-stato di raffronto (per gli interventi che interessano l'impianto distributivo interno)"
-filename="Planimetria.pdf"
-firmato="SI"
-firmatari="Titolare1_CodiceFiscale"
-firmatari_label="Tecnico_incaricato"
-istruzioni="/modulistica/moduli/Planimetria"
+<!-- Allegato DICHIARAZIONE IMPRESA -->
+<meta codice_allegato="DURC"
+descrizione_estesa="Dichiarazione impresa costruttrice al fine dell'acquisizione d'ufficio del DURC"
+filename="DURC.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/DURC"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<!-- Allegato ATTESTAZIONE FIRMATA DAL TECNICO -->
-<meta codice_allegato="Attestazione_tecnico"
-descrizione_estesa="Attestazione di irrilevanza strutturale"
-filename="Attestazione_tecnico.pdf"
-firmato="SI"
-firmatari="Titolare1_CodiceFiscale"
-firmatari_label="Tecnico_incaricato"
-istruzioni="/modulistica/moduli/Attestazione_tecnico"
-name="GLOBO_allegato"
+<!-- Allegato VERIFICA DOCUMENTAZIONE -->
+<meta codice_modulo_figlio="M47016-DICHIARAZIONE-SICUREZZA-CANTIERI"
+name="GLOBO_modulofiglio"
 numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
+obbligatorio="DINAMICO"/>
 
-<!-- Allegato ELABORATI PROGETTUALI FIRMATA DAL TECNICO -->
+<!-- Allegato ELABORATI PLANIMETRICI -->
 <meta codice_allegato="Elaborato_progettuale"
-descrizione_estesa="Elaborato progettuale relativo agli impianti"
+descrizione_estesa="Elaborato progettuale"
 filename="Elaborato_progettuale.pdf"
 firmato="SI"
 firmatari="Titolare1_CodiceFiscale"
@@ -83,28 +74,6 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
-
-<!-- Allegato RELAZIONE DITTA -->
-<meta codice_allegato="Relazione_ditta"
-descrizione_estesa="Relazione della ditta/tecnico attestante i requisiti di prestazione energetica"
-filename="Relazione_ditta.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/Relazione_ditta"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<!-- Allegati ulteriori firmatari -->
-<meta codice_modulo_figlio="STU-EDI-INT-TN"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
-
-<meta codice_modulo_figlio="STU-EDI-INT-AU-TN"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
 
 <!-- Allegato modulo compilato e firmato -->
 <meta codice_allegato="Modulo_compilato_firma_autografa"
@@ -138,6 +107,17 @@ numero="0"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<!-- Allegati ulteriori firmatari -->
+<meta codice_modulo_figlio="STU-EDI-INT-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="STU-EDI-INT-AU-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <!-- Allegato ulteriori particelle -->
 <meta codice_modulo_figlio="STU-EDI-IMM-TN"
 name="GLOBO_modulofiglio"
@@ -168,15 +148,15 @@ numero="1"
 obbligatorio="DINAMICO"/>
 
 <!-- Allegato MODULO SUBENTRO -->
-<meta codice_modulo_figlio="MODULO-SUBENTRO"
+<meta codice_modulo_figlio="M47014-MODULO-SUBENTRO"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-
 {% endblock meta %}
 
-{% block title %}M47561-MANUTENZIONE-STRAORDINARIA{% endblock title %}
+{% block title %}M47005-COMUNICAZIONE-INIZIO-LAVORI{% endblock title %}
+
 
 {% block content %}
 <globo_fondo_pagina areaheight="150" scope="4">
@@ -185,27 +165,13 @@ obbligatorio="DINAMICO"/>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Comunicazione manutenzione straordinaria'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Comunicazione inizio lavori'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
 <h1 class="Modulo" style="text-align: center;">
-  COMUNICAZIONE MANUTENZIONE STRAORDINARIA
+  COMUNICAZIONE INIZIO LAVORI
 </h1>
-
-<p class="Modulo" style="text-align: center;">
-  (articolo 97, comma 1, lettera a bis) della legge provinciale del 4 marzo 2008, n. 1)
-</p>
-
-<br>
-
-<h2 class="Modulo" style="text-align: center;">
-  Comunicazione per gli allacciamenti dei servizi all'utenza diretta, sottoservizi e impianti a rete in genere, con esclusione delle linee elettriche aeree
-</h2>
-
-<p class="Modulo" style="text-align: center;">
-  (articolo 97, comma 1, lettera c bis) della legge provinciale del 4 marzo 2008, n. 1)
-</p>
 
 <br>
 
@@ -233,6 +199,22 @@ obbligatorio="DINAMICO"/>
         <p>Tecnico o professionista incaricato</p>
       </td>
     </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente3" name="Tipo_richiedente" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Direttore dei lavori incaricato</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente4" name="Tipo_richiedente" type="radio" value="4" />
+      </td>
+      <td>
+        <p>Soggetto abilitato alla certificazione energetica</p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -250,82 +232,89 @@ obbligatorio="DINAMICO"/>
 
 <br>
 
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <p> Relativamente alla pratica intestata a: <input class="" id="Titolarita_procedimento" name="Titolarita_procedimento" label="Titolarita del procedimento" style="width:67%;" mandatory_enabled="true"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipologia_concessione" name="Tipologia_concessione" label="Concessione edilizia/SCIA posseduta"> </div>
+        <input group="Tipologia_concessione" id="Tipologia_concessione1" name="Tipologia_concessione" type="radio" value="1"/>
+      </td>
+      <td>
+        <p> Concessione edilizia prot.nr. <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="40" mandatory_enabled="#Tipologia_concessione1.checked()"/> rilasciata in data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Tipologia_concessione1.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipologia_concessione" id="Tipologia_concessione2" name="Tipologia_concessione" type="radio" value="2"/>
+      </td>
+      <td>
+        <p> SCIA prot.nr. <input class="" id="Prot_SCIA" name="Prot_SCIA" label="Numero di protocollo della SCIA" size="52" mandatory_enabled="#Tipologia_concessione2.checked()"/> depositata in data <input class="" id="Data_SCIA" name="Data_SCIA" label="Data deposizione SCIA" format="date" size="8" mandatory_enabled="#Tipologia_concessione2.checked()"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
 <h1 class="Modulo">COMUNICA</h1>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="3">
-        <p><b>In data <input class="" format="date" id="Data_inizio_lavori" name="Data_inizio_lavori" label="Data di inizio lavori" mandatory_enabled="true" size="8"/> avranno inizio i lavori di:</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <div id="Tipo_lavori" name="Tipo_lavori" label="Tipo lavori" mandatory_enabled="true"> </div>
-        <input group="Tipo_lavori" id="Tipo_lavori1" name="Tipo_lavori" type="radio" value="1" />
-      </td>
-      <td colspan="2">
-        <p>Allacciamenti dei servizi all'utenza diretta, sottoservizi e impianti a rete in genere, con esclusione delle linee elettriche aeree</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="4">
-        <input group="Tipo_lavori" id="Tipo_lavori2" name="Tipo_lavori" type="radio" value="2" />
-      </td>
-      <td colspan="2">
-        <p>Manutenzione straordinaria
-        <span style="font-size:80%;"><i> (di cui all'art. 99, comma 1, lettera b, della l.p. 1/2008)</i></span></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <div id="Tipo_manutenzione" name="Tipo_manutenzione" label="Tipo manutenzione" mandatory_enabled="#Tipo_lavori2.checked()"> </div>
-        <input id="Tipo_manutenzione1" group="Tipo_manutenzione" name="Tipo_manutenzione" type="radio" value="1" />
-      </td>
-      <td>
-        <p>non interessano le parti esterne dell'edificio</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Tipo_manutenzione2" group="Tipo_manutenzione" name="Tipo_manutenzione" type="radio" value="2" />
-      </td>
-      <td>
-        <p>interessano le parti esterne dell'edificio e non sono utilizzati materiali o tinteggiature diversi da quelli esistenti</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;" colspan="2">
-        <textarea class="inputNormal" id="Descrizione_esterno_edi" name="Descrizione_esterno_edi" label="Descrizione elementi esterno edificio" style="width:100%;height:2cm" mandatory_enabled="#Tipo_manutenzione2.checked()" >
-        </textarea>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p><b>I lavori consistono in:</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;" colspan="2">
-        <textarea class="inputNormal" id="Descrizione_lavori" name="Descrizione_lavori" label="Descrizione lavori" style="width:100%;height:5cm" mandatory_enabled="true" >
-        </textarea>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
 
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
 
-    {{ immobili_trento.immobile_trento("Immobile", "I lavori interessano le seguenti realtà immobiliari", disattivato="true") }}
+    {{ immobili_trento.immobile_trento_inizio_lavori("Immobile", "avranno inizio i lavori previsti dalla concessione edilizia/SCIA sopra citata, <b>da eseguire presso la realtà immobiliare</b> seguente:", disattivato="true") }}
+
+<br>
+
+{{anagrafica_trento.professionista_direttore_lavori("Titolare2","Direttore dei lavori incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale") }}
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Dichiarazione_direttore_lavori" name="Dichiarazione_direttore_lavori" type="checkbox" value="1" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p>Il sottoscritto Direttore dei lavori dichiara di aver preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto, nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p>Ai sensi dell'art. 84 della l.p. 1/2008 e del D.P.P. n. 11-13/Leg. del 13 luglio 2009:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Incarico_soggetto_certificatore" name="Incarico_soggetto_certificatore" label="Incarico di un soggetto certificatore" mandatory_enabled="true"> </div>
+        <input group="Incarico_soggetto_certificatore" id="Incarico_soggetto_certificatore1" name="Incarico_soggetto_certificatore" type="radio" value="1" />
+      </td>
+      <td>
+        <p>non è necessario incaricare un soggetto certificatore</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Incarico_soggetto_certificatore" id="Incarico_soggetto_certificatore2" name="Incarico_soggetto_certificatore" type="radio" value="2" />
+      </td>
+      <td>
+        <p>viene incaricato un <b>soggetto abilitato alla certificazione energetica</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{{anagrafica_trento.soggetto_certificazione("Titolare3","Soggetto abilitato alla certificazione energetica","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale") }}
 
 <br>
 
@@ -464,77 +453,6 @@ obbligatorio="DINAMICO"/>
 
 <br>
 
-<h2 class="Modulo">DICHIARA inoltre</h2>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Vincoli1" name="Vincoli1" type="checkbox" value="1" mandatory_enabled="true"/>
-      </td>
-      <td>
-        <p>che <b>non sussistono vincoli iscritti al Libro Fondiario</b> che creano impedimento alla realizzazione dell'intervento richiesto</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Vincoli2" name="Vincoli2" type="checkbox" value="2" mandatory_enabled="true"/>
-      </td>
-      <td>
-        <p>che i lavori <b>non interessano elementi strutturali dell'edificio</b></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-
-<h2 class="Modulo">DICHIARA infine di essere informato sui seguenti vincoli e obblighi</h2>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Obblighi1" group="Obblighi1" name="Obblighi1" type="checkbox" value="1" mandatory_enabled="true"/>
-      </td>
-      <td>
-        <p>L'intervento deve essere realizzato nel rispetto delle altre normative di settore aventi incidenza sulla disciplina dell'attività edilizia e, in particolare, delle norme:</p>
-            <ul>
-              <li>in materia antisismica</li>
-              <li>in materia di sicurezza</li>
-              <li>in materia di lavoro e regolarità contributiva</li>
-              <li>in materia igienico-sanitaria, in particolare in osservanza dei criteri fissati dal regolamento edilizio comunale (ad esempio la dimensione minima dei locali, fori, servizi igienici, etc.)</li>
-              <li>in materia di efficienza energetica</li>
-              <li>in materia di impianti e barriere architettoniche</li>
-            </ul>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Obblighi2" name="Obblighi2" type="checkbox" value="2" mandatory_enabled="true"/>
-      </td>
-      <td>
-        <p>L'intervento non deve comportare alcuna modifica dei seguenti aspetti:</p>
-            <ul>
-              <li>destinazione d'uso</li>
-              <li>carico urbanistico ai fini del pagamento del contributo di concessione</li>
-              <li>standard urbanistici (ad esempio spazi di parcheggio)</li>
-            </ul>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Obblighi3" name="Obblighi3" type="checkbox" value="3" mandatory_enabled="true"/>
-      </td>
-      <td>
-        <p>Le opere di progetto non possono avere inizio <b>prima della data</b> di presentazione della presente comunicazione e che <b>l'omissione della presente comunicazione comporta il pagamento della sanzione pecuniaria prevista dall'art. 97, comma 3-bis, della l.p. 1/2008.</b></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-
 <h1 class="Modulo">ALLEGA</h1>
 
 <table class="Modulo" name="Allegati" style="border: 1px solid grey">
@@ -552,50 +470,42 @@ obbligatorio="DINAMICO"/>
     </tr>
     <tr>
       <td style="width:4%">
-        <input id="Documentazione_fotografica" name="Documentazione_fotografica" type="checkbox" checked="true" value="OBBLIGATORIO" />
+        <input id="Notifica_preliminare" name="Notifica_preliminare" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p>
-          Documentazione fotografica
+          Copia della notifica preliminare <span style="font-size:80%">(di cui all'articolo 99 del D. Lgs. 81/2008)</span>
         </p>
       </td>
     </tr>
     <tr>
       <td style="width:4%">
-        <input id="Planimetria" name="Planimetria" type="checkbox" value="OBBLIGATORIO" />
+        <input id="Dich_impresa" name="Dich_impresa" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p>
-          Planimetria che rappresenti lo stato di raffronto <b>nel caso di interventi che interessano l'impianto distributivo interno</b>
+          Dichiarazione, con firma autografa, dell'impresa esecutrice al fine dell'acquisizione d'ufficio del DURC <span style="font-size:80%">(ai sensi dell'art. 15 della legge 183/2011)</span>
         </p>
       </td>
     </tr>
     <tr>
       <td style="width:4%">
-        <input id="Attestazione_tecnico" name="Attestazione_tecnico" type="checkbox" value="OBBLIGATORIO" />
+        <input id="Verifica_doc" name="Verifica_doc" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p>
-          Attestazione di un tecnico abilitato che dimostri l'irrilevanza strutturale
+          Dichiarazione attestante l'avvenuta verifica della documentazione relativa all'articolo 90, comma 9 lettera a) e b) del D. Lgs. n. 81 del 2008
         </p>
       </td>
     </tr>
     <tr>
       <td style="width:4%">
-        <input id="Elaborato_progettuale" name="Elaborato_progettuale" type="checkbox" value="OBBLIGATORIO" />
+        <input id="Elab_planimetrico" name="Elab_planimetrico" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p>
-          n° <input class="" format="number" id="Nelaborati_progettuali" label="Numero elaborati progettuali" mandatory_enabled="#Elaborato_progettuale.checked()" name="Nelaborati_progettuali" size="1"/> elaborato/i progettuale/i relativo/i agli impianti di cui al D.M. 37/2008
+          n° <input class="" format="number" id="Nelaborati_planimetrici" label="Numero elaborati planimetrici" mandatory_enabled="#Elab_planimetrico.checked()" name="Nelaborati_planimetrici" size="1"/> elaborato/i planimetrico/i quote terreno redatto e sottoscritto dal Direttore dei lavori <span style="font-size:80%">(da trasmettere nel caso di nuove costruzioni, ampliamenti o demolizioni e ricostruzioni), qualora previsto dal Regolamento edilizio comunale</span>
         </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-       <input id="Relazione_ditta" name="Relazione_ditta" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p>Relazione della ditta/tecnico attestante i requisiti di prestazione energetica (nel caso in cui gli interventi ricadano nell'articolo 4, comma 4 del D.P.P. 13 luglio 2009, n. 11-13/Leg. e ss.mm)</p>
       </td>
     </tr>
     <tr>
@@ -614,14 +524,14 @@ obbligatorio="DINAMICO"/>
     </tr>
     <tr>
       <td>
-       <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
+       <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() || #Tipo_richiedente3.checked() || #Tipo_richiedente4.checked()" enabled="#Tipo_richiedente2.checked() || #Tipo_richiedente3.checked() || #Tipo_richiedente4.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p>
         Modulo compilato e firmato nella seguente modalità:
         <br/>
-        <span style="font-size:70%">
-          (da allegare se la compilazione del modulo è stata eseguita dal professionista incaricato)
+        <span style="font-size:80%">
+          (da allegare se la compilazione del modulo non è stata eseguita dal proprietario dell'immobile)
         </span>
        </p>
       </td>
@@ -654,16 +564,6 @@ obbligatorio="DINAMICO"/>
      </td>
     </tr>
     <tr>
-     <td style="vertical-align: top; width:3%">
-       <input id="Titolo_contrattuale" name="Titolo_contrattuale" type="checkbox" dynamic_check="#Parametri_Titolo4.checked()" enabled="#Parametri_Titolo4.checked()" value="OBBLIGATORIO"/>
-     </td>
-     <td style="background-color: #eeeeee;" colspan="2">
-        <p>
-          Copia del titolo contrattuale (se locatario, titolare di leasing etc.) per l'immobile/gli immobili oggetto del procedimento
-        </p>
-      </td>
-    </tr>
-    <tr>
      <td>
       <input dynamic_check="#Esecuzione_lavori1.checked()" enabled="#Esecuzione_lavori1.checked()" id="Anagrafica_imprese" name="Anagrafica_imprese" type="checkbox" value="OBBLIGATORIO"/>
       <input dynamic_check="#Esecuzione_lavori2.checked()" enabled="#Esecuzione_lavori2.checked()" id="Anagrafica_lavoratori_autonomi" name="Anagrafica_lavoratori_autonomi" type="checkbox" value="OBBLIGATORIO"/>
@@ -672,6 +572,16 @@ obbligatorio="DINAMICO"/>
       <p>n° <input class="" format="number" id="Nanag_imprese_allegate" label="Numero anagrafiche imprese allegate" mandatory_enabled="#Anagrafica_imprese.checked()" name="Nanag_imprese_allegate" size="1" dynamic_value="#numero_imprese.value()" readonly/> imprese coinvolte, per le quali si richiede la compilazione delle relative anagrafiche</p>
 	    <p>n° <input class="" format="number" id="Nanag_lav_allegate" label="Numero anagrafiche lavoratori autonomi allegate" mandatory_enabled="#Anagrafica_lavoratori_autonomi.checked()" name="Nanag_lav_allegate" size="1" dynamic_value="#numero_lavoratori_autonomi.value()" readonly/> lavoratori autonomi coinvolti, per i quali si richiede la compilazione delle relative anagrafiche</p>
      </td>
+    </tr>
+    <tr>
+     <td style="vertical-align: top; width:3%">
+       <input id="Titolo_contrattuale" name="Titolo_contrattuale" type="checkbox" dynamic_check="#Parametri_Titolo4.checked()" enabled="#Parametri_Titolo4.checked()" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          Copia del titolo contrattuale (se locatario, titolare di leasing etc.) per l'immobile/gli immobili oggetto del procedimento
+        </p>
+      </td>
     </tr>
     <tr>
       <td style="vertical-align: top; width:3%">
@@ -694,10 +604,10 @@ obbligatorio="DINAMICO"/>
       <td>
         <p><b>Nota bene:</b></p>
           <ul>
-            <li>qualora le opere comportino modificazioni catastali andrà presentata denuncia di variazione catastale ai competenti uffici ai sensi della normativa vigente</li>
-            <li>al termine dei lavori l'impresa installatrice dovrà rilasciare al committente la dichiarazione di conformità degli impianti realizzati nel rispetto delle norme di cui all'art. 6 del D.M. 37/2008 e che, ai sensi del medesimo decreto, la dichiarazione di conformità o il certificato di collaudo degli impianti, ove previsto, andrà depositato in Comune</li>
-            <li>nel caso in cui l'intervento riguardi la copertura dell'edificio va osservato il D.P.P. 25 febbraio 2008, n. 7-117/Leg.: "Regolamento tecnico per la prevenzione dei rischi di infortunio a seguito di cadute dall'alto nei lavori di manutenzione ordinaria sulle coperture"</li>
-            <li>la presente comunicaione non è soggetta a vincoli temporali e per la stessa <b>non è previsto il deposito della comunicazione di fine lavori</b></li>
+            <li>I primi tre documenti dell'elenco <b>NON SONO DOVUTI</b> in caso di <b>LAVORI SVOLTI IN ECONOMIA</b></li>
+            <li>Nel caso di subentro nel cantiere di imprese/lavoratori autonomi sussiste l'obbligo di dare tempestiva comunicazione, ai sensi dell'art. 90 del D. Lgs. n. 81 del 2008</li>
+            <li>Nel caso di opere che comportano la realizzazione di manufatti soggetti a collaudo statico ed i relativi lavori comportano pregiudizio per la staticità del fabbricato devono essere osservati gli adempimenti ai sensi dell'art. 65 del D.P.R. n. 380 di data 06/06/2001</li>
+            <li>Ai sensi della G.D.P. n. 3110/2009 il proprietario dell'edificio o chi ne ha titolo, prima dell'inizio dei lavori, affida ad un soggetto certificatore, iscritto negli elenchi dei professionisti abilitati di cui all'art. 8 del D.P.P. 11-13/Leg. del 13 luglio 2009, recante "Disposizioni regolamentari in materia di edilizia sostenibile in attuazione del titolo IV della l.p. 1/2008", l'incarico di redigere l'Attestato di certificazione energetica</li>
           </ul>
       </td>
     </tr>
@@ -722,22 +632,22 @@ obbligatorio="DINAMICO"/>
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_modulofiglio_cIncarico_procura" name="GLOBO_modulofiglio_cIncarico_procura" type="hidden" value="" />
 <input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
+<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" dynamic_value="#Titolare_Nome.value()" type="hidden"/>
 <input id="Metadati_Titolare1_Cognome" name="Metadati_Titolare1_Cognome" dynamic_value="#Titolare1_Cognome.value()" type="hidden"/>
+<input id="Metadati_Titolare2_Cognome" name="Metadati_Titolare2_Cognome" dynamic_value="#Titolare2_Cognome.value()" type="hidden"/>
+<input id="Metadati_Titolare3_Cognome" name="Metadati_Titolare3_Cognome" dynamic_value="#Titolare3_Cognome.value()" type="hidden"/>
 
-<!-- Allegato DOCUMENTAZIONE FOTOGRAFICA -->
-<input id="GLOBO_allegato_cDocumentazione_fotografica" name="GLOBO_allegato_cDocumentazione_fotografica" obbligatorio="#Documentazione_fotografica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<!-- Allegato COPIA NOTIFICA PRELIMINARE -->
+<input id="GLOBO_allegato_cCopia_notifica_preliminare" name="GLOBO_allegato_cCopia_notifica_preliminare" obbligatorio="#Notifica_preliminare.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<!-- Allegato PLANIMETRIA FIRMATA DAL TECNICO -->
-<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cPlanimetria" name="GLOBO_allegato_cPlanimetria" obbligatorio="#Planimetria.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<!-- Allegato DICHIARAZIONE IMPRESA -->
+<input id="GLOBO_allegato_cDURC" name="GLOBO_allegato_cDURC" obbligatorio="#Dich_impresa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<!-- Allegato ATTESTAZIONE FIRMATA DAL TECNICO -->
-<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cAttestazione_tecnico" name="GLOBO_allegato_cAttestazione_tecnico" obbligatorio="#Attestazione_tecnico.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<!-- Allegato VERIFICA DOCUMENTAZIONE -->
+<input id="GLOBO_modulofiglio_cM47016-DICHIARAZIONE-SICUREZZA-CANTIERI" name="GLOBO_modulofiglio_cM47016-DICHIARAZIONE-SICUREZZA-CANTIERI" obbligatorio="#Verifica_doc.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<!-- Allegato ELABORATI PROGETTUALI FIRMATA DAL TECNICO -->
-<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cElaborato_progettuale" name="GLOBO_allegato_cElaborato_progettuale" numero="#Nelaborati_progettuali.value()" obbligatorio="#Elaborato_progettuale.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
-<!-- Allegato RELAZIONE DITTA -->
-<input id="GLOBO_allegato_cRelazione_ditta" name="GLOBO_allegato_cRelazione_ditta" obbligatorio="#Relazione_ditta.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<!-- Allegato ELABORATI PLANIMETRICI -->
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cElaborato_planimetrico" name="GLOBO_allegato_cElaborato_planimetrico" numero="#Nelaborati_planimetrici.value()" obbligatorio="#Elab_planimetrico.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <!-- Allegati ulteriori firmatari -->
 <input id="GLOBO_modulofiglio_cSTU-EDI-INT-TN" name="GLOBO_modulofiglio_cSTU-EDI-INT-TN" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
@@ -764,7 +674,7 @@ obbligatorio="DINAMICO"/>
 <input id="GLOBO_modulofiglio_cANAGRAFICA-LAVAUTONOMI" name="GLOBO_modulofiglio_cANAGRAFICA-LAVAUTONOMI" numero="#numero_lavoratori_autonomi.value()" obbligatorio="#numero_lavoratori_autonomi.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <!-- Allegato MODULO SUBENTRO -->
-<input id="GLOBO_modulofiglio_cMODULO-SUBENTRO" name="GLOBO_modulofiglio_cMODULO-SUBENTRO" obbligatorio="#Allega_modulo_subentro.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cM47014-MODULO-SUBENTRO" name="GLOBO_modulofiglio_cM47014-MODULO-SUBENTRO" obbligatorio="#Allega_modulo_subentro.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />

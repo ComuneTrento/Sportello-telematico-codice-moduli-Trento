@@ -1,0 +1,497 @@
+{% set CodiceModulo = "M47014-MODULO-SUBENTRO" %}
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Comunicazione di subentro/integrazione dell'impresa che opera in cantiere"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M47014-MODULO-SUBENTRO"
+verifica_pagamento="NO"
+versione="1.1|14/02/2018"/>
+
+<meta codice_modulo_figlio="Incarico_procura"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"/>
+
+<!-- Allegato COPIA NOTIFICA PRELIMINARE -->
+<meta codice_allegato="Copia_notifica_preliminare"
+descrizione_estesa="Copia notifica preliminare"
+filename="Documentazione_fotografica.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Copia_notifica_preliminare"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- Allegato DICHIARAZIONE IMPRESA -->
+<meta codice_allegato="DURC"
+descrizione_estesa="Dichiarazione impresa costruttrice al fine dell'acquisizione d'ufficio del DURC"
+filename="DURC.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/DURC"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- Allegato VERIFICA DOCUMENTAZIONE -->
+<meta codice_modulo_figlio="M47016-DICHIARAZIONE-SICUREZZA-CANTIERI"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Allegati ulteriori firmatari -->
+<meta codice_modulo_figlio="STU-EDI-INT-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="STU-EDI-INT-AU-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Allegato modulo compilato e firmato autografo da titolare e direttore dei lavori -->
+<meta codice_allegato="Comunicazione_subentro_firma_autografa"
+descrizione_estesa="Comunicazione di subentro firmata manualmente dal titolare e dal direttore dei lavori"
+filename="Comunicazione_subentro_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Comunicazione_subentro_firma_autografa"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- Allegato carta identità del titolare -->
+<meta codice_allegato="DAE-CDI"
+descrizione_estesa="Copia del documento di identità del richiedente"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/DAE-CDI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- Allegato carta identità del direttore dei lavori -->
+<meta codice_allegato="DAE-CDI-DIR-LAV"
+descrizione_estesa="Copia del documento di identità del direttore dei lavori"
+filename="Documento identita direttore lavori.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/DAE-CDI-DIR-LAV"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- Allegato ulteriori particelle -->
+<meta codice_modulo_figlio="STU-EDI-IMM-TN"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Allegato ANAGRAFICA IMPRESE -->
+<meta codice_modulo_figlio="ANAGRAFICA-IMPRESE"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Allegato ANAGRAFICA LAVORATORE AUTONOMO -->
+<meta codice_modulo_figlio="ANAGRAFICA-LAVAUTONOMI"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+{% endblock meta %}
+
+{% block title %}M47014-MODULO-SUBENTRO{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Modulo subentro'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+
+<h1 class="Modulo" style="text-align: center;">
+  COMUNICAZIONE DI SUBENTRO/INTEGRAZIONE DELL'IMPRESA CHE OPERA IN CANTIERE
+</h1>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Titolare o soggetto in possesso di titolo idoneo alla presentazione dell'istanza</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Tecnico o professionista incaricato</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente3" name="Tipo_richiedente" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Direttore dei lavori incaricato</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+{{anagrafica_trento.societa("AventeTitolo","Il/la sottoscritto/a",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "AventeTitolo", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <p> Relativamente alla pratica intestata a: <input class="" id="Titolarita_procedimento" name="Titolarita_procedimento" label="Titolarita del procedimento" style="width:67%;" mandatory_enabled="true"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipologia_concessione" name="Tipologia_concessione" label="Concessione edilizia/SCIA posseduta"> </div>
+        <input group="Tipologia_concessione" id="Tipologia_concessione1" name="Tipologia_concessione" type="radio" value="1"/>
+      </td>
+      <td>
+        <p> Concessione edilizia prot.nr. <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="40" mandatory_enabled="#Tipologia_concessione1.checked()"/> rilasciata in data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Tipologia_concessione1.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipologia_concessione" id="Tipologia_concessione2" name="Tipologia_concessione" type="radio" value="2"/>
+      </td>
+      <td>
+        <p> Denuncia inizio attività ric.nr. <input class="" id="Ric_in_att" name="Ric_in_att" label="Numero di protocollo dichiarazione inizio attività" size="38" mandatory_enabled="#Tipologia_concessione2.checked()"/> presentata in data <input class="" id="Data_in_att" name="Data_in_att" label="Data deposizione dichiarazione inizio attività" format="date" size="8" mandatory_enabled="#Tipologia_concessione2.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipologia_concessione" id="Tipologia_concessione3" name="Tipologia_concessione" type="radio" value="3"/>
+      </td>
+      <td>
+        <p> Comunicazione inizio lavori prot.nr. <input class="" id="Prot_in_lav" name="Prot_in_lav" label="Numero di protocollo comunicazione inizio lavori" size="33" mandatory_enabled="#Tipologia_concessione3.checked()"/> presentata in data <input class="" id="Data_in_lav" name="Data_in_lav" label="Data deposizione comunicazione inizio lavori" format="date" size="8" mandatory_enabled="#Tipologia_concessione3.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipologia_concessione" id="Tipologia_concessione4" name="Tipologia_concessione" type="radio" value="4"/>
+      </td>
+      <td>
+        <p> Comunicazione prot.nr. <input class="" id="Prot_com" name="Prot_com" label="Numero di protocollo comunicazione" size="33" mandatory_enabled="#Tipologia_concessione4.checked()"/> depositata in data <input class="" id="Data_com" name="Data_com" label="Data deposizione comunicazione" format="date" size="8" mandatory_enabled="#Tipologia_concessione4.checked()"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+
+    {{ immobili_trento.immobile_trento("Immobile", "Relativamente all'immobile, oggetto dell'intervento:", disattivato="true") }}
+
+<br>
+
+<p class="Modulo">Ai sensi dell'art. 47 del d.p.r. 445/2000, consapevole delle sanzioni penali, nel caso di dichiarazioni non veritiere e falsità negli atti, richiamate dall'art. 76 del d.p.r. 445/2000:</p>
+
+<h1 class="Modulo">DICHIARA</h1>
+
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p>
+          <b>di essere soggetto abilitato alla presentazione dell'istanza in quanto</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
+        <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Proprietario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Comproprietario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p>
+          <b>Esclusivita' del titolo</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_Titolo" name="Tassonomia_Titolo" label="Titolo sottoscrivente" mandatory_enabled="true"></div>
+        <input id="Tassonomia_Titolo1" name="Tassonomia_Titolo" type="radio" value="1" />
+      </td>
+      <td>
+        <p>intestatario unico</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tassonomia_Titolo2" name="Tassonomia_Titolo" type="radio" value="2" />
+      </td>
+      <td>
+        <p>primo intestatario di altri soggetti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h1 class="Modulo">COMUNICA</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <p> A partire dalla data: <input class="" id="Data_subentro" name="Data_subentro" label="Data del subentro" format="date" size="8" mandatory_enabled="true"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="subentro_integrazione" name="subentro_integrazione" label="Specificare subentro o integrazione"> </div>
+        <input group="subentro_integrazione" id="subentro_integrazione1" name="subentro_integrazione" type="radio" value="1"/>
+      </td>
+      <td>
+        <p>il <b>SUBENTRO</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="subentro_integrazione" id="subentro_integrazione2" name="subentro_integrazione" type="radio" value="2"/>
+      </td>
+      <td>
+        <p>l'<b>INTEGRAZIONE</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <p>della/e nuova/e</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="impresa_lavautonomo" name="impresa_lavautonomo" label="Specificare nuova impresa o lavoratore autonomo"> </div>
+        <input group="impresa_lavautonomo" id="impresa_lavautonomo1" name="impresa_lavautonomo" type="radio" value="1"/>
+      </td>
+      <td>
+        <p>N.<input class="" format="number" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#impresa_lavautonomo1.checked()" size="2"/> <b>IMPRESA/E</b> esecutrice dei lavori</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="impresa_lavautonomo" id="impresa_lavautonomo2" name="impresa_lavautonomo" type="radio" value="2"/>
+      </td>
+      <td>
+        <p>N.<input class="" format="number" id="numero_lavoratori_autonomi" name="numero_lavoratori_autonomi" label="numero lavoratori autonomi coinvolti" mandatory_enabled="#impresa_lavautonomo2.checked()" size="2"/> <b>LAVORATORE/I AUTONOMO/I</b> esecutore dei lavori</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<!--Parte degli allegati -->
+<h1 class="Modulo">ALLEGA</h1>
+
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+          <br>
+          <span style="font-size:70%">
+            <i>(barrare la documentazione presentata)</i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="Notifica_preliminare" name="Notifica_preliminare" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          Copia della notifica preliminare <span style="font-size:80%">(di cui all'articolo 99 del D. Lgs. 81/2008)</span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="Dich_impresa" name="Dich_impresa" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          Dichiarazione, con firma autografa, dell'impresa esecutrice al fine dell'acquisizione d'ufficio del DURC <span style="font-size:80%">(ai sensi dell'art. 15 della legge 183/2011)</span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="Verifica_doc" name="Verifica_doc" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          Dichiarazione attestante l'avvenuta verifica della documentazione relativa all'articolo 90, comma 9 lettera a) e b) del D. Lgs. n. 81 del 2008
+        </p>
+      </td>
+    </tr>
+    <tr>
+     <td>
+      <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="STU-EDI-INT-TN" name="STU-EDI-INT-TN" type="checkbox" value="OBBLIGATORIO"/>
+      <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="STU-EDI-INT-AU-TN" name="STU-EDI-INT-AU-TN" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+      <p>
+       n° <input class="" format="number" id="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#STU_EDI_INT_TN.checked()" name="NschedeAllegateEl" size="1"/> ulteriori sottoscrittori del procedimento edilizio che firmano con firma elettronica
+      </p>
+	    <p>
+       n° <input class="" format="number" id="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#STU_EDI_INT_AU_TN.checked()" name="NschedeAllegateAu" size="1"/> ulteriori sottoscrittori del procedimento edilizio che firmano con firma autografa con allegata copia del documento di identità
+      </p>
+     </td>
+    </tr>
+    <tr>
+      <td>
+       <input id="Comunicazione_subentro_firma_autografa" name="Comunicazione_subentro_firma_autografa" type="checkbox" checked="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>Modulo compilato e firmato dal titolare e dal direttore dei lavori con firma autografa</p>
+      </td>
+    </tr>
+    <tr>
+     <td style="vertical-align: top; width:3%">
+       <input id="DAE-CDI" name="DAE-CDI" type="checkbox" checked="true" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          Copia del documento d'identità del proprietario dell'immobile/soggetto in possesso di titolo idoneo
+        </p>
+      </td>
+    </tr>
+    <tr>
+     <td style="vertical-align: top; width:3%">
+       <input id="DAE-CDI-DIR-LAV" name="DAE-CDI-DIR-LAV" type="checkbox" checked="true" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          Copia del documento d'identità del direttore dei lavori
+        </p>
+      </td>
+    </tr>
+    <tr>
+     <td>
+      <input dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" id="STU-EDI-IMM-TN" name="STU-EDI-IMM-TN" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+      <p>
+       Ulteriori particelle o subalterni oggetto del procedimento
+      </p>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <input dynamic_check="#impresa_lavautonomo1.checked()" enabled="#impresa_lavautonomo1.checked()" id="Anagrafica_imprese" name="Anagrafica_imprese" type="checkbox" value="OBBLIGATORIO"/>
+      <input dynamic_check="#impresa_lavautonomo2.checked()" enabled="#impresa_lavautonomo2.checked()" id="Anagrafica_lavoratori_autonomi" name="Anagrafica_lavoratori_autonomi" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+      <p>n° <input class="" format="number" id="Nanag_imprese_allegate" label="Numero anagrafiche imprese allegate" mandatory_enabled="#Anagrafica_imprese.checked()" name="Nanag_imprese_allegate" size="1" dynamic_value="#numero_imprese.value()" readonly/> imprese coinvolte, per le quali si richiede la compilazione delle relative anagrafiche</p>
+	    <p>n° <input class="" format="number" id="Nanag_lav_allegate" label="Numero anagrafiche lavoratori autonomi allegate" mandatory_enabled="#Anagrafica_lavoratori_autonomi.checked()" name="Nanag_lav_allegate" size="1" dynamic_value="#numero_lavoratori_autonomi.value()" readonly/> lavoratori autonomi coinvolti, per i quali si richiede la compilazione delle relative anagrafiche</p>
+     </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<br>
+
+ {{ utils.firma_hidden() }}
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_modulofiglio_cIncarico_procura" name="GLOBO_modulofiglio_cIncarico_procura" type="hidden" value="" />
+
+<input id="GLOBO_allegato_cDichiarazione_sicurezza_firma_autografa" name="GLOBO_allegato_cDichiarazione_sicurezza_firma_autografa" obbligatorio="#Dichiarazione_sicurezza.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+{% endblock content %}

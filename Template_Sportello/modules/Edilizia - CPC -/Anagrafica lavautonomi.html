@@ -1,0 +1,276 @@
+{% set CodiceModulo =  "ANAGRAFICA-LAVAUTONOMI" %}
+
+{% extends "base_trento.html" %}
+
+{% block meta %}
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Anagrafica dei lavoratori autonomi coinvolti nella procedura di manutenzione straordinaria"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione="ATTENZIONE: questo modulo deve essere compilato con i dati del lavoratore autonomo."
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/ANAGRAFICA-LAVAUTONOMI"
+verifica_pagamento="NO"
+versione="1.1|14/02/2018"/>
+
+<meta codice_allegato="Anagrafica_lavoratore_autonomo"
+descrizione_estesa="Scansione stampa anagrafica lavoratore"
+filename="Anagrafica_lavoratore_autonomo.pdf"
+firmato="no"
+istruzioni="/modulistica/moduli/Anagrafica_lavoratore_autonomo"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+{% block title %}
+   Anagrafica lavoratore autonomo
+{% endblock title %}
+
+{% block content %}
+ <globo_fondo_pagina areaheight="150" scope="1">
+ {{ utils.firma() }}
+</globo_fondo_pagina>
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - anagrafica lavoratore autonomo'"/>
+
+<h1 class="Modulo">
+ Anagrafica lavoratore autonomo
+</h1>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+   <tbody>
+     <tr class="Rigaintestazione">
+       <td colspan="6">
+         <p><b>Il sottoscritto</b></p>
+       </td>
+     </tr>
+     <tr class="Rigaintestazioneridotta">
+       <td colspan="2" style="width:33%;">
+         <p class="Labelcella">Cognome</p>
+       </td>
+       <td colspan="2" style="width:33%;">
+         <p class="Labelcella">Nome</p>
+       </td>
+       <td colspan="2" style="width:33%;">
+         <p class="Labelcella">Codice Fiscale</p>
+       </td>
+      </tr>
+      <tr>
+       <td colspan="2" style="width:33%;">
+         <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome del firmatario"/>
+       </td>
+       <td colspan="2" style="width:33%;">
+         <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome del firmatario"/>
+       </td>
+       <td colspan="2" style="width:33%;">
+         <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del firmatario"/>
+       </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta" style="border-top:0px">
+       <td style="width:20%;">
+         <p class="Labelcella">Data di nascita</p>
+       </td>
+       <td style="width:10;">
+         <p class="Labelcella">Sesso (M/F)</p>
+       </td>
+       <td colspan="2">
+         <p class="Labelcella">Nazionalità</p>
+       </td>
+       <td colspan="2">
+         <p class="Labelcella">Luogo di nascita</p>
+       </td>
+      </tr>
+      <tr>
+       <td style="width:20%;">
+         <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita del firmatario"/>
+       </td>
+       <td style="width:10%;">
+         <select class="inputNormal" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso del firmatario">
+           <option value=""></option>
+           <option value="M">M</option>
+           <option value="F">F</option>
+         </select>
+       </td>
+       <td colspan="2">
+         {{ utils.nazionalita("AventeTitolo_Nazionalita", "Nazionalità")}}
+       </td>
+       <td colspan="2">
+         <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita del firmatario"/>
+       </td>
+     </tr>
+   </tbody>
+ </table>
+
+ <table class="Modulo" style="border:1px solid grey" mandatory="true">
+   <tbody>
+     <tr class="Rigaintestazioneridotta">
+       <td colspan="5">
+         <p class="Labelcella"><b>Residenza</b></p>
+       </td>
+     </tr>
+     <tr class="Rigaintestazioneridotta">
+       <td style="width:10%;">
+         <p class="Labelcella">Provincia</p>
+       </td>
+       <td style="width:33%;">
+         <p class="Labelcella">Comune</p>
+       </td>
+       <td style="width:33%;">
+         <p class="Labelcella">Indirizzo</p>
+       </td>
+       <td style="width:12%;">
+         <p class="Labelcella">Civico</p>
+       </td>
+       <td style="width:12%;">
+         <p class="Labelcella">CAP</p>
+       </td>
+    </tr>
+    <tr>
+      <td style="width:10%;">
+       {{ utils.provincie("AventeTitolo_ProvinciaResidenza", "Provincia di residenza")}}
+      </td>
+      <td style="width:33%;">
+        <select class="inputNormal" id="AventeTitolo_ComuneResidenza" name="AventeTitolo_ComuneResidenza" style="width:100%" label="Comune di residenza del firmatario"
+        dynamic_value="getComuniFromProvincia( #AventeTitolo_ProvinciaResidenza.value(), 'AventeTitolo_ComuneResidenza')">
+        </select>
+      </td>
+      <td style="width:33%;">
+       <input class="" id="AventeTitolo_ViaResidenza" name="AventeTitolo_ViaResidenza" style="width:100%;" label="Via di residenza del firmatario"/>
+      </td>
+      <td style="width:12%;">
+       <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" style="width:100%;" label="Civico di residenza del firmatario" maxlength="10"/>
+      </td>
+      <td style="width:12%;">
+       <input class="" id="AventeTitolo_CAPResidenza" name="AventeTitolo_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del firmatario" mandatory="#AventeTitolo_ProvinciaResidenza.value() != 'EE'"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Partita IVA </p>
+      </td>
+      <td>
+        <p class="Labelcella">E-mail PEC (domicilio digitale)</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="" id="AventeTitolo_CFPI" name="AventeTitolo_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva"/>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_APEC" name="AventeTitolo_APEC" label="PEC Azienda" style="width:100%;" format="pec" />
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Telefono</p>
+      </td>
+      <td>
+        <p class="Labelcella">Fax</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="" id="AventeTitolo_TelefonoSede" name="AventeTitolo_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_FaxSede" name="AventeTitolo_FaxSede" label="Fax della sede legale" style="width:100%;" mandatory="false"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:50%">
+        <p class="Labelcella">Iscrizione al Registro Imprese della Camera di Commercio</p>
+      </td>
+      <td style="width:9%">
+        <p class="Labelcella">Provincia</p>
+      </td>
+      <td style="width:41%">
+        <p class="Labelcella">Numero iscrizione</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <select class="inputNormal" id="AventeTitolo_Attributi_IscrittoCCIAA" name="AventeTitolo_Attributi_IscrittoCCIAA" label="Iscrizione al Registro Imprese della Camera di Commercio" style="width:100%" mandatory_enabled="#AventeTitolo_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])">
+          <option value=""></option>
+          <option value="iscritto">iscritto</option>
+          <option value="in attesa di iscrizione">in attesa di iscrizione</option>
+          <option value="non tenuto all'iscrizione">non tenuto all'iscrizione</option>
+        </select>
+      </td>
+      <td mandatory_enabled="#AventeTitolo_Attributi_IscrittoCCIAA.check_value([ 'iscritto','in attesa di iscrizione' ])">
+        {{utils.provincie( 'AventeTitolo_Attributi_CCIAAProv', label="Provincia iscrizione al Registro Imprese della Camera di Commercio")}}
+      </td>
+      <td mandatory_enabled="#AventeTitolo_Attributi_IscrittoCCIAA.check_value([ 'iscritto' ])">
+        <input class="" id="AventeTitolo_Attributi_CCIAANumero" name="AventeTitolo_Attributi_CCIAANumero" label="Numero iscrizione al Registro Imprese della Camera di Commercio" style="width:100%"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" name="Allegati" style="border:1px solid grey">
+ <tbody>
+  <tr class="Rigaintestazione">
+   <td colspan="2">
+    <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+   </td>
+  </tr>
+  <tr>
+   <td style="vertical-align: top; width:4%">
+    <input id="Anagrafica_lavoratore_autonomo" name="Anagrafica_lavoratore_autonomo" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
+   </td>
+   <td style="background-color: #eeeeee;">
+    <p>
+     Scansione della stampa di questo modulo firmata
+     <br/>
+   </p>
+   </td>
+  </tr>
+ </tbody>
+</table>
+
+<br/>
+
+ {{ utils.firma_hidden() }}
+
+ <br/>
+
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cAnagrafica_lavoratore_autonomo" name="GLOBO_allegato_cAnagrafica_lavoratore_autonomo" obbligatorio="true" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<!-- passaggio dati tra moduli -->
+{{ utils.passaggio_metadati() }}
+<input id="Metadati_Dom_Digi" name="Metadati_Dom_Digi" type="hidden"/>
+{% endblock content %}
