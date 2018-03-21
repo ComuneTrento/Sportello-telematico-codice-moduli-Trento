@@ -26,6 +26,26 @@ urlhelp="/modulistica/moduli/Marca_Bollo"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
+<meta codice_allegato="Modulo_bollo_compilato_firma_autografa"
+descrizione_estesa="Modulo pagamento imposta di bollo compilato e firmato manualmente"
+filename="Modulo_bollo_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_bollo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Modulo_bollo_compilato_firma_elettronica"
+descrizione_estesa="Modulo pagamento imposta di bollo compilato e firmato elettronicamente"
+filename="Modulo_bollo_compilato_firma_elettronica.pdf"
+firmato="SI"
+istruzioni="/modulistica/moduli/Modulo_bollo_compilato_firma_elettronica"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <script type="text/javascript">
 var simpaticoEservice = "1_1"; //  the id corresponding to the e-service
 var simpaticoForm = "modulo_secondario_pagamento_imposta_bollo";
@@ -154,6 +174,41 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
  </table>
   <!-- simpatico start -->  </div> <!-- simpatico end -->
  <br/>
+
+ <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+   <tbody>
+     <tr class="Rigaintestazione">
+       <td colspan="3">
+         <p style="text-align: center;">
+           <b>Elenco degli allegati richiesti</b>
+         </p>
+       </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_bollo_firma_autografa" name="Modulo_bollo_firma_autografa" dynamic_check="#Metadati_firma_bollo.value() == 'A'" enabled="#Metadati_firma_bollo.value() == 'A'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        Modulo pagamento imposta di bollo firmato dal richiedente con <b>firma autografa</b>
+       </p>
+      </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_bollo_firma_elettronica" name="Modulo_bollo_firma_elettronica" dynamic_check="#Metadati_firma_bollo.value() == 'E'" enabled="#Metadati_firma_bollo.value() == 'E'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        Modulo pagamento imposta di bollo firmato dal richiedente con <b>firma elettronica</b>
+       </p>
+      </td>
+     </tr>
+   </tbody>
+ </table>
+
+ <br>
+
  <!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->
 {{ utils.firma_hidden() }}
 <!-- simpatico start --></div><!-- simpatico end -->
@@ -168,7 +223,13 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
+ <input id="GLOBO_allegato_cModulo_bollo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_bollo_compilato_firma_autografa" obbligatorio="#Modulo_bollo_firma_autografa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ <input id="GLOBO_allegato_cModulo_bollo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_bollo_compilato_firma_elettronica" obbligatorio="#Modulo_bollo_firma_elettronica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+
  <!-- passaggio dati tra moduli -->
  {{ utils.passaggio_metadati() }}
  <input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
+ <input id="Metadati_firma_bollo" name="Metadati_firma_bollo" type="hidden"/>
+
 {% endblock content %}

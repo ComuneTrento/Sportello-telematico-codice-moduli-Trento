@@ -180,7 +180,7 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
         <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
       </td>
       <td>
-        <p>Proprietario dell'immobile o soggetto in possesso di titolo idoneo</p>
+        <p>Proprietario, comproprietario o richiedente in possesso di titolo idoneo</p>
       </td>
     </tr>
     <tr>
@@ -200,7 +200,7 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
   Ai sensi della Legge urbanistica provinciale 04/08/2015, n. 15
 </h2>
 
-{{anagrafica_trento.societa("Titolare","Il proprietario o soggetto in possesso di titolo idoneo",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+{{anagrafica_trento.societa("Titolare","Il sottoscritto (Proprietario, Comproprietario, Richiedente in possesso di titolo idoneo)",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
 
 <!-- simpatico start -->
 <div class="simpatico-block simpatico-query-and-answer">
@@ -643,6 +643,13 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
         <p style="font-size:70%;">
           (da non allegare se l'istanza è presentata da ente pubblico)
         </p>
+        <p>
+          <select class="inputNormal" id="Tipo_Firma_pagamento_bollo" name="Tipo_Firma_pagamento_bollo" style="width:100%" label="Tipo firma bollo" mandatory_enabled="#Tipo_richiedente2.checked()">
+            <option value=""></option>
+            <option value="A">Si allega dichiarazione del pagamento dell'imposta di bollo con firma autografa del richiedente</option>
+            <option value="E">Si allega dichiarazione del pagamento dell'imposta di bollo con firma elettronica del richiedente</option>
+          </select>
+        </p>
       </td>
     </tr>
     <tr>
@@ -653,6 +660,9 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
         <p>
           ricevuta dei diritti di segreteria/istruttoria e marca da bollo
         </p>
+        <p style="font-size:70%;">
+          (da non allegare se l'istanza è presentata da ente pubblico)
+        </p>
       </td>
     </tr>
     <tr>
@@ -662,6 +672,13 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
      <td style="background-color: #eeeeee;" colspan="2">
       <p>
        ulteriori particelle o subalterni oggetto del procedimento
+      </p>
+      <p>
+        <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
+          <option value=""></option>
+          <option value="A">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
+          <option value="E">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
+        </select>
       </p>
      </td>
     </tr>
@@ -685,10 +702,10 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
       </td>
       <td style="background-color: #eeeeee;">
         <p>
-        Modulo compilato e firmato nella seguente modalità:
+        Domanda firmata dal richiedente nella seguente modalità:
         <br/>
         <span style="font-size:70%">
-          (da allegare se la compilazione del modulo è stata eseguita dal professionista incaricato)
+          (da allegare se la compilazione della domanda è stata eseguita dal professionista incaricato)
         </span>
        </p>
       </td>
@@ -727,9 +744,6 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
   </tbody>
 </table>
 
-<input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" dynamic_value="#NschedeAllegateAu.value()" type="hidden"/>
-<input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" dynamic_value="#NschedeAllegateEl.value()" type="hidden"/>
-
 <br>
 
 <!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->
@@ -763,6 +777,11 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'E' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" dynamic_value="#NschedeAllegateAu.value()" type="hidden"/>
+<input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" dynamic_value="#NschedeAllegateEl.value()" type="hidden"/>
+<input id="Metadati_firma_bollo" name="Metadati_firma_bollo" dynamic_value="#Tipo_Firma_pagamento_bollo.value()" type="hidden"/>
+<input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" dynamic_value="#Tipo_Firma_ult_particelle.value()" type="hidden"/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />

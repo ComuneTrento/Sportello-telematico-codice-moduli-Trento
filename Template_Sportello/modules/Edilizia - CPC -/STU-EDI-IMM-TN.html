@@ -25,6 +25,26 @@ urlhelp="/modulistica/moduli/STU-EDI-IMM"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
+<meta codice_allegato="Modulo_ult_part_compilato_firma_autografa"
+descrizione_estesa="Modulo ulteriori particelle compilato e firmato manualmente"
+filename="Modulo_ult_part_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_ult_part_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Modulo_ult_part_compilato_firma_elettronica"
+descrizione_estesa="Modulo ulteriori particelle compilato e firmato elettronicamente"
+filename="Modulo_ult_part_compilato_firma_elettronica.pdf"
+firmato="SI"
+istruzioni="/modulistica/moduli/Modulo_compilato_firma_elettronica"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <script type="text/javascript">
 var simpaticoEservice = "1_3"; //  the id corresponding to the e-service
 var simpaticoForm = "modulo_secondario_ulteriori_particelle_o_subalterni";
@@ -115,10 +135,39 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
 
  <br/>
 
- <div class="simpatico-block simpatico-query-and-answer">
- {{ utils.firma_hidden() }}
- </div>
- <br/>
+ <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+   <tbody>
+     <tr class="Rigaintestazione">
+       <td colspan="3">
+         <p style="text-align: center;">
+           <b>Elenco degli allegati richiesti</b>
+         </p>
+       </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_ult_part_firma_autografa" name="Modulo_ult_part_firma_autografa" dynamic_check="#Metadati_firma_ult_part.value() == 'A'" enabled="#Metadati_firma_ult_part.value() == 'A'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        Modulo per le ulteriori particelle firmato dal richiedente con <b>firma autografa</b>
+       </p>
+      </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_ult_part_firma_elettronica" name="Modulo_ult_part_firma_elettronica" dynamic_check="#Metadati_firma_ult_part.value() == 'E'" enabled="#Metadati_firma_ult_part.value() == 'E'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        Modulo per le ulteriori particelle firmato dal richiedente con <b>firma elettronica</b>
+       </p>
+      </td>
+     </tr>
+   </tbody>
+ </table>
+
+<br>
 
  <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
@@ -128,7 +177,18 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
+ <input id="GLOBO_allegato_cModulo_ult_part_compilato_firma_autografa" name="GLOBO_allegato_cModulo_ult_part_compilato_firma_autografa" obbligatorio="#Modulo_ult_part_firma_autografa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ <input id="GLOBO_allegato_cModulo_ult_part_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_ult_part_compilato_firma_elettronica" obbligatorio="#Modulo_ult_part_firma_elettronica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<br>
+
+ <div class="simpatico-block simpatico-query-and-answer">
+ {{ utils.firma_hidden() }}
+ </div>
+ <br/>
+
  {{ utils.passaggio_metadati() }}
  <input id="Metadati_altre_part" name="Metadati_altre_part" type="hidden"/>
+ <input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" type="hidden"/>
 
 {% endblock content %}
