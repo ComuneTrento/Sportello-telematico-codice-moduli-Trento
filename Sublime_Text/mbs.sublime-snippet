@@ -1,0 +1,74 @@
+<snippet>
+	<content><![CDATA[
+{% set CodiceModulo = "${1:CODICE_MODULO_SECONDARIO}" %}
+{% set Urn = "" %}
+{% extends "base.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo1_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="${3:Generale}"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="${2:Descrizione modulo}"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_ELETTRONICA"
+istruzioni_compilazione="ATTENZIONE: questo modulo deve essere compilato con i dati del sottoscrivente."
+istruzioni_invio=""
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|${4:01/01}/2018"/>
+
+{% endblock meta %}
+
+{% block title %}
+	${2:Descrizione modulo}
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+	{{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="'${2:Descrizione modulo} di ' + #AventeTitolo1_Cognome.value().toUpperCase() + ' ' + #AventeTitolo1_Nome.value().toUpperCase()"/>
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+
+<h1 class="Modulo">
+	${2:Descrizione modulo}
+</h1>
+
+${5:}
+
+
+
+<br/>
+	{{ utils.firma_hidden() }}
+<br/>
+
+<p class="Modulo">
+	<input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+{% endblock content %}
+
+]]></content>
+	<tabTrigger>mbs</tabTrigger>
+</snippet>
