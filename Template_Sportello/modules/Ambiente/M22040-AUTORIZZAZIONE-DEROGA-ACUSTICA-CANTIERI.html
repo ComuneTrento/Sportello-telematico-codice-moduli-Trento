@@ -1,9 +1,15 @@
-{% set CodiceModulo =  "M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" %}{% extends "base_trento.html" %}
+{% set CodiceModulo =  "M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" %}
+{% set Urn =  "" %}
+{% extends "base_trento.html" %}
 {% set modulo_workflow_model =  "http://simpatico.eu/M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI-SIMPATICO_v0.1" %}
 {% block meta %}
 
 <meta campi_firma="Titolare_CodiceFiscale"
 campi_firma_label="il dichiarante"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Richiesta deroga acustica"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
 descrizione="Deroga acustica per attività edilizia temporanea - Cantieri"
@@ -29,12 +35,12 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="Marca_Bollo"
+<meta codice_modulo_figlio="GEN-MARCABOLLO"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="STU-EDI-IMM-TN"
+<meta codice_modulo_figlio="GEN-IMMAGG"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -59,11 +65,11 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="DAE-CDI"
+<meta codice_allegato="GEN-CDI"
 descrizione_estesa="Fotocopia dei documenti d’identità dei comproprietari"
 filename="Documento identita.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/DAE-CDI"
+istruzioni="/modulistica/moduli/GEN-CDI"
 name="GLOBO_allegato"
 numero="0"
 obbligatorio="DINAMICO"
@@ -91,6 +97,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_report="CSP_SESSION_REPORT"
+urn_report=""
 generate_on="sending"
 name="GLOBO_report"
 />
@@ -138,8 +145,11 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
 
 {{anagrafica_trento.societa("Titolare","Il sottoscritto",["Persona fisica","Titolare","Legale rappresentante","Amministratore di condominio", "Direttore lavori", "Responsabile tecnico"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria", "false")}}
 <br>
-<!-- simpatico start -->
-<div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end --><h1 class="Modulo">CHIEDE</h1>
+
+<!-- simpatico start -->
+<div class="simpatico-block simpatico-query-and-answer">
+<!-- simpatico end -->
+<h1 class="Modulo">CHIEDE</h1>
  <table class="Modulo" style="border: 1px solid grey">
   <tbody>
    <tr class="Rigaintestazione" >
@@ -158,7 +168,8 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
 		<!-- <input id="Tassonomia_LuIntr_Rilascio1" name="Tassonomia_LuIntr_Rilascio" type="checkbox" value="1"/>  -->
     <input group="Tassonomia_LuIntr_Rilascio" id="Tassonomia_LuIntr_Rilascio1" name="Tassonomia_LuIntr_Rilascio1" type="checkbox" value="1"/>
 	</td>
-  <br>
+
+  <br>
 	<td colspan="5">
 		<p> per l’esecuzione dei lavori con attrezzature tipicamente rumorose</p>
 		<p style="font-size:70%"><i>(articolo 53 del Regolamento di polizia urbana)</i></p>
@@ -177,7 +188,8 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
   </tr>
     </tbody>
  </table>
- <!-- simpatico start -->  </div> <!-- simpatico end -->
+
+ <!-- simpatico start -->  </div> <!-- simpatico end -->
  <br>
  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">	<tbody>
 	<tr class="Rigaintestazione" >
@@ -207,7 +219,10 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
 <!-- <globo_salto_pagina></globo_salto_pagina> -->
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
 <br>
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">  <tbody>
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
     <tr class="Rigaintestazione" >
       <td colspan="3">
 	      <p>
@@ -242,7 +257,9 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
     {{ immobili_trento.immobile_trento("Immobile", "Particelle", disattivato="#Tassonomia_eseguito2.checked()") }}
 
 <br>
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">  <tbody>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
     <tr class="Rigaintestazione" >
       <td colspan="6">
 	  <p>
@@ -517,7 +534,9 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
    <input id="messaggio_errore7" name="messaggio_errore7" label="Controllo data" dynamic_value="#Controllo_data7.checked() ? 'Errore nelle date' : ''" readonly>
  </td>
    </tr>
-   <br>   <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+
+   <br>
+   <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
 	<tbody>
 	<tr class="Rigaintestazione" >
     <td>
@@ -545,7 +564,8 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
  </table>
   </tbody>
  </table>
-<br>
+
+<br>
 
  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
 	<tbody>
@@ -593,9 +613,19 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
 
 <br>
 <!-- simpatico start -->
-<div class="simpatico-block simpatico-query-and-answer"><!-- simpatico end -->{{anagrafica.domicilio_digitale2(id_pec_personale="Titolare_EMailPEC",id_pec_societa="Titolare_APEC")}}
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+<!-- simpatico end -->
+
+{{anagrafica.domicilio_digitale2(id_pec_personale="Titolare_EMailPEC",id_pec_societa="Titolare_APEC")}}
 <!-- simpatico start -->
-</div><!-- simpatico end --><br>
+
+</div>
+
+<!-- simpatico end -->
+
+<br>
 
 
 <!--Parte degli allegati -->
@@ -717,7 +747,13 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
 <p class="Modulo" style="font-size:70%" type="hidden"><b>5 architetti, pianificatori, paesaggisti e conservatori - ingegneri - geologi -dottori agronomi e forestali - dottori commercialisti e esperti contabili - geometri - periti industriali</b></p>
 -->
 <!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->{{ utils.firma_hidden() }}
-<!-- simpatico start --></div><!-- simpatico end --><br>
+<!-- simpatico start -->
+
+</div>
+
+<!-- simpatico end -->
+
+<br>
 
 <p class="Modulo">
    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
@@ -728,12 +764,12 @@ var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_E
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 <input firmare="'NO'" id="GLOBO_modulofiglio_cIncarico_procura" name="GLOBO_modulofiglio_cIncarico_procura" type="hidden" value=""/>
 
-<input firmare="'NO'" id="GLOBO_modulofiglio_cMarca_Bollo" name="GLOBO_modulofiglio_cMarca_Bollo" obbligatorio="#Marca_Bollo.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input firmare="'NO'" id="GLOBO_modulofiglio_cGEN-MARCABOLLO" name="GLOBO_modulofiglio_cGEN-MARCABOLLO" obbligatorio="#Marca_Bollo.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
-<input id="GLOBO_modulofiglio_cSTU-EDI-IMM-TN" name="GLOBO_modulofiglio_cSTU-EDI-IMM-TN" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#STU_EDI_IMM_TN.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#STU_EDI_IMM_TN.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<input id="GLOBO_allegato_cDAE-CDI" name="GLOBO_allegato_cDAE-CDI" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cModulo_compilato_firmato" name="GLOBO_allegato_cModulo_compilato_firmato" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cRIC-DIR-SEG" name="GLOBO_allegato_cRIC-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 

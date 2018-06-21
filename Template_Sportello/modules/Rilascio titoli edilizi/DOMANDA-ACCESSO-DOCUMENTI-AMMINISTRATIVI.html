@@ -1,0 +1,358 @@
+{% set CodiceModulo = "DOMANDA-DI-ACCESSO-AI-DOCUMENTI-AMMINISTRATIVI-IN-MATERIA-EDILIZIA" %}
+{% extends "base_trento.html" %}
+{% set Urn =  "" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Istanza per il rilascio di titoli edilizi per atti di compravendita"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_allegato="ALTRI-ALLEGATI"
+descrizione_estesa="Altri allegati"
+filename="Altri allegati.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/ALTRI-ALLEGATI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+urn_report=""
+generate_on="sending"
+name="GLOBO_report"/>
+
+
+{% endblock meta %}
+
+{% block title %}RILASCIO-TITOLI-EDILIZI{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Domanda di accesso ai documenti amministrativi in materia edilizia'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+  Domanda di accesso ai documenti amministrativi in materia edilizia
+</h1>
+
+<p align="justify" class="Modulo">
+  Ai sensi dell'art. 47 del D.P.R. 445/2000 e smi, consapevole delle sanzioni penali, consapevole delle sanzioni penali ai sensi dell’art. 76 del D.P.R. 445 del 28.12.2000 e s.m., nel caso di attestazioni non veritiere e falsità negli atti;
+</p>
+
+<br>
+
+{{anagrafica_trento.richiedente( "AventeTitolo", "ll/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility") }}
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p><b>In qualità di:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; width: 4%;" colspan="4">
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />Concessionario / <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" /> Intestatario della: 
+          <select class="inputNormal" id="Tipo_doc_poss" name="Tipo_doc_poss" style="width:64%" label="Tipo documento in possesso" mandatory_enabled="#Tipo_richiedente1.checked() || #Tipo_richiedente2.checked()">
+            <option value=""></option>
+            <option value="dia">dia</option>
+            <option value="scia">s.c.i.a.</option>
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente3" name="Tipo_richiedente" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Attuale proprietario della: </p>
+      </td>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_proprieta" name="Tipo_proprieta" label="Tipo proprietà" mandatory_enabled="#Tipo_richiedente3.checked()"> </div>
+          <input group="Tipo_proprieta" id="Tipo_proprieta1" name="Tipo_proprieta" type="radio" value="1" />
+          <br>
+          <br>
+          <br>
+          <input group="Tipo_proprieta" id="Tipo_proprieta2" name="Tipo_proprieta" type="radio" value="2" />
+      </td>
+      <td>
+        <p>p.ed. <input class="" id="ped" label="specificare p.ed." mandatory_enabled="#Tipo_proprieta1.checked()" name="ped" size="8"/> p.m. <input class="" id="pm" label="specificare p.m." name="pm" size="8" mandatory_enabled="#Tipo_proprieta1.checked()"/></p>
+        <br>
+        <p>p.f. <input class="" id="pf" label="specificare p.f." mandatory_enabled="#Tipo_proprieta2.checked()" name="pf" size="8"/> C.C. <input class="" id="cc" label="specificare C.C." name="pf" size="8" mandatory_enabled="#Tipo_proprieta2.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente4" name="Tipo_richiedente" type="radio" value="4" />
+      </td>
+      <td>
+        <p>Confinante proprietario della: </p>
+      </td>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_proprieta_conf" name="Tipo_proprieta_conf" label="Tipo proprietà confinante" mandatory_enabled="#Tipo_richiedente4.checked()"> </div>
+        <input group="Tipo_proprieta_conf" id="Tipo_proprieta_conf1" name="Tipo_proprieta_conf" type="radio" value="1" />
+        <br>
+        <br>
+        <br>
+        <input group="Tipo_proprieta_conf" id="Tipo_proprieta_conf2" name="Tipo_proprieta_conf" type="radio" value="2" />
+      </td>
+      <td>
+        <p>p.ed. <input class="" id="ped_conf" label="specificare p.ed. confinante" mandatory_enabled="#Tipo_proprieta_conf1.checked()" name="ped_conf" size="8"/> p.m. <input class="" id="pm_conf" label="specificare p.m. confinante" name="pm_conf" size="8" mandatory_enabled="#Tipo_proprieta_conf1.checked()"/></p>
+        <br>
+        <p>p.f. <input class="" id="pf_conf" label="specificare p.f. confinante" mandatory_enabled="#Tipo_proprieta_conf2.checked()" name="pf_conf" size="8"/> C.C. <input class="" id="cc_conf" label="specificare C.C. confinante" name="pf_conf" size="8" mandatory_enabled="#Tipo_proprieta_conf2.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente5" name="Tipo_richiedente" type="radio" value="5" />
+      </td>
+      <td colspan="3">
+        <p>Consulente tecnico incaricato dal Tribunale</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; width: 4%;" rowspan="3">
+        <input group="Tipo_richiedente" id="Tipo_richiedente6" name="Tipo_richiedente" type="radio" value="6" /><br><br>
+        <input group="Tipo_richiedente" id="Tipo_richiedente7" name="Tipo_richiedente" type="radio" value="7" />
+      </td>
+      <td style="vertical-align: center;" rowspan="3">
+        <p>Tecnico</p>
+        <br>
+        <p>Legale</p>
+      </td>
+      <td style="vertical-align: top; width: 4%;">
+          <div id="Tipo_incarico" name="Tipo_incarico" label="Tipo incarico" mandatory_enabled="#Tipo_richiedente6.checked() || #Tipo_richiedente7.checked()"> </div>
+          <input group="Tipo_incarico" id="Tipo_incarico1" name="Tipo_incarico" type="radio" value="1"/>
+      </td>
+      <td>
+        <p>
+          incaricato dal <b>concessionario / titolare</b> permesso di costruire / <b>intestatario</b> segnalazione certificata di inizio attività: 
+          <br><br>
+          Nome e cognome: <input class="" id="nominativo_incaricante1" label="nominativo della persona incaricante" mandatory_enabled="#Tipo_incarico1.checked()" name="nominativo_incaricante1" size="20"/>
+          <br><br>
+          Residente a: <input class="" id="residenza_incaricante1" label="residenza della persona incaricante" mandatory_enabled="#Tipo_incarico1.checked()" name="residenza_incaricante1" size="20"/>
+          in <input class="" id="via_incaricante1" label="via di residenza della persona incaricante" mandatory_enabled="#Tipo_incarico1.checked()" name="via_incaricante1" size="20"/>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+          <input group="Tipo_incarico" id="Tipo_incarico2" name="Tipo_incarico" type="radio" value="2"/>
+      </td>
+      <td>
+        <p>
+          incaricato dal <b>confinante</b>: 
+          <br><br>
+          Nome e cognome: <input class="" id="nominativo_incaricante2" label="nominativo della persona incaricante" mandatory_enabled="#Tipo_incarico2.checked()" name="nominativo_incaricante2" size="20"/>
+          <br><br>
+          Residente a: <input class="" id="residenza_incaricante2" label="residenza della persona incaricante" mandatory_enabled="#Tipo_incarico2.checked()" name="residenza_incaricante2" size="20"/>
+          in <input class="" id="via_incaricante2" label="via di residenza della persona incaricante"mandatory_enabled="#Tipo_incarico2.checked()" name="via_incaricante2" size="20"/>
+          <br><br>
+          in quanto proprietario della p.ed. <input class="" id="ped_incaricante" label="p.ed della persona incaricante" mandatory_enabled="#Tipo_incarico2.checked()" name="ped_incaricante" size="12"/> C.C. <input class="" id="cc_incaricante" label="c.c. della persona incaricante" mandatory_enabled="#Tipo_incarico2.checked()" name="cc_incaricante" size="12"/>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+          <input group="Tipo_incarico" id="Tipo_incarico3" name="Tipo_incarico" type="radio" value="3"/>
+      </td>
+      <td>
+        <p>
+          incaricato dall'<b>attuale proprietario</b>: 
+          <br><br>
+          Nome e cognome: <input class="" id="nominativo_incaricante3" label="nominativo della persona incaricante" mandatory_enabled="#Tipo_incarico3.checked()" name="nominativo_incaricante3" size="20"/>
+          <br><br>
+          Residente a: <input class="" id="residenza_incaricante3" label="residenza della persona incaricante" mandatory_enabled="#Tipo_incarico3.checked()" name="residenza_incaricante3" size="20"/>
+          in <input class="" id="via_incaricante3" label="via di residenza della persona incaricante" mandatory_enabled="#Tipo_incarico3.checked()" name="via_incaricante3" size="20"/>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input group="Tipo_richiedente" id="Tipo_richiedente8" name="Tipo_richiedente" type="radio" value="8" />
+      </td>
+      <td colspan="3">
+        <p>Titolare di un interesse diretto, concreto ed attuale alla pratica sopracitata in quanto <input class="" id="motivazione_interesse" label="motivazione interesse" mandatory_enabled="#Tipo_richiedente8.checked()" name="motivazione_interesse" size="20"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>Per la seguente motivazione:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <textarea class="inputNormal" id="motivazione_richiesta" name="motivazione_richiesta" label="Motivazione della richiesta" style="width:100%;height:2cm" mandatory_enabled="true" ></textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+<h1 class="Modulo">CHIEDE</h1>
+
+
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Servizio_richiesto" name="Servizio_richiesto" label="Servizio richiesto" mandatory_enabled="true"> </div>
+          <input group="Servizio_richiesto" id="Servizio_richiesto1" name="Servizio_richiesto" type="radio" value="1" /> 
+        </td>
+        <td colspan="3">
+          <p>La visione</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <input group="Servizio_richiesto" id="Servizio_richiesto2" name="Servizio_richiesto" type="radio" value="2" />
+        </td>
+        <td style="width: 34%;">
+          <p>il rilascio di:</p>
+        </td>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Tipo_rilascio" name="Tipo_rilascio" label="Tipo rilascio" mandatory_enabled="#Servizio_richiesto2.checked()"> </div>
+            <input group="Tipo_rilascio" id="Tipo_rilascio1" name="Tipo_rilascio" type="radio" value="1" />
+            <br>
+            <br>
+            <br>
+            <input group="Tipo_rilascio" id="Tipo_rilascio2" name="Tipo_rilascio" type="radio" value="2" />
+        </td>
+        <td>
+          <p>copia 
+          <br><br><br>
+          <p>copia conforme all’originale (in tal caso anche la domanda va presentata con marca da bollo ai sensi del D.P.R. 642/1972)</p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p>della seguente documentazione:</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="documento_richiesto" name="documento_richiesto" label="documento_richiesto" mandatory_enabled="#Servizio_richiesto1.checked() || #Servizio_richiesto2.checked()"> </div>
+          <input group="documento_richiesto" id="documento_richiesto1" name="documento_richiesto" type="radio" value="1" /> 
+        </td>
+        <td colspan="3">
+          <p>concessione/permesso di costruire / autorizzazione / licenza edilizia/ d.i.a /s.c.i.a</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="documento_richiesto" id="documento_richiesto2" name="documento_richiesto" type="radio" value="2" /> 
+        </td>
+        <td colspan="3">
+          <p>degli elaborati progettuali allegati al provvedimento</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="documento_richiesto" id="documento_richiesto3" name="documento_richiesto" type="radio" value="3" /> 
+        </td>
+        <td colspan="3">
+          <p>della relazione tecnica</p>
+        </td>
+      </tr>  
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="documento_richiesto" id="documento_richiesto4" name="documento_richiesto" type="radio" value="4" /> 
+        </td>
+        <td colspan="3">
+          <p>altro <input class="" id="specifica_documento" label="specificare tipo di documento richiesto" mandatory_enabled="#documento_richiesto4.checked()" name="specifica_documento" size="20"/></p>
+        </td>
+      </tr>        
+    </tbody>
+  </table>
+
+<br>
+<br>
+
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+          <br>
+          <span style="font-size:70%">
+            <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+			<td>
+			 <input id="ALTRI-ALLEGATI" name="ALTRI-ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+			  <p>
+			  altri allegati
+			  <span style="font-size:70%">
+			   (specificare)
+			  </span>
+			  <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:81%;"/>
+			 </p>
+			</td>
+	  </tr>
+  </tbody>
+</table>
+
+<br>
+
+ {{ utils.firma_hidden() }}
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+{% endblock content %}
