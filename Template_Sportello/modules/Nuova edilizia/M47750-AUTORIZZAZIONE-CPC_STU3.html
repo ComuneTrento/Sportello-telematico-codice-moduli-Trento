@@ -1,6 +1,7 @@
 {% set CodiceModulo = "M47750-AUTORIZZAZIONE-CPC-STU3" %}
 {% set Urn =  "document:c_l378:autorizzazione.paesaggistica.pareri.obbligatori;istanza.rilascio" %}
-{% extends "base_trento.html" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC_v1.0" %}
+{% extends "base_trento_new.html" %}
 
 {% block meta %}
 
@@ -420,6 +421,31 @@ name="GLOBO_report"
 urn_report="report:CSP_SESSION_REPORT"/>
 
 
+<script type="text/javascript">
+var simpaticoEservice = "1"; //  the id corresponding to the e-service
+var simpaticoEserviceName = "M47750 AUTORIZZAZIIONE CPC";
+var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC" ; //  the url corresponding to the e-service
+var simpaticoForm = "main";
+var simpaticoCategory = "Edilizia"; // the general category of the e-service
+var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
+      var ERROR_LABELS = {
+          'block1' : 'Selezionare una delle opzioni',
+          'block2' : 'Inserire il codice fiscale',
+          'block3' : 'Selezionare il ruolo',
+          'block5' : 'Selezionare la tipologia di autorizzazione/parere richiesta',
+          'block6' : 'Selezionare intervento per cui è richiesto parere obbligatorio',
+          'block8' : 'Particella edilizia non valida',
+          'block9' : 'Indirizzo non inserito',
+          'block10' : 'Indirizzo non verificato',
+          'block12' : 'Selezionare una delle opzioni',
+          'block13' : 'Definire il ruolo',
+          'block14' : 'Selezionare una delle opzioni',
+          'block15' : 'Inserire il codice fiscale',
+          'block16' : 'Selezionare una delle opzioni'
+            }
+</script>
+
+
 {% endblock meta %}
 
 {% block title %}DOMANDA ALLA COMMISSIONE EDILIZIA COMUNALE CON FUNZIONE DI COMMISSIONE PER LA PIANIFICAZIONE TERRITORIALE E IL PAESAGGIO DELLA COMUNITÀ (CPC){% endblock title %}
@@ -435,7 +461,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 {{ intestazioni.intestazione_moduloprincipale_conbollo() }}
 
-
+<div class="simpatico-block simpatico-query-and-answer">
 <h1 class="Modulo">
     DOMANDA ALLA COMMISSIONE EDILIZIA COMUNALE CON FUNZIONE DI COMMISSIONE PER LA PIANIFICAZIONE TERRITORIALE E IL PAESAGGIO DELLA COMUNITÀ (CPC)
 </h1>
@@ -466,13 +492,14 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
     </tbody>
   </table>
-
+</div>
   <br>
 
   {{anagrafica_trento.societa("Titolare","Il sottoscritto (Proprietario, Comproprietario, Richiedente in possesso di titolo idoneo)",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
 
   
   <br>
+  <div class="simpatico-block simpatico-query-and-answer">
   <h1 class="Modulo">CHIEDE</h1>
 
   <table class="Modulo" style="border: 1px solid grey">
@@ -705,13 +732,12 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
     </tbody>
   </table>
+</div>
 
   <br>
   <br>
 
-
-
-  <table class="Modulo" style="border: 1px solid grey">
+  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td>
@@ -827,7 +853,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
   
   <br>
 
-
+  <div class="simpatico-block simpatico-query-and-answer">
     <p align="justify">
         Valendosi della facolta' prevista dagli articoli 46 e 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445,
         <br> consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445
@@ -872,8 +898,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
           </tr>
         </tbody>
       </table>
+      </div>
 
-       <table class="Modulo" style="border:1px solid grey;">
+       <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
         <tbody>
           <tr class="Rigaintestazione">
             <td colspan="2">
@@ -908,8 +935,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="Titolare1_DatiProfessionistaObbligatori" name="Titolare1_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
 <input id="Titolare1_DatiAlboProfessionistaObbligatori" name="Titolare1_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
 
-
+<div class="simpatico-block simpatico-query-and-answer">
 {{anagrafica.professionista("Titolare1","progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
   <tbody>
@@ -922,22 +950,22 @@ urn_report="report:CSP_SESSION_REPORT"/>
 </table>
 
 <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
-
+</div>
 
 
 <br>
 
-
+<div class="simpatico-block simpatico-query-and-answer">
 {{anagrafica.domicilio_digitale(id_pec_personale="Titolare_EMailPEC",id_cognome_professionista="Titolare1_Cognome",id_nome_professionista="Titolare1_Nome",id_pec_professionista="Titolare1_EMailPEC",id_pec_societa="Titolare_APEC")}}
 <input id="Metadati_Dom_Digi" name="Metadati_Dom_Digi" dynamic_value="(#Tassonomia_DomDigi1.checked() ? #Titolare_EMailPEC.value() : 0 || #Tassonomia_DomDigi2.checked() ? #Titolare1_EMailPEC.value() : 0 || #Tassonomia_DomDigi3.checked() ? #Titolare_APEC.value() : 0)" type="hidden"/>
-
+</div>
 
 <br>
 <br>
 <br>
 
 
-    <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="3">
@@ -1318,9 +1346,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
   <br>
   <br>
 
-
+  <div class="simpatico-block">
     {{ utils.firma_hidden() }}
-
+</div>
 <br>
 <p class="Modulo">
  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
