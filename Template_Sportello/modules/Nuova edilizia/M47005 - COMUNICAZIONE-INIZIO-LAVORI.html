@@ -1,4 +1,5 @@
 {% set CodiceModulo = "M47005-COMUNICAZIONE-INIZIO-LAVORI" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/"M47005-COMUNICAZIONE-INIZIO-LAVORI_v1.0" %}
 {% extends "base_trento.html" %}
 
 {% block meta %}
@@ -301,6 +302,23 @@ tipo_mime="application/pdf"/>
 generate_on="sending"
 name="GLOBO_report"/>
 
+<script type="text/javascript">
+  var simpaticoEservice = "1"; //  the id corresponding to the e-service
+  var simpaticoForm = "main";
+  var simpaticoCategory = "Edilizia"; // the general category of the e-service
+  var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
+        var ERROR_LABELS = {
+            'block1' : 'Selezionare una delle opzioni',
+            'block2' : 'Inserire il codice fiscale',
+            'block3' : 'Selezionare il ruolo',
+            'block6' : 'Particella edilizia non valida',
+            'block7' : 'Indirizzo non inserito',
+            'block8' : 'Indirizzo non verificato',
+            'block11' : 'Inserire il codice fiscale',
+            'block13' : 'Confermare presa visione informativa sulla privacy'
+              }
+  </script>
+
 {% endblock meta %}
 
 {% block title %}M47005-COMUNICAZIONE-INIZIO-LAVORI{% endblock title %}
@@ -317,6 +335,7 @@ name="GLOBO_report"/>
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
+<div class="simpatico-block simpatico-query-and-answer">
 <h1 class="Modulo" style="text-align: center;">
   COMUNICAZIONE INIZIO LAVORI
 </h1>
@@ -357,6 +376,7 @@ name="GLOBO_report"/>
     </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 
@@ -365,8 +385,10 @@ name="GLOBO_report"/>
 </h2>
 
 {{anagrafica_trento.societa("Titolare","Il titolare o soggetto in possesso di titolo idoneo",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+
 <br>
-<table class="Modulo" style="border: 1px solid grey">
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td>
@@ -377,14 +399,13 @@ name="GLOBO_report"/>
 </table>
 <br>
 
-<h1 class="Modulo">COMUNICA</h1>
-
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
 
     {{ immobili_trento.immobile_trento_inizio_lavori("Immobile", "avranno inizio i lavori previsti dal permesso di costruire sopra citato, <b>da eseguire presso la realtà immobiliare</b> seguente:", disattivato="true") }}
 
 <br>
 
+<div class="simpatico-block simpatico-query-and-answer">
 {{anagrafica_trento.professionista_direttore_lavori("Titolare2","che incarica quale <b>DIRETTORE DEI LAVORI</b>:","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale") }}
 
 <table class="Modulo" style="border: 1px solid grey">
@@ -399,11 +420,12 @@ name="GLOBO_report"/>
     </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 <br>
 
-<table class="Modulo" style="border: 1px solid grey">
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
@@ -434,7 +456,7 @@ name="GLOBO_report"/>
 
 <br>
 
-<table class="Modulo" style="border: 1px solid grey">
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="3">
@@ -481,7 +503,7 @@ name="GLOBO_report"/>
 <br>
 <br>
 
-
+<div class="simpatico-block simpatico-query-and-answer">
 <h1 class="Modulo">DICHIARA</h1>
 
 <table class="Modulo" style="border:1px solid grey;">
@@ -557,10 +579,12 @@ name="GLOBO_report"/>
     </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 <br>
 
+<div class="simpatico-block simpatico-query-and-answer">
 <table class="Modulo" name="Dichiarazioni_ulteriori" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
@@ -648,10 +672,12 @@ name="GLOBO_report"/>
       </tr>
     </tbody>
   </table>
+</div>
 
   <br>
   <br>
 
+  <div class="simpatico-block simpatico-query-and-answer">
 <h1 class="Modulo">ALLEGA</h1>
 
 <table class="Modulo" name="Allegati" style="border: 1px solid grey">
@@ -880,6 +906,7 @@ name="GLOBO_report"/>
     </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 <br>
@@ -922,9 +949,10 @@ name="GLOBO_report"/>
 <br>
 <br>
 
+<div class="simpatico-block simpatico-query-and-answer">
 <h1 class="Modulo">NOTE</h1>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Note_finali" style="border: 1px solid grey">
+<table class="Modulo" name="Note_finali" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td>
@@ -957,7 +985,7 @@ name="GLOBO_report"/>
       </tr>
     </tbody>
   </table>
-
+</div>
   <br>
 
  {{ utils.firma_hidden() }}
