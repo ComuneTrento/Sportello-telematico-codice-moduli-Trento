@@ -1,11 +1,13 @@
-{% set CodiceModulo =  "ANAGRAFICA-IMPRESE" %}
-
-{% extends "base_trento.html" %}
+{% set CodiceModulo =  "GEN-IMPRESE" %}
+{% set Urn =  "document:c_l378:imprese" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMPRESE_v1.0" %}
+{% extends "base_trento_new.html" %}
 
 {% block meta %}
 <meta campi_firma="AventeTitolo_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
 descrizione="Anagrafica delle imprese coinvolte nella procedura di manutenzione straordinaria"
 destinatario_amministrazione=""
 destinatario_ufficio=""
@@ -26,6 +28,7 @@ verifica_pagamento="NO"
 versione="1.1|14/02/2018"/>
 
 <meta codice_allegato="Anagrafica_impresa"
+urn="document:c_l378:copia.anagrafica.impresa"
 descrizione_estesa="Scansione stampa anagrafica impresa"
 filename="Anagrafica_impresa.pdf"
 firmato="no"
@@ -34,6 +37,18 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
+
+<script type="text/javascript">
+  var simpaticoEservice = "5_2"; //  the id corresponding to the e-service
+  var simpaticoEserviceName = "GEN IMPRESE";
+  var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMPRESE" ; //  the url corresponding to the e-service
+  var simpaticoForm = "main";
+  var simpaticoCategory = "Edilizia"; // the general category of the e-service
+  var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
+        var ERROR_LABELS = {
+            'block1' : 'Inserire il codice fiscale'
+              }
+  </script>
 
 {% endblock meta %}
 
@@ -49,6 +64,7 @@ tipo_mime="application/pdf"/>
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
  <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Denominazione.value().toUpperCase() + ' - anagrafica imprese'"/>
 
+ <div class="simpatico-block simpatico-query-and-answer">
 <h1 class="Modulo">
  Anagrafica impresa
 </h1>
@@ -155,10 +171,10 @@ tipo_mime="application/pdf"/>
     </tr>
   </tbody>
 </table>
-
+</div>
 <br>
 
-<table class="Modulo" name="Allegati" style="border:1px solid grey">
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
  <tbody>
   <tr class="Rigaintestazione">
    <td colspan="2">
@@ -180,9 +196,9 @@ tipo_mime="application/pdf"/>
 </table>
 
 <br/>
-
+<div class="simpatico-block">
  {{ utils.firma_hidden() }}
-
+</div>
  <br/>
 
 <p class="Modulo">
