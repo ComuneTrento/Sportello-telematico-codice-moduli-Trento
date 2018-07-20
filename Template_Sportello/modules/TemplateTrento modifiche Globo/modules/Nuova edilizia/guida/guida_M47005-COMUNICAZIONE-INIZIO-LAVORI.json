@@ -1,0 +1,647 @@
+{
+    "objectId": "38beaef4-a652-4ca3-866a-4386d9e1b597",
+    "creationDate": 1531230375464,
+    "lastUpdate": 1531230375464,
+    "uri": "https://sportello.comune.trento.it/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI_v1.0",
+    "eserviceId": null,
+    "profileTypes": [],
+    "model": {
+        "context": {},
+        "blocks": [
+            {
+                "id": "block1",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[1]",
+                "tags": [],
+                "fields": [
+                    "Tipo_richiedente1",
+                    "Tipo_richiedente3",
+                    "Tipo_richiedente4"
+                ],
+                "blocks": [],
+                "dependencies": [],
+                "condition": null,
+                "completed": "(context['Tipo_richiedente1'] == '1') || (context['Tipo_richiedente3'] == '3') || (context['Tipo_richiedente4'] == '4')",
+                "description": {
+                    "it": "Selezionare il titolo a nome del quale verrà compilato il modulo."
+                }
+            },
+            {
+                "id": "block2",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
+                "tags": [],
+                "fields": [
+                    "Tipo_richiedente1",
+                    "Tipo_richiedente3",
+                    "Tipo_richiedente4",
+                    "Titolare_CodiceFiscale"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block1"
+                ],
+                "condition": "(context['Tipo_richiedente1'] == '1') || (context['Tipo_richiedente3'] == '3') || (context['Tipo_richiedente4'] == '4')",
+                "completed": "(context['Titolare_CodiceFiscale'] != null) && (context['Titolare_CodiceFiscale'] != '')",
+                "description": {
+                    "it": "Una volta effettuato l’accesso con la carta dei servizi, premendo il pulsante <i>“Carica dati personali”</i> le informazioni anagrafiche verranno caricate automaticamente. Verificare i dati e compilare eventuali voci mancanti.<br><br><b>ATTENZIONE:</b> qualora la domanda venga compilata dal professionista, in questa tabella dovranno essere riportati i dati anagrafici del proprietario/comproprietario e non del professionista"
+                }
+            },
+            {
+                "id": "block3",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[3]",
+                "tags": [],
+                "fields": [
+                    "Titolare_CodiceFiscale",
+                    "Titolare_Ruolo"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block2"
+                ],
+                "condition": "(context['Titolare_CodiceFiscale'] != null) && (context['Titolare_CodiceFiscale'] != '')",
+                "completed": "context['Titolare_Ruolo'] != null",
+                "description": {
+                    "it": "Indicare il ruolo ricoperto dal richiedente nel contesto dei lavori da svolgere."
+                }
+            },
+            {
+                "id": "block4",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[4]",
+                "tags": [],
+                "fields": [
+                    "Titolare_Ruolo"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block3"
+                ],
+                "condition": "context['Titolare_Ruolo']=='Legale rappresentante'|| context['Titolare_Ruolo']=='Amministratore di condominio'",
+                "completed": null,
+                "description": {
+                    "it": "Inserire i dati neccessari al fine di definire la ragione sociale/denominazione per conto della quale si sta eseguendo la richiesta."
+                }
+            },
+            {
+                "id": "block5",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[5]",
+                "tags": [],
+                "fields": [
+                    "Prot_concessione",
+                    "Data_concessione"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block3"
+                ],
+                "condition": null,
+                "completed": "(((context['Prot_concessione'] != null) && (context['Prot_concessione'] != '')) && ((context['Data_concessione'] != null) && (context['Data_concessione'] != '')))",
+                "description": {
+                    "it": "Indicare numero di protocollo e data della concessione in possesso."
+                }
+            },
+            {
+                "id": "block6",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[6]",
+                "tags": [],
+                "fields": [
+                    "Prot_concessione",
+                    "Data_concessione",
+                    "Immobile_CheckVerificaCatastale",
+                    "Immobile_TipoImmobile",
+                    "Data_inizio_lavori"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block5"
+                ],
+                "condition": "(((context['Prot_concessione'] != null) && (context['Prot_concessione'] != '')) && ((context['Data_concessione'] != null) && (context['Data_concessione'] != '')))",
+                "completed": "(context['Immobile_CheckVerificaCatastale'] !=null) && (context['Data_inizio_lavori'] != null) && (context['Data_inizio_lavori'] != '')",
+                "description": {
+                    "it": "Indicare la data di inizio dei lavori, quindi definire la particella catastale oggetto di intervento e verificarne l'esistenza premendo il pulsante <i>“Controllo particella”</i>.<br>Premere il pulsante <i>“Mappa”</i> per un controllo cartografico dei dati catastali immessi.<br><br>Le diciture <b>intero edificio</b> e <b>porzione di edificio</b> identificano la particella edificiale."
+                }
+            },
+            {
+                "id": "block7",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[7]",
+                "tags": [],
+                "fields": [
+                    "Immobile_TipoImmobile",
+                    "Localita_part_fondiaria",
+                    "Immobile_CheckVerificaCatastale",
+                    "Data_inizio_lavori"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block6"
+                ],
+                "condition": "context['Immobile_CheckVerificaCatastale'] !=null && context['Immobile_TipoImmobile'] == 'F' && (context['Data_inizio_lavori'] != null) && (context['Data_inizio_lavori'] != '')",
+                "completed": "context['Localita_part_fondiaria'] !=null && context['Localita_part_fondiaria'] != ''",
+                "description": {
+                    "it": "Inserirne un indirizzo o la località di riferimento della particella fondiaria."
+                }
+            },
+            {
+                "id": "block8",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[8]",
+                "tags": [],
+                "fields": [
+                    "Immobile_TipoImmobile",
+                    "Immobile_CheckVerificaCatastale",
+                    "Immobile_CheckVerificaCivico",
+                    "Data_inizio_lavori"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block6"
+                ],
+                "condition": "context['Immobile_CheckVerificaCatastale'] !=null && (context['Data_inizio_lavori'] != null) && (context['Data_inizio_lavori'] != '') && (context['Immobile_TipoImmobile'] == 'S' || context['Immobile_TipoImmobile'] == 'E')",
+                "completed": "context['Immobile_CheckVerificaCivico'] !=null",
+                "description": {
+                    "it": "Specificare l'indirizzo dell’<b>intero edificio</b> oppure della <b>porzione di edificio</b> coinvolta nell’intervento e verificarne l'esistenza mediante il pulsante <i>“Controllo indirizzo”</i>.<br>E' possibile esplorare la mappa cartografica premendo il pulsante <i>“Mappa”</i> per il controllo dell'indirizzo immesso."
+                }
+            },
+            {
+                "id": "block9",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[9]",
+                "tags": [],
+                "fields": [
+                    "Immobile_CheckVerificaCivico",
+                    "Localita_part_fondiaria"
+                ],
+                "blocks": [],
+                "dependencies": [],
+                "condition": "context['Immobile_CheckVerificaCivico'] !=null || (context['Localita_part_fondiaria'] !=null && context['Localita_part_fondiaria'] != '')",
+                "completed": null,
+                "description": {
+                    "it": "Specificare il numero di eventuali ulteriori particelle coinvolte nel procedimento."
+                }
+            },
+            {
+                "id": "block10",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[10]",
+                "tags": [],
+                "fields": [
+                    "Titolare2_CodiceFiscale",
+                    "Dichiarazione_direttore_lavori"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block9"
+                ],
+                "condition": null,
+                "completed": "(context['Titolare2_CodiceFiscale'] != null) && (context['Titolare2_CodiceFiscale'] != '') && (context['Dichiarazione_direttore_lavori']=='1')",
+                "description": {
+                    "it": "Inserire i dati del direttore dei lavori."
+                }
+            },
+            {
+                "id": "block11",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[11]",
+                "tags": [],
+                "fields": [
+                    "Titolare2_CodiceFiscale",
+                    "Dichiarazione_direttore_lavori",
+                    "Incarico_soggetto_certificatore1",
+                    "Incarico_soggetto_certificatore2"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block10"
+                ],
+                "condition": "(context['Titolare2_CodiceFiscale'] != null) && (context['Titolare2_CodiceFiscale'] != '') && (context['Dichiarazione_direttore_lavori']=='1')",
+                "completed": "(context['Incarico_soggetto_certificatore1']=='1') || (context['Incarico_soggetto_certificatore2']=='2')",
+                "description": {
+                    "it": "Indicare la fattispecie di titolo idoneo alla presentazione dell'istanza."
+                }
+            },
+            {
+                "id": "block12",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[12]",
+                "tags": [],
+                "fields": [
+                    "Titolare3_CodiceFiscale",
+                    "Incarico_soggetto_certificatore2"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block11"
+                ],
+                "condition": "context['Incarico_soggetto_certificatore2']=='2'",
+                "completed": "(context['Titolare3_CodiceFiscale'] != null) && (context['Titolare3_CodiceFiscale'] != '')",
+                "description": {
+                    "it": "Inserire i dati del soggetto abilitato alla certificazione energetica."
+                }
+            },
+            {
+                "id": "block13",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[13]",
+                "tags": [],
+                "fields": [
+                    "Titolare3_CodiceFiscale",
+                    "Incarico_soggetto_certificatore1",
+                    "Incarico_soggetto_certificatore2",
+                    "Modalita_lavori1",
+                    "Modalita_lavori2"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block11"
+                ],
+                "condition": "(context['Incarico_soggetto_certificatore1']=='1') || ((context['Incarico_soggetto_certificatore2']=='2') && ((context['Titolare3_CodiceFiscale'] != null) && (context['Titolare3_CodiceFiscale'] != '')))",
+                "completed": "(context['Modalita_lavori1'] == '1') || (context['Modalita_lavori2'] == '2')",
+                "description": {
+                    "it": "Indicare la modalità con cui verranno eseguiti i lavori."
+                }
+            },
+            {
+                "id": "block14",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[14]",
+                "tags": [],
+                "fields": [
+                    "Parametri_Titolo1",
+                    "Parametri_Titolo2",
+                    "Parametri_Titolo3",
+                    "Parametri_Titolo4",
+                    "Tipo_Parametri_Titolo3",
+                    "Modalita_lavori1",
+                    "Modalita_lavori2"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block13"
+                ],
+                "condition": "(context['Modalita_lavori1'] == '1') || (context['Modalita_lavori2'] == '2')",
+                "completed": "context['Parametri_Titolo1'] == '1' || context['Parametri_Titolo2'] == '2' || context['Parametri_Titolo4'] == '4' ||(context['Parametri_Titolo3'] == '3' && ((context['Tipo_Parametri_Titolo3'] != null) && (context['Tipo_Parametri_Titolo3'] != '')))",
+                "description": {
+                    "it": "Indicare la fattispecie di titolo idoneo alla presentazione dell'istanza."
+                }
+            },
+            {
+                "id": "block15",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[15]",
+                "tags": [],
+                "fields": [
+                    "Tassonomia_Titolo1",
+                    "Tassonomia_Titolo2",
+                    "Parametri_Titolo1",
+                    "Parametri_Titolo2",
+                    "Parametri_Titolo3",
+                    "Parametri_Titolo4",
+                    "Tipo_Parametri_Titolo3"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block14"
+                ],
+                "condition": "context['Parametri_Titolo1'] == '1' || context['Parametri_Titolo2'] == '2' || context['Parametri_Titolo4'] == '4' ||(context['Parametri_Titolo3'] == '3' && ((context['Tipo_Parametri_Titolo3'] != null) && (context['Tipo_Parametri_Titolo3'] != '')))",
+                "completed": "context['Tassonomia_Titolo1'] == '1' || context['Tassonomia_Titolo2'] == '2'",
+                "description": {
+                    "it": "Indicare l'esclusività o meno del titolo idoneo alla presentazione dell'istanza."
+                }
+            },
+            {
+                "id": "block16",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[16]",
+                "tags": [],
+                "fields": [
+                    "Tassonomia_Titolo1",
+                    "Tassonomia_Titolo2",
+                    "Dich_notifica_si",
+                    "Dich_notifica_no"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block15"
+                ],
+                "condition": "context['Tassonomia_Titolo1'] == '1' || context['Tassonomia_Titolo2'] == '2'",
+                "completed": "context['Dich_notifica_si'] == '2' || context['Dich_notifica_no'] == '1'",
+                "description": {
+                    "it": "Barrare le dichiarazioni opportune e indicare se per l'intervento è richiesto o meno l'invio della notifica.<br>Leggere attentamente le note riportate."
+                }
+            },
+            {
+                "id": "block17",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[17]",
+                "tags": [],
+                "fields": [
+                    "Dich_notifica_si",
+                    "Dich_notifica_no"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block16"
+                ],
+                "condition": "context['Dich_notifica_si'] == '2' || context['Dich_notifica_no'] == '1'",
+                "completed": null,
+                "description": {
+                    "it": "Selezionare gli allegati all'istanza."
+                }
+            },
+            {
+                "id": "block18",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[18]",
+                "tags": [],
+                "fields": [
+                    "Presa_visione_check"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block17"
+                ],
+                "condition": null,
+                "completed": "context['Presa_visione_check']=='1'",
+                "description": {
+                    "it": "Dichiarare di aver preso visione dell'informativa sulla privacy e il trattamento dei dati."
+                }
+            },
+            {
+                "id": "block19",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[19]",
+                "tags": [],
+                "fields": [
+                    "Presa_visione_check"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block18"
+                ],
+                "condition": "context['Presa_visione_check']=='1'",
+                "completed": null,
+                "description": {
+                    "it": "Leggere le note."
+                }
+            },
+            {
+                "id": "block20",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[20]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                  "block19"
+                ],
+                "condition": null,
+                "completed": null,
+                "description": {
+                    "it": "Specificare luogo e data. Per completare il modulo premere <i>“FINE”</i>. Verificare nuovamente tutti i dati inseriti e premere <i>“Salva modulo”</i>. Verranno segnalate eventuali mancanze. In tal caso provvedere all’inserimento dei dati mancanti."
+                }
+            }
+        ],
+        "fields": [
+            {
+                "id": "Tipo_richiedente1",
+                "xpath": "//*[@id=\"Tipo_richiedente1\"]",
+                "mapping": {
+                    "key": "Tipo_richiedente1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tipo_richiedente3",
+                "xpath": "//*[@id=\"Tipo_richiedente3\"]",
+                "mapping": {
+                    "key": "Tipo_richiedente3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tipo_richiedente4",
+                "xpath": "//*[@id=\"Tipo_richiedente4\"]",
+                "mapping": {
+                    "key": "Tipo_richiedente4",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Titolare_CodiceFiscale",
+                "xpath": "//*[@id=\"Titolare_CodiceFiscale\"]",
+                "mapping": {
+                    "key": "Titolare_CodiceFiscale",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Titolare_Ruolo",
+                "xpath": "//*[@id=\"Titolare_Ruolo\"]",
+                "mapping": {
+                    "key": "Titolare_Ruolo",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Prot_concessione",
+                "xpath": "//*[@id=\"Prot_concessione\"]",
+                "mapping": {
+                    "key": "Prot_concessione",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Data_concessione",
+                "xpath": "//*[@id=\"Data_concessione\"]",
+                "mapping": {
+                    "key": "Data_concessione",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Data_inizio_lavori",
+                "xpath": "//*[@id=\"Data_inizio_lavori\"]",
+                "mapping": {
+                    "key": "Data_inizio_lavori",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Immobile_CheckVerificaCatastale",
+                "xpath": "//*[@id=\"Immobile_CheckVerificaCatastale\"]",
+                "mapping": {
+                    "key": "Immobile_CheckVerificaCatastale",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Immobile_TipoImmobile",
+                "xpath": "//*[@id=\"Immobile_TipoImmobile\"]",
+                "mapping": {
+                    "key": "Immobile_TipoImmobile",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Localita_part_fondiaria",
+                "xpath": "//*[@id=\"Localita_part_fondiaria\"]",
+                "mapping": {
+                    "key": "Localita_part_fondiaria",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Immobile_CheckVerificaCivico",
+                "xpath": "//*[@id=\"Immobile_CheckVerificaCivico\"]",
+                "mapping": {
+                    "key": "Immobile_CheckVerificaCivico",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Parametri_Titolo1",
+                "xpath": "//*[@id=\"Parametri_Titolo1\"]",
+                "mapping": {
+                    "key": "Parametri_Titolo1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Parametri_Titolo2",
+                "xpath": "//*[@id=\"Parametri_Titolo2\"]",
+                "mapping": {
+                    "key": "Parametri_Titolo2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Parametri_Titolo3",
+                "xpath": "//*[@id=\"Parametri_Titolo3\"]",
+                "mapping": {
+                    "key": "Parametri_Titolo3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Parametri_Titolo4",
+                "xpath": "//*[@id=\"Parametri_Titolo4\"]",
+                "mapping": {
+                    "key": "Parametri_Titolo4",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tipo_Parametri_Titolo3",
+                "xpath": "//*[@id=\"Tipo_Parametri_Titolo3\"]",
+                "mapping": {
+                    "key": "Tipo_Parametri_Titolo3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_Titolo1",
+                "xpath": "//*[@id=\"Tassonomia_Titolo1\"]",
+                "mapping": {
+                    "key": "Tassonomia_Titolo1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_Titolo2",
+                "xpath": "//*[@id=\"Tassonomia_Titolo2\"]",
+                "mapping": {
+                    "key": "Tassonomia_Titolo2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Titolare2_CodiceFiscale",
+                "xpath": "//*[@id=\"Titolare2_CodiceFiscale\"]",
+                "mapping": {
+                    "key": "Titolare2_CodiceFiscale",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Titolare3_CodiceFiscale",
+                "xpath": "//*[@id=\"Titolare3_CodiceFiscale\"]",
+                "mapping": {
+                    "key": "Titolare3_CodiceFiscale",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Dichiarazione_direttore_lavori",
+                "xpath": "//*[@id=\"Dichiarazione_direttore_lavori\"]",
+                "mapping": {
+                    "key": "Dichiarazione_direttore_lavori",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Incarico_soggetto_certificatore1",
+                "xpath": "//*[@id=\"Incarico_soggetto_certificatore1\"]",
+                "mapping": {
+                    "key": "Incarico_soggetto_certificatore1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Incarico_soggetto_certificatore2",
+                "xpath": "//*[@id=\"Incarico_soggetto_certificatore2\"]",
+                "mapping": {
+                    "key": "Incarico_soggetto_certificatore2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Modalita_lavori1",
+                "xpath": "//*[@id=\"Modalita_lavori1\"]",
+                "mapping": {
+                    "key": "Modalita_lavori1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Modalita_lavori2",
+                "xpath": "//*[@id=\"Modalita_lavori2\"]",
+                "mapping": {
+                    "key": "Modalita_lavori2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Dich_notifica_si",
+                "xpath": "//*[@id=\"Dich_notifica_si\"]",
+                "mapping": {
+                    "key": "Dich_notifica_si",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Dich_notifica_no",
+                "xpath": "//*[@id=\"Dich_notifica_no\"]",
+                "mapping": {
+                    "key": "Dich_notifica_no",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Presa_visione_check",
+                "xpath": "//*[@id=\"Presa_visione_check\"]",
+                "mapping": {
+                    "key": "Presa_visione_check",
+                    "binding": "OUT"
+                }
+            }
+        ],
+        "description": null,
+        "name": null,
+        "workflow": null
+    }
+}

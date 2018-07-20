@@ -1,0 +1,411 @@
+{% macro QuadroC( prefix, codice_modulo='RICH_BANDO_ALLOGGIO' ) -%}
+  <tr>
+   <td rowspan="4" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="vertical-align:top">
+    <input class="inputNormal" id="{{ prefix }}CognomeC" label="Cognome componente" name="{{ prefix }}CognomeC" style="width: 100%; font-size:80%" dynamic_value="#{{ prefix }}_Cognome.value()"/>
+   </td>
+   <td rowspan="4" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="vertical-align:top">
+     <input class="inputNormal" id="{{ prefix }}NomeC" label="Nome componente" name="{{ prefix }}NomeC" style="width: 100%; font-size:80%" dynamic_value="#{{ prefix }}_Nome.value()"/>
+   </td>
+   {% if codice_modulo == 'RICH_BANDO_ALLOGGIO' %}
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+            <select class="inputNormal" id="{{ prefix }}TipologiaRedditoC" name="{{ prefix }}TipologiaRedditoC" style="width:100%; font-size:80%" label="Tipologia reddito">
+                    <option value=""></option>
+					<option value="dichiarazione dei redditi - CU">
+						dichiarazione dei redditi - CU
+					</option>
+					<option value="dichiarazione dei redditi - Unico">
+						dichiarazione dei redditi - Unico
+					</option>
+					<option value="dichiarazione dei redditi - mod. 730">
+						dichiarazione dei redditi - mod. 730
+					</option>
+					<option value="reddito da lavoro dipendente o assimilabile">
+						reddito da lavoro dipendente o assimilabile
+					</option>
+					<option value="reddito da pensione">
+						reddito da pensione
+					</option>
+					<option value="accompagnamento">
+						accompagnamento
+					</option>
+					<option value="indennita di frequenza">
+						indennità di frequenza
+					</option>
+					<option value="assegni del nucleo familiare">
+						assegni del nucleo familiare
+					</option>
+					<option value="redditi da lavoro autonomo o saltuario">
+						redditi da lavoro autonomo o saltuario
+					</option>
+					<option value="sussidio assistenziale">
+						sussidio assistenziale
+					</option>
+					<option value="donazione">
+						donazione
+					</option>
+					<option value="erogazione">
+						eerogazione
+					</option>
+					<option value="contributo fondo sostegno affitti">
+						contributo fondo sostegno affitti
+					</option>
+					<option value="assegni di mantenimento">
+						assegni di mantenimento
+					</option>
+					<option value="borsa di studio">
+						borsa di studio
+					</option>				
+			</select>
+   </td>
+   {% endif %}
+   {% if codice_modulo == 'COM_ANAGRAFE_UTENZA' %}
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+            <select class="inputNormal" id="{{ prefix }}TipologiaRedditoC" name="{{ prefix }}TipologiaRedditoC" style="width:100%; font-size:80%" label="Tipologia reddito">
+					<option value=""></option>
+				<optgroup label="Causale reddito">
+					<option value="reddito da lavoro dipendente">
+						reddito da lavoro dipendente
+					</option>
+					<option value="reddito da pensione (compresa invalidità)">
+						reddito da pensione (compresa invalidità)
+					</option>
+					<option value="reddito da lavoro autonomo o saltuario">
+						reddito da lavoro autonomo o saltuario
+					</option>
+					<option value="accompagnamento">
+						accompagnamento
+					</option>
+					<option value="indennita di frequenza">
+						indennità di frequenza
+					</option>							
+				</optgroup>
+				<optgroup label="Causale altre entrate">					
+					<option value="sussidio assistenziale">
+						sussidio assistenziale
+					</option>
+					<option value="donazione">
+						donazione
+					</option>
+					<option value="assegni di mantenimento">
+						assegni di mantenimento
+					</option>
+				</optgroup>
+				<optgroup label="Nessun reddito">
+					<option value="nessun reddito">
+						nessun reddito
+					</option>	
+				</optgroup>					
+			</select>
+   </td>
+   {% endif %}
+   <td mandatory_enabled="#{{ prefix }}TipologiaRedditoC.value() != '' and #{{ prefix }}TipologiaRedditoC.value() != 'nessun reddito'">
+    <input class="inputNormal" id="{{ prefix }}ImportoRedditoC" label="Importo reddito" name="{{ prefix }}ImportoRedditoC" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaRedditoC.value() != '' and #{{ prefix }}TipologiaRedditoC.value() != 'nessun reddito'">
+       <input class="inputNormal" id="{{ prefix }}ImportoDetrazioniC" label="Importo detrazioni" name="{{ prefix }}ImportoDetrazioniC" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td>  
+   </tr>
+	<tr>
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked() and #{{ prefix }}TipologiaRedditoC.value() != 'nessun reddito'">
+                        <select class="inputNormal" id="{{ prefix }}TipologiaReddito2C" name="{{ prefix }}TipologiaReddito2C" style="width:100%; font-size:80%" label="Tipologia reddito">
+                        <option value=""></option>
+				<optgroup label="Causale reddito">
+					<option value="reddito da lavoro dipendente">
+						reddito da lavoro dipendente
+					</option>
+					<option value="reddito da pensione (compresa invalidità)">
+						reddito da pensione (compresa invalidità)
+					</option>
+					<option value="reddito da lavoro autonomo o saltuario">
+						reddito da lavoro autonomo o saltuario
+					</option>
+					<option value="accompagnamento">
+						accompagnamento
+					</option>
+					<option value="indennita di frequenza">
+						indennità di frequenza
+					</option>							
+				</optgroup>
+				<optgroup label="Causale altre entrate">					
+					<option value="sussidio assistenziale">
+						sussidio assistenziale
+					</option>
+					<option value="donazione">
+						donazione
+					</option>
+					<option value="assegni di mantenimento">
+						assegni di mantenimento
+					</option>
+				</optgroup>			
+						</select>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaReddito2C.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}ImportoReddito2C" label="Importo reddito" name="{{ prefix }}ImportoReddito2C" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaReddito2C.value() != ''">
+       <input class="inputNormal" id="{{ prefix }}ImportoDetrazioni2C" label="Importo detrazioni" name="{{ prefix }}ImportoDetrazioni2C" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+   </tr>
+   <tr>
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked() and #{{ prefix }}TipologiaRedditoC.value() != 'nessun reddito'">
+                        <select class="inputNormal" id="{{ prefix }}TipologiaReddito3C" name="{{ prefix }}TipologiaReddito3C" style="width:100%; font-size:80%" label="Tipologia reddito">
+                        <option value=""></option>
+				<optgroup label="Causale reddito">
+					<option value="reddito da lavoro dipendente">
+						reddito da lavoro dipendente
+					</option>
+					<option value="reddito da pensione (compresa invalidità)">
+						reddito da pensione (compresa invalidità)
+					</option>
+					<option value="reddito da lavoro autonomo o saltuario">
+						reddito da lavoro autonomo o saltuario
+					</option>
+					<option value="accompagnamento">
+						accompagnamento
+					</option>
+					<option value="indennita di frequenza">
+						indennità di frequenza
+					</option>							
+				</optgroup>
+				<optgroup label="Causale altre entrate">					
+					<option value="sussidio assistenziale">
+						sussidio assistenziale
+					</option>
+					<option value="donazione">
+						donazione
+					</option>
+					<option value="assegni di mantenimento">
+						assegni di mantenimento
+					</option>
+				</optgroup>			
+						</select>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaReddito3C.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}ImportoReddito3C" label="Importo reddito" name="{{ prefix }}ImportoReddito3C" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaReddito3C.value() != ''">
+       <input class="inputNormal" id="{{ prefix }}ImportoDetrazioni3C" label="Importo detrazioni" name="{{ prefix }}ImportoDetrazioni3C" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+   </tr>
+   <tr>
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked() and #{{ prefix }}TipologiaRedditoC.value() != 'nessun reddito'">
+                        <select class="inputNormal" id="{{ prefix }}TipologiaReddito4C" name="{{ prefix }}TipologiaReddito4C" style="width:100%; font-size:80%" label="Tipologia reddito">
+                        <option value=""></option>
+				<optgroup label="Causale reddito">
+					<option value="reddito da lavoro dipendente">
+						reddito da lavoro dipendente
+					</option>
+					<option value="reddito da pensione (compresa invalidità)">
+						reddito da pensione (compresa invalidità)
+					</option>
+					<option value="reddito da lavoro autonomo o saltuario">
+						reddito da lavoro autonomo o saltuario
+					</option>
+					<option value="accompagnamento">
+						accompagnamento
+					</option>
+					<option value="indennita di frequenza">
+						indennità di frequenza
+					</option>							
+				</optgroup>
+				<optgroup label="Causale altre entrate">					
+					<option value="sussidio assistenziale">
+						sussidio assistenziale
+					</option>
+					<option value="donazione">
+						donazione
+					</option>
+					<option value="assegni di mantenimento">
+						assegni di mantenimento
+					</option>
+				</optgroup>			
+						</select>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaReddito4C.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}ImportoReddito4C" label="Importo reddito" name="{{ prefix }}ImportoReddito4C" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaReddito4C.value() != ''">
+       <input class="inputNormal" id="{{ prefix }}ImportoDetrazioni4C" label="Importo detrazioni" name="{{ prefix }}ImportoDetrazioni4C" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+   </tr>
+{%- endmacro %}
+
+{% macro QuadroD( prefix, codice_modulo='RICH_BANDO_ALLOGGIO' ) -%}
+  <tr>
+   <td rowspan="2" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="vertical-align:top">
+    <input class="inputNormal" id="{{ prefix }}CognomeD" label="Cognome componente" name="{{ prefix }}CognomeD" style="width: 100%; font-size:80%" dynamic_value="#{{ prefix }}_Cognome.value()"/>
+   </td>
+   <td rowspan="2" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="vertical-align:top">
+     <input class="inputNormal" id="{{ prefix }}NomeD" label="Nome componente" name="{{ prefix }}NomeD" style="width: 100%; font-size:80%" dynamic_value="#{{ prefix }}_Nome.value()"/>
+   </td>
+   {% if codice_modulo == 'RICH_BANDO_ALLOGGIO' %}
+		<td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+                <select class="inputNormal" id="{{ prefix }}TipologiaBeniD" name="{{ prefix }}TipologiaBeniD" style="width:100%; font-size:80%" label="Tipo beni immobili">
+                        <option value=""></option>
+					<option value="fabbricato">
+						fabbricato
+					</option>
+					<option value="terreno agricolo">
+						terreno agricolo
+					</option>
+					<option value="terreno fabbricabile">
+						terreno fabbricabile
+					</option>			
+				</select>
+		</td>
+   {% endif %}
+   {% if codice_modulo == 'COM_ANAGRAFE_UTENZA' %}
+		<td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+                <select class="inputNormal" id="{{ prefix }}TipologiaBeniD" name="{{ prefix }}TipologiaBeniD" style="width:100%; font-size:80%" label="Tipo beni immobili">
+                        <option value=""></option>
+					<option value="fabbricato">
+						fabbricato
+					</option>
+					<option value="terreno agricolo">
+						terreno agricolo
+					</option>
+					<option value="terreno fabbricabile">
+						terreno fabbricabile
+					</option>
+					<option value="fabbricato o terreno all'estero">
+						fabbricato o terreno all'estero
+					</option>	
+					<option value="nessun fabbricato o terreno">
+						nessun fabbricato o terreno
+					</option>						
+				</select>
+		</td>
+   {% endif %}
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeniD.value() != '' and #{{ prefix }}TipologiaBeniD.value() != 'fabbricato o terreno all\'estero' and #{{ prefix }}TipologiaBeniD.value() != 'nessun fabbricato o terreno'">
+    <input class="inputNormal" id="{{ prefix }}QuotaPercentualeD" label="% Quota" name="{{ prefix }}QuotaPercentualeD" style="width: 100%; font-size:80%" format="positive_float"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeniD.value() != '' and #{{ prefix }}TipologiaBeniD.value() != 'fabbricato o terreno all\'estero' and #{{ prefix }}TipologiaBeniD.value() != 'nessun fabbricato o terreno'">
+    <input class="inputNormal" id="{{ prefix }}ValoreICID" label="Importo valore ICI" name="{{ prefix }}ValoreICID" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeniD.value() != '' and #{{ prefix }}TipologiaBeniD.value() != 'fabbricato o terreno all\'estero' and #{{ prefix }}TipologiaBeniD.value() != 'nessun fabbricato o terreno'">
+    <input class="inputNormal" id="{{ prefix }}SuperficieD" label="Superficie" name="{{ prefix }}SuperficieD" style="width: 100%; font-size:80%" format="positive_float"/>
+   </td> 
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeniD.value() != '' and #{{ prefix }}TipologiaBeniD.value() != 'fabbricato o terreno all\'estero' and #{{ prefix }}TipologiaBeniD.value() != 'nessun fabbricato o terreno'">
+    <input class="inputNormal" id="{{ prefix }}QuotaResiduaD" label="Importo quota residua mutuo" name="{{ prefix }}QuotaResiduaD" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeniD.value() != '' and #{{ prefix }}TipologiaBeniD.value() != 'fabbricato o terreno all\'estero' and #{{ prefix }}TipologiaBeniD.value() != 'nessun fabbricato o terreno'">
+                <select class="inputNormal" id="{{ prefix }}ResidenzaD" name="{{ prefix }}ResidenzaD" style="width:100%; font-size:80%" label="Tipo beni immobili">
+                        <option value=""></option>
+					<option value="si">
+						si
+					</option>
+					<option value="no">
+						no
+					</option>	
+				</select>
+   </td>
+ </tr>
+ <tr>
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked() and #{{ prefix }}TipologiaBeniD.value() != 'nessun fabbricato o terreno'">
+                <select class="inputNormal" id="{{ prefix }}TipologiaBeni2D" name="{{ prefix }}TipologiaBeni2D" style="width:100%; font-size:80%" label="Tipo beni immobili">
+                        <option value=""></option>
+					<option value="fabbricato">
+						fabbricato
+					</option>
+					<option value="terreno agricolo">
+						terreno agricolo
+					</option>
+					<option value="terreno fabbricabile">
+						terreno fabbricabile
+					</option>	
+					<option value="fabbricato o terreno all'estero">
+						fabbricato o terreno all'estero
+					</option>						
+				</select>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeni2D.value() != '' and #{{ prefix }}TipologiaBeni2D.value() != 'fabbricato o terreno all\'estero'">
+    <input class="inputNormal" id="{{ prefix }}QuotaPercentuale2D" label="% Quota" name="{{ prefix }}QuotaPercentuale2D" style="width: 100%; font-size:80%" format="positive_float"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeni2D.value() != '' and #{{ prefix }}TipologiaBeni2D.value() != 'fabbricato o terreno all\'estero'">
+    <input class="inputNormal" id="{{ prefix }}ValoreICI2D" label="Importo valore ICI" name="{{ prefix }}ValoreICI2D" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeni2D.value() != '' and #{{ prefix }}TipologiaBeni2D.value() != 'fabbricato o terreno all\'estero'">
+    <input class="inputNormal" id="{{ prefix }}Superficie2D" label="Superficie" name="{{ prefix }}Superficie2D" style="width: 100%; font-size:80%" format="positive_float"/>
+   </td> 
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeni2D.value() != '' and #{{ prefix }}TipologiaBeni2D.value() != 'fabbricato o terreno all\'estero'">
+    <input class="inputNormal" id="{{ prefix }}QuotaResidua2D" label="Importo quota residua mutuo" name="{{ prefix }}QuotaResidua2D" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+   <td mandatory_enabled="#{{ prefix }}TipologiaBeni2D.value() != '' and #{{ prefix }}TipologiaBeni2D.value() != 'fabbricato o terreno all\'estero'">
+                <select class="inputNormal" id="{{ prefix }}Residenza2D" name="{{ prefix }}Residenza2D" style="width:100%; font-size:80%" label="Tipo beni immobili">
+                        <option value=""></option>
+					<option value="si">
+						si
+					</option>
+					<option value="no">
+						no
+					</option>	
+				</select>
+   </td>
+ </tr>
+{%- endmacro %}
+
+{% macro QuadroE( prefix ) -%}
+  <tr>
+   <td rowspan="2" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="vertical-align:top">
+    <input class="inputNormal" id="{{ prefix }}CognomeE" label="Cognome componente" name="{{ prefix }}CognomeE" style="width: 100%; font-size:80%" dynamic_value="#{{ prefix }}_Cognome.value()"/>
+   </td>
+   <td rowspan="2" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="vertical-align:top">
+     <input class="inputNormal" id="{{ prefix }}NomeE" label="Nome componente" name="{{ prefix }}NomeE" style="width: 100%; font-size:80%" dynamic_value="#{{ prefix }}_Nome.value()"/>
+   </td>
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+    <input class="inputNormal" id="{{ prefix }}IntermediarioE" label="Intermediario" name="{{ prefix }}IntermediarioE" style="width: 100%; font-size:80%"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}IntermediarioE.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}ABICCABE" label="ABI/CAB" name="{{ prefix }}ABICCABE" style="width: 100%; font-size:80%"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}IntermediarioE.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}ConsistenzaE" label="Importo consistenza beni mobili" name="{{ prefix }}ConsistenzaE" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+ </tr>
+ <tr>
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+    <input class="inputNormal" id="{{ prefix }}Intermediario2E" label="Intermediario" name="{{ prefix }}Intermediario2E" style="width: 100%; font-size:80%"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}Intermediario2E.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}ABICCAB2E" label="ABI/CAB" name="{{ prefix }}ABICCAB2E" style="width: 100%; font-size:80%"/>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}Intermediario2E.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}Consistenza2E" label="Importo consistenza beni mobili" name="{{ prefix }}Consistenza2E" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+ </tr>
+{%- endmacro %}
+
+{% macro QuadroF( prefix ) -%}
+  <tr>
+   <td rowspan="2" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="vertical-align:top">
+    <input class="inputNormal" id="{{ prefix }}CognomeF" label="Cognome componente" name="{{ prefix }}CognomeF" style="width: 100%; font-size:80%" dynamic_value="#{{ prefix }}_Cognome.value()"/>
+   </td>
+   <td rowspan="2" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="vertical-align:top">
+     <input class="inputNormal" id="{{ prefix }}NomeF" label="Nome componente" name="{{ prefix }}NomeF" style="width: 100%; font-size:80%" dynamic_value="#{{ prefix }}_Nome.value()"/>
+   </td>
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+	<select class="inputNormal" id="{{ prefix }}CausaleF" name="{{ prefix }}CausaleF" style="width:100%; font-size:80%" label="Causale spesa">
+                        <option value=""></option>
+                        <option value="spese sanitarie">spese sanitarie</option>
+                        <option value="spese per ricovero familiari">spese per ricovero familiari</option>
+						<option value="spese per soggetti portatori di handicap">spese per soggetti portatori di handicap</option>						
+	</select>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}CausaleF.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}ConsistenzaF" label="Importo spesa sanitaria" name="{{ prefix }}ConsistenzaF" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+ </tr>
+ <tr>
+   <td enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+ 	<select class="inputNormal" id="{{ prefix }}Causale2F" name="{{ prefix }}Causale2F" style="width:100%; font-size:80%" label="Causale spesa">
+                        <option value=""></option>
+                        <option value="spese sanitarie">spese sanitarie</option>
+                        <option value="spese per ricovero familiari">spese per ricovero familiari</option>
+						<option value="spese per soggetti portatori di handicap">spese per soggetti portatori di handicap</option>						
+	</select>
+   </td>
+   <td mandatory_enabled="#{{ prefix }}Causale2F.value() != ''">
+    <input class="inputNormal" id="{{ prefix }}Consistenza2F" label="Importo spesa sanitaria" name="{{ prefix }}Consistenza2F" style="width: 100%; font-size:80%" format="valuta_positiva"/>
+   </td> 
+ </tr>
+{%- endmacro %}
