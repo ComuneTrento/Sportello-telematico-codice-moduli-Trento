@@ -1,0 +1,1744 @@
+{% macro intestazione_titolo( testo1="", testo2="" ) -%}
+<div type="titolo">
+
+	<table class="Modulo" style="border:1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						SEGNALA
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						Procedimento
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="vertical-align: top;">
+					<p style="padding: 1px 0px;">
+						{{ testo1 }}
+					</p>
+				</td>
+				<td style="vertical-align: top;">
+					<p style="padding: 1px 0px;">
+						{{ testo2 }}
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+{%- endmacro %}
+
+
+
+{% macro titolo( testo="" ) -%}
+<table class="Modulo" style="border: 0px;">
+	<tbody>
+		<tr style="border: 0px; background-color: #C5C5C5;">
+			<td style="border: 0px; padding: 2px 5px;">
+				<p>
+					{{ testo }}
+				</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+{%- endmacro %}
+
+
+
+{% macro anagrafica_societa(prefix="TitolareNonImportare", Solo1="Richiedente", ruoli=["Proprietario", "Titolare", "Legale rappresentante", "Amministratore di condominio", "Procuratore legale"]) -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
+
+<div type="Anagrafica_Società">
+	{% do all_prefix.append( prefix ) %}
+	{{ titolo("Anagrafica dell'impresa") }}
+	<p class="Modulo" style="margin: 10px 0px;">
+		Sezione anagrafica dell'impresa richiedente (Dati relativi al legale rappresentante) o della persona fisica
+	</p>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 25%;">
+					<p style="padding: 1px 0px;">
+						Nome
+					</p>
+				</td>
+				<td style="width: 25%;">
+					<p style="padding: 1px 0px;">
+						Cognome
+					</p>
+				</td>
+				<td style="width: 25%;">
+					<p style="padding: 1px 0px;">
+						Sesso
+					</p>
+				</td>
+				<td style="width: 25%;">
+					<p style="padding: 1px 0px;">
+						Cittadinanza
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del {{ Solo1 }}" mandatory="true"/>
+				</td>
+				<td>
+					<input id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del {{ Solo1 }}" mandatory="true"/>
+				</td>
+				<td>
+					<select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso del {{ Solo1 }}" mandatory="true">
+                        <option value=""></option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+				</td>
+				<td mandatory="true">
+					{{ utils.nazionalita( prefix + '_Cittadinanza', 'Cittadinanza' )}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						Nato a
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						il
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita del {{ Solo1 }}" mandatory="true"/>
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita del {{ Solo1 }}" mandatory="true"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-top: 0px; border-left: 0px; width: 25%;">
+				</td>
+				<td style="width: 25%; background-color: #EEEEEE; border: 1px solid gray;">
+					<p style="padding: 1px 0px;">
+						Provincia
+					</p>
+				</td>
+				<td style="border-top: 0px; width: 25%;">
+				</td>
+				<td style="width: 25%; background-color: #EEEEEE; border: 1px solid gray;">
+					<p style="padding: 1px 0px;">
+						Stato
+					</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border: 1px solid gray;">
+					<table style="border: 0px; margin: 0px; padding: 0px; border-collapse: collapse; width: 100%;">
+						<tr style="border: 0px; margin: 0px; padding: 0px;">
+							<td style="border: 0px; margin: 0px; padding: 0px; vertical-align: middle; width: 4%;">
+								<div id="{{ prefix }}_Nascita" name="{{ prefix }}_Nascita" label="Nazione di nascita del {{ Solo1 }}" mandatory="true"></div>
+								<input id="{{ prefix }}_Nascita1" name="{{ prefix }}_Nascita" type="radio" value="1"/>
+							</td>
+							<td style="border: 0px; margin: 0px; padding: 0px; width: 96%;">
+								<label for="{{ prefix }}_Nascita1">in Italia</label>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td style="border: 1px solid gray;" mandatory_enabled="#{{ prefix }}_Nascita1.checked()">
+					{{ utils.provincie( prefix + '_ProvinciaNascita', label='Provincia di nascita' ) }}
+				</td>
+				<td style="border: 1px solid gray;">
+					<table style="border: 0px; margin: 0px; padding: 0px; border-collapse: collapse; width: 100%;">
+						<tr style="border: 0px; margin: 0px; padding: 0px;">
+							<td style="border: 0px; margin: 0px; padding: 0px; vertical-align: middle; width: 4%;">
+								<input id="{{ prefix }}_Nascita2" name="{{ prefix }}_Nascita" type="radio" value="2"/>
+							</td>
+							<td style="border: 0px; margin: 0px; padding: 0px; width: 96%;">
+								<label for="{{ prefix }}_Nascita2">all'Estero</label>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td style="border: 1px solid gray;" mandatory_enabled="#{{ prefix }}_Nascita2.checked()">
+					{{ utils.nazionalita( prefix + '_StatoNascita', 'Stato di Nascita' )}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						Cod. Fiscale
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del {{ Solo1 }}" mandatory="true"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Informazioni relative alla residenza :
+	</p>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Residente in
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Provincia
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						CAP
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza del {{ Solo1 }}" mandatory="true"/>
+				</td>
+				<td mandatory="true">
+					{{ utils.provincie( prefix + '_ProvinciaResidenza', label='Provincia di residenza' ) }}
+				</td>
+				<td>
+					<input class="inputNormal" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del {{ Solo1 }}" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Indirizzo
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Tel
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Fax
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" style="width:100%;" label="Via di residenza del {{ Solo1 }}" mandatory="true"/>
+				</td>
+				<td>
+					<input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono del {{ Solo1 }}" name="{{ prefix }}_Telefono" style="width:100%" mandatory="true"/>
+				</td>
+				<td>
+					<input class="inputNormal" id="{{ prefix }}_Fax" label="Fax del {{ Solo1 }}" mandatory="false" name="{{ prefix }}_Fax" style="width:100%"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						eMail PEC
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="inputNormal" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory="true"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						Carica (se persona fisica selezionare 'Proprietario')
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<select class="inputNormal" id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" style="width:100%;" mandatory_enabled="true" label="Ruolo del {{ Solo1 }}">
+							<option value=""></option>
+						{% for ruolo in ruoli %}
+							<option value="{{ ruolo }}">{{ ruolo }}</option>
+						{% endfor %}
+                    </select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Sezione anagrafica dell'impresa richiedente (Dati relativi alla sede legale) o della persona fisica
+	</p>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Codice Fiscale
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						P.IVA
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Forma giuridica (se persona fisica selezionare 'Altre forme')
+					</p>
+				</td>
+			</tr>
+			<tr mandatory="true">
+				<td>
+					<input class="" id="{{ prefix }}_CFPI" name="{{ prefix }}_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva"/>
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_PI" name="{{ prefix }}_PI" label="Partita IVA" style="width:100%;" format="piva"/>
+				</td>
+				<td>
+					{{ utils.tipologiaimpresa( prefix + '_TipologiaImpresa' )}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						Denominazione (Cognome e Nome in caso di persona fisica)
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td mandatory="true">
+					<input class="" id="{{ prefix }}_Denominazione" name="{{ prefix }}_Denominazione" style="width:100%" label="Denominazione/Ragione sociale"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Con sede in
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Provincia
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						CAP
+					</p>
+				</td>
+			</tr>
+			<tr mandatory="true">
+				<td>
+					<input class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune della sede legale"/>
+				</td>
+				<td>
+					{{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia della sede legale") }}
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_CAPSede" name="{{ prefix }}_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Toponimo (DUG)
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Denominazione stradale
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Numero civico
+					</p>
+				</td>
+			</tr>
+			<tr mandatory="true">
+				<td>
+					<input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_DenominazioneStradaleSede" name="{{ prefix }}_DenominazioneStradaleSede" style="width:100%;" label="Denominazione stradale della sede legale"/>
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_CivicoSede" name="{{ prefix }}_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						Telefono
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						Fax
+					</p>
+				</td>
+			</tr>
+			<tr mandatory="true">
+				<td>
+					<input class="" id="{{ prefix }}_TelefonoSede" name="{{ prefix }}_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_FaxSede" name="{{ prefix }}_FaxSede" label="Fax della sede legale" style="width:100%;" mandatory="false"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Informazioni relative all'iscrizione al Registro Imprese
+	</p>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Camera di commercio di:
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Numero REA
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Data
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{{ utils.provincie( prefix + '_Attributi_CCIAAProv', label="Provincia iscrizione al Registro Imprese della Camera di Commercio") }}
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_Attributi_CCIAANumero" name="{{ prefix }}_Attributi_CCIAANumero" label="Numero iscrizione al Registro Imprese della Camera di Commercio" style="width:100%"/>
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_Attributi_CCIAAData" name="{{ prefix }}_Attributi_CCIAAData" label="Data iscrizione al Registro Imprese della Camera di Commercio" style="width:100%" format="date"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<globo_salto_pagina></globo_salto_pagina>
+
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Se l’impresa non è ancora iscritta o se si tratta di soggetto non tenuto all’iscrizione al Registro Imprese, non compilare i campi; altrimenti compilare almeno Camera di Commercio e Numero Rea
+	</p>
+
+{%- endmacro %}
+
+
+
+{% macro oggetto_pratica() -%}
+
+	{{ titolo("Oggetto della pratica") }}
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						Descrizione generale dell'intervento
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="inputNormal" id="Parametri_DescrizioneIntervento" name="Parametri_DescrizioneIntervento" style="width: 100%;" label="Descrizione generale dell'intervento" mandatory="true">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Ai fini delle comunicazioni relative al presente procedimento si elegge il proprio domicilio elettronico presso la seguente casella di posta elettronica (domicilio elettronico)
+	</p>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 50%;">
+					<p style="padding: 1px 0px;">
+						DOMICILIO ELETTRONICO: (N.B. Inserire l'indirizzo della casella PEC a cui il SUAP dovra' inviare la ricevuta e le altre comunicazioni relative alla pratica)
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="inputNormal" id="Parametri_DomicilioElettronico" name="Parametri_DomicilioElettronico" style="width: 100%;" label="Domicilio elettronico" mandatory="true"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; width: 4%;">
+					<input id="Parametri_DichiaraPEC" name="Parametri_DichiaraPEC" type="checkbox" value="SI" checked="checked" dynamic_check="true"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p>
+						Si dichiara di essere consapevoli che nel caso non venga indicata una casella di posta elettronica certificata (PEC), non si avra' la certezza del buon esito dell' eventuale scambio di comunicazioni che seguiranno la presente istanza
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{%- endmacro %}
+
+
+
+{% macro dichiarazione_consapevolezza() -%}
+
+	{{ titolo("Dichiarazione di consapevolezza ex artt. 46 e 47 DPR 445/2000") }}
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; width: 4%;">
+					<input id="Parametri_DichiarazioneConsapevol" name="Parametri_DichiarazioneConsapevol" type="checkbox" value="SI" checked="checked" dynamic_check="true"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p>
+						Dichiara di essere consapevole che le dichiarazioni false, la falsità negli atti e l'uso di atti falsi comportano l'applicazione delle sanzioni penali previste dall'art. 76 del D.P.R. 445/2000 e la decadenza dai benefici eventualmente conseguenti al provvedimento emanato sulla base della dichiarazione non veritiera
+					</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td colspan="2">
+					<p style="text-align: center; padding: 20px 0px;">
+						SEGNALA a: ASL Lecce Sud - Dipartimento di Prevenzione
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{%- endmacro %}
+
+
+
+{% macro sede_attivita(prefix="Immobile", comune="") -%}
+
+	{{ titolo("Sede dell'attività") }}
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Comune
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Frazione
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						CAP
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%;" label="Comune" mandatory="true" value="{{ comune }}"/>
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_Frazione" name="{{ prefix }}_Frazione" style="width:100%;" label="Frazione dell'immobile" mandatory="true"/>
+				</td>
+				<td>
+					<input class="" id="{{ prefix }}_CAP" name="{{ prefix }}_CAP" style="width:100%;" label="CAP dell'immobile" mandatory="true"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		ATTENZIONE - l'ubicazione dell'attività o intervento deve essere nel 'Comune' al cui SUAP è destinata la pratica
+	</p>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 100%;">
+					<p style="padding: 1px 0px;">
+						Via, Viale, Piazza
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="" id="{{ prefix }}_Via" name="{{ prefix }}_Via" style="width:100%;" label="Indirizzo immobile" mandatory="true"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid gray;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 100%;">
+					<p style="padding: 1px 0px;">
+						Numero civico
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="" id="{{ prefix }}_Civico" name="{{ prefix }}_Civico" style="width:100%;" maxlength="10" label="Civico immobile" mandatory="true"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{%- endmacro %}
+
+
+
+{% macro tipologia_attivita() -%}
+
+	{{ titolo("Tipologia di attività esercitata") }}
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px; width: 53%;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE; width: 47%;">
+					<p style="padding: 1px 0px;">
+						specificare
+					</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<div id="Tassonomia_TipologiaAttivita" name="Tassonomia_TipologiaAttivita" label="Tipologia di attività esercitata"></div>
+					<input id="Tassonomia_TipologiaAttivita1" name="Tassonomia_TipologiaAttivita" type="radio" value="1"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						ATTIVITÀ DI PRODUZIONE, TRASFORMAZIONE E/O CONFEZIONAMENTO SENZA VENDITA AL DETTAGLIO
+					</p>
+				</td>
+				<td>
+					<input class="inputNormal" id="Parametri_TipologiaAttivita1_Note" name="Parametri_TipologiaAttivita1_Note" style="width: 100%;" label="Specificare attività" mandatory_enabled="#Tassonomia_TipologiaAttivita1.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_TipologiaAttivita2" name="Tassonomia_TipologiaAttivita" type="radio" value="2"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						ATTIVITÀ DI PRODUZIONE, TRASFORMAZIONE E/O CONFEZIONAMENTO DESTINATA IN PREVALENZA ALLA VENDITA AL DETTAGLIO
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_AttConPuntoVendita" name="Parametri_AttConPuntoVendita" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						con annesso punto vendita
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_AttConConfezionamento" name="Parametri_AttConConfezionamento" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						con confezionamento
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Laboratorio di:
+	</p>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabGastronomia" name="Parametri_LabGastronomia" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Gastronomia
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabGelateria" name="Parametri_LabGelateria" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Gelateria
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabPasticceria" name="Parametri_LabPasticceria" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Pasticceria
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabRosticceria" name="Parametri_LabRosticceria" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Rosticceria
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabPastaFresca" name="Parametri_LabPastaFresca" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Pasta fresca
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabPanificazione" name="Parametri_LabPanificazione" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Panificazione
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="4">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabPizzeriaAlTaglio" name="Parametri_LabPizzeriaAlTaglio" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Pizzeria al taglio
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabAltro" name="Parametri_LabAltro" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita2.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Altro
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<input class="inputNormal" id="Parametri_LabAltro_Note" name="Parametri_LabAltro_Note" style="width: 100%;" label="Specificare altro laboratorio" mandatory_enabled="#Parametri_LabAltro.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_TipologiaAttivita3" name="Tassonomia_TipologiaAttivita" type="radio" value="3"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						ATTIVITÀ DI RISTORAZIONE PUBBLICA
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabBar" name="Parametri_LabBar" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						Bar
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabSomminBevande" name="Parametri_LabSomminBevande" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						Con somministrazione di alimenti confezionati e bevande
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Parametri_LabPreparazioneBevande" name="Parametri_LabPreparazioneBevande" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Con somministrazione di bevande e preparazione al banco o in apposito spazio o altra zona
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<input class="inputNormal" id="Parametri_LabPreparazioneBevande_Note" name="Parametri_LabPreparazioneBevande_Note" style="width: 100%;" label="Specificare zona di preparazione" mandatory_enabled="#Parametri_LabPreparazioneBevande.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>di (specificare)</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabAnnesso" name="Parametri_LabAnnesso" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Con annesso laboratorio
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<input class="inputNormal" id="Parametri_LabAnnesso_Note" name="Parametri_LabAnnesso_Note" style="width: 100%;" label="Specificare laboratorio annesso" mandatory_enabled="#Parametri_LabAnnesso.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabRistTrattoriaPizzeria" name="Parametri_LabRistTrattoriaPizzeria" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						Ristorante/trattoria/pizzeria
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>di (specificare)</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabPrepSomm" name="Parametri_LabPrepSomm" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Preparazione e somministrazione
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<input class="inputNormal" id="Parametri_LabPrepSomm_Note" name="Parametri_LabPrepSomm_Note" style="width: 100%;" label="Specificare preparazione e somministrazione di" mandatory_enabled="#Parametri_LabPrepSomm.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabRistorazCompleta" name="Parametri_LabRistorazCompleta" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						Ristorazione completa
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabAltraSomm" name="Parametri_LabAltraSomm" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Altro
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<input class="inputNormal" id="Parametri_LabAltraSomm_Note" name="Parametri_LabAltraSomm_Note" style="width: 100%;" label="Specificare altro" mandatory_enabled="#Parametri_LabAltraSomm.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabAlimAltraImpresa" name="Parametri_LabAlimAltraImpresa" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						Somministrazione di alimenti preparati da altra impresa alimentare
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_LabCatering" name="Parametri_LabCatering" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita3.checked()"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						Catering
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_TipologiaAttivita4" name="Tassonomia_TipologiaAttivita" type="radio" value="4"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						RISTORAZIONE COLLETTIVA - ASSISTENZIALE
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<div id="Tassonomia_CentroCottura" name="Tassonomia_CentroCottura" label="Classificazione attività ristorazione collettiva" mandatory_enabled="#Tassonomia_TipologiaAttivita4.checked()"></div>
+					<input id="Tassonomia_CentroCottura1" name="Tassonomia_CentroCottura" type="radio" value="1"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Centro cottura senza <br/>somministrazione
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_CentroCottura2" name="Tassonomia_CentroCottura" type="radio" value="2"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Centro cottura con <br/>somministrazione
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_CentroCottura3" name="Tassonomia_CentroCottura" type="radio" value="3"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Refrattorio con sola <br/>somministrazione
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border-left: 0px; border-top: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_TipologiaAttivita5" name="Tassonomia_TipologiaAttivita" type="radio" value="5"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						COMMERCIO ALL'INGROSSO
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<input class="inputNormal" id="Parametri_LabCommercioIngrosso_Note" name="Parametri_LabCommercioIngrosso_Note" style="width: 100%;" label="Specificare altro" mandatory_enabled="#Tassonomia_TipologiaAttivita5.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Parametri_CommIngrAlimenti" name="Parametri_CommIngrAlimenti" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita5.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Alimenti
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Parametri_CommIngrBevande" name="Parametri_CommIngrBevande" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita5.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Bevande
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Si tratta di alimenti:
+	</p>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<div id="Tassonomia_TipoAlimenti" name="Tassonomia_TipoAlimenti" label="Tipo alimenti" enabled="#Tassonomia_TipologiaAttivita5.checked()"></div>
+					<input id="Tassonomia_TipoAlimenti1" name="Tassonomia_TipoAlimenti" type="radio" value="1"/>
+				</td>
+				<td style="border-left: 0px; width: 21%;">
+					<p style="padding: 2px 0px;">
+						Deperibili
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_TipoAlimenti2" name="Tassonomia_TipoAlimenti" type="radio" value="2"/>
+				</td>
+				<td style="border-left: 0px; width: 21%;">
+					<p style="padding: 2px 0px;">
+						Non deperibili
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_TipoAlimenti3" name="Tassonomia_TipoAlimenti" type="radio" value="3"/>
+				</td>
+				<td style="border-left: 0px; width: 21%;">
+					<p style="padding: 2px 0px;">
+						Confezionati
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_TipoAlimenti4" name="Tassonomia_TipoAlimenti" type="radio" value="4"/>
+				</td>
+				<td style="border-left: 0px; width: 21%;">
+					<p style="padding: 2px 0px;">
+						Sfusi
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+<globo_salto_pagina></globo_salto_pagina>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_TipologiaAttivita6" name="Tassonomia_TipologiaAttivita" type="radio" value="6"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						COMMERCIO AL DETTAGLIO IN SEDE FISSA
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="4">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_VenditaAlimConfezione" name="Parametri_VenditaAlimConfezione" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita6.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Vendita di alimenti in confezione
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_VenditaAlimAltro" name="Parametri_VenditaAlimAltro" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita6.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Altro
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<input class="inputNormal" id="Parametri_VenditaAlimAltro_Note" name="Parametri_VenditaAlimAltro_Note" style="width: 100%;" label="Specificare altro" mandatory_enabled="#Tassonomia_TipologiaAttivita6.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_TipologiaAttivita7" name="Tassonomia_TipologiaAttivita" type="radio" value="7"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						COMMERCIO AL DETTAGLIO SU AREE PUBBLICHE
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_AttivInFormaAmbulante" name="Parametri_AttivInFormaAmbulante" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita7.checked()"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						Attività in forma ambulante
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="6">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<div id="Tassonomia_AttivAmbulante" name="Tassonomia_AttivAmbulante" label="AttivAmbulante" enabled="#Parametri_AttivInFormaAmbulante.checked()"></div>
+					<input id="Tassonomia_AttivAmbulante1" name="Tassonomia_AttivAmbulante" type="radio" value="1"/>
+				</td>
+				<td style="border-left: 0px; width: 21%;">
+					<p style="padding: 2px 0px;">
+						Banco mobile
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_AttivAmbulante2" name="Tassonomia_AttivAmbulante" type="radio" value="2"/>
+				</td>
+				<td style="border-left: 0px; width: 21%;">
+					<p style="padding: 2px 0px;">
+						Negozio mobile
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_AttivAmbulante3" name="Tassonomia_AttivAmbulante" type="radio" value="3"/>
+				</td>
+				<td style="border-left: 0px; width: 21%;">
+					<p style="padding: 2px 0px;">
+						Altra struttura mobile
+					</p>
+				</td>
+				<td style="width: 25%;">
+					<input class="inputNormal" id="Tassonomia_AttivAmbulante3_Note" name="Tassonomia_AttivAmbulante3_Note" style="width: 100%;" label="Specificare altra struttura mobile" mandatory_enabled="#Tassonomia_AttivAmbulante3.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_AttivInSedeFissa" name="Parametri_AttivInSedeFissa" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita7.checked()"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						Attività in sede fissa
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<div id="Tassonomia_AttivSedeFissa" name="Tassonomia_AttivSedeFissa" label="AttivSedeFissa" enabled="#Parametri_AttivInSedeFissa.checked()"></div>
+					<input id="Tassonomia_AttivSedeFissa1" name="Tassonomia_AttivSedeFissa" type="radio" value="1"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Banco mobile
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_AttivSedeFissa2" name="Tassonomia_AttivSedeFissa" type="radio" value="2"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Costruzione stabile
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_AttivSedeFissa3" name="Tassonomia_AttivSedeFissa" type="radio" value="3"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Negozio mobile
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_AltraStrutturaMobile" name="Parametri_AltraStrutturaMobile" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita7.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Altra struttura mobile
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<input class="inputNormal" id="Parametri_AltraStrutturaMobile_Note" name="Parametri_AltraStrutturaMobile_Note" style="width: 100%;" label="Specificare altro" mandatory_enabled="#Parametri_AltraStrutturaMobile.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_TipologiaAttivita8" name="Tassonomia_TipologiaAttivita" type="radio" value="8"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						TRASPORTO
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid grey;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Mezzo di trasporto (Specificare tipo, marca e modello del <br/>mezzo di trasporto)
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Targa
+					</p>
+				</td>
+			</tr>
+			<tr mandatory_enabled="#Tassonomia_TipologiaAttivita8.checked()">
+				<td>
+					<input class="inputNormal" id="Parametri_MezzoDiTrasporto" name="Parametri_MezzoDiTrasporto" style="width: 100%;" label="Mezzo di trasporto">
+				</td>
+				<td>
+					<input class="inputNormal" id="Parametri_TargaMezzoDiTrasporto" name="Parametri_TargaMezzoDiTrasporto" style="width: 100%;" label="Targa del mezzo di trasporto">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid grey;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Certificato ATP n.
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						del
+					</p>
+				</td>
+			</tr>
+			<tr mandatory_enabled="#Tassonomia_TipologiaAttivita8.checked()">
+				<td>
+					<input class="inputNormal" id="Parametri_NumeroCertificatoATP" name="Parametri_NumeroCertificatoATP" style="width: 100%;" label="Numero certificato ATP">
+				</td>
+				<td>
+					<input class="inputNormal" id="Parametri_DataCertificatoARP" name="Parametri_DataCertificatoARP" style="width: 100%;" label="Data certificato ATP" format="date">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid grey;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 33%;">
+					<p style="padding: 1px 0px;">
+						Tipologia alimenti trasportati
+					</p>
+				</td>
+			</tr>
+			<tr mandatory_enabled="#Tassonomia_TipologiaAttivita8.checked()">
+				<td>
+					<input class="inputNormal" id="Parametri_TipoAlimentiTrasp" name="Parametri_TipoAlimentiTrasp" style="width: 100%;" label="Tipologia alimenti trasportati">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Attrezzato con:
+	</p>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="4">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>T°C minima raggiungibile</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_CassoneIsotermico" name="Parametri_CassoneIsotermico" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita8.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Cassone isotermico
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_GruppoRefrigerante" name="Parametri_GruppoRefrigerante" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita8.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						Gruppo refrigerante
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<input class="inputNormal" id="Parametri_TempMinimaRaggiungibile" name="Parametri_TempMinimaRaggiungibile" style="width: 100%;" label="Temperatura minima raggiungibile" enabled="#Tassonomia_TipologiaAttivita8.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_Cisterne" name="Parametri_Cisterne" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita8.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Cisterne
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Parametri_Contenitori" name="Parametri_Contenitori" type="checkbox" value="SI" enabled="#Tassonomia_TipologiaAttivita8.checked()"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						Contenitori
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_TipologiaAttivita9" name="Tassonomia_TipologiaAttivita" type="radio" value="9"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						ALTRA TIPOLOGIA DI ATTIVITA' SVOLTA
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<input class="inputNormal" id="Parametri_AltraAttivaSvolta_Note" name="Parametri_AltraAttivaSvolta_Note" style="width: 100%;" label="Specificare altra attività svolta" mandatory_enabled="#Tassonomia_TipologiaAttivita9.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{%- endmacro %}
+
+
+
+{% macro dichiarazione_diritti_segreteria() -%}
+
+	{{ titolo("Dichiarazione relativa ai diritti di segreteria/istruttori") }}
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		VERSAMENTO DIRITTO O SPESE
+	</p>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<div id="Tassonomia_OneriDovuti" name="Tassonomia_OneriDovuti" label="Oneri dovuti" mandatory="true"></div>
+					<input id="Tassonomia_OneriDovuti1" name="Tassonomia_OneriDovuti" type="radio" value="1"/>
+				</td>
+				<td style="border-left: 0px;">
+					<p style="padding: 2px 0px;">
+						non sono dovuti oneri quali diritti o spese
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="4">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>specificare la motivazione</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<div id="Tassonomia_MotivOneriNonDovuti" name="Tassonomia_MotivOneriNonDovuti" label="Motivazione oneri non dovuti" mandatory_enabled="#Tassonomia_OneriDovuti1.checked()"></div>
+					<input id="Tassonomia_MotivOneriNonDovuti1" name="Tassonomia_MotivOneriNonDovuti" type="radio" value="1"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						poichè non previsti dal tariffario
+					</p>
+				</td>
+				<td style="border-right: 0px; vertical-align: middle; width: 4%;">
+					<input id="Tassonomia_MotivOneriNonDovuti2" name="Tassonomia_MotivOneriNonDovuti" type="radio" value="2"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						poichè esentati
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<input class="inputNormal" id="Parametri_MotivazioneEsenzione" name="Parametri_MotivazioneEsenzione" style="width: 100%;" label="Motivazione esenzione" mandatory_enabled="#Tassonomia_MotivOneriNonDovuti2.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>
+						per un totale di Euro
+					</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 3px; width: 4%;">
+					<input id="Tassonomia_OneriDovuti2" name="Tassonomia_OneriDovuti" type="radio" value="2"/>
+				</td>
+				<td style="border-left: 0px; width: 46%;">
+					<p style="padding: 2px 0px;">
+						sono dovuti oneri quali diritti o spese, di provvedervi come segue ed allega copia delle relative attestazioni di pagamento
+					</p>
+				</td>
+				<td style="width: 50%;">
+					<input class="inputNormal" id="Parametri_OneriValoreEuro" name="Parametri_OneriValoreEuro" style="width: 100%;" label="Totale oneri in euro" mandatory_enabled="#Tassonomia_OneriDovuti2.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="Modulo" style="margin: 10px 0px;">
+		Attenzione: è necessario allegare copia dell'attestazione di pagamento
+	</p>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>
+						in data
+					</p>
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>
+						ufficio postale di
+					</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 4px; width: 4%;">
+					<div id="Parametri_VersamentoCC" label="Modalità di versamento dei diritti o spese" mandatory_enabled="#Tassonomia_OneriDovuti2.checked()"/>
+					<input id="Parametri_VersamentoCC1" name="Parametri_VersamentoCC" type="radio" value="1"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						versamento su conto corrente postale (vedere le istruzioni di ogni SUAP)
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<input class="inputNormal" id="Parametri_DataVersamentoCC" name="Parametri_DataVersamentoCC" style="width: 100%;" label="Data versamento" mandatory_enabled="#Parametri_VersamentoCC.checked()" format="date">
+				</td>
+				<td style="width: 33%;">
+					<input class="inputNormal" id="Parametri_UfficioPostaleCC" name="Parametri_UfficioPostaleCC" style="width: 100%;" label="Ufficio postale" mandatory_enabled="#Parametri_VersamentoCC.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid grey;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 100%;">
+					<p style="padding: 1px 0px;">
+						Allegata qui la ricevuta di versamento tramite conto corrente postale
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 0px;">
+		<tbody>
+			<tr style="border: 0px;">
+				<td style="border-left: 0px; border-top: 0px;" colspan="2">
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>
+						in data
+					</p>
+				</td>
+				<td style="border: 1px solid gray; background-color: #EEEEEE;">
+					<p>
+						ufficio postale di
+					</p>
+				</td>
+			</tr>
+			<tr style="border: 1px solid gray;">
+				<td style="border-right: 0px; vertical-align: top; padding-top: 4px; width: 4%;">
+					<input id="Parametri_VersamentoCC2" name="Parametri_VersamentoCC" type="radio" value="2"/>
+				</td>
+				<td style="border-left: 0px; width: 29%;">
+					<p style="padding: 2px 0px;">
+						mediante bonifico bancario (vedere le istruzioni di ogni SUAP)
+					</p>
+				</td>
+				<td style="width: 33%;">
+					<input class="inputNormal" id="Parametri_DataVersamentoBon" name="Parametri_DataVersamentoBon" style="width: 100%;" label="Data versamento" mandatory_enabled="#Parametri_VersamentoCC2.checked()" format="date">
+				</td>
+				<td style="width: 33%;">
+					<input class="inputNormal" id="Parametri_BonCodiceCRO" name="Parametri_BonCodiceCRO" style="width: 100%;" label="Codice CRO" mandatory_enabled="#Parametri_VersamentoCC2.checked()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="Modulo" style="border: 1px solid grey;">
+		<tbody>
+			<tr class="Rigaintestazione">
+				<td style="width: 100%;">
+					<p style="padding: 1px 0px;">
+						Allegata qui la ricevuta del bonifico bancario
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{%- endmacro %}

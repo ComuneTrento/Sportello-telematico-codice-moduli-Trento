@@ -1,0 +1,364 @@
+{% set CodiceModulo = "M2701-RICHIESTA-EMISSIONE-ORDINANZA-PROVVEDIMENTI-TRAFFICO" %}
+<!-- {% set modulo_workflow_model =  "M2701-RICHIESTA-EMISSIONE-ORDINANZA-PROVVEDIMENTI-TRAFFICO_v1.0" %} -->
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Richiesta emissione ordinanza per provvedimenti sul traffico"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="Titolare"
+tipo_modulo="secondario"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016" />
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
+<script type="text/javascript">
+    var simpaticoEservice="4"
+    var simpaticoForm="main"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Fax",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                        'block1' : 'Selezionare una delle opzioni',
+                        'block2' : 'Inserire il codice fiscale',
+                        'block3' : 'Selezionare il ruolo',
+                        'block6' : 'Particella edilizia non valida',
+                        'block7' : 'Indirizzo non inserito',
+                        'block8' : 'Indirizzo non verificato',
+                        'block11' : 'Inserire il codice fiscale',
+                        'block13' : 'Confermare presa visione informativa sulla privacy'
+      }
+  
+    </script>
+   *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+
+{% block title %}RICHIESTA EMISSIONE ORDINANZA PER PROVVEDIMENTI SUL TRAFFICO{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Richiesta di emissione di ordinanza per provvedimenti sul traffico'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo">
+        RICHIESTA EMISSIONE DI ORDINANZA PER PROVVEDIMENTI SUL TRAFFICO
+</h1>
+    
+<!-- ELENCO POSSIBILI MODULI SECONDARI E ALLEGATI -->
+<p>ELENCO MODULI SECONDARI E ALLEGATI DA PREVEDERE
+    - MAPPA E/O PLANIMETRIA CON PUNTO INTERVENTO EVIDENZIATO
+    - ELENCO VIE E CIVICI PER PROVVEDIMENTI SU PIU' STRADE
+    - SE MODIFICA ALLA VIABILITA' --> PLANIMETRIA CON PERCORSI ALTERNATIVI
+    - DOCUMENTO IDENTITA
+    - RICEVUTA PAGAMENTO TARIFFA
+</p>
+  
+    <table class="Modulo" style="border: 1px solid grey">
+        <tbody>
+            <tr class="Rigaintestazione">
+                <td colspan="2">
+                    <p><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; width: 4%;">
+                    <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+                    <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+                </td>
+                <td>
+                    <p>Richiedente</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; width: 4%;">
+                    <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+                </td>
+                <td>
+                    <p>Referente incaricato</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+<br> 
+
+{{anagrafica_trento.societa("Titolare","Il sottoscritto",["Persona fisica","Legale rappresentante","Altro"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+    {{anagrafica_trento.richiedente("Referente","Indica quale referente", "visibility:visibility", "cursor:pointer", "false")}}
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+<h1 class="Modulo">CHIEDE</h1>
+
+<table class="Modulo" name="Dati_richiesta" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p>l'<b>emissione di un'ordinanza</b> per l'istituzione di:</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <div id="Ordinanza_richiesta" name="Ordinanza_richiesta" label="Ordinanza richiesta" mandatory_enabled="true"></div> 
+                <input id="Ordinanza_richiesta1" name="Ordinanza_richiesta" group="Ordinanza_richiesta" type="radio" value="1"/>
+            </td>
+            <td>
+                <p>divieto di transito</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <input id="Ordinanza_richiesta2" name="Ordinanza_richiesta" group="Ordinanza_richiesta" type="radio" value="2"/>
+            </td>
+            <td>
+                <p>divieto di sosta e di fermata</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <input id="Ordinanza_richiesta3" name="Ordinanza_richiesta" group="Ordinanza_richiesta" type="radio" value="3"/>
+            </td>
+            <td>
+                <p>divieto di transito pedonale</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <input id="Ordinanza_richiesta4" name="Ordinanza_richiesta" group="Ordinanza_richiesta" type="radio" value="4"/>
+            </td>
+            <td>
+                <p>restringimento carreggiata</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <input id="Ordinanza_richiesta5" name="Ordinanza_richiesta" group="Ordinanza_richiesta" type="radio" value="5"/>
+            </td>
+            <td>
+                <p>senso unico alternato regolato da <input class="" id="metodo_regol_senso_unico" name="metodo_regol_senso_unico" label="Modalità di regolazione del senso unico alternato" mandatory_enabled="#Ordinanza_richiesta5.checked()" size="63"/></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <input id="Ordinanza_richiesta6" name="Ordinanza_richiesta" group="Ordinanza_richiesta" type="radio" value="6"/>
+            </td>
+            <td>
+                <p>altro <input class="" id="altra_ord" name="altra_ord" label="Specificare motivazione ordinanza richiesta" mandatory_enabled="#Ordinanza_richiesta6.checked()" size="87"/></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>a <input class="" id="Località_ordinanza" name="Località_ordinanza" label="località interessata" mandatory_enabled="true" size="30"/>, al seguente indirizzo: <input class="" id="indirizzo_ordinanza" name="indirizzo_ordinanza" label="Indirizzo per istituzione ordinanza" mandatory_enabled="true" size="40"/></p>
+                <p>in prossimità di (numero civico) o nel tratto stradale (da a):</p>
+                <p><textarea class="inputNormal" id="Posizione_ordinanza" name="Posizione_ordinanza" label="Indicare una posizione precisa per emissione di ordinanza" style="width:99%;height:3cm" mandatory_enabled="true" ></textarea></p>    
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Dati_richiesta" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td>
+                <p>per poter effettuare:</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p><textarea class="inputNormal" id="Descrizione_attivita" name="Descrizione_attivita" label="Descrizione attività da svolgere" style="width:99%;height:3cm" mandatory_enabled="true" ></textarea></p>    
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>per la durata dei lavori previsti in numero giorni <input class="" id="giorni_lavori" name="giorni_lavori" label="Numero giorni dei lavori" mandatory_enabled="true" size="2"/>, da eseguirsi nel periodo dal <input class="" format="date" id="inizio_lavori" name="inizio_lavori" label="Giorno inizio lavori" mandatory_enabled="true" size="7"/> al <input class="" format="date" id="fine_lavori" name="fine_lavori" label="Giorno fine lavori" mandatory_enabled="true" size="7"/></p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta"><td></td></tr>
+        <tr>
+            <td>
+                <p><b><i>Per lavori di interesse comunale:</i></b> per conto del servizio <input class="" id="servizio_richiedente" name="servizio_richiedente" label="Servizio richiedente" enabled="true" size="47" mandatory="#tecnico_referente.value() != '' || #tel_referente.value() != ''"/></p>
+                <p>tecnico referente: <input class="" id="tecnico_referente" name="tecnico_referente" label="Nominativo tecnico referente" enabled="true" size="35" mandatory="#servizio_richiedente.value() != '' || #tel_referente.value() != ''"/> --- telefono: <input class="" id="tel_referente" name="tel_referente" label="Telefono tecnico referente" enabled="true" size="15" mandatory="#tecnico_referente.value() != '' || #servizio_richiedente.value() != ''"/></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p><b>Il sottoscritto autorizza l'Amministrazione Comunale a trasmettere l'atto tramite uno dei seguenti metodi:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Metodo_trasmissione_atto" name="Metodo_trasmissione_atto" label="Metodo per la trasmissione dell'atto da parte del Comune" mandatory_enabled="true"></div>
+                <input id="Metodo_trasmissione_atto1" name="Metodo_trasmissione_atto" group="Metodo_trasmissione_atto" type="radio" value="1" />
+            </td>
+            <td>
+                <p>
+                    Email del richiedente: <input class="" id="mail_trasm" name="mail_trasm" label="Indirizzo mail per trasmissione atto" dynamic_value="#Titolare_EMail.value()" enabled="#Metodo_trasmissione_atto1.checked()" size="50" readonly/>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_trasmissione_atto2" name="Metodo_trasmissione_atto" group="Metodo_trasmissione_atto" type="radio" value="2" />
+            </td>
+            <td>
+                <p>
+                    PEC del richiedente: <input class="" id="PEC_trasm" name="PEC_trasm" label="Indirizzo PEC per trasmissione atto" dynamic_value="#Titolare_EMailPEC.value()" enabled="#Metodo_trasmissione_atto2.checked()" size="50" readonly/>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_trasmissione_atto3" name="Metodo_trasmissione_atto" group="Metodo_trasmissione_atto" type="radio" value="3" />
+            </td>
+            <td>
+                <p>
+                    Email del referente incaricato: <input class="" id="mail_ref_trasm" name="mail_ref_trasm" label="Indirizzo mail del referente per trasmissione atto" dynamic_value="#Referente_EMail.value()" enabled="#Metodo_trasmissione_atto3.checked()" size="50" readonly/>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_trasmissione_atto4" name="Metodo_trasmissione_atto" group="Metodo_trasmissione_atto" type="radio" value="4" />
+            </td>
+            <td>
+                <p>
+                    PEC del referente incaricato: <input class="" id="PEC_ref_trasm" name="PEC_ref_trasm" label="Indirizzo PEC del referente per trasmissione atto" dynamic_value="#Referente_EMailPEC.value()" enabled="#Metodo_trasmissione_atto4.checked()" size="50" readonly/>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p style="text-align: center;"><b>INFORMATIVA SULLA PRIVACY</b></p>
+                <p style="text-align: center; font-size:85%"><i>Art. 13 del D. Lgs. n. 196/2003, Regolamento UE 2016/679 in vigore dal 24.05.2016 e pienamente dal 25.05.2018</i></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br>
+                <p>Ai sensi dell'art. 13 del decreto legislativo 30 giugno 2003 n. 196, "Codice in materia di protezione dei dati personali", si informa che:</p>
+                <ul>
+                    <li>i dati vengono raccolti e trattati ai fini del rilascio/rinnovo delle concessioni</li>
+                    <li>i dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza degli stessi</li>
+                    <li>il conferimento dei dati ha natura obbligatoria ai fini del rilascio/rinnovo delle concessioni. Non fornire i dati comporta l'impossibilità di dare riscontro alle richieste medesime</li>
+                    <li>i dati possono essere comunicati ai soggetti che, secondo le norme di legge o di regolamento, sono tenuti a conoscerli o possono conoscerli, per gli adempimenti di competenza, nonché ai soggetti che sono titolari del diritto di accesso</li>
+                    <li>i dati possono essere conosciuti dal responsabile e dagli incaricati dei Servizi destinati dell'atto e del Servizio Gestione Strade e Parchi</li>
+                    <li>ai sensi dell'art. 7 del d.lgs. 196/2003, l'interessato ha diritto di:
+                        <ul>
+                            <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano</li>
+                            <li>ottenere la loro comunicazione in forma intelligibile</li>
+                            <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici</li>
+                            <li>ottenere la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge</li>
+                            <li>aggiornare, correggere o integrare i dati che lo riguardano</li>
+                            <li>opporsi, per motivi legittimi, al trattamento dei dati</li>
+                        </ul>
+                    </li>
+                    <li>Titolare del trattamento dei dati è il Comune di Trento</li>
+                    <li>Responsabile del trattamento è il Dirigente del Servizio Gestione Strade e Parchi</li>
+                    <li>Responsabile designato per l'esercizio dei diritti dell'interessato è il Segretario generale</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+                <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+            </td>
+            <td colspan="2" style="background-color: #eeeeee;">
+                <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+
+  <div class="simpatico-block">
+    {{ utils.firma_hidden() }}
+</div>
+<br>
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+
+
+{% endblock content %}

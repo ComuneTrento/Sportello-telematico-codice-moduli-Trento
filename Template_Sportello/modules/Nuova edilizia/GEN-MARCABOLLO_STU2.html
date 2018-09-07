@@ -1,0 +1,243 @@
+{% set CodiceModulo =  "GEN-MARCABOLLO" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-MARCABOLLO_v0.1" %}
+{% extends "base_trento.html" %}
+
+{% block meta %}
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Dichiarazione di pagamento dell'imposta di bollo"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione="ATTENZIONE: questo modulo deve essere compilato con i dati del richiedente."
+istruzioni_invio="mail_pec"
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/Marca_Bollo"
+verifica_pagamento="NO"
+versione="1.0|01/01/2015"/>
+
+<meta codice_allegato="Modulo_bollo_compilato_firma_autografa"
+descrizione_estesa="Modulo pagamento imposta di bollo compilato e firmato manualmente"
+filename="Modulo_bollo_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_bollo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Modulo_bollo_compilato_firma_elettronica"
+descrizione_estesa="Modulo pagamento imposta di bollo compilato e firmato elettronicamente"
+filename="Modulo_bollo_compilato_firma_elettronica.pdf"
+firmato="SI"
+istruzioni="/modulistica/moduli/Modulo_bollo_compilato_firma_elettronica"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+<script type="text/javascript">
+    var simpaticoEservice="1_1"
+    var simpaticoForm="modulo_secondario_pagamento_imposta_bollo"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Fax",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                          'block2' : 'Inserire il numero seriale della marca da bollo'
+      }
+  
+    </script>
+  <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+
+{% block title %}
+   Dichiarazione di pagamento dell'imposta di bollo
+{% endblock title %}
+
+{% block content %}
+ <globo_fondo_pagina areaheight="150" scope="1">
+{{ utils.firma() }}
+ </globo_fondo_pagina>
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+ <input id="Oggetto" name="Oggetto" dynamic_value="#Metadati_Titolare_Cognome.value().toUpperCase() + ' - pagamento imposta di bollo'" type="hidden"/>
+
+ <h1 class="Modulo">
+  Dichiarazione di pagamento dell'imposta di bollo
+ </h1>
+ <h2 class="Modulo">
+  Ai sensi del Decreto del Presidente della Repubblica 26/10/1972, n. 642 e dell'articolo 3 del Decreto Ministeriale 10/11/2011
+ </h2>
+
+ <!-- simpatico start -->
+ <div class="simpatico-block simpatico-query-and-answer">
+<!-- simpatico end -->
+ {{anagrafica.cognome_nome("Titolare","Il sottoscritto", "Richiedente", "visibility:hidden", "cursor:default")}}
+ <table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+   <tr class="Rigaintestazione">
+    <td>
+     <p>
+      <b>
+       in relazione alla documentazione
+      </b>
+     </p>
+    </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta">
+    <td>
+     <p class="Labelcella">
+      Breve descrizione del documento per il quale è annullata la marca da bollo
+     </p>
+    </td>
+   </tr>
+   <tr>
+    <td>
+     <input class="" id="Parametri_InrelazCorpoCom" label="Breve descrizione del documento per il quale è annullata la marca da bollo" mandatory="true" name="Parametri_InrelazCorpoCom" dynamic_value="#Metadati_Titolare_Cognome.value().toUpperCase() + ' - Domanda di autorizzazione paesaggistica'" style="width:100%"/>
+    </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta">
+    <td style="width:40%;">
+     <p class="Labelcella">
+      Codice univoco dell'istanza
+     </p>
+    </td>
+   </tr>
+   <tr>
+    <td>
+     <input class="" id="Codice_istanza" label="Codice univoco istanza" mandatory="true" name="Codice_istanza" style="width:100%"/>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ <input checked="checked" id="SempreSI" name="SempreSI" style="display:none;" type="checkbox" value="si"/>
+ <!-- simpatico start -->
+ </diV>
+<!-- simpatico end -->
+
+<!-- simpatico start -->
+<div class="simpatico-block simpatico-query-and-answer">
+<!-- simpatico end -->
+ <p class="Modulo">
+  Valendosi della facoltà prevista dall'articolo 3 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti,
+ </p>
+ <h3 class="Modulo">
+  DICHIARA
+ </h3>
+ <table class="Modulo" style="border: 0px;">
+  <tbody>
+   <tr style="border:0px;">
+    <td style="width:2%;border:0px;">
+     <input checked="checked" dynamic_check="true" id="Parametri_BolloDichiara1" name="Parametri_BolloDichiara1" type="checkbox" value="si"/>
+    </td>
+    <td style="border:0px;">
+     <p>
+      che la seguente marca da bollo è stata annullata per la presentazione della documentazione sopra indicata
+     </p>
+    </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta" style="border:0px;">
+    <td style="background:white;border:0px;">
+    </td>
+    <td>
+     <p class="Rigaintestazioneridotta">
+      <b>Numero seriale marca da bollo</b>
+     </p>
+     <p>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportellotest.comune.trento.it/faq/come-fare-per-pagare-limposta-di-bollo-per-la-presentazione-di-unistanza-telematica" target="_blank"> <i> Come pagare? </i></a>)</p>
+    </td>
+   </tr>
+   <tr style="border:0px;">
+    <td style="border:0px;">
+    </td>
+    <td>
+       <input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory="true" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
+    </td>
+   </tr>
+   <tr style="border: 0px;">
+    <td style="width: 20px; border: 0px; vertical-align: top;">
+     <input checked="checked" dynamic_check="true" id="Parametri_BolloDichiara2" name="Parametri_BolloDichiara2" type="checkbox" value="si"/>
+    </td>
+    <td style="border: 0px;">
+     <p>
+      di impegnarsi a conservare l'originale della marca da bollo annullata
+     </p>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+  <!-- simpatico start -->  </div> <!-- simpatico end -->
+ <br/>
+
+ <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+   <tbody>
+     <tr class="Rigaintestazione">
+       <td colspan="3">
+         <p style="text-align: center;">
+           <b>Elenco degli allegati richiesti</b>
+         </p>
+       </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_bollo_firma_autografa" name="Modulo_bollo_firma_autografa" dynamic_check="#Metadati_firma_bollo.value() == 'A'" enabled="#Metadati_firma_bollo.value() == 'A'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        Modulo pagamento imposta di bollo firmato dal richiedente con <b>firma autografa</b>
+       </p>
+      </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_bollo_firma_elettronica" name="Modulo_bollo_firma_elettronica" dynamic_check="#Metadati_firma_bollo.value() == 'E'" enabled="#Metadati_firma_bollo.value() == 'E'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        Modulo pagamento imposta di bollo firmato dal richiedente con <b>firma elettronica</b>
+       </p>
+      </td>
+     </tr>
+   </tbody>
+ </table>
+
+ <br/>
+
+ <!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->
+{{ utils.firma_hidden() }}
+<!-- simpatico start --></div><!-- simpatico end -->
+
+<br>
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+
+
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+ <input id="GLOBO_allegato_cModulo_bollo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_bollo_compilato_firma_autografa" obbligatorio="#Modulo_bollo_firma_autografa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ <input id="GLOBO_allegato_cModulo_bollo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_bollo_compilato_firma_elettronica" obbligatorio="#Modulo_bollo_firma_elettronica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+
+ <!-- passaggio dati tra moduli -->
+ {{ utils.passaggio_metadati() }}
+ <input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
+ <input id="Metadati_firma_bollo" name="Metadati_firma_bollo" type="hidden"/>
+
+{% endblock content %}

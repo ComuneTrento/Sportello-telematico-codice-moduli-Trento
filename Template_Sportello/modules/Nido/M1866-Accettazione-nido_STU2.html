@@ -1,0 +1,517 @@
+{% set CodiceModulo = "M1866-ACCETTAZIONE-NIDO" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1876-ACCETTAZIONE-NIDO_v1.0" %}-->
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="ACCETTAZIONE ASILO NIDO"
+destinatario_amministrazione=""
+destinatario_ufficio="EBPGCM"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016" />
+
+<meta codice_allegato="RIC-VER-QUOTA"
+descrizione_estesa="Ricevuta versamento quota di anticipo tariffario"
+filename="Ricevuta quota anticipo.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/RIC-VER-QUOTA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
+<script type="text/javascript">
+    var simpaticoEservice="6"
+    var simpaticoForm="modulo_trasmissione_integrazione"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Fax",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                        'block1' : 'Selezionare una delle opzioni',
+                        'block2' : 'Inserire il nominativo del proprietario o soggetto avente titolo idoneo',
+                        'block3' : 'Selezionare il ruolo',
+                        'block5' : 'Inserire il nominativo del progettista',
+                        'block6' : 'Inserire i riferimenti alla pratica per cui si sta trasmettendo una integrazione',
+                        'block7' : 'Particella edilizia non valida',
+                        'block8' : 'Indirizzo non inserito',
+                        'block9' : 'Indirizzo non verificato',
+                        'block10' : 'Selezionare una delle opzioni',
+                        'block11' : 'Selezionare una delle opzioni',
+                        'block13' : 'Selezionare una delle opzioni'
+      }
+  
+    </script>
+*********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+
+{% block title %}M1866-ACCETTAZIONE-NIDO{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Accettazione nido di infanzia'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+  Accesso ai nidi d'infanzia: accettazione
+</h1>
+
+{{anagrafica_trento.persona_fisica(prefix='AventeTitolo', intestazione="Il sottoscritto", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", visibility_residenza="visibility:visibility", visibility_mail="no_mail", carica_campi="", cf_obbligatorio="true", format_telefono_numerico="false", pec_obbligatoria ="false")}}
+<br>
+
+<input type="hidden" class="inputNormal" id="Bambino_Cognome" name="Bambino_Cognome" label="cognome del bambino/a" readonly/>
+<input type="hidden" class="inputNormal" id="Bambino_Nome" name="Bambino_Nome" label="Nome del bambino/a" readonly/>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p>
+          <b>In riferimento alla domanda di iscrizione al nido di infanzia</b>
+        </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td class="Labelcella" style="width:60%">
+        <p style="font-size:75%;">Nominativo bambino/a</p>
+      </td>
+      <td class="Labelcella" style="width:25%">
+        <p style="font-size:75%;">Num. Protocollo</p>
+      </td>
+      <td class="Labelcella" style="width:15%">
+        <p style="font-size:75%;">Data</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" label="Bambino/a iscritto" id="Bambino_iscritto" name="Bambino_iscritto" dynamic_value="' ' + #Bambino_Cognome.value().toUpperCase() + ',' + #Bambino_Nome.value().toUpperCase()" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" label="Numero protocollo" id="Numero_protocollo" name="Numero_protocollo" mandatory_enabled="true" style="width:100%"/>
+      </td>
+      <td>
+        <input class="" label="Data protocollazione" id="Data_protocollazione" name="Data_protocollazione" format="date" mandatory_enabled="true" style="width:100%"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h1 class="Modulo">dichiara</h1>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="dichiarazioni" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p><b>di accettare il posto assegnato al/alla proprio/a figlio/a presso:<br><br>- il nido a tempo pieno:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="5" style="vertical-align: top; width: 4%;">
+        <div id="nome_nido" name="nome_nido" label="Nido ammissione del bambino/a" mandatory_enabled="true"></div> 
+        <input group="nome_nido" id="nome_nido1" name="nome_nido" type="radio" value="1"/>
+      </td>
+      <td colspan="2">
+        <input class="" id="Nome_nido_FT1" name="Nome_nido_FT1" label="nome prima scelta nido full time" style="width:100%;" readonly/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <p><b>Confermando</b> la richiesta dei seguenti servizi opzionali, ove previsti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="nessun_servizio_opzionale_FT1" name="nessun_servizio_opzionale_FT1" enabled="#Nome_nido_FT1.value() != '' and #nome_nido1.checked()" type="checkbox" value="0"/>
+      </td>
+      <td>
+        nessun servizio
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="servizio_opzionale_1FT1" name="servizio_opzionale_1FT1" enabled="#nome_nido1.checked() and #Parametri_DettaglioServizio1FT1 != '' and !#nessun_servizio_opzionale_FT1.checked()" type="checkbox" value="1"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_DettaglioServizio1FT1" name="Parametri_DettaglioServizio1FT1" style="width: 100%;" label="Primo servizio opzionale offerto" readonly>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="servizio_opzionale_1FT2" name="servizio_opzionale_1FT2" enabled="#nome_nido1.checked() and #Parametri_DettaglioServizio1FT2 != '' and !#nessun_servizio_opzionale_FT1.checked()" type="checkbox" value="2"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_DettaglioServizio1FT2" name="Parametri_DettaglioServizio1FT2" style="width: 100%;" label="Tipo di servizio opzionale offerto" readonly>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="5" style="vertical-align: top; width: 4%;">
+        <input group="nome_nido" id="nome_nido2" name="nome_nido" type="radio" value="2"/>
+      </td>
+      <td colspan="2">
+        <input class="" id="Nome_nido_FT2" name="Nome_nido_FT2" label="nome seconda scelta nido full time" style="width:100%;" readonly/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <p><b>Confermando</b> la richiesta dei seguenti servizi opzionali, ove previsti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="nessun_servizio_opzionale_FT2" name="nessun_servizio_opzionale_FT2" enabled="#nome_nido2.checked()" type="checkbox" value="0"/>
+      </td>
+      <td>
+        nessun servizio
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="servizio_opzionale_2FT1" name="servizio_opzionale_2FT1" enabled="#nome_nido2.checked() and #Parametri_DettaglioServizio2FT1 != '' and !#nessun_servizio_opzionale_FT2.checked()" type="checkbox" value="1"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_DettaglioServizio2FT1" name="Parametri_DettaglioServizio2FT1" style="width: 100%;" label="Primo servizio opzionale offerto" readonly>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="servizio_opzionale_2FT2" name="servizio_opzionale_2FT2" enabled="#nome_nido2.checked() and #Parametri_DettaglioServizio2FT2 != '' and !#nessun_servizio_opzionale_FT2.checked()" type="checkbox" value="2"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_DettaglioServizio2FT2" name="Parametri_DettaglioServizio2FT2" style="width: 100%;" label="Tipo di servizio opzionale offerto" readonly>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p><b>- il nido a tempo parziale:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="5" style="vertical-align: top; width: 4%;">
+        <input group="nome_nido" id="nome_nido3" name="nome_nido" type="radio" value="3"/>
+      </td>
+      <td colspan="2">
+        <input class="" id="Nome_nido_PT1" name="Nome_nido_PT1" label="nome prima scelta nido part time" style="width:100%;" readonly/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <p><b>Confermando</b> la richiesta dei seguenti servizi opzionali, ove previsti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="nessun_servizio_opzionale_PT1" name="nessun_servizio_opzionale_PT1" enabled="#nome_nido3.checked()" type="checkbox" value="0"/>
+      </td>
+      <td>
+        nessun servizio
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="servizio_opzionale_1PT1" name="servizio_opzionale_1PT1" enabled="#nome_nido3.checked() and #Parametri_DettaglioServizio1PT1 != '' and !#nessun_servizio_opzionale_PT1.checked()" type="checkbox" value="1"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_DettaglioServizio1PT1" name="Parametri_DettaglioServizio1PT1" style="width: 100%;" label="Primo servizio opzionale offerto" readonly>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="servizio_opzionale_1PT2" name="servizio_opzionale_1PT2" enabled="#nome_nido3.checked() and #Parametri_DettaglioServizio1PT2 != '' and !#nessun_servizio_opzionale_PT1.checked()" type="checkbox" value="2"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_DettaglioServizio1PT2" name="Parametri_DettaglioServizio1PT2" style="width: 100%;" label="Tipo di servizio opzionale offerto" readonly>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="5" style="vertical-align: top; width: 4%;">
+        <input group="nome_nido" id="nome_nido4" name="nome_nido" type="radio" value="4"/>
+      </td>
+      <td colspan="2">
+        <input class="" id="Nome_nido_PT2" name="Nome_nido_PT2" label="nome seconda scelta nido full time" style="width:100%;" readonly/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <p><b>Confermando</b> la richiesta dei seguenti servizi opzionali, ove previsti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="nessun_servizio_opzionale_PT2" name="nessun_servizio_opzionale_PT2" enabled="#nome_nido4.checked()" type="checkbox" value="0"/>
+      </td>
+      <td>
+        nessun servizio
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="servizio_opzionale_2PT1" name="servizio_opzionale_2PT1" enabled="#nome_nido4.checked() and #Parametri_DettaglioServizio2PT1 != '' and !#nessun_servizio_opzionale_PT2.checked()" type="checkbox" value="1"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_DettaglioServizio2PT1" name="Parametri_DettaglioServizio2PT1" style="width: 100%;" label="Primo servizio opzionale offerto" readonly>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="servizio_opzionale_2PT2" name="servizio_opzionale_2PT2" enabled="#nome_nido4.checked() and #Parametri_DettaglioServizio2PT2 != '' and !#nessun_servizio_opzionale_PT2.checked()" type="checkbox" value="2"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_DettaglioServizio2PT2" name="Parametri_DettaglioServizio2PT2" style="width: 100%;" label="Tipo di servizio opzionale offerto" readonly>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="dichiarazioni" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p>
+          <b>dichiara inoltre:</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione2" name="dichiarazione2" dynamic_check="true" type="checkbox" value="2"/>
+      </td>
+      <td colspan="2">
+        <p>di essere a conoscenza che l'accettazione del posto assegnato determina la cancellazione definitiva del nominativo del/la bambino/a dalla graduatoria per le altre scelte di servizio effettuate</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione3" name="dichiarazione3" dynamic_check="true" type="checkbox" value="3"/>
+      </td>
+      <td colspan="2">
+        <p>di aver versato la quota di anticipo tariffario pari a € <input class="" id="quota_anticipo" name="quota_anticipo" size="5" label="quota anticipo tariffario" mandatory_enabled="true"/> come risulta dall’allegata ricevuta di versamento di data <input class="" id="data_versamento" name="data_versamento" size="7" format="date" label="data versamento" mandatory_enabled="true"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione4" name="dichiarazione4" dynamic_check="true" type="checkbox" value="4"/>
+      </td>
+      <td colspan="2">
+        <p>di essere a conoscenza che nel caso di rinuncia del posto accettato la quota sopra citata sarà trattenuta dall’Amministrazione</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione5" name="dichiarazione5" dynamic_check="true" type="checkbox" value="5"/>
+      </td>
+      <td colspan="2">
+        <p>di essere a conoscenza che in caso di perdita del requisito della residenza nel Comune di Trento dopo l'accettazione ma prima dell'ambientamento, il/la bambino/a non può più essere ammesso al nido</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione6" name="dichiarazione6" dynamic_check="true" type="checkbox" value="6"/>
+      </td>
+      <td colspan="2">
+        <p>di aver adempiuto agli obblighi previsti in tema di vaccinazioni come da documentazione allegata</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione7" name="dichiarazione7" dynamic_check="true" type="checkbox" value="7"/>
+      </td>
+      <td colspan="2">
+        <p>di aver preso visione del "Regolamento per la disciplina dei servizi socio educativi per la prima infanzia", di cui alla <i>Delibera del Consiglio n. 70 dd 28/06/2007 e s.m.</i> e dei "Criteri e modalità di presentazione delle domande, formazione delle graduatorie, assegnazione e accettazione del posto nei nidi d’infanzia comunali", di cui al testo coordinato da ultimo approvato con <i>Deliberazione della Giunta comunale n. 67 dd 07/04/2014</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione8" name="dichiarazione8" dynamic_check="true" type="checkbox" value="8"/>
+      </td>
+      <td colspan="2">
+        <p>di aver preso visione della “Carta della qualità del servizio di nido d’infanzia” e delle relative schede annuali disponibili nel sito del Comune di Trento www.comune.trento.it, area tematica servizi all’infanzia e istruzione</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione9" name="dichiarazione9" dynamic_check="true" type="checkbox" value="9"/>
+      </td>
+      <td colspan="2">
+        <p>di dare atto che la retta di frequenza mensile per il servizio di nido d'infanzia è stabilita in base al valore dell'indicatore ICEF da richiedere a un CAF abilitato a partire da luglio 2018 ed <b>entro il mese di ammissione</b>, che tale valore verrà acquisito direttamente dall'Amministrazione dagli archivi provinciali e che <b>la mancata determinazione del valore ICEF entro i termini stabiliti, comporta l'applicazione della retta mensile massima</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione10" name="dichiarazione10" dynamic_check="true" type="checkbox" value="10"/>
+      </td>
+      <td colspan="2">
+        <p>di prendere atto che, salvo diversa comunicazione, i bollettini di pagamento della retta verranno emessi a nome del genitore che ha sottoscritto l'accettazione del posto al nido e che in caso di mancato pagamento l'altro genitore sarà chiamato a corrispondere il dovuto in quanto coobbligato</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dichiarazione11" name="dichiarazione11" dynamic_check="true" type="checkbox" value="11"/>
+      </td>
+      <td colspan="2">
+        <p>di prendere atto che in caso di concessione dei servizi aggiuntivi di anticipo o posticipo e/o per il sabato mattina (nei nidi in cui sono previsti), l'Amministrazione provvederà, sulla base di tali dati, a ricalcolare la retta mensile comprensiva della quota aggiuntiva per tali servizi</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;" rowspan="3">
+        <input id="dichiarazione12" name="dichiarazione12" dynamic_check="true" type="checkbox" value="12"/>
+      </td>
+      <td colspan="2">
+        <p>di chiedere, ai fini del calcolo della retta, l'applicazione delle seguenti agevolazioni:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="richieste1" name="richieste1" enabled="true" type="checkbox" value="1"/>
+      </td>
+      <td>
+        <p>riduzione della retta in presenza di fratelli che fruiscono contemporaneamente del nido</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="richieste2" name="richieste2" enabled="true" type="checkbox" value="2"/>
+      </td>
+      <td>
+        <p>riduzione della retta in presenza di gemelli che fruiscono contemporaneamente del nido</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="RIC_VER_QUOTA" name="RIC_VER_QUOTA" dynamic_check="true" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>Ricevuta versamento quota di anticipo tariffario</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
+        <p style="text-align: center; font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <br>
+        <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e delle disposizioni della normativa nazionale, si informa che:</p>
+        <ul>
+          <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: http://comune.trento.it)</li>
+          <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: http://www.comunitrentini.it)</li>
+          <li>Il trattamento ha ad oggetto le seguenti categorie di dati: dati personali ordinari, dati particolari (salute), dati finanziari (situazione economico patrimoniale), e può avere ad oggetto dati giudiziari</li>
+          <li>I dati vengono raccolti e trattati per le finalità di cui alla L. P.12.3.2002 n. 4 e ss. mm. e alle procedure amministrative e contabili inerenti all’ammissione ed erogazione dei servizi socio educativi per la prima infanzia. I dati personali raccolti possono essere trattati dal comune di Trento per finalità statistiche e di documentazione</li>
+          <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico</li>
+          <li>Il trattamento riguarda anche dati sensibili (origine, stato di salute) ai sensi di quanto disposto dalla L. P.12.3.2002 n. 4 e ss. mm. e dal Regolamento per la disciplina del sistema dei servizi socio educativi per la prima infanzia del Comune di Trento</li>
+          <li>I dati sono raccolti dagli incaricati del Servizio Servizi all'infanzia, Istruzione e Sport nonché dai soggetti pubblici e privati tramite i quali si procede alla verifica del contenuto delle dichiarazioni ricevute dall'amministrazione (datori di lavoro, Azienda Provinciale per i Servizi Sanitari, Centro per l'impiego)</li>
+          <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza</li>
+          <li>I dati possono essere comunicati ai soggetti gestori dei servizi e a tutti i soggetti (Uffici, Enti ed Organi della Pubblica Amministrazione, utenti) che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso</li>
+          <li>I dati possono essere oggetto di diffusione per finalità statistiche e di documentazione e non sono oggetto di trasferimento all'estero</li>
+          <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Servizi all’Infanzia, Istruzione e Sport</li>
+          <li>Il conferimento dei dati ha natura obbligatoria per quanto riguarda i procedimenti  amministrativi e contabili inerenti all’ammissione ed erogazione dei servizi socio educativi per la prima infanzia. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa provvedere all’ammissione ed erogazione dei servizi socio educativi  per la prima infanzia</li>
+          <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge</li>
+          <li>I diritti dell'interessato sono:
+            <ul>
+              <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano</li>
+              <li>ottenere la loro comunicazione in forma intelligibile</li>
+              <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici</li>
+              <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge</li>
+              <li>richiedere la portabilità dei dati</li>
+              <li>aggiornare, correggere o integrare i dati che lo riguardano</li>
+              <li>opporsi, per motivi legittimi, al trattamento dei dati</li>
+              <li>proporre reclamo al Garante per la protezione dei dati personali</li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione1" name="Presa_visione1" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+        <input id="Presa_visione_check1" name="Presa_visione1" type="radio" value="1"/>
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p>Dichiaro di aver ricevuto e preso visione dell'informativa sul trattamento dei dati personali <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<globo_fondo_pagina areaheight="150" scope="1">
+    {{ utils.firma() }}
+    </globo_fondo_pagina>
+<br>
+
+<div class="simpatico-block">
+    {{ utils.firma_hidden() }}
+</div>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="GLOBO_allegato_cRIC-VER-QUOTA" name="GLOBO_allegato_cRIC-VER-QUOTA" obbligatorio="#RIC_VER_QUOTA.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+
+{% endblock content %}

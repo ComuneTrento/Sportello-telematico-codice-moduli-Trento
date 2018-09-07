@@ -1,0 +1,76 @@
+{% macro getDomandaAttiva(codice_fiscale_element, tipo_servizio, output, on) %}
+<div
+  ws-name="getDomandaAttiva"
+  ws-param-in={{ compose_ws_param({'codiceFiscale': codice_fiscale_element, 'tipoServizio': tipo_servizio }) }}
+  ws-param-out={{ compose_ws_param(output) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{{ service.getDomandaAttiva('Parametri_CFBambino','TipoDomandaFullTime', {
+ 'Parametri_TipoDomandaFT': 'tipoServizio',
+ 'Parametri_NumeroDomandaValFT': 'idDomanda',
+ 'Parametri_TipoOperazioneFT': 'tipoOperazione',
+ 'Parametri_DataDomValFT': 'dtDomanda',
+ 'Parametri_RichDomValFT': 'richiedente',
+},
+'#Parametri_CFBambino:change' ) }}
+
+
+{% macro getListaNidiDisponibili(codice_via, numero_civico, barra_civico, numero_domanda, tipo_servizio, lista_completa, lista_asili_element, on) %}
+<div
+  ws-name="getListaNidiDisponibili"
+  ws-param-in={{ compose_ws_param({
+    'codiceVia': codice_via,
+    'numeroCivico': numero_civico,
+    'barraCivico': barra_civico,
+    'numeroDomanda': numero_domanda,
+    'tipoServizio': tipo_servizio,
+	'listaCompleta': lista_completa
+  }) }}
+  ws-param-out={{ compose_ws_param({lista_asili_element: 'listaNidiDisponibili3'}) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{{ service.getListaNidiDisponibili(
+          'SvCodiceVia',
+          'SvCivicoResidenza',
+          'empty',
+          'Parametri_NumeroDomandaValFT',
+          'Tassonomia_FullTime',
+          'empty',
+          'Tassonomia_NidoInfanziaFT1',
+          '#RecuperaListaFam:click'
+          )}}
+
+
+{% macro getServiziNido(codice_nido, lista_servizi_element,on, id="lista_servizi") %}
+<div
+  id="{{ id }}"
+  ws-name="getServiziNido"
+  ws-param-in={{ compose_ws_param({'codiceNido': codice_nido }) }}
+  ws-param-out={{ compose_ws_param({lista_servizi_element: 'listaServiziDisponibili'}) }}
+  ws-on="{{ on }}">
+</div>
+{%- endmacro %}
+
+{{ service.getServiziNido('Tassonomia_NidoInfanziaFT1', 'Parametri_CodiceServizioNido1FT*', '#Tassonomia_NidoInfanziaFT1:change', 'listaServizi11') }}
+
+
+
+{% macro getDettaglioServizioNido(codice_nido, codice_servizio, output, on) %}
+<div
+  ws-name="getDettaglioServizioNido"
+  ws-param-in={{ compose_ws_param({
+  'codiceNido':codice_nido,
+  'codiceServizio':codice_servizio
+  }) }}
+  ws-param-out={{ compose_ws_param(output) }}
+  ws-on="{{ on }}" >
+</div>
+{%- endmacro %}
+
+{{ service.getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido1FT' + prefix, {
+      'Parametri_DettaglioServizio1FT' + prefix: 'descrizione'
+    }, '#Parametri_CodiceServizioNido1FT' + prefix + ':change' )}}

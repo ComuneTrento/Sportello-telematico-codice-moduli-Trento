@@ -49,23 +49,21 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
-<script type="text/javascript">
-var simpaticoEservice = "1_2"; //  the id corresponding to the e-service
-var simpaticoEserviceName = "GEN INTAGG AU";
-var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-AU" ; //  the url corresponding to the e-service
-var simpaticoForm = "modulo_secondario_ulteriori_intestatari_firma_autografa";
-var simpaticoCategory = "Edilizia"; // the general category of the e-service
-var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"]; // CDV
-      var ERROR_LABELS = {
-        'block1' : 'Inserire il codice fiscale',
-        'block2' : 'Selezionare il ruolo',
-        'block4' : 'Definire il ruolo'
-            }
-</script>
-<!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
-
 {% endblock meta %}
+
+{% block simpaticoconfig %}
+{% set simpaticoEservice="1_2" %}
+{% set simpaticoEserviceName="GEN INTAGG AU" %}
+{% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-AU" %}
+{% set simpaticoForm="modulo_secondario_ulteriori_intestatari_firma_autografa" %}
+{% set simpaticoCategory="Edilizia" %}
+{% set simpaticoMapping=[ "AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"] %}
+{% set ERROR_LABELS=[   ('block1' , 'Inserire il codice fiscale'),
+                        ('block2' , 'Selezionare il ruolo'),
+                        ('block4' , 'Definire il ruolo')] %}
+{{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
+
 
 {% block title %}
    Ulteriori intestatari del procedimento

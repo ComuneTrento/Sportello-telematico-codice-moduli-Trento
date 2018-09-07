@@ -1,0 +1,170 @@
+{% set CodiceModulo =  "GEN-DIR-LAV" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG_v1.0" %}-->
+{% extends "base_trento.html" %}
+
+{% block meta %}
+<meta campi_firma="Titolare2_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Anagrafica del direttore dei lavori"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/GEN-DIR-LAV"
+verifica_pagamento="NO"
+versione="1.0|01/01/2015"/>
+
+<meta codice_allegato="Modulo_an_dir_lav_firma_autografa"
+descrizione_estesa="Modulo anagrafica direttore dei lavori compilato e firmato manualmente"
+filename="Modulo_an_dir_lav_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_an_dir_lav_firma_autografa"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Modulo_an_dir_lav_firma_elettronica"
+descrizione_estesa="Modulo anagrafica direttore dei lavori compilato e firmato elettronicamente"
+filename="Modulo_an_dir_lav_firma_elettronica.pdf"
+firmato="SI"
+istruzioni="/modulistica/moduli/Modulo_an_dir_lav_firma_elettronica"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO ***********
+<script type="text/javascript">
+  var simpaticoEservice="1_3"
+  var simpaticoForm="modulo_secondario_ulteriori_particelle_o_subalterni"
+  var simpaticoCategory="Edilizia"
+  var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                         "AventeTitolo_Fax",
+                         "AventeTitolo_EMail"]
+  var ERROR_LABELS= {   
+                        'block1' :'Inserire il codice fiscale',
+                        'block2' : 'Selezionare il ruolo',
+                        'block4' : 'Particella inesistente',
+                        'block5' : 'Particella inesistente',
+                        'block6' : 'Particella inesistente',
+                        'block7' : 'Particella inesistente',
+                        'block8' : 'Particella inesistente',
+                        'block9' : 'Particella inesistente',
+                        'block10' : 'Particella inesistente',
+                        'block11' : 'Particella inesistente',
+                        'block12' : 'Particella inesistente',
+                        'block13' : 'Particella inesistente'
+    }
+
+  </script>
+ *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+
+{% block title %}
+   Anagrafica direttore dei lavori
+{% endblock title %}
+
+{% block content %}
+ <globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+ </globo_fondo_pagina>
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Titolare2_Cognome.value().toUpperCase() + ' - anagrafica direttore dei lavori'"/>
+
+ <h1 class="Modulo">
+  Anagrafica direttore dei lavori
+ </h1>
+
+ <input id="Titolare2_DatiProfessionistaObbligatori" name="Titolare2_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+ <input id="Titolare2_DatiAlboProfessionistaObbligatori" name="Titolare2_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+ 
+ <div class="simpatico-block simpatico-query-and-answer">
+
+{{anagrafica_trento.professionista("Titolare2","Il direttore dei lavori","Direttore_lavori","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Dichiarazione_direttore_lavori" name="Dichiarazione_direttore_lavori" type="radio" value="1" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p>Il sottoscritto Direttore dei lavori dichiara di aver preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto, nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+ </div>
+
+ <br/>
+
+  <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+   <tbody>
+     <tr class="Rigaintestazione">
+       <td colspan="3">
+         <p style="text-align: center;">
+           <b>Elenco degli allegati richiesti</b>
+         </p>
+       </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_dir_lav_firma_autografa" name="Modulo_dir_lav_firma_autografa" dynamic_check="#Metadati_Tipo_Firma_dir_lav.value() == 'A'" enabled="#Metadati_Tipo_Firma_dir_lav.value() == 'A'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        Modulo anagrafica firmato dal direttore dei lavori con <b>firma autografa</b>
+       </p>
+      </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_dir_lav_firma_elettronica" name="Modulo_dir_lav_firma_elettronica" dynamic_check="#Metadati_Tipo_Firma_dir_lav.value() == 'E'" enabled="#Metadati_Tipo_Firma_dir_lav.value() == 'E'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        Modulo anagrafica firmato dal direttore dei lavori con <b>firma elettronica</b>
+       </p>
+      </td>
+     </tr>
+   </tbody>
+ </table>
+
+ <br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+{{ utils.firma_hidden() }}
+</div>
+<br/>
+
+
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+ <input id="GLOBO_allegato_cModulo_an_dir_lav_firma_autografa" name="GLOBO_allegato_cModulo_an_dir_lav_firma_autografa" obbligatorio="#Modulo_dir_lav_firma_autografa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ <input id="GLOBO_allegato_cModulo_an_dir_lav_firma_elettronica" name="GLOBO_allegato_cModulo_an_dir_lav_firma_elettronica" obbligatorio="#Modulo_dir_lav_firma_elettronica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+ {{ utils.passaggio_metadati() }}
+ <input id="Metadati_Tipo_Firma_dir_lav" name="Metadati_Tipo_Firma_dir_lav" type="hidden"/>
+
+{% endblock content %}

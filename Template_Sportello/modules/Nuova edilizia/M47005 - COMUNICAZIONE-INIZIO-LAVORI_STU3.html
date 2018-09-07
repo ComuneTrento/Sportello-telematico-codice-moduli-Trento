@@ -335,35 +335,33 @@ generate_on="sending"
 name="GLOBO_report"
 urn_report="report:CSP_SESSION_REPORT"/>
 
-<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
-<script type="text/javascript">
-  var simpaticoEservice = "5"; //  the id corresponding to the e-service
-  var simpaticoEserviceName = "M47005 COMUNICAZIONE INIZIO LAVORI";
-  var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI" ; //  the url corresponding to the e-service
-  var simpaticoForm = "main";
-  var simpaticoCategory = "Edilizia"; // the general category of the e-service
-  var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
-        var ERROR_LABELS = {
-            'block1' : 'Selezionare una delle opzioni',
-            'block2' : 'Inserire il codice fiscale',
-            'block3' : 'Selezionare il ruolo',
-            'block5' : 'Inserire i dati richiesti',
-            'block6' : 'Data inizio lavori non inserita oppure particella edilizia non valida',
-            'block7' : 'Indirizzo non inserito',
-            'block8' : 'Indirizzo non verificato',
-            'block10' : 'Inserire il codice fiscale e indicare presa conoscenza',
-            'block11' : 'Selezionare una delle opzioni',
-            'block12' : 'Inserire il codice fiscale',
-            'block13' : 'Selezionare una delle opzioni',
-            'block14' : 'Selezionare una delle opzioni',
-            'block15' : 'Selezionare una delle opzioni',
-            'block16' : 'Indicare se richiesto invio della notifica',
-            'block18' : 'Confermare presa visione informativa sulla privacy'
-              }
-  </script>
-  <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 
 {% endblock meta %}
+
+{% block simpaticoconfig %}
+{% set simpaticoEservice="5" %}
+{% set simpaticoEserviceName="M47005 COMUNICAZIONE INIZIO LAVORI" %}
+{% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI" %}
+{% set simpaticoForm="main" %}
+{% set simpaticoCategory="Edilizia" %}
+{% set simpaticoMapping=[ "AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"] %}
+{% set ERROR_LABELS=[   ('block1' , 'Selezionare una delle opzioni'),
+                        ('block2' , 'Inserire il codice fiscale'),
+                        ('block3' , 'Selezionare il ruolo'),
+                        ('block5' , 'Inserire i dati richiesti'),
+                        ('block6' , 'Data inizio lavori non inserita oppure particella edilizia non valida'),
+                        ('block7' , 'Indirizzo non inserito'),
+                        ('block8' , 'Indirizzo non verificato'),
+                        ('block10' , 'Inserire il codice fiscale e indicare presa conoscenza'),
+                        ('block11' , 'Selezionare una delle opzioni'),
+                        ('block12' , 'Inserire il codice fiscale'),
+                        ('block13' , 'Selezionare una delle opzioni'),
+                        ('block14' , 'Selezionare una delle opzioni'),
+                        ('block15' , 'Selezionare una delle opzioni'),
+                        ('block16' , 'Indicare se richiesto invio della notifica'),
+                        ('block18' , 'Confermare presa visione informativa sulla privacy')] %}
+{{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
 
 {% block title %}M47005-COMUNICAZIONE-INIZIO-LAVORI{% endblock title %}
 
@@ -452,6 +450,18 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <div class="simpatico-block simpatico-query-and-answer">
 {{anagrafica_trento.professionista_direttore_lavori("Titolare2","che incarica quale <b>DIRETTORE DEI LAVORI</b>:","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale") }}
 
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr>
+      <td>
+        <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente3.checked() and #Titolare_CodiceFiscale.value() == #Titolare2_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il direttore dei lavori indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il direttore dei lavori indicati sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
+
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
@@ -496,7 +506,21 @@ urn_report="report:CSP_SESSION_REPORT"/>
   </tbody>
 </table>
 
+<div class="simpatico-block simpatico-query-and-answer">
 {{anagrafica_trento.soggetto_certificazione("Titolare3","SOGGETTO ABILITATO ALLA CERTIFICAZIONE ENERGETICA","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale") }}
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr>
+      <td>
+        <input style="width:100%" class="Modulo" id="coerenza_richiedente1" name="coerenza_richiedente1" dynamic_value="#Tipo_richiedente4.checked() and #Titolare_CodiceFiscale.value() == #Titolare3_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il soggetto incaricato alla certificazione energetica indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<input type="hidden" class="Modulo" id="verifica_coerenza_richiedente1" name="verifica_coerenza_richiedente1" dynamic_value="#coerenza_richiedente1.value() == 'ATTENZIONE: il richiedente e il soggetto incaricato alla certificazione energetica indicati sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
+</div>
 
 <br>
 
@@ -692,7 +716,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top">
-        <input id="Dich_eff_com" name="Dich_eff_com" type="checkbox" checked="true" value="3" />
+        <input id="Dich_eff_com" name="Dich_eff_com" type="checkbox" dynamic_check="true" value="3" />
       </td>
       <td>
         <b>dichiara</b> inoltre di essere a conoscenza che l’efficacia della presente Comunicazione di inizio lavori è sospesa qualora sia assente il piano di sicurezza e coordinamento di cui all’art. 100 d.lgs. n. 81/2008 o il fascicolo di cui all’art. 91, comma 1, lettera b), quando previsti, oppure in assenza di notifica di cui all’art. 99, quando prevista, oppure in assenza di documento unico di regolarità contributiva
@@ -939,6 +963,22 @@ urn_report="report:CSP_SESSION_REPORT"/>
       <td style="background-color: #eeeeee;" colspan="2">
         <p>Altri provvedimenti di cui alle disposizioni vigenti in materia di tutela degli ambienti per gli inquinamenti<br>
         Provvedimento nr. <input class="" label="numero provvedimento" id="num_provv4" mandatory_enabled="#tutela_ambienti.checked()" name="num_provv4" size="10"/> d.d. <input class="" label="d.d. provvedimento" id="dd_provv4" mandatory_enabled="#tutela_ambienti.checked()" name="dd_provv4" size="10"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width:3%">
+        <input id="Anagr_impresa" name="Anagr_impresa" type="checkbox" dynamic_check="#Esecuzione_lavori1.checked()" enabled="#Esecuzione_lavori1.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>modulo anagrafica impresa incaricata dei lavori</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width:3%">
+        <input id="Anagr_lav_aut" name="Anagr_lav_aut" type="checkbox" dynamic_check="#Esecuzione_lavori2.checked()" enabled="#Esecuzione_lavori2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>modulo anagrafica lavoratori autonomi incaricati dei lavori</p>
       </td>
     </tr>
     <tr>
