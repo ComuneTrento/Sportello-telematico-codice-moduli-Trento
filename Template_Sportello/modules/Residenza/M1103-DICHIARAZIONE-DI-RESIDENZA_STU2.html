@@ -27,6 +27,58 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
+<!-- Modulo figlio anagrafica familiare -->
+<meta codice_modulo_figlio="GEN-ALTRI-FAM"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Modulo figlio Allegato A -->
+<meta codice_modulo_figlio="DICH-RES-ALL-A"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Modulo figlio Allegato B -->
+<meta codice_modulo_figlio="DICH-RES-ALL-B"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Modulo figlio Allegato D -->
+<meta codice_modulo_figlio="ALL-D-DICH-SOST-ATTO-NOT"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Modulo figlio Allegato E -->
+<meta codice_modulo_figlio="ALL-E-DICH-SOST-ATTO-NOT"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Contratto di locazione o verbale di consegna dell'immobile -->
+<meta codice_allegato="GEN-CONTR-LOC"
+descrizione_estesa="Contratto di locazione o verbale di consegna dell'immobile"
+filename="Contratto locazione o verbale consegna immobile.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CONTR-LOC"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- Dichiarazione entrata in convivenza -->
+<meta codice_allegato="GEN-ENTR-CONV"
+descrizione_estesa="Dichiarazione entrata in convivenza"
+filename="Dichiarazione entrata in convivenza.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-ENTR-CONV"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
@@ -77,11 +129,11 @@ name="GLOBO_report"
 {{ intestazioni.intestazione_moduloprincipale_conbollo() }}
 
 <div class="simpatico-block simpatico-query-and-answer">
-<h1 class="Modulo">
+  <h1 class="Modulo">
     DICHIARAZIONE DI RESIDENZA
-</h1>
+  </h1>
 
-<table class="Modulo" style="border: 1px solid grey">
+  <table class="Modulo" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
@@ -117,7 +169,6 @@ name="GLOBO_report"
           <p>Dichiarazione di residenza di cittadini italiani iscritti all'AIRE (Anagrafe degli Italiani residenti all'estero),<br>
              presso il seguente comune: {{ utils.provincie_cambio_res_aire( 'Titolare_provincia_iscr_aire', 'Provincia di iscrizione AIRE del richiedente' )}}
              <select class="inputNormal" id="Titolare_comune_iscr_aire" name="Titolare_comune_iscr_aire" style="width:60%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #Titolare_provincia_iscr_aire.value(), 'Titolare_comune_iscr_aire')" mandatory_enabled="#Titolare_provincia_iscr_aire.value() != ''"></select><br>
-
              con provenienza dall'estero.</p>
         </td>
       </tr>
@@ -143,84 +194,1015 @@ name="GLOBO_report"
   </table>
 </div>
 
-  <br>
+<br>
 
-  {{anagrafica_trento.richiedente_cambio_res("Titolare","Il/La dichiarante","visibility:visibility", "cursor:pointer", "visibility:visibility")}}
+{{anagrafica_trento.richiedente_cambio_res("Titolare","Il/La dichiarante","visibility:visibility", "cursor:pointer", "visibility:visibility")}}
 
-  <br>
+<br>
 
-  <p class="Modulo"> Consapevole delle responsabilità penali per le dichiarazioni mendaci ai sensi degli art. 75 e 76 DPR 445/2000 che prevedono la decadenza dei benefici e l'obbligo di denuncia all'autorità competente</p>
+<p class="Modulo"> Consapevole delle responsabilità penali per le dichiarazioni mendaci ai sensi degli art. 75 e 76 DPR 445/2000 che prevedono la decadenza dei benefici e l'obbligo di denuncia all'autorità competente</p>
   
-  <h1 class="Modulo">DICHIARA</h1>
+<h1 class="Modulo">DICHIARA</h1>
 
-  <table class="Modulo" style="border: 1px solid grey">
-      <tbody>
-        <tr class="Rigaintestazione">
-          <td colspan="2">
-            <p><b>di aver trasferito la dimora abituale (residenza) nel Comune di Trento al seguente indirizzo:</b></p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p><b>di aver trasferito la dimora abituale (residenza) nel Comune di Trento al seguente indirizzo:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Provincia</p>
+      </td>
+      <td colspan="2">
+        <p class="Labelcella">Comune</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ utils.provincie( 'Titolare_prov_res', 'Provincia nuova residenza del richiedente' )}}
+      </td>
+      <td colspan="2">
+        <select class="inputNormal" id="Titolare_comune_res" name="Titolare_comune_res" style="width:100%" label="Comune nuova residenza del richiedente" dynamic_value="getComuniFromProvincia( #Titolare_prov_res.value(), 'Titolare_comune_res')" mandatory_enabled="true"></select><br>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Via/Piazza/Strada</p>
+      </td>
+      <td>
+        <p class="Labelcella">Numero civico</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input style="width:100%" class="Modulo" id="Titolare_via_res" name="Titolare_via_res" label="Via nuova residenza del richiedente" mandatory_enabled="true">
+      </td>
+      <td>
+        <input style="width:100%" class="Modulo" id="num_civ_res" name="num_civ_res" label="Numero civico nuova residenza del richiedente" mandatory_enabled="true">
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Scala</p>
+      </td>
+      <td>
+        <p class="Labelcella">Piano</p>
+      </td>
+      <td>
+        <p class="Labelcella">Interno</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%" class="Modulo" id="scala_res" name="scala_res" label="Scala nuova residenza del richiedente" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%" class="Modulo" id="piano_res" name="piano_res" label="Piano nuova residenza del richiedente" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%" class="Modulo" id="interno_res" name="interno_res" label="Interno nuova residenza del richiedente" enabled="true">
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+<br>
+<br>
 
-  
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>che nell'abitazione sita al nuovo indirizzo:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="trasferimento_familiari" name="trasferimento_familiari" label="Trasferimento di familiari al nuovo indirizzo" mandatory_enabled="true"> </div>
+        <input group="trasferimento_familiari" id="trasferimento_familiari1" name="trasferimento_familiari" type="radio" value="1" />
+      </td>
+      <td>
+        <p>non si sono trasferiti altri familiari</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="trasferimento_familiari" id="trasferimento_familiari2" name="trasferimento_familiari" type="radio" value="2" />
+      </td>
+      <td>
+        <p>si sono trasferiti n. <input size="4" class="Modulo" id="familiari_trasferiti" format="number" name="familiari_trasferiti" label="Numero familiari trasferiti al nuovo indirizzo" mandatory_enabled="#trasferimento_familiari2.checked()"> familiari</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+<!-- apertura moduli secondari per dettagli familiari trasferiti -->
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p><b>Eventuali occupanti residenti:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="persone_iscritte" name="persone_iscritte" label="Persone già iscritte al nuovo indirizzo" mandatory_enabled="true"> </div>
+        <input group="persone_iscritte" id="persone_iscritte1" name="persone_iscritte" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p>nell'abitazione sita al nuovo indirizzo non sono già iscritte altre persone</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
+        <input group="persone_iscritte" id="persone_iscritte2" name="persone_iscritte" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p>nell'abitazione sita al nuovo indirizzo sono già iscritte le seguenti persone (è sufficiente specificare le generalità di un componente della famiglia)</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td>
+        <p class="Labelcella">Nome</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%;" class="Modulo" id="cognome_fam_iscritto" name="cognome_fam_iscritto" label="Cognome del familiare già iscritto al nuovo indirizzo" mandatory_enabled="#persone_iscritte2.checked()">
+      </td>
+      <td>
+        <input style="width:100%;" class="Modulo" id="nome_fam_iscritto" name="nome_fam_iscritto" label="Nome del familiare già iscritto al nuovo indirizzo" mandatory_enabled="#persone_iscritte2.checked()">
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Luogo di nascita</p>
+      </td>
+      <td>
+        <p class="Labelcella">Data di nascita</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%;" class="Modulo" id="luogo_nasc_fam_iscritto" name="luogo_nasc_fam_iscritto" label="Luogo di nascita del familiare già iscritto al nuovo indirizzo" mandatory_enabled="#persone_iscritte2.checked()">
+      </td>
+      <td>
+        <input style="width:100%;" class="Modulo" id="data_nasc_fam_iscritto" name="data_nasc_fam_iscritto" format="date" label="Data di nascita del familiare già iscritto al nuovo indirizzo" mandatory_enabled="#persone_iscritte2.checked()">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p><b>Rapporti con persone già residenti:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="rapporti_residenti" name="rapporti_residenti" label="Rapporti con le persone già iscritte al nuovo indirizzo" mandatory_enabled="true"> </div>
+        <input group="rapporti_residenti" id="rapporti_residenti1" name="rapporti_residenti" type="radio" value="1" />
+      </td>
+      <td colspan="3">
+        <p><b>NON SUSSISTONO</b> rapporti di coniugio, parentela, affinità, adozione, tutela o vincoli affettivi con i componenti della famiglia già residente</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="12">
+        <input group="rapporti_residenti" id="rapporti_residenti2" name="rapporti_residenti" type="radio" value="2" />
+      </td>
+      <td colspan="3">
+        <p><b>SUSSISTE</b> il seguente vincolo rispetto al suindicato componente della famiglia già residente:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="tipo_rapporto" name="tipo_rapporto" label="Tipo di raporto" mandatory_enabled="#rapporti_residenti2.checked()"> </div>
+        <input group="tipo_rapporto" id="tipo_rapporto1" name="tipo_rapporto" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p>Matrimonio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="tipo_rapporto" id="tipo_rapporto2" name="tipo_rapporto" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p>Unione civile</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="4">
+        <input group="tipo_rapporto" id="tipo_rapporto3" name="tipo_rapporto" type="radio" value="3" />
+      </td>
+      <td colspan="2">
+        <p>Parentela</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="tipo_parentela" name="tipo_parentela" label="Tipo di raporto di parentela" mandatory_enabled="#tipo_rapporto3.checked()"> </div>
+        <input group="tipo_parentela" id="tipo_parentela1" name="tipo_parentela" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Figlio/a</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="tipo_parentela" id="tipo_parentela2" name="tipo_parentela" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Padre/Madre</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="tipo_parentela" id="tipo_parentela3" name="tipo_parentela" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Fratello/Sorella</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="tipo_rapporto" id="tipo_rapporto4" name="tipo_rapporto" type="radio" value="4" />
+      </td>
+      <td colspan="2">
+        <p>Affinità</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="tipo_rapporto" id="tipo_rapporto5" name="tipo_rapporto" type="radio" value="5" />
+      </td>
+      <td colspan="2">
+        <p>Adozione</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="tipo_rapporto" id="tipo_rapporto6" name="tipo_rapporto" type="radio" value="6" />
+      </td>
+      <td colspan="2">
+        <p>Tutela</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="tipo_rapporto" id="tipo_rapporto7" name="tipo_rapporto" type="radio" value="7" />
+      </td>
+      <td colspan="2">
+        <p>Vincoli affettivi</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="tipo_rapporto" id="tipo_rapporto8" name="tipo_rapporto" type="radio" value="8" />
+      </td>
+      <td colspan="2">
+        <p>Altro (specificare): <input style="width: 82%;" class="Modulo" id="Altro_tipo_parentela" name="Altro_tipo_parentela" label="Specificare altro tipo di parentela" mandatory_enabled="#tipo_rapporto8.checked()"></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p><b>Informazioni utili per l'accertamento anagrafico</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <p>Le utenze (acqua, gas, luce, rifiuti) sono a nome:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="ref_utenze" name="ref_utenze" label="Specificare a nome di chi sono le utenze" enabled="true"> </div>
+        <input group="ref_utenze" id="ref_utenze1" name="ref_utenze" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p>del dichiarante</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <input group="ref_utenze" id="ref_utenze2" name="ref_utenze" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p>di altro soggetto</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td>
+        <p class="Labelcella">Nome</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%;" class="Modulo" id="cognome_ref_utenze" name="cognome_ref_utenze" label="Cognome del referente per le utenze" enabled="#ref_utenze2.checked()">
+      </td>
+      <td>
+        <input style="width:100%;" class="Modulo" id="nome_ref_utenze" name="nome_ref_utenze" label="Nome del referente per le utenze" enabled="#ref_utenze2.checked()">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>Nome indicato sul campanello/cassetta delle lettere:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td>
+        <p class="Labelcella">Nome</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%;" class="Modulo" id="cognome_campanello" name="cognome_campanello" label="Cognome indicato sul campanello/cassetta della posta" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%;" class="Modulo" id="nome_campanello" name="nome_campanello" label="Nome indicato sul campanello/cassetta della posta" enabled="true">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
-          <p style="text-align: center;"><b>INFORMATIVA SULLA PRIVACY</b></p>
-          <p style="text-align: center; font-size:85%"><i>Art. 13 del D. Lgs. n. 196/2003, Regolamento UE 2016/679 in vigore dal 24.05.2016 e pienamente dal 25.05.2018</i></p>
+          <p><b>Fasce orarie preferenziali per l'effettuazione dell'accertamento anagrafico:</b></p>
         </td>
       </tr>
       <tr>
-        <td colspan="2">
+        <td>
+          <p>Giorno: <select class="inputNormal" id="giorno_acc1" name="giorno_acc1" style="width:15%" label="Giorno preferenziale per accertamento anagrafico" enabled="true">
+                        <option value=""></option>
+                        <option value="lunedi">Lunedì</option>
+                        <option value="martedi">Martedì</option>
+                        <option value="mercoledi">Mercoledì</option>
+                        <option value="giovedi">Giovedì</option>
+                        <option value="venerdi">Venerdì</option>
+                        <option value="sabato">Sabato</option>
+                      </select>
+            --- dalle ore: <select class="inputNormal" id="ora_inizio_acc1" name="ora_inizio_acc1" style="width:15%" label="Orario preferenziale per inizio accertamento anagrafico" enabled="true">
+                              <option value=""></option>
+                              <option value="7">7:00</option>
+                              <option value="7_30">7:30</option>
+                              <option value="8">8:00</option>
+                              <option value="8_30">8:30</option>
+                              <option value="9">9:00</option>
+                              <option value="9_30">9:30</option>
+                              <option value="10">10:00</option>
+                              <option value="10_30">10:30</option>
+                              <option value="11">11:00</option>
+                              <option value="11_30">11:30</option>
+                              <option value="12">12:00</option>
+                              <option value="12_30">12:30</option>
+                              <option value="13">13:00</option>
+                              <option value="13_30">13:30</option>
+                              <option value="14">14:00</option>
+                              <option value="14_30">14:30</option>
+                              <option value="15">15:00</option>
+                              <option value="15_30">15:30</option>
+                              <option value="16">16:00</option>
+                              <option value="16_30">16:30</option>
+                              <option value="17">17:00</option>
+                              <option value="17_30">17:30</option>
+                            </select> 
+            alle ore: <select class="inputNormal" id="ora_fine_acc1" name="ora_fine_acc1" style="width:15%" label="Orario preferenziale per fine accertamento anagrafico" enabled="true">
+                        <option value=""></option>
+                        <option value="7_30">7:30</option>
+                        <option value="8">8:00</option>
+                        <option value="8_30">8:30</option>
+                        <option value="9">9:00</option>
+                        <option value="9_30">9:30</option>
+                        <option value="10">10:00</option>
+                        <option value="10_30">10:30</option>
+                        <option value="11">11:00</option>
+                        <option value="11_30">11:30</option>
+                        <option value="12">12:00</option>
+                        <option value="12_30">12:30</option>
+                        <option value="13">13:00</option>
+                        <option value="13_30">13:30</option>
+                        <option value="14">14:00</option>
+                        <option value="14_30">14:30</option>
+                        <option value="15">15:00</option>
+                        <option value="15_30">15:30</option>
+                        <option value="16">16:00</option>
+                        <option value="16_30">16:30</option>
+                        <option value="17">17:00</option>
+                        <option value="17_30">17:30</option>
+                        <option value="18">18:00</option>
+                      </select> 
+          </p>
+          <p>Giorno: <select class="inputNormal" id="giorno_acc2" name="giorno_acc2" style="width:15%" label="Giorno alternativo per accertamento anagrafico" enabled="true">
+                        <option value=""></option>
+                        <option value="lunedi">Lunedì</option>
+                        <option value="martedi">Martedì</option>
+                        <option value="mercoledi">Mercoledì</option>
+                        <option value="giovedi">Giovedì</option>
+                        <option value="venerdi">Venerdì</option>
+                        <option value="sabato">Sabato</option>
+                      </select>
+            --- dalle ore: <select class="inputNormal" id="ora_inizio_acc2" name="ora_inizio_acc2" style="width:15%" label="Orario alternativo per inizio accertamento anagrafico" enabled="true">
+                              <option value=""></option>
+                              <option value="7">7:00</option>
+                              <option value="7_30">7:30</option>
+                              <option value="8">8:00</option>
+                              <option value="8_30">8:30</option>
+                              <option value="9">9:00</option>
+                              <option value="9_30">9:30</option>
+                              <option value="10">10:00</option>
+                              <option value="10_30">10:30</option>
+                              <option value="11">11:00</option>
+                              <option value="11_30">11:30</option>
+                              <option value="12">12:00</option>
+                              <option value="12_30">12:30</option>
+                              <option value="13">13:00</option>
+                              <option value="13_30">13:30</option>
+                              <option value="14">14:00</option>
+                              <option value="14_30">14:30</option>
+                              <option value="15">15:00</option>
+                              <option value="15_30">15:30</option>
+                              <option value="16">16:00</option>
+                              <option value="16_30">16:30</option>
+                              <option value="17">17:00</option>
+                              <option value="17_30">17:30</option>
+                            </select> 
+            alle ore: <select class="inputNormal" id="ora_fine_acc2" name="ora_fine_acc2" style="width:15%" label="Orario alternativo per fine accertamento anagrafico" enabled="true">
+                        <option value=""></option>
+                        <option value="7_30">7:30</option>
+                        <option value="8">8:00</option>
+                        <option value="8_30">8:30</option>
+                        <option value="9">9:00</option>
+                        <option value="9_30">9:30</option>
+                        <option value="10">10:00</option>
+                        <option value="10_30">10:30</option>
+                        <option value="11">11:00</option>
+                        <option value="11_30">11:30</option>
+                        <option value="12">12:00</option>
+                        <option value="12_30">12:30</option>
+                        <option value="13">13:00</option>
+                        <option value="13_30">13:30</option>
+                        <option value="14">14:00</option>
+                        <option value="14_30">14:30</option>
+                        <option value="15">15:00</option>
+                        <option value="15_30">15:30</option>
+                        <option value="16">16:00</option>
+                        <option value="16_30">16:30</option>
+                        <option value="17">17:00</option>
+                        <option value="17_30">17:30</option>
+                        <option value="18">18:00</option>
+                      </select> 
+          </p><br>
+          <p>Altre notizie: <input style="width:88%;" class="Modulo" id="altre_notizie" name="altre_notizie" label="Altre notizie utili ai fini dell'accertamento anagrafico" enabled="true"></p>
           <br>
-          <p>Ai sensi dell'art. 13 del codice in materia di protezione dei dati personali si forniscono le seguenti informazioni:</p>
-          <ul>
-            <li><b>Finalità del trattamento:</b> i dati personali dichiarati saranno utilizzati dagli uffici nell'ambito del procedimento per il quale la presente dichiarazione viene resa.</li>
-            <br>
-            <li><b>Modalità:</b> il trattamento avverrà sia con strumenti cartacei sia su supporti informatici a disposizione degli uffici.</li>
-            <br>
-            <li><b>Ambito di comunicazione:</b> i dati verranno comunicati a terzi ai sensi della L. n. 241/1990, ove applicabile, e in caso di verifiche ai sensi dell'art. 71 del D.P.R. n. 445/2000.</li>
-            <br>
-            <li><b>Diritti:</b> il sottoscrittore può in ogni momento esercitare i diritti di accesso, rettifica, aggiornamento e integrazione dei dati ai sensi dell'art. 7 del D.Lgs. n. 196/2003 rivolgendo le richieste al Titolare del trattamento: Comune di Trento</li>
-          </ul>
-        </td>
-      </tr>
-      <tr>
-        <td style="width: 4%; vertical-align: top;">
-          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
-          <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
-        </td>
-        <td colspan="2" style="background-color: #eeeeee;">
-          <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+          <p><b>N.B.: Le fasce orarie preferenziali segnalate sono puramente indicative e non vincolanti per l'amministrazione Comunale ai fini dell'accertamento</b></p>
         </td>
       </tr>
     </tbody>
-  </table>
+</table>
 
-  <br>
-  <br>
+<br>
+<br>
 
-  <div class="simpatico-block">
-    {{ utils.firma_hidden() }}
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>Comunicazione per la tariffa gestione rifiuti:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <p>La comunicazione relativa alla tariffa gestione dei rifiuti va presentata a Dolomiti Energia S.p.A. <b>entro i 5 giorni successivi alla data di inizio occupazione</b>. Allo stesso tempo va segnalato a Dolomiti Energia S.p.A. l'eventuale abbandono della precedente abitazione qualora situata nel Comune di Trento.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="gestione_rifiuti" name="gestione_rifiuti" label="Possesso del modello relativo alla tariffa sui rifiuti" enabled="true"> </div>
+        <input group="gestione_rifiuti" id="gestione_rifiuti1" name="gestione_rifiuti" type="radio" value="1" />
+      </td>
+      <td>
+        <p>dichiara di <b>essere in possesso</b> del modello relativo alla tariffa sui rifiuti - TAR</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="gestione_rifiuti" id="gestione_rifiuti2" name="gestione_rifiuti" type="radio" value="2" />
+      </td>
+      <td>
+        <p>dichiara di <b>non essere in possesso</b> del modello relativo alla tariffa sui rifiuti - TARI</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<h2 class="Modulo">DICHIARA INOLTRE</h2>
+<p class="Modulo">di occupare l'abitazione in base al titolo di seguito descritto, consapevole che, ai sensi dell'art. 5 del D.L. 28.03.2014 n. 47 (convertito nella legge 23.05.2014 n. 80), in caso di dichiarazioni mendaci l'iscrizione anagrafica sarà nulla, per espressa previsione di legge, con decorrenza dalla data della dichiarazione stessa.</p>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="11">
+        <p><b>Titolo di occupazione dell'alloggio:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="4">
+        <div id="titolo_occupazione" name="titolo_occupazione" label="Specificare il titolo di occupazione dell'alloggio" enabled="true"> </div>
+        <input group="titolo_occupazione" id="titolo_occupazione1" name="titolo_occupazione" type="radio" value="1" />
+      </td>
+      <td colspan="10">
+        <p>di essere <b>proprietario</b> dell'abitazione contraddistinta dai seguenti estremi catastali:</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 20%;" colspan="2">
+        <p class="Labelcella">Tipo</p>
+      </td>
+      <td style="width: 15%;">
+        <p class="Labelcella">Comune catastale (codice)</p>
+      </td>
+      <td style="width: 25%;">
+        <p class="Labelcella">Comune catastale (nome esteso)</p>
+      </td>
+      <td style="width: 7%;">
+        <p class="Labelcella">Numero</p>
+      </td>
+      <td style="width: 6%;">
+        <p class="Labelcella">Barra</p>
+      </td>
+      <td style="width: 6%;">
+        <p class="Labelcella">Porzione Materiale</p>
+      </td>
+      <td style="width: 6%;">
+        <p  class="Labelcella">Subalterno</p>
+      </td>
+      <td style="width: 5%;">
+        <p class="Labelcella">Controllo particella</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Mappa</p>
+      </td>
+    </tr>
+    <tr valid="#RisultatoVerificaCatastale.value() == 'SI' || #RisultatoVerificaCatastale.value() == ''">
+      <td colspan="2">
+        <select class="inputNormal" id="TipoImmobile" name="TipoImmobile" style="width:100%" label="Tipo immobile" mandatory_enabled="#titolo_occupazione1.checked()">
+          <option value=""></option>
+          <option value="Porzione_edificio">porzione di edificio</option>
+          <option value="Intero_edificio">intero edificio</option>
+        </select>
+      </td>
+      <td>
+        <select class="inputNorma2" id="CatComune" name="CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#titolo_occupazione1.checked()">
+          <option value=""></option>
+          <option value="17">Baselga del Bondone</option>
+          <option value="50">Cadine</option>
+          <option value="108">Cognola</option>
+          <option value="161">Gardolo</option>
+          <option value="222">Mattarello</option>
+          <option value="224">Meano</option>
+          <option value="244">Montevaccino</option>
+          <option value="285">Povo</option>
+          <option value="305">Ravina</option>
+          <option value="308">Romagnano</option>
+          <option value="337">Sardagna</option>
+          <option value="355">Sopramonte</option>
+          <option value="406" selected>Trento</option>
+          <option value="432">Vigolo Baselga</option>
+          <option value="437">Villamontagna</option>
+          <option value="439">Villazzano</option>
+          <option value="4">Aldeno</option>
+          <option value="101">Cimone</option>
+          <option value="162">Garniga</option>
+        </select>
+      </td>
+      <td>
+        <input name="ComuneCatastale_esteso" id="ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+      </td>
+      <td>
+        <input name="CatNumero" id="CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#titolo_occupazione1.checked()"/>
+      </td>
+      <td>
+        <input name="CatBarra" id="CatBarra" style="width:100%;" label="Barra particella catastale" enabled="true"/>
+      </td>
+      <td>
+        <input name="CatPM" id="CatPM" style="width:100%;" label="Porzione Materiale" enabled="true" />
+      </td>
+      <td>
+        <input name="CatSubalterno" id="CatSubalterno" style="width:100%;" label="Subalterno" mandatory="#TipoImmobile.check_value(['Porzione_edificio'])"/>
+      </td>
+      <td>
+        <button type="button" style="width:34px; height:28px" id="ControlloDatiCatastaliButton" name="ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+          {{ service.verifica_particella(
+            'CatComune',
+            'CatNumero',
+            'CatBarra',
+            'TipoImmobile',
+            'CatSubalterno',
+            {
+            'RisultatoVerificaCatastale': 'esiste',
+            'Particella': particella
+            },
+            '#' + 'ControlloDatiCatastaliButton:click') }}
+
+        <input id="RisultatoVerificaCatastale" name="RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+          {{ service.lista_vie(
+            'CatComune',
+            'CatNumero',
+            'CatBarra',
+            'TipoImmobile',
+            'lista_vie1',
+            '#' + 'RisultatoVerificaCatastale:change'
+            )}}
+      </td>
+      <td>
+        <button type="button" enabled="#RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('CatComune').value; num = document.getElementById('CatNumero').value; barra = document.getElementById('CatBarra').value; tipo = document.getElementById('TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="10">
+        <b>Verifica esito particella:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input
+          id="CheckVerificaCatastale"
+          name="CheckVerificaCatastale"
+          dynamic_check="#RisultatoVerificaCatastale.value()=='SI'"
+          enabled="#RisultatoVerificaCatastale.value()=='SI'"
+          type="checkbox"
+          label="Modulo"/>
+
+        Particella esistente&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <input
+           id="CheckVerificaCatastale1"
+           name="CheckVerificaCatastale1"
+           dynamic_check="#RisultatoVerificaCatastale.value()=='NO'"
+           enabled="#RisultatoVerificaCatastale.value()=='NO'"
+           type="checkbox"/>
+
+        Particella NON esistente
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="titolo_occupazione" id="titolo_occupazione2" name="titolo_occupazione" type="radio" value="2" />
+      </td>
+      <td colspan="10">
+        <p>di essere <b>intestatario del contratto di locazione</b> regolarmente registrato<br><br>
+          Agenzia delle entrate di <input name="Ag_entrate" id="Ag_entrate" size="10" label="Agenzia delle entrate di registrazione del contratto di locazione" mandatory_enabled="#titolo_occupazione2.checked()"/> &nbsp;&nbsp;in data <input name="Data_reg_contratto_locazione" id="Data_reg_contratto_locazione" format="date" size="7" label="Data di registrazione del contratto di locazione" mandatory_enabled="#titolo_occupazione2.checked()"/>&nbsp;&nbsp;al n. <input name="Num_contratto_locazione" id="Num_contratto_locazione" size="7" label="Numero di registrazione del contratto di locazione" mandatory_enabled="#titolo_occupazione2.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="titolo_occupazione" id="titolo_occupazione3" name="titolo_occupazione" type="radio" value="3" />
+      </td>
+      <td colspan="10">
+        <p>di essere <b>intestatario di contratto di locazione relativo a immobili di Edilizia Residenziale Pubblica</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="titolo_occupazione" id="titolo_occupazione4" name="titolo_occupazione" type="radio" value="4" />
+      </td>
+      <td colspan="10">
+        <p>di essere <b>comodatario</b> con contratto di comodato d'uso regolarmente registrato<br><br>
+          Agenzia delle entrate di <input name="Ag_entrate_comod" id="Ag_entrate_comod" size="10" label="Agenzia delle entrate di registrazione del contratto di comodato di uso" mandatory_enabled="#titolo_occupazione4.checked()"/> &nbsp;&nbsp;in data <input name="Data_reg_contratto_com_uso" id="Data_reg_contratto_com_uso" format="date" size="7" label="Data di registrazione del contratto di comodato di uso" mandatory_enabled="#titolo_occupazione4.checked()"/>&nbsp;&nbsp;al n. <input name="Num_contratto_com_uso" id="Num_contratto_com_uso" size="7" label="Numero di registrazione del contratto di comodato di uso" mandatory_enabled="#titolo_occupazione4.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="titolo_occupazione" id="titolo_occupazione5" name="titolo_occupazione" type="radio" value="5" />
+      </td>
+      <td colspan="10">
+        <p>di essere <b>usufruttuario</b>, in forza del seguente titolo costruttivo:</p>
+        <p style="font-size:85%;"><i>(indicare dati utili a consentire la verifica da parte dell'Ufficio Anagrafe)</i></p>
+        <textarea class="inputNormal" id="titolo_costruttivo" name="titolo_costruttivo" label="Specificare titolo costruttivo per usufrutto immobile" style="width:100%;height:1cm" mandatory_enabled="#titolo_occupazione5.checked()"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
+        <input group="titolo_occupazione" id="titolo_occupazione6" name="titolo_occupazione" type="radio" value="6" />
+      </td>
+      <td colspan="10">
+        <p>di occupare legittimamente l'abitazione in base al titolo di seguito descritto:</p>
+        <textarea class="inputNormal" id="doc_occupazione" name="doc_occupazione" label="Specificare titolo per legittima occupazione immobile" style="width:100%;height:1cm" mandatory_enabled="#titolo_occupazione6.checked()"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <div id="proprieta_immobile" name="proprieta_immobile" label="Specificare il proprietario dell'immobile" mandatory_enabled="#titolo_occupazione6.checked()"> </div>
+        <input group="proprieta_immobile" id="proprieta_immobile1" name="proprieta_immobile" type="radio" value="1" />
+      </td>
+      <td colspan="9">
+        <p>indica di seguito i dati anagrafici del proprietario dell'immobile:</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td colspan="2">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td colspan="5">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input name="cognome_propr_imm" id="cognome_propr_imm" style="width:100%;" label="Cognome proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      </td>
+      <td colspan="2">
+        <input name="nome_propr_imm" id="nome_propr_imm" style="width:100%;" label="Nome proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      </td>
+      <td colspan="5">
+        <input name="ind_propr_imm" id="ind_propr_imm" style="width:100%;" label="Indirizzo proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input group="proprieta_immobile" id="proprieta_immobile2" name="proprieta_immobile" type="radio" value="2" />
+      </td>
+      <td colspan="9">
+        <p>dichiara di essere ospite presso una Convivenza anagrafica</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="6">
+        <p><b>RECAPITO: si chiede di ricevere le eventuali comunicazioni inerenti la presente istanza presso</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
+        <div id="recapito_scelto" name="recapito_scelto" label="Recapito per le comunicazioni" enabled="true"> </div>
+        <input group="recapito_scelto" id="recapito_scelto1" name="recapito_scelto" type="radio" value="1" />
+      </td>
+      <td colspan="5">
+        <p>la nuova residenza e i recapiti indicati nell'anagrafica personale</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td><p class="Labelcella">Provincia</p></td>
+      <td><p class="Labelcella">Comune</p></td>
+      <td colspan="2"><p class="Labelcella">Via/Piazza/Strada</p></td>
+      <td><p class="Labelcella">Numero civico</p></td>
+    </tr>
+    <tr>
+      <td><input name="prov_recapito" id="prov_recapito" style="width:100%;" label="Provincia per il recapito comunicazioni" dynamic_value="#Titolare_prov_res.value()" enabled="#recapito_scelto1.checked()" readonly /></td>
+      <td><input name="comune_recapito" id="comune_recapito" style="width:100%;" label="Comune per il recapito comunicazioni" dynamic_value="#Titolare_comune_res.value()" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td colspan="2"><input name="indirizzo_recapito" id="indirizzo_recapito" style="width:100%;" label="Infdirizzo per il recapito comunicazioni" dynamic_value="#Titolare_via_res.value()" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="num_civ_recapito" id="num_civ_recapito" style="width:100%;" label="Numero civico per il recapito comunicazioni" dynamic_value="#num_civ_res.value()" enabled="#recapito_scelto1.checked()" readonly/></td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td><p class="Labelcella">Telefono</p></td>
+      <td><p class="Labelcella">Cellulare</p></td>
+      <td><p class="Labelcella">Fax</p></td>
+      <td><p class="Labelcella">Email</p></td>
+      <td><p class="Labelcella">PEC</p></td>
+    </tr>
+    <tr>
+      <td><input name="Telefono_recapito" id="Telefono_recapito" style="width:100%;" label="Telefono per il recapito comunicazioni" dynamic_value="#Titolare_Telefono.value() != '' ? #Titolare_Telefono.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="Cellulare_recapito" id="Cellulare_recapito" style="width:100%;" label="Cellulare per il recapito comunicazioni" dynamic_value="#Titolare_Cellulare.value() != '' ? #Titolare_Cellulare.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="Fax_recapito" id="Fax_recapito" style="width:100%;" label="Fax per il recapito comunicazioni" dynamic_value="#Titolare_Fax.value() != '' ? #Titolare_Fax.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="EMail_recapito" id="EMail_recapito" style="width:100%;" label="Email per il recapito comunicazioni" dynamic_value="#Titolare_EMail.value() != '' ? #Titolare_EMail.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="EMailPEC_recapito" id="EMailPEC_recapito" style="width:100%;" label="PEC per il recapito comunicazioni" dynamic_value="#Titolare_EMailPEC.value() != '' ? #Titolare_EMailPEC.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
+        <input group="recapito_scelto" id="recapito_scelto2" name="recapito_scelto" type="radio" value="2" />
+      </td>
+      <td colspan="5">
+        <p>un recapito differente, indicato di seguito</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td><p class="Labelcella">Provincia</p></td>
+      <td><p class="Labelcella">Comune</p></td>
+      <td colspan="2"><p class="Labelcella">Via/Piazza/Strada</p></td>
+      <td><p class="Labelcella">Numero civico</p></td>
+    </tr>
+    <tr>
+      <td>{{ utils.provincie( 'prov_recapito_diverso', 'Provincia per il recapito comunicazioni' )}}</td>
+      <td><select name="comune_recapito_diverso" id="comune_recapito_diverso" style="width:100%;" label="Comune per il recapito comunicazioni" dynamic_value="getComuniFromProvincia( #prov_recapito_diverso.value(), 'comune_recapito_diverso')" enabled="#recapito_scelto2.checked()"></select></td>
+      <td colspan="2"><input name="indirizzo_recapito_diverso" id="indirizzo_recapito_diverso" style="width:100%;" label="Infdirizzo per il recapito comunicazioni" enabled="#recapito_scelto2.checked()"/></td>
+      <td><input name="num_civ_recapito_diverso" id="num_civ_recapito_diverso" style="width:100%;" label="Numero civico per il recapito comunicazioni" enabled="#recapito_scelto2.checked()"/></td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td><p class="Labelcella">Telefono</p></td>
+      <td><p class="Labelcella">Cellulare</p></td>
+      <td><p class="Labelcella">Fax</p></td>
+      <td><p class="Labelcella">Email</p></td>
+      <td><p class="Labelcella">PEC</p></td>
+    </tr>
+    <tr>
+      <td><input name="Telefono_recapito_diverso" id="Telefono_recapito_diverso" style="width:100%;" label="Telefono per il recapito comunicazioni" enabled="#recapito_scelto2.checked()"/></td>
+      <td><input name="Cellulare_recapito_diverso" id="Cellulare_recapito_diverso" style="width:100%;" label="Cellulare per il recapito comunicazioni" enabled="#recapito_scelto2.checked()"/></td>
+      <td><input name="Fax_recapito_diverso" id="Fax_recapito_diverso" style="width:100%;" label="Fax per il recapito comunicazioni" enabled="#recapito_scelto2.checked()"/></td>
+      <td><input name="EMail_recapito_diverso" id="EMail_recapito_diverso" style="width:100%;" label="Email per il recapito comunicazioni" enabled="#recapito_scelto2.checked()"/></td>
+      <td><input name="EMailPEC_recapito_diverso" id="EMailPEC_recapito_diverso" style="width:100%;" label="PEC per il recapito comunicazioni" enabled="#recapito_scelto2.checked()"/></td>
+    </tr>
+    </tr>
+  </tbody>
+</table>
+ 
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="DICH_RES_ALL_A" name="DICH_RES_ALL_A" type="checkbox" dynamic_check="!#Titolare_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="!#Titolare_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>
+      </td>
+      <td>
+        Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati non appartenenti all'UE</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>
+      </td>
+      <td>
+        Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati appartenenti all'UE</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="DICH_RES_ALL_D" name="DICH_RES_ALL_D" type="checkbox" dynamic_check="#persone_iscritte2.checked()" enabled="#persone_iscritte2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td>
+        Dichiarazione esistenza di vincoli con il dichiarante da parte della persona già residente al nuovo indirizzo</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#titolo_occupazione4.checked() || #titolo_occupazione5.checked()" enabled="#titolo_occupazione4.checked() || #titolo_occupazione5.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td>
+        Titolo di occupazione dell'alloggio, da compilarsi da parte del proprietario dell'immobile</b>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<!-- Modulo figlio Allegato E -->
+<!--ALL-E-DICH-SOST-ATTO-NOT -->
+
+<!-- Contratto di locazione o verbale di consegna dell'immobile -->
+<!--GEN-CONTR-LOC -->
+
+<!-- Dichiarazione entrata in convivenza -->
+<!--GEN-ENTR-CONV -->
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;"><b>INFORMATIVA SULLA PRIVACY</b></p>
+        <p style="text-align: center; font-size:85%"><i>Art. 13 del D. Lgs. n. 196/2003, Regolamento UE 2016/679 in vigore dal 24.05.2016 e pienamente dal 25.05.2018</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <br>
+        <p>Ai sensi dell'art. 13 del codice in materia di protezione dei dati personali si forniscono le seguenti informazioni:</p>
+        <ul>
+          <li><b>Finalità del trattamento:</b> i dati personali sono raccolti dal Servizio Servizi Demografici e Decentramento esclusivamente per lo svolgimento dell’attività di competenza e per lo svolgimento di funzioni istituzionali</li>
+          <li><b>Modalità del trattamento:</b> i dati vengono trattati con sistemi informatici e/o manuali attraverso procedure adeguate a garantire la sicurezza e la riservatezza degli stessi.</li>
+          <li><b>Il conferimento dei dati ha natura obbligatoria per l’espletamento del servizio.</b></li>
+          <li>Non fornire i dati comporta l’inosservanza di obblighi di legge e/o impedire l’espletamento del servizio</li>
+          <li>I dati possono essere comunicati a tutti i soggetti (Uffici, Enti ed Organi della Pubblica Amministrazione, Aziende o Istituzioni) che, secondo le norme, sono tenuti a conoscerli, nonché ai soggetti che devono o possono intervenire nel procedimento amministrativo</li>
+          <li>I dati possono essere conosciuti dal responsabile e dagli incaricati del Servizio Servizi Demografici e Decentramento</li>
+          <li>diritti dell’interessato sono (art. 7 del D.Lgs. 196/2003):
+            <ul>
+              <li>richiedere la conferma dell’esistenza o meno dei dati che lo riguardano</li>
+              <li>ottenere la loro comunicazione in forma intelligibile</li>
+              <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici</li>
+              <li>ottenere la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge</li>
+              <li>aggiornare, correggere o integrare i dati che lo riguardano</li>
+              <li>opporsi, per motivi legittimi, al trattamenti dei dati</li>
+            </ul>
+          </li>
+          <li><b>Titolare del trattamento dei dati:</b> COMUNE DI TRENTO – VIA BELENZANI, 19</li>
+          <li><b>Responsabile del trattamento dei dati:</b> Dirigente del Servizio Servizi Demografici e Decentramento<br>
+                  Il Responsabile designato per l’esercizio dei diritti dell’interessato è il Segretario generale – Via Belenzani, 19 (indicazione consultabile anche sul sito internet <a href="http://www.comune.trento.it" target="_blank">www.comune.trento.it</a>)
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+        <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block">
+  {{ utils.firma_hidden() }}
 </div>
+
 <br>
 <p class="Modulo">
- <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
 </p>
+
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
 
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<!-- Modulo figlio Allegato A -->
+<!--DICH-RES-ALL-A -->
+
+<!-- Modulo figlio Allegato B -->
+<!--DICH-RES-ALL-B -->
+
+<!-- Modulo figlio Allegato C -->
+<!--ALL-C-DICH-SOST-ATTO-NOT -->
+
+<!-- Modulo figlio Allegato D -->
+<!--ALL-D-DICH-SOST-ATTO-NOT -->
+
+<!-- Modulo figlio Allegato E -->
+<!--ALL-E-DICH-SOST-ATTO-NOT -->
+
+<!-- Contratto di locazione o verbale di consegna dell'immobile -->
+<!--GEN-CONTR-LOC -->
+
+<!-- Dichiarazione entrata in convivenza -->
+<!--GEN-ENTR-CONV -->
 
 {% endblock content %}
