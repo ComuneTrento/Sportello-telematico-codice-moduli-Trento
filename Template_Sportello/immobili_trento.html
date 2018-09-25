@@ -2350,7 +2350,7 @@
                 prefix + '_CatNumero',
                 prefix + '_CatBarra',
                 prefix + '_TipoImmobile',
-                'lista_vie1',
+                prefix + '_lista_vie1',
                 '#' + prefix + '_RisultatoVerificaCatastale:change'
                 )}}
           </td>
@@ -2412,7 +2412,7 @@
           <p style="font-size:85%"> Via di riferimento o località in cui si trova la particella fondiaria oggetto di intervento</p>
         </td>
         <td colspan="4">
-          <input class="inputNormal" id="Localita_part_fondiaria" name="Localita_part_fondiaria" style="width: 100%;" label="Via/Localita della particella fondiaria"  mandatory_enabled="#{{ prefix }}_TipoImmobile.value() == 'F'">
+          <input class="inputNormal" id="{{ prefix }}_Localita_part_fondiaria" name="{{ prefix }}_Localita_part_fondiaria" style="width: 100%;" label="Via/Localita della particella fondiaria"  mandatory_enabled="#{{ prefix }}_TipoImmobile.value() == 'F'">
         </td>
       </tr>
     </tbody>
@@ -2463,14 +2463,14 @@
           <td enabled="(#{{ prefix }}_TipoImmobile.value() == 'S' || #{{ prefix }}_TipoImmobile.value() == 'E')">
 				    <select
 				        class="inputNormal"
-				        id="lista_vie1"
-				        name="lista_vie1"
+				        id="{{ prefix }}_lista_vie1"
+				        name="{{ prefix }}_lista_vie1"
 				        style="width:100%;"
 				        label="Elenco vie">
 				   </select>
           </td>
           <td colspan="2">
-            <input name="{{ prefix }}_Nomevia_esteso" id="{{ prefix }}_Nomevia_esteso" style="width:100%;" label="nome via" enabled="(#{{ prefix }}_TipoImmobile.value() == 'S' || #{{ prefix }}_TipoImmobile.value() == 'E')" dynamic_value="switch(#lista_vie1.value()) { case '10':	'VIA C. ABBA'; break;
+            <input name="{{ prefix }}_Nomevia_esteso" id="{{ prefix }}_Nomevia_esteso" style="width:100%;" label="nome via" enabled="(#{{ prefix }}_TipoImmobile.value() == 'S' || #{{ prefix }}_TipoImmobile.value() == 'E')" dynamic_value="switch(#{{ prefix }}_lista_vie1.value()) { case '10':	'VIA C. ABBA'; break;
                                                                                                                                                                          case '20':	'VIA A. ABONDI'; break;
                                                                                                                                                                          case '30':	'VIA J. ACONCIO'; break;
                                                                                                                                                                          case '40':	'VIA ADAMELLO'; break;
@@ -3654,7 +3654,7 @@
 			    <td>
 				    <button type="button" style="width:34px; height:28px" id="{{ prefix }}_ControlloStradarioButton" name="{{ prefix }}_ControlloStradarioButton"><img src="./appoggio/img/valida.png"/></button>
 				        {{ service.verifica_civico(
-						      'lista_vie1',
+						       prefix + '_lista_vie1',
 						       prefix + "_Civico",
 						       prefix + "_Barrato",
 					        {
@@ -3665,7 +3665,7 @@
 				    <input id="{{ prefix }}_RisultatoVerificaCivico" name="{{ prefix }}_RisultatoVerificaCivico" type="hidden" enabled="(#{{ prefix }}_TipoImmobile.value() == 'S' || #{{ prefix }}_TipoImmobile.value() == 'E')"/>
           </td>
           <td>
-		        <button type="button" enabled="#{{ prefix }}_RisultatoVerificaCatastale.value()=='SI'" onclick="codvia=document.getElementById('lista_vie1').value; num = document.getElementById('{{ prefix }}_Civico').value; barra = document.getElementById('{{ prefix }}_Barrato').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?via='+codvia+'&amp;civ='+num+'&amp;barra='+barra);"><img src="./appoggio/img/mappa.png"/></button>
+		        <button type="button" enabled="#{{ prefix }}_RisultatoVerificaCatastale.value()=='SI'" onclick="codvia=document.getElementById('{{ prefix }}_lista_vie1').value; num = document.getElementById('{{ prefix }}_Civico').value; barra = document.getElementById('{{ prefix }}_Barrato').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?via='+codvia+'&amp;civ='+num+'&amp;barra='+barra);"><img src="./appoggio/img/mappa.png"/></button>
           </td>
         </tr>
       </tbody>
