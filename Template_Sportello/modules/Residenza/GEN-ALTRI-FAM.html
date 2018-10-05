@@ -1,0 +1,153 @@
+{% set CodiceModulo =  "GEN-ALTRI-FAM" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-ALTRI-FAM_v1.0" %}-->
+{% extends "base_trento.html" %}
+
+{% block meta %}
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Anagrafica dei familiari trasferiti nella nuova residenza"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/GEN-ALTRI-FAM"
+verifica_pagamento="NO"
+versione="1.1|03/06/2016"/>
+
+<meta codice_modulo_figlio="DICH-RES-ALL-C"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_allegato="Modulo_compilato_firma_autografa"
+descrizione_estesa="Modulo compilato e firmato manualmente"
+filename="Modulo_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
+<script type="text/javascript">
+    var simpaticoEservice="5_1"
+    var simpaticoForm="modulo_secondario_lavoratori_autonomi"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Fax",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                          'block1' :'Inserire il codice fiscale'
+      }
+  
+    </script>
+   *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+
+{% block title %}
+Anagrafica dei familiari trasferiti nella nuova residenza
+{% endblock title %}
+
+
+{% block content %}
+ <globo_fondo_pagina areaheight="150" scope="1">
+ {{ utils.firma() }}
+</globo_fondo_pagina>
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input checked="checked" dynamic_check="true" id="SempreSI" name="SempreSI" type="hidden" value="SI"/>
+ <input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Anagrafica familiare trasferito nella nuova residenza'" id="Oggetto" name="Oggetto" type="hidden"/>
+
+ <!-- simpatico start -->
+<div class="simpatico-block simpatico-query-and-answer">
+    <!-- simpatico end -->
+<h1 class="Modulo">
+  Anagrafica familiare trasferito nella nuova residenza
+</h1>
+
+<br>
+
+{{anagrafica_trento.richiedente_cambio_res("AventeTitolo","Il/La familiare","visibility:visibility", "cursor:pointer", "visibility:visibility")}}
+
+</div>
+
+<br>
+<br>
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
+ <tbody>
+  <tr class="Rigaintestazione">
+   <td colspan="2">
+    <p style="text-align: center;">
+     <b>
+      Elenco degli allegati
+     </b>
+    </p>
+   </td>
+  </tr>
+  <tr>
+   <td style="vertical-align: top; width:4%">
+    <input id="Anag_famil" name="Anag_famil" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
+   </td>
+   <td style="background-color: #eeeeee;">
+    <p>scansione della stampa di questo modulo firmata (firma autografa)</p>
+   </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top; width:4%">
+     <input id="Famil_minorenne" name="Famil_minorenne" type="checkbox" dynamic_check="moment(#Data_PDF.value(), 'DD/MM/YYYY').diff(moment(#AventeTitolo_DataNascita.value(), 'DD/MM/YYYY'), 'years') < 18" enabled="moment(#Data_PDF.value(), 'DD/MM/YYYY').diff(moment(#AventeTitolo_DataNascita.value(), 'DD/MM/YYYY'), 'years') < 18" value="OBBLIGATORIO"/>
+    </td>
+    <td style="background-color: #eeeeee;">
+     <p>Allegato C - trasferimento di un familiare minorenne</p>
+    </td>
+   </tr>
+  <!-- controllo età familiare indicato, se inferiore a 18 anni necessario compilare modulo secondario (allegato C) -->
+  
+ </tbody>
+</table>
+
+<br/>
+
+<!-- simpatico start -->
+<div class="simpatico-block">
+<!-- simpatico end -->
+ {{ utils.firma_hidden() }}
+ </div>
+
+ <br/>
+
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+ 
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+ <input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Anag_famil.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ <input id="GLOBO_modulofiglio_cDICH-RES-ALL-C" name="GLOBO_modulofiglio_cDICH-RES-ALL-C" obbligatorio="#Famil_minorenne.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ 
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ 
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ 
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+ 
+
+ {{ utils.passaggio_metadati() }}
+
+
+ {% endblock content %}
