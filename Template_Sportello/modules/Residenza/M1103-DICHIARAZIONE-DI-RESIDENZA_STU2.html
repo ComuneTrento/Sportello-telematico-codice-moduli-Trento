@@ -46,6 +46,12 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<!-- Modulo figlio Allegato C -->
+<meta codice_modulo_figlio="DICH-RES-ALL-C"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <!-- Modulo figlio Allegato D -->
 <meta codice_modulo_figlio="DICH-RES-ALL-D"
 name="GLOBO_modulofiglio"
@@ -169,8 +175,10 @@ name="GLOBO_report"
         <td>
           <p>Dichiarazione di residenza di cittadini italiani iscritti all'AIRE (Anagrafe degli Italiani residenti all'estero),<br>
              presso il seguente comune: {{ utils.provincie_cambio_res_aire( 'Titolare_provincia_iscr_aire', 'Provincia di iscrizione AIRE del richiedente' )}}
-             <select class="inputNormal" id="Titolare_comune_iscr_aire" name="Titolare_comune_iscr_aire" style="width:60%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #Titolare_provincia_iscr_aire.value(), 'Titolare_comune_iscr_aire')" mandatory_enabled="#Titolare_provincia_iscr_aire.value() != ''"></select><br>
-             con provenienza dall'estero.</p>
+             <select class="inputNormal" id="Titolare_comune_iscr_aire" name="Titolare_comune_iscr_aire" style="width:64%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #Titolare_provincia_iscr_aire.value(), 'Titolare_comune_iscr_aire')" mandatory_enabled="#Titolare_provincia_iscr_aire.value() != ''"></select><br>
+             con provenienza dalla seguente nazione estera:
+             {{ utils.stato_cambio_res_aire( 'Titolare_comune_iscr_aire_nazione_provenienza', 'Nazione di provenienza del richiedente' )}}
+          </p>
         </td>
       </tr>
       <tr>
@@ -222,10 +230,12 @@ name="GLOBO_report"
     </tr>
     <tr>
       <td>
-        {{ utils.provincie( 'Titolare_prov_res', 'Provincia nuova residenza del richiedente' )}}
+        <p>TN</p>
+        <!--{{ utils.provincie( 'Titolare_prov_res', 'Provincia nuova residenza del richiedente' )}}-->
       </td>
       <td colspan="2">
-        <select class="inputNormal" id="Titolare_comune_res" name="Titolare_comune_res" style="width:100%" label="Comune nuova residenza del richiedente" dynamic_value="getComuniFromProvincia( #Titolare_prov_res.value(), 'Titolare_comune_res')" mandatory_enabled="true"></select><br>
+        <P>TRENTO</P>
+        <!--<select class="inputNormal" id="Titolare_comune_res" name="Titolare_comune_res" style="width:100%" label="Comune nuova residenza del richiedente" dynamic_value="getComuniFromProvincia( #Titolare_prov_res.value(), 'Titolare_comune_res')" mandatory_enabled="true"></select><br>-->
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -539,24 +549,13 @@ name="GLOBO_report"
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
+      <td>
         <p><b>Nome indicato sul campanello/cassetta delle lettere:</b></p>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella">Cognome</p>
-      </td>
-      <td>
-        <p class="Labelcella">Nome</p>
       </td>
     </tr>
     <tr>
       <td>
-        <input style="width:100%;" class="Modulo" id="cognome_campanello" name="cognome_campanello" label="Cognome indicato sul campanello/cassetta della posta" enabled="true">
-      </td>
-      <td>
-        <input style="width:100%;" class="Modulo" id="nome_campanello" name="nome_campanello" label="Nome indicato sul campanello/cassetta della posta" enabled="true">
+        <input style="width:100%;" class="Modulo" id="Nominativo_campanello" name="Nominativo_campanello" label="Nome/i indicato/i sul campanello/cassetta della posta" enabled="true">
       </td>
     </tr>
   </tbody>
@@ -686,7 +685,7 @@ name="GLOBO_report"
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;" rowspan="4">
-        <div id="titolo_occupazione" name="titolo_occupazione" label="Specificare il titolo di occupazione dell'alloggio" enabled="true"> </div>
+        <div id="titolo_occupazione" name="titolo_occupazione" label="Specificare il titolo di occupazione dell'alloggio" mandatory_enabled="true"> </div>
         <input group="titolo_occupazione" id="titolo_occupazione1" name="titolo_occupazione" type="radio" value="1" />
       </td>
       <td colspan="10">
@@ -694,31 +693,31 @@ name="GLOBO_report"
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td style="width: 20%;" colspan="2">
+      <td style="width: 49%;" colspan="2">
         <p class="Labelcella">Tipo</p>
       </td>
-      <td style="width: 15%;">
+      <td style="width: 5%;">
         <p class="Labelcella">Comune catastale (codice)</p>
       </td>
-      <td style="width: 25%;">
+      <td style="width: 20%;">
         <p class="Labelcella">Comune catastale (nome esteso)</p>
       </td>
-      <td style="width: 7%;">
+      <td style="width: 5%;">
         <p class="Labelcella">Numero</p>
       </td>
-      <td style="width: 6%;">
+      <td style="width: 5%;">
         <p class="Labelcella">Barra</p>
       </td>
-      <td style="width: 6%;">
+      <td style="width: 5%;">
         <p class="Labelcella">Porzione Materiale</p>
       </td>
-      <td style="width: 6%;">
+      <td style="width: 5%;">
         <p  class="Labelcella">Subalterno</p>
       </td>
-      <td style="width: 5%;">
+      <td style="width: 3%;">
         <p class="Labelcella">Controllo particella</p>
       </td>
-      <td style="width: 10%;">
+      <td style="width: 3%;">
         <p class="Labelcella">Mappa</p>
       </td>
     </tr>
@@ -726,7 +725,7 @@ name="GLOBO_report"
       <td colspan="2">
         <select class="inputNormal" id="TipoImmobile" name="TipoImmobile" style="width:100%" label="Tipo immobile" mandatory_enabled="#titolo_occupazione1.checked()">
           <option value=""></option>
-          <option value="Porzione_edificio">porzione di edificio</option>
+          <option value="Porzione_edificio">abitazione</option>
           <option value="Intero_edificio">intero edificio</option>
         </select>
       </td>
@@ -821,7 +820,7 @@ name="GLOBO_report"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="3">
+      <td style="vertical-align: top; width: 4%;" rowspan="7">
         <input group="titolo_occupazione" id="titolo_occupazione2" name="titolo_occupazione" type="radio" value="2" />
       </td>
       <td colspan="10">
@@ -838,11 +837,50 @@ name="GLOBO_report"
       </td>
     </tr>  
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
         <input group="registr_contratto" id="registr_contratto2" name="registr_contratto" type="radio" value="2" />
       </td>
       <td colspan="9">
-        <p>in fase di registrazione presso l'Agenzia delle entrate di <input name="Ag_entrate_prob" id="Ag_entrate_prob" size="20" label="Agenzia delle entrate di registrazione del contratto di locazione" mandatory_enabled="#registr_contratto2.checked()"/></p>
+        <p>in fase di registrazione:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <div id="dati_propr_loc" name="dati_propr_loc" label="Scelta modalità per fornire dati sul proprietario" mandatory_enabled="#registr_contratto2.checked()"> </div>
+        <input group="dati_propr_loc" id="dati_propr_loc1" name="dati_propr_loc" type="radio" value="1" />
+      </td>
+      <td colspan="9">
+        <p>si forniscono di seguito i dati del proprietario</p>
+      </td>
+    </tr> 
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td colspan="3">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td colspan="4">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input name="cognome_propr_imm1" id="cognome_propr_imm1" style="width:100%;" label="Cognome proprietario dell'immobile" mandatory_enabled="#dati_propr_loc1.checked()"/>
+      </td>
+      <td colspan="3">
+        <input name="nome_propr_imm1" id="nome_propr_imm1" style="width:100%;" label="Nome proprietario dell'immobile" mandatory_enabled="#dati_propr_loc1.checked()"/>
+      </td>
+      <td colspan="4">
+        <input name="ind_propr_imm1" id="ind_propr_imm1" style="width:100%;" label="Indirizzo proprietario dell'immobile" mandatory_enabled="#dati_propr_loc1.checked()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="dati_propr_loc" id="dati_propr_loc2" name="dati_propr_loc" type="radio" value="2" />
+      </td>
+      <td colspan="9">
+        <p>si allega il modulo E, compilato dal proprietario</p>
       </td>
     </tr>    
     <tr>
@@ -854,7 +892,7 @@ name="GLOBO_report"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="3">
+      <td style="vertical-align: top; width: 4%;" rowspan="7">
         <input group="titolo_occupazione" id="titolo_occupazione4" name="titolo_occupazione" type="radio" value="4" />
       </td>
       <td colspan="10">
@@ -863,7 +901,7 @@ name="GLOBO_report"
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="registr_contratto_com_uso" name="registr_contratto_com_uso" label="Estremi della registrazione del contratto di comodato d'uso" mandatory_enabled="#titolo_occupazione4.checked()"> </div>
+        <div id="registr_contratto_com_uso" name="registr_contratto_com_uso" label="Estremi della registrazione del contratto di comodato d'uso" mandatory_enabled="#titolo_occupazione8.checked()"> </div>
         <input group="registr_contratto_com_uso" id="registr_contratto_com_uso1" name="registr_contratto_com_uso" type="radio" value="1" />
       </td>
       <td colspan="9">
@@ -871,11 +909,50 @@ name="GLOBO_report"
       </td>
     </tr>  
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
         <input group="registr_contratto_com_uso" id="registr_contratto_com_uso2" name="registr_contratto_com_uso" type="radio" value="2" />
       </td>
       <td colspan="9">
-        <p>in fase di registrazione presso l'Agenzia delle entrate di <input name="Ag_entrate_prob_com_uso" id="Ag_entrate_prob_com_uso" size="20" label="Agenzia delle entrate di registrazione del contratto di comodato d'uso" mandatory_enabled="#registr_contratto_com_uso2.checked()"/></p>
+        <p>in fase di registrazione:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <div id="dati_propr_com" name="dati_propr_com" label="Scelta modalità per fornire dati sul proprietario" mandatory_enabled="#registr_contratto_com_uso2.checked()"> </div>
+        <input group="dati_propr_com" id="dati_propr_com1" name="dati_propr_com" type="radio" value="1" />
+      </td>
+      <td colspan="9">
+        <p>si forniscono di seguito i dati del proprietario</p>
+      </td>
+    </tr>  
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td colspan="3">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td colspan="4">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input name="cognome_propr_imm2" id="cognome_propr_imm2" style="width:100%;" label="Cognome proprietario dell'immobile" mandatory_enabled="#dati_propr_com1.checked()"/>
+      </td>
+      <td colspan="3">
+        <input name="nome_propr_imm2" id="nome_propr_imm2" style="width:100%;" label="Nome proprietario dell'immobile" mandatory_enabled="#dati_propr_com1.checked()"/>
+      </td>
+      <td colspan="4">
+        <input name="ind_propr_imm2" id="ind_propr_imm2" style="width:100%;" label="Indirizzo proprietario dell'immobile" mandatory_enabled="#dati_propr_com1.checked()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="dati_propr_com" id="dati_propr_com2" name="dati_propr_com" type="radio" value="2" />
+      </td>
+      <td colspan="9">
+        <p>si allega il modulo E, compilato dal proprietario</p>
       </td>
     </tr>  
     <tr>
@@ -883,13 +960,13 @@ name="GLOBO_report"
         <input group="titolo_occupazione" id="titolo_occupazione5" name="titolo_occupazione" type="radio" value="5" />
       </td>
       <td colspan="10">
-        <p>di essere <b>usufruttuario</b>, in forza del seguente titolo costruttivo:</p>
-        <p style="font-size:85%;"><i>(indicare dati utili a consentire la verifica da parte dell'Ufficio Anagrafe)</i></p>
-        <textarea class="inputNormal" id="titolo_costruttivo" name="titolo_costruttivo" label="Specificare titolo costruttivo per usufrutto immobile" style="width:100%;height:1cm" mandatory_enabled="#titolo_occupazione5.checked()"></textarea>
+        <p>di essere <b>usufruttuario</b></p>
+        <p style="font-size:85%;"><i>(indicare eventuali dati utili a consentire la verifica da parte dell'Ufficio Anagrafe)</i></p>
+        <textarea class="inputNormal" id="titolo_costruttivo" name="titolo_costruttivo" label="Specificare titolo costruttivo per usufrutto immobile" style="width:100%;height:1cm" enabled="#titolo_occupazione5.checked()"></textarea>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="5">
+      <td style="vertical-align: top; width: 4%;" rowspan="6">
         <input group="titolo_occupazione" id="titolo_occupazione6" name="titolo_occupazione" type="radio" value="6" />
       </td>
       <td colspan="10">
@@ -907,30 +984,38 @@ name="GLOBO_report"
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td colspan="2">
+      <td colspan="3">
         <p class="Labelcella">Cognome</p>
       </td>
-      <td colspan="2">
+      <td colspan="3">
         <p class="Labelcella">Nome</p>
       </td>
-      <td colspan="5">
+      <td colspan="3">
         <p class="Labelcella">Indirizzo</p>
       </td>
     </tr>
     <tr>
-      <td colspan="2">
-        <input name="cognome_propr_imm" id="cognome_propr_imm" style="width:100%;" label="Cognome proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      <td colspan="3">
+        <input name="cognome_propr_imm3" id="cognome_propr_imm3" style="width:100%;" label="Cognome proprietario dell'immobile" mandatory_enabled="#proprieta_immobile1.checked()"/>
       </td>
-      <td colspan="2">
-        <input name="nome_propr_imm" id="nome_propr_imm" style="width:100%;" label="Nome proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      <td colspan="3">
+        <input name="nome_propr_imm3" id="nome_propr_imm3" style="width:100%;" label="Nome proprietario dell'immobile" mandatory_enabled="#proprieta_immobile1.checked()"/>
       </td>
-      <td colspan="5">
-        <input name="ind_propr_imm" id="ind_propr_imm" style="width:100%;" label="Indirizzo proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      <td colspan="3">
+        <input name="ind_propr_imm3" id="ind_propr_imm3" style="width:100%;" label="Indirizzo proprietario dell'immobile" mandatory_enabled="#proprieta_immobile1.checked()"/>
       </td>
     </tr>
     <tr>
-      <td>
+      <td style="vertical-align: top; width: 4%;">
         <input group="proprieta_immobile" id="proprieta_immobile2" name="proprieta_immobile" type="radio" value="2" />
+      </td>
+      <td colspan="9">
+        <p>si allega il modulo E, compilato dal proprietario</p>
+      </td>
+    </tr>  
+    <tr>
+      <td>
+        <input group="proprieta_immobile" id="proprieta_immobile3" name="proprieta_immobile" type="radio" value="3" />
       </td>
       <td colspan="9">
         <p>dichiara di essere ospite presso una Convivenza anagrafica</p>
@@ -1051,7 +1136,7 @@ name="GLOBO_report"
     </tr>
     <tr>
       <td>
-        <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>
+        <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" enabled="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" value="OBBLIGATORIO"/>
       </td>
       <td>
         Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati appartenenti all'UE</b>
@@ -1067,7 +1152,7 @@ name="GLOBO_report"
     </tr>
     <tr>
       <td>
-        <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#titolo_occupazione4.checked() || #titolo_occupazione5.checked()" enabled="#titolo_occupazione4.checked() || #titolo_occupazione5.checked()" value="OBBLIGATORIO"/>
+        <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" enabled="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td>
         Titolo di occupazione dell'alloggio, da compilarsi da parte del proprietario dell'immobile
@@ -1083,12 +1168,13 @@ name="GLOBO_report"
     </tr>
     <tr>
       <td>
-        <input id="GEN_ENTR_CONV" name="GEN_ENTR_CONV" type="checkbox" dynamic_check="#proprieta_immobile2.checked()" enabled="#proprieta_immobile2.checked()" value="OBBLIGATORIO"/>
+        <input id="GEN_ENTR_CONV" name="GEN_ENTR_CONV" type="checkbox" dynamic_check="#proprieta_immobile3.checked()" enabled="#proprieta_immobile3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td>
         Dichiarazione di entrata in convivenza
       </td>
     </tr>
+
   </tbody>
 </table>
 

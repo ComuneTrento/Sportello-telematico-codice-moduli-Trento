@@ -25,10 +25,15 @@ urlhelp="/modulistica/moduli/GEN-ALTRI-FAM"
 verifica_pagamento="NO"
 versione="1.1|03/06/2016"/>
 
-<meta codice_modulo_figlio="DICH-RES-ALL-C"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
+<meta codice_allegato="GEN-CDI"
+descrizione_estesa="Copia del documento di identità del richiedente"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="Modulo_compilato_firma_autografa"
 descrizione_estesa="Modulo compilato e firmato manualmente"
@@ -39,6 +44,19 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
+
+<!-- Modulo figlio Allegato A -->
+<meta codice_modulo_figlio="DICH-RES-ALL-A"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<!-- Modulo figlio Allegato B -->
+<meta codice_modulo_figlio="DICH-RES-ALL-B"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 
 <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
 <script type="text/javascript">
@@ -88,7 +106,6 @@ Anagrafica dei familiari trasferiti nella nuova residenza
 <br>
 <br>
 
-
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
  <tbody>
   <tr class="Rigaintestazione">
@@ -105,21 +122,37 @@ Anagrafica dei familiari trasferiti nella nuova residenza
     <input id="Anag_famil" name="Anag_famil" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
    </td>
    <td style="background-color: #eeeeee;">
-    <p>scansione della stampa di questo modulo firmata (firma autografa)</p>
+    <p>Scansione della stampa di questo modulo firmata (firma autografa)</p>
    </td>
   </tr>
   <tr>
-    <td style="vertical-align: top; width:4%">
-     <input id="Famil_minorenne" name="Famil_minorenne" type="checkbox" dynamic_check="moment(#Data_PDF.value(), 'DD/MM/YYYY').diff(moment(#AventeTitolo_DataNascita.value(), 'DD/MM/YYYY'), 'years') < 18" enabled="moment(#Data_PDF.value(), 'DD/MM/YYYY').diff(moment(#AventeTitolo_DataNascita.value(), 'DD/MM/YYYY'), 'years') < 18" value="OBBLIGATORIO"/>
-    </td>
-    <td style="background-color: #eeeeee;">
-     <p>Allegato C - trasferimento di un familiare minorenne</p>
-    </td>
-   </tr>
-  <!-- controllo età familiare indicato, se inferiore a 18 anni necessario compilare modulo secondario (allegato C) -->
-  
+      <td style="vertical-align: top; width:3%">
+        <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="!#poss_carta_id2.checked()" enabled="!#poss_carta_id2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>
+          Copia del documento d'identità del dichiarante
+        </p>
+      </td>
+    </tr>
+  <tr>
+      <td>
+        <input id="DICH_RES_ALL_A" name="DICH_RES_ALL_A" type="checkbox" dynamic_check="!#AventeTitolo_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="!#AventeTitolo_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati non appartenenti all'UE</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#AventeTitolo_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="#AventeTitolo_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>      </td>
+      <td style="background-color: #eeeeee;">
+        Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati appartenenti all'UE</b>
+      </td>
+  </tr>
  </tbody>
 </table>
+
 
 <br/>
 
@@ -138,7 +171,6 @@ Anagrafica dei familiari trasferiti nella nuova residenza
  <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 
  <input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Anag_famil.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
- <input id="GLOBO_modulofiglio_cDICH-RES-ALL-C" name="GLOBO_modulofiglio_cDICH-RES-ALL-C" obbligatorio="#Famil_minorenne.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
  
  <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
  
@@ -146,12 +178,9 @@ Anagrafica dei familiari trasferiti nella nuova residenza
  
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
-
-
-<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#Famil_minorenne.checked() ? #AventeTitolo_Cognome.value() : ''" type="hidden"/>
-<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#Famil_minorenne.checked() ? #AventeTitolo_Nome.value() : ''" type="hidden"/>
-<input id="Metadati_Minore_LuogoNasc" name="Metadati_Minore_LuogoNasc" dynamic_value="#Famil_minorenne.checked() ? #AventeTitolo_LuogoNascita.value() : ''" type="hidden"/>
-<input id="Metadati_Minore_DataNasc" name="Metadati_Minore_DataNasc" dynamic_value="#Famil_minorenne.checked() ? #AventeTitolo_DataNascita.value() : ''" type="hidden"/>
+ <input id="GLOBO_modulofiglio_cDICH-RES-ALL-A" name="GLOBO_modulofiglio_cDICH-RES-ALL-A" obbligatorio="#DICH_RES_ALL_A.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ <input id="GLOBO_modulofiglio_cDICH-RES-ALL-B" name="GLOBO_modulofiglio_cDICH-RES-ALL-B" obbligatorio="#DICH_RES_ALL_B.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
  
 
  {{ utils.passaggio_metadati() }}
