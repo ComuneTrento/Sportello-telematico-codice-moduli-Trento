@@ -1,0 +1,377 @@
+{
+    "objectId": "7e23f567-f61e-42e7-bdf6-5b456d3666fc",
+    "creationDate": 1539699880441,
+    "lastUpdate": 1539699880441,
+    "uri": "https://sportello.comune.trento.it/modulistica/moduli/RILASCIO-TITOLI-EDILIZI_v1.0",
+    "eserviceId": null,
+    "profileTypes": [],
+    "model": {
+        "context": {},
+        "blocks": [
+            {
+                "id": "block1",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[1]",
+                "tags": [],
+                "fields": [
+                    "Tipo_richiedente1",
+                    "Tipo_richiedente2",
+                    "Tipo_richiedente3",
+                    "Tipo_richiedente4",
+                    "Tipo_richiedente5"
+                ],
+                "blocks": [],
+                "dependencies": [],
+                "condition": null,
+                "completed": "(context['Tipo_richiedente1'] == '1') || (context['Tipo_richiedente2'] == '2') || (context['Tipo_richiedente3'] == '3') || (context['Tipo_richiedente4'] == '4') || (context['Tipo_richiedente5'] == '5')",
+                "description": {
+                    "it": "Selezionare il titolo a nome del quale verrà compilato il modulo."
+                }
+            },
+            {
+                "id": "block2",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
+                "tags": [],
+                "fields": [
+                    "Tipo_richiedente1",
+                    "Tipo_richiedente2",
+                    "Tipo_richiedente3",
+                    "Tipo_richiedente4",
+                    "Tipo_richiedente5",
+                    "AventeTitolo_CodiceFiscale"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block1"
+                ],
+                "condition": "(context['Tipo_richiedente1'] == '1') || (context['Tipo_richiedente2'] == '2') || (context['Tipo_richiedente3'] == '3') || (context['Tipo_richiedente4'] == '4') || (context['Tipo_richiedente5'] == '5')",
+                "completed": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
+                "description": {
+                    "it": "Una volta effettuato l’accesso con la carta dei servizi, premendo il pulsante <i>“Carica dati personali”</i> le informazioni anagrafiche verranno caricate automaticamente. Verificare i dati e compilare eventuali voci mancanti."
+                }
+            },
+            {
+                "id": "block3",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[3]",
+                "tags": [],
+                "fields": [
+                    "Immobile_CheckVerificaCatastale",
+                    "Immobile_TipoImmobile"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block2"
+                ],
+                "condition": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
+                "completed": "context['Immobile_CheckVerificaCatastale'] !=null",
+                "description": {
+                    "it": "Definire la particella catastale oggetto della richiesta e verificarne l'esistenza premendo il pulsante <i>“Controllo particella”</i>.<br>Premere il pulsante <i>“Mappa”</i> per un controllo cartografico dei dati catastali immessi.<br><br>Le diciture <b>intero edificio</b> e <b>porzione di edificio</b> identificano la particella edificiale."
+                }
+            },
+            {
+                "id": "block4",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[4]",
+                "tags": [],
+                "fields": [
+                    "Immobile_TipoImmobile",
+                    "Immobile_Localita_part_fondiaria",
+                    "Immobile_CheckVerificaCatastale"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block3"
+                ],
+                "condition": "context['Immobile_CheckVerificaCatastale'] !=null && context['Immobile_TipoImmobile'] == 'F'",
+                "completed": "context['Immobile_Localita_part_fondiaria'] !=null && context['Immobile_Localita_part_fondiaria'] != ''",
+                "description": {
+                    "it": "Inserirne un indirizzo o la località di riferimento della particella fondiaria."
+                }
+            },
+            {
+                "id": "block5",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[5]",
+                "tags": [],
+                "fields": [
+                    "Immobile_TipoImmobile",
+                    "Immobile_CheckVerificaCatastale",
+                    "Immobile_CheckVerificaCivico"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block3"
+                ],
+                "condition": "context['Immobile_CheckVerificaCatastale'] !=null && (context['Immobile_TipoImmobile'] == 'S' || context['Immobile_TipoImmobile'] == 'E')",
+                "completed": "context['Immobile_CheckVerificaCivico'] !=null",
+                "description": {
+                    "it": "Specificare l'indirizzo dell’<b>intero edificio</b> oppure della <b>porzione di edificio</b> per il quale si sta effettuandp richiesta e verificarne l'esistenza mediante il pulsante <i>“Controllo indirizzo”</i>.<br>E' possibile esplorare la mappa cartografica premendo il pulsante <i>“Mappa”</i> per il controllo dell'indirizzo immesso."
+                }
+            },
+            {
+                "id": "block6",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[6]",
+                "tags": [],
+                "fields": [
+                    "Immobile_CheckVerificaCivico",
+                    "Immobile_Localita_part_fondiaria"
+                ],
+                "blocks": [],
+                "dependencies": [],
+                "condition": "context['Immobile_CheckVerificaCivico'] !=null || (context['Immobile_Localita_part_fondiaria'] !=null && context['Immobile_Localita_part_fondiaria'] != '')",
+                "completed": null,
+                "description": {
+                    "it": "Definire la seconda particella catastale oggetto della richiesta e verificarne l'esistenza premendo il pulsante <i>“Controllo particella”</i>.<br>Premere il pulsante <i>“Mappa”</i> per un controllo cartografico dei dati catastali immessi.<br><br>Le diciture <b>intero edificio</b> e <b>porzione di edificio</b> identificano la particella edificiale."
+                }
+            },
+            {
+                "id": "block7",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[7]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                    "block6"
+                ],
+                "condition": null,
+                "completed": null,
+                "description": {
+                    "it": "Inserirne un indirizzo o la località di riferimento della particella fondiaria."
+                }
+            },
+            {
+                "id": "block8",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[8]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                    "block7"
+                ],
+                "condition": null,
+                "completed": null,
+                "description": {
+                    "it": "Specificare l'indirizzo dell’<b>intero edificio</b> oppure della <b>porzione di edificio</b> per il quale si sta effettuandp richiesta e verificarne l'esistenza mediante il pulsante <i>“Controllo indirizzo”</i>.<br>E' possibile esplorare la mappa cartografica premendo il pulsante <i>“Mappa”</i> per il controllo dell'indirizzo immesso."
+                }
+            },
+            {
+                "id": "block9",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[9]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                  "block8"
+                ],
+                "condition": null,
+                "completed": null,
+                "description": {
+                    "it": "Definire la terza particella catastale oggetto della richiesta e verificarne l'esistenza premendo il pulsante <i>“Controllo particella”</i>.<br>Premere il pulsante <i>“Mappa”</i> per un controllo cartografico dei dati catastali immessi.<br><br>Le diciture <b>intero edificio</b> e <b>porzione di edificio</b> identificano la particella edificiale."
+                }
+            },
+            {
+                "id": "block10",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[10]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                    "block9"
+                ],
+                "condition": null,
+                "completed": null,
+                "description": {
+                    "it": "Inserirne un indirizzo o la località di riferimento della particella fondiaria."
+                }
+            },
+            {
+                "id": "block11",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[11]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                    "block10"
+                ],
+                "condition": null,
+                "completed": null,
+                "description": {
+                    "it": "Specificare l'indirizzo dell’<b>intero edificio</b> oppure della <b>porzione di edificio</b> per il quale si sta effettuandp richiesta e verificarne l'esistenza mediante il pulsante <i>“Controllo indirizzo”</i>.<br>E' possibile esplorare la mappa cartografica premendo il pulsante <i>“Mappa”</i> per il controllo dell'indirizzo immesso."
+                }
+            },
+            {
+                "id": "block12",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[12]",
+                "tags": [],
+                "fields": [
+                    "Finalita_richiesta1",
+                    "Finalita_richiesta2",
+                    "Finalita_richiesta3"
+                ],
+                "blocks": [],
+                "dependencies": [
+                  "block11"
+                ],
+                "condition": null,
+                "completed": "(context['Finalita_richiesta1'] == '1') || (context['Finalita_richiesta2'] == '2') || (context['Finalita_richiesta3'] == '3')",
+                "description": {
+                    "it": "Indicare per quale finalità viene effettuata la richiesta"
+                }
+            },
+            {
+                "id": "block13",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[13]",
+                "tags": [],
+                "fields": [
+                    "Finalita_richiesta1",
+                    "Finalita_richiesta2",
+                    "Finalita_richiesta3"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block12"
+                ],
+                "condition": "(context['Finalita_richiesta1'] == '1') || (context['Finalita_richiesta2'] == '2') || (context['Finalita_richiesta3'] == '3')",
+                "completed": null,
+                "description": {
+                    "it": "Selezionare gli allegati all'istanza."
+                }
+            },
+            {
+                "id": "block14",
+                "type": "BLOCK",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[14]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                  "block13"
+                ],
+                "condition": null,
+                "completed": null,
+                "description": {
+                    "it": "Specificare luogo e data. Per completare il modulo premere <i>“FINE”</i>. Verificare nuovamente tutti i dati inseriti e premere <i>“Salva modulo”</i>. Verranno segnalate eventuali mancanze. In tal caso provvedere all’inserimento dei dati mancanti."
+                }
+            }
+        ],
+        "fields": [
+            {
+                "id": "Tipo_richiedente1",
+                "xpath": "//*[@id=\"Tipo_richiedente1\"]",
+                "mapping": {
+                    "key": "Tipo_richiedente1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tipo_richiedente2",
+                "xpath": "//*[@id=\"Tipo_richiedente2\"]",
+                "mapping": {
+                    "key": "Tipo_richiedente2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tipo_richiedente3",
+                "xpath": "//*[@id=\"Tipo_richiedente3\"]",
+                "mapping": {
+                    "key": "Tipo_richiedente3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tipo_richiedente4",
+                "xpath": "//*[@id=\"Tipo_richiedente4\"]",
+                "mapping": {
+                    "key": "Tipo_richiedente4",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tipo_richiedente5",
+                "xpath": "//*[@id=\"Tipo_richiedente5\"]",
+                "mapping": {
+                    "key": "Tipo_richiedente5",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "AventeTitolo_CodiceFiscale",
+                "xpath": "//*[@id=\"AventeTitolo_CodiceFiscale\"]",
+                "mapping": {
+                    "key": "AventeTitolo_CodiceFiscale",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Immobile_CheckVerificaCatastale",
+                "xpath": "//*[@id=\"Immobile_CheckVerificaCatastale\"]",
+                "mapping": {
+                    "key": "Immobile_CheckVerificaCatastale",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Immobile_TipoImmobile",
+                "xpath": "//*[@id=\"Immobile_TipoImmobile\"]",
+                "mapping": {
+                    "key": "Immobile_TipoImmobile",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Immobile_Localita_part_fondiaria",
+                "xpath": "//*[@id=\"Immobile_Localita_part_fondiaria\"]",
+                "mapping": {
+                    "key": "Immobile_Localita_part_fondiaria",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Immobile_CheckVerificaCivico",
+                "xpath": "//*[@id=\"Immobile_CheckVerificaCivico\"]",
+                "mapping": {
+                    "key": "Immobile_CheckVerificaCivico",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Finalita_richiesta1",
+                "xpath": "//*[@id=\"Finalita_richiesta1\"]",
+                "mapping": {
+                    "key": "Finalita_richiesta1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Finalita_richiesta2",
+                "xpath": "//*[@id=\"Finalita_richiesta2\"]",
+                "mapping": {
+                    "key": "Finalita_richiesta2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Finalita_richiesta3",
+                "xpath": "//*[@id=\"Finalita_richiesta3\"]",
+                "mapping": {
+                    "key": "Finalita_richiesta3",
+                    "binding": "OUT"
+                }
+            }
+        ],
+        "description": null,
+        "name": null,
+        "workflow": null
+    }
+}
