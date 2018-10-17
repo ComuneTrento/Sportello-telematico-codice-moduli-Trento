@@ -62,6 +62,12 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<!-- Modulo figlio Allegato C -->
+<meta codice_modulo_figlio="DICH-RES-ALL-C"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <!-- Modulo figlio Allegato D -->
 <meta codice_modulo_figlio="DICH-RES-ALL-D"
 name="GLOBO_modulofiglio"
@@ -93,6 +99,16 @@ firmato="NO"
 istruzioni="/modulistica/moduli/GEN-ENTR-CONV"
 name="GLOBO_allegato"
 numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-CDI"
+descrizione_estesa="Copia del documento di identità del richiedente"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="0"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
@@ -398,6 +414,59 @@ function get_ufficio_dest() {
   <h1 class="Modulo">
     DICHIARAZIONE DI RESIDENZA
   </h1>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="3">
+          <p><b>La compilazione del modulo viene eseguita:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Tipo_richiedente" name="Tipo_richiedente" label="Specificare il richiedente" mandatory_enabled="true"> </div>
+          <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+        </td>
+        <td colspan="2">
+          <p>a titolo personale<br>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;" rowspan="4">
+          <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+        </td>
+        <td colspan="2">
+          <p>a nome di un minore<br>
+          </p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p><b>Il/La minore dichiara di trasferirsi:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Tipo_cambio_res_minore" name="Tipo_cambio_res_minore" label="Specificare il tipo di cambio residenza effettuato dal minore" mandatory_enabled="#Tipo_richiedente2.checked()"> </div>
+          <input group="Tipo_cambio_res_minore" id="Tipo_cambio_res_minore1" name="Tipo_cambio_res_minore" type="radio" value="1" />
+        </td>
+        <td>
+          <p><b>da solo o con solo un genitore</b>, ad un indirizzo dove <b>NON</b> risiede l'altro genitore<br>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Tipo_cambio_res_minore" id="Tipo_cambio_res_minore2" name="Tipo_cambio_res_minore" type="radio" value="2" />
+        </td>
+        <td>
+          <p><b>con i genitori o con solo un genitore</b>, ad un indirizzo dove risiede l'altro genitore<br>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
 
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
@@ -908,8 +977,258 @@ function get_ufficio_dest() {
     <option value="VV">VV</option>
     <option value="EE">EE</option>
 </select>
-             <select class="inputNormal" id="Titolare_comune_iscr_aire" name="Titolare_comune_iscr_aire" style="width:60%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #Titolare_provincia_iscr_aire.value(), 'Titolare_comune_iscr_aire')" mandatory_enabled="#Titolare_provincia_iscr_aire.value() != ''"></select><br>
-             con provenienza dall'estero.</p>
+             <select class="inputNormal" id="Titolare_comune_iscr_aire" name="Titolare_comune_iscr_aire" style="width:64%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #Titolare_provincia_iscr_aire.value(), 'Titolare_comune_iscr_aire')" mandatory_enabled="#Titolare_provincia_iscr_aire.value() != ''"></select><br>
+             con provenienza dalla seguente nazione estera:
+             <select id="Titolare_comune_iscr_aire_nazione_provenienza" name="Titolare_comune_iscr_aire_nazione_provenienza" style="width:56%" label="Nazione di provenienza del richiedente" mandatory_enabled="#Tipo_residenza3.checked()">
+		<option value=""></option>
+    <optgroup label="Unione Europea">
+        <option value="ITALIA">Italia</option>
+        <option value="AUSTRIA">Austria</option>
+        <option value="BELGIO">Belgio</option>
+        <option value="BULGARIA">Bulgaria</option>
+        <option value="CIPRO">Cipro</option>
+        <option value="DANIMARCA">Danimarca</option>
+        <option value="EIRE">Eire</option>
+        <option value="ESTONIA">Estonia</option>
+        <option value="FINLANDIA">Finlandia</option>
+        <option value="FRANCIA">Francia</option>
+        <option value="GERMANIA">Germania</option>
+        <option value="GRECIA">Grecia</option>
+        <option value="LETTONIA">Lettonia</option>
+        <option value="LITUANIA">Lituania</option>
+        <option value="LUSSEMBURGO">Lussemburgo</option>
+        <option value="MALTA">Malta</option>
+        <option value="PAESI BASSI">Paesi Bassi</option>
+        <option value="POLONIA">Polonia</option>
+        <option value="PORTOGALLO">Portogallo</option>
+        <option value="REGNO UNITO">Regno Unito</option>
+        <option value="REPUBBLICA CECA">Repubblica Ceca</option>
+        <option value="ROMANIA">Romania</option>
+        <option value="SLOVACCHIA">Slovacchia</option>
+        <option value="SLOVENIA">Slovenia</option>
+        <option value="SPAGNA">Spagna</option>
+        <option value="SVEZIA">Svezia</option>
+        <option value="UNGHERIA">Ungheria</option>
+    </optgroup>
+    <optgroup label="NON Unione Europea">
+      <option value="AFGHANISTAN">Afghanistan</option>
+      <option value="ALBANIA">Albania</option>
+      <option value="ALGERIA">Algeria</option>
+      <option value="ANDORRA">Andorra</option>
+      <option value="ANGOLA">Angola</option>
+      <option value="ANGUILLA">Anguilla</option>
+      <option value="ANTARTIDE">Antartide</option>
+      <option value="ANTIGUA E BARBUDA">Antigua e Barbuda</option>
+      <option value="ANTILLE OLANDESI">Antille Olandesi</option>
+      <option value="ARABIA SAUDITA">Arabia Saudita</option>
+      <option value="ARGENTINA">Argentina</option>
+      <option value="ARMENIA">Armenia</option>
+      <option value="ARUBA">Aruba</option>
+      <option value="AUSTRALIA">Australia</option>
+      <option value="AZERBAIJAN">Azerbaijan</option>
+      <option value="BAHAMAS">Bahamas</option>
+      <option value="BAHRAIN">Bahrain</option>
+      <option value="BANGLADESH">Bangladesh</option>
+      <option value="BARBADOS">Barbados</option>
+      <option value="BELIZE">Belize</option>
+      <option value="BENIN">Benin</option>
+      <option value="BERMUDA">Bermuda</option>
+      <option value="BHUTAN">Bhutan</option>
+      <option value="BIELORUSSIA">Bielorussia</option>
+      <option value="BOLIVIA">Bolivia</option>
+      <option value="BOSNIA ERZEGOVINA">Bosnia Erzegovina</option>
+      <option value="BOTSWANA">Botswana</option>
+      <option value="BRASILE">Brasile</option>
+      <option value="BRUNEI DARUSSALAM">Brunei Darussalam</option>
+      <option value="BURKINA FASO">Burkina Faso</option>
+      <option value="BURUNDI">Burundi</option>
+      <option value="CAMBOGIA">Cambogia</option>
+      <option value="CAMERUN">Camerun</option>
+      <option value="CANADA">Canada</option>
+      <option value="CAPO VERDE">Capo Verde</option>
+      <option value="CIAD">Ciad</option>
+      <option value="CILE">Cile</option>
+      <option value="CINA">Cina</option>
+      <option value="CITTA' DEL VATICANO">Città del Vaticano</option>
+      <option value="COLOMBIA">Colombia</option>
+      <option value="COMORE">Comore</option>
+      <option value="COREA DEL NORD">Corea del Nord</option>
+      <option value="COREA DEL SUD">Corea del Sud</option>
+      <option value="COSTA D'AVORIO">Costa d'Avorio</option>
+      <option value="COSTA RICA">Costa Rica</option>
+      <option value="CROAZIA">Croazia</option>
+      <option value="CUBA">Cuba</option>
+      <option value="DOMINICA">Dominica</option>
+      <option value="ECUADOR">Ecuador</option>
+      <option value="EGITTO">Egitto</option>
+      <option value="EL SALVADOR">El Salvador</option>
+      <option value="EMIRATI ARABI UNITI">Emirati Arabi Uniti</option>
+      <option value="ERITREA">Eritrea</option>
+      <option value="ETIOPIA">Etiopia</option>
+      <option value="FEDERAZIONE RUSSA">Federazione Russa</option>
+      <option value="FIJI">Fiji</option>
+      <option value="FILIPPINE">Filippine</option>
+      <option value="GABON">Gabon</option>
+      <option value="GAMBIA">Gambia</option>
+      <option value="GEORGIA">Georgia</option>
+      <option value="GHANA">Ghana</option>
+      <option value="GIAMAICA">Giamaica</option>
+      <option value="GIAPPONE">Giappone</option>
+      <option value="GIBILTERRA">Gibilterra</option>
+      <option value="GIBUTI">Gibuti</option>
+      <option value="GIORDANIA">Giordania</option>
+      <option value="GRENADA">Grenada</option>
+      <option value="GROENLANDIA">Groenlandia</option>
+      <option value="GUADALUPA">Guadalupa</option>
+      <option value="GUAM">Guam</option>
+      <option value="GUATEMALA">Guatemala</option>
+      <option value="GUINEA EQUATORIALE">Guinea Equatoriale</option>
+      <option value="GUINEA">Guinea</option>
+      <option value="GUINEA-BISSAU">Guinea-Bissau</option>
+      <option value="GUYANA FRANCESE">Guyana Francese</option>
+      <option value="GUYANA">Guyana</option>
+      <option value="HAITI">Haiti</option>
+      <option value="HONDURAS">Honduras</option>
+      <option value="HONG KONG">Hong Kong</option>
+      <option value="INDIA">India</option>
+      <option value="INDONESIA">Indonesia</option>
+      <option value="IRAN">Iran</option>
+      <option value="IRAQ">Iraq</option>
+      <option value="ISLANDA">Islanda</option>
+      <option value="ISOLA BOUVET">Isola Bouvet</option>
+      <option value="ISOLA DI NATALE">Isola di Natale</option>
+      <option value="ISOLA HEARD E ISOLE MCDONALD">Isola Heard e Isole McDonald</option>
+      <option value="ISOLA NORFOLK">Isola Norfolk</option>
+      <option value="ISOLE CAYMAN">Isole Cayman</option>
+      <option value="ISOLE COCOS">Isole Cocos</option>
+      <option value="ISOLE COOK">Isole Cook</option>
+      <option value="ISOLE FALKLAND">Isole Falkland</option>
+      <option value="ISOLE FAROE">Isole Faroe</option>
+      <option value="ISOLE MARIANNE SETTENTRIONALI">Isole Marianne Settentrionali</option>
+      <option value="ISOLE MARSHALL">Isole Marshall</option>
+      <option value="ISOLE MINORI DEGLI STATI UNITI D'AMERICA">Isole Minori degli Stati Uniti d'America</option>
+      <option value="ISOLE SOLOMON">Isole Solomon</option>
+      <option value="ISOLE TURKS E CAICOS">Isole Turks e Caicos</option>
+      <option value="ISOLE VERGINI AMERICANE">Isole Vergini Americane</option>
+      <option value="ISOLE VERGINI BRITANNICHE">Isole Vergini Britanniche</option>
+      <option value="ISRAELE">Israele</option>
+      <option value="KAZAKHISTAN">Kazakhistan</option>
+      <option value="KENYA">Kenya</option>
+      <option value="KIRGHIZISTAN">Kirghizistan</option>
+      <option value="KIRIBATI">Kiribati</option>
+      <option value="KOSSOVO">Kossovo</option>
+      <option value="KUWAIT">Kuwait</option>
+      <option value="LAOS">Laos</option>
+      <option value="LESOTHO">Lesotho</option>
+      <option value="LIBANO">Libano</option>
+      <option value="LIBERIA">Liberia</option>
+      <option value="LIBIA">Libia</option>
+      <option value="LIECHTENSTEIN">Liechtenstein</option>
+      <option value="MACAO">Macao</option>
+      <option value="MACEDONIA">Macedonia</option>
+      <option value="MADAGASCAR">Madagascar</option>
+      <option value="MALAWI">Malawi</option>
+      <option value="MALDIVE">Maldive</option>
+      <option value="MALESIA">Malesia</option>
+      <option value="MALI">Mali</option>
+      <option value="MAROCCO">Marocco</option>
+      <option value="MARTINICA">Martinica</option>
+      <option value="MAURITANIA">Mauritania</option>
+      <option value="MAURIZIUS">Maurizius</option>
+      <option value="MAYOTTE">Mayotte</option>
+      <option value="MESSICO">Messico</option>
+      <option value="MOLDAVIA">Moldavia</option>
+      <option value="MONACO">Monaco</option>
+      <option value="MONGOLIA">Mongolia</option>
+      <option value="MONTENEGRO">Montenegro</option>
+      <option value="MONTSERRAT">Montserrat</option>
+      <option value="MOZAMBICO">Mozambico</option>
+      <option value="MYANMAR">Myanmar</option>
+      <option value="NAMIBIA">Namibia</option>
+      <option value="NAURU">Nauru</option>
+      <option value="NEPAL">Nepal</option>
+      <option value="NICARAGUA">Nicaragua</option>
+      <option value="NIGER">Niger</option>
+      <option value="NIGERIA">Nigeria</option>
+      <option value="NIUE">Niue</option>
+      <option value="NORVEGIA">Norvegia</option>
+      <option value="NUOVA CALEDONIA">Nuova Caledonia</option>
+      <option value="NUOVA ZELANDA">Nuova Zelanda</option>
+      <option value="OMAN">Oman</option>
+      <option value="PAKISTAN">Pakistan</option>
+      <option value="PALAU">Palau</option>
+      <option value="PANAMA">Panama</option>
+      <option value="PAPUA NUOVA GUINEA">Papua Nuova Guinea</option>
+      <option value="PARAGUAY">Paraguay</option>
+      <option value="PERU'">Perù</option>
+      <option value="PITCAIRN">Pitcairn</option>
+      <option value="POLINESIA FRANCESE">Polinesia Francese</option>
+      <option value="PORTO RICO">Porto Rico</option>
+      <option value="QATAR">Qatar</option>
+      <option value="REPUBBLICA CENTROAFRICANA">Repubblica Centroafricana</option>
+      <option value="REPUBBLICA DEL CONGO">Repubblica del Congo</option>
+      <option value="REPUBBLICA DEMOCRATICA DEL CONGO">Repubblica Democratica del Congo</option>
+      <option value="REPUBBLICA DOMINICANA">Repubblica Dominicana</option>
+      <option value="REUNION">Reunion</option>
+      <option value="RUANDA">Ruanda</option>
+      <option value="SAHARA OCCIDENTALE">Sahara Occidentale</option>
+      <option value="SAINT KITTS E NEVIS">Saint Kitts e Nevis</option>
+      <option value="SAINT PIERRE E MIQUELON">Saint Pierre e Miquelon</option>
+      <option value="SAINT VINCENT E GRENADINE">Saint Vincent e Grenadine</option>
+      <option value="SAMOA AMERICANE">Samoa Americane</option>
+      <option value="SAMOA">Samoa</option>
+      <option value="SAN MARINO">San Marino</option>
+      <option value="SANTA LUCIA">Santa Lucia</option>
+      <option value="SANT'ELENA">Sant'Elena</option>
+      <option value="SAO TOME E PRINCIPE">Sao Tome e Principe</option>
+      <option value="SENEGAL">Senegal</option>
+      <option value="SERBIA">Serbia</option>
+      <option value="SEYCHELLES">Seychelles</option>
+      <option value="SIERRA LEONE">Sierra Leone</option>
+      <option value="SINGAPORE">Singapore</option>
+      <option value="SIRIA">Siria</option>
+      <option value="SOMALIA">Somalia</option>
+      <option value="SRI LANKA">Sri Lanka</option>
+      <option value="STATI FEDERATI DELLA MICRONESIA">Stati Federati della Micronesia</option>
+      <option value="STATI UNITI D'AMERICA">Stati Uniti d'America</option>
+      <option value="SUD AFRICA">Sud Africa</option>
+      <option value="SUD GEORGIA E ISOLE SANDWICH">Sud Georgia e Isole Sandwich</option>
+      <option value="SUDAN">Sudan</option>
+      <option value="SURINAME">Suriname</option>
+      <option value="SVALBARD E JAN MAYEN">Svalbard e Jan Mayen</option>
+      <option value="SVIZZERA">Svizzera</option>
+      <option value="SWAZILAND">Swaziland</option>
+      <option value="TAGIKISTAN">Tagikistan</option>
+      <option value="THAILANDIA">Thailandia</option>
+      <option value="TAIWAN">Taiwan</option>
+      <option value="TANZANIA">Tanzania</option>
+      <option value="TERRITORI BRITANNICI DELL'OCEANO INDIANO">Territori Britannici dell'Oceano Indiano</option>
+      <option value="TERRITORI FRANCESI DEL SUD">Territori Francesi del Sud</option>
+      <option value="TERRITORI PALESTINESI OCCUPATI">Territori Palestinesi Occupati</option>
+      <option value="TIMOR EST">Timor Est</option>
+      <option value="TOGO">Togo</option>
+      <option value="TOKELAU">Tokelau</option>
+      <option value="TONGA">Tonga</option>
+      <option value="TRINIDAD E TOBAGO">Trinidad e Tobago</option>
+      <option value="TUNISIA">Tunisia</option>
+      <option value="TURCHIA">Turchia</option>
+      <option value="TURKMENISTAN">Turkmenistan</option>
+      <option value="TUVALU">Tuvalu</option>
+      <option value="UCRAINA">Ucraina</option>
+      <option value="UGANDA">Uganda</option>
+      <option value="URUGUAY">Uruguay</option>
+      <option value="UZBEKISTAN">Uzbekistan</option>
+      <option value="VANUATU">Vanuatu</option>
+      <option value="VENEZUELA">Venezuela</option>
+      <option value="VIETNAM">Vietnam</option>
+      <option value="WALLIS E FUTUNA">Wallis e Futuna</option>
+      <option value="YEMEN">Yemen</option>
+      <option value="ZAMBIA">Zambia</option>
+      <option value="ZIMBABWE">Zimbabwe</option>
+      <option value="APOLIDE">Apolide</option>
+ </optgroup>
+</select>
+          </p>
         </td>
       </tr>
       <tr>
@@ -942,7 +1261,7 @@ function get_ufficio_dest() {
   <tbody>
     <tr class="Rigaintestazione">
       <td style="border-right:0px">
-        <p class="Labeltabella"  style="vertical-align:middle">Il/La dichiarante
+        <p class="Labeltabella"  style="vertical-align:middle">Il/La richiedente
         </p>
       </td>
       <td style="width:20%; border-left:0px; border-right:0px">
@@ -1350,6 +1669,38 @@ function get_ufficio_dest() {
 
 <br>
 
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="vertical-align: top; width: 4%;" rowspan="3">
+          <input id="check_minorenne" name="check_minorenne" type="checkbox" dynamic_check="moment(#Data_PDF.value(), 'DD/MM/YYYY').diff(moment(#Titolare_DataNascita.value(), 'DD/MM/YYYY'), 'years') < 18" enabled="moment(#Data_PDF.value(), 'DD/MM/YYYY').diff(moment(#Titolare_DataNascita.value(), 'DD/MM/YYYY'), 'years') < 18"/>
+        </td>
+        <td colspan="2">
+          <p><b>Il/La richiedente è minorenne ed è:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="poss_carta_id" name="poss_carta_id" mandatory_enabled="#check_minorenne.checked()" label="Minorenne in possesso di carta di identità"> </div>
+          <input id="poss_carta_id1" name="poss_carta_id" group="poss_carta_id" type="radio" value="1"/>
+        </td>
+        <td>
+          <p>in possesso di un documento di identità</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="poss_carta_id2" name="poss_carta_id" group="poss_carta_id" type="radio" value="2"/>
+        </td>
+        <td>
+          <p>NON in possesso di un documento di identità</p>
+        </td>        
+      </tr>
+    </tbody>
+  </table>
+
+<br>
+
 <table class="Modulo" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazioneridotta">
@@ -1431,7 +1782,7 @@ function get_ufficio_dest() {
       <tbody>
         <tr class="Rigaintestazioneridotta">
           <td colspan="4">
-            <p><b>Dettagli patente</b></p>
+            <p><b>Dettagli patente di guida Italiana</b></p>
           </td>
         </tr>
         <tr>
@@ -1440,7 +1791,7 @@ function get_ufficio_dest() {
             <input id="Tipo_patente5" name="Tipo_patente5" type="checkbox" value="5"/>B1 &nbsp; &nbsp; &nbsp; &nbsp; <input id="Tipo_patente6" name="Tipo_patente6" type="checkbox" value="6"/>B &nbsp; &nbsp; &nbsp; &nbsp; <input id="Tipo_patente7" name="Tipo_patente7" type="checkbox" value="7"/>BE<br><br>
             <input id="Tipo_patente8" name="Tipo_patente8" type="checkbox" value="8"/>C1 &nbsp; &nbsp; &nbsp; &nbsp; <input id="Tipo_patente9" name="Tipo_patente9" type="checkbox" value="9"/>C1E &nbsp; &nbsp; &nbsp; &nbsp; <input id="Tipo_patente10" name="Tipo_patente10" type="checkbox" value="10"/>C &nbsp; &nbsp; &nbsp; &nbsp; <input id="Tipo_patente11" name="Tipo_patente11" type="checkbox" value="11"/>CE<br><br>
             <input id="Tipo_patente12" name="Tipo_patente12" type="checkbox" value="12"/>D1 &nbsp; &nbsp; &nbsp; &nbsp; <input id="Tipo_patente13" name="Tipo_patente13" type="checkbox" value="13"/>D1E &nbsp; &nbsp; &nbsp; &nbsp; <input id="Tipo_patente14" name="Tipo_patente14" type="checkbox" value="14"/>D &nbsp; &nbsp; &nbsp; &nbsp; <input id="Tipo_patente15" name="Tipo_patente15" type="checkbox" value="15"/>DE<br><br>
-            <p>Numero: <input class="inputNormal" id="Titolare_Numero_patente" label="Numero patente del dichiarante" name="Titolare_Numero_patente" style="width:15%" maxlength="10" enabled="true"/> --- Data rilascio: <input class="inputNormal" id="Titolare_Data_rilascio_patente" label="Data di rilascio della patente del dichiarante" name="Titolare_Data_rilascio_patente" size="7" format="date" enabled="true"/> --- Organo di rilascio: <select class="inputNormal" id="Titolare_Organorilasciopatente" name="Titolare_Organorilasciopatente" style="width:12%" label="Organo di rilascio della patente">
+            <p><a href="https://www.patentati.it/blog/articoli-patente/come-si-legge-la-patente-di-guida.html" target="_blank">Numero</a>: <input class="inputNormal" id="Titolare_Numero_patente" label="Numero patente del dichiarante" name="Titolare_Numero_patente" style="width:15%" maxlength="10" enabled="true"/> --- Data rilascio: <input class="inputNormal" id="Titolare_Data_rilascio_patente" label="Data di rilascio della patente del dichiarante" name="Titolare_Data_rilascio_patente" size="7" format="date" enabled="true"/> --- Organo di rilascio: <select class="inputNormal" id="Titolare_Organorilasciopatente" name="Titolare_Organorilasciopatente" style="width:12%" label="Organo di rilascio della patente">
                                       <option value=""></option>
                                       <option value="Prefettura">Prefettura</option>
                                       <option value="MCTC">M.C.T.C.</option>
@@ -1613,6 +1964,12 @@ function get_ufficio_dest() {
       </tbody>
     </table>
 
+    <input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#check_minorenne.checked() ? #Titolare_Cognome.value() : ''" />
+    <input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#check_minorenne.checked() ? #Titolare_Nome.value() : ''" />
+    <input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" dynamic_value="#check_minorenne.checked() ? #Titolare_CodiceFiscale.value() : ''" />
+    <input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" dynamic_value="#check_minorenne.checked() ? #Titolare_DataNascita.value() : ''" />
+    <input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" dynamic_value="#check_minorenne.checked() ? #Titolare_LuogoNascita.value() : ''" />
+
 <br>
 
 <p class="Modulo"> Consapevole delle responsabilità penali per le dichiarazioni mendaci ai sensi degli art. 75 e 76 DPR 445/2000 che prevedono la decadenza dei benefici e l'obbligo di denuncia all'autorità competente</p>
@@ -1636,7 +1993,8 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td>
-        <select id="Titolare_prov_res" name="Titolare_prov_res" style="width:100%" label="Provincia nuova residenza del richiedente" >
+        <p>TN</p>
+        <!--<select id="Titolare_prov_res" name="Titolare_prov_res" style="width:100%" label="Provincia nuova residenza del richiedente" >
     <option value=""></option>
     <option value="AG">AG</option>
     <option value="AL">AL</option>
@@ -1749,10 +2107,11 @@ function get_ufficio_dest() {
     <option value="VT">VT</option>
     <option value="VV">VV</option>
     <option value="EE">EE</option>
-</select>
+</select>-->
       </td>
       <td colspan="2">
-        <select class="inputNormal" id="Titolare_comune_res" name="Titolare_comune_res" style="width:100%" label="Comune nuova residenza del richiedente" dynamic_value="getComuniFromProvincia( #Titolare_prov_res.value(), 'Titolare_comune_res')" mandatory_enabled="true"></select><br>
+        <P>TRENTO</P>
+        <!--<select class="inputNormal" id="Titolare_comune_res" name="Titolare_comune_res" style="width:100%" label="Comune nuova residenza del richiedente" dynamic_value="getComuniFromProvincia( #Titolare_prov_res.value(), 'Titolare_comune_res')" mandatory_enabled="true"></select><br>-->
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -2066,24 +2425,13 @@ function get_ufficio_dest() {
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
+      <td>
         <p><b>Nome indicato sul campanello/cassetta delle lettere:</b></p>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella">Cognome</p>
-      </td>
-      <td>
-        <p class="Labelcella">Nome</p>
       </td>
     </tr>
     <tr>
       <td>
-        <input style="width:100%;" class="Modulo" id="cognome_campanello" name="cognome_campanello" label="Cognome indicato sul campanello/cassetta della posta" enabled="true">
-      </td>
-      <td>
-        <input style="width:100%;" class="Modulo" id="nome_campanello" name="nome_campanello" label="Nome indicato sul campanello/cassetta della posta" enabled="true">
+        <input style="width:100%;" class="Modulo" id="Nominativo_campanello" name="Nominativo_campanello" label="Nome/i indicato/i sul campanello/cassetta della posta" enabled="true">
       </td>
     </tr>
   </tbody>
@@ -2213,7 +2561,7 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;" rowspan="4">
-        <div id="titolo_occupazione" name="titolo_occupazione" label="Specificare il titolo di occupazione dell'alloggio" enabled="true"> </div>
+        <div id="titolo_occupazione" name="titolo_occupazione" label="Specificare il titolo di occupazione dell'alloggio" mandatory_enabled="true"> </div>
         <input group="titolo_occupazione" id="titolo_occupazione1" name="titolo_occupazione" type="radio" value="1" />
       </td>
       <td colspan="10">
@@ -2221,31 +2569,31 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td style="width: 20%;" colspan="2">
+      <td style="width: 49%;" colspan="2">
         <p class="Labelcella">Tipo</p>
       </td>
-      <td style="width: 15%;">
+      <td style="width: 5%;">
         <p class="Labelcella">Comune catastale (codice)</p>
       </td>
-      <td style="width: 25%;">
+      <td style="width: 20%;">
         <p class="Labelcella">Comune catastale (nome esteso)</p>
       </td>
-      <td style="width: 7%;">
+      <td style="width: 5%;">
         <p class="Labelcella">Numero</p>
       </td>
-      <td style="width: 6%;">
+      <td style="width: 5%;">
         <p class="Labelcella">Barra</p>
       </td>
-      <td style="width: 6%;">
+      <td style="width: 5%;">
         <p class="Labelcella">Porzione Materiale</p>
       </td>
-      <td style="width: 6%;">
+      <td style="width: 5%;">
         <p  class="Labelcella">Subalterno</p>
       </td>
-      <td style="width: 5%;">
+      <td style="width: 3%;">
         <p class="Labelcella">Controllo particella</p>
       </td>
-      <td style="width: 10%;">
+      <td style="width: 3%;">
         <p class="Labelcella">Mappa</p>
       </td>
     </tr>
@@ -2253,7 +2601,7 @@ function get_ufficio_dest() {
       <td colspan="2">
         <select class="inputNormal" id="TipoImmobile" name="TipoImmobile" style="width:100%" label="Tipo immobile" mandatory_enabled="#titolo_occupazione1.checked()">
           <option value=""></option>
-          <option value="Porzione_edificio">porzione di edificio</option>
+          <option value="Porzione_edificio">abitazione</option>
           <option value="Intero_edificio">intero edificio</option>
         </select>
       </td>
@@ -2347,7 +2695,7 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="3">
+      <td style="vertical-align: top; width: 4%;" rowspan="7">
         <input group="titolo_occupazione" id="titolo_occupazione2" name="titolo_occupazione" type="radio" value="2" />
       </td>
       <td colspan="10">
@@ -2364,11 +2712,50 @@ function get_ufficio_dest() {
       </td>
     </tr>  
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
         <input group="registr_contratto" id="registr_contratto2" name="registr_contratto" type="radio" value="2" />
       </td>
       <td colspan="9">
-        <p>in fase di registrazione presso l'Agenzia delle entrate di <input name="Ag_entrate_prob" id="Ag_entrate_prob" size="20" label="Agenzia delle entrate di registrazione del contratto di locazione" mandatory_enabled="#registr_contratto2.checked()"/></p>
+        <p>in fase di registrazione:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <div id="dati_propr_loc" name="dati_propr_loc" label="Scelta modalità per fornire dati sul proprietario" mandatory_enabled="#registr_contratto2.checked()"> </div>
+        <input group="dati_propr_loc" id="dati_propr_loc1" name="dati_propr_loc" type="radio" value="1" />
+      </td>
+      <td colspan="9">
+        <p>si forniscono di seguito i dati del proprietario</p>
+      </td>
+    </tr> 
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td colspan="3">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td colspan="4">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input name="cognome_propr_imm1" id="cognome_propr_imm1" style="width:100%;" label="Cognome proprietario dell'immobile" mandatory_enabled="#dati_propr_loc1.checked()"/>
+      </td>
+      <td colspan="3">
+        <input name="nome_propr_imm1" id="nome_propr_imm1" style="width:100%;" label="Nome proprietario dell'immobile" mandatory_enabled="#dati_propr_loc1.checked()"/>
+      </td>
+      <td colspan="4">
+        <input name="ind_propr_imm1" id="ind_propr_imm1" style="width:100%;" label="Indirizzo proprietario dell'immobile" mandatory_enabled="#dati_propr_loc1.checked()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="dati_propr_loc" id="dati_propr_loc2" name="dati_propr_loc" type="radio" value="2" />
+      </td>
+      <td colspan="9">
+        <p>si allega il modulo E, compilato dal proprietario</p>
       </td>
     </tr>    
     <tr>
@@ -2380,7 +2767,7 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="3">
+      <td style="vertical-align: top; width: 4%;" rowspan="7">
         <input group="titolo_occupazione" id="titolo_occupazione4" name="titolo_occupazione" type="radio" value="4" />
       </td>
       <td colspan="10">
@@ -2389,7 +2776,7 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="registr_contratto_com_uso" name="registr_contratto_com_uso" label="Estremi della registrazione del contratto di comodato d'uso" mandatory_enabled="#titolo_occupazione4.checked()"> </div>
+        <div id="registr_contratto_com_uso" name="registr_contratto_com_uso" label="Estremi della registrazione del contratto di comodato d'uso" mandatory_enabled="#titolo_occupazione8.checked()"> </div>
         <input group="registr_contratto_com_uso" id="registr_contratto_com_uso1" name="registr_contratto_com_uso" type="radio" value="1" />
       </td>
       <td colspan="9">
@@ -2397,11 +2784,50 @@ function get_ufficio_dest() {
       </td>
     </tr>  
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; width: 4%;" rowspan="5">
         <input group="registr_contratto_com_uso" id="registr_contratto_com_uso2" name="registr_contratto_com_uso" type="radio" value="2" />
       </td>
       <td colspan="9">
-        <p>in fase di registrazione presso l'Agenzia delle entrate di <input name="Ag_entrate_prob_com_uso" id="Ag_entrate_prob_com_uso" size="20" label="Agenzia delle entrate di registrazione del contratto di comodato d'uso" mandatory_enabled="#registr_contratto_com_uso2.checked()"/></p>
+        <p>in fase di registrazione:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <div id="dati_propr_com" name="dati_propr_com" label="Scelta modalità per fornire dati sul proprietario" mandatory_enabled="#registr_contratto_com_uso2.checked()"> </div>
+        <input group="dati_propr_com" id="dati_propr_com1" name="dati_propr_com" type="radio" value="1" />
+      </td>
+      <td colspan="9">
+        <p>si forniscono di seguito i dati del proprietario</p>
+      </td>
+    </tr>  
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td colspan="3">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td colspan="4">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input name="cognome_propr_imm2" id="cognome_propr_imm2" style="width:100%;" label="Cognome proprietario dell'immobile" mandatory_enabled="#dati_propr_com1.checked()"/>
+      </td>
+      <td colspan="3">
+        <input name="nome_propr_imm2" id="nome_propr_imm2" style="width:100%;" label="Nome proprietario dell'immobile" mandatory_enabled="#dati_propr_com1.checked()"/>
+      </td>
+      <td colspan="4">
+        <input name="ind_propr_imm2" id="ind_propr_imm2" style="width:100%;" label="Indirizzo proprietario dell'immobile" mandatory_enabled="#dati_propr_com1.checked()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="dati_propr_com" id="dati_propr_com2" name="dati_propr_com" type="radio" value="2" />
+      </td>
+      <td colspan="9">
+        <p>si allega il modulo E, compilato dal proprietario</p>
       </td>
     </tr>  
     <tr>
@@ -2409,13 +2835,13 @@ function get_ufficio_dest() {
         <input group="titolo_occupazione" id="titolo_occupazione5" name="titolo_occupazione" type="radio" value="5" />
       </td>
       <td colspan="10">
-        <p>di essere <b>usufruttuario</b>, in forza del seguente titolo costruttivo:</p>
-        <p style="font-size:85%;"><i>(indicare dati utili a consentire la verifica da parte dell'Ufficio Anagrafe)</i></p>
-        <textarea class="inputNormal" id="titolo_costruttivo" name="titolo_costruttivo" label="Specificare titolo costruttivo per usufrutto immobile" style="width:100%;height:1cm" mandatory_enabled="#titolo_occupazione5.checked()"></textarea>
+        <p>di essere <b>usufruttuario</b></p>
+        <p style="font-size:85%;"><i>(indicare eventuali dati utili a consentire la verifica da parte dell'Ufficio Anagrafe)</i></p>
+        <textarea class="inputNormal" id="titolo_costruttivo" name="titolo_costruttivo" label="Specificare titolo costruttivo per usufrutto immobile" style="width:100%;height:1cm" enabled="#titolo_occupazione5.checked()"></textarea>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="5">
+      <td style="vertical-align: top; width: 4%;" rowspan="6">
         <input group="titolo_occupazione" id="titolo_occupazione6" name="titolo_occupazione" type="radio" value="6" />
       </td>
       <td colspan="10">
@@ -2433,30 +2859,38 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td colspan="2">
+      <td colspan="3">
         <p class="Labelcella">Cognome</p>
       </td>
-      <td colspan="2">
+      <td colspan="3">
         <p class="Labelcella">Nome</p>
       </td>
-      <td colspan="5">
+      <td colspan="3">
         <p class="Labelcella">Indirizzo</p>
       </td>
     </tr>
     <tr>
-      <td colspan="2">
-        <input name="cognome_propr_imm" id="cognome_propr_imm" style="width:100%;" label="Cognome proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      <td colspan="3">
+        <input name="cognome_propr_imm3" id="cognome_propr_imm3" style="width:100%;" label="Cognome proprietario dell'immobile" mandatory_enabled="#proprieta_immobile1.checked()"/>
       </td>
-      <td colspan="2">
-        <input name="nome_propr_imm" id="nome_propr_imm" style="width:100%;" label="Nome proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      <td colspan="3">
+        <input name="nome_propr_imm3" id="nome_propr_imm3" style="width:100%;" label="Nome proprietario dell'immobile" mandatory_enabled="#proprieta_immobile1.checked()"/>
       </td>
-      <td colspan="5">
-        <input name="ind_propr_imm" id="ind_propr_imm" style="width:100%;" label="Indirizzo proprietario dell'immobile" enabled="#proprieta_immobile1.checked()"/>
+      <td colspan="3">
+        <input name="ind_propr_imm3" id="ind_propr_imm3" style="width:100%;" label="Indirizzo proprietario dell'immobile" mandatory_enabled="#proprieta_immobile1.checked()"/>
       </td>
     </tr>
     <tr>
-      <td>
+      <td style="vertical-align: top; width: 4%;">
         <input group="proprieta_immobile" id="proprieta_immobile2" name="proprieta_immobile" type="radio" value="2" />
+      </td>
+      <td colspan="9">
+        <p>si allega il modulo E, compilato dal proprietario</p>
+      </td>
+    </tr>  
+    <tr>
+      <td>
+        <input group="proprieta_immobile" id="proprieta_immobile3" name="proprieta_immobile" type="radio" value="3" />
       </td>
       <td colspan="9">
         <p>dichiara di essere ospite presso una Convivenza anagrafica</p>
@@ -2673,6 +3107,16 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr>
+      <td style="vertical-align: top; width:3%">
+        <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#poss_carta_id1.checked()" enabled="#poss_carta_id1.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td>
+        <p>
+          Copia del documento d'identità del dichiarante se minorenne
+        </p>
+      </td>
+    </tr>
+    <tr>
       <td>
         <input id="GEN_ALTRI_FAM" name="GEN_ALTRI_FAM" obbligatorio="#familiari_trasferiti.value() != 0 ? 'OBBLIGATORIO' : ''" type="checkbox" dynamic_check="#familiari_trasferiti.value() != 0" enabled="#familiari_trasferiti.value() != 0"/>
       </td>
@@ -2690,10 +3134,18 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td>
-        <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>
+        <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" enabled="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" value="OBBLIGATORIO"/>
       </td>
       <td>
         Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati appartenenti all'UE</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="DICH_RES_ALL_C" name="DICH_RES_ALL_C" type="checkbox" dynamic_check="#Tipo_cambio_res_minore1.checked()" enabled="#Tipo_cambio_res_minore1.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td>
+        Allegato C - Dichiarazione sostitutiva atto di notorietà - <b>trasferimento di minore</b>
       </td>
     </tr>
     <tr>
@@ -2706,7 +3158,7 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td>
-        <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#titolo_occupazione4.checked() || #titolo_occupazione5.checked()" enabled="#titolo_occupazione4.checked() || #titolo_occupazione5.checked()" value="OBBLIGATORIO"/>
+        <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" enabled="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td>
         Titolo di occupazione dell'alloggio, da compilarsi da parte del proprietario dell'immobile
@@ -2722,12 +3174,13 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td>
-        <input id="GEN_ENTR_CONV" name="GEN_ENTR_CONV" type="checkbox" dynamic_check="#proprieta_immobile2.checked()" enabled="#proprieta_immobile2.checked()" value="OBBLIGATORIO"/>
+        <input id="GEN_ENTR_CONV" name="GEN_ENTR_CONV" type="checkbox" dynamic_check="#proprieta_immobile3.checked()" enabled="#proprieta_immobile3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td>
         Dichiarazione di entrata in convivenza
       </td>
     </tr>
+
   </tbody>
 </table>
 
@@ -2832,6 +3285,7 @@ function get_ufficio_dest() {
 
 <input id="GLOBO_modulofiglio_cDICH-RES-ALL-A" name="GLOBO_modulofiglio_cDICH-RES-ALL-A" obbligatorio="#DICH_RES_ALL_A.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cDICH-RES-ALL-B" name="GLOBO_modulofiglio_cDICH-RES-ALL-B" obbligatorio="#DICH_RES_ALL_B.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cDICH-RES-ALL-C" name="GLOBO_modulofiglio_cDICH-RES-ALL-C" obbligatorio="#DICH_RES_ALL_C.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cDICH-RES-ALL-D" name="GLOBO_modulofiglio_cDICH-RES-ALL-D" obbligatorio="#DICH_RES_ALL_D.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cDICH-RES-ALL-E" name="GLOBO_modulofiglio_cDICH-RES-ALL-E" obbligatorio="#DICH_RES_ALL_E.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
@@ -2839,6 +3293,7 @@ function get_ufficio_dest() {
 
 <input id="GLOBO_allegato_cGEN-CONTR-LOC" name="GLOBO_allegato_cGEN-CONTR-LOC" obbligatorio="#GEN_CONTR_LOC.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cGEN-ENTR-CONV" name="GLOBO_allegato_cGEN-ENTR-CONV" obbligatorio="#GEN_ENTR_CONV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 
 <!-- METADATI -->
