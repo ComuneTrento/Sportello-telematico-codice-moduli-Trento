@@ -3,7 +3,7 @@
 {% extends "base_trento.html" %}
 
 {% block meta %}
-<meta campi_firma="Titolare_Cognome"
+<meta campi_firma="Titolare_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 descrizione="Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore"
@@ -65,7 +65,7 @@ Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di min
  </globo_fondo_pagina>
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_Titolare_Cognome.value() != '' ? #Metadati_Titolare_Cognome.value().toUpperCase() + ' - Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore' : 'Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#dichiarante_Cognome.value().toUpperCase() + ' - Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore'"/>
 
  <h1 class="Modulo">
   Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore
@@ -77,7 +77,41 @@ Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di min
 
 <br>
 
-{{anagrafica.cognome_nome("Titolare","Il/La sottoscritto/a", "Richiedente", "visibility:hidden", "cursor:default")}}
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="border-right:0px">
+        <p class="Labeltabella">Il/La sottoscritto/a</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 33%;">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td style="width: 33%;">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td style="width: 34%;">
+        <p class="Labelcella">Codice Fiscale</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="dichiarante_Cognome" name="dichiarante_Cognome" style="width:100%" label="Cognome del dichiarante" dynamic_value="#Metadati_Titolare_Cognome.value() != '' ? #Metadati_Titolare_Cognome.value() : #Metadati_Compilante_Cognome.value()"/>
+      </td>
+      <td>
+        <input id="dichiarante_Nome" name="dichiarante_Nome" style="width:100%" label="Nome del dichiarante" dynamic_value="#Metadati_Titolare_Nome.value() != '' ? #Metadati_Titolare_Nome.value() : #Metadati_Compilante_Nome.value()"/>
+      </td>
+      <td>
+        <input format="cf" id="dichiarante_CodiceFiscale" name="dichiarante_CodiceFiscale" style="width:100%" label="Codice fiscale del dichiarante" dynamic_value="#Metadati_Titolare_CodiceFiscale.value() != '' ? #Metadati_Titolare_CodiceFiscale.value() : #Metadati_Compilante_CodiceFiscale.value()"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 
@@ -129,22 +163,22 @@ Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di min
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
  {{ utils.passaggio_metadati() }}
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
-<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" type="hidden"/>
-<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" type="hidden"/>
-
+<!-- METADATI DICHIARANTE -->
+<input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome"/>
+<input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome"/>
+<input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale"/>
+<br>
+<!-- METADATI TITOLARE -->
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome"/>
+<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome"/>
+<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale"/>
+<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc"/>
+<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc"/>
+<br>
+<!-- METADATI MINORE -->
 <input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome"/>
 <input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome"/>
 <input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale"/>
 <input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita"/>
 <input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita"/>
-
-<input id="Metadati_Minore_Cognome1" name="Metadati_Minore_Cognome1"/>
-<input id="Metadati_Minore_Nome1" name="Metadati_Minore_Nome1"/>
-<input id="Metadati_Minore_CodiceFiscale1" name="Metadati_Minore_CodiceFiscale1"/>
-<input id="Metadati_Minore_DataNascita1" name="Metadati_Minore_DataNascita1"/>
-<input id="Metadati_Minore_LuogoNascita1" name="Metadati_Minore_LuogoNascita1"/>
-
-
-
 {% endblock content %}

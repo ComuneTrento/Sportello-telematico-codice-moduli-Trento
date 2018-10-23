@@ -85,7 +85,7 @@ Allegato D - Dichiarazione sostitutiva atto di notorietà
  </globo_fondo_pagina>
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_Titolare_Cognome.value().toUpperCase() + ' - Allegato D - Dichiarazione sostitutiva atto di notorietà'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Cognome_dichiarante.value().toUpperCase() + ' - Allegato D - Dichiarazione sostitutiva atto di notorietà'"/>
 
  <h1 class="Modulo">
   Allegato D - Dichiarazione sostitutiva atto di notorietà
@@ -352,8 +352,8 @@ Allegato D - Dichiarazione sostitutiva atto di notorietà
         <input id="dich_inform_check" name="dich_inform" type="radio" value="1"/>
       </td>
       <td colspan="2">
-        <p>di essere a conoscenza che il signor/la signora: <input dynamic_value="#Metadati_Titolare_Cognome.value() + ' ' + #Metadati_Titolare_Nome.value()" id="Nominativo_titolare" name="Nominativo_titolare" size="50" readonly/></p>
-        <p>nato/a a: <input dynamic_value="#Metadati_Titolare_luogonasc.value()" id="luogonasc_titolare" name="luogonasc_titolare" size="50" readonly/> &nbsp;&nbsp;&nbsp;&nbsp; il: <input dynamic_value="#Metadati_Titolare_datanasc.value()" id="datanasc_titolare" name="datanasc_titolare" size="24" readonly/></p>
+        <p>di essere a conoscenza che il signor/la signora: <input dynamic_value="#Metadati_Titolare_Cognome.value() != '' ? #Metadati_Titolare_Cognome.value() + ' ' + #Metadati_Titolare_Nome.value() : #Metadati_Minore_Cognome.value() + ' ' + #Metadati_Minore_Nome.value()" id="Nominativo_titolare" name="Nominativo_titolare" size="50" readonly/></p>
+        <p>nato/a a: <input dynamic_value="#Metadati_Titolare_luogonasc.value() != '' ? #Metadati_Titolare_luogonasc.value() : #Metadati_Minore_LuogoNascita.value()" id="luogonasc_titolare" name="luogonasc_titolare" size="50" readonly/> &nbsp;&nbsp;&nbsp;&nbsp; il: <input dynamic_value="#Metadati_Titolare_datanasc.value() != '' ? #Metadati_Titolare_datanasc.value() : #Metadati_Minore_DataNascita.value()" id="datanasc_titolare" name="datanasc_titolare" size="24" readonly/></p>
         <br>
         <p>ha la dimora abituale presso di sé, al proprio indirizzo e che lo/la stesso/a, ai sensi della vigente normativa (art. 4 D.P.R. 30.05.1989 n. 223: “agli effetti anagrafici per famiglia si intende un insieme di persone legate da vincoli di matrimonio, parentela, affinità, adozione, tutela o da vincoli affettivi, coabitanti ed aventi dimora abituale nello stesso comune”)</p>
       </td>
@@ -432,15 +432,28 @@ Allegato D - Dichiarazione sostitutiva atto di notorietà
  <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
  {{ utils.passaggio_metadati() }}
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
-<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" type="hidden"/>
-<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc" type="hidden"/>
-<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc" type="hidden"/>
-<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" type="hidden"/>
-<input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto" type="hidden"/>
-<input id="Metadati_nome_fam_iscritto" name="Metadati_nome_fam_iscritto" type="hidden"/>
-<input id="Metadati_luogo_nasc_fam_iscritto" name="Metadati_luogo_nasc_fam_iscritto" type="hidden"/>
-<input id="Metadati_data_nasc_fam_iscritto" name="Metadati_data_nasc_fam_iscritto" type="hidden"/>
-
-
+<!-- METADATI DICHIARANTE -->
+<input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome"/>
+<input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome"/>
+<input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale"/>
+<br>
+<!-- METADATI TITOLARE -->
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome"/>
+<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome"/>
+<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale"/>
+<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc"/>
+<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc"/>
+<br>
+<!-- METADATI MINORE -->
+<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome"/>
+<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome"/>
+<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale"/>
+<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita"/>
+<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita"/>
+<br>
+<!-- METADATI PERSONA GIA' RESIDENTE AL NUOVO INDIRIZZO-->
+<input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto"/>
+<input id="Metadati_nome_fam_iscritto" name="Metadati_nome_fam_iscritto"/>
+<input id="Metadati_luogo_nasc_fam_iscritto" name="Metadati_luogo_nasc_fam_iscritto"/>
+<input id="Metadati_data_nasc_fam_iscritto" name="Metadati_data_nasc_fam_iscritto"/>
 {% endblock content %}

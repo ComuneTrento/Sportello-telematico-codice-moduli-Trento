@@ -3,7 +3,7 @@
 {% extends "base_trento.html" %}
 
 {% block meta %}
-<meta campi_firma="Metadati_Titolare_Cognome"
+<meta campi_firma="Titolare_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 descrizione="Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini di Stati appartenenti all'UE"
@@ -175,7 +175,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
  </globo_fondo_pagina>
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_Titolare_Cognome.value().toUpperCase() + ' - Allegato B - documentazione necessaria per iscrizione anagrafica cittadini di Stati UE'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#dichiarante.value().toUpperCase() + ' - Allegato B - documentazione necessaria per iscrizione anagrafica cittadini di Stati UE'"/>
 
  <h1 class="Modulo">
     Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini di Stati appartenenti all'UE
@@ -183,7 +183,41 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
 
 <br>
 
-{{anagrafica.cognome_nome("Titolare","Il/La sottoscritto/a", "Richiedente", "visibility:hidden", "cursor:default")}}
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="border-right:0px">
+        <p class="Labeltabella">Il/La sottoscritto/a</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 33%;">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td style="width: 33%;">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td style="width: 34%;">
+        <p class="Labelcella">Codice Fiscale</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="dichiarante_Cognome" name="dichiarante_Cognome" style="width:100%" label="Cognome del dichiarante" dynamic_value="#Metadati_Titolare_Cognome.value() != '' ? #Metadati_Titolare_Cognome.value() : #Metadati_Minore_Cognome.value()"/>
+      </td>
+      <td>
+        <input id="dichiarante_Nome" name="dichiarante_Nome" style="width:100%" label="Nome del dichiarante" dynamic_value="#Metadati_Titolare_Nome.value() != '' ? #Metadati_Titolare_Nome.value() : #Metadati_Minore_Nome.value()"/>
+      </td>
+      <td>
+        <input format="cf" id="dichiarante_CodiceFiscale" name="dichiarante_CodiceFiscale" style="width:100%" label="Codice fiscale del dichiarante" dynamic_value="#Metadati_Titolare_CodiceFiscale.value() != '' ? #Metadati_Titolare_CodiceFiscale.value() : #Metadati_Minore_CodiceFiscale.value()"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 
@@ -266,7 +300,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_DOC_ID_NAZ_PROV" name="GEN_DOC_ID_NAZ_PROV" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         copia di un documento di identità valido per l'espatrio in corso di validità rilasciato dalle competenti autorità del Paese di cui si possiede la cittadinanza
       </td>
     </tr>
@@ -274,7 +308,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_QUAL_LAV" name="GEN_QUAL_LAV" type="checkbox" dynamic_check="#Tipo_cittadinanza_UE1.checked()" enabled="#Tipo_cittadinanza_UE1.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         documentazione comprovante la qualità di lavoratore subordinato o autonomo
       </td>
     </tr>
@@ -282,7 +316,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_DOC_STATO_CIV" name="GEN_DOC_STATO_CIV" type="checkbox" enabled="#Tipo_cittadinanza_UE1.checked() || #Tipo_cittadinanza_UE2.checked() || #Tipo_cittadinanza_UE3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         copia degli atti originali, tradotti e legalizzati, comprovanti lo stato civile e la composizione della famiglia
       </td>
     </tr>
@@ -290,7 +324,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_AUTOCERT_RIS_ECON" name="GEN_AUTOCERT_RIS_ECON" type="checkbox" dynamic_check="#Tipo_cittadinanza_UE2.checked() || #Tipo_cittadinanza_UE3.checked()" enabled="#Tipo_cittadinanza_UE2.checked() || #Tipo_cittadinanza_UE3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         autocertificazione del possesso di risorse economiche sufficienti (la somma di riferimento corrisponde all'importo dell'assegno sociale lordo annuo) per non diventare un onere a carico dell'assistenza sociale dello Stato (per gli importi aggiornati si veda il sito www.inps.it)
       </td>
     </tr>
@@ -298,7 +332,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_ASS_SANIT" name="GEN_ASS_SANIT" type="checkbox" dynamic_check="#Tipo_cittadinanza_UE2.checked()" enabled="#Tipo_cittadinanza_UE2.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         copia di un'assicurazione sanitaria che copra i rischi sanitari sul territorio nazionale, valida per almeno un anno, oppure copia di uno dei seguenti formulari rilasciati dallo Stato di provenienza: E106, E120, E121 (o E 33), E109 (o E 37), S1
       </td>
     </tr>
@@ -306,7 +340,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_ISCR_SCOL" name="GEN_ISCR_SCOL" type="checkbox" dynamic_check="#Tipo_cittadinanza_UE3.checked()" enabled="#Tipo_cittadinanza_UE3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         documentazione attestante l'iscrizione presso un istituto scolastico o di formazione professionale
       </td>
     </tr>
@@ -314,7 +348,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_ASS_SANIT_STUD" name="GEN_ASS_SANIT_STUD" type="checkbox" dynamic_check="#Tipo_cittadinanza_UE3.checked()" enabled="#Tipo_cittadinanza_UE3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         copia di un'assicurazione sanitaria che copra i rischi sanitari sul territorio nazionale, valida per almeno un anno o almeno pari al corso di studi o di formazione professionale, se inferiore all'anno o formulario comunitario
       </td>
     </tr>
@@ -322,7 +356,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_ATTI_SOGG" name="GEN_ATTI_SOGG" type="checkbox" dynamic_check="#Tipo_cittadinanza_UE4.checked()" enabled="#Tipo_cittadinanza_UE4.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         copia degli atti originali, in regola con le norme sulla traduzione e la legalizzazione, di soggiorno (ad es. certificato di matrimonio per il coniuge, certificato di nascita con paternità e maternità per l'ascendente o discendente)
       </td>
     </tr>
@@ -330,7 +364,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_DICH_VIV" name="GEN_DICH_VIV" type="checkbox" dynamic_check="#Tipo_cittadinanza_UE4.checked()" enabled="#Tipo_cittadinanza_UE4.checked()" value="OBBLIGATORIO"/> <!-- da capire come indicare il numero di ascendenti e discendenti ultra 21enni -->
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         dichiarazione di vivenza a carico resa dal cittadino dell'Unione in possesso di autonomi requisiti di soggiorno per n. <input name="asc_disc_ultra21" id="asc_disc_ultra21" size="4" label="Numero ascendenti/discendenti ultra 21enni" mandatory_enabled="#GEN_DICH_VIV.checked()"/> ascendenti e/o discendenti ultra 21enni
       </td>
     </tr>
@@ -338,7 +372,7 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
       <td>
         <input id="GEN_CARTA_SOGG_FAM" name="GEN_CARTA_SOGG_FAM" type="checkbox" dynamic_check="#Tipo_cittadinanza_UE5.checked()" enabled="#Tipo_cittadinanza_UE5.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         carta di soggiorno di familiare di cittadino dell'Unione, oppure ricevuta della richiesta di rilascio di carta di soggiorno
       </td>
     </tr>
@@ -376,7 +410,17 @@ Allegato B - documentazione necessaria per l'iscrizione anagrafica di cittadini 
 
 
  {{ utils.passaggio_metadati() }}
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
-<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" type="hidden"/>
-<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" type="hidden"/>
+<!-- METADATI TITOLARE -->
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome"/>
+<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome"/>
+<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale"/>
+<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc"/>
+<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc"/>
+<br>
+<!-- METADATI MINORE -->
+<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome"/>
+<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome"/>
+<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale"/>
+<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita"/>
+<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita"/>
 {% endblock content %}

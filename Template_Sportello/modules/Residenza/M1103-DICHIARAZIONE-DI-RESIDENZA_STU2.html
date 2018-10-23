@@ -153,7 +153,7 @@ name="GLOBO_report"
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
-        <td colspan="3">
+        <td colspan="5">
           <p><b>La compilazione del modulo viene eseguita:</b></p>
         </td>
       </tr>
@@ -162,22 +162,49 @@ name="GLOBO_report"
           <div id="Tipo_richiedente" name="Tipo_richiedente" label="Specificare il richiedente" mandatory_enabled="true"> </div>
           <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
         </td>
-        <td colspan="2">
+        <td colspan="4">
           <p>a titolo personale<br>
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;" rowspan="4">
+        <td style="vertical-align: top; width: 4%;" rowspan="7">
           <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
         </td>
-        <td colspan="2">
+        <td colspan="4">
           <p>a nome di un minore<br>
           </p>
         </td>
       </tr>
-      <tr class="Rigaintestazione">
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="4">
+          <p>in questo caso la compilazione viene eseguita da:</p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
         <td colspan="2">
-          <p><b>Il/La minore dichiara di trasferirsi:</b></p>
+          <p class="Labelcella">Cognome</p>
+        </td>
+        <td style="width: 33%;">
+          <p class="Labelcella">Nome</p>
+        </td>
+        <td style="width: 34%;">
+          <p class="Labelcella">Codice Fiscale</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input id="compilante_Cognome" name="compilante_Cognome" style="width:100%" label="Cognome del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()"/>
+        </td>
+        <td>
+          <input id="compilante_Nome" name="compilante_Nome" style="width:100%" label="Nome del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()"/>
+        </td>
+        <td>
+          <input format="cf" id="compilante_CodiceFiscale" name="compilante_CodiceFiscale" style="width:100%" label="Codice fiscale del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p><b>Il/La minore si trasferisce:</b></p>
         </td>
       </tr>
       <tr>
@@ -185,7 +212,7 @@ name="GLOBO_report"
           <div id="Tipo_cambio_res_minore" name="Tipo_cambio_res_minore" label="Specificare il tipo di cambio residenza effettuato dal minore" mandatory_enabled="#Tipo_richiedente2.checked()"> </div>
           <input group="Tipo_cambio_res_minore" id="Tipo_cambio_res_minore1" name="Tipo_cambio_res_minore" type="radio" value="1" />
         </td>
-        <td>
+        <td colspan="3">
           <p><b>da solo o con solo un genitore</b>, ad un indirizzo dove <b>NON</b> risiede l'altro genitore</p>
         </td>
       </tr>
@@ -193,7 +220,7 @@ name="GLOBO_report"
         <td style="vertical-align: top; width: 4%;">
           <input group="Tipo_cambio_res_minore" id="Tipo_cambio_res_minore2" name="Tipo_cambio_res_minore" type="radio" value="2" />
         </td>
-        <td>
+        <td colspan="3">
           <p><b>con i genitori o con solo un genitore</b>, ad un indirizzo dove risiede l'altro genitore</p>
         </td>
       </tr>
@@ -269,12 +296,6 @@ name="GLOBO_report"
 <br>
 
 {{anagrafica_trento.richiedente_cambio_res("Titolare","Il/La richiedente","visibility:visibility", "cursor:pointer", "visibility:visibility")}}
-
-<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Cognome.value() : ''"/>
-<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Nome.value() : ''"/>
-<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_CodiceFiscale.value() : ''"/>
-<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_DataNascita.value() : ''"/>
-<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_LuogoNascita.value() : ''"/>
 
 <br>
 
@@ -919,7 +940,7 @@ name="GLOBO_report"
         <input group="dati_propr_loc" id="dati_propr_loc1" name="dati_propr_loc" type="radio" value="1" />
       </td>
       <td colspan="9">
-        <p>si forniscono di seguito i dati del proprietario</p>
+        <p>indica di seguito i dati anagrafici del proprietario dell'immobile:</p>
       </td>
     </tr> 
     <tr class="Rigaintestazioneridotta">
@@ -970,7 +991,7 @@ name="GLOBO_report"
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="registr_contratto_com_uso" name="registr_contratto_com_uso" label="Estremi della registrazione del contratto di comodato d'uso" mandatory_enabled="#titolo_occupazione8.checked()"> </div>
+        <div id="registr_contratto_com_uso" name="registr_contratto_com_uso" label="Estremi della registrazione del contratto di comodato d'uso" mandatory_enabled="#titolo_occupazione4.checked()"> </div>
         <input group="registr_contratto_com_uso" id="registr_contratto_com_uso1" name="registr_contratto_com_uso" type="radio" value="1" />
       </td>
       <td colspan="9">
@@ -991,7 +1012,7 @@ name="GLOBO_report"
         <input group="dati_propr_com" id="dati_propr_com1" name="dati_propr_com" type="radio" value="1" />
       </td>
       <td colspan="9">
-        <p>si forniscono di seguito i dati del proprietario</p>
+        <p>indica di seguito i dati anagrafici del proprietario dell'immobile:</p>
       </td>
     </tr>  
     <tr class="Rigaintestazioneridotta">
@@ -1191,7 +1212,7 @@ name="GLOBO_report"
       <td style="vertical-align: top; width:3%">
         <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#poss_carta_id1.checked()" enabled="#poss_carta_id1.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         <p>
           Copia del documento d'identità del dichiarante se minorenne
         </p>
@@ -1201,7 +1222,7 @@ name="GLOBO_report"
       <td>
         <input id="GEN_ALTRI_FAM" name="GEN_ALTRI_FAM" obbligatorio="#familiari_trasferiti.value() != 0 ? 'OBBLIGATORIO' : ''" type="checkbox" dynamic_check="#familiari_trasferiti.value() != 0" enabled="#familiari_trasferiti.value() != 0"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         Anagrafica dei <input id="num_fam_trasf" name="num_fam_trasf" dynamic_value="#familiari_trasferiti.value()" size="4"/> familiari trasferitisi al nuovo indirizzo
       </td>
     </tr>
@@ -1209,23 +1230,23 @@ name="GLOBO_report"
       <td>
         <input id="DICH_RES_ALL_A" name="DICH_RES_ALL_A" type="checkbox" dynamic_check="!#Titolare_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="!#Titolare_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>
       </td>
-      <td>
-        Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati non appartenenti all'UE</b>
+      <td style="background-color: #eeeeee;">
+        Allegato A - Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati non appartenenti all'UE</b>
       </td>
     </tr>
     <tr>
       <td>
         <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" enabled="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
-        Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati appartenenti all'UE</b>
+      <td style="background-color: #eeeeee;">
+        Allegato B - Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati appartenenti all'UE</b>
       </td>
     </tr>
     <tr>
       <td>
         <input id="DICH_RES_ALL_C" name="DICH_RES_ALL_C" type="checkbox" dynamic_check="#Tipo_cambio_res_minore1.checked()" enabled="#Tipo_cambio_res_minore1.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         Allegato C - Dichiarazione sostitutiva atto di notorietà - <b>trasferimento di minore</b>
       </td>
     </tr>
@@ -1233,23 +1254,23 @@ name="GLOBO_report"
       <td>
         <input id="DICH_RES_ALL_D" name="DICH_RES_ALL_D" type="checkbox" dynamic_check="#persone_iscritte2.checked()" enabled="#persone_iscritte2.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
-        Dichiarazione esistenza di vincoli con il dichiarante da parte della persona già residente al nuovo indirizzo
+      <td style="background-color: #eeeeee;">
+        Allegato D - Dichiarazione esistenza di vincoli con il dichiarante da parte della persona già residente al nuovo indirizzo
       </td>
     </tr>
     <tr>
       <td>
         <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" enabled="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
-        Titolo di occupazione dell'alloggio, da compilarsi da parte del proprietario dell'immobile
+      <td style="background-color: #eeeeee;">
+        Allegato E - Titolo di occupazione dell'alloggio, da compilarsi da parte del proprietario dell'immobile
       </td>
     </tr>
     <tr>
       <td>
         <input id="GEN_CONTR_LOC" name="GEN_CONTR_LOC" type="checkbox" dynamic_check="#titolo_occupazione3.checked()" enabled="#titolo_occupazione3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         Copia del contratto o del verbale di consegna dell'immobile I.T.E.A.
       </td>
     </tr>
@@ -1257,7 +1278,7 @@ name="GLOBO_report"
       <td>
         <input id="GEN_ENTR_CONV" name="GEN_ENTR_CONV" type="checkbox" dynamic_check="#proprieta_immobile3.checked()" enabled="#proprieta_immobile3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td>
+      <td style="background-color: #eeeeee;">
         Dichiarazione di entrata in convivenza
       </td>
     </tr>
@@ -1348,17 +1369,31 @@ name="GLOBO_report"
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 
-<!-- METADATI -->
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Cognome.value() : ''" type="hidden"/>
-<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Nome.value() : ''" type="hidden"/>
-<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" dynamic_value="!#check_minorenne.checked() ? #Titolare_CodiceFiscale.value() : ''" type="hidden"/>
-<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_DataNascita.value() : ''" type="hidden"/>
-<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_LuogoNascita.value() : ''" type="hidden"/>
-<input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto" dynamic_value="#cognome_fam_iscritto.value()" type="hidden"/>
-<input id="Metadati_nome_fam_iscritto" name="Metadati_nome_fam_iscritto" dynamic_value="#nome_fam_iscritto.value()" type="hidden"/>
-<input id="Metadati_luogo_nasc_fam_iscritto" name="Metadati_luogo_nasc_fam_iscritto" dynamic_value="#luogo_nasc_fam_iscritto.value()" type="hidden"/>
-<input id="Metadati_data_nasc_fam_iscritto" name="Metadati_data_nasc_fam_iscritto" dynamic_value="#data_nasc_fam_iscritto.value()" type="hidden"/>
-
-<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+<!-- METADATI DICHIARANTE -->
+<input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome" dynamic_value="#compilante_Cognome.value()"/>
+<input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome" dynamic_value="#compilante_Nome.value()"/>
+<input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale" dynamic_value="#compilante_CodiceFiscale.value()"/>
+<br>
+<!-- METADATI TITOLARE -->
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Cognome.value() : ''"/>
+<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Nome.value() : ''"/>
+<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" dynamic_value="!#check_minorenne.checked() ? #Titolare_CodiceFiscale.value() : ''"/>
+<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_DataNascita.value() : ''"/>
+<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_LuogoNascita.value() : ''"/>
+<br>
+<!-- METADATI MINORE -->
+<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Cognome.value() : ''"/>
+<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Nome.value() : ''"/>
+<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_CodiceFiscale.value() : ''"/>
+<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_DataNascita.value() : ''"/>
+<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_LuogoNascita.value() : ''"/>
+<br>
+<!-- METADATI PERSONA GIA' RESIDENTE AL NUOVO INDIRIZZO-->
+<input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto" dynamic_value="#cognome_fam_iscritto.value()"/>
+<input id="Metadati_nome_fam_iscritto" name="Metadati_nome_fam_iscritto" dynamic_value="#nome_fam_iscritto.value()"/>
+<input id="Metadati_luogo_nasc_fam_iscritto" name="Metadati_luogo_nasc_fam_iscritto" dynamic_value="#luogo_nasc_fam_iscritto.value()"/>
+<input id="Metadati_data_nasc_fam_iscritto" name="Metadati_data_nasc_fam_iscritto" dynamic_value="#data_nasc_fam_iscritto.value()"/>
+<br>
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()"/>
 
 {% endblock content %}

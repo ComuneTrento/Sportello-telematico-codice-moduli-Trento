@@ -19,7 +19,7 @@
         <link rel="stylesheet" type="text/css" href="./validator/css/moduli.css"/>
     
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js" integrity="sha256-De/cgZoAkgvqoxL9yJpJzPHyozUETFnSv7EQGfQWQ4o=" crossorigin="anonymous"></script>
-<meta campi_firma="Titolare_Cognome"
+<meta campi_firma="Titolare_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="DICH-RES-ALL-C"
 descrizione="Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore"
@@ -331,7 +331,7 @@ function get_ufficio_dest() {
 		</tbody>
 	</table>
 </div>
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_Titolare_Cognome.value() != '' ? #Metadati_Titolare_Cognome.value().toUpperCase() + ' - Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore' : 'Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#dichiarante_Cognome.value().toUpperCase() + ' - Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore'"/>
 
  <h1 class="Modulo">
   Allegato C - Dichiarazione sostitutiva atto di notorietà - trasferimento di minore
@@ -343,50 +343,41 @@ function get_ufficio_dest() {
 
 <br>
 
-
-<!-- visibility:visibility or display:none, cursor:pointer or default -->
-
-
-<div type="Anagrafica_Cognome_Nome">
-    <input id="Titolare_Titolo" name="Titolare_Titolo" type="hidden" value="Richiedente"/>
-    <input id="Titolare_Ruolo"  name="Titolare_Ruolo"  type="hidden" value="Richiedente"/>
-	<table class="Modulo" style="border:1px solid grey; visibility:visibility">
-        <tbody>
-            <tr class="Rigaintestazione">
-                <td style="border-right:0px">
-                    <p class="Labeltabella">Il/La sottoscritto/a
-					          </p>
-                </td>
-            </tr>
-		</tbody>
-    </table>
-	<table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="true">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td style="width: 33%;">
-                    <p class="Labelcella">Cognome</p>
-                </td>
-                <td style="width: 33%;">
-                    <p class="Labelcella">Nome</p>
-                </td>
-                <td style="width: 34%;">
-                    <p class="Labelcella">Codice Fiscale</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input id="Titolare_Cognome" name="Titolare_Cognome" style="width:100%" label="Cognome del Richiedente"/>
-                </td>
-                <td>
-                    <input id="Titolare_Nome" name="Titolare_Nome" style="width:100%" label="Nome del Richiedente"/>
-                </td>
-                <td>
-                    <input format="cf" id="Titolare_CodiceFiscale" name="Titolare_CodiceFiscale" style="width:100%" label="Il codice fiscale del Richiedente"/>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="border-right:0px">
+        <p class="Labeltabella">Il/La sottoscritto/a</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 33%;">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td style="width: 33%;">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td style="width: 34%;">
+        <p class="Labelcella">Codice Fiscale</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="dichiarante_Cognome" name="dichiarante_Cognome" style="width:100%" label="Cognome del dichiarante" dynamic_value="#Metadati_Titolare_Cognome.value() != '' ? #Metadati_Titolare_Cognome.value() : #Metadati_Compilante_Cognome.value()"/>
+      </td>
+      <td>
+        <input id="dichiarante_Nome" name="dichiarante_Nome" style="width:100%" label="Nome del dichiarante" dynamic_value="#Metadati_Titolare_Nome.value() != '' ? #Metadati_Titolare_Nome.value() : #Metadati_Compilante_Nome.value()"/>
+      </td>
+      <td>
+        <input format="cf" id="dichiarante_CodiceFiscale" name="dichiarante_CodiceFiscale" style="width:100%" label="Codice fiscale del dichiarante" dynamic_value="#Metadati_Titolare_CodiceFiscale.value() != '' ? #Metadati_Titolare_CodiceFiscale.value() : #Metadati_Compilante_CodiceFiscale.value()"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 
@@ -469,24 +460,24 @@ function get_ufficio_dest() {
  
   
 
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
-<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" type="hidden"/>
-<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" type="hidden"/>
-
+<!-- METADATI DICHIARANTE -->
+<input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome"/>
+<input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome"/>
+<input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale"/>
+<br>
+<!-- METADATI TITOLARE -->
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome"/>
+<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome"/>
+<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale"/>
+<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc"/>
+<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc"/>
+<br>
+<!-- METADATI MINORE -->
 <input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome"/>
 <input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome"/>
 <input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale"/>
 <input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita"/>
 <input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita"/>
-
-<input id="Metadati_Minore_Cognome1" name="Metadati_Minore_Cognome1"/>
-<input id="Metadati_Minore_Nome1" name="Metadati_Minore_Nome1"/>
-<input id="Metadati_Minore_CodiceFiscale1" name="Metadati_Minore_CodiceFiscale1"/>
-<input id="Metadati_Minore_DataNascita1" name="Metadati_Minore_DataNascita1"/>
-<input id="Metadati_Minore_LuogoNascita1" name="Metadati_Minore_LuogoNascita1"/>
-
-
-
 
 	  <input id="GLOBO_MyJobIsDone" name="GLOBO_MyJobIsDone" type="hidden" value=""/>
 	  <input id="GLOBO_IsReadyToSend" name="GLOBO_IsReadyToSend" type="hidden" value=""/>
@@ -518,7 +509,7 @@ function get_ufficio_dest() {
              validator.tree_builder();
 			 $('#UfficioDestinatario').val(get_ufficio_dest());
 					
-                loadForm( ["Titolare", "Metadati"] ); //autoload prefix.
+                loadForm( ["Metadati"] ); //autoload prefix.
 
             
          });
