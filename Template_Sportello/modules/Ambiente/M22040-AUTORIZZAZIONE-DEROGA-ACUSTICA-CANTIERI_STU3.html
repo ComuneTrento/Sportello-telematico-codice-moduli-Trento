@@ -1,0 +1,796 @@
+{% set CodiceModulo =  "M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" %}
+{% set Urn =  "document:c_l378:deroga.acustica;istanza.rilascio" %}
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Richiesta deroga acustica"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Autorizzazione deroga acustica"
+descrizione="Deroga acustica per attività edilizia temporanea - Cantieri"
+destinatario_amministrazione=""
+destinatario_ufficio="FMEB9R"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016" />
+
+<meta codice_modulo_figlio="GEN-MARCABOLLO"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_allegato="M22040-A01-VALUTAZIONE-IMPATTO-ACUSTICO"
+descrizione_estesa="valutazione previsionale di impatto acustico"
+filename="M22040-A01-VALUTAZIONE-IMPATTO-ACUSTICO.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M22040-A01-VALUTAZIONE-IMPATTO-ACUSTICO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="RIC-DIR-SEG"
+descrizione_estesa="Ricevuta versamento di 16,52 € per bollo rilascio e diritti segreteria/istruttoria"
+filename="Ricev. diritti segreteria.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/RIC-DIR-SEG"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-CDI"
+descrizione_estesa="Fotocopia dei documenti d’identità dei comproprietari"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Modulo_compilato_firmato"
+descrizione_estesa="Modulo compilato e firmato"
+filename="Modulo_compilato_firmato.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_compilato_firmato"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="ALTRI-ALLEGATI"
+descrizione_estesa="Altri allegati"
+dimensione_massima="4"
+filename="Altri allegati.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/ALTRI-ALLEGATI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+urn_report=""
+generate_on="sending"
+name="GLOBO_report"
+/>
+
+<script type="text/javascript">
+var simpaticoEservice = "3"; //  the id corresponding to the e-service
+var simpaticoForm = "main";
+var simpaticoCategory = "Ambiente"; // the general category of the e-service
+var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
+      var ERROR_LABELS = {
+          'block1' : 'Inserire il codice fiscale',
+          'block2' : 'Seleziona il ruolo',
+          'block4' : 'Seleziona almeno una tipologia di deroga',
+          'block6' : 'Seleziona una delle opzioni',
+          'block7' : 'Particella edilizia non valida',
+          'block8' : 'Indirizzo non verificato',
+          'block10' : 'Seleziona una delle opzioni',
+          'block14' : 'Seleziona una delle opzioni'
+            }
+</script>
+
+{% endblock meta %}
+
+{% block title %}
+  "M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI"
+{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="3">
+{{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden"/>
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase()+ ' - Domanda di autorizzazione di deroga acustica' " id="Oggetto" name="Oggetto" type="hidden"/>
+
+{{ intestazioni.intestazione_moduloprincipale_conbollo() }}
+
+<h1 class="Modulo">
+  Domanda di autorizzazione di deroga acustica per attività edilizia temporanea
+ </h1>
+<h2 class="Modulo">
+		Ai sensi dell’articolo 53 del Regolamento di polizia urbana
+</h2>
+
+
+{{anagrafica_trento.societa("Titolare","Il sottoscritto",["Persona fisica","Titolare","Legale rappresentante","Amministratore di condominio", "Direttore lavori", "Responsabile tecnico"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria", "false")}}
+<br>
+
+<!-- simpatico start -->
+<div class="simpatico-block simpatico-query-and-answer">
+<!-- simpatico end -->
+<h1 class="Modulo">CHIEDE</h1>
+ <table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+   <tr class="Rigaintestazione" >
+    <td colspan="7">
+     <p>
+      <b>
+       il rilascio di autorizzazione
+      </b>
+     </p>
+    </td>
+   </tr>
+   <tr>
+	 <td style="vertical-align: top; width: 4%;">
+     <div id="Tassonomia_LuIntr_Rilascio" name="Tassonomia_LuIntr_Rilascio" label="Tipo rilascio" mandatory="true"> </div>
+		<!-- <div id="Tassonomia_LuIntr_Rilascio" name="Tassonomia_LuIntr_Rilascio" label="Rilascio" ></div> -->
+		<!-- <input id="Tassonomia_LuIntr_Rilascio1" name="Tassonomia_LuIntr_Rilascio" type="checkbox" value="1"/>  -->
+    <input group="Tassonomia_LuIntr_Rilascio" id="Tassonomia_LuIntr_Rilascio1" name="Tassonomia_LuIntr_Rilascio1" type="checkbox" value="1"/>
+	</td>
+
+  <br>
+	<td colspan="5">
+		<p> per l’esecuzione dei lavori con attrezzature tipicamente rumorose</p>
+		<p style="font-size:70%"><i>(articolo 53 del Regolamento di polizia urbana)</i></p>
+	</td>
+  </tr>
+
+  <tr>
+	 <td style="vertical-align: top; width: 4%;">
+		<!-- <input id="Tassonomia_LuIntr_Rilascio2" name="Tassonomia_LuIntr_Rilascio" type="radio" value="2"/> -->
+    <input group="Tassonomia_LuIntr_Rilascio" id="Tassonomia_LuIntr_Rilascio2" name="Tassonomia_LuIntr_Rilascio2" type="checkbox" value="2"/>
+	</td>
+	<td colspan="5">
+		<p> di deroga alle fasce orarie</p>
+		<p style="font-size:70%"><i>(articolo 53 del Regolamento di polizia urbana)</i></p>
+	</td>
+  </tr>
+    </tbody>
+ </table>
+
+ <!-- simpatico start -->  </div> <!-- simpatico end -->
+ <br>
+ <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">	<tbody>
+	<tr class="Rigaintestazione" >
+    <td>
+     <p>
+      <b>
+       per l’esecuzione dei lavori di
+      </b>
+     </p>
+    </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+	 <td>
+	 <p class="Labelcella">
+		Descrizione intervento
+	 </p>
+	 </td>
+    </tr>
+   <tr>
+    <td>
+	 <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="esecuzione dei lavori di" mandatory="true" style="width:100%;height:4cm;">
+				</textarea>
+	</td>
+   </tr>
+   </tbody>
+ </table>
+<!-- <globo_salto_pagina></globo_salto_pagina> -->
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+<br>
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione" >
+      <td colspan="3">
+	      <p>
+        <b>da eseguire in</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_eseguito" id="Tassonomia_eseguito1" name="Tassonomia_eseguito" type="radio" value="1"/>
+      </td>
+      <td>
+        <p>Vie oggetto del procedimento</p>
+      </td>
+      <td colspan="2">
+        <input class="inputNormal" id="Parametri_Procedimento" name="Parametri_Procedimento" style="width: 100%;" label="Vie oggetto del procedimento"  mandatory_enabled="#Tassonomia_eseguito1.checked()">
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_eseguito" name="Tassonomia_eseguito" label="particelle" > </div>
+          <input group="Tassonomia_eseguito" id="Tassonomia_eseguito2" name="Tassonomia_eseguito" type="radio" value="2"/>
+      </td>
+      <td colspan="5">
+        <p>Particelle catastali oggetto del procedimento</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+    {{ immobili_trento.immobile_trento("Immobile", "Particelle", disattivato="#Tassonomia_eseguito2.checked()") }}
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione" >
+      <td colspan="6">
+	  <p>
+        <b>Tipo procedimento</b>
+	  </p>
+       <p style="font-size:70%"><i>(permesso di costruire, SCIA, ordinanza in materia viabilistica)</i></p>
+      </td>
+    </tr>
+
+	<tr class="Rigaintestazione">
+			<td colspan="2">
+				<p style="font-size:70%"> Tipo</p>
+			</td>
+
+			<td>
+				<p style="font-size:70%"> Descrizione</p>
+			</td>
+
+			<td>
+				<p style="font-size:70%"> N. Protocollo/N. Atto</p>
+			</td>
+
+			<td>
+				<p style="font-size:70%">Data</p>
+			</td>
+	</tr>
+
+	<tr>
+		<td style="vertical-align: top; width: 4%;">
+			<div id="Tassonomia_autorizzato" name="Tassonomia_Tipo" label="autorizzato con" > </div>
+			<input group="Tassonomia_autorizzato" id="Tassonomia_autorizzato1" name="Tassonomia_autorizzato" type="radio" value="1" />
+		</td>
+		<td  width="40%">
+			<p>Autorizzato con</p>
+		</td>
+		<td  width="20%">
+			<input class="inputNormal" id="ParametriDesc1" name="ParametriDesc1" style="width: 100%;" label="Descrizione" mandatory_enabled="#Tassonomia_autorizzato1.checked()" />
+		</td>
+		<td  width="20%">
+			<input class="inputNormal" id="ParametriProtocollo1" name="ParametriProtocollo1" style="width: 100%;" label="N Protocollo " mandatory_enabled="#Tassonomia_autorizzato1.checked()" />
+		</td>
+		<td  width="15%">
+			<input class="inputNormal" id="ParametriData1" format="date" name="ParametriData1" style="width: 100%;" label="Data" mandatory_enabled="#Tassonomia_autorizzato1.checked()" />
+		</td>
+	</tr>
+
+  <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tassonomia_autorizzato" id="Tassonomia_autorizzato2" name="Tassonomia_autorizzato" type="radio" value="2"/>
+      </td>
+      <td colspan="5">
+        <p>attività edilizia libera (art. 78 LP 15/2015)</p>
+      </td>
+      <!-- <td colspan="4">
+        <input class="inputNormal" id="Parametri_Procedimento2" name="Parametri_Procedimento2" style="width: 100%;" label="Attività edilizia libera"  mandatory_enabled="#Tassonomia_autorizzato2.checked()">
+    </td> -->
+    </tr>
+
+  </tbody>
+</table>
+<input class="" format="date" id="Data_oggi" label="Data" mandatory="true" name="Data_oggi" style="width:50%;" dynamic_value="#Data.value()" type="hidden"/>
+<br>
+ <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+   <tr class="Rigaintestazione" >
+    <td colspan="6">
+     <p>
+      <b>
+       che si svolgerà in questi giorni nei rispettivi orari
+      </b>
+     </p>
+	 <p style="font-size:70%"><i>(indicare con precisione date e orari di svolgimento previsti)</i></p>
+    </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta" >
+		<td style="width: 20%;">
+	<p class="Labelcella">
+		Dalla data
+	</p>
+	</td>
+	<td style="width: 20%;">
+	<p class="Labelcella">
+		Alla data
+	</p>
+	</td>
+   <td style="width: 20%;">
+	<p class="Labelcella">
+		Dalle ore
+	</p>
+	</td>
+	<td style="width: 20%;">
+	<p class="Labelcella">
+		Alle ore
+	</p>
+	</td>
+  <td colspan="2" style="width: 20%;">
+    <p class="Labelcella">Controllo date</p>
+  </td>
+   </tr>
+  <tr>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DallaData1" name="Parametri_LuIntr_Int_DallaData1" style="width: 100%;" label="Svolgimento Dalla data" format="date"  mandatory_enabled="true">
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AllaData1" name="Parametri_LuIntr_Int_AllaData1" style="width: 100%;" label="Svolgimento alla data" format="date" mandatory_enabled="true"  >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DalleOre1" name="Parametri_LuIntr_Int_DalleOre1" style="width: 100%;" label="Svolgimento dalle ore" mandatory_enabled="true" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AlleOre1" name="Parametri_LuIntr_Int_AlleOre1" style="width: 100%;" label="Svolgimento alle ore" mandatory_enabled="true" >
+	</td>
+  <td>
+   <input id="Controllo_data1"
+          name="Controllo_dataora1"
+          type="checkbox"
+          value="1"
+          enabled="(moment(#Parametri_LuIntr_Int_DallaData1.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData1.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData1.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData1.value(), 'DD/MM/YYYY'))"
+          dynamic_check="(moment(#Parametri_LuIntr_Int_DallaData1.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData1.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData1.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData1.value(), 'DD/MM/YYYY'))"/>
+ </td>
+ <td>
+   <input id="messaggio_errore1" name="messaggio_errore1" label="Controllo data" dynamic_value="#Controllo_data1.checked() ? 'Errore nelle date' : ''" readonly>
+ </td>
+   </tr>
+   <tr>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DallaData2" name="Parametri_LuIntr_Int_DallaData2" style="width: 100%;" label="Svolgimento Dalla data" format="date"  enabled="#Parametri_LuIntr_Int_DallaData1.value() != '' and #Parametri_LuIntr_Int_AllaData1.value() != '' and #Parametri_LuIntr_Int_DalleOre1.value() != '' and #Parametri_LuIntr_Int_AlleOre1.value() != ''">
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AllaData2" name="Parametri_LuIntr_Int_AllaData2" style="width: 100%;" label="Svolgimento alla data" format="date" mandatory_enabled="#Parametri_LuIntr_Int_DallaData2.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DalleOre2" name="Parametri_LuIntr_Int_DalleOre2" style="width: 100%;" label="Svolgimento dalle ore" mandatory_enabled="#Parametri_LuIntr_Int_DallaData2.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AlleOre2" name="Parametri_LuIntr_Int_AlleOre2" style="width: 100%;" label="Svolgimento alle ore" mandatory_enabled="#Parametri_LuIntr_Int_DallaData2.value() != ''" >
+	</td>
+  <td>
+   <input id="Controllo_data2"
+          name="Controllo_dataora2"
+          type="checkbox"
+          value="2"
+          enabled="(moment(#Parametri_LuIntr_Int_DallaData2.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData2.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData2.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData2.value(), 'DD/MM/YYYY'))"
+          dynamic_check="(moment(#Parametri_LuIntr_Int_DallaData2.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData2.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData2.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData2.value(), 'DD/MM/YYYY'))"/>
+ </td>
+ <td>
+   <input id="messaggio_errore2" name="messaggio_errore2" label="Controllo data" dynamic_value="#Controllo_data2.checked() ? 'Errore nelle date' : ''" readonly>
+ </td>
+   </tr>
+   <tr>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DallaData3" name="Parametri_LuIntr_Int_DallaData3" style="width: 100%;" label="Svolgimento Dalla data" format="date"  enabled="#Parametri_LuIntr_Int_DallaData2.value() != '' and #Parametri_LuIntr_Int_AllaData2.value() != '' and #Parametri_LuIntr_Int_DalleOre2.value() != '' and #Parametri_LuIntr_Int_AlleOre2.value() != ''">
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AllaData3" name="Parametri_LuIntr_Int_AllaData3" style="width: 100%;" label="Svolgimento alla data" format="date" mandatory_enabled="#Parametri_LuIntr_Int_DallaData3.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DalleOre3" name="Parametri_LuIntr_Int_DalleOre3" style="width: 100%;" label="Svolgimento dalle ore" mandatory_enabled="#Parametri_LuIntr_Int_DallaData3.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AlleOre3" name="Parametri_LuIntr_Int_AlleOre3" style="width: 100%;" label="Svolgimento alle ore" mandatory_enabled="#Parametri_LuIntr_Int_DallaData3.value() != ''" >
+	</td>
+  <td>
+   <input id="Controllo_data3"
+          name="Controllo_dataora3"
+          type="checkbox"
+          value="3"
+          enabled="(moment(#Parametri_LuIntr_Int_DallaData3.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData3.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData3.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData3.value(), 'DD/MM/YYYY'))"
+          dynamic_check="(moment(#Parametri_LuIntr_Int_DallaData3.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData3.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData3.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData3.value(), 'DD/MM/YYYY'))"/>
+ </td>
+ <td>
+   <input id="messaggio_errore3" name="messaggio_errore3" label="Controllo data" dynamic_value="#Controllo_data3.checked() ? 'Errore nelle date' : ''" readonly>
+ </td>
+   </tr>
+   <tr>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DallaData4" name="Parametri_LuIntr_Int_DallaData4" style="width: 100%;" label="Svolgimento Dalla data" format="date"  enabled="#Parametri_LuIntr_Int_DallaData3.value() != '' and #Parametri_LuIntr_Int_AllaData3.value() != '' and #Parametri_LuIntr_Int_DalleOre3.value() != '' and #Parametri_LuIntr_Int_AlleOre3.value() != ''">
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AllaData4" name="Parametri_LuIntr_Int_AllaData4" style="width: 100%;" label="Svolgimento alla data" format="date" mandatory_enabled="#Parametri_LuIntr_Int_DallaData4.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DalleOre4" name="Parametri_LuIntr_Int_DalleOre4" style="width: 100%;" label="Svolgimento dalle ore" mandatory_enabled="#Parametri_LuIntr_Int_DallaData4.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AlleOre4" name="Parametri_LuIntr_Int_AlleOre4" style="width: 100%;" label="Svolgimento alle ore" mandatory_enabled="#Parametri_LuIntr_Int_DallaData4.value() != ''" >
+	</td>
+  <td>
+   <input id="Controllo_data4"
+          name="Controllo_dataora4"
+          type="checkbox"
+          value="4"
+          enabled="(moment(#Parametri_LuIntr_Int_DallaData4.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData4.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData4.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData4.value(), 'DD/MM/YYYY'))"
+          dynamic_check="(moment(#Parametri_LuIntr_Int_DallaData4.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData4.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData4.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData4.value(), 'DD/MM/YYYY'))"/>
+ </td>
+ <td>
+   <input id="messaggio_errore4" name="messaggio_errore4" label="Controllo data" dynamic_value="#Controllo_data4.checked() ? 'Errore nelle date' : ''" readonly>
+ </td>
+   </tr>
+   <tr>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DallaData5" name="Parametri_LuIntr_Int_DallaData5" style="width: 100%;" label="Svolgimento Dalla data" format="date"  enabled="#Parametri_LuIntr_Int_DallaData4.value() != '' and #Parametri_LuIntr_Int_AllaData4.value() != '' and #Parametri_LuIntr_Int_DalleOre4.value() != '' and #Parametri_LuIntr_Int_AlleOre4.value() != ''">
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AllaData5" name="Parametri_LuIntr_Int_AllaData5" style="width: 100%;" label="Svolgimento alla data" format="date" mandatory_enabled="#Parametri_LuIntr_Int_DallaData5.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DalleOre5" name="Parametri_LuIntr_Int_DalleOre5" style="width: 100%;" label="Svolgimento dalle ore" mandatory_enabled="#Parametri_LuIntr_Int_DallaData5.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AlleOre5" name="Parametri_LuIntr_Int_AlleOre5" style="width: 100%;" label="Svolgimento alle ore" mandatory_enabled="#Parametri_LuIntr_Int_DallaData5.value() != ''" >
+	</td>
+  <td>
+   <input id="Controllo_data5"
+          name="Controllo_dataora5"
+          type="checkbox"
+          value="5"
+          enabled="(moment(#Parametri_LuIntr_Int_DallaData5.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData5.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData5.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData5.value(), 'DD/MM/YYYY'))"
+          dynamic_check="(moment(#Parametri_LuIntr_Int_DallaData5.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData5.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData5.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData5.value(), 'DD/MM/YYYY'))"/>
+ </td>
+ <td>
+   <input id="messaggio_errore5" name="messaggio_errore5" label="Controllo data" dynamic_value="#Controllo_data5.checked() ? 'Errore nelle date' : ''" readonly>
+ </td>
+   </tr>
+   <tr>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DallaData6" name="Parametri_LuIntr_Int_DallaData6" style="width: 100%;" label="Svolgimento Dalla data" format="date"  enabled="#Parametri_LuIntr_Int_DallaData5.value() != '' and #Parametri_LuIntr_Int_AllaData5.value() != '' and #Parametri_LuIntr_Int_DalleOre5.value() != '' and #Parametri_LuIntr_Int_AlleOre5.value() != ''">
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AllaData6" name="Parametri_LuIntr_Int_AllaData6" style="width: 100%;" label="Svolgimento alla data" format="date" mandatory_enabled="#Parametri_LuIntr_Int_AllaData6.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DalleOre6" name="Parametri_LuIntr_Int_DalleOre6" style="width: 100%;" label="Svolgimento dalle ore" mandatory_enabled="#Parametri_LuIntr_Int_DalleOre6.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AlleOre6" name="Parametri_LuIntr_Int_AlleOre6" style="width: 100%;" label="Svolgimento alle ore" mandatory_enabled="#Parametri_LuIntr_Int_AlleOre6.value() != ''" >
+	</td>
+  <td>
+   <input id="Controllo_data6"
+          name="Controllo_dataora6"
+          type="checkbox"
+          value="6"
+          enabled="(moment(#Parametri_LuIntr_Int_DallaData6.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData6.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData6.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData6.value(), 'DD/MM/YYYY'))"
+          dynamic_check="(moment(#Parametri_LuIntr_Int_DallaData6.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData6.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData6.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData6.value(), 'DD/MM/YYYY'))"/>
+ </td>
+ <td>
+   <input id="messaggio_errore6" name="messaggio_errore6" label="Controllo data" dynamic_value="#Controllo_data6.checked() ? 'Errore nelle date' : ''" readonly>
+ </td>
+   </tr>
+   <tr>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DallaData7" name="Parametri_LuIntr_Int_DallaData7" style="width: 100%;" label="Svolgimento Dalla data" format="date"  enabled="#Parametri_LuIntr_Int_DallaData6.value() != '' and #Parametri_LuIntr_Int_AllaData6.value() != '' and #Parametri_LuIntr_Int_DalleOre6.value() != '' and #Parametri_LuIntr_Int_AlleOre6.value() != ''">
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AllaData7" name="Parametri_LuIntr_Int_AllaData7" style="width: 100%;" label="Svolgimento alla data" format="date" mandatory_enabled="#Parametri_LuIntr_Int_AllaData7.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_DalleOre7" name="Parametri_LuIntr_Int_DalleOre7" style="width: 100%;" label="Svolgimento dalle ore" mandatory_enabled="#Parametri_LuIntr_Int_DalleOre7.value() != ''" >
+	</td>
+	<td>
+	 <input class="inputNormal" id="Parametri_LuIntr_Int_AlleOre7" name="Parametri_LuIntr_Int_AlleOre7" style="width: 100%;" label="Svolgimento alle ore" mandatory_enabled="#Parametri_LuIntr_Int_AlleOre7.value() != ''" >
+	</td>
+  <td>
+   <input id="Controllo_data7"
+          name="Controllo_dataora7"
+          type="checkbox"
+          value="7"
+          enabled="(moment(#Parametri_LuIntr_Int_DallaData7.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData7.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData7.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData7.value(), 'DD/MM/YYYY'))"
+          dynamic_check="(moment(#Parametri_LuIntr_Int_DallaData7.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY')|| moment(#Parametri_LuIntr_Int_AllaData7.value(), 'DD/MM/YYYY') < moment(#Data_oggi.value(), 'DD/MM/YYYY') || moment(#Parametri_LuIntr_Int_AllaData7.value(), 'DD/MM/YYYY') < moment(#Parametri_LuIntr_Int_DallaData7.value(), 'DD/MM/YYYY'))"/>
+ </td>
+ <td>
+   <input id="messaggio_errore7" name="messaggio_errore7" label="Controllo data" dynamic_value="#Controllo_data7.checked() ? 'Errore nelle date' : ''" readonly>
+ </td>
+   </tr>
+
+   <br>
+   <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+	<tbody>
+	<tr class="Rigaintestazione" >
+    <td>
+     <p>
+      <b>
+       con i seguenti macchinari o attrezzature
+      </b>
+     </p>
+    </td>
+   </tr>
+    <tr class="Rigaintestazioneridotta">
+	<td>
+	<p class="Labelcella">
+		Descrizione macchinari
+	</p>
+	</td>
+   </tr>
+   <tr>
+    <td>
+	 <textarea class="inputNormal" id="Parametri_Macchinari" name="Parametri_Macchinari" label="con i seguenti macchinari o attrezzature" mandatory="true" style="width:100%;height:4cm;">
+	 </textarea>
+	</td>
+   </tr>
+   </tbody>
+ </table>
+  </tbody>
+ </table>
+
+<br>
+
+ <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+	<tbody>
+	   <tr class="Rigaintestazione" >
+		<td colspan="3">
+		<p>
+			<b>
+			Responsabile o altro referente di cantiere da contattare in caso di urgenza
+			</b>
+		</p>
+		</td>
+   </tr>
+   <tr class="Rigaintestazioneridotta">
+	<td style="width=33;">
+	<p class="Labelcella">
+		Cognome
+	</p>
+	</td>
+	<td style="width=33;">
+	<p class="Labelcella">
+		Nome
+	</p>
+	</td>
+	<td style="width=34;">
+	<p class="Labelcella">
+		Telefono
+	</p>
+	</td>
+   </tr>
+   <tr>
+	   <td>
+		 <input class="inputNormal" id="Parametri_RespAltroRefCognome" name="Parametri_RespAltroRefCognome" style="width: 100%;" label="Responsabile o altro referente di cantiere da contattare in caso di urgenza cognome" mandatory_enabled="true">
+		</td>
+		<td>
+		 <input class="inputNormal" id="Parametri_RespAltroRefNome" name="Parametri_RespAltroRefNome" style="width: 100%;" label="Responsabile o altro referente di cantiere da contattare in caso di urgenza nome" mandatory_enabled="true">
+		</td>
+		<td>
+		 <input class="inputNormal" id="Parametri_RespAltroRefTelefono" name="Parametri_RespAltroRefTelefono" style="width: 100%;" label="Responsabile o altro referente di cantiere da contattare in caso di urgenza telefono" mandatory_enabled="true">
+		</td>
+   </tr>
+	</tbody>
+</table>
+<!-- Tabella dei titoli Fine -->
+<br>
+
+<br>
+<!-- simpatico start -->
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+<!-- simpatico end -->
+
+{{anagrafica.domicilio_digitale2(id_pec_personale="Titolare_EMailPEC",id_pec_societa="Titolare_APEC")}}
+<!-- simpatico start -->
+
+</div>
+
+<!-- simpatico end -->
+
+<br>
+
+
+<!--Parte degli allegati -->
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+	<tbody>
+		<tr class="Rigaintestazione">
+			<td colspan="2">
+				<p style="text-align: center;">
+					<b>
+						Elenco degli allegati
+					</b>
+					<br>
+					<span style="font-size:70%">
+						<i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+					</span>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 4%; vertical-align: top;">
+				<input id="M22040-A01-VALUTAZIONE-IMPATTO-ACUSTICO" name="M22040-A01-VALUTAZIONE-IMPATTO-ACUSTICO" dynamic_check="#Tassonomia_LuIntr_Int_Ricorrenza1.checked()" type="checkbox" value="OBBLIGATORIO"/>
+			</td>
+			<td style="background-color: #eeeeee;">
+				<p>
+					valutazione di impatto acustico per cantieri particolarmente complessi
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 4%; vertical-align: top;">
+				        <input id="Marca_Bollo" name="Marca_Bollo" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+			</td>
+			<td style="background-color: #eeeeee;">
+				<p>
+					pagamento dell'imposta di bollo per la richiesta di autorizzazione
+				</p>
+				<p style="font-size:70%;">
+				 (da non allegare se l'istanza è presentata da ente pubblico)
+				</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td style="width:4%">
+				<input id="RIC-DIR-SEG" name="RIC-DIR-SEG" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+			</td>
+			<td style="background-color: #eeeeee;">
+				<p>
+					Ricevuta versamento di 16,52 € per bollo rilascio e diritti segreteria/istruttoria
+				</p>
+			</td>
+		</tr>
+
+	<tr>
+     <td>
+      <input dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 16) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 16) &gt; 0" id="STU-EDI-IMM-TN" name="STU-EDI-IMM-TN" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+
+     <td style="background-color: #eeeeee;">
+      <p>
+       ulteriori particelle o subalterni oggetto del procedimento
+      </p>
+     </td>
+    </tr>
+
+	<tr>
+     <td style="vertical-align: top; width:3%">
+    <input id="DAE-CDI" name="DAE-CDI" type="checkbox" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;">
+     <p>
+       copia del documento d'identità
+       <br/>
+       <span style="font-size:70%">
+         (da non allegare se l'istanza è presentata in modalità telematica o se la firma autografa è apposta di fronte a un pubblico ufficiale)
+       </span>
+     </p>
+      </td>
+    </tr>
+
+    <tr>
+  		<td>
+  		 <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" value="OBBLIGATORIO"/>
+  		</td>
+  		<td style="background-color: #eeeeee;">
+  		  <p>
+  		  Modulo compilato e firmato
+        <br/>
+        <span style="font-size:70%">
+          (da non allegare se l'istanza è presentata in modalità telematica)
+        </span>
+  		 </p>
+  		</td>
+  	</tr>
+
+	<tr>
+		<td>
+		 <input id="ALTRI-ALLEGATI" name="ALTRI-ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+		</td>
+		<td style="background-color: #eeeeee;">
+		  <p>
+		  altri allegati
+		  <span style="font-size:70%">
+		   (specificare)
+		  </span>
+		  <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:79%;"/>
+		 </p>
+		</td>
+	    </tr>
+	</tbody>
+</table>
+<br>
+<!--<p>__________________________________</p>
+<p class="Modulo" style="font-size:70%" type="hidden"><b>1 persona fisica - titolare - legale rappresentante - amministratore del condominio</b></p>
+<p class="Modulo" style="font-size:70%" type="hidden"><b>2 ditta individuale - SNC - SAPA - SAS - SRL - SURL - SPA - ente pubblico - societa' cooperativa - SS - altro</b></p>
+<p class="Modulo" style="font-size:70%" type="hidden"><b>3 iscritto - in attesa di iscrizione - non tenuto all'iscrizione</b></p>
+<p class="Modulo" style="font-size:70%" type="hidden"><b>4 Unita' Immobiliare Urbana - Particella Terreni</b></p>
+<p class="Modulo" style="font-size:70%" type="hidden"><b>5 architetti, pianificatori, paesaggisti e conservatori - ingegneri - geologi -dottori agronomi e forestali - dottori commercialisti e esperti contabili - geometri - periti industriali</b></p>
+-->
+<!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->{{ utils.firma_hidden() }}
+<!-- simpatico start -->
+
+</div>
+
+<!-- simpatico end -->
+
+<br>
+
+<p class="Modulo">
+   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<input firmare="'NO'" id="GLOBO_modulofiglio_cIncarico_procura" name="GLOBO_modulofiglio_cIncarico_procura" type="hidden" value=""/>
+
+<input firmare="'NO'" id="GLOBO_modulofiglio_cGEN-MARCABOLLO" name="GLOBO_modulofiglio_cGEN-MARCABOLLO" obbligatorio="#Marca_Bollo.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#STU_EDI_IMM_TN.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cModulo_compilato_firmato" name="GLOBO_allegato_cModulo_compilato_firmato" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cRIC-DIR-SEG" name="GLOBO_allegato_cRIC-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<!-- passaggio dati tra moduli -->
+<!-- per modulo STU-EDI-INT-TN -->
+<input id="Metadati_EmailRifPers" name="Metadati_EmailRifPers" dynamic_value="#Parametri_DomDigiPersPec.value()" type="hidden"/>
+<input id="Metadati_EmailRifProf" name="Metadati_EmailRifProf" dynamic_value="#Parametri_DomDigiProfPec.value()" type="hidden"/>
+<input id="Metadati_EmailRifSoc"  name="Metadati_EmailRifSoc"  dynamic_value="#Parametri_DomDigiSocPec.value()"  type="hidden"/>
+
+
+<!-- per modulo Marca_Bollo-TN -->
+<input id="Metadati_ogg_pagam" name="Metadati_ogg_pagam" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+
+
+
+
+{% endblock content %}
