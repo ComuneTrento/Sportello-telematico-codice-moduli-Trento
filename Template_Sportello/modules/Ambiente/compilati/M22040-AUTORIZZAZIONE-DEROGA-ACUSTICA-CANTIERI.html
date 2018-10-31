@@ -119,20 +119,53 @@ name="GLOBO_report"
 />
 
 <script type="text/javascript">
-var simpaticoEservice = "3"; //  the id corresponding to the e-service
-var simpaticoForm = "main";
-var simpaticoCategory = "Ambiente"; // the general category of the e-service
-var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
-      var ERROR_LABELS = {
-          'block1' : 'Inserire il codice fiscale',
-          'block2' : 'Seleziona il ruolo',
-          'block4' : 'Seleziona almeno una tipologia di deroga',
-          'block6' : 'Seleziona una delle opzioni',
-          'block7' : 'Particella edilizia non valida',
-          'block8' : 'Indirizzo non verificato',
-          'block10' : 'Seleziona una delle opzioni',
-          'block14' : 'Seleziona una delle opzioni'
-            }
+	var simpaticoEservice = "3"; //  the id corresponding to the e-service
+	var simpaticoForm = "main";
+	var simpaticoCategory = "Ambiente"; // the general category of the e-service
+	var simpaticoMapping=["Titolare_Cognome",
+												"Titolare_Nome",
+												"Titolare_CodiceFiscale",
+												"Titolare_DataNascita",
+												"Titolare_Sesso",
+												"Titolare_ProvinciaResidenza",
+												"Titolare_ComuneResidenza",
+												"Titolare_ViaResidenza",
+												"Titolare_CivicoResidenza",
+												"Titolare_CAPResidenza",
+												"Titolare_Telefono",
+												"Titolare_Cittadinanza",
+												"Titolare_LuogoNascita",
+												"Titolare_Fax",
+												"Titolare_EMail",
+												"Titolare_EMailPEC",
+												"Titolare_Telefono",
+												"Titolare_TipologiaImpresa",
+												"Titolare_Denominazione",
+												"Titolare_ComuneSede",
+												"Titolare_ProvinciaSede",
+												"Titolare_ViaSede",
+												"Titolare_CivicoSede",
+												"Titolare_CAPSede",
+												"Titolare_CFPI",
+												"Titolare_APEC",
+												"Titolare_TelefonoSede",
+												"Titolare_FaxSede",
+												"Titolare_Attributi_IscrittoCCIAA",
+												"Titolare_Attributi_CCIAAProv",
+												"Titolare_Attributi_CCIAANumero"]
+	var serviceName = "M22040 AUTORIZZAZIONE DEROGA ACUSTICA CANTIERI"; // Eservice example
+	var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI.html";
+	var ERROR_LABELS = {
+											'block1' : 'Inserire il codice fiscale',
+											'block2' : 'Seleziona il ruolo',
+											'block4' : 'Seleziona almeno una tipologia di deroga',
+											'block6' : 'Seleziona una delle opzioni',
+											'block7' : 'Particella edilizia non valida',
+											'block8' : 'Indirizzo non verificato',
+											'block10' : 'Seleziona una delle opzioni',
+											'block14' : 'Seleziona una delle opzioni'
+										}
+			
 </script>
 
 
@@ -1021,7 +1054,7 @@ function get_ufficio_dest() {
           <p class="Labelcella">Tipologia</p>
         </td>
       </tr>
-      <tr mandatory_enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento' ])">
+      <tr mandatory_enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento', 'Titolare omonima ditta individuale' ])">
         <td colspan="3">
           <input class="" id="Titolare_Denominazione" name="Titolare_Denominazione" style="width:100%" label="Denominazione/Ragione sociale"/>
         </td>
@@ -1066,7 +1099,7 @@ function get_ufficio_dest() {
           <p class="Labelcella">CAP</p>
         </td>
       </tr>
-      <tr mandatory_enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento' ])">
+      <tr mandatory_enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento', 'Titolare omonima ditta individuale' ])">
         <td>
           <select id="Titolare_ProvinciaSede" name="Titolare_ProvinciaSede" style="width:100%" label="Provincia della sede legale" >
     <option value=""></option>
@@ -1194,13 +1227,13 @@ function get_ufficio_dest() {
           <input class="" id="Titolare_CivicoSede" name="Titolare_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="Titolare_CAPSede" name="Titolare_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale' ])" mandatory="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale' ]) and #Titolare_ProvinciaSede.value() != 'EE'"/>
+          <input class="" id="Titolare_CAPSede" name="Titolare_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Titolare omonima ditta individuale' ])" mandatory="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Titolare omonima ditta individuale' ]) and #Titolare_ProvinciaSede.value() != 'EE'"/>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento' ])">
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento', 'Titolare omonima ditta individuale' ])">
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td style="width:50%;">
@@ -1256,7 +1289,7 @@ function get_ufficio_dest() {
       </tr>
       <tr>
         <td>
-          <select class="inputNormal" id="Titolare_Attributi_IscrittoCCIAA" name="Titolare_Attributi_IscrittoCCIAA" label="Iscrizione al Registro Imprese della Camera di Commercio" style="width:100%" mandatory_enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale' ])">
+          <select class="inputNormal" id="Titolare_Attributi_IscrittoCCIAA" name="Titolare_Attributi_IscrittoCCIAA" label="Iscrizione al Registro Imprese della Camera di Commercio" style="width:100%" mandatory_enabled="#Titolare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Titolare omonima ditta individuale' ])">
             <option value=""></option>
             <option value="iscritto">iscritto</option>
             <option value="in attesa di iscrizione">in attesa di iscrizione</option>

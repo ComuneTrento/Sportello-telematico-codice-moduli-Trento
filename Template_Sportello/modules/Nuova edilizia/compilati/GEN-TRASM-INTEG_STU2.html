@@ -23,7 +23,7 @@
 <meta campi_firma="Titolare_CodiceFiscale"
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
-codice_modulo="GEN-TRASM-INTEG-STU2"
+codice_modulo="GEN-TRASM-INTEG"
 descrizione="Trasmissione di documentazione integrativa"
 destinatario_amministrazione=""
 destinatario_ufficio="OE7NEF"
@@ -61,27 +61,60 @@ name="GLOBO_report"
 
 <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 <script type="text/javascript">
-    var simpaticoEservice="6"
-    var simpaticoForm="modulo_trasmissione_integrazione"
-    var simpaticoCategory="Edilizia"
-    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
-                           "AventeTitolo_Fax",
-                           "AventeTitolo_EMail"]
-    var ERROR_LABELS= {   
-                        'block1' : 'Selezionare una delle opzioni',
-                        'block2' : 'Inserire il nominativo del proprietario o soggetto avente titolo idoneo',
-                        'block3' : 'Selezionare il ruolo',
-                        'block5' : 'Inserire il nominativo del progettista',
-                        'block6' : 'Inserire i riferimenti alla pratica per cui si sta trasmettendo una integrazione',
-                        'block7' : 'Particella edilizia non valida',
-                        'block8' : 'Indirizzo non inserito',
-                        'block9' : 'Indirizzo non verificato',
-                        'block10' : 'Selezionare una delle opzioni',
-                        'block11' : 'Selezionare una delle opzioni',
-                        'block13' : 'Selezionare una delle opzioni'
-      }
-  
-    </script>
+  var simpaticoEservice = "6"; //  the id corresponding to the e-service
+  var simpaticoForm = "main";
+  var simpaticoCategory = "Edilizia"; // the general category of the e-service
+  var simpaticoMapping=["Titolare_Cognome",
+                        "Titolare_Nome",
+                        "Titolare_CodiceFiscale",
+                        "Titolare_DataNascita",
+                        "Titolare_Sesso",
+                        "Titolare_Cittadinanza",
+                        "Titolare_LuogoNascita",
+                        "Titolare_ProvinciaResidenza",
+                        "Titolare_ComuneResidenza",
+                        "Titolare_ViaResidenza",
+                        "Titolare_CivicoResidenza",
+                        "Titolare_CAPResidenza",
+                        "Titolare_Telefono",
+                        "Titolare_Fax",
+                        "Titolare_EMail",
+                        "Titolare_EMailPEC",
+                        "Titolare1_Cognome",
+                        "Titolare1_Nome",
+                        "Titolare1_CodiceFiscale",
+                        "Titolare1_DataNascita",
+                        "Titolare1_Sesso",
+                        "Titolare1_Cittadinanza",
+                        "Titolare1_LuogoNascita",
+                        "Titolare1_PartitaIVA",
+                        "Titolare1_Attributi_Albo",
+                        "Titolare1_Attributi_DellaProvincia",
+                        "Titolare1_Attributi_AlNumero",
+                        "Titolare1_ProvinciaStudio",
+                        "Titolare1_ComuneStudio",
+                        "Titolare1_ViaStudio",
+                        "Titolare1_CivicoStudio",
+                        "Titolare1_CAPStudio",
+                        "Titolare1_TelefonoStudio",
+                        "Titolare1_FaxStudio",
+                        "Titolare1_EMailPEC"];
+  var serviceName = "Trasmissione documentazione integrativa"; // 
+  var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/GEN-TRASM-INTEG.html";
+  var ERROR_LABELS = {
+                      'block1' : 'Selezionare una delle opzioni',
+                      'block2' : 'Inserire il nominativo del proprietario o soggetto avente titolo idoneo',
+                      'block3' : 'Selezionare il ruolo',
+                      'block5' : 'Inserire il nominativo del progettista',
+                      'block6' : 'Inserire i riferimenti alla pratica per cui si sta trasmettendo una integrazione',
+                      'block7' : 'Particella edilizia non valida',
+                      'block8' : 'Indirizzo non inserito',
+                      'block9' : 'Indirizzo non verificato',
+                      'block10' : 'Selezionare una delle opzioni',
+                      'block11' : 'Selezionare una delle opzioni',
+                      'block13' : 'Selezionare una delle opzioni'
+                    }
+</script>
   <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 
 
@@ -1208,110 +1241,98 @@ function get_ufficio_dest() {
 
 <!-- visibility:visibility or display:none, cursor:pointer or default, albo: provinciale or regionale -->
 <div type="Anagrafica_professionista">
-  <!-- creare l'hidden type="checkbox" id="Titolare1_DatiProfessionistaObbligatori" per settare l'obbligatorietà dei dati del professionista fuori dal <div> -->
-  <!-- creare l'hidden type="checkbox" id="Titolare1_DatiAlboProfessionistaObbligatori" per settare l'obbligatorietà dei dati dell'Albo del professionista fuori dal <div> -->
-  <input id="Titolare1_Titolo" name="Titolare1_Titolo" type="hidden" value="Professionista"/>
-  <input id="Titolare1_Ruolo" name="Titolare1_Ruolo" type="hidden" value="Professionista"/>
+    <!-- creare l'hidden type="checkbox" id="Titolare1_DatiProfessionistaObbligatori" per settare l'obbligatorietà dei dati del professionista fuori dal <div> -->
+    <!-- creare l'hidden type="checkbox" id="Titolare1_DatiAlboProfessionistaObbligatori" per settare l'obbligatorietà dei dati dell'Albo del professionista fuori dal <div> -->
+    <input id="Titolare1_Titolo" name="Titolare1_Titolo" type="hidden" value="Professionista"/>
+    <input id="Titolare1_Ruolo" name="Titolare1_Ruolo" type="hidden" value="Professionista"/>
 
-  <div class="simpatico-block simpatico-query-and-answer">
-
-    <table class="Modulo" style="border:1px solid grey; visibility:visibility">
-      <tbody>
-        <tr class="Rigaintestazione">
-          <td style="border-right:0px">
-            <p class="Labeltabella">Progettista incaricato</p>
-          </td>
-          <td style="width:39%; border-left:0px; border-right:0px">
-            <p class="Labeltabella"></p>
-          </td>
-          <td style="width:25%; cursor:pointer; border-left:0px">
-            <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
-              
-
-<button type="button" class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility" title="Carica dati da profilo utente" onclick="recuperaAnagrafica( 'Titolare1' )">Carica dati personali</button>
-
-
-            </span>
-          </td>
-        </tr>
-      </tbody>
+	<table class="Modulo" style="border:1px solid grey; visibility:visibility">
+        <tbody>
+            <tr class="Rigaintestazione">
+                <td style="border-right:0px">
+                    <p class="Labeltabella">Progettista incaricato
+					</p>
+                </td>
+				<td style="width:39%; border-left:0px; border-right:0px">
+                    <p class="Labeltabella"></p>
+                </td>
+            </tr>
+		</tbody>
     </table>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
-      <tbody>
-        <tr class="Rigaintestazioneridotta">
-          <td style="width:13%">
-            <p class="Labelcella">Titolo</p>
-          </td>
-          <td style="width:31%">
-            <p class="Labelcella">Cognome</p>
-          </td>
-          <td>
-            <p class="Labelcella">Nome</p>
-          </td>
-          <td style="width:25%">
-            <p class="Labelcella">Codice Fiscale</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <select class="inputNormal" id="Titolare1_TitoloPersona" name="Titolare1_TitoloPersona" style="width:100%;" label="Titolo del Professionista">
-              <option value=""></option>
-              <option value="Sig.">Sig.</option>
-              <option value="Sig.ra">Sig.ra</option>
-              <option value="Dott.">Dott.</option>
-              <option value="Dott.ssa">Dott.ssa</option>
-              <option value="Prof.">Prof.</option>
-              <option value="Prof.ssa">Prof.ssa</option>
-              <option value="Arch.">Arch.</option>
-              <option value="Ing.">Ing.</option>
-              <option value="Comm.">Comm.</option>
-              <option value="Avv.">Avv.</option>
-              <option value="Geom.">Geom.</option>
-            </select>
-          </td>
-          <td>
-            <input class="" id="Titolare1_Cognome" name="Titolare1_Cognome" style="width:100%" label="Cognome del Professionista"/>
-          </td>
-          <td>
-            <input class="" id="Titolare1_Nome" name="Titolare1_Nome" style="width:100%" label="Nome del Professionista"/>
-          </td>
-          <td>
-            <input class="" id="Titolare1_CodiceFiscale" name="Titolare1_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del Professionista" mandatory="#Tipo_richiedente2.checked()"/>
-          </td>
-        </tr>
-      </tbody>
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="#Titolare1_DatiProfessionistaObbligatori.checked()">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width:13%">
+                    <p class="Labelcella">Titolo</p>
+                </td>
+                <td style="width:31%">
+                    <p class="Labelcella">Cognome</p>
+                </td>
+                <td>
+                    <p class="Labelcella">Nome</p>
+                </td>
+                <td style="width:25%">
+                    <p class="Labelcella">Codice Fiscale</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select class="inputNormal" id="Titolare1_TitoloPersona" name="Titolare1_TitoloPersona" style="width:100%;" label="Titolo del Professionista">
+                        <option value=""></option>
+                        <option value="Sig.">Sig.</option>
+                        <option value="Sig.ra">Sig.ra</option>
+                        <option value="Dott.">Dott.</option>
+                        <option value="Dott.ssa">Dott.ssa</option>
+                        <option value="Prof.">Prof.</option>
+                        <option value="Prof.ssa">Prof.ssa</option>
+                        <option value="Arch.">Arch.</option>
+                        <option value="Ing.">Ing.</option>
+                        <option value="Comm.">Comm.</option>
+                        <option value="Avv.">Avv.</option>
+                        <option value="Geom.">Geom.</option>
+                    </select>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_Cognome" name="Titolare1_Cognome" style="width:100%" label="Cognome del Professionista"/>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_Nome" name="Titolare1_Nome" style="width:100%" label="Nome del Professionista"/>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_CodiceFiscale" name="Titolare1_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del Professionista"/>
+                </td>
+            </tr>
+		</tbody>
     </table>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory="#Tipo_richiedente2.checked()">
-      <tbody>
-        <tr class="Rigaintestazioneridotta">
-          <td style="width:24%;">
-            <p class="Labelcella">Data di nascita</p>
-          </td>
-          <td style="width:9%;">
-            <p class="Labelcella">Sesso (M/F)</p>
-          </td>
-          <td style="width: 33%;">
-            <p class="Labelcella">Nazionalità del progettista</p>
-          </td>
-          <td style="width: 34%;">
-            <p class="Labelcella">Luogo di nascita</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input class="" id="Titolare1_DataNascita" name="Titolare1_DataNascita" style="width:100%;" format="date" label="Data nascita del Professionista"/>
-          </td>
-          <td>
-            <select class="inputNormal" id="Titolare1_Sesso" name="Titolare1_Sesso" style="width:100%;" label="Sesso del Professionista">
-              <option value=""></option>
-              <option value="M">M</option>
-              <option value="F">F</option>
-            </select>
-          </td>
-          <td>
-            <select id="Titolare1_Cittadinanza" name="Titolare1_Cittadinanza" style="width:100%" label="Cittadinanza" >
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#Titolare1_DatiProfessionistaObbligatori.checked()">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width:24%;">
+                    <p class="Labelcella">Data di nascita</p>
+                </td>
+                <td style="width:9%;">
+                    <p class="Labelcella">Sesso (M/F)</p>
+                </td>
+                <td style="width: 33%;">
+                    <p class="Labelcella">Nazionalità del progettista</p>
+                </td>
+                <td style="width: 34%;">
+                    <p class="Labelcella">Luogo di nascita</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="" id="Titolare1_DataNascita" name="Titolare1_DataNascita" style="width:100%;" format="date" label="Data nascita del Professionista"/>
+                </td>
+                <td>
+                    <select class="inputNormal" id="Titolare1_Sesso" name="Titolare1_Sesso" style="width:100%;" label="Sesso del Professionista">
+                        <option value=""></option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                </td>
+                <td>
+                   <select id="Titolare1_Cittadinanza" name="Titolare1_Cittadinanza" style="width:100%" label="Cittadinanza" >
 		<option value=""></option>
     <optgroup label="Unione Europea">
         <option value="Italia">ITALIA</option>
@@ -1560,38 +1581,36 @@ function get_ufficio_dest() {
         <option value="Apolide">APOLIDE</option>
     </optgroup>
 </select>
-          </td>
-          <td>
-            <input class="" id="Titolare1_LuogoNascita" name="Titolare1_LuogoNascita" style="width:100%;" label="Lugo di nascita del Professionista"/>
-          </td>
-        </tr>
-      </tbody>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_LuogoNascita" name="Titolare1_LuogoNascita" style="width:100%;" label="Lugo di nascita del Professionista"/>
+                </td>
+            </tr>
+		</tbody>
     </table>
-
-
     
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
-      <tbody>
-        <tr class="Rigaintestazioneridotta">
-          <td style="width:24%">
-            <p class="Labelcella">Partita IVA</p>
-          </td>
-          <td style="width:42%">
-            <p class="Labelcella">Albo o Ordine</p>
-          </td>
-          <td style="width:9%">
-            <p class="Labelcella">Provincia</p>
-          </td>
-          <td style="width:25%">
-            <p class="Labelcella">Numero iscrizione</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" id="Titolare1_PartitaIVA" class="inputNormal" name="Titolare1_PartitaIVA" format="cfpiva" label="Partita IVA del Professionista" mandatory="false"/>
-          </td>
-          <td>
-            <select id="Titolare1_Attributi_Albo" name="Titolare1_Attributi_Albo" style="width:100%" label="Albo o Ordine">
+	<table class="Modulo" style="border:1px solid grey; margin-top:-1px;" enabled="#Titolare1_DatiProfessionistaObbligatori.checked()">
+        <tbody>
+			<tr class="Rigaintestazioneridotta">
+				<td style="width:24%">
+					<p class="Labelcella">Partita IVA</p>
+				</td>
+				<td style="width:42%">
+					<p class="Labelcella">Albo o Ordine</p>
+				</td>
+				<td style="width:9%">
+					<p class="Labelcella">Provincia</p>
+				</td>
+				<td style="width:25%">
+					<p class="Labelcella">Numero iscrizione</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input style="width: 100%" id="Titolare1_PartitaIVA" class="inputNormal" name="Titolare1_PartitaIVA" format="cfpiva" label="Partita IVA del Professionista" mandatory="false"/>
+				</td>
+				<td mandatory="#Titolare1_DatiProfessionistaObbligatori.checked()">
+					<select id="Titolare1_Attributi_Albo" name="Titolare1_Attributi_Albo" style="width:100%" label="Albo o Ordine">
 	  <option value=""></option>
 	  <option value="agrotecnici">agrotecnici</option>
 	  <option value="architetti, pianificatori, paesaggisti">architetti, pianificatori, paesaggisti</option>
@@ -1606,9 +1625,9 @@ function get_ufficio_dest() {
 	  <option value="periti industriali">periti industriali</option>
 	  <option value="non tenuto all'iscrizione all'Albo o all'Ordine">non tenuto all'iscrizione all'Albo o all'Ordine</option>
 </select>
-          </td>
-          <td mandatory_enabled="#Titolare1_Attributi_Albo.value() != '' and #Titolare1_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
-            <select id="Titolare1_Attributi_DellaProvincia" name="Titolare1_Attributi_DellaProvincia" style="width:100%" label="Provincia iscrizione Albo" >
+				</td>
+				<td mandatory_enabled="#Titolare1_Attributi_Albo.value() != '' and #Titolare1_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
+					<select id="Titolare1_Attributi_DellaProvincia" name="Titolare1_Attributi_DellaProvincia" style="width:100%" label="Provincia iscrizione Albo" >
     <option value=""></option>
     <option value="AG">AG</option>
     <option value="AL">AL</option>
@@ -1722,44 +1741,43 @@ function get_ufficio_dest() {
     <option value="VV">VV</option>
     <option value="EE">EE</option>
 </select>
-          </td>
-          <td mandatory_enabled="#Titolare1_Attributi_Albo.value() != '' and #Titolare1_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
-            <input style="width: 100%" id="Titolare1_Attributi_AlNumero" class="inputNormal" name="Titolare1_Attributi_AlNumero" label="Numero iscrizione Albo"/>
-          </td>
-        </tr>
-      </tbody>
+				</td>
+				<td mandatory_enabled="#Titolare1_Attributi_Albo.value() != '' and #Titolare1_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
+					<input style="width: 100%" id="Titolare1_Attributi_AlNumero" class="inputNormal" name="Titolare1_Attributi_AlNumero" label="Numero iscrizione Albo"/>
+				</td>
+			</tr>
+		</tbody>
     </table>
-  	
-
+	
     
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
-      <tbody>
-        <tr class="Rigaintestazioneridotta">
-          <td colspan="5" style="width: 100%;">
-            <p class="Labelcella">Studio Professionale</p>
-          </td>
-        </tr>
-        <tr class="Rigaintestazioneridotta">
-          <td style="width:9%;">
-            <p class="Labelcella">Provincia</p>
-          </td>
-          <td style="width:33%;">
-            <p class="Labelcella">Comune</p>
-          </td>
-          <td style="width:33%;">
-            <p class="Labelcella">Indirizzo</p>
-          </td>
-          <td style="width:9%;">
-            <p class="Labelcella">Civico</p>
-          </td>
-          <td style="width:16%;">
-            <p class="Labelcella">CAP</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <select id="Titolare1_ProvinciaStudio" name="Titolare1_ProvinciaStudio" style="width:100%" label="Provincia dello studio" >
+	
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#Titolare1_DatiProfessionistaObbligatori.checked()">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td colspan="5" style="width: 100%;">
+                    <p class="Labelcella">Studio Professionale</p>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width:9%;">
+                    <p class="Labelcella">Provincia</p>
+                </td>
+                <td style="width:33%;">
+                    <p class="Labelcella">Comune</p>
+                </td>
+                <td style="width:33%;">
+                    <p class="Labelcella">Indirizzo</p>
+                </td>
+                <td style="width:9%;">
+                    <p class="Labelcella">Civico</p>
+                </td>
+                <td style="width:16%;">
+                    <p class="Labelcella">CAP</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+					<select id="Titolare1_ProvinciaStudio" name="Titolare1_ProvinciaStudio" style="width:100%" label="Provincia dello studio" >
     <option value=""></option>
     <option value="AG">AG</option>
     <option value="AL">AL</option>
@@ -1873,73 +1891,62 @@ function get_ufficio_dest() {
     <option value="VV">VV</option>
     <option value="EE">EE</option>
 </select>
-          </td>
-          <td>
-            <select class="inputNormal" id="Titolare1_ComuneStudio" name="Titolare1_ComuneStudio" style="width:100%" label="Comune dello studio del Professionista" dynamic_value="getComuniFromProvincia( #Titolare1_ProvinciaStudio.value(), 'Titolare1_ComuneStudio')">
-            </select>
-          </td>
-          <td>
-            <input class="" id="Titolare1_ViaStudio" name="Titolare1_ViaStudio" style="width:100%;" label="Indirizzo dello studio del Professionista"/>
-          </td>
-          <td>
-            <input class="" id="Titolare1_CivicoStudio" name="Titolare1_CivicoStudio" style="width:100%;" label="Civico dello studio del Professionista" maxlength="10"/>
-          </td>
-          <td>
-            <input class="" id="Titolare1_CAPStudio" name="Titolare1_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del Professionista" enabled="#Titolare1_ProvinciaStudio.value() != 'EE'"/>
-          </td>
-        </tr>
-      </tbody>
+                </td>
+                <td>
+					<select class="inputNormal" id="Titolare1_ComuneStudio" name="Titolare1_ComuneStudio" style="width:100%" label="Comune dello studio del Professionista" dynamic_value="getComuniFromProvincia( #Titolare1_ProvinciaStudio.value(), 'Titolare1_ComuneStudio')">
+					</select>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_ViaStudio" name="Titolare1_ViaStudio" style="width:100%;" label="Indirizzo dello studio del Professionista"/>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_CivicoStudio" name="Titolare1_CivicoStudio" style="width:100%;" label="Civico dello studio del Professionista" maxlength="10"/>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_CAPStudio" name="Titolare1_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del Professionista" enabled="#Titolare1_DatiProfessionistaObbligatori.checked()" mandatory="#Titolare1_DatiProfessionistaObbligatori.checked() and #Titolare1_ProvinciaStudio.value() != 'EE'"/>
+                </td>
+            </tr>
+        </tbody>
     </table>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
-      <tbody>
-        <tr class="Rigaintestazioneridotta">
-          <td style="width:24%;">
-            <p class="Labelcella">Telefono</p>
-          </td>
-          <td style="width:26%;">
-            <p class="Labelcella">Fax</p>
-          </td>
-          <td style="width:50%;">
-            <p class="Labelcella">
-              E-mail PEC <i>(domicilio digitale)</i>
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input class="" id="Titolare1_TelefonoStudio" name="Titolare1_TelefonoStudio" style="width:100%" label="Telefono del Professionista"/>
-          </td>
-          <td>
-            <input class="" id="Titolare1_FaxStudio" name="Titolare1_FaxStudio" style="width:100%" mandatory="false" label="Fax del Professionista"/>
-          </td>
-          <td>
-            <input class="" id="Titolare1_EMailPEC" name="Titolare1_EMailPEC" style="width:100%;" format="pec" label="E-mail PEC del Professionista"/>
-          </td>
-        </tr>
-      </tbody>
+	
+	
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#Titolare1_DatiProfessionistaObbligatori.checked()">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width:24%;">
+                    <p class="Labelcella">Telefono</p>
+                </td>
+                <td style="width:26%;">
+                    <p class="Labelcella">Fax</p>
+                </td>
+                <td style="width:50%;">
+                    <p class="Labelcella">
+                        E-mail PEC
+                            <i>(domicilio digitale)</i>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="" id="Titolare1_TelefonoStudio" name="Titolare1_TelefonoStudio" style="width:100%" label="Telefono del Professionista"/>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_FaxStudio" name="Titolare1_FaxStudio" style="width:100%" mandatory="false" label="Fax del Professionista"/>
+                </td>
+                <td>
+                    <input class="" id="Titolare1_EMailPEC" name="Titolare1_EMailPEC" style="width:100%;" format="pec" label="E-mail PEC del Professionista"/>
+                </td>
+            </tr>
+        </tbody>
     </table>
-    <input id="Titolare1_Attributi_Albo_categoria" 			name="Titolare1_Attributi_Albo_categoria" 		   type="hidden" value="Altri dati"/>
-    <input id="Titolare1_Attributi_Albo_nome" 				name="Titolare1_Attributi_Albo_nome" 			   type="hidden" value="Albo professionale"/>
-    <input id="Titolare1_Attributi_AlNumero_categoria" 		name="Titolare1_Attributi_AlNumero_categoria"	   type="hidden" value="Altri dati"/>
-    <input id="Titolare1_Attributi_AlNumero_nome" 			name="Titolare1_Attributi_AlNumero_nome" 		   type="hidden" value="Numero iscrizione Albo professionale"/>
-    <input id="Titolare1_Attributi_DellaProvincia_categoria" name="Titolare1_Attributi_DellaProvincia_categoria" type="hidden" value="Altri dati"/>
+	<input id="Titolare1_Attributi_Albo_categoria" 			name="Titolare1_Attributi_Albo_categoria" 		   type="hidden" value="Altri dati"/>
+	<input id="Titolare1_Attributi_Albo_nome" 				name="Titolare1_Attributi_Albo_nome" 			   type="hidden" value="Albo professionale"/>
+	<input id="Titolare1_Attributi_AlNumero_categoria" 		name="Titolare1_Attributi_AlNumero_categoria"	   type="hidden" value="Altri dati"/>
+	<input id="Titolare1_Attributi_AlNumero_nome" 			name="Titolare1_Attributi_AlNumero_nome" 		   type="hidden" value="Numero iscrizione Albo professionale"/>
+	<input id="Titolare1_Attributi_DellaProvincia_categoria" name="Titolare1_Attributi_DellaProvincia_categoria" type="hidden" value="Altri dati"/>
     <input id="Titolare1_Attributi_DellaProvincia_nome" 		name="Titolare1_Attributi_DellaProvincia_nome" 	   type="hidden" value="Provincia Albo professionale"/>
-
-
-    <table class="Modulo" style="border:1px solid grey;">
-      <tbody>
-        <tr>
-          <td>
-            <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente2.checked() and #Titolare_CodiceFiscale.value() == #Titolare1_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
-          </td>
-        </tr>
-      </tbody>
-    </table>
     
-    <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
-    
-  </div>
+ 
 </div>
 <br>
 
@@ -2056,7 +2063,7 @@ function get_ufficio_dest() {
         </tr>
         <tr valid="#Immobile_RisultatoVerificaCatastale.value() == 'SI' || #Immobile_RisultatoVerificaCatastale.value() == ''">
           <td colspan="2">
-            <select class="inputNormal" id="Immobile_TipoImmobile" name="Immobile_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="true">
+            <select class="inputNormal" id="Immobile_TipoImmobile" name="Immobile_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile_DatiCatastaliObbligatori.checked()" enabled="true">
               <option value=""></option>
               <option value="S">porzione di edificio</option>
 	            <option value="E">intero edificio</option>
@@ -2122,7 +2129,7 @@ function get_ufficio_dest() {
   ws-param-in=
   "barra=Immobile_CatBarra;num=Immobile_CatNumero;com=Immobile_CatComune;tipo=Immobile_TipoImmobile"
   ws-param-out=
-  "lista_vie1=lista_vie_particella"
+  "Immobile_lista_vie1=lista_vie_particella"
   ws-on="#Immobile_RisultatoVerificaCatastale:change">
 </div>
           </td>
@@ -2148,8 +2155,7 @@ function get_ufficio_dest() {
 			        name="Immobile_CheckVerificaCatastale"
 			        dynamic_check="#Immobile_RisultatoVerificaCatastale.value()=='SI'"
 			        enabled="#Immobile_RisultatoVerificaCatastale.value()=='SI'"
-			        type="checkbox"
-			        label="Modulo"/>
+			        type="checkbox"/>
 			    </td>
 			    <td>
 			      <p>Particella esistente</p>
@@ -2184,7 +2190,7 @@ function get_ufficio_dest() {
           <p style="font-size:85%"> Via di riferimento o località in cui si trova la particella fondiaria oggetto di intervento</p>
         </td>
         <td colspan="4">
-          <input class="inputNormal" id="Localita_part_fondiaria" name="Localita_part_fondiaria" style="width: 100%;" label="Via/Localita della particella fondiaria"  mandatory_enabled="#Immobile_TipoImmobile.value() == 'F'">
+          <input class="inputNormal" id="Immobile_Localita_part_fondiaria" name="Immobile_Localita_part_fondiaria" style="width: 100%;" label="Via/Localita della particella fondiaria"  mandatory_enabled="#Immobile_TipoImmobile.value() == 'F'">
         </td>
       </tr>
     </tbody>
@@ -2348,14 +2354,14 @@ function get_ufficio_dest() {
           <td enabled="(#Immobile_TipoImmobile.value() == 'S' || #Immobile_TipoImmobile.value() == 'E')">
 				    <select
 				        class="inputNormal"
-				        id="lista_vie1"
-				        name="lista_vie1"
+				        id="Immobile_lista_vie1"
+				        name="Immobile_lista_vie1"
 				        style="width:100%;"
 				        label="Elenco vie">
 				   </select>
           </td>
           <td colspan="2">
-            <input name="Immobile_Nomevia_esteso" id="Immobile_Nomevia_esteso" style="width:100%;" label="nome via" enabled="(#Immobile_TipoImmobile.value() == 'S' || #Immobile_TipoImmobile.value() == 'E')" dynamic_value="switch(#lista_vie1.value()) { case '10':	'VIA C. ABBA'; break;
+            <input name="Immobile_Nomevia_esteso" id="Immobile_Nomevia_esteso" style="width:100%;" label="nome via" enabled="(#Immobile_TipoImmobile.value() == 'S' || #Immobile_TipoImmobile.value() == 'E')" dynamic_value="switch(#Immobile_lista_vie1.value()) { case '10':	'VIA C. ABBA'; break;
                                                                                                                                                                          case '20':	'VIA A. ABONDI'; break;
                                                                                                                                                                          case '30':	'VIA J. ACONCIO'; break;
                                                                                                                                                                          case '40':	'VIA ADAMELLO'; break;
@@ -3542,7 +3548,7 @@ function get_ufficio_dest() {
 <div
   ws-name="gis_verifica_civico"
   ws-param-in=
-  "codvia=lista_vie1;barra=Immobile_Barrato;numero=Immobile_Civico"
+  "codvia=Immobile_lista_vie1;barra=Immobile_Barrato;numero=Immobile_Civico"
     ws-param-out=
   "Immobile_RisultatoVerificaCivico=esiste"
   ws-on="#Immobile_ControlloStradarioButton:click">
@@ -3551,7 +3557,7 @@ function get_ufficio_dest() {
 				    <input id="Immobile_RisultatoVerificaCivico" name="Immobile_RisultatoVerificaCivico" type="hidden" enabled="(#Immobile_TipoImmobile.value() == 'S' || #Immobile_TipoImmobile.value() == 'E')"/>
           </td>
           <td>
-		        <button type="button" enabled="#Immobile_RisultatoVerificaCatastale.value()=='SI'" onclick="codvia=document.getElementById('lista_vie1').value; num = document.getElementById('Immobile_Civico').value; barra = document.getElementById('Immobile_Barrato').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?via='+codvia+'&amp;civ='+num+'&amp;barra='+barra);"><img src="./appoggio/img/mappa.png"/></button>
+		        <button type="button" enabled="#Immobile_RisultatoVerificaCatastale.value()=='SI'" onclick="codvia=document.getElementById('Immobile_lista_vie1').value; num = document.getElementById('Immobile_Civico').value; barra = document.getElementById('Immobile_Barrato').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?via='+codvia+'&amp;civ='+num+'&amp;barra='+barra);"><img src="./appoggio/img/mappa.png"/></button>
           </td>
         </tr>
       </tbody>
@@ -3569,8 +3575,7 @@ function get_ufficio_dest() {
               name="Immobile_CheckVerificaCivico"
               dynamic_check="#Immobile_RisultatoVerificaCivico.value()=='SI'"
               enabled="#Immobile_RisultatoVerificaCivico.value()=='SI'"
-              type="checkbox"
-              label="Modulo"/>
+              type="checkbox"/>
           </td>
           <td>
             <p>Indirizzo verificato</p>
@@ -3663,13 +3668,13 @@ function get_ufficio_dest() {
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
 </p>
-<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_cGEN-TRASM-INTEG-STU2" name="GLOBO_modulo_cGEN-TRASM-INTEG-STU2" type="hidden" value="" />
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_cGEN-TRASM-INTEG" name="GLOBO_modulo_cGEN-TRASM-INTEG" type="hidden" value="" />
 <input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cIntegrazione_documentazione" name="GLOBO_allegato_cIntegrazione_documentazione" numero="#Nintegr.value()" obbligatorio="#Integrazione_documentazione.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
-<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="GEN-TRASM-INTEG-STU2" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="GEN-TRASM-INTEG" />
 
 
 	  <input id="GLOBO_MyJobIsDone" name="GLOBO_MyJobIsDone" type="hidden" value=""/>
