@@ -119,29 +119,39 @@ name="GLOBO_report"
 
 <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
 <script type="text/javascript">
-    var simpaticoEservice="1"
-    var simpaticoForm="main"
-    var simpaticoCategory="Edilizia"
-    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
-                           "AventeTitolo_Fax",
-                           "AventeTitolo_EMail"]
-    var ERROR_LABELS= {   
-                        'block1' : 'Selezionare una delle opzioni',
-                        'block2' : 'Inserire il codice fiscale',
-                        'block3' : 'Selezionare il ruolo',
-                        'block5' : 'Selezionare la tipologia di autorizzazione/parere richiesta',
-                        'block7' : 'Specificare la tipologia di intervento',
-                        'block8' : 'Particella edilizia non valida',
-                        'block9' : 'Indirizzo non inserito',
-                        'block10' : 'Indirizzo non verificato',
-                        'block12' : 'Selezionare una delle opzioni',
-                        'block13' : 'Definire il ruolo',
-                        'block14' : 'Inserire il codice fiscale',
-                        'block15' : 'Selezionare una delle opzioni',
-                        'block17' : 'Confermare presa visione informativa sulla privacy'
-      }
-  
-    </script>
+  var simpaticoEservice = "4"; //  the id corresponding to the e-service
+  var simpaticoForm = "main";
+  var simpaticoCategory = "Generale"; // the general category of the e-service
+  var simpaticoMapping=["Titolare_Cognome",
+	                      "Titolare_Nome",
+	                      "Titolare_CodiceFiscale",
+	                      "Titolare_DataNascita",
+	                      "Titolare_Sesso",
+	                      "Titolare_Cittadinanza",
+	                      "Titolare_LuogoNascita",
+	                      "Titolare_Telefono",
+	                      "Titolare_Cellulare",
+	                      "Titolare_Fax",
+	                      "Titolare_EMail",
+	                      "Titolare_EMailPEC"];
+
+  var serviceName = "DICHIARAZIONE DI RESIDENZA"; // 
+  var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/M1103-DICHIARAZIONE-RESIDENZA.html";
+  var ERROR_LABELS= {'block1' : 'Selezionare una delle opzioni',
+                     'block2' : 'Inserire il codice fiscale',
+                     'block3' : 'Selezionare il ruolo',
+                     'block5' : 'Selezionare la tipologia di autorizzazione/parere richiesta',
+                     'block7' : 'Specificare la tipologia di intervento',
+                     'block8' : 'Particella edilizia non valida',
+                     'block9' : 'Indirizzo non inserito',
+                     'block10' : 'Indirizzo non verificato',
+                     'block12' : 'Selezionare una delle opzioni',
+                     'block13' : 'Definire il ruolo',
+                     'block14' : 'Inserire il codice fiscale',
+                     'block15' : 'Selezionare una delle opzioni',
+                     'block17' : 'Confermare presa visione informativa sulla privacy'
+                    }
+</script>
  *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 
 
@@ -2153,24 +2163,24 @@ function get_ufficio_dest() {
     </tr>
     <tr class="Rigaintestazioneridotta">
       <td>
-        <p class="Labelcella">Scala</p>
+        <p class="Labelcella">Scala <i>(digitare "0" se inesistente o ignoto)</i></p>
       </td>
       <td>
-        <p class="Labelcella">Piano</p>
+        <p class="Labelcella">Piano <i>(digitare "0" se inesistente o ignoto)</i></p>
       </td>
       <td>
-        <p class="Labelcella">Interno</p>
+        <p class="Labelcella">Interno <i>(digitare "0" se inesistente o ignoto)</i></p>
       </td>
     </tr>
     <tr>
       <td>
-        <input style="width:100%" class="Modulo" id="scala_res" name="scala_res" label="Scala nuova residenza del richiedente" enabled="true">
+        <input style="width:100%" class="Modulo" id="scala_res" name="scala_res" label="Scala nuova residenza del richiedente" mandatory_enabled="true">
       </td>
       <td>
-        <input style="width:100%" class="Modulo" id="piano_res" name="piano_res" label="Piano nuova residenza del richiedente" enabled="true">
+        <input style="width:100%" class="Modulo" id="piano_res" name="piano_res" label="Piano nuova residenza del richiedente" mandatory_enabled="true">
       </td>
       <td>
-        <input style="width:100%" class="Modulo" id="interno_res" name="interno_res" label="Interno nuova residenza del richiedente" enabled="true">
+        <input style="width:100%" class="Modulo" id="interno_res" name="interno_res" label="Interno nuova residenza del richiedente" mandatory_enabled="true">
       </td>
     </tr>
   </tbody>
@@ -2620,11 +2630,7 @@ function get_ufficio_dest() {
     </tr>
     <tr valid="#RisultatoVerificaCatastale.value() == 'SI' || #RisultatoVerificaCatastale.value() == ''">
       <td colspan="2">
-        <select class="inputNormal" id="TipoImmobile" name="TipoImmobile" style="width:100%" label="Tipo immobile" mandatory_enabled="#titolo_occupazione1.checked()">
-          <option value=""></option>
-          <option value="Porzione_edificio">abitazione</option>
-          <option value="Intero_edificio">intero edificio</option>
-        </select>
+        <input id="TipoImmobile" name="TipoImmobile" style="width:100%" label="Tipo immobile" dynamic_value="'abitazione'" enabled="#titolo_occupazione1.checked()" readonly/>
       </td>
       <td>
         <select class="inputNorma2" id="CatComune" name="CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#titolo_occupazione1.checked()">
@@ -2663,7 +2669,7 @@ function get_ufficio_dest() {
         <input name="CatPM" id="CatPM" style="width:100%;" label="Porzione Materiale" enabled="true" />
       </td>
       <td>
-        <input name="CatSubalterno" id="CatSubalterno" style="width:100%;" label="Subalterno" mandatory="#TipoImmobile.check_value(['Porzione_edificio'])"/>
+        <input name="CatSubalterno" id="CatSubalterno" style="width:100%;" label="Subalterno" mandatory="true"/>
       </td>
       <td>
         <button type="button" style="width:34px; height:28px" id="ControlloDatiCatastaliButton" name="ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -3318,31 +3324,31 @@ function get_ufficio_dest() {
 
 
 <!-- METADATI DICHIARANTE -->
-<input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome" dynamic_value="#compilante_Cognome.value()"/>
-<input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome" dynamic_value="#compilante_Nome.value()"/>
-<input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale" dynamic_value="#compilante_CodiceFiscale.value()"/>
+<input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome" dynamic_value="#compilante_Cognome.value()" type="hidden"/>
+<input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome" dynamic_value="#compilante_Nome.value()" type="hidden"/>
+<input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale" dynamic_value="#compilante_CodiceFiscale.value()" type="hidden"/>
 <br>
 <!-- METADATI TITOLARE -->
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Cognome.value() : ''"/>
-<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Nome.value() : ''"/>
-<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" dynamic_value="!#check_minorenne.checked() ? #Titolare_CodiceFiscale.value() : ''"/>
-<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_DataNascita.value() : ''"/>
-<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_LuogoNascita.value() : ''"/>
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Cognome.value() : ''" type="hidden"/>
+<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Nome.value() : ''" type="hidden"/>
+<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" dynamic_value="!#check_minorenne.checked() ? #Titolare_CodiceFiscale.value() : ''" type="hidden"/>
+<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_DataNascita.value() : ''" type="hidden"/>
+<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_LuogoNascita.value() : ''" type="hidden"/>
 <br>
 <!-- METADATI MINORE -->
-<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Cognome.value() : ''"/>
-<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Nome.value() : ''"/>
-<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_CodiceFiscale.value() : ''"/>
-<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_DataNascita.value() : ''"/>
-<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_LuogoNascita.value() : ''"/>
+<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Cognome.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Nome.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_CodiceFiscale.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_DataNascita.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_LuogoNascita.value() : ''" type="hidden"/>
 <br>
 <!-- METADATI PERSONA GIA' RESIDENTE AL NUOVO INDIRIZZO-->
-<input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto" dynamic_value="#cognome_fam_iscritto.value()"/>
-<input id="Metadati_nome_fam_iscritto" name="Metadati_nome_fam_iscritto" dynamic_value="#nome_fam_iscritto.value()"/>
-<input id="Metadati_luogo_nasc_fam_iscritto" name="Metadati_luogo_nasc_fam_iscritto" dynamic_value="#luogo_nasc_fam_iscritto.value()"/>
-<input id="Metadati_data_nasc_fam_iscritto" name="Metadati_data_nasc_fam_iscritto" dynamic_value="#data_nasc_fam_iscritto.value()"/>
+<input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto" dynamic_value="#cognome_fam_iscritto.value()" type="hidden"/>
+<input id="Metadati_nome_fam_iscritto" name="Metadati_nome_fam_iscritto" dynamic_value="#nome_fam_iscritto.value()" type="hidden"/>
+<input id="Metadati_luogo_nasc_fam_iscritto" name="Metadati_luogo_nasc_fam_iscritto" dynamic_value="#luogo_nasc_fam_iscritto.value()" type="hidden"/>
+<input id="Metadati_data_nasc_fam_iscritto" name="Metadati_data_nasc_fam_iscritto" dynamic_value="#data_nasc_fam_iscritto.value()" type="hidden"/>
 <br>
-<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()"/>
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
 
 	  <input id="GLOBO_MyJobIsDone" name="GLOBO_MyJobIsDone" type="hidden" value=""/>
