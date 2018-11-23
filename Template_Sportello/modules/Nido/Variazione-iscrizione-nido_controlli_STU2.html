@@ -671,11 +671,11 @@ VARIAZIONE-ISCRIZIONE-NIDO
 <div class="simpatico-block simpatico-query-and-answer">
   {{ anagrafica_bambino('Bambino', 'Anagrafica del/la bambino/a') }}
 
-  <input name="SvCodiceFamiglia" id="SvCodiceFamiglia" type="hidden" dynamic_value="(#AventeTitolo_RuoloRichiedente.check_value([ 'affidatario','preadottivo']) ? #AventeTitolo_CodiceFamiglia.value() : 0) || (#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) ? #Bambino_CodiceFamiglia.value() : 0 )" >
+  <input name="SvCodiceFamiglia" id="SvCodiceFamiglia" type="hidden" dynamic_value="#Bambino_CodiceFamiglia.value()" >
   <input name="ProvaCodiceFamiglia" id="ProvaCodiceFamiglia" type="hidden" >
-  <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="(#AventeTitolo_RuoloRichiedente.check_value([ 'affidatario','preadottivo']) ? #AventeTitolo_CodiceVia.value() : 0) || (#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre','tutore']) ? #Bambino_CodiceVia.value() : 0 )" >
-  <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="(#AventeTitolo_RuoloRichiedente.check_value([ 'affidatario','preadottivo']) ? #AventeTitolo_CivicoResidenza.value() : 0) || (#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre','tutore']) ? #Bambino_CivicoResidenza.value() : 0 )" format="number">
-  <input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="(#AventeTitolo_RuoloRichiedente.check_value([ 'tutore','affidatario','preadottivo']) ? #Parametri_CFBambino.value() : 0) || (#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) ? #Bambino_CFBambino.value() : 0 )" >
+  <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="#Bambino_CodiceVia.value()" >
+  <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="#Bambino_CivicoResidenza.value()" format="number">
+  <input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="#Bambino_CFBambino.value()" >
   <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
   <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
 
@@ -723,6 +723,10 @@ VARIAZIONE-ISCRIZIONE-NIDO
         'Parametri_DataDomValPT': 'dtDomanda',
        },
        '#RecuperaDomandaNido:click' ) }}
+
+       {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile1', '#RecuperaDomandaNido:click', 'listaFam1') }}
+       {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile2', '#RecuperaDomandaNido:click', 'listaFam2') }}
+       {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile3', '#RecuperaDomandaNido:click', 'listaFam3') }}
     </th>
   </tbody>
 </table>
@@ -813,14 +817,6 @@ VARIAZIONE-ISCRIZIONE-NIDO
 
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-      <th colspan="7" style="background-color: #eeeeee;">
-        <br>
-        <button type="button" id="RecuperaListaFam">Recupera nuovamente i dati del nucleo familiare</button>
-            {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile1', '#RecuperaListaFam:click', 'listaFam1') }}
-            {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile2', '#RecuperaListaFam:click', 'listaFam2') }}
-            {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile3', '#RecuperaListaFam:click', 'listaFam3') }}
-            <br>
-      </th>
       <tr class="Rigaintestazioneridotta">
         <td colspan="7">
           <b>che i componenti del nucleo familiare residenti con il bambino sono i seguenti</b><br>
@@ -1319,10 +1315,10 @@ VARIAZIONE-ISCRIZIONE-NIDO
       </tr>
       <tr>
         <td colspan="2">
-          <input class="inputNormal" id="Parametri_CoefficienteICEF" name="Parametri_CoefficienteICEF" style="width: 100%;" label="Coefficiente ICEF">
+          <input class="inputNormal" id="Parametri_CoefficienteICEF" name="Parametri_CoefficienteICEF" style="width: 100%;" label="Coefficiente ICEF" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_DataCalcolo" name="Parametri_DataCalcolo" style="width: 100%;" label="Data attestazione ICEF">
+          <input class="inputNormal" id="Parametri_DataCalcolo" name="Parametri_DataCalcolo" style="width: 100%;" label="Data attestazione ICEF" readonly>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta">
@@ -1351,13 +1347,13 @@ VARIAZIONE-ISCRIZIONE-NIDO
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="Parametri_CognomeDichiaranteICEF" name="Parametri_CognomeDichiaranteICEF" style="width: 100%;" label="Cognome dichiarante ICEF">
+          <input class="inputNormal" id="Parametri_CognomeDichiaranteICEF" name="Parametri_CognomeDichiaranteICEF" style="width: 100%;" label="Cognome dichiarante ICEF" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_NomeDichiaranteICEF" name="Parametri_NomeDichiaranteICEF" style="width: 100%;" label="Nome dichiarante ICEF">
+          <input class="inputNormal" id="Parametri_NomeDichiaranteICEF" name="Parametri_NomeDichiaranteICEF" style="width: 100%;" label="Nome dichiarante ICEF" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_CFDichiaranteICEF" name="Parametri_CFDichiaranteICEF" style="width: 100%;" label="Codice fiscale dichiarante ICEF">
+          <input class="inputNormal" id="Parametri_CFDichiaranteICEF" name="Parametri_CFDichiaranteICEF" style="width: 100%;" label="Codice fiscale dichiarante ICEF" readonly>
         </td>
       </tr>
       <tr>
@@ -1477,7 +1473,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
   <tbody>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input group="Tassonomia_TipoServizioFP" id="Tassonomia_FullTime" name="Tassonomia_FullTime" type="checkbox" value="FT" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()"/>
+        <input group="Tassonomia_TipoServizioFP" id="Tassonomia_FullTime" name="Tassonomia_FullTime" type="checkbox" value="FT" dynamic_check="#Parametri_TipoDomandaFT.value() != ''" enabled="#Parametri_TipoDomandaFT.value() != ''"/>
       </td>
       <td>
         <p>Tempo pieno</p>
@@ -1485,7 +1481,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input group="Tassonomia_TipoServizioFP" id="Tassonomia_PartTime" name="Tassonomia_PartTime" type="checkbox" value="PT" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()"/>
+        <input group="Tassonomia_TipoServizioFP" id="Tassonomia_PartTime" name="Tassonomia_PartTime" type="checkbox" value="PT" dynamic_check="#Parametri_TipoDomandaPT.value() != ''" enabled="#Parametri_TipoDomandaPT.value() != ''"/>
       </td>
       <td>
         <p>Tempo parziale</p>
@@ -1512,11 +1508,11 @@ VARIAZIONE-ISCRIZIONE-NIDO
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
-<table class="Modulo" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()">
   <tbody>
     <tr>
       <td style="vertical-align: top; width: 4%;" rowspan="21">
-        <input id="Tassonomia_TipoFrequenza1" name="Tassonomia_TipoFrequenza1" type="checkbox" value="FT" dynamic_check="#Tassonomia_FullTime.checked()" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()"/>
+        <input id="Tassonomia_TipoFrequenza1" name="Tassonomia_TipoFrequenza1" type="checkbox" value="FT" dynamic_check="#Tassonomia_FullTime.checked()"/>
       </td>
       <td colspan="4">
         <p>Per la domanda a tempo pieno</p>
@@ -1528,7 +1524,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
           id="Tassonomia_TipoDomandaFT2"
           name="Tassonomia_TipoDomandaFT2"
           dynamic_check="#Parametri_TipoOperazioneFT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA' || #Parametri_TipoOperazioneFT.value() == 'VARIAZIONE' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA'"
-          enabled="#Tassonomia_TipoFrequenza1.checked() and #Parametri_TipoOperazioneFT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA' ||#Tassonomia_TipoFrequenza1.checked() and #Parametri_TipoOperazioneFT.value() == 'VARIAZIONE' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA'"
+          enabled="#Tassonomia_FullTime.checked() and #Parametri_TipoOperazioneFT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA' ||#Tassonomia_TipoFrequenza1.checked() and #Parametri_TipoOperazioneFT.value() == 'VARIAZIONE' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA'"
           type="checkbox"
           value="2" />
       </td>
@@ -1551,10 +1547,10 @@ VARIAZIONE-ISCRIZIONE-NIDO
     </tr>
     <tr enabled="#Tassonomia_TipoDomandaFT2.checked()">
       <td colspan="2">
-        <input class="inputNormal" readonly="" id="Parametri_RichiedenteVarFT" name="Parametri_RichiedenteVarFT" style="width: 100%;" label="Richiedente della domanda" dynamic_value="#Parametri_RichDomValFT.value()">
+        <input class="inputNormal" id="Parametri_RichiedenteVarFT" name="Parametri_RichiedenteVarFT" style="width: 100%;" label="Richiedente della domanda" dynamic_value="#Parametri_RichDomValFT.value()" readonly>
       </td>
       <td>
-        <input class="inputNormal" readonly="" id="Parametri_DataVarFT" name="Parametri_DataVarFT" style="width: 100%;" label="Data della domanda" dynamic_value="#Parametri_DataDomValFT.value()">
+        <input class="inputNormal" id="Parametri_DataVarFT" name="Parametri_DataVarFT" style="width: 100%;" label="Data della domanda" dynamic_value="#Parametri_DataDomValFT.value()" readonly>
       </td>
     </tr>
     <tr class="Rigaintestazione" >
@@ -1578,7 +1574,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
           'Tassonomia_FullTime',
           'empty',
           'Tassonomia_NidoInfanziaFT1',
-          '#RecuperaListaFam:click'
+          '#RecuperaDomandaNido:click'
           )}}
 
         <select
@@ -1649,7 +1645,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="Tassonomia_SceltaSecondoFT" name="Tassonomia_SceltaSecondoFT" mandatory_enabled="#Tassonomia_FullTime.checked()" label="Scelta secondo nido a tempo pieno"> </div>        
+        <div id="Tassonomia_SceltaSecondoFT" name="Tassonomia_SceltaSecondoFT" mandatory_enabled="#Nome_nido_FT1.value() != ''" label="Scelta secondo nido a tempo pieno"> </div>        
         <input id="Tassonomia_SceltaSecondoFT1" name="Tassonomia_SceltaSecondoFT" type="radio" value="1"/>
       </td>
       <td colspan="3">
@@ -1677,7 +1673,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
           'Tassonomia_FullTime',
           'listaCompleta2',
           'Tassonomia_NidoInfanziaFT2',
-          '#RecuperaListaFam:click'
+          '#RecuperaDomandaNido:click'
           )}}
 
         <select
@@ -1767,11 +1763,11 @@ VARIAZIONE-ISCRIZIONE-NIDO
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
-<table class="Modulo" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()">
   <tbody>
     <tr>
       <td style="vertical-align: top; width: 4%;" rowspan="21">
-        <input id="Tassonomia_TipoFrequenza2" name="Tassonomia_TipoFrequenza2" type="checkbox" value="PT" dynamic_check="#Tassonomia_PartTime.checked()" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()"/>
+        <input id="Tassonomia_TipoFrequenza2" name="Tassonomia_TipoFrequenza2" type="checkbox" value="PT" dynamic_check="#Tassonomia_PartTime.checked()" enabled="#Tassonomia_PartTime.checked()"/>
       </td>
       <td colspan="4">
         <p>Per la domanda a tempo parziale</p>
@@ -1783,7 +1779,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
           id="Tassonomia_TipoDomandaPT2"
           name="Tassonomia_TipoDomandaPT2"
           dynamic_check="#Parametri_TipoOperazionePT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA' || #Parametri_TipoOperazionePT.value() == 'VARIAZIONE' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA'"
-          enabled="#Tassonomia_TipoFrequenza2.checked() and #Parametri_TipoOperazionePT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA' || #Tassonomia_TipoFrequenza2.checked() and #Parametri_TipoOperazionePT.value() == 'VARIAZIONE' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA'"
+          enabled="#Tassonomia_PartTime.checked() and #Parametri_TipoOperazionePT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA' || #Tassonomia_TipoFrequenza2.checked() and #Parametri_TipoOperazionePT.value() == 'VARIAZIONE' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA'"
           type="checkbox"
           value="2" />
       </td>
@@ -1906,7 +1902,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="Tassonomia_SceltaSecondoPT" name="Tassonomia_SceltaSecondoPT" mandatory_enabled="#Tassonomia_PartTime.checked()" label="Scelta secondo nido a tempo parziale"> </div>
+        <div id="Tassonomia_SceltaSecondoPT" name="Tassonomia_SceltaSecondoPT" mandatory_enabled="#Nome_nido_PT1.value() != ''" label="Scelta secondo nido a tempo parziale"> </div>
         <input id="Tassonomia_SceltaSecondoPT1" name="Tassonomia_SceltaSecondoPT" type="radio" value="1"/>
       </td>
       <td colspan="3">
