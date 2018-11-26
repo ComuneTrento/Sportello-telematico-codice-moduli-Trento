@@ -1490,20 +1490,17 @@ VARIAZIONE-ISCRIZIONE-NIDO
   </tbody>
 </table>
 <table class="Modulo" style="border: 1px solid grey">
-    <tbody>
-        <tr class="Rigaintestazione ridotta">
-            <td>
-                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input class="inputNormal" id="modifiche_blocco_10" name="modifiche_blocco_10" label="Elencare le modifiche effettuate al blocco scelta tipologia nido" style="width:100%;" enabled="true"/>
-            </td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <td>
+        <input class="inputNormal" id="controllo_val_domanda" name="controllo_val_domanda" label="Errore nel tipo di variazione richiesta" style="width:100%;" dynamic_value="#Parametri_TipoDomandaFT.value() == '' and #Tassonomia_FullTime.checked() ? 'ATTENZIONE: Per l’iscrizione a tempo pieno è necessario compilare il modulo per una nuova iscrizione' : (#Parametri_TipoDomandaPT.value() == '' and #Tassonomia_PartTime.checked() ? 'ATTENZIONE: Per l’iscrizione a tempo parziale è necessario compilare il modulo per una nuova iscrizione' : 'Procedere con la compilazione')"/>
+      </td>
+    </tr>
+  </tbody>
 </table>
 </div>
+
+<input type="hidden" id="check_val_dom" name="check_val_dom" mandatory="true" dynamic_value="#controllo_val_domanda.value() == 'Procedere con la compilazione' ? 'OK' : ''">
 
 <br>
 
@@ -1629,7 +1626,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
     {% for i in range(1, 3) %}
     {{ Tassonomia_ServizioAsilo1FT('Tassonomia_NidoInfanziaFT1', i) }}
 
-    <input type="hidden" id="Parametri_CodiceServizioNido1FT{{ i }}" name="Parametri_CodiceServizioNido1FT{{ i }}">
+    <input id="Parametri_CodiceServizioNido1FT{{ i }}" name="Parametri_CodiceServizioNido1FT{{ i }}">
 
     {% endfor %}
 
