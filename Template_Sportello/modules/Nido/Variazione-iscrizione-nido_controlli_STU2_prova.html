@@ -481,7 +481,8 @@ VARIAZIONE-ISCRIZIONE-NIDO
 <input name="ProvaCodiceFamiglia" id="ProvaCodiceFamiglia" type="hidden" >
 <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="#Bambino_CodiceVia.value()" >
 <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="#Bambino_CivicoResidenza.value()" format="number">
-<input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="#Bambino_CFBambino.value()" >
+<input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" >
+
 <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
 <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
 
@@ -514,7 +515,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
   <tbody>
     <th colspan="6" style="background-color: #eeeeee;">
       <button type="button" id="RecuperaDomandaNido">Recupera i dati della domanda di ammissione</button>
-      {{ service.getDomandaAttiva('Bambino_CFBambino','TipoDomandaFullTime', {
+      {{ service.getDomandaAttiva('SvCFBambino','TipoDomandaFullTime', {
         'Parametri_TipoDomandaFT': 'tipoServizio',
         'Parametri_NumeroDomandaValFT': 'idDomanda',
         'Parametri_TipoOperazioneFT': 'tipoOperazione',
@@ -523,7 +524,7 @@ VARIAZIONE-ISCRIZIONE-NIDO
        },
        '#RecuperaDomandaNido:click' ) }}
          
-       {{ service.getDomandaAttiva('Bambino_CFBambino','TipoDomandaPartTime',   {
+       {{ service.getDomandaAttiva('SvCFBambino','TipoDomandaPartTime',   {
         'Parametri_TipoDomandaPT': 'tipoServizio',
         'Parametri_NumeroDomandaValPT': 'idDomanda',
         'Parametri_TipoOperazionePT': 'tipoOperazione',
