@@ -1,5 +1,5 @@
-{% set CodiceModulo =  "M1876-ISCRIZIONE-NIDO-PROVA" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1876-ISCRIZIONE-NIDO_v2.0" %}
+{% set CodiceModulo =  "VARIAZIONE-ISCRIZIONE-NIDO-PROVA" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/VARIAZIONE-ISCRIZIONE-NIDO-PROVA_v1.0" %}-->
 {% extends "base_trento.html" %}
 
 {% block meta %}
@@ -8,7 +8,7 @@
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
-descrizione="ISCRIZIONE ALL'ASILO NIDO"
+descrizione="TEST VAR NIDO"
 destinatario_amministrazione=""
 destinatario_ufficio="94SMCB"
 dinamico="SI"
@@ -25,16 +25,15 @@ segnatura="AventeTitolo"
 tipo_modulo="principale"
 urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
-versione="1.0|06/04/2016" />
+versione="1.0|06/04/2016"/>
 
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
-name="GLOBO_report"
-/>
+name="GLOBO_report"/>
 
-  <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
 <script type="text/javascript">
-    var simpaticoEservice = "2"; //  the id corresponding to the e-service
+    var simpaticoEservice = "2_1"; //  the id corresponding to the e-service
     var simpaticoForm = "main";
     var simpaticoCategory = "Infanzia"; // the general category of the e-service
     var simpaticoMapping= [ "AventeTitolo_Cognome",
@@ -43,12 +42,12 @@ name="GLOBO_report"
                             "AventeTitolo_DataNascita",
                             "AventeTitolo_EMailPEC",
                             "AventeTitolo_Sesso",
-                            "AventeTitolo_ProvinciaResidenza",
-                            "AventeTitolo_ComuneResidenza",
-                            "AventeTitolo_ViaResidenza",
-                            "AventeTitolo_CivicoResidenza",
-                            "AventeTitolo_CAPResidenza",
-                            "AventeTitolo_Telefono",
+						                "AventeTitolo_ProvinciaResidenza",
+						                "AventeTitolo_ComuneResidenza",
+						                "AventeTitolo_ViaResidenza",
+						                "AventeTitolo_CivicoResidenza",
+						                "AventeTitolo_CAPResidenza",
+						                "AventeTitolo_Telefono",
                             "AventeTitolo_Fax",
                             "AventeTitolo_Nazionalita",
                             "AventeTitolo_EMail",
@@ -76,662 +75,469 @@ name="GLOBO_report"
                             "Parametri_AgenziaEntrateMadre",
                             "Parametri_PIVAMadre",
                             "Parametri_ScuolaMadre"];
-  	var serviceName = "M1876 ISCRIZIONE NIDO"; // Eservice example
-    var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/M1876-ISCRIZIONE-NIDO.html"						
+  	var serviceName = "VARIAZIONE ISCRIZIONE NIDO"; // Eservice example
+    var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/VARIAZIONE-ISCRIZIONE-NIDO.html"						
     var ERROR_LABELS = { 
                         'block1' : 'Inserire il codice fiscale',
                         'block2' : 'Ruolo non specificato',
                         'block3' : 'Seleziona una delle opzioni',
                         'block5' : 'IMPOSSIBILE CONTINUARE LA COMPILAZIONE',
-                        'block9' : 'Seleziona se avvalersi dell’attestazione ICEF o meno',
-                        'block11' : 'Seleziona Part-time / Full-time',
-                        'block26' : 'Seleziona una delle opzioni',
-                        'block32' : 'Seleziona una delle opzioni',
-                        'block37' : 'Confermare presa visione dell’informativa'
+                        'block8' : 'Seleziona se avvalersi dell’attestazione ICEF o meno',
+                        'block10' : 'Seleziona Part-time / Full-time',
+                        'block25' : 'Seleziona una delle opzioni',
+                        'block31' : 'Seleziona una delle opzioni',
+                        'block36' : 'Confermare presa visione dell’informativa'
                       }
 </script>
-<!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+ *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 
 {% endblock meta %}
 
 
 {% block title %}
-M1876-ISCRIZIONE-NIDO
+VARIAZIONE-ISCRIZIONE-NIDO
 {% endblock title %}
-
-
-{% macro anagrafica_bambino( prefix='AventeTitolo', intestazione="Il sottoscritto", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", visibility_residenza="visibility:visibility", visibility_mail="no_mail", carica_campi="", cf_obbligatorio="true", format_telefono_numerico="false", pec_obbligatoria ="false"  ) -%}
-{% do all_prefix.append( prefix ) %}
-
-<div type="Anagrafica_bambino">
-
-  <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
-  <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
-
-  <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td style="border-right:0px">
-          <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}
-          </p>
-        </td>
-        <td style="width:38%; border-left:0px; border-right:0px">
-          <p class="Labeltabella">{{ carica_campi|safe }}</p>
-        </td>
-        <td style="width:3%; {{ pointer_carica_dati }}; border-left:0px; border-right:0px">
-          <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
-            {{ service.getFiglioREST('Parametri_CFBambino','TipoContesto', 'TipoLista', {
-              prefix + '_DataNascita':  'datanascita',
-              prefix + '_Nome':  'nome',
-              prefix + '_Cognome':  'cognome',
-              prefix + '_Sesso':  'sesso',
-              prefix + '_Nazionalita':  'nazione',
-              prefix + '_Cittadinanza':  'nazionalita',
-              prefix + '_CFBambino':  'codiceFiscale',
-              prefix + '_CodiceFamiglia':  'codiceFamiglia',
-              prefix + '_CodiceVia':  'codiceVia',
-              prefix + '_ProvinciaResidenza' : 'provincia',
-              prefix + '_ComuneResidenza' : 'citta',
-              prefix + '_ViaResidenza' : 'indirizzo',
-              prefix + '_CivicoResidenza' : 'numeroCivico',
-              prefix + '_BarraResidenza' : 'barra',
-              prefix + '_CAPResidenza' : 'cap',
-              prefix + '_Nazione' : 'nazione',
-              prefix + '_LuogoNascita' : 'comuneNascita',
-              prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
-              prefix + '_MatricolaAnagrafe' : 'matricola',
-              prefix + '_Paternita' : 'padre',
-              prefix + '_Maternita' : 'madre',
-            },
-            '#Parametri_CFBambino:change', '#Tassonomia_ListaFam1_allowEdit' ) }}
-
-            {{ service.getPersonaREST('Tassonomia_ListaFam1','TipoContesto', 'TipoLista', {
-              prefix + '_DataNascita':  'datanascita',
-              prefix + '_Nome':  'nome',
-              prefix + '_Cognome':  'cognome',
-              prefix + '_Sesso':  'sesso',
-              prefix + '_Nazionalita':  'nazione',
-              prefix + '_Cittadinanza':  'nazionalita',
-              prefix + '_CFBambino':  'codiceFiscale',
-              prefix + '_CodiceFamiglia':  'codiceFamiglia',
-              prefix + '_CodiceVia':  'codiceVia',
-              prefix + '_ProvinciaResidenza' : 'provincia',
-              prefix + '_ComuneResidenza' : 'citta',
-              prefix + '_ViaResidenza' : 'indirizzo',
-              prefix + '_CivicoResidenza' : 'numeroCivico',
-              prefix + '_BarraResidenza' : 'barra',
-              prefix + '_CAPResidenza' : 'cap',
-              prefix + '_Nazione' : 'nazione',
-              prefix + '_LuogoNascita' : 'comuneNascita',
-              prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
-              prefix + '_MatricolaAnagrafe' : 'matricola',
-              prefix + '_Paternita' : 'padre',
-              prefix + '_Maternita' : 'madre',
-            },
-            '#Tassonomia_ListaFam1:change', '#Tassonomia_ListaFam1_allowEdit' ) }}
-          </span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <input type="hidden" dynamic_value="#Tassonomia_CF.check_value('3') ? 'true' : 'false' " name="Tassonomia_ListaFam1_allowEdit" id="Tassonomia_ListaFam1_allowEdit" />
-
-  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()">
-    <tbody>
-      <tr class="Rigaintestazioneridotta">
-        <td colspan="2">
-          <p class="Labelcella">Cognome</p>
-        </td>
-        <td colspan="2">
-          <p class="Labelcella">Nome</p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome"/>
-        </td>
-        <td colspan="2">
-          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome"/>
-        </td>
-      </tr>
-      <tr class="Rigaintestazioneridotta">
-        <td style="width:24%;">
-          <p class="Labelcella">Data di nascita</p>
-        </td>
-        <td style="width:9%;">
-          <p class="Labelcella">Sesso (M/F)</p>
-        </td>
-        <td style="width: 33%;">
-          <p class="Labelcella">Cittadinanza</p>
-        </td>
-        <td style="width: 34%;">
-          <p class="Labelcella">Luogo di nascita</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita"/>
-        </td>
-        <td>
-          <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso">
-            <option value=""></option>
-            <option value="M">M</option>
-            <option value="F">F</option>
-          </select>
-        </td>
-        <td>
-          {{ utils.cittadinanza( prefix + '_Cittadinanza', 'Cittadinanza' )}}
-        </td>
-        <td>
-          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita" />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-    <tbody>
-      <tr class="Rigaintestazioneridotta">
-        <td colspan="6">
-          <p class="Labelcella">Residenza</p>
-        </td>
-      </tr>
-      <tr class="Rigaintestazioneridotta">
-        <td style="width:9%;">
-          <p class="Labelcella">Provincia</p>
-        </td>
-        <td style="width:33%;">
-          <p class="Labelcella">Comune</p>
-        </td>
-        <td style="width:33%;">
-          <p class="Labelcella">Indirizzo</p>
-        </td>
-        <td style="width:9%;">
-          <p class="Labelcella">Civico</p>
-        </td>
-        <td style="width:9%;">
-          <p class="Labelcella">Barra</p>
-        </td>
-        <td style="width:16%;">
-          <p class="Labelcella">CAP</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza") }}
-        </td>
-        <td>
-          <input class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza"  mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="width:100%" label="Comune di residenza"/>
-        </td>
-        <td>
-          <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza"  mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="width:100%;" label="Via di residenza" maxlength="40"/>
-        </td>
-        <td>
-          <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza"  mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()" format="number" style="width:100%;" label="Civico di residenza" maxlength="10"/>
-        </td>
-        <td>
-          <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3"/>
-        </td>
-        <td>
-          <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza"  mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="width:100%;" format="cap" label="CAP di residenza" />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <input id="{{ prefix }}_DatiPersonaObbligatori" name="{{ prefix }}_DatiPersonaObbligatori" dynamic_check="true" type="hidden" />
-  <input id="{{ prefix }}_CodiceFamiglia" name="{{ prefix }}_CodiceFamiglia" type="hidden"/>
-  <input id="{{ prefix }}_CodiceVia" name="{{ prefix }}_CodiceVia" type="hidden"/>
-  <input id="{{ prefix }}_CFBambino" name="{{ prefix }}_CFBambino" type="hidden"/>
-  <input id="{{ prefix }}_MatricolaAnagrafe" name="{{ prefix }}_MatricolaAnagrafe" type="hidden"/>
-  <input id="{{ prefix }}_Nazionalita" name="{{ prefix }}_Nazionalita" type="hidden"/>
-  <input id="{{ prefix }}_Nazione" name="{{ prefix }}_Nazione" type="hidden"/>
-  <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="hidden"/>
-  <input id="{{ prefix }}_Paternita" name="{{ prefix }}_Paternita" type="hidden"/>
-  <input id="{{ prefix }}_Maternita" name="{{ prefix }}_Maternita" type="hidden"/>
-</div>
-{%- endmacro %}
-
 
 {% block content %}
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
-<input dynamic_value="'Iscrizione nido del bambino ' + #Bambino_CFBambino.value().toUpperCase()" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="'Variazione domanda di iscrizione al nido del bambino ' + #Bambino_CFBambino.value().toUpperCase()" id="Oggetto" name="Oggetto" type="hidden"/>
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
-<h2 class="Modulo">
-  Richiesta di iscrizione al nido d'infanzia anno educativo 2019/2020
-</h2>
-<p class="Modulo simpatico-text-paragraph">
-  Ai sensi del regolamento per la disciplina del sistema dei servizi socio educativi per la prima infanzia approvato con deliberazione del Consiglio comunale 28/06/2007, n.70 e s.m. e dei <i>"Criteri e modalità di presentazione delle domande, formazione delle graduatorie, assegnazione e accettazione del posto nei nidi d’infanzia comunali"</i>, deliberazione della Giunta comunale 28/08/2018 n. 154
-</p>
+<div class="simpatico-block simpatico-query-and-answer">
+<h2 class="Modulo">Richiesta di iscrizione al nido d'infanzia anno educativo 2019/2020</h2>
+<h2 class="Modulo">Variazione della domanda presentata da: <input class="inputNormal" id="Richiedente_variazione" name="Richiedente_variazione" style="width: 30%;" label="Richiedente della domanda" dynamic_value="#Parametri_RichDomValFT.value() != '' ? #Parametri_RichDomValFT.value() : #Parametri_RichDomValPT.value()" readonly> &nbsp; il: <input class="inputNormal" id="Data_domanda_orig" name="Data_domanda_orig" style="width: 12%;" label="Data della domanda" dynamic_value="#Parametri_DataDomValFT.value() != '' ? #Parametri_DataDomValFT.value() : #Parametri_DataDomValPT.value()" readonly></h2>
+  
+<br> 
+
+<p class="Modulo simpatico-text-paragraph">Ai sensi del regolamento per la disciplina del sistema dei servizi socio educativi per la prima infanzia approvato con deliberazione del Consiglio comunale 28/06/2007, n.70 e s.m. e dei <i>"Criteri e modalità di presentazione delle domande, formazione delle graduatorie, assegnazione e accettazione del posto nei nidi d’infanzia comunali"</i>, deliberazione della Giunta comunale 28/08/2018 n. 154</p>
 
 <br>
 
-
-{% macro persona_fisicaTrento( prefix='AventeTitolo', intestazione="Il sottoscritto", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", visibility_residenza="visibility:visibility", visibility_mail="no_mail", carica_campi="", cf_obbligatorio="true", format_telefono_numerico="false", pec_obbligatoria ="false"  ) -%}
-{% do all_prefix.append( prefix ) %}
-
-<div type="Anagrafica_persona_fisica">
-
-  <!-- simpatico start -->
-  <div class="simpatico-block simpatico-query-and-answer">
-  <!-- simpatico end -->
-
-    <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
-      <tbody>
-        <tr class="Rigaintestazione">
-          <td style="border-right:0px">
-            <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}
-  					</p>
-          </td>
-  				<td style="width:20%; border-left:0px; border-right:0px">
-            <p class="Labeltabella">{{ carica_campi|safe }}</p>
-          </td>
-  				<td style="width:30%; {{ pointer_carica_dati }}; border-left:0px; border-right:0px">
-  					<span style="pd4ml-visibility: hidden; pd4ml-display: none;">
-  						{{ utils.recupero_dati( prefix, visibility_carica_dati ) }}
-  					</span>
-          </td>
-        </tr>
-      </tbody>
-
-      {{ service.getPersonaREST( 'AventeTitolo_CodiceFiscale','TipoContesto', 'TipoLista',  {
-        'AventeTitolo_DataNascita':  'datanascita',
-        'AventeTitolo_Nome':  'nome',
-        'AventeTitolo_Cognome':  'cognome',
-        'AventeTitolo_Sesso':  'sesso',
-        'AventeTitolo_Nazionalita':  'stato',
-        'AventeTitolo_Cittadinanza':  'nazionalita',
-        'AventeTitolo_CodiceFamiglia':  'codiceFamiglia',
-        'AventeTitolo_CodiceVia':  'codiceVia',
-        'AventeTitolo_ProvinciaResidenza' : 'provincia',
-        'AventeTitolo_ComuneResidenza' : 'citta',
-        'AventeTitolo_ViaResidenza' : 'indirizzo',
-        'AventeTitolo_CivicoResidenza' : 'numeroCivico',
-        'AventeTitolo_BarraResidenza' : 'barra',
-        'AventeTitolo_CAPResidenza' : 'cap',
-        'AventeTitolo_Nazione' : 'nazione',
-        'AventeTitolo_LuogoNascita' : 'comuneNascita',
-        'AventeTitolo_CodiceComuneNascita' : 'codiceComuneNascita',
-        'AventeTitolo_MatricolaAnagrafe' : 'matricola',
-      },
-      '#AventeTitolo_CodiceFiscale:change','true') }}
-    </table>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
-      <tbody>
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
         <tr class="Rigaintestazioneridotta">
-          <td colspan="2">
-            <p class="Labelcella">Cognome</p>
-          </td>
-          <td>
-            <p class="Labelcella">Nome</p>
-          </td>
-          <td>
-            <p class="Labelcella">Codice Fiscale</p>
-          </td>
+            <td colspan="2">
+                <p class="Labelcella">Cognome</p>
+            </td>
+            <td>
+                <p class="Labelcella">Nome</p>
+            </td>
+            <td>
+                <p class="Labelcella">Codice Fiscale</p>
+            </td>
         </tr>
         <tr>
-          <td colspan="2">
-            <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome"/>
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome"/>
-          </td>
-          {% if cf_obbligatorio == 'true' %}
-          <td>
-            <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale"/>
-          </td>
-          {% endif %}
-  				{% if cf_obbligatorio == 'false' %}
-          <td>
-            <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory="!#{{ prefix }}_ProvinciaResidenza.check_value(['EE'])"/>
-          </td>
-  				{% endif %}
+            <td colspan="2">
+                <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome" readonly/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome" readonly/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Codice fiscale" readonly/>
+            </td>
         </tr>
         <tr class="Rigaintestazioneridotta">
-          <td style="width:24%;">
-            <p class="Labelcella">Data di nascita</p>
-          </td>
-          <td style="width:9%;">
-            <p class="Labelcella">Sesso (M/F)</p>
-          </td>
-          <td style="width: 33%;">
-            <p class="Labelcella">Nazionalità</p>
-          </td>
-          <td style="width: 34%;">
-            <p class="Labelcella">Luogo di nascita</p>
-          </td>
+            <td style="width:24%;">
+                <p class="Labelcella">Data di nascita</p>
+            </td>
+            <td style="width:9%;">
+                <p class="Labelcella">Sesso (M/F)</p>
+            </td>
+            <td style="width: 33%;">
+                <p class="Labelcella">Nazionalità</p>
+            </td>
+            <td style="width: 34%;">
+                <p class="Labelcella">Luogo di nascita</p>
+            </td>
         </tr>
         <tr>
-          <td>
-            <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita"/>
-          </td>
-          <td>
-            <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso">
-              <option value=""></option>
-              <option value="M">M</option>
-              <option value="F">F</option>
-            </select>
-          </td>
-          <td>
-            {{ utils.stato( prefix + '_Nazionalita', label='Nazionalità')}}
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita"/>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    {% if visibility_residenza == 'visibility:visibility' %}
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px; {{ visibility_residenza }} ">
-      <tbody>
-        <tr class="Rigaintestazioneridotta">
-          <td colspan="6">
-            <p class="Labelcella">Residenza</p>
-          </td>
-        </tr>
-        <tr class="Rigaintestazioneridotta">
-          <td style="width:9%;">
-            <p class="Labelcella">Provincia</p>
-          </td>
-          <td style="width:33%;">
-            <p class="Labelcella">Comune</p>
-          </td>
-          <td style="width:33%;">
-            <p class="Labelcella">Indirizzo</p>
-          </td>
-          <td style="width:9%;">
-            <p class="Labelcella">Civico</p>
-          </td>
-  				<td style="width:9%;">
-            <p class="Labelcella">Barra</p>
-          </td>
-          <td style="width:16%;">
-            <p class="Labelcella">CAP</p>
-          </td>
+            <td>
+                <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita" readonly/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso" readonly/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_Nazionalita" name="AventeTitolo_Nazionalita" style="width:100%;" label="Nazionalità" readonly/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita" readonly/>
+            </td>
         </tr>
         <tr>
-          <td>
-            {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza") }}
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
-          </td>
-  				<td>
-            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3"/>
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked() and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'"/>
-          </td>
+            <td colspan="4">
+                <textarea class="inputNormal" id="no_mod_blocco_1" name="no_mod_blocco_1" dynamic_value="'ATTENZIONE! Non è possibile apportare modifiche ai campi soprastanti. Qualora fosse invece necessario modificare tali dati, si prega di prendere appuntamento con il Servizio Istruzione per la gestione delle modifiche.'" style="width:100%;" readonly></textarea>
+            </td>
         </tr>
-      </tbody>
-    </table>
-    {% endif %}
-    {% if visibility_mail == 'mail_ordinaria' %}
-  	<table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
-  		<tbody>
-  			<tr class="Rigaintestazioneridotta">
-  				<td style="width:16.5%;">
-  					<p class="Labelcella">
-  						Numero cellulare
-  					</p>
-  				</td>
-  				<td style="width:16.5%;">
-  					<p class="Labelcella">
-  						Fax
-  					</p>
-  				</td>
-  				<td style="width:33%;">
-  					<p class="Labelcella">
-  						E-mail
-  							<i>
-  								(posta elettronica ordinaria)
-  							</i>
-  					</p>
-  				</td>
-  				<td>
-  					<p class="Labelcella">
-  						E-mail PEC
-  							<i>
-  							(domicilio digitale)
-  							</i>
-  					</p>
-  				</td>
-  			</tr>
-  			<tr>
-  				{% if format_telefono_numerico == 'false'%}
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono" name="{{ prefix }}_Telefono" style="width:100%" maxlength="13"/>
-  				</td>
-  				{% endif %}
-  				{% if format_telefono_numerico == 'true'%}
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono" name="{{ prefix }}_Telefono" style="width:100%" format="number" maxlength="13"/>
-  				</td>
-  				{% endif %}
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Fax" label="Fax" mandatory="false" name="{{ prefix }}_Fax" style="width:100%" maxlength="13"/>
-  				</td>
-  				<td>
-  					<input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria" mandatory="true" name="{{ prefix }}_EMail" style="width:100%;" maxlength="60"/>
-  				</td>
-  				<td>
-  				{% if pec_obbligatoria == 'true'%}
-  					<input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory="true" maxlength="60"/>
-  				{% endif %}
-  				{% if pec_obbligatoria == 'false'%}
-  					<input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory="false" maxlength="60"/>
-  				{% endif %}
-  				</td>
-  			</tr>
-  		</tbody>
-    </table>
-    {% endif %}
-  	{% if visibility_mail == 'mail_pec'%}
-  	<table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
-  		<tbody>
-  			<tr class="Rigaintestazioneridotta">
-  				<td style="width:21%;">
-  					<p class="Labelcella">
-  						Telefono
-  					</p>
-  				</td>
-  				<td style="width:21%;">
-  					<p class="Labelcella">
-  						Fax
-  					</p>
-  				</td>
-  				<td>
-  					<p class="Labelcella">
-  						E-mail PEC
-  							<i>
-  								(domicilio digitale)
-  							</i>
-  					</p>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono" name="{{ prefix }}_Telefono" style="width:100%" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
-  				</td>
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Fax" label="Fax" enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" name="{{ prefix }}_Fax" style="width:100%"/>
-  				</td>
-  				<td>
-  					<input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del dichiarante" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" maxlength="60"/>
-  				</td>
-  			</tr>
-  		</tbody>
-  	</table>
-    {% endif %}
+    </tbody>
+</table>
 
-  <!-- simpatico start -->
-  </div>
-  <!--  simpatico end -->
+<br>
 
-</div>
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+    <tbody>
+        <tr class="Rigaintestazioneridotta">
+            <td colspan="6">
+                <p class="Labelcella">Residenza</p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td style="width:9%;">
+                <p class="Labelcella">Provincia</p>
+            </td>
+            <td style="width:33%;">
+                <p class="Labelcella">Comune</p>
+            </td>
+            <td style="width:33%;">
+                <p class="Labelcella">Indirizzo</p>
+            </td>
+            <td style="width:9%;">
+                <p class="Labelcella">Civico</p>
+            </td>
+            <td style="width:9%;">
+                <p class="Labelcella">Barra</p>
+            </td>
+            <td style="width:16%;">
+                <p class="Labelcella">CAP</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ utils.provincie('AventeTitolo_ProvinciaResidenza', label="Provincia di residenza") }}
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_ComuneResidenza" name="AventeTitolo_ComuneResidenza" style="width:100%" label="Comune di residenza" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_ViaResidenza" name="AventeTitolo_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_BarraResidenza" name="AventeTitolo_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_CAPResidenza" name="AventeTitolo_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#AventeTitolo_CodiceFiscale.value() != '' and #AventeTitolo_ProvinciaResidenza.value() != 'EE'"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-<input id="AventeTitolo_DatiPersonaObbligatori" name="AventeTitolo_DatiPersonaObbligatori" dynamic_check="true" type="hidden" />
-<input id="AventeTitolo_Titolo" name="AventeTitolo_Titolo" type="hidden" value="" />
-<input id="AventeTitolo_Ruolo" name="AventeTitolo_Ruolo" type="hidden" value="" />
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+    <tbody>
+        <tr class="Rigaintestazioneridotta">
+            <td style="width:16.5%;">
+                <p class="Labelcella">Numero cellulare</p>
+            </td>
+            <td style="width:16.5%;">
+                <p class="Labelcella">Fax</p>
+            </td>
+            <td style="width:33%;">
+                <p class="Labelcella">E-mail <i>(posta elettronica ordinaria)</i></p>
+            </td>
+            <td>
+                <p class="Labelcella">E-mail PEC <i>(domicilio digitale)</i></p>
+            </td>
+        </tr>
+        <tr>
+			<td>
+                <input class="" id="AventeTitolo_Telefono" name="AventeTitolo_Telefono" label="Telefono" style="width:100%" maxlength="13" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_Fax" name="AventeTitolo_Fax" label="Fax" style="width:100%" maxlength="13" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_EMail" name="AventeTitolo_EMail" label="E-mail ordinaria" style="width:100%;" format="email" maxlength="60" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="AventeTitolo_EMailPEC" name="AventeTitolo_EMailPEC" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<input type="hidden" id="AventeTitolo_Titolo" name="AventeTitolo_Titolo" value="" />
+<input type="hidden" id="AventeTitolo_Ruolo" name="AventeTitolo_Ruolo"  value="" />
 <input type="hidden" id="AventeTitolo_CodiceFamiglia" name="AventeTitolo_CodiceFamiglia"/>
 <input type="hidden" id="AventeTitolo_CodiceVia" name="AventeTitolo_CodiceVia"/>
 <input type="hidden" id="AventeTitolo_MatricolaAnagrafe" name="AventeTitolo_MatricolaAnagrafe"/>
 <input type="hidden" id="AventeTitolo_Nazione" name="AventeTitolo_Nazione"/>
 <input type="hidden" id="AventeTitolo_CodiceComuneNascita" name="AventeTitolo_CodiceComuneNascita"/>
-{%- endmacro %}
 
-{{ persona_fisicaTrento( "AventeTitolo", "ll sottoscritto genitore/tutore/affidatario ", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria") }}
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione" >
-      <td colspan="3">
-        <b>in qualità di</b>
-      </td>
-      <tr>
-        <td colspan="3">
-          <select class="inputNormal" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" mandatory_enabled="true" label="Ruolo del genitore/affidatario">
-            <option value=""></option>
-            <option value="padre">Padre</option>
-            <option value="madre">Madre</option>
-          </select>
-        </td>
-      </tr>
-  </tbody>
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_1" name="modifiche_blocco_1" label="Elencare le modifiche effettuate al blocco anagrafica del genitore" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
 </table>
-
-<br>
-
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazioneridotta">
-      <td colspan="3">
-        <p>
-          <b>
-            del bambino/a
-          </b>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <div id="Tassonomia_CF" name="Tassonomia_CF" label="Codice fiscale bambino"> </div>
-          <input id="Tassonomia_CF1" name="Tassonomia_CF" type="radio" value="1" enabled="true"/>
-      </td>
-      <td style="width:60%;">
-        <p><b>appartenente</b> al mio nucleo familiare</p>
-      </td>
-      <td style="width:36%;">
-        {{ service.getListaFamigliaREST(
-          'AventeTitolo_CodiceFamiglia',
-          'Tassonomia_ListaFam1',
-          '#AventeTitolo_CodiceFamiglia:change'
-        )}}
-        <select
-          enabled="#Tassonomia_CF1.checked()"
-          class="inputNormal"
-          id="Tassonomia_ListaFam1"
-          name="Tassonomia_ListaFam1"
-          style="width:100%;"
-          label="Scelta da lista familiari">
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Tassonomia_CF2" name="Tassonomia_CF" type="radio" value="2"/>
-      </td>
-      <td style="width:60%;">
-        <p><b>NON appartenente</b> al mio nucleo familiare e avente codice fiscale:</p>
-      </td>
-      <td style="width:36%;">
-        <input class="inputNormal" id="Parametri_CFBambino" name="Parametri_CFBambino" format="cf" label="Codice fiscale del bambino" mandatory_enabled="#Tassonomia_CF2.checked()" style="width:100%;">
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Tassonomia_CF3" name="Tassonomia_CF" type="radio" value="3" enabled="true"/>
-      </td>
-      <td colspan="2">
-        <p>non ancora in possesso di codice fiscale perchè in corso di iscrizione all'anagrafe<br><b>Si prega di prendere appuntamento con il Servizio Istruzione per la gestione della domanda</b></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-
-<!-- simpatico add start -->
-<div class="simpatico-block simpatico-query-and-answer">
-<!-- simpatico add end -->
-  {{ anagrafica_bambino('Bambino', 'Anagrafica del/la bambino/a') }}
-  <input name="SvCodiceFamiglia" id="SvCodiceFamiglia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFamiglia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceFamiglia.value() : 0)" >
-  <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceVia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceVia.value() : 0 )" >
-  <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CivicoResidenza.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CivicoResidenza.value() : 0 )" format="number">
-  <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
-  <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
-
-  <input id="check_CFBambino" name="check_CFBambino" type="hidden" label="ATTENZIONE! Il codice fiscale del bambino non risulta essere stato ancora convalidato dall'Agenzia delle Entrate" dynamic_value="#Bambino_CFBambino.value() == '' ? '' : 'OK'" mandatory="true"/>
-
-
-  <!-- simpatico add start -->
 </div>
-  <!-- simpatico add end -->
 
 <br>
 
-<!-- simpatico add start -->
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione" >
+            <td colspan="3">
+                <b>in qualità di</b>
+            </td>
+        <tr>
+            <td colspan="3">
+                <input class="inputNormal" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" label="Ruolo del genitore/affidatario" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <input class="inputNormal" id="no_mod_blocco_2" name="no_mod_blocco_2" dynamic_value="'ATTENZIONE! Non è possibile apportare modifiche al ruolo del genitore richiedente'" style="width:100%;" readonly/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- simpatico add end -->
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazioneridotta">
+            <td colspan="3">
+                <p><b>del bambino/a</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Tassonomia_CF" name="Tassonomia_CF" label="Codice fiscale bambino"> </div>
+                <input id="Tassonomia_CF1" name="Tassonomia_CF" type="radio" value="1" enabled="true"/>
+            </td>
+            <td style="width:60%;">
+                <p><b>appartenente</b> al mio nucleo familiare e avente codice fiscale:</p>
+            </td>
+            <td style="width:36%;">
+                <input class="inputNormal" id="Tassonomia_ListaFam1" name="Tassonomia_ListaFam1" style="width:100%;" label="Scelta da lista familiari" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tassonomia_CF2" name="Tassonomia_CF" type="radio" value="2"/>
+            </td>
+            <td style="width:60%;">
+                <p><b>NON appartenente</b> al mio nucleo familiare e avente codice fiscale:</p>
+            </td>
+            <td style="width:36%;">
+                <input class="inputNormal" id="Parametri_CFBambino" name="Parametri_CFBambino" format="cf" label="Codice fiscale del bambino" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tassonomia_CF3" name="Tassonomia_CF" type="radio" value="3" enabled="true"/>
+            </td>
+            <td colspan="2">
+                <p>non ancora in possesso di codice fiscale perchè in corso di iscrizione all'anagrafe<br><b>Si prega di prendere appuntamento con il Servizio Istruzione per la gestione della domanda</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <textarea class="inputNormal" id="no_mod_blocco_3" name="no_mod_blocco_3" dynamic_value="'ATTENZIONE! Non è possibile apportare modifiche in questo blocco. Qualora fosse invece necessario effettuare una modifica, si prega di prendere appuntamento con il Servizio Istruzione per la gestione della variazione.'" style="width:100%;" readonly></textarea>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+        <tr class="Rigaintestazioneridotta">
+            <td colspan="2">
+                <p class="Labelcella">Cognome</p>
+            </td>
+            <td colspan="2">
+                <p class="Labelcella">Nome</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input class="" id="Bambino_Cognome" name="Bambino_Cognome" style="width:100%" label="Cognome" readonly/>
+            </td>
+            <td colspan="2">
+                <input class="" id="Bambino_Nome" name="Bambino_Nome" style="width:100%" label="Nome" readonly/>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td style="width:24%;">
+                <p class="Labelcella">Data di nascita</p>
+            </td>
+            <td style="width:9%;">
+                <p class="Labelcella">Sesso (M/F)</p>
+            </td>
+            <td style="width: 33%;">
+                <p class="Labelcella">Cittadinanza</p>
+            </td>
+            <td style="width: 34%;">
+                <p class="Labelcella">Luogo di nascita</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="" id="Bambino_DataNascita" name="Bambino_DataNascita" style="width:100%;" format="date" label="Data di nascita" readonly/>
+            </td>
+            <td>
+                <input class="" id="Bambino_Sesso" name="Bambino_Sesso" style="width:100%;" label="Sesso" readonly/>
+            </td>
+            <td>
+                <input class="" id="Bambino_Cittadinanza" name="Bambino_Cittadinanza" style="width:100%;" label="Cittadinanza" readonly/>
+            </td>
+            <td>
+                <input class="" id="Bambino_LuogoNascita" name="Bambino_LuogoNascita" style="width:100%;" label="Luogo di nascita" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <textarea class="inputNormal" id="no_mod_blocco_4" name="no_mod_blocco_4" dynamic_value="'ATTENZIONE! Non è possibile apportare modifiche ai campi soprastanti. Qualora fosse invece necessario modificare tali dati, si prega di prendere appuntamento con il Servizio Istruzione per la gestione delle modifiche.'" style="width:100%;" readonly></textarea>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+        <tr class="Rigaintestazioneridotta">
+            <td colspan="6">
+                <p class="Labelcella">Residenza</p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td style="width:9%;">
+                <p class="Labelcella">Provincia</p>
+            </td>
+            <td style="width:33%;">
+                <p class="Labelcella">Comune</p>
+            </td>
+            <td style="width:33%;">
+                <p class="Labelcella">Indirizzo</p>
+            </td>
+            <td style="width:9%;">
+                <p class="Labelcella">Civico</p>
+            </td>
+            <td style="width:9%;">
+                <p class="Labelcella">Barra</p>
+            </td>
+            <td style="width:16%;">
+                <p class="Labelcella">CAP</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ utils.provincie('Bambino_ProvinciaResidenza', label="Provincia di residenza") }}
+            </td>
+            <td>
+                <input class="" id="Bambino_ComuneResidenza" name="Bambino_ComuneResidenza" style="width:100%" label="Comune di residenza" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="Bambino_ViaResidenza" name="Bambino_ViaResidenza" style="width:100%;" label="Via di residenza" maxlength="40" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="Bambino_CivicoResidenza" name="Bambino_CivicoResidenza" format="number" style="width:100%;" label="Civico di residenza" maxlength="10" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="Bambino_BarraResidenza" name="Bambino_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" enabled="true"/>
+            </td>
+            <td>
+                <input class="" id="Bambino_CAPResidenza" name="Bambino_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<input id="Bambino_CodiceFamiglia" name="Bambino_CodiceFamiglia" type="hidden"/>
+<input id="Bambino_CodiceVia" name="Bambino_CodiceVia" type="hidden"/>
+<input id="Bambino_CFBambino" name="Bambino_CFBambino" type="hidden"/>
+<input id="Bambino_MatricolaAnagrafe" name="Bambino_MatricolaAnagrafe" type="hidden"/>
+<input id="Bambino_Nazionalita" name="Bambino_Nazionalita" type="hidden"/>
+<input id="Bambino_Nazione" name="Bambino_Nazione" type="hidden"/>
+<input id="Bambino_CodiceComuneNascita" name="Bambino_CodiceComuneNascita" type="hidden"/>
+<input id="Bambino_Paternita" name="Bambino_Paternita" type="hidden"/>
+<input id="Bambino_Maternita" name="Bambino_Maternita" type="hidden"/>
+
+<input name="SvCodiceFamiglia" id="SvCodiceFamiglia" type="hidden" dynamic_value="#Bambino_CodiceFamiglia.value()" >
+<input name="ProvaCodiceFamiglia" id="ProvaCodiceFamiglia" type="hidden" >
+<input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="#Bambino_CodiceVia.value()" >
+<input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="#Bambino_CivicoResidenza.value()" format="number">
+<input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="#Bambino_CFBambino.value()" >
+<input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
+<input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
+
+<input id="check_CFBambino" name="check_CFBambino" type="hidden" label="ATTENZIONE! Il codice fiscale del bambino non risulta essere stato ancora convalidato dall'Agenzia delle Entrate" dynamic_value="#Bambino_CFBambino.value() == '' ? '' : 'OK'" mandatory="true"/>
+
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_4" name="modifiche_blocco_4" label="Elencare le modifiche effettuate al blocco residenza del bambino da iscrivere" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
 
 <input type="hidden" name="TipoDomandaPartTime" id="TipoDomandaPartTime" value="PT">
 <input type="hidden" name="TipoDomandaFullTime" id="TipoDomandaFullTime" value="FT">
 
-{{ service.getDomandaAttiva('Parametri_CFBambino','TipoDomandaFullTime', {
- 'Parametri_TipoDomandaFT': 'tipoServizio',
- 'Parametri_NumeroDomandaValFT': 'idDomanda',
- 'Parametri_TipoOperazioneFT': 'tipoOperazione',
- 'Parametri_DataDomValFT': 'dtDomanda',
- 'Parametri_RichDomValFT': 'richiedente',
-},
-'#Parametri_CFBambino:change' ) }}
+<table class="Modulo" style="border: 0px">
+  <tbody>
+    <th colspan="6" style="background-color: #eeeeee;">
+      <button type="button" id="RecuperaDomandaNido">Recupera i dati della domanda di ammissione</button>
+      {{ service.getDomandaAttiva('Bambino_CFBambino','TipoDomandaFullTime', {
+        'Parametri_TipoDomandaFT': 'tipoServizio',
+        'Parametri_NumeroDomandaValFT': 'idDomanda',
+        'Parametri_TipoOperazioneFT': 'tipoOperazione',
+        'Parametri_DataDomValFT': 'dtDomanda',
+        'Parametri_RichDomValFT': 'richiedente',
+       },
+       '#RecuperaDomandaNido:click' ) }}
+         
+       {{ service.getDomandaAttiva('Bambino_CFBambino','TipoDomandaPartTime',   {
+        'Parametri_TipoDomandaPT': 'tipoServizio',
+        'Parametri_NumeroDomandaValPT': 'idDomanda',
+        'Parametri_TipoOperazionePT': 'tipoOperazione',
+        'Parametri_RichDomValPT': 'richiedente',
+        'Parametri_DataDomValPT': 'dtDomanda',
+       },
+       '#RecuperaDomandaNido:click' ) }}
 
-{{ service.getDomandaAttiva('Parametri_CFBambino','TipoDomandaPartTime',   {
- 'Parametri_TipoDomandaPT': 'tipoServizio',
- 'Parametri_NumeroDomandaValPT': 'idDomanda',
- 'Parametri_TipoOperazionePT': 'tipoOperazione',
- 'Parametri_RichDomValPT': 'richiedente',
- 'Parametri_DataDomValPT': 'dtDomanda',
-},
-'#Parametri_CFBambino:change' ) }}
-
-{{ service.getDomandaAttiva('Tassonomia_ListaFam1','TipoDomandaFullTime', {
- 'Parametri_TipoDomandaFT': 'tipoServizio',
- 'Parametri_NumeroDomandaValFT': 'idDomanda',
- 'Parametri_TipoOperazioneFT': 'tipoOperazione',
- 'Parametri_DataDomValFT': 'dtDomanda',
- 'Parametri_RichDomValFT': 'richiedente',
-},
-'#Tassonomia_ListaFam1:change' ) }}
-
-{{ service.getDomandaAttiva('Tassonomia_ListaFam1','TipoDomandaPartTime',   {
- 'Parametri_TipoDomandaPT': 'tipoServizio',
- 'Parametri_NumeroDomandaValPT': 'idDomanda',
- 'Parametri_TipoOperazionePT': 'tipoOperazione',
- 'Parametri_RichDomValPT': 'richiedente',
- 'Parametri_DataDomValPT': 'dtDomanda',
-},
-'#Tassonomia_ListaFam1:change' ) }}
+       {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile1', '#RecuperaDomandaNido:click', 'listaFam1') }}
+       {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile2', '#RecuperaDomandaNido:click', 'listaFam2') }}
+       {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile3', '#RecuperaDomandaNido:click', 'listaFam3') }}
+    </th>
+  </tbody>
+</table>
 
 <input type="hidden" id="Parametri_TipoDomandaFT" name="Parametri_TipoDomandaFT" />
 <input type="hidden" id="Parametri_NumeroDomandaValFT" name="Parametri_NumeroDomandaValFT"/>
@@ -809,22 +615,7 @@ M1876-ISCRIZIONE-NIDO
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 0px">
-  <tbody>
-    <th colspan="6">
-      <button type="button" id="RecuperaListaFam">Recupera dati famiglia</button>
-      {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile1', '#RecuperaListaFam:click', 'listaFam1') }}
-      {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile2', '#RecuperaListaFam:click', 'listaFam2') }}
-      {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile3', '#RecuperaListaFam:click', 'listaFam3') }}
-    </th>
-  </tbody>
-</table>
-
-<br>
-
-  <!--  simpatico start -->
 <div class="simpatico-block simpatico-query-and-answer">
-  <!--  simpatico end -->
 
   <p class="Modulo">Valendosi della facoltà prevista dagli articoli 46 e 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445,
     consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445
@@ -836,16 +627,13 @@ M1876-ISCRIZIONE-NIDO
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td colspan="7">
-          <b>che i componenti del nucleo familiare residenti</b>
-          <ul><li><b>con il bambino</b> (se il richiedente ha indicato il ruolo di padre/madre o di tutore/tutrice) </li>
-              <li><b>con il richiedente</b> (se quest'ultimo ha indicato il ruolo di affidatario/affidatario preadottivo)</li>
-          </ul>
-          <b>sono i seguenti</b><i> (indicando per ciascuno il grado di parentela rispetto al bambino da iscrivere)</i><b>:</b>
+          <b>che i componenti del nucleo familiare residenti con il bambino sono i seguenti</b><br>
+          <i> (indicando per ciascuno il grado di parentela rispetto al bambino da iscrivere)</i>
         </td>
       </tr>
 
       <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Familiari del bambino/a"> </div>
-      {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
+      {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Parametri_CFFam*', '#RecuperaDomandaNido:click', 'listaFamiglia1') }}
 
       {% macro Tassonomia_Familiare(prefix) %}
       {% set prefix = prefix|string %}
@@ -932,10 +720,21 @@ M1876-ISCRIZIONE-NIDO
       {% endfor %}
     </tbody>
   </table>
-
-  <!--  simpatico start -->
+  <table class="Modulo" style="border: 1px solid grey">
+        <tbody>
+            <tr class="Rigaintestazione ridotta">
+                <td>
+                    <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="inputNormal" id="modifiche_blocco_6" name="modifiche_blocco_6" label="Elencare le modifiche effettuate al blocco anagrafica nucleo familiare residenti con il bambino" style="width:100%;" enabled="true"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-  <!--  simpatico end -->
 
   <input class="inputNormal" type="hidden" id="Nominativo_Fam1" name="Nominativo_Fam1" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam1.value() + ',' + #Parametri_NomeFam1.value()">
   <input class="inputNormal" type="hidden" id="Nominativo_Fam2" name="Nominativo_Fam2" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam2.value() + ',' + #Parametri_NomeFam2.value()">
@@ -951,8 +750,8 @@ M1876-ISCRIZIONE-NIDO
   <input class="inputNormal" type="hidden" id="Nominativo_Fam12" name="Nominativo_Fam12" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam12.value() + ',' + #Parametri_NomeFam12.value()">
 
 <br>
-
-  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td colspan="8">
@@ -995,28 +794,28 @@ M1876-ISCRIZIONE-NIDO
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="Parametri_CognomeAltroFam1" name="Parametri_CognomeAltroFam1" style="width: 100%;" label="Cognome del familiare non residente" enabled="!#Tassonomia_CF3.checked() and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_Cognome.value() : ''">
+          <input class="inputNormal" id="Parametri_CognomeAltroFam1" name="Parametri_CognomeAltroFam1" style="width: 100%;" label="Cognome del familiare non residente" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_NomeAltroFam1" name="Parametri_NomeAltroFam1" style="width: 100%;" label="Nome del familiare non residente" enabled="!#Tassonomia_CF3.checked() and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_Nome.value() : ''">
+          <input class="inputNormal" id="Parametri_NomeAltroFam1" name="Parametri_NomeAltroFam1" style="width: 100%;" label="Nome del familiare non residente" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_CFAltroFam1" name="Parametri_CFAltroFam1" format="cf" style="width: 100%;" label="Codice fiscale del familiare non residente" enabled="!#Tassonomia_CF3.checked() and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_CodiceFiscale.value() : ''">
+          <input class="inputNormal" id="Parametri_CFAltroFam1" name="Parametri_CFAltroFam1" format="cf" style="width: 100%;" label="Codice fiscale del familiare non residente" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_SessoAltroFam1" name="Parametri_SessoAltroFam1" style="width:100%;" label="Sesso familiare non residente" enabled="!#Tassonomia_CF3.checked() and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_Sesso.value() : ''">
+          <input class="inputNormal" id="Parametri_SessoAltroFam1" name="Parametri_SessoAltroFam1" style="width:100%;" label="Sesso familiare non residente" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_LuogoNascitaAltroFam1" name="Parametri_LuogoNascitaAltroFam1" style="width: 100%;" label="Luogo di nascita del familiare non residente" enabled="!#Tassonomia_CF3.checked() and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_LuogoNascita.value() : ''">
+          <input class="inputNormal" id="Parametri_LuogoNascitaAltroFam1" name="Parametri_LuogoNascitaAltroFam1" style="width: 100%;" label="Luogo di nascita del familiare non residente" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_DataNasAltroFam1" name="Parametri_DataNasAltroFam1" format="date" style="width: 100%;" label="Data di nascita del familiare non residente" enabled="!#Tassonomia_CF3.checked() and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_DataNascita.value() : ''">
+          <input class="inputNormal" id="Parametri_DataNasAltroFam1" name="Parametri_DataNasAltroFam1" format="date" style="width: 100%;" label="Data di nascita del familiare non residente" readonly>
         </td>
         <td>
-          <input class="inputNormal" style="width: 100%;" id="Parametri_GradoParAltroFam1" name="Parametri_GradoParAltroFam1" enabled="(#Parametri_CognomeAltroFam1.value() != '' || #Parametri_NomeAltroFam1.value() != '' || #Parametri_CFAltroFam1.value() != '')"  dynamic_value="switch(#AventeTitolo_RuoloRichiedente.value()) { case 'padre': 'P'; break; case 'madre': 'M'; break;}">
+          <input class="inputNormal" style="width: 100%;" id="Parametri_GradoParAltroFam1" name="Parametri_GradoParAltroFam1" readonly>
         </td>
         <td>
-          <input class="inputNormal" id="GradoParAltroFam1" name="GradoParAltroFam1" style="width: 100%;" label="Grado parentela altro familiare" enabled="(#Parametri_CognomeAltroFam1.value() != '' || #Parametri_NomeAltroFam1.value() != '' || #Parametri_CFAltroFam1.value() != '')" dynamic_value="#AventeTitolo_RuoloRichiedente.value()" readonly>
+          <input class="inputNormal" id="GradoParAltroFam1" name="GradoParAltroFam1" style="width: 100%;" label="Grado parentela altro familiare" readonly>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta">
@@ -1041,22 +840,22 @@ M1876-ISCRIZIONE-NIDO
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="Parametri_ProvinciaResidenzaAltroFam1" name="Parametri_ProvinciaResidenzaAltroFam1" style="width:100%" label="Provincia di residenza_extnucleo" enabled="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_ProvinciaResidenza.value() :  ''">
+          <input class="inputNormal" id="Parametri_ProvinciaResidenzaAltroFam1" name="Parametri_ProvinciaResidenzaAltroFam1" style="width:100%" label="Provincia di residenza_extnucleo" readonly/>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_ComuneResidenzaAltroFam1" name="Parametri_ComuneResidenzaAltroFam1" style="width:100%" label="Comune di residenza_extnucleo" enabled="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_ComuneResidenza.value() : ''">
+          <input class="inputNormal" id="Parametri_ComuneResidenzaAltroFam1" name="Parametri_ComuneResidenzaAltroFam1" style="width:100%" label="Comune di residenza_extnucleo" readonly/>
         </td>
         <td colspan="3">
-          <input class="inputNormal" id="Parametri_ViaResidenzaAltroFam1" name="Parametri_ViaResidenzaAltroFam1" style="width:100%;" maxlength="40" label="Via di residenza_extnucleo" enabled="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_ViaResidenza.value() : ''"/>
+          <input class="inputNormal" id="Parametri_ViaResidenzaAltroFam1" name="Parametri_ViaResidenzaAltroFam1" style="width:100%;" maxlength="40" label="Via di residenza_extnucleo" readonly/>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_CivicoResidenzaAltroFam1" name="Parametri_CivicoResidenzaAltroFam1" style="width:100%;" format="number" label="Civico di residenza_extnucleo" enabled="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_CivicoResidenza.value() : ''"/>
+          <input class="inputNormal" id="Parametri_CivicoResidenzaAltroFam1" name="Parametri_CivicoResidenzaAltroFam1" style="width:100%;" format="number" label="Civico di residenza_extnucleo" readonly/>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_BarraResidenzaAltroFam1" name="Parametri_BarraResidenzaAltroFam1" style="width:100%;" maxlength="3" label="Barra di residenza_extnucleo" enabled="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_BarraResidenza.value() : ''"/>
+          <input class="inputNormal" id="Parametri_BarraResidenzaAltroFam1" name="Parametri_BarraResidenzaAltroFam1" style="width:100%;" maxlength="3" label="Barra di residenza_extnucleo" readonly/>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_CAPResidenzaAltroFam1" name="Parametri_CAPResidenzaAltroFam1" format="cap" style="width:100%;" maxlength="5" label="CAP di residenza_extnucleo" enabled="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="#AventeTitolo_RuoloRichiedente.check_value([ 'madre','padre']) and #AventeTitolo_CodiceFamiglia.value() != #Bambino_CodiceFamiglia.value() ? #AventeTitolo_CAPResidenza.value() : ''"/>
+          <input class="inputNormal" id="Parametri_CAPResidenzaAltroFam1" name="Parametri_CAPResidenzaAltroFam1" format="cap" style="width:100%;" maxlength="5" label="CAP di residenza_extnucleo" readonly/>
         </td>
       </tr>
       <tr>
@@ -1185,6 +984,21 @@ M1876-ISCRIZIONE-NIDO
       {% endfor %}
     </tbody>
   </table>
+  <table class="Modulo" style="border: 1px solid grey">
+        <tbody>
+            <tr class="Rigaintestazione ridotta">
+                <td>
+                    <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="inputNormal" id="modifiche_blocco_7" name="modifiche_blocco_7" label="Elencare le modifiche effettuate al blocco anagrafica nucleo familiare non residenti con il bambino" style="width:100%;" enabled="true"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
   <input class="inputNormal" type="hidden" id="Nominativo_AltroFam1" name="Nominativo_AltroFam1" label="Nominativo_AltroFamiliare" dynamic_value="#Parametri_CognomeAltroFam1.value() + ',' + #Parametri_NomeAltroFam1.value()">
   <input class="inputNormal" type="hidden" id="Nominativo_AltroFam2" name="Nominativo_AltroFam2" label="Nominativo_AltroFamiliare" dynamic_value="#Parametri_CognomeAltroFam2.value() + ',' + #Parametri_NomeAltroFam2.value()">
@@ -1215,7 +1029,8 @@ M1876-ISCRIZIONE-NIDO
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo " style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione" >
       <td colspan="2">
@@ -1241,12 +1056,24 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
-
+<table class="Modulo" style="border: 1px solid grey">
+        <tbody>
+            <tr class="Rigaintestazione ridotta">
+                <td>
+                    <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="inputNormal" id="modifiche_blocco_8" name="modifiche_blocco_8" label="Elencare le modifiche effettuate al blocco scelta ICEF" style="width:100%;" enabled="true"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <br>
 
-  <!-- simpatico start -->
 <div class="simpatico-block simpatico-query-and-answer">
-  <!-- simpatico end -->
 
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
@@ -1255,16 +1082,18 @@ M1876-ISCRIZIONE-NIDO
           <b>Situazione ICEF</b>
         </td>
       </tr>
-
-      {{ service.getIcef('Bambino_CFBambino',
-      {
-      'Parametri_CFDichiaranteICEF': 'codiceFiscaleRichiedente',
-      'Parametri_NomeDichiaranteICEF': 'nomeRichiedente',
-      'Parametri_CognomeDichiaranteICEF': 'cognomeRichiedente',
-      'Parametri_CoefficienteICEF': 'coefficienteIcef',
-      'Parametri_DataCalcolo': 'dataCalcolo',
-      },
-      '#Tassonomia_ICEF1:change')}}
+      <th colspan="6" style="background-color: #eeeeee;">
+            <button type="button" id="RicalcoloICEF">Ricalcola ICEF</button>
+            {{ service.getIcef('SvCFBambino',
+            {
+            'Parametri_CFDichiaranteICEF': 'codiceFiscaleRichiedente',
+            'Parametri_NomeDichiaranteICEF': 'nomeRichiedente',
+            'Parametri_CognomeDichiaranteICEF': 'cognomeRichiedente',
+            'Parametri_CoefficienteICEF': 'coefficienteIcef',
+            'Parametri_DataCalcolo': 'dataCalcolo',
+            },
+            '#RicalcoloICEF:change')}}
+          </th>
 
       <tr>
         <td style="vertical-align: top; width: 4%;" rowspan="6">
@@ -1422,16 +1251,25 @@ M1876-ISCRIZIONE-NIDO
       </tr>
     </tbody>
   </table>
-
-
-    <!-- simpatico start -->
+  <table class="Modulo" style="border: 1px solid grey">
+        <tbody>
+            <tr class="Rigaintestazione ridotta">
+                <td>
+                    <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="inputNormal" id="modifiche_blocco_9" name="modifiche_blocco_9" label="Elencare le modifiche effettuate al blocco valore ICEF" style="width:100%;" enabled="true"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-  <!-- simpatico end -->
+
 <br>
 
-<!-- simpatico add start -->
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- simpatico add end -->
 
 <h2 class="Modulo">CHIEDE</h2>
 
@@ -1443,7 +1281,7 @@ M1876-ISCRIZIONE-NIDO
   <tbody>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input group="Tassonomia_TipoServizioFP" id="Tassonomia_FullTime" name="Tassonomia_FullTime" type="checkbox" value="FT" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()"/>
+        <input group="Tassonomia_TipoServizioFP" id="Tassonomia_FullTime" name="Tassonomia_FullTime" type="checkbox" value="FT" dynamic_check="#Parametri_TipoDomandaFT.value() != ''"/>
       </td>
       <td>
         <p>Tempo pieno</p>
@@ -1451,7 +1289,7 @@ M1876-ISCRIZIONE-NIDO
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input group="Tassonomia_TipoServizioFP" id="Tassonomia_PartTime" name="Tassonomia_PartTime" type="checkbox" value="PT" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()"/>
+        <input group="Tassonomia_TipoServizioFP" id="Tassonomia_PartTime" name="Tassonomia_PartTime" type="checkbox" value="PT" dynamic_check="#Parametri_TipoDomandaPT.value() != ''"/>
       </td>
       <td>
         <p>Tempo parziale</p>
@@ -1459,36 +1297,30 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
-
-<!-- simpatico add start -->
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td>
+        <input class="inputNormal" id="controllo_val_domanda" name="controllo_val_domanda" label="Errore nel tipo di variazione richiesta" style="width:100%;" dynamic_value="#Parametri_TipoDomandaFT.value() == '' and #Tassonomia_FullTime.checked() ? 'ATTENZIONE: Per l’iscrizione a tempo pieno è necessario compilare il modulo per una nuova iscrizione' : (#Parametri_TipoDomandaPT.value() == '' and #Tassonomia_PartTime.checked() ? 'ATTENZIONE: Per l’iscrizione a tempo parziale è necessario compilare il modulo per una nuova iscrizione' : 'Procedere con la compilazione')"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </div>
-<!-- simpatico add end -->
+
+<input type="hidden" id="check_val_dom" name="check_val_dom" mandatory="true" dynamic_value="#controllo_val_domanda.value() == 'Procedere con la compilazione' ? 'OK' : ''">
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()">
   <tbody>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="23">
-        <input id="Tassonomia_TipoFrequenza1" name="Tassonomia_TipoFrequenza1" type="checkbox" value="FT" dynamic_check="#Tassonomia_FullTime.checked()" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()"/>
+      <td style="vertical-align: top; width: 4%;" rowspan="21">
+        <input id="Tassonomia_TipoFrequenza1" name="Tassonomia_TipoFrequenza1" type="checkbox" value="FT" dynamic_check="#Tassonomia_FullTime.checked()"/>
       </td>
       <td colspan="4">
         <p>Per la domanda a tempo pieno</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input
-          id="Tassonomia_TipoDomandaFT1"
-          name="Tassonomia_TipoDomandaFT1"
-          dynamic_check="(#Parametri_NumeroDomandaValFT.value() == '' and #Parametri_TipoOperazioneFT.value() != 'ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA' || #Parametri_NumeroDomandaValFT.value() != '' and (#Parametri_TipoOperazioneFT.value() == 'DECADENZA' || #Parametri_TipoOperazioneFT.value() == 'DIMISSIONE' || #Parametri_TipoOperazioneFT.value() == 'RIFIUTO DOPO ACCETTAZIONE'))"
-          enabled="#Tassonomia_TipoFrequenza1.checked() and (#Parametri_NumeroDomandaValFT.value() == '' and #Parametri_TipoOperazioneFT.value() != 'ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA' || #Parametri_NumeroDomandaValFT.value() != '' and (#Parametri_TipoOperazioneFT.value() == 'DECADENZA' || #Parametri_TipoOperazioneFT.value() == 'DIMISSIONE' || #Parametri_TipoOperazioneFT.value() == 'RIFIUTO DOPO ACCETTAZIONE'))"
-          type="checkbox"
-          value="1"/>
-      </td>
-      <td  colspan="3">
-        <p>Nuova iscrizione </p>
-        <p style="font-size:70%"><i>(prima domanda di ammissione al nido d'infanzia)</i></p>
       </td>
     </tr>
     <tr>
@@ -1497,7 +1329,7 @@ M1876-ISCRIZIONE-NIDO
           id="Tassonomia_TipoDomandaFT2"
           name="Tassonomia_TipoDomandaFT2"
           dynamic_check="#Parametri_TipoOperazioneFT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA' || #Parametri_TipoOperazioneFT.value() == 'VARIAZIONE' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA'"
-          enabled="#Tassonomia_TipoFrequenza1.checked() and #Parametri_TipoOperazioneFT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA' ||#Tassonomia_TipoFrequenza1.checked() and #Parametri_TipoOperazioneFT.value() == 'VARIAZIONE' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA'"
+          enabled="#Tassonomia_FullTime.checked() and #Parametri_TipoOperazioneFT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA' ||#Tassonomia_TipoFrequenza1.checked() and #Parametri_TipoOperazioneFT.value() == 'VARIAZIONE' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazioneFT.value() != 'GRADUATORIA'"
           type="checkbox"
           value="2" />
       </td>
@@ -1520,25 +1352,10 @@ M1876-ISCRIZIONE-NIDO
     </tr>
     <tr enabled="#Tassonomia_TipoDomandaFT2.checked()">
       <td colspan="2">
-        <input class="inputNormal" readonly="" id="Parametri_RichiedenteVarFT" name="Parametri_RichiedenteVarFT" style="width: 100%;" label="Richiedente della domanda" dynamic_value="#Parametri_RichDomValFT.value()">
+        <input class="inputNormal" id="Parametri_RichiedenteVarFT" name="Parametri_RichiedenteVarFT" style="width: 100%;" label="Richiedente della domanda" dynamic_value="#Parametri_RichDomValFT.value()" readonly>
       </td>
       <td>
-        <input class="inputNormal" readonly="" id="Parametri_DataVarFT" name="Parametri_DataVarFT" style="width: 100%;" label="Data della domanda" dynamic_value="#Parametri_DataDomValFT.value()">
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input
-          id="Tassonomia_TipoDomandaFT3"
-          name="Tassonomia_TipoDomandaFT3"
-          dynamic_check="#Parametri_TipoOperazioneFT.value() == 'GRADUATORIA' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE'"
-          enabled="#Tassonomia_TipoFrequenza1.checked() and #Parametri_TipoOperazioneFT.value() == 'GRADUATORIA' and #Parametri_TipoOperazioneFT.value() != 'DECADENZA' and #Parametri_TipoOperazioneFT.value() != 'DIMISSIONE' and #Parametri_TipoOperazioneFT.value() != 'RIFIUTO DOPO ACCETTAZIONE'"
-          type="checkbox"
-          value="3" />
-      </td>
-      <td colspan="3">
-        <p>Aggiornamento della domanda </p>
-        <p><b>Si prega di prendere appuntamento con il Servizio Istruzione per la gestione dell'aggiornamento</b></p>
+        <input class="inputNormal" id="Parametri_DataVarFT" name="Parametri_DataVarFT" style="width: 100%;" label="Data della domanda" dynamic_value="#Parametri_DataDomValFT.value()" readonly>
       </td>
     </tr>
     <tr class="Rigaintestazione" >
@@ -1548,7 +1365,7 @@ M1876-ISCRIZIONE-NIDO
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">     
-        <input id="Tassonomia_SceltaPrimoFT1" name="Tassonomia_SceltaPrimoFT1" type="radio" value="1" checked/>
+        <input id="Tassonomia_SceltaPrimoFT1" name="Tassonomia_SceltaPrimoFT1" type="radio" value="1"/>
       </td>
       <td>
         <p>Indicare la prima scelta (obbligatoria)</p>
@@ -1565,7 +1382,7 @@ M1876-ISCRIZIONE-NIDO
           'Tassonomia_FullTime',
           'empty',
           'Tassonomia_NidoInfanziaFT1',
-          '#RecuperaListaFam:click'
+          '#RecuperaDomandaNido:click'
           )}}
 
         <select
@@ -1599,28 +1416,25 @@ M1876-ISCRIZIONE-NIDO
     {{ service.getServiziNido('Tassonomia_NidoInfanziaFT1', 'Parametri_CodiceServizioNido1FT*', '#Tassonomia_NidoInfanziaFT1:change', 'listaServizi11') }}
 
     {% macro Tassonomia_ServizioAsilo1FT(codice_nido, prefix) %}
-
     {% set prefix = prefix|string %}
 
     {{ service.getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido1FT' + prefix, {
       'Parametri_DettaglioServizio1FT' + prefix: 'descrizione'
     }, '#Parametri_CodiceServizioNido1FT' + prefix + ':change' )}}
-
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input group="Tassonomia_ServiziPrimoNidoFT" id="Tassonomia_TipoSceltaServizioAsilo1FT{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo1FT{{ prefix }}" type="checkbox" value="{{ prefix }}" />
+        <input group="Tassonomia_ServiziPrimoNidoFT" id="Tassonomia_TipoSceltaServizioAsilo1FT{{ prefix }}"  name="Tassonomia_TipoSceltaServizioAsilo1FT{{ prefix }}" type="checkbox" value="{{ prefix }}" />
       </td>
       <td colspan="3">
         <input class="inputNormal" id="Parametri_DettaglioServizio1FT{{ prefix }}" name="Parametri_DettaglioServizio1FT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" readonly>
       </td>
     </tr>
-
     {%- endmacro %}
 
     {% for i in range(1, 3) %}
     {{ Tassonomia_ServizioAsilo1FT('Tassonomia_NidoInfanziaFT1', i) }}
 
-    <input type="hidden" id="Parametri_CodiceServizioNido1FT{{ i }}" name="Parametri_CodiceServizioNido1FT{{ i }}">
+    <input id="Parametri_CodiceServizioNido1FT{{ i }}" name="Parametri_CodiceServizioNido1FT{{ i }}" type="hidden">
 
     {% endfor %}
 
@@ -1639,7 +1453,7 @@ M1876-ISCRIZIONE-NIDO
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="Tassonomia_SceltaSecondoFT" name="Tassonomia_SceltaSecondoFT" mandatory_enabled="#Tassonomia_FullTime.checked()" label="Scelta secondo nido a tempo pieno"> </div>        
+        <div id="Tassonomia_SceltaSecondoFT" name="Tassonomia_SceltaSecondoFT" mandatory_enabled="#Nome_nido_FT1.value() != ''" label="Scelta secondo nido a tempo pieno"> </div>        
         <input id="Tassonomia_SceltaSecondoFT1" name="Tassonomia_SceltaSecondoFT" type="radio" value="1"/>
       </td>
       <td colspan="3">
@@ -1667,7 +1481,7 @@ M1876-ISCRIZIONE-NIDO
           'Tassonomia_FullTime',
           'listaCompleta2',
           'Tassonomia_NidoInfanziaFT2',
-          '#RecuperaListaFam:click'
+          '#RecuperaDomandaNido:click'
           )}}
 
         <select
@@ -1723,7 +1537,7 @@ M1876-ISCRIZIONE-NIDO
     {% for i in range(1, 3) %}
     {{ Tassonomia_ServizioAsilo2FT('Tassonomia_NidoInfanziaFT2', i) }}
 
-    <input type="hidden" id="Parametri_CodiceServizioNido2FT{{ i }}" name="Parametri_CodiceServizioNido2FT{{ i }}">
+    <input id="Parametri_CodiceServizioNido2FT{{ i }}" name="Parametri_CodiceServizioNido2FT{{ i }}" type="hidden">
 
     {% endfor %}
 
@@ -1735,35 +1549,36 @@ M1876-ISCRIZIONE-NIDO
 
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_11" name="modifiche_blocco_11" label="Elencare le modifiche effettuate al blocco scelta nido a tempo pieno" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <input class="Modulo" type="hidden" id="serv_aggFT1_ok" name="serv_aggFT1_ok" dynamic_value="(#check_serv_aggFT1.value() == '' || #check_serv_aggFT1.value() == 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte') ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del primo nido a tempo pieno">
 <input class="Modulo" type="hidden" id="serv_aggFT2_ok" name="serv_aggFT2_ok" dynamic_value="(#check_serv_aggFT2.value() == '' || #check_serv_aggFT2.value() == 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte') ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del secondo nido a tempo pieno">
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()">
   <tbody>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="23">
-        <input id="Tassonomia_TipoFrequenza2" name="Tassonomia_TipoFrequenza2" type="checkbox" value="PT" dynamic_check="#Tassonomia_PartTime.checked()" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()"/>
+      <td style="vertical-align: top; width: 4%;" rowspan="21">
+        <input id="Tassonomia_TipoFrequenza2" name="Tassonomia_TipoFrequenza2" type="checkbox" value="PT" dynamic_check="#Tassonomia_PartTime.checked()" enabled="#Tassonomia_PartTime.checked()"/>
       </td>
       <td colspan="4">
         <p>Per la domanda a tempo parziale</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input
-          id="Tassonomia_TipoDomandaPT1"
-          name="Tassonomia_TipoDomandaPT1"
-          dynamic_check="(#Parametri_NumeroDomandaValPT.value() == '' and #Parametri_TipoOperazionePT.value() != 'ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA' || #Parametri_NumeroDomandaValPT.value() != '' and (#Parametri_TipoOperazionePT.value() == 'DECADENZA' || #Parametri_TipoOperazionePT.value() == 'DIMISSIONE' || #Parametri_TipoOperazionePT.value() == 'RIFIUTO DOPO ACCETTAZIONE'))"
-          enabled="#Tassonomia_TipoFrequenza2.checked() and (#Parametri_NumeroDomandaValPT.value() == '' and #Parametri_TipoOperazionePT.value() != 'ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA' || #Parametri_NumeroDomandaValPT.value() != '' and (#Parametri_TipoOperazionePT.value() == 'DECADENZA' || #Parametri_TipoOperazionePT.value() == 'DIMISSIONE' || #Parametri_TipoOperazionePT.value() == 'RIFIUTO DOPO ACCETTAZIONE'))"
-          type="checkbox"
-          value="1"/>
-      </td>
-      <td  colspan="3">
-        <p>Nuova iscrizione </p>
-        <p style="font-size:70%"><i>(prima domanda di ammissione al nido d'infanzia)</i></p>
       </td>
     </tr>
     <tr>
@@ -1772,7 +1587,7 @@ M1876-ISCRIZIONE-NIDO
           id="Tassonomia_TipoDomandaPT2"
           name="Tassonomia_TipoDomandaPT2"
           dynamic_check="#Parametri_TipoOperazionePT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA' || #Parametri_TipoOperazionePT.value() == 'VARIAZIONE' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA'"
-          enabled="#Tassonomia_TipoFrequenza2.checked() and #Parametri_TipoOperazionePT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA' || #Tassonomia_TipoFrequenza2.checked() and #Parametri_TipoOperazionePT.value() == 'VARIAZIONE' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA'"
+          enabled="#Tassonomia_PartTime.checked() and #Parametri_TipoOperazionePT.value() == 'INSERIMENTO DOMANDA' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA' || #Tassonomia_TipoFrequenza2.checked() and #Parametri_TipoOperazionePT.value() == 'VARIAZIONE' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'GRADUATORIA'"
           type="checkbox"
           value="2" />
       </td>
@@ -1801,21 +1616,6 @@ M1876-ISCRIZIONE-NIDO
         <input class="inputNormal" readonly="" id="Parametri_DataVarPT" name="Parametri_DataVarPT" style="width: 100%;" label="Data della domanda" dynamic_value="#Parametri_DataDomValPT.value()">
       </td>
     </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input
-          id="Tassonomia_TipoDomandaPT3"
-          name="Tassonomia_TipoDomandaPT3"
-          dynamic_check="#Parametri_TipoOperazionePT.value() == 'GRADUATORIA' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE'"
-          enabled="#Tassonomia_TipoFrequenza2.checked() and #Parametri_TipoOperazionePT.value() == 'GRADUATORIA' and #Parametri_TipoOperazionePT.value() != 'DECADENZA' and #Parametri_TipoOperazionePT.value() != 'DIMISSIONE' and #Parametri_TipoOperazionePT.value() != 'RIFIUTO DOPO ACCETTAZIONE'"
-          type="checkbox"
-          value="3" />
-      </td>
-      <td colspan="3">
-        <p>Aggiornamento della domanda </p>
-        <p><b>Si prega di prendere appuntamento con il Servizio Istruzione per la gestione dell'aggiornamento</b></p>
-      </td>
-    </tr>
     <tr class="Rigaintestazione" >
       <td colspan="4">
         <p class="Labelcella">Scelta del nido d'infanzia <a href="http://www.comune.trento.it/Aree-tematiche/Servizi-all-infanzia-e-istruzione/Servizi-prima-infanzia-0-3-anni/Mappa-nidi-d-infanzia" target="_blank"> (mappa dei nidi con servizi)</a> </p>
@@ -1823,7 +1623,7 @@ M1876-ISCRIZIONE-NIDO
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">     
-        <input id="Tassonomia_SceltaPrimoPT1" name="Tassonomia_SceltaPrimoPT1" type="radio" value="1" checked/>
+        <input id="Tassonomia_SceltaPrimoPT1" name="Tassonomia_SceltaPrimoPT1" type="radio" value="1"/>
       </td>
       <td>
         <p>Indicare la prima scelta (obbligatoria)</p>
@@ -1840,7 +1640,7 @@ M1876-ISCRIZIONE-NIDO
           'Tassonomia_PartTime',
           'emptyPT',
           'Tassonomia_NidoInfanziaPT1',
-          '#RecuperaListaFam:click'
+          '#RecuperaDomandaNido:click'
         )}}
 
         <select
@@ -1853,7 +1653,8 @@ M1876-ISCRIZIONE-NIDO
         </select>
       </td>
       <td style="width: 36%;">
-        <input class="inputNormal" id="Nome_nido_PT1" name="Nome_nido_PT1" style="width: 100%;" label="Nome nido PT1" dynamic_value="switch(#Tassonomia_NidoInfanziaPT1.value()) { case '31': 'Madonna Bianca Part Time MATTINO'; break; case '32': 'Madonna Bianca Part Time POMERIGGIO'; break; case '33': 'Roncafort Part Time'; break; case '34': 'Viale dei Tigli'; break; case '40': 'Il Magicocastello Part Time POMERIGGIO'; break; case '41': 'Il Magicocastello Part Time MATTINO'; break; case '42': 'La Nuvola Part Time'; break;}" readonly>      </td>
+        <input class="inputNormal" id="Nome_nido_PT1" name="Nome_nido_PT1" style="width: 100%;" label="Nome nido PT1" dynamic_value="switch(#Tassonomia_NidoInfanziaPT1.value()) { case '31': 'Madonna Bianca Part Time MATTINO'; break; case '32': 'Madonna Bianca Part Time POMERIGGIO'; break; case '33': 'Roncafort Part Time'; break; case '34': 'Viale dei Tigli'; break; case '40': 'Il Magicocastello Part Time POMERIGGIO'; break; case '41': 'Il Magicocastello Part Time MATTINO'; break; case '42': 'La Nuvola Part Time'; break;}" readonly>      
+      </td>
     </tr>
     <tr class="Rigaintestazione" >
       <td colspan="4">
@@ -1894,7 +1695,7 @@ M1876-ISCRIZIONE-NIDO
     {% for i in range(1, 3) %}
     {{ Tassonomia_ServizioAsilo1PT('Tassonomia_NidoInfanziaPT1', i) }}
 
-    <input type="hidden" id="Parametri_CodiceServizioNido1PT{{ i }}" name="Parametri_CodiceServizioNido1PT{{ i }}">
+    <input id="Parametri_CodiceServizioNido1PT{{ i }}" name="Parametri_CodiceServizioNido1PT{{ i }}" type="hidden">
 
     {% endfor %}
 
@@ -1913,7 +1714,7 @@ M1876-ISCRIZIONE-NIDO
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="Tassonomia_SceltaSecondoPT" name="Tassonomia_SceltaSecondoPT" mandatory_enabled="#Tassonomia_PartTime.checked()" label="Scelta secondo nido a tempo parziale"> </div>
+        <div id="Tassonomia_SceltaSecondoPT" name="Tassonomia_SceltaSecondoPT" mandatory_enabled="#Nome_nido_PT1.value() != ''" label="Scelta secondo nido a tempo parziale"> </div>
         <input id="Tassonomia_SceltaSecondoPT1" name="Tassonomia_SceltaSecondoPT" type="radio" value="1"/>
       </td>
       <td colspan="3">
@@ -1941,7 +1742,7 @@ M1876-ISCRIZIONE-NIDO
           'Tassonomia_PartTime',
           'listaCompletaPT2',
           'Tassonomia_NidoInfanziaPT2',
-          '#RecuperaListaFam:click'
+          '#RecuperaDomandaNido:click'
           )}}
 
         <select
@@ -1997,7 +1798,7 @@ M1876-ISCRIZIONE-NIDO
     {% for i in range(1, 3) %}
     {{ Tassonomia_ServizioAsilo2PT('Tassonomia_NidoInfanziaPT2', i) }}
 
-    <input type="hidden" id="Parametri_CodiceServizioNido2PT{{ i }}" name="Parametri_CodiceServizioNido2PT{{ i }}">
+    <input id="Parametri_CodiceServizioNido2PT{{ i }}" name="Parametri_CodiceServizioNido2PT{{ i }}" type="hidden">
 
     {% endfor %}
 
@@ -2009,15 +1810,30 @@ M1876-ISCRIZIONE-NIDO
 
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_12" name="modifiche_blocco_12" label="Elencare le modifiche effettuate al blocco scelta nido a tempo parziale" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <input class="Modulo" type="hidden" id="serv_aggPT1_ok" name="serv_aggPT1_ok" dynamic_value="(#check_serv_aggPT1.value() == '' || #check_serv_aggPT1.value() == 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte') ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del primo nido a tempo parziale">
 <input class="Modulo" type="hidden" id="serv_aggPT2_ok" name="serv_aggPT2_ok" dynamic_value="(#check_serv_aggPT2.value() == '' || #check_serv_aggPT2.value() == 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte') ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del secondo nido a tempo parziale">
 
 <br>
 <br>
-<br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione" >
       <td colspan="3">
@@ -2178,16 +1994,30 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_13" name="modifiche_blocco_13" label="Elencare le modifiche effettuate al blocco disponibilità accettazione" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione" >
       <td colspan="2">
-        <b>in riferimento alla disponibilità a essere contattato per l'accettazione di posti eventualmente rimasti
-          liberi, in qualsiasi nido del territorio comunale, dopo le assegnazioni sulla graduatoria
-          annuale</b>
+        <b>in riferimento alla disponibilità a essere contattato per l'accettazione di posti eventualmente rimasti liberi, in qualsiasi nido del territorio comunale, dopo le assegnazioni sulla graduatoria annuale</b>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -2240,10 +2070,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_14" name="modifiche_blocco_14" label="Elencare le modifiche effettuate al blocco disponibilità accettazione altri nidi" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione" >
       <td colspan="3">
@@ -2272,10 +2118,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_15" name="modifiche_blocco_15" label="Elencare le modifiche effettuate al blocco disponibilità autorizzazione invio SMS" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione" >
       <td colspan="3">
@@ -2307,10 +2169,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_16" name="modifiche_blocco_16" label="Elencare le modifiche effettuate al blocco modalità ricezione comunicazioni" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="3">
@@ -2343,12 +2221,25 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_17" name="modifiche_blocco_17" label="Elencare le modifiche effettuate al blocco ulteriore recapito per le comunicazioni" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-  <!--  simpatico start -->
 <div class="simpatico-block simpatico-query-and-answer">
-  <!--  simpatico end -->
 
   <p class="Modulo">Valendosi della facoltà prevista dagli articoli 46 e 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445,
     consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445
@@ -2361,11 +2252,10 @@ M1876-ISCRIZIONE-NIDO
   <p class="Modulo">che il bambino e/o il nucleo familiare presenta le seguenti situazioni già in essere al momento della presentazione
     della domanda</p>
 
-  <!--  simpatico start -->
 </div>
-  <!--  simpatico end -->
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="4">
@@ -2420,8 +2310,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_18" name="modifiche_blocco_18" label="Elencare le modifiche effettuate al blocco disabilità del bambino" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="4">
@@ -2478,8 +2386,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_19" name="modifiche_blocco_19" label="Elencare le modifiche effettuate al blocco servizi sociali" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="5">
@@ -2590,7 +2516,6 @@ M1876-ISCRIZIONE-NIDO
         <input class="inputNormal" id="Parametri_VerbaleFam3" name="Parametri_VerbaleFam3" style="width: 100%;" enabled="#Tassonomia_DisabilitaFam2.checked() and !#Tassonomia_FamDisabile2.check_value([''])" label="Riferimenti verbale disabilità del familiare" maxlength="100" mandatory="(#Tassonomia_FamDisabile3.value() != '' || #Parametri_PercFam3.value() != '')">
       </td>
     </tr>
-
     <tr class="Rigaintestazioneridotta">
       <td colspan="4">
       </td>
@@ -2644,8 +2569,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_20" name="modifiche_blocco_20" label="Elencare le modifiche effettuate al blocco disabilità membri del nucleo familiare" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="5">
@@ -2755,21 +2698,32 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_21" name="modifiche_blocco_21" label="Elencare le modifiche effettuate al blocco tipologia nucleo familiare" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
  <br>
 
-  <!--  simpatico start -->
 <div class=" simpatico-block simpatico-query-and-answer">
-  <!--  simpatico end -->
 
   <h3 class="Modulo">Situazione lavorativa del padre/compagno convivente</h3>
 
   <p  class="Modulo"><b>che la condizione lavorativa del padre o compagno convivente presente nel nucleo è:</b>
     <i>(ogni dichiarazione deve fare riferimento a situazioni già in essere al momento della presentazione della domanda. Non si terrà conto di promesse di assunzione o di situazioni lavorative non formalizzate)</i></p>
 
-  <!--  simpatico start -->
 </div>
-  <!--  simpatico end -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -2790,7 +2744,8 @@ M1876-ISCRIZIONE-NIDO
   </tbody>
 </table>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="2">
@@ -2825,10 +2780,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_22" name="modifiche_blocco_22" label="Elencare le modifiche effettuate al blocco tipologia lavoro padre" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="6">
@@ -3016,9 +2987,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_23" name="modifiche_blocco_23" label="Elencare le modifiche effettuate al blocco dettagli lavoro padre" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="2">
@@ -3051,10 +3039,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_24" name="modifiche_blocco_24" label="Elencare le modifiche effettuate al blocco dettagli studio padre" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="6">
@@ -3101,21 +3105,32 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_25" name="modifiche_blocco_25" label="Elencare le modifiche effettuate al blocco dettagli disoccupazione padre" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-  <!--  simpatico start -->
 <div class="simpatico-block simpatico-query-and-answer">
-  <!--  simpatico end -->
 
   <h3 class="Modulo">Situazione lavorativa della madre/compagna convivente</h3>
 
   <p  class="Modulo"><b>che la condizione lavorativa della madre o compagna convivente presente nel nucleo è:</b>
     <i>(ogni dichiarazione deve fare riferimento a situazioni già in essere al momento della presentazione della domanda. Non si terrà conto di promesse di assunzione o di situazioni lavorative non formalizzate)</i></p>
 
-  <!--  simpatico start -->
 </div>
-  <!--  simpatico end -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -3136,7 +3151,8 @@ M1876-ISCRIZIONE-NIDO
   </tbody>
 </table>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="2">
@@ -3171,10 +3187,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_26" name="modifiche_blocco_26" label="Elencare le modifiche effettuate al blocco tipologia lavoro madre" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="6">
@@ -3362,9 +3394,25 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_27" name="modifiche_blocco_27" label="Elencare le modifiche effettuate al blocco dettagli lavoro madre" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="2">
@@ -3397,10 +3445,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_28" name="modifiche_blocco_28" label="Elencare le modifiche effettuate al blocco dettagli studio madre" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="6">
@@ -3447,13 +3511,26 @@ M1876-ISCRIZIONE-NIDO
     </tr>
   </tbody>
 </table>
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione ridotta">
+            <td>
+                <p style="font-size:90%;">Se si sono effettuate variazioni in questo blocco, indicare di seguito i campi che sono stati modificati rispetto alla domanda originale</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="inputNormal" id="modifiche_blocco_29" name="modifiche_blocco_29" label="Elencare le modifiche effettuate al blocco dettagli disoccupazione madre" style="width:100%;" enabled="true"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <br>
 <br>
 
-  <!--  simpatico start -->
 <div class="simpatico-block simpatico-query-and-answer">
-  <!--  simpatico end -->
 
   <h2 class="Modulo">DICHIARA INFINE</h2>
 
@@ -3500,9 +3577,7 @@ M1876-ISCRIZIONE-NIDO
     </tbody>
   </table>
 
-  <!--  simpatico start -->
 </div>
-  <!--  simpatico end -->
 
 <br>
 <br>

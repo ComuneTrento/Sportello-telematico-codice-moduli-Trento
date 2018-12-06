@@ -1,0 +1,188 @@
+{% set CodiceModulo = "M1462-IMIS" %}
+{% set modulo_workflow_model =  "M1462-IMIS_v1.0" %}
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Comunicazione indirizzo di posta elettronica per IMIS"
+destinatario_amministrazione=""
+destinatario_ufficio="KT5TBQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
+<script type="text/javascript">
+  var simpaticoEservice="20"
+  var simpaticoForm="main"
+  var simpaticoCategory="Edilizia"
+  var simpaticoMapping=["AventeTitolo_CodiceFiscale",
+                        "AventeTitolo_DataNascita",
+                        "AventeTitolo_Sesso",
+                        "AventeTitolo_Nazionalita",
+                        "AventeTitolo_LuogoNascita",
+                        "AventeTitolo_ComuneResidenza",
+                        "AventeTitolo_ViaResidenza",
+                        "AventeTitolo_CivicoResidenza",
+                        "AventeTitolo_CAPResidenza",
+                        "AventeTitolo_Cognome",
+                        "AventeTitolo_Nome",
+                        "AventeTitolo_Telefono",
+                        "AventeTitolo_Fax",
+                        "AventeTitolo_EMail",
+                        "AventeTitolo_EMailPEC"]
+  var serviceName = "Rilascio di titoli edilizi per atti di compravendita"; // Eservice example
+  var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/RILASCIO-TITOLI-EDILIZI.html";
+  var ERROR_LABELS= {   
+                     'block1' : 'Selezionare una delle opzioni',
+                     'block2' : 'Inserire il codice fiscale',
+                     'block3' : 'Particella edilizia non valida',
+                     'block4' : 'Indirizzo non inserito',
+                     'block5' : 'Indirizzo non verificato',
+                     'block12' : 'Selezionare una delle opzioni'
+                    }
+</script>
+ *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+
+{% endblock meta %}
+
+{% block title %}M1462-IMIS{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Indirizzo di posta elettronica'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+    Indirizzo di posta elettronica
+</h1>
+<h3 class="Modulo">
+    <i>Liberatoria alla comunicazione al Servizio Risorse finanziarie del Comune di Trento</i>
+</h3>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+{{anagrafica_trento.richiedente_IMIS( "AventeTitolo", "ll/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility") }}
+</div>
+
+<br>
+
+<p class="Modulo" style="line-height:1.8;">fornisce il seguente indirizzo di posta elettronica a cui inviare le indicazioni e i prospetti per permettere di adempiere agli obblighi di legge riguardanti l'Imposta Immobiliare Semplice e gli altri tributi comunali:<br>
+    <input id="Mail_invio_indicazioni_IMIS" name="Mail_invio_indicazioni_IMIS" mandatory_enabled="true" label="Indicare una mail valida" format="email" style="width:100%;"/></p>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Tassonomia_Dichiarazioni1" name="Tassonomia_Dichiarazioni1" mandatory="true" type="checkbox" value="1"/>
+        </td>
+        <td>
+          <p>Il sottoscritto dichiara di essere stato informato che sarà possibile chiedere la cancellazione dell'indirizzo e-mail qualora riterrà di non avvalersi dell'invio telematico dei prospetti di calcolo dell'imposta</p>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
+          <p style="text-align: center; font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <br>
+          <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e delle disposizioni della normativa nazionale, si informa che:</p>
+          <ul>
+            <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://comune.trento.it" target="_blank">http://comune.trento.it</a>)</li>
+            <li>Responsabile per la protezione dei dati è il Dirigente del Servizio Risorse finanziarie</li>
+            <li>Responsabile designato per l'esercizio dei diritti dell'interessato è il Segretario generale</li>
+            <li>I dati vengono raccolti e trattati per procedere all'invio telematico dei prospetti e indicazioni relativi all'imposta</li>
+            <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza</li>
+            <li>Il conferimento dei dati ha natura obbligatoria. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa procedere all'invio telematico dei prospetti e indicazioni relativi all'imposta</li>
+            <li>I dati possono essere comunicati a tutti i soggetti (concessionari di servizi, enti gestori, Uffici, Enti ed Organi della Pubblica Amministrazione, Aziende o Istituzioni) che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso</li>
+            <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Risorse finanziarie</li>
+            <li>I diritti dell'interessato sono:
+              <ul>
+                <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano</li>
+                <li>ottenere la loro comunicazione in forma intelligibile</li>
+                <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici</li>
+                <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge</li>
+                <li>richiedere la portabilità dei dati</li>
+                <li>aggiornare, correggere o integrare i dati che lo riguardano</li>
+                <li>opporsi, per motivi legittimi, al trattamento dei dati</li>
+                <li>proporre reclamo al Garante per la protezione dei dati personali</li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+          <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p>Dichiaro di aver ricevuto e preso visione dell'informativa sul trattamento dei dati personali <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<div class="simpatico-block">
+  {{ utils.firma_hidden() }}
+</div>
+
+<br>
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+{% endblock content %}
