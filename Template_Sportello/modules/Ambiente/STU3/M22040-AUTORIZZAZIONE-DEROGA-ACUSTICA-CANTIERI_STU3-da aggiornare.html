@@ -1,21 +1,18 @@
 {% set CodiceModulo =  "M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" %}
-{% set Urn =  "document:c_l378:deroga.acustica;istanza.rilascio" %}
-{% extends "base_trento.html" %}
+{% set Urn =  "document:c_l378:richiesta.autorizzazione.deroga.acustica.cantieri" %}
+<!--{% set modulo_workflow_model =  "http://simpatico.eu/M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI-SIMPATICO_v0.1" %}-->
+{% extends "base_trento_new.html" %}
 
 {% block meta %}
 
 <meta campi_firma="Titolare_CodiceFiscale"
 campi_firma_label="il dichiarante"
-urn="{{ Urn }}"
-sub_urn_list=""
-uo_globo_list=""
-contesto_procedurale="Richiesta deroga acustica"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
 sub_urn_list=""
 uo_globo_list=""
-contesto_procedurale="Autorizzazione deroga acustica"
+contesto_procedurale="Richiesta deroga acustica"
 descrizione="Deroga acustica per attività edilizia temporanea - Cantieri"
 destinatario_amministrazione=""
 destinatario_ufficio="FMEB9R"
@@ -29,10 +26,16 @@ istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
 procura="NO,,"
+segnatura="Titolare"
 tipo_modulo="principale"
 urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
+
+<meta codice_modulo_figlio="Incarico_procura"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
 
 <meta codice_modulo_figlio="GEN-MARCABOLLO"
 name="GLOBO_modulofiglio"
@@ -45,6 +48,7 @@ numero="1"
 obbligatorio="DINAMICO"/>
 
 <meta codice_allegato="M22040-A01-VALUTAZIONE-IMPATTO-ACUSTICO"
+urn="document:c_l378:valutazione.impatto.acustico"
 descrizione_estesa="valutazione previsionale di impatto acustico"
 filename="M22040-A01-VALUTAZIONE-IMPATTO-ACUSTICO.pdf"
 firmato="NO"
@@ -55,6 +59,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="RIC-DIR-SEG"
+urn="document:c_l378:ricevuta.diritti.segreteria"
 descrizione_estesa="Ricevuta versamento di 16,52 € per bollo rilascio e diritti segreteria/istruttoria"
 filename="Ricev. diritti segreteria.pdf"
 firmato="NO"
@@ -65,7 +70,8 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-CDI"
-descrizione_estesa="Fotocopia dei documenti d’identità dei comproprietari"
+urn="document:c_l378:documento.identita"
+descrizione_estesa="Copia del documento di identità del richiedente"
 filename="Documento identita.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-CDI"
@@ -75,6 +81,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="Modulo_compilato_firmato"
+urn="document:c_l378:copia.modulo.firmato"
 descrizione_estesa="Modulo compilato e firmato"
 filename="Modulo_compilato_firmato.pdf"
 firmato="NO"
@@ -85,6 +92,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="ALTRI-ALLEGATI"
+urn="document:c_l378:altri.allegati"
 descrizione_estesa="Altri allegati"
 dimensione_massima="4"
 filename="Altri allegati.pdf"
@@ -96,29 +104,82 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_report="CSP_SESSION_REPORT"
-urn_report=""
 generate_on="sending"
 name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
 />
 
-<script type="text/javascript">
-var simpaticoEservice = "3"; //  the id corresponding to the e-service
-var simpaticoForm = "main";
-var simpaticoCategory = "Ambiente"; // the general category of the e-service
-var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
-      var ERROR_LABELS = {
-          'block1' : 'Inserire il codice fiscale',
-          'block2' : 'Seleziona il ruolo',
-          'block4' : 'Seleziona almeno una tipologia di deroga',
-          'block6' : 'Seleziona una delle opzioni',
-          'block7' : 'Particella edilizia non valida',
-          'block8' : 'Indirizzo non verificato',
-          'block10' : 'Seleziona una delle opzioni',
-          'block14' : 'Seleziona una delle opzioni'
-            }
-</script>
+<!--<script type="text/javascript">
+	var simpaticoEservice = "3"; //  the id corresponding to the e-service
+	var simpaticoForm = "main";
+	var simpaticoCategory = "Ambiente"; // the general category of the e-service
+	var simpaticoMapping=["Titolare_Cognome",
+												"Titolare_Nome",
+												"Titolare_CodiceFiscale",
+												"Titolare_DataNascita",
+												"Titolare_Sesso",
+												"Titolare_ProvinciaResidenza",
+												"Titolare_ComuneResidenza",
+												"Titolare_ViaResidenza",
+												"Titolare_CivicoResidenza",
+												"Titolare_CAPResidenza",
+												"Titolare_Telefono",
+												"Titolare_Cittadinanza",
+												"Titolare_LuogoNascita",
+												"Titolare_Fax",
+												"Titolare_EMail",
+												"Titolare_EMailPEC",
+												"Titolare_Telefono",
+												"Titolare_TipologiaImpresa",
+												"Titolare_Denominazione",
+												"Titolare_ComuneSede",
+												"Titolare_ProvinciaSede",
+												"Titolare_ViaSede",
+												"Titolare_CivicoSede",
+												"Titolare_CAPSede",
+												"Titolare_CFPI",
+												"Titolare_APEC",
+												"Titolare_TelefonoSede",
+												"Titolare_FaxSede",
+												"Titolare_Attributi_IscrittoCCIAA",
+												"Titolare_Attributi_CCIAAProv",
+												"Titolare_Attributi_CCIAANumero"]
+	var serviceName = "M22040 AUTORIZZAZIONE DEROGA ACUSTICA CANTIERI"; // Eservice example
+	var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI.html";
+	var ERROR_LABELS = {
+											'block1' : 'Inserire il codice fiscale',
+											'block2' : 'Seleziona il ruolo',
+											'block4' : 'Seleziona almeno una tipologia di deroga',
+											'block6' : 'Seleziona una delle opzioni',
+											'block7' : 'Particella edilizia non valida',
+											'block8' : 'Indirizzo non verificato',
+											'block10' : 'Seleziona una delle opzioni',
+											'block14' : 'Seleziona una delle opzioni'
+										}
+			
+</script>-->
 
 {% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="2" %}
+  {% set simpaticoEserviceName="M1876 ISCRIZIONE NIDO" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1876-ISCRIZIONE-NIDO" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Infanzia" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale","AventeTitolo_DataNascita","AventeTitolo_EMailPEC","AventeTitolo_Sesso","AventeTitolo_ProvinciaResidenza","AventeTitolo_ComuneResidenza","AventeTitolo_ViaResidenza","AventeTitolo_CivicoResidenza","AventeTitolo_CAPResidenza","AventeTitolo_Telefono","AventeTitolo_Fax","AventeTitolo_Nazionalita","AventeTitolo_EMail","AventeTitolo_EnteProvv","AventeTitolo_NumProt","AventeTitolo_LuogoNascita","AventeTitolo_Data","Parametri_TipoLavoroPadre","Parametri_AziendaLavoroPadre","Parametri_IndirizzoAziendaLavoroPadre","Parametri_CivicoAziendaLavoroPadre","Parametri_CapAziendaLavoroPadre","Parametri_TelAziendaLavoroPadre","Parametri_EmailAziendaLavoroPadre","Parametri_AgenziaEntratePadre","Parametri_PIVAPadre","Parametri_ScuolaPadre","Parametri_TipoLavoroMadre","Parametri_AziendaLavoroMadre","Parametri_IndirizzoAziendaLavoroMadre","Parametri_CivicoAziendaLavoroMadre","Parametri_CapAziendaLavoroMadre","Parametri_TelAziendaLavoroMadre","Parametri_EmailAziendaLavoroMadre","Parametri_AgenziaEntrateMadre","Parametri_PIVAMadre","Parametri_ScuolaMadre"] %}
+  {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
+                          ('block2', 'Ruolo non specificato'),
+                          ('block3', 'Seleziona una delle opzioni'),
+                          ('block5', 'IMPOSSIBILE CONTINUARE LA COMPILAZIONE'),
+                          ('block9', 'Seleziona se avvalersi dell\'attestazione ICEF o meno'),
+                          ('block11', 'Seleziona Part-time / Full-time'),
+                          ('block26', 'Seleziona una delle opzioni'),
+                          ('block32', 'Seleziona una delle opzioni'),
+                          ('block37', 'Confermare presa visione dell’informativa')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
 
 {% block title %}
   "M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI"
