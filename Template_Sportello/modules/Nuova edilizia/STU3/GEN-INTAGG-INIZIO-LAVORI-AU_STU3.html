@@ -1,6 +1,6 @@
-{% set CodiceModulo =  "GEN-INTAGG-AU" %}
-{% set Urn =  "document:c_l378:modulo.secondario.ulteriori.intestatari.firma.autografa" %}
-{% set modulo_workflow_model = "https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-AU_v1.0" %}
+{% set CodiceModulo =  "GEN-INTAGG-INIZIO-LAVORI-AU" %}
+{% set Urn =  "document:c_l378:inizio.lavori;comunicazione.inizio.lavori;modulo.secondario.inizio.lavori.ulteriori.intestatari.firma.autografa" %}
+<!--{% set modulo_workflow_model = "https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-AU_v1.0" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -23,7 +23,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-INTAGG-AU"
+urlhelp="/modulistica/moduli/GEN-INTAGG-INIZIO-LAVORI-AU"
 verifica_pagamento="NO"
 versione="1.1|03/06/2016"/>
 
@@ -38,20 +38,20 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="ULT-INT-AU"
+<meta codice_allegato="GEN-ULT-INT-AU"
 urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
 descrizione_estesa="Scansione stampa modulo ulteriori intestatari firmata"
-filename="modulo-ult-int.pdf"
+filename="GEN-ULT-INT-AU.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/ULT-INT-AU"
+istruzioni="/modulistica/moduli/GEN-ULT-INT-AU"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
 <script type="text/javascript">
-    var simpaticoEservice="1_2"
+    var simpaticoEservice="5_3"
     var simpaticoForm="modulo_secondario_ulteriori_intestatari_firma_autografa"
     var simpaticoCategory="Edilizia"
     var simpaticoMapping=[ "AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"]
@@ -62,7 +62,7 @@ tipo_mime="application/pdf"/>
       }
   
     </script>
-  <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+*********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 
 {% endblock meta %}
 
@@ -296,7 +296,7 @@ tipo_mime="application/pdf"/>
           <option value=""></option>
           <option value="Persona fisica">Persona fisica</option>
           <option value="Legale rappresentante">Legale rappresentante</option>
-          <option value="Amministratore di condominio">Amministratore di condominio</option>
+          <option value="Amministratore di condominio">Procuratore</option>
         </select>
       </td>
     </tr>
@@ -456,53 +456,35 @@ tipo_mime="application/pdf"/>
 
 {{ utils.Dichiara_445() }}
 
-<p>di essere soggetto abilitato alla presentazione dell'istanza in quanto</p>
 <!-- Tabella dei titoli Inizio -->
 <table class="Modulo" style="border:1px solid grey;">
   <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p>
-          <b>Titolo sottoscrivente (proprietario, comproprietario, ecc.)</b>
-        </p>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="dich1" name="dich1" type="checkbox" value="1" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p>di avere titolo idoneo alla realizzazione dei lavori in quanto cointestatario del permesso di costruire prot.nr. <input class="" id="Prot_perm_costr" name="Prot_perm_costr" dynamic_value="#Metadati_Prot_concessione.value()" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="true"/> di data <input class="" id="Data_perm_costr" name="Data_perm_costr" dynamic_value="#Metadati_Data_concessione.value()" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="true"/></p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
-        <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+        <input id="dich2" name="dich2" type="checkbox" value="2" mandatory_enabled="true"/>
       </td>
       <td>
-        <p>Proprietario</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
-      </td>
-      <td>
-        <p>Comproprietario</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
-      </td>
-      <td>
-        <p>Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+        <p>di aver preso visione e di condividere quanto dichiarato dal titolare</p>
       </td>
     </tr>
   </tbody>
 </table>
 
-<p class="Modulo">e di essere informato che tutte le comunicazioni inerenti questa istanza verranno inviate al domicilio digitale eletto per questo procedimento, ovvero:
-<input id="dom_digi_rif" name="dom_digi_rif" dynamic_value=#Metadati_Dom_Digi.value() readonly/>
-</p>
-<br>
-
 <!-- simpatico start -->
 </div>
 <!-- simpatico end -->
+
+<br>
+<br>
+
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
  <tbody>
@@ -565,7 +547,7 @@ tipo_mime="application/pdf"/>
  
  <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
  
- <input id="GLOBO_allegato_cULT-INT-AU" name="GLOBO_allegato_cULT-INT-AU" obbligatorio="#ULT_INT_AU.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ <input id="GLOBO_allegato_cGEN-ULT-INT-AU" name="GLOBO_allegato_cGEN-ULT-INT-AU" obbligatorio="#ULT_INT_AU.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
  
  <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
  
@@ -573,8 +555,9 @@ tipo_mime="application/pdf"/>
  
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
  
- <!-- passaggio dati tra moduli -->
+
  {{ utils.passaggio_metadati() }}
- <input id="Metadati_Dom_Digi" name="Metadati_Dom_Digi" type="hidden"/>
- <input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" type="hidden"/>
+<input id="Metadati_Prot_concessione" name="Metadati_Prot_concessione" type="hidden"/>
+<input id="Metadati_Data_concessione" name="Metadati_Data_concessione" type="hidden"/>
+
  {% endblock content %}

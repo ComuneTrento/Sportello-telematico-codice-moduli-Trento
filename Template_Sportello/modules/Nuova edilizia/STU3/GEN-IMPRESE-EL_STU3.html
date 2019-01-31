@@ -1,0 +1,297 @@
+{% set CodiceModulo =  "GEN-IMPRESE-EL" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.imprese.firma.elettronica" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMPRESE_v1.0" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Anagrafica delle imprese (firma elettronica)"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_ELETTRONICA"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/GEN-IMPRESE-EL"
+verifica_pagamento="NO"
+versione="1.1|14/02/2018"/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO ***********
+<script type="text/javascript">
+  var simpaticoEservice="5_6"
+  var simpaticoForm="modulo_secondario_imprese"
+  var simpaticoCategory="Edilizia"
+  var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                         "AventeTitolo_Fax",
+                         "AventeTitolo_EMail"]
+  var ERROR_LABELS= {   
+                      'block1' : 'Inserire il codice fiscale'
+    }
+
+  </script>
+ *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+{% set simpaticoEservice="1" %}
+{% set simpaticoEserviceName="M47750 AUTORIZZAZIIONE CPC" %}
+{% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC" %}
+{% set simpaticoForm="main" %}
+{% set simpaticoCategory="Edilizia" %}
+{% set simpaticoMapping=[ "AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"] %}
+{% set ERROR_LABELS=[   ('block1' , 'Selezionare una delle opzioni'),
+                        ('block2' , 'Inserire il codice fiscale'),
+                        ('block3' , 'Selezionare il ruolo'),
+                        ('block5' , 'Selezionare la tipologia di autorizzazione/parere richiesta'),
+                        ('block7' , 'Specificare la tipologia di intervento'),
+                        ('block8' , 'Particella edilizia non valida'),
+                        ('block9' , 'Indirizzo non inserito'),
+                        ('block10' , 'Indirizzo non verificato'),
+                        ('block12' , 'Selezionare una delle opzioni'),
+                        ('block13' , 'Definire il ruolo'),
+                        ('block14' , 'Inserire il codice fiscale'),
+                        ('block15' , 'Selezionare una delle opzioni'),
+                        ('block17' , 'Confermare presa visione informativa sulla privacy')] %}
+{{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+{% block title %}
+   Anagrafica impresa
+{% endblock title %}
+
+{% block content %}
+ <globo_fondo_pagina areaheight="150" scope="1">
+ {{ utils.firma() }}
+</globo_fondo_pagina>
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Denominazione.value().toUpperCase() + ' - anagrafica imprese'"/>
+
+ <div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo">
+ Anagrafica impresa
+</h1>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="width:75%;">
+        <p><b>Denominazione/Ragione sociale</b></p>
+      </td>
+      <td style="width:25%;">
+        <p><b>Tipologia</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:75%;">
+        <input class="" id="AventeTitolo_Denominazione" name="AventeTitolo_Denominazione" style="width:100%" label="Denominazione/Ragione sociale"/>
+      </td>
+      <td style="width:25%;">
+        {{ utils.tipologiaimpresa('AventeTitolo_TipologiaImpresa')}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="6">
+        <p class="Labelcella"><b>Sede legale</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:10%;">
+        <p class="Labelcella">Provincia</p>
+      </td>
+      <td style="width:33%;">
+        <p class="Labelcella">Comune</p>
+      </td>
+      <td style="width:33%;">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+      <td style="width:12%;">
+        <p class="Labelcella">Civico</p>
+      </td>
+      <td style="width:12%;">
+        <p class="Labelcella">CAP</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{utils.provincie( 'AventeTitolo_ProvinciaSede', label="Provincia della sede legale")}}
+      </td>
+      <td>
+        <select class="inputNormal" id="AventeTitolo_ComuneSede" name="AventeTitolo_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #AventeTitolo_ProvinciaSede.value(), 'AventeTitolo_ComuneSede')">
+        </select>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_ViaSede" name="AventeTitolo_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_CivicoSede" name="AventeTitolo_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_CAPSede" name="AventeTitolo_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" mandatory="#AventeTitolo_ProvinciaSede.value() != 'EE'"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Codice Fiscale / Partita IVA </p>
+      </td>
+      <td>
+        <p class="Labelcella">E-mail PEC (domicilio digitale)</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="" id="AventeTitolo_CFPI" name="AventeTitolo_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva"/>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_APEC" name="AventeTitolo_APEC" label="PEC Azienda" style="width:100%;" format="pec" />
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Telefono</p>
+      </td>
+      <td>
+        <p class="Labelcella">Fax</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="" id="AventeTitolo_TelefonoSede" name="AventeTitolo_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_FaxSede" name="AventeTitolo_FaxSede" label="Fax della sede legale" style="width:100%;" mandatory="false"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  {{anagrafica_trento.legale_rappresentante("AventeTitolo","indica quale <b>LEGALE RAPPRESENTANTE</b>:","Legale rappresentante") }}
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
+  <tbody>
+   <tr class="Rigaintestazione">
+    <td colspan="2">
+     <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+    </td>
+   </tr>
+   <tr>
+    <td style="vertical-align: top; width:4%">
+     <input id="Anagrafica_impresa" name="Anagrafica_impresa" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
+    </td>
+    <td style="background-color: #eeeeee;">
+     <p>
+      Modulo firmato elettronicamente
+      <br/>
+    </p>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
+        <p style="text-align: center; font-size:85%"><i>art. 13 Regolamento UE n. 2016/679</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <br>
+        <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e del decreto legislativo n. 196/2003, si informa che:</p>
+        <ul>
+          <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://www.comune.trento.it" target="_blank">http://comune.trento.it</a>);</li>
+          <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://www.comunitrentini.it</a>);</li>
+          <li>I dati vengono raccolti e trattati nell'ambito del procedimento per il quale la presente dichiarazione viene resa;</li>
+          <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico;</li>
+          <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza;</li>
+          <li>I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso;</li>
+          <li>I dati sono oggetto di diffusione, nel rispetto del principio di minimizzazione, esclusivamente per l'ottemperanza agli obblighi di pubblicazione dei dati imposti dalla normativa vigente in materia di amministrazione trasparente;</li>
+          <li>I dati non sono oggetto di trasferimento all'estero;</li>
+          <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Attività edilizia sito in Trento, Via del Brennero n. 312, 38121 – Trento, tel. 0461/884798, fax 0461/884701, PEC: servizio.attivitaedilizia@pec.comune.trento.it;</li>
+          <li>Il conferimento dei dati ha natura obbligatoria per le finalità di cui sopra e per tutte quelle ausiliarie e connesse. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa corrispondere alla richiesta connessa alla specifica finalità;</li>
+          <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge;</li>
+          <li>I diritti dell'interessato sono: 
+            <ul>
+              <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano;</li>
+              <li>ottenere la loro comunicazione in forma intelligibile; </li>
+              <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici; </li>
+              <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge; </li>
+              <li>richiedere la portabilità dei dati;</li>
+              <li>aggiornare, correggere o integrare i dati che lo riguardano; </li>
+              <li>opporsi, per motivi legittimi, al trattamento dei dati;</li>
+              <li>proporre reclamo al Garante per la protezione dei dati personali.</li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+        <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<div class="simpatico-block">
+ {{ utils.firma_hidden() }}
+</div>
+ <br/>
+
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cAnagrafica_impresa_EL" name="GLOBO_allegato_cAnagrafica_impresa_EL" obbligatorio="true" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+
+{% endblock content %}

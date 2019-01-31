@@ -1,5 +1,5 @@
 {% set CodiceModulo =  "GEN-MARCABOLLO" %}
-{% set Urn =  "document:c_l378:pagamento.imposta.bollo" %}
+{% set Urn =  "document:c_l378:modulo.secondario.pagamento.marca.bollo" %}
 {% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-MARCABOLLO_v0.1" %}
 {% extends "base_trento_new.html" %}
 
@@ -29,7 +29,7 @@ verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
 <meta codice_allegato="Modulo_bollo_compilato_firma_autografa"
-urn="document:c_l378:pagamento.imposta.bollo;firma.autografa"
+urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
 descrizione_estesa="Modulo pagamento imposta di bollo compilato e firmato manualmente"
 filename="Modulo_bollo_compilato_firma_autografa.pdf"
 firmato="NO"
@@ -40,7 +40,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="Modulo_bollo_compilato_firma_elettronica"
-urn="document:c_l378:pagamento.imposta.bollo;firma.elettronica"
+urn_allegato="document:c_l378:allegato.copia.modulo.firma.elettronica"
 descrizione_estesa="Modulo pagamento imposta di bollo compilato e firmato elettronicamente"
 filename="Modulo_bollo_compilato_firma_elettronica.pdf"
 firmato="SI"
@@ -50,18 +50,46 @@ numero="0"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+<script type="text/javascript">
+    var simpaticoEservice="1_1"
+    var simpaticoForm="modulo_secondario_pagamento_imposta_bollo"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Fax",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                          'block2' : 'Inserire il numero seriale della marca da bollo'
+      }
+  
+    </script>
+  <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
 {% endblock meta %}
 
-{% block simpaticoconfig %}
-{% set simpaticoEservice="1_1" %}
-{% set simpaticoEserviceName="GEN MARCABOLLO" %}
-{% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-MARCABOLLO" %}
-{% set simpaticoForm="modulo_secondario_pagamento_imposta_bollo" %}
+<!--{% block simpaticoconfig %}
+{% set simpaticoEservice="1" %}
+{% set simpaticoEserviceName="M47750 AUTORIZZAZIIONE CPC" %}
+{% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC" %}
+{% set simpaticoForm="main" %}
 {% set simpaticoCategory="Edilizia" %}
 {% set simpaticoMapping=[ "AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"] %}
-{% set ERROR_LABELS=[('block2' , 'Inserire il numero seriale della marca da bollo')] %}
+{% set ERROR_LABELS=[   ('block1' , 'Selezionare una delle opzioni'),
+                        ('block2' , 'Inserire il codice fiscale'),
+                        ('block3' , 'Selezionare il ruolo'),
+                        ('block5' , 'Selezionare la tipologia di autorizzazione/parere richiesta'),
+                        ('block7' , 'Specificare la tipologia di intervento'),
+                        ('block8' , 'Particella edilizia non valida'),
+                        ('block9' , 'Indirizzo non inserito'),
+                        ('block10' , 'Indirizzo non verificato'),
+                        ('block12' , 'Selezionare una delle opzioni'),
+                        ('block13' , 'Definire il ruolo'),
+                        ('block14' , 'Inserire il codice fiscale'),
+                        ('block15' , 'Selezionare una delle opzioni'),
+                        ('block17' , 'Confermare presa visione informativa sulla privacy')] %}
 {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}
+{% endblock simpaticoconfig %}-->
+
 
 {% block title %}
    Dichiarazione di pagamento dell'imposta di bollo
@@ -106,7 +134,7 @@ tipo_mime="application/pdf"/>
    </tr>
    <tr>
     <td>
-     <input class="" id="Parametri_InrelazCorpoCom" label="Breve descrizione del documento per il quale è annullata la marca da bollo" mandatory="true" name="Parametri_InrelazCorpoCom" dynamic_value="#Metadati_Titolare_Cognome.value().toUpperCase() + ' - Domanda di autorizzazione paesaggistica'" style="width:100%"/>
+     <input class="" id="Parametri_InrelazCorpoCom" label="Breve descrizione del documento per il quale è annullata la marca da bollo" mandatory="true" name="Parametri_InrelazCorpoCom" dynamic_value="#Metadati_oggetto.value()" style="width:100%"/>
     </td>
    </tr>
    <tr class="Rigaintestazioneridotta">
@@ -238,5 +266,6 @@ tipo_mime="application/pdf"/>
  {{ utils.passaggio_metadati() }}
  <input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
  <input id="Metadati_firma_bollo" name="Metadati_firma_bollo" type="hidden"/>
+ <input id="Metadati_oggetto" name="Metadati_oggetto" type="hidden"/>
 
 {% endblock content %}
