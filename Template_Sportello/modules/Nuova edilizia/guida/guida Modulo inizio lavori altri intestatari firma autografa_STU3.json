@@ -1,0 +1,199 @@
+{
+    "objectId": "f6cf6eaa-1518-4c46-8d31-6336f73ba4b9",
+    "creationDate": 1549541777207,
+    "lastUpdate": 1549541777207,
+    "uri": "https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-INIZIO-LAVORI-AU_vSTU3",
+    "eserviceId": null,
+    "profileTypes": [],
+    "model": {
+        "context": {},
+        "blocks": [
+            {
+                "id": "block1",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Anagrafica del firmatario"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[1]",
+                "tags": [],
+                "fields": [
+                    "AventeTitolo_CodiceFiscale"
+                ],
+                "blocks": [],
+                "dependencies": [],
+                "condition": null,
+                "completed": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
+                "description": {
+                    "it": "Inserire i dati anagrafici del firmatario."
+                }
+            },
+            {
+                "id": "block2",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Ruolo del firmatario"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
+                "tags": [],
+                "fields": [
+                    "AventeTitolo_Ruolo"
+                ],
+                "blocks": [],
+                "dependencies": [],
+                "condition": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
+                "completed": "context['AventeTitolo_Ruolo'] != null",
+                "description": {
+                    "it": "Selezionare ruolo."
+                }
+            },
+            {
+                "id": "block3",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Ragione sociale del firmatario"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[3]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                    "block2"
+                ],
+                "condition": "context['AventeTitolo_Ruolo']=='Legale rappresentante'|| context['AventeTitolo_Ruolo']=='Amministratore di condominio'",
+                "completed": null,
+                "description": {
+                    "it": "Inserire i dati richiesti."
+                }
+            },
+            {
+                "id": "block4",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Dichiarazioni del firmatario"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[4]",
+                "tags": [],
+                "fields": [
+                    "dich1",
+                    "dich2"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block2"
+                ],
+                "condition": "context['AventeTitolo_Ruolo'] != null",
+                "completed": "context['dich1'] == '1' && context['dich2'] == '2'",
+                "description": {
+                    "it": "Dichiarazioni obbligatorie per il sottoscrivente."
+                }
+            },
+            {
+                "id": "block5",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Allegati"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[5]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                    "block4"
+                ],
+                "condition": "context['dich1'] == '1' && context['dich2'] == '2'",
+                "completed": null,
+                "description": {
+                    "it": "Consultare allegati richiesti."
+                }
+            },
+            {
+                "id": "block6",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Conclusione della domanda"
+                },
+                "xpath": "//*[@id='firme']",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                    "block5"
+                ],
+                "condition": null,
+                "completed": null,
+                "description": {
+                    "it": "Termine presentazione della domanda: specificare luogo e data. Per completare il modulo premere <i>“FINE”</i>. Verificare nuovamente tutti i dati inseriti e premere <b>“Salva modulo”</b>.  Verranno segnalate eventuali mancanze. In tal caso provvedere all’inserimento dei dati mancanti."
+                }
+            }
+        ],
+        "fields": [
+            {
+                "id": "AventeTitolo_CodiceFiscale",
+                "xpath": "//*[@id=\"AventeTitolo_CodiceFiscale\"]",
+                "mapping": {
+                    "key": "AventeTitolo_CodiceFiscale",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "AventeTitolo_Ruolo",
+                "xpath": "//*[@id=\"AventeTitolo_Ruolo\"]",
+                "mapping": {
+                    "key": "AventeTitolo_Ruolo",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "dich1",
+                "xpath": "//*[@id=\"dich1\"]",
+                "mapping": {
+                    "key": "dich1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "dich2",
+                "xpath": "//*[@id=\"dich2\"]",
+                "mapping": {
+                    "key": "dich2",
+                    "binding": "OUT"
+                }
+            }
+        ],
+        "description": {
+            "it": "Modulo per indicare ulteriori intestatari della particella oggetto del procedimento di cui all'istanza di riferimento"
+        },
+        "name": {
+            "it": "Ulteriori intestatari - firma autografa"
+        },
+        "workflow": [
+            {
+                "id": "step1",
+                "name": {
+                    "it": "Compilazione anagrafica del sottoscrivente"
+                },
+                "description": {
+                    "it": "Compilare il blocco anagrafico del sottoscrivente"
+                }
+            },
+            {
+                "id": "step2",
+                "name": {
+                    "it": "Dichiarazioni obbligatorie"
+                },
+                "description": {
+                    "it": "Dichiarare il possesso del titolo idoneo alla realizzazione dei lavori e di aver preso visione delle dichiarazioni del titolare"
+                }
+            },
+            {
+                "id": "step3",
+                "name": {
+                    "it": "Allegati"
+                },
+                "description": {
+                    "it": "Indicare tutta la documentazione allegata alla domanda"
+                }
+            }
+        ]
+    }
+}

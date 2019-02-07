@@ -1,8 +1,8 @@
 {
-    "objectId": "85ed8d01-7d67-4e1b-9e1a-4db71f36a1e8",
-    "creationDate": 1525940111457,
-    "lastUpdate": 1525940111457,
-    "uri": "https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-AU_v1.0",
+    "objectId": "7dd7bab8-6991-4c62-8636-e58a095a186e",
+    "creationDate": 1549541812813,
+    "lastUpdate": 1549541812813,
+    "uri": "https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-INIZIO-LAVORI-EL_vSTU3",
     "eserviceId": null,
     "profileTypes": [],
     "model": {
@@ -11,6 +11,9 @@
             {
                 "id": "block1",
                 "type": "BLOCK",
+                "name": {
+                    "it": "Anagrafica del firmatario"
+                },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[1]",
                 "tags": [],
                 "fields": [
@@ -21,12 +24,15 @@
                 "condition": null,
                 "completed": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
                 "description": {
-                    "it": "Inserire i dati richiesti"
+                    "it": "Inserire i dati anagrafici del firmatario."
                 }
             },
             {
                 "id": "block2",
                 "type": "BLOCK",
+                "name": {
+                    "it": "Ruolo del firmatario"
+                },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
                 "tags": [],
                 "fields": [
@@ -37,12 +43,15 @@
                 "condition": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
                 "completed": "context['AventeTitolo_Ruolo'] != null",
                 "description": {
-                    "it": "Selezionare ruolo."
+                    "it": "Indicare il ruolo ricoperto dal firmatario nel contesto dei lavori da svolgere."
                 }
             },
             {
                 "id": "block3",
                 "type": "BLOCK",
+                "name": {
+                    "it": "Ragione sociale del firmatario"
+                },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[3]",
                 "tags": [],
                 "fields": [],
@@ -53,34 +62,38 @@
                 "condition": "context['AventeTitolo_Ruolo']=='Legale rappresentante'|| context['AventeTitolo_Ruolo']=='Amministratore di condominio'",
                 "completed": null,
                 "description": {
-                    "it": "Inserire i dati richiesti."
+                    "it": "Inserire i dati neccessari al fine di definire la ragione sociale/denominazione per conto della quale si sta eseguendo la richiesta."
                 }
             },
             {
                 "id": "block4",
                 "type": "BLOCK",
+                "name": {
+                    "it": "Dichiarazioni del firmatario"
+                },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[4]",
                 "tags": [],
                 "fields": [
-                    "Parametri_Titolo1",
-                    "Parametri_Titolo2",
-                    "Parametri_Titolo3",
-                    "Tipo_Parametri_Titolo3"
+                    "dich1",
+                    "dich2"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block2"
                 ],
                 "condition": "context['AventeTitolo_Ruolo'] != null",
-                "completed": "context['Parametri_Titolo1'] == '1' || context['Parametri_Titolo2'] == '2' || (context['Parametri_Titolo3'] == '3' && ((context['Tipo_Parametri_Titolo3'] != null) && (context['Tipo_Parametri_Titolo3'] != '')))",
+                "completed": "context['dich1'] == '1' && context['dich2'] == '2'",
                 "description": {
-                    "it": "Indicare la fattispecie di titolo idoneo alla presentazione dell'istanza."
+                    "it": "Dichiarazioni obbligatorie per il sottoscrivente."
                 }
             },
             {
                 "id": "block5",
                 "type": "BLOCK",
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[5]",
+                "name": {
+                    "it": "Conclusione della domanda"
+                },
+                "xpath": "//*[@id='firme']",
                 "tags": [],
                 "fields": [],
                 "blocks": [],
@@ -88,22 +101,6 @@
                     "block4"
                 ],
                 "condition": "context['Parametri_Titolo1'] == '1' || context['Parametri_Titolo2'] == '2' || (context['Parametri_Titolo3'] == '3' && ((context['Tipo_Parametri_Titolo3'] != null) && (context['Tipo_Parametri_Titolo3'] != '')))",
-                "completed": null,
-                "description": {
-                    "it": "Consultare allegati richiesti."
-                }
-            },
-            {
-                "id": "block6",
-                "type": "BLOCK",
-                "xpath": "//*[@id='firme']",
-                "tags": [],
-                "fields": [],
-                "blocks": [],
-                "dependencies": [
-                    "block5"
-                ],
-                "condition": null,
                 "completed": null,
                 "description": {
                     "it": "Termine presentazione della domanda: specificare luogo e data. Per completare il modulo premere <i>“FINE”</i>. Verificare nuovamente tutti i dati inseriti e premere <b>“Salva modulo”</b>.  Verranno segnalate eventuali mancanze. In tal caso provvedere all’inserimento dei dati mancanti."
@@ -128,40 +125,47 @@
                 }
             },
             {
-                "id": "Parametri_Titolo1",
-                "xpath": "//*[@id=\"Parametri_Titolo1\"]",
+                "id": "dich1",
+                "xpath": "//*[@id=\"dich1\"]",
                 "mapping": {
-                    "key": "Parametri_Titolo1",
+                    "key": "dich1",
                     "binding": "OUT"
                 }
             },
             {
-                "id": "Parametri_Titolo2",
-                "xpath": "//*[@id=\"Parametri_Titolo2\"]",
+                "id": "dich2",
+                "xpath": "//*[@id=\"dich2\"]",
                 "mapping": {
-                    "key": "Parametri_Titolo2",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Parametri_Titolo3",
-                "xpath": "//*[@id=\"Parametri_Titolo3\"]",
-                "mapping": {
-                    "key": "Parametri_Titolo3",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tipo_Parametri_Titolo3",
-                "xpath": "//*[@id=\"Tipo_Parametri_Titolo3\"]",
-                "mapping": {
-                    "key": "Tipo_Parametri_Titolo3",
+                    "key": "dich2",
                     "binding": "OUT"
                 }
             }
         ],
-        "description": null,
-        "name": null,
-        "workflow": null
+        "description": {
+            "it": "Modulo per indicare ulteriori intestatari della particella oggetto del procedimento di cui all'istanza di riferimento"
+        },
+        "name": {
+            "it": "Ulteriori intestatari - firma elettronica"
+        },
+        "workflow": [
+            {
+                "id": "step1",
+                "name": {
+                    "it": "Compilazione anagrafica del sottoscrivente"
+                },
+                "description": {
+                    "it": "Compilare il blocco anagrafico del sottoscrivente"
+                }
+            },
+            {
+                "id": "step2",
+                "name": {
+                    "it": "Dichiarazioni obbligatorie"
+                },
+                "description": {
+                    "it": "Dichiarare il possesso del titolo idoneo alla realizzazione dei lavori e di aver preso visione delle dichiarazioni del titolare"
+                }
+            }
+        ]
     }
 }
