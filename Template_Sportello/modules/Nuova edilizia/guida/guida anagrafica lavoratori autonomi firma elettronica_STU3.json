@@ -1,8 +1,8 @@
 {
-    "objectId": "1d12fbc8-f454-435a-ab6b-f0760b3fecd8",
-    "creationDate": 1531316644216,
-    "lastUpdate": 1531316644216,
-    "uri": "https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON_v1.0",
+    "objectId": "9ff82c12-b4ae-47e3-ac3f-c3da39a08fcb",
+    "creationDate": 1549614164838,
+    "lastUpdate": 1549614164838,
+    "uri": "https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-EL_vSTU3",
     "eserviceId": null,
     "profileTypes": [],
     "model": {
@@ -11,6 +11,9 @@
             {
                 "id": "block1",
                 "type": "BLOCK",
+                "name": {
+                    "it": "Anagrafica del lavoratore"
+                },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[1]",
                 "tags": [],
                 "fields": [
@@ -21,36 +24,43 @@
                 "condition": null,
                 "completed": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
                 "description": {
-                    "it": "Inserire i dati dell'impresa"
+                    "it": "Indicare i dati anagrafici del lavoratore."
                 }
             },
             {
                 "id": "block2",
                 "type": "BLOCK",
+                "name": {
+                    "it": "Informativa trattamento dati personali"
+                },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
                 "tags": [],
                 "fields": [
-                    "AventeTitolo_CodiceFiscale"
+                    "AventeTitolo_CodiceFiscale",
+                    "Presa_visione_check"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block1"
                 ],
                 "condition": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
-                "completed": null,
+                "completed": "context['Presa_visione_check']=='1'",
                 "description": {
-                    "it": "Selezionare gli allegati all'istanza."
+                    "it": "Dichiarare di aver preso visione dell'informativa sulla privacy e il trattamento dei dati."
                 }
             },
             {
                 "id": "block3",
                 "type": "BLOCK",
+                "name": {
+                    "it": "Conclusione della domanda"
+                },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[3]",
                 "tags": [],
                 "fields": [],
                 "blocks": [],
                 "dependencies": [],
-                "condition": null,
+                "condition": "context['Presa_visione_check']=='1'",
                 "completed": null,
                 "description": {
                     "it": "Specificare luogo e data. Per completare il modulo premere <i>“FINE”</i>. Verificare nuovamente tutti i dati inseriti e premere <i>“Salva modulo”</i>. Verranno segnalate eventuali mancanze. In tal caso provvedere all’inserimento dei dati mancanti."
@@ -65,10 +75,41 @@
                     "key": "AventeTitolo_CodiceFiscale",
                     "binding": "OUT"
                 }
+            },
+            {
+                "id": "Presa_visione_check",
+                "xpath": "//*[@id=\"Presa_visione_check\"]",
+                "mapping": {
+                    "key": "Presa_visione_check",
+                    "binding": "OUT"
+                }
             }
         ],
-        "description": null,
-        "name": null,
-        "workflow": null
+        "description": {
+            "it": "Modulo per dichiarare l'anagrafica dei lavoratori autonomi coinvolti"
+        },
+        "name": {
+            "it": "Anagrafica lavoratori autonomi - firma elettronica"
+        },
+        "workflow": [
+            {
+                "id": "step1",
+                "name": {
+                    "it": "Compilazione anagrafica del lavoratore"
+                },
+                "description": {
+                    "it": "Compilare il blocco anagrafico del lavoratore"
+                }
+            },
+            {
+                "id": "step2",
+                "name": {
+                    "it": "Consenso trattamento dei dati"
+                },
+                "description": {
+                    "it": "Fornire il consenso al trattamento dei dati personali"
+                }
+            }
+        ]
     }
 }
