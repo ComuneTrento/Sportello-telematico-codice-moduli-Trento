@@ -1,6 +1,6 @@
-{% set CodiceModulo =  "GEN-MARCABOLLO" %}
-{% set Urn =  "document:c_l378:modulo.secondario.pagamento.marca.bollo" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-MARCABOLLO_vSTU3" %}
+{% set CodiceModulo =  "AMB-MARCABOLLO" %}
+{% set Urn =  "document:c_l378:modulo.secondario.deroga.limiti.immissione.acustica.pagamento.marca.bollo" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/AMB-MARCABOLLO_vSTU3" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -28,36 +28,14 @@ urlhelp="/modulistica/moduli/Marca_Bollo"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
-<meta codice_allegato="Modulo_compilato_firma_autografa"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
-descrizione_estesa="Modulo pagamento imposta di bollo compilato e firmato manualmente"
-filename="Modulo_bollo_compilato_firma_autografa.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/Modulo_compilato_firma_autografa"
-name="GLOBO_allegato"
-numero="0"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<meta codice_allegato="Modulo_compilato_firma_elettronica"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.elettronica"
-descrizione_estesa="Modulo pagamento imposta di bollo compilato e firmato elettronicamente"
-filename="Modulo_bollo_compilato_firma_elettronica.pdf"
-firmato="SI"
-istruzioni="/modulistica/moduli/Modulo_compilato_firma_elettronica"
-name="GLOBO_allegato"
-numero="0"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
 {% endblock meta %}
 
 {% block simpaticoconfig %}
-  {% set simpaticoEservice="1_1" %}
-  {% set simpaticoEserviceName="GEN MARCABOLLO" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-MARCABOLLO" %}
+  {% set simpaticoEservice="3_1" %}
+  {% set simpaticoEserviceName="AMB MARCABOLLO" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/AMB-MARCABOLLO" %}
   {% set simpaticoForm="modulo_secondario" %}
-  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoCategory="Ambiente" %}
   {% set simpaticoMapping=[] %}
 
   {% set ERROR_LABELS=[ ('block2' , 'Inserire il numero seriale della marca da bollo')] %}
@@ -127,7 +105,7 @@ tipo_mime="application/pdf"/>
  </table>
  <input checked="checked" id="SempreSI" name="SempreSI" style="display:none;" type="checkbox" value="si"/>
  <!-- simpatico start -->
- </diV>
+ </div>
 <!-- simpatico end -->
 
 <!-- simpatico start -->
@@ -183,40 +161,6 @@ tipo_mime="application/pdf"/>
   <!-- simpatico start -->  </div> <!-- simpatico end -->
  <br/>
 
- <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
-   <tbody>
-     <tr class="Rigaintestazione">
-       <td colspan="3">
-         <p style="text-align: center;">
-           <b>Elenco degli allegati richiesti</b>
-         </p>
-       </td>
-     </tr>
-     <tr>
-      <td>
-       <input id="Modulo_bollo_firma_autografa" name="Modulo_bollo_firma_autografa" dynamic_check="#Metadati_firma_bollo.value() == 'A'" enabled="#Metadati_firma_bollo.value() == 'A'" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-       <p>
-        Modulo pagamento imposta di bollo firmato dal richiedente con <b>firma autografa</b>
-       </p>
-      </td>
-     </tr>
-     <tr>
-      <td>
-       <input id="Modulo_bollo_firma_elettronica" name="Modulo_bollo_firma_elettronica" dynamic_check="#Metadati_firma_bollo.value() == 'E'" enabled="#Metadati_firma_bollo.value() == 'E'" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-       <p>
-        Modulo pagamento imposta di bollo firmato dal richiedente con <b>firma elettronica</b>
-       </p>
-      </td>
-     </tr>
-   </tbody>
- </table>
-
- <br/>
-
  <!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->
 {{ utils.firma_hidden() }}
 <!-- simpatico start --></div><!-- simpatico end -->
@@ -232,14 +176,9 @@ tipo_mime="application/pdf"/>
  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
- <input id="GLOBO_allegato_cModulo_bollo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_bollo_compilato_firma_autografa" obbligatorio="#Modulo_bollo_firma_autografa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
- <input id="GLOBO_allegato_cModulo_bollo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_bollo_compilato_firma_elettronica" obbligatorio="#Modulo_bollo_firma_elettronica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
-
  <!-- passaggio dati tra moduli -->
  {{ utils.passaggio_metadati() }}
  <input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
- <input id="Metadati_firma_bollo" name="Metadati_firma_bollo" type="hidden"/>
  <input id="Metadati_oggetto" name="Metadati_oggetto" type="hidden"/>
 
 {% endblock content %}

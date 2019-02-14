@@ -35,7 +35,7 @@ urn="document:c_l378:deroga.limiti.immissione.acustica;edilizia.temporanea;richi
 sub_urn_list=""
 uo_globo_list=""
 contesto_procedurale="Richiesta deroga acustica"
-descrizione="Deroga acustica per attività edilizia temporanea - Cantieri"
+descrizione="Deroga acustica per attività edilizia temporanea"
 destinatario_amministrazione=""
 destinatario_ufficio="FMEB9R"
 dinamico="SI"
@@ -54,8 +54,8 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
-<meta codice_modulo_figlio="GEN-MARCABOLLO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.pagamento.marca.bollo"
+<meta codice_modulo_figlio="AMB-MARCABOLLO"
+urn_modulo_figlio="document:c_l378:modulo.secondario.deroga.limiti.immissione.acustica.pagamento.marca.bollo"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -96,28 +96,6 @@ firmato="NO"
 istruzioni="/modulistica/moduli/GEN-CDI"
 name="GLOBO_allegato"
 numero="0"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<meta codice_allegato="Modulo_compilato_firma_autografa"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
-descrizione_estesa="Modulo compilato e firmato manualmente"
-filename="Modulo_compilato_firma_autografa.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/Modulo_compilato_firma_autografa"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<meta codice_allegato="Modulo_compilato_firma_elettronica"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.elettronica"
-descrizione_estesa="Modulo compilato e firmato elettronicamente"
-filename="Modulo_compilato_firma_elettronica.pdf"
-firmato="SI"
-istruzioni="/modulistica/moduli/Modulo_compilato_firma_elettronica"
-name="GLOBO_allegato"
-numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
@@ -211,8 +189,8 @@ urn_report="report:CSP_SESSION_REPORT"
         'block6' : 'Seleziona una delle opzioni',
         'block7' : 'Particella edilizia non valida',
         'block8' : 'Indirizzo non verificato',
-        'block10' : 'Seleziona una delle opzioni',
-        'block14' : 'Seleziona una delle opzioni', 
+        'block11' : 'Seleziona una delle opzioni',
+        'block15' : 'Seleziona una delle opzioni', 
     }
   </script>
 <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
@@ -3570,18 +3548,11 @@ function get_ufficio_dest() {
 		</tr>
 		<tr>
 			<td style="width: 4%; vertical-align: top;">
-				<input id="GEN_MARCABOLLO" name="GEN_MARCABOLLO" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+				<input id="AMB_MARCABOLLO" name="AMB_MARCABOLLO" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
 			</td>
 			<td style="background-color: #eeeeee;" colspan="2">
 				<p>Pagamento dell'imposta di bollo per la richiesta di autorizzazione</p>
 				<p style="font-size:70%;">(da non allegare se l'istanza è presentata da ente pubblico)</p>
-				<p>
-					<select class="inputNormal" id="Tipo_Firma_pagamento_bollo" name="Tipo_Firma_pagamento_bollo" style="width:100%" label="Tipo firma bollo" mandatory_enabled="true">
-						<option value=""></option>
-						<option value="A">Si allega dichiarazione del pagamento dell'imposta di bollo con firma autografa del richiedente</option>
-						<option value="E">Si allega dichiarazione del pagamento dell'imposta di bollo con firma elettronica del richiedente</option>
-					</select>
-				</p>
 			</td>
 		</tr>
 		<tr>
@@ -3591,34 +3562,12 @@ function get_ufficio_dest() {
 			<td style="background-color: #eeeeee;" colspan="2">
 				<p>Ulteriori particelle o subalterni oggetto del procedimento</p>
 				<p>
-					<select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Immobile_NumeroAltriImmobili.value() != '0'">
+					<select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#GEN_IMMAGG.checked()">
 						<option value=""></option>
 						<option value="A">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
 						<option value="E">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
 					</select>
 				</p>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			 <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
-			</td>
-			<td style="background-color: #eeeeee;" colspan="2">
-			  <p>Domanda firmata dal richiedente nella seguente modalità: 
-				<select class="inputNormal" id="tipofirma" name="tipofirma" style="width:48%;" label="Tipo firma modulo compilato" mandatory_enabled="true">
-					<option value=""></option>
-					<option value="A">Firma autografa</option>
-					<option value="E">Firma elettronica</option>
-				</select>
-			 </p>
-			</td>
-		</tr>
-		<tr>
-			<td style="vertical-align: top; width:3%">
-				<input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#tipofirma.value() == 'A'" enabled="#tipofirma.value() == 'A'" value="OBBLIGATORIO"/>
-			</td>
-			<td style="background-color: #eeeeee;" colspan="2">
-				<p>Copia del documento d'identità del richiedente</p>
 			</td>
 		</tr>
 		<tr>
@@ -3680,7 +3629,7 @@ function get_ufficio_dest() {
 
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_cM22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" name="GLOBO_modulo_cM22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" type="hidden" value=""/>
 
-<input firmare="'NO'" id="GLOBO_modulofiglio_cGEN-MARCABOLLO" name="GLOBO_modulofiglio_cGEN-MARCABOLLO" obbligatorio="#GEN_MARCABOLLO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input firmare="'NO'" id="GLOBO_modulofiglio_cAMB-MARCABOLLO" name="GLOBO_modulofiglio_cAMB-MARCABOLLO" obbligatorio="#AMB_MARCABOLLO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <!-- Calcolo numero di moduli da richiedere per ulteriori particelle -->
 <input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
@@ -3688,8 +3637,6 @@ function get_ufficio_dest() {
 
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cRIC-DIR-SEG" name="GLOBO_allegato_cRIC-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#tipofirma.value() == 'A' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#tipofirma.value() == 'E' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
