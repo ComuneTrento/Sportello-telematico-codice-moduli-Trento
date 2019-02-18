@@ -3326,7 +3326,7 @@
 
 
 
-{% macro richiedente_atti( prefix='AventeTitolo', intestazione="Il sottoscritto", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", visibility_residenza="visibility:visibility", visibility_mail="no_mail", carica_campi="", cf_obbligatorio="true", format_telefono_numerico="false", pec_obbligatoria ="false"  ) -%}
+{% macro richiedente_atti( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
 
 <div type="Anagrafica_persona_fisica">
@@ -3376,7 +3376,7 @@
       '#AventeTitolo_CodiceFiscale:change','true') }}
     </table>
 
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
       <tbody>
         <tr class="Rigaintestazioneridotta">
           <td colspan="2">
@@ -3396,17 +3396,10 @@
           <td>
             <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome"/>
           </td>
-          {% if cf_obbligatorio == 'true' %}
           <td>
             <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale"/>
           </td>
-          {% endif %}
-  				{% if cf_obbligatorio == 'false' %}
-          <td>
-            <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory="!#{{ prefix }}_ProvinciaResidenza.check_value(['EE'])"/>
-          </td>
-  				{% endif %}
-        </tr>
+           </tr>
         <tr class="Rigaintestazioneridotta">
           <td style="width:24%;">
             <p class="Labelcella">Data di nascita</p>
@@ -3441,8 +3434,7 @@
         </tr>
       </tbody>
     </table>
-    {% if visibility_residenza == 'visibility:visibility' %}
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px; {{ visibility_residenza }} ">
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
       <tbody>
         <tr class="Rigaintestazioneridotta">
           <td colspan="6">
@@ -3474,26 +3466,25 @@
             {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza") }}
           </td>
           <td>
-            <input class="" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
+            <input class="" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory_enabled="true"/>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
+            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true"/>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
+            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true"/>
           </td>
   				<td>
             <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3"/>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked() and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'"/>
+            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'"/>
           </td>
         </tr>
       </tbody>
     </table>
-    {% endif %}
-    {% if visibility_mail == 'mail_ordinaria' %}
-  	<table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory="true">
   		<tbody>
   			<tr class="Rigaintestazioneridotta">
   				<td style="width:16.5%;">
@@ -3524,16 +3515,9 @@
   				</td>
   			</tr>
   			<tr>
-  				{% if format_telefono_numerico == 'false'%}
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono" name="{{ prefix }}_Telefono" style="width:100%" maxlength="13"/>
-  				</td>
-  				{% endif %}
-  				{% if format_telefono_numerico == 'true'%}
   				<td>
   					<input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono" name="{{ prefix }}_Telefono" style="width:100%" format="number" maxlength="13"/>
   				</td>
-  				{% endif %}
   				<td>
   					<input class="inputNormal" id="{{ prefix }}_Fax" label="Fax" mandatory="false" name="{{ prefix }}_Fax" style="width:100%" maxlength="13"/>
   				</td>
@@ -3541,54 +3525,11 @@
   					<input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria" mandatory_enabled="#Tipo_richiedente3.checked()" name="{{ prefix }}_EMail" style="width:100%;" maxlength="60"/>
   				</td>
   				<td>
-  				{% if pec_obbligatoria == 'true'%}
-  					<input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory_enabled="#Tipo_richiedente1.checked() || #Tipo_richiedente2.checked() || #Tipo_richiedente4.checked() || #Tipo_richiedente5.checked()" maxlength="60"/>
-  				{% endif %}
-  				{% if pec_obbligatoria == 'false'%}
-  					<input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory_enabled="#Tipo_richiedente1.checked() || #Tipo_richiedente2.checked() || #Tipo_richiedente4.checked() || #Tipo_richiedente5.checked()" maxlength="60"/>
-  				{% endif %}
+            <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory="#Tipo_richiedente1.checked() || #Tipo_richiedente2.checked() || #Tipo_richiedente4.checked() || #Tipo_richiedente5.checked()" maxlength="60"/>
   				</td>
   			</tr>
   		</tbody>
     </table>
-    {% endif %}
-  	{% if visibility_mail == 'mail_pec'%}
-  	<table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
-  		<tbody>
-  			<tr class="Rigaintestazioneridotta">
-  				<td style="width:21%;">
-  					<p class="Labelcella">
-  						Telefono
-  					</p>
-  				</td>
-  				<td style="width:21%;">
-  					<p class="Labelcella">
-  						Fax
-  					</p>
-  				</td>
-  				<td>
-  					<p class="Labelcella">
-  						E-mail PEC
-  							<i>
-  								(domicilio digitale)
-  							</i>
-  					</p>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono" name="{{ prefix }}_Telefono" style="width:100%" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
-  				</td>
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Fax" label="Fax" enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" name="{{ prefix }}_Fax" style="width:100%"/>
-  				</td>
-  				<td>
-  					<input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del dichiarante" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()" maxlength="60"/>
-  				</td>
-  			</tr>
-  		</tbody>
-  	</table>
-    {% endif %}
 
   <!-- simpatico start -->
   </div>
@@ -3596,13 +3537,5 @@
 
 </div>
 
-<input id="AventeTitolo_DatiPersonaObbligatori" name="AventeTitolo_DatiPersonaObbligatori" dynamic_check="true" type="hidden" />
-<input id="AventeTitolo_Titolo" name="AventeTitolo_Titolo" type="hidden" value="" />
-<input id="AventeTitolo_Ruolo" name="AventeTitolo_Ruolo" type="hidden" value="" />
-<input type="hidden" id="AventeTitolo_CodiceFamiglia" name="AventeTitolo_CodiceFamiglia"/>
-<input type="hidden" id="AventeTitolo_CodiceVia" name="AventeTitolo_CodiceVia"/>
-<input type="hidden" id="AventeTitolo_MatricolaAnagrafe" name="AventeTitolo_MatricolaAnagrafe"/>
-<input type="hidden" id="AventeTitolo_Nazione" name="AventeTitolo_Nazione"/>
-<input type="hidden" id="AventeTitolo_CodiceComuneNascita" name="AventeTitolo_CodiceComuneNascita"/>
 {%- endmacro %}
 
