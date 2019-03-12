@@ -32,8 +32,14 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
-<meta codice_modulo_figlio="GEN-IMMAGG"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -1281,8 +1287,8 @@ urn_report="report:CSP_SESSION_REPORT"
         <p>
           <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
             <option value=""></option>
-            <option value="A">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
-            <option value="E">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
+						<option value="Firmato con firma autografa">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
+						<option value="Firmato con firma elettronica">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
           </select>
         </p>
        </td>
@@ -1309,8 +1315,8 @@ urn_report="report:CSP_SESSION_REPORT"
           <p><b>Domanda firmata dal richiedente</b> nella seguente modalità: 
               <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:46%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
                 <option value=""></option>
-                <option value="A">Firma autografa</option>
-                <option value="E">Firma elettronica</option>
+                <option value="Firma autografa">Firma autografa</option>
+                <option value="Firma elettronica">Firma elettronica</option>
               </select>
           <br/>
           <span style="font-size:70%">
@@ -1321,7 +1327,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
        <td style="vertical-align: top; width:3%">
-         <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" enabled="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" value="OBBLIGATORIO"/>
+         <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'Firma autografa'" enabled="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'Firma autografa'" value="OBBLIGATORIO"/>
        </td>
        <td style="background-color: #eeeeee;" colspan="2">
           <p>
@@ -1415,7 +1421,8 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <!-- Calcolo numero di moduli da richiedere per ulteriori particelle -->
 <input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
-<input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#GEN_IMMAGG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_modulofiglio_cGEN-INTAGG-EL" name="GLOBO_modulofiglio_cGEN-INTAGG-EL" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-INTAGG-AU" name="GLOBO_modulofiglio_cGEN-INTAGG-AU" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
@@ -1448,14 +1455,13 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cRIC-DIR-SEG" name="GLOBO_allegato_cRIC-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'A' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'E' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" dynamic_value="#NschedeAllegateAu.value()" type="hidden"/>
 <input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" dynamic_value="#NschedeAllegateEl.value()" type="hidden"/>
-<input id="Metadati_firma_bollo" name="Metadati_firma_bollo" dynamic_value="#Tipo_Firma_pagamento_bollo.value()" type="hidden"/>
 <input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" dynamic_value="#Tipo_Firma_ult_particelle.value()" type="hidden"/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />

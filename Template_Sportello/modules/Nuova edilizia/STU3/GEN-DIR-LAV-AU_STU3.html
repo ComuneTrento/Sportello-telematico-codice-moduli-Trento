@@ -1,0 +1,195 @@
+{% set CodiceModulo =  "GEN-DIR-LAV-AU" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.direttore.lavori.firma.autografa" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-DIR-LAV-AU_vSTU3" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="Titolare2_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Anagrafica del direttore dei lavori"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/GEN-DIR-LAV-AU"
+verifica_pagamento="NO"
+versione="1.0|01/01/2015"/>
+
+<meta codice_allegato="Modulo_compilato_firma_autografa"
+urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
+descrizione_estesa="Scansione del modulo anagrafica direttore dei lavori compilato e firmato manualmente"
+filename="Modulo_an_dir_lav_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="5_8_2" %}
+  {% set simpaticoEserviceName="GEN DIR LAV AU" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-DIR-LAV-AU" %}
+  {% set simpaticoForm="modulo_secondario" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=[ "Titolare2_CodiceFiscale",
+                           "Titolare2_Cognome",
+                           "Titolare2_Nome",
+                           "Titolare2_PartitaIVA",
+                           "Titolare2_EMailPEC"] %}
+
+  {% set ERROR_LABELS=[ ('block1' , 'Inserire il codice fiscale e dichiarare presa coscienza dei contenuti progettuali'),
+                        ('block3' , 'Confermare presa visione informativa sulla privacy')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
+
+{% block title %}
+   Anagrafica direttore dei lavori
+{% endblock title %}
+
+{% block content %}
+ <globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+ </globo_fondo_pagina>
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Titolare2_Cognome.value().toUpperCase() + ' - anagrafica direttore dei lavori'"/>
+
+ <h1 class="Modulo">
+  Anagrafica direttore dei lavori
+ </h1>
+
+ <input id="Titolare2_DatiProfessionistaObbligatori" name="Titolare2_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+ <input id="Titolare2_DatiAlboProfessionistaObbligatori" name="Titolare2_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+ 
+ <div class="simpatico-block simpatico-query-and-answer">
+
+{{anagrafica_trento.professionista("Titolare2","Il direttore dei lavori","Direttore_lavori","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Dichiarazione_direttore_lavori" name="Dichiarazione_direttore_lavori" type="radio" value="1" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p>Il sottoscritto Direttore dei lavori dichiara di aver preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto, nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+ </div>
+
+ <br/>
+
+  <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+   <tbody>
+     <tr class="Rigaintestazione">
+       <td colspan="3">
+         <p style="text-align: center;">
+           <b>Elenco degli allegati richiesti</b>
+         </p>
+       </td>
+     </tr>
+     <tr>
+      <td>
+       <input id="Modulo_dir_lav_firma_autografa" name="Modulo_dir_lav_firma_autografa" dynamic_check="#Metadati_Tipo_Firma_dir_lav.value() == 'Firmato con firma autografa'" enabled="#Metadati_Tipo_Firma_dir_lav.value() == 'Firmato con firma autografa'" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+       <p>
+        scansione della stampa di questo modulo firmata
+       </p>
+      </td>
+     </tr>
+   </tbody>
+ </table>
+
+ <br>
+
+ <table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
+        <p style="text-align: center; font-size:85%"><i>art. 13 Regolamento UE n. 2016/679</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <br>
+        <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e del decreto legislativo n. 196/2003, si informa che:</p>
+        <ul>
+          <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://www.comune.trento.it" target="_blank">http://comune.trento.it</a>);</li>
+          <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://www.comunitrentini.it</a>);</li>
+          <li>I dati vengono raccolti e trattati nell'ambito del procedimento per il quale la presente dichiarazione viene resa;</li>
+          <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico;</li>
+          <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza;</li>
+          <li>I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso;</li>
+          <li>I dati sono oggetto di diffusione, nel rispetto del principio di minimizzazione, esclusivamente per l'ottemperanza agli obblighi di pubblicazione dei dati imposti dalla normativa vigente in materia di amministrazione trasparente;</li>
+          <li>I dati non sono oggetto di trasferimento all'estero;</li>
+          <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Attività edilizia sito in Trento, Via del Brennero n. 312, 38121 – Trento, tel. 0461/884798, fax 0461/884701, PEC: servizio.attivitaedilizia@pec.comune.trento.it;</li>
+          <li>Il conferimento dei dati ha natura obbligatoria per le finalità di cui sopra e per tutte quelle ausiliarie e connesse. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa corrispondere alla richiesta connessa alla specifica finalità;</li>
+          <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge;</li>
+          <li>I diritti dell'interessato sono: 
+            <ul>
+              <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano;</li>
+              <li>ottenere la loro comunicazione in forma intelligibile; </li>
+              <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici; </li>
+              <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge; </li>
+              <li>richiedere la portabilità dei dati;</li>
+              <li>aggiornare, correggere o integrare i dati che lo riguardano; </li>
+              <li>opporsi, per motivi legittimi, al trattamento dei dati;</li>
+              <li>proporre reclamo al Garante per la protezione dei dati personali.</li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+        <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+ <br>
+
+<div class="simpatico-block">
+{{ utils.firma_hidden() }}
+</div>
+<br/>
+
+
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+ <input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Modulo_dir_lav_firma_autografa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+ {{ utils.passaggio_metadati() }}
+ <input id="Metadati_Tipo_Firma_dir_lav" name="Metadati_Tipo_Firma_dir_lav" type="hidden"/>
+
+{% endblock content %}

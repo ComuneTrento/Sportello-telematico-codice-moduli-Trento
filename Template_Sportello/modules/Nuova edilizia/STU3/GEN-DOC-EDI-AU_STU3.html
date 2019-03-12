@@ -1,6 +1,6 @@
-{% set CodiceModulo =  "GEN-DOC-EDI" %}
-{% set Urn =  "document:c_l378:modulo.secondario.documentazione.procedimento.edilizio" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-DOC-EDI_vSTU3" %}
+{% set CodiceModulo =  "GEN-DOC-EDI-AU" %}
+{% set Urn =  "document:c_l378:modulo.secondario.documentazione.procedimento.edilizio.firma.autografa" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-DOC-EDI-AU_vSTU3" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -23,7 +23,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-DOC-EDI"
+urlhelp="/modulistica/moduli/GEN-DOC-EDI-AU"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
@@ -33,17 +33,6 @@ descrizione_estesa="Scansione del modulo documentazione necessaria per il proced
 filename="Modulo_doc_edi_firma_autografa.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/Modulo_compilato_firma_autografa"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<meta codice_allegato="Modulo_compilato_firma_elettronica"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.elettronica"
-descrizione_estesa="Modulo documentazione necessaria per il procedimento edilizio compilato e firmato elettronicamente"
-filename="Modulo_doc_edi_firma_elettronica.pdf"
-firmato="SI"
-istruzioni="/modulistica/moduli/Modulo_compilato_firma_elettronica"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -206,9 +195,9 @@ tipo_mime="application/pdf"/>
 {% endblock meta %}
 
 {% block simpaticoconfig %}
-  {% set simpaticoEservice="5_10" %}
-  {% set simpaticoEserviceName="GEN DOC EDI" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-DOC-EDI" %}
+  {% set simpaticoEservice="5_10_2" %}
+  {% set simpaticoEserviceName="GEN DOC EDI AU" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-DOC-EDI-AU" %}
   {% set simpaticoForm="modulo_secondario" %}
   {% set simpaticoCategory="Edilizia" %}
 
@@ -402,24 +391,14 @@ Elenco documentazione necessaria per il procedimento edilizio
     </tr>
     <tr>
       <td>
-       <input id="Check_doc_edi_firma_autografa" name="Check_doc_edi_firma_autografa" dynamic_check="#Metadati_Tipo_Firma_doc_edi.value() == 'A'" enabled="#Metadati_Tipo_Firma_doc_edi.value() == 'A'" type="checkbox" value="OBBLIGATORIO"/>
+       <input id="Check_doc_edi_firma_autografa" name="Check_doc_edi_firma_autografa" dynamic_check="#Metadati_Tipo_Firma_doc_edi.value() == 'Firmato con firma autografa'" enabled="#Metadati_Tipo_Firma_doc_edi.value() == 'Firmato con firma autografa'" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
        <p>
-        Elenco documentazione necessaria per il procedimento edilizio firmato dal direttore dei lavori con <b>firma autografa</b>
+        scansione della stampa di questo modulo firmata
        </p>
       </td>
      </tr>
-     <tr>
-      <td>
-       <input id="Check_doc_edi_firma_elettronica" name="Check_doc_edi_firma_elettronica" dynamic_check="#Metadati_Tipo_Firma_doc_edi.value() == 'E'" enabled="#Metadati_Tipo_Firma_doc_edi.value() == 'E'" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-       <p>
-        Elenco documentazione necessaria per il procedimento edilizio firmato dal direttore dei lavori con <b>firma elettronica</b>
-       </p>
-      </td>
-    </tr>
   </tbody>
 </table>
 
@@ -440,7 +419,6 @@ Elenco documentazione necessaria per il procedimento edilizio
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
  <input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Check_doc_edi_firma_autografa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
- <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Check_doc_edi_firma_elettronica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cGEN_PLANIMETRIA_RETI" name="GLOBO_allegato_cGEN_PLANIMETRIA_RETI" obbligatorio="#planimetria_reti.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cGEN_SCARICHI_ACQUE" name="GLOBO_allegato_cGEN_SCARICHI_ACQUE" obbligatorio="#scarichi.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
