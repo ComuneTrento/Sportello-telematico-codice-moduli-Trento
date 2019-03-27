@@ -1,0 +1,141 @@
+{
+    "model": {
+        "context": {},
+        "blocks": [
+            {
+                "id": "block1",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Anagrafica del richiedente"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[1]",
+                "tags": [],
+                "fields": [
+                    "AventeTitolo_CodiceFiscale"
+                ],
+                "blocks": [],
+                "dependencies": [],
+                "condition": null,
+                "completed": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
+                "description": {
+                    "it": "Una volta effettuato l’accesso con la carta dei servizi, premendo il pulsante <i>“Carica dati personali”</i> le informazioni anagrafiche verranno caricate automaticamente.<br>Verificare i dati e compilare eventuali voci mancanti.<br>NOTA: Se il richiedente non risiede nell'Unione Europea, selezionare come provincia di residenza l'opzione <i>“EE”</i> e inserire la nazione di residenza nel campo “Comune”.<br><br><b>ATTENZIONE! I campi evidenziati in arancione sono obbligatori.</b><br><br>Una volta compilati tutti i campi premere il pulsante <i>“SUCCESSIVO”</i> per proseguire."
+                }
+            },
+            {
+                "id": "block2",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Informazioni importanti"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
+                "tags": [],
+                "fields": [
+                    "AventeTitolo_CodiceFiscale"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block1"
+                ],
+                "condition": "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",
+                "completed": null,
+                "description": {
+                    "it": "Leggere le informazioni relative all'impegno che il ruolo di scrutatore comporta"
+                }
+            },
+            {
+                "id": "block3",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Informativa trattamento dati personali"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[3]",
+                "tags": [],
+                "fields": [
+                    "Presa_visione_check"
+                ],
+                "blocks": [],
+                "dependencies": [],
+                "condition": null,
+                "completed": "context['Presa_visione_check'] =='1'",
+                "description": {
+                    "it": "Dichiarare di aver preso visione dell'informativa sul trattamento dei dati personali"
+                }
+            },
+            {
+                "id": "block4",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Conclusione della domanda"
+                },
+                "xpath": "//*[@id='firme']",
+                "tags": [],
+                "fields": [
+                  "Presa_visione_check"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block3"
+                ],
+                "condition": "context['Presa_visione_check'] =='1'",
+                "completed": null,
+                "description": {
+                    "it": "Termine presentazione della domanda: specificare luogo e data. Per completare il modulo premere <i>“FINE”</i>. Verificare nuovamente tutti i dati inseriti e premere <b>“Salva modulo”</b>.  Verranno segnalate eventuali mancanze. In tal caso provvedere all’inserimento dei dati mancanti."
+                }
+            }
+        ],
+        "fields": [
+            {
+                "id": "AventeTitolo_CodiceFiscale",
+                "xpath": "//*[@id=\"AventeTitolo_CodiceFiscale\"]",
+                "mapping": {
+                    "key": "AventeTitolo_CodiceFiscale",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Presa_visione_check",
+                "xpath": "//*[@id=\"Presa_visione_check\"]",
+                "mapping": {
+                    "key": "Presa_visione_check",
+                    "binding": "OUT"
+                }
+            }
+        ],
+        "description": {
+            "it": "Modulo dichiarazione disponibilità a svolgere il ruolo di scrutatore di seggio elettorale"
+        },
+        "name": {
+            "it": "Dichiarzione di disponibilità a svolgere il ruolo di scrutatore di seggio elettorale"
+        },
+        "workflow": [
+            {
+                "id": "step1",
+                "name": {
+                    "it": "Compilazione anagrafica"
+                },
+                "description": {
+                    "it": "Il richiedente deve inserire i propri dati anagrafici (recuperati in automatico mediante l'apposito pulsante)."
+                }
+            },
+            {
+                "id": "step2",
+                "name": {
+                    "it": "Dichiarazione disponibilità"
+                },
+                "description": {
+                    "it": "Leggere le informazioni relative all'impegno che il ruolo di scrutatore comporta."
+                }
+            },
+            {
+                "id": "step3",
+                "name": {
+                    "it": "Dichiarazioni finali e accettazione trattamento dei dati"
+                },
+                "description": {
+                    "it": "Dichiarazioni conclusive obbligatorie e presa visione e accettazione del trattamento dei dati personali inseriti nel modulo."
+                }
+            }
+        ]
+    },
+        "uri": "https://sportello.comune.trento.it/modulistica/moduli/M1144-DISPONIBILITA-SCRUTATORE_vSTU3"
+}

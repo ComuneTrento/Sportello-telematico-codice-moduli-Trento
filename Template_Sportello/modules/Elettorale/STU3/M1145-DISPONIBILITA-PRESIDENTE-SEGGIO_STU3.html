@@ -1,6 +1,6 @@
 {% set CodiceModulo = "M1145-DISPONIBILITA-PRESIDENTE-SEGGIO" %}
 {% set Urn =  "document:c_l378:albo.presidenti.seggio;dare.disponibilita.presidenti.seggio;disponibilita.incarico.presidenti.seggio;modulo.disponibilita.incarico.presidenti.seggio" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1145-DISPONIBILITA-PRESIDENTE-SEGGIO_v1.0" %}-->
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1145-DISPONIBILITA-PRESIDENTE-SEGGIO_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -32,55 +32,11 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|23/02/2018" />
 
-<!--<meta codice_allegato="GEN-CDI"
-urn="document:c_l378:copia.documento.identita"
-descrizione_estesa="Documento di identità"
-filename="Documento identita.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/GEN-CDI"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>-->
-
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
 urn_report="report:CSP_SESSION_REPORT"
 />
-
-<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
-<script type="text/javascript">
-  var simpaticoEservice="19"
-  var simpaticoForm="main"
-  var simpaticoCategory="Edilizia"
-  var simpaticoMapping=["AventeTitolo_CodiceFiscale",
-                        "AventeTitolo_DataNascita",
-                        "AventeTitolo_Sesso",
-                        "AventeTitolo_Nazionalita",
-                        "AventeTitolo_LuogoNascita",
-                        "AventeTitolo_ComuneResidenza",
-                        "AventeTitolo_ViaResidenza",
-                        "AventeTitolo_CivicoResidenza",
-                        "AventeTitolo_CAPResidenza",
-                        "AventeTitolo_Cognome",
-                        "AventeTitolo_Nome",
-                        "AventeTitolo_Telefono",
-                        "AventeTitolo_Fax",
-                        "AventeTitolo_EMail",
-                        "AventeTitolo_EMailPEC"]
-  var serviceName = "Rilascio di titoli edilizi per atti di compravendita"; // Eservice example
-  var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/RILASCIO-TITOLI-EDILIZI.html";
-  var ERROR_LABELS= {   
-                     'block1' : 'Selezionare una delle opzioni',
-                     'block2' : 'Inserire il codice fiscale',
-                     'block3' : 'Particella edilizia non valida',
-                     'block4' : 'Indirizzo non inserito',
-                     'block5' : 'Indirizzo non verificato',
-                     'block12' : 'Selezionare una delle opzioni'
-                    }
-</script>
- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 
 {% endblock meta %}
 
@@ -112,9 +68,10 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Elezioni europee 26 maggio 2019: Disponibilità a svolgere l’incarico di presidente di seggio'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#nominativo_oggetto.value() + ' - Elezioni 26 maggio 2019 - Disponibilità presidente'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
 
 <br>
 <h1 class="Modulo" style="line-height:1.6;">
@@ -124,41 +81,173 @@ urn_report="report:CSP_SESSION_REPORT"
     ELEZIONI EUROPEE E CAMERA DEI DEPUTATI COLLEGIO UNINOMINALE DI TRENTO
 </h2>
 <br>
-<h3 class="Modulo" style="line-height:1.6;">
+<h2 class="Modulo" style="line-height:1.6;">
     DISPONIBILITA' A SVOLGERE L'INCARICO DI PRESIDENTE DI SEGGIO
-</h3>
+</h2>
 
 
 <div class="simpatico-block simpatico-query-and-answer">
-{{anagrafica_trento.richiedente_elettorale( "AventeTitolo", "ll/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility") }}
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
-    <tbody>
-        <tr class="Rigaintestazioneridotta">
-            <td>
-                <p class="Labelcella">Condizione lavorativa/Professione</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input class="inputNormal" id="tipo_lavoro" name="tipo_lavoro" style="width:100%" mandatory_enabled="true"/>
-            </td>
-        </tr>
-    </tbody>
+  {{anagrafica_trento.richiedente_elettorale("AventeTitolo","Il/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility")}}
+
+  <input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
+
+  <input type="hidden" id="chek_residenza" name="chek_residenza" dynamic_value="(#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai residenti a Trento'" style="width: 100%;" readonly/>
+
+
+</div>
+
+<br>
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey" enabled="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p><b>Avente la seguente occupazione:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Lavoro_richiedente" name="Lavoro_richiedente"  mandatory="true" label="Condizione di lavoro del richiedente"> </div>
+        <input id="Lavoro_richiedente1" name="Lavoro_richiedente" type="radio" value="Lavoratore"/>
+      </td>
+      <td>
+        <p>lavoratore</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; width: 4%;">
+        <input id="Lavoro_richiedente2" name="Lavoro_richiedente" type="radio" value="Studente"/>
+      </td>
+      <td>
+        <p>studente regolarmente iscritto</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Lavoro_richiedente3" name="Lavoro_richiedente" type="radio" value="Studente/Lavoratore"/>
+      </td>
+      <td>
+        <p>studente lavoratore</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Lavoro_richiedente4" name="Lavoro_richiedente" type="radio" value="Non occupato/Pensionato"/>
+      </td>
+      <td>
+        <p>non occupato/pensionato</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<h3 class="Modulo">DICHIARA</h3>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="3">
+        <p><b>relativamente all'iscrizione all'albo dei Presidenti di seggio</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <div id="Iscrizione_albo" name="Iscrizione_albo"  mandatory_enabled="true" label="Dichiarazione iscrizione albo"> </div>
+        <input id="Iscrizione_albo1" name="Iscrizione_albo" type="radio" value="Iscritto albo"/>
+      </td>
+      <td colspan="2">
+        <p>di essere iscritto all'albo dei Presidenti di seggio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Data_iscrizione_albo" name="Data_iscrizione_albo"  mandatory_enabled="#Iscrizione_albo1.checked()" label="Data iscrizione albo"> </div>
+        <input id="Data_iscrizione_albo1" name="Data_iscrizione_albo" type="radio" value="Iscritto entro termine ultimo"/>
+      </td>
+      <td>
+        <p>che l'iscrizione è stata perfezionata <b>entro il 31 ottobre 2018</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; width: 4%;">
+        <input id="Data_iscrizione_albo2" name="Data_iscrizione_albo" type="radio" value="Iscritto oltre termine ultimo"/>
+      </td>
+      <td>
+        <p>che l'iscrizione è stata perfezionata <b>dopo il 31 ottobre 2018</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; width: 4%;">
+        <input id="Iscrizione_albo2" name="Iscrizione_albo" type="radio" value="Non iscritto albo"/>
+      </td>
+      <td colspan="2">
+        <p>di NON essere iscritto all'albo dei Presidenti di seggio</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" name="Note" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+          <p><b>NOTA BENE: Non è possibile presentare contestualmente la richiesta di iscrizione all'albo e la domanda di disponibilità per le elezioni.</b><br>Per ulteriori informazioni si prega di contattare l'Ufficio Elettorale del Comune di Trento al numero 0461-884299</p>
+      </td>
+    </tr>
+  </tbody>
 </table>
 </div>
 
 <br>
-<p class="Modulo"><b>già iscritto/a all'Albo dei presidenti</b>, con la presente</p>
 <br>
 
-<h3 class="Modulo">DICHIARA LA PROPRIA DISPONIBILITA'</h3>
+<div class="simpatico-block simpatico-query-and-answer">
+<h3 class="Modulo">DICHIARA INOLTRE LA PROPRIA DISPONIBILITA'</h3>
+<table class="Modulo" name="Note" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>a svolgere l'incarico di Presidente di seggio</b> alle elezioni europee-Camera Deputati del 26 maggio, ovvero dichiara la propria disponibilità nelle seguenti giornate:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Dichiarazioni" name="Dichiarazioni" label="Dichiarazioni disponibilità"> </div>
+        <input id="Dichiarazioni1" name="Dichiarazioni1" dynamic_check="true" type="checkbox" value="1"/>
+      </td>
+      <td>
+        <p>mattina di sabato 25 maggio - consegna materiale,</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Dichiarazioni2" name="Dichiarazioni2" dynamic_check="true" type="checkbox" value="2"/>
+      </td>
+      <td>
+        <p>pomeriggio di sabato 25 maggio - costituzione seggio,</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Dichiarazioni3" name="Dichiarazioni3" dynamic_check="true" type="checkbox" value="3"/>
+      </td>
+      <td>
+        <p>domenica 26 maggio - giorno della votazione e, a seguire, a partire dalle ore 23.00 operazioni di scrutinio da concludersi entro la giornata di lunedì.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 <br>
-
-<p class="Modulo"><b>a svolgere l'incarico di presidente alle elezioni elezioni europee-Camera Deputati del 26 maggio (mattina di sabato 25 maggio consegna materiale, pomeriggio di sabato 25 maggio costituzione seggio; domenica 26 maggio giorno della votazione e, a seguire, a partire dalle ore 23.00 operazioni di scrutinio da concludersi entro la giornata di lunedì).</b></p>
-
 <br>
 
+<div class="simpatico-block simpatico-query-and-answer">
 <h3 class="Modulo">DICHIARA ALTRESI', in occasione di precedenti tornate elettorali:</h3>
 
 <table class="Modulo" style="border:1px solid grey;">
@@ -167,7 +256,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <tr>
             <td style="vertical-align: top; width: 4%;">
               <div id="ruolo_pres" name="ruolo_pres" label="Svolgimento funzione presidente di seggio" mandatory_enabled="true"></div>
-              <input id="ruolo_pres1" name="ruolo_pres" type="radio" value="1" />
+              <input id="ruolo_pres1" name="ruolo_pres" type="radio" value="già presidente" />
             </td>
             <td>
               <p>di avere svolto la funzione di Presidente di seggio</p>
@@ -175,7 +264,7 @@ urn_report="report:CSP_SESSION_REPORT"
         </tr>
         <tr>
             <td style="vertical-align: top; width: 4%;">
-              <input id="ruolo_pres2" name="ruolo_pres" type="radio" value="2" />
+              <input id="ruolo_pres2" name="ruolo_pres" type="radio" value="mai presidente" />
             </td>
             <td>
               <p>di NON avere svolto la funzione di Presidente di seggio</p>
@@ -185,7 +274,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <tr>
             <td style="vertical-align: top; width: 4%;">
               <div id="ruolo_scrut" name="ruolo_scrut" label="Svolgimento funzione scrutatore" mandatory_enabled="true"></div>
-              <input id="ruolo_scrut1" name="ruolo_scrut" type="radio" value="1" />
+              <input id="ruolo_scrut1" name="ruolo_scrut" type="radio" value="già scrutatore" />
             </td>
             <td>
               <p>di avere svolto la funzione di Scrutatore</p>
@@ -193,7 +282,7 @@ urn_report="report:CSP_SESSION_REPORT"
         </tr>
         <tr>
             <td style="vertical-align: top; width: 4%;">
-              <input id="ruolo_scrut2" name="ruolo_scrut" type="radio" value="2" />
+              <input id="ruolo_scrut2" name="ruolo_scrut" type="radio" value="mai scrutatore" />
             </td>
             <td>
               <p>di NON avere svolto la funzione di Scrutatore</p>
@@ -203,7 +292,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <tr>
             <td style="vertical-align: top; width: 4%;">
               <div id="ruolo_segr" name="ruolo_segr" label="Svolgimento funzione segretario" mandatory_enabled="true"></div>
-              <input id="ruolo_segr1" name="ruolo_segr" type="radio" value="1" />
+              <input id="ruolo_segr1" name="ruolo_segr" type="radio" value="già segretario" />
             </td>
             <td>
               <p>di avere svolto la funzione di Segretario</p>
@@ -211,7 +300,7 @@ urn_report="report:CSP_SESSION_REPORT"
         </tr>
         <tr>
             <td style="vertical-align: top; width: 4%;">
-              <input id="ruolo_segr2" name="ruolo_segr" type="radio" value="2" />
+              <input id="ruolo_segr2" name="ruolo_segr" type="radio" value="mai segretario" />
             </td>
             <td>
               <p>di NON avere svolto la funzione di Segretario</p>
@@ -219,16 +308,66 @@ urn_report="report:CSP_SESSION_REPORT"
         </tr>
     </tbody>
 </table>
+</div>
 
 <br>
 <br>
 
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione" >
+        <td colspan="2">
+          <b>Verifica requisiti presentabilità della domanda</b>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input
+            id="check_presentabilità1"
+            name="check_presentabilità1"
+            dynamic_check="#AventeTitolo_ComuneResidenza.value() != '' and (#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento'))"
+            enabled="#AventeTitolo_ComuneResidenza.value() != '' and (#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento'))"
+            type="checkbox"
+            value="Residente a Trento"/>
+        </td>
+        <td>
+          <p>Il richiedente è residente a Trento</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input
+            id="check_presentabilità2"
+            name="check_presentabilità2"
+            dynamic_check="#Data_iscrizione_albo1.checked()"
+            enabled="#Data_iscrizione_albo1.checked()"
+            type="checkbox"
+            value="Iscrizione albo entro termini"/>
+        </td>
+        <td>
+          <p>L'iscrizione all'albo è avvenuta entro il 31 ottobre 2018</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input id="Blocca_domanda" name="Blocca_domanda" label="CONTROLLO PRESENTABILITÀ DELLE DOMANDE" style="width: 100%;" dynamic_value="#Data_iscrizione_albo1.checked() and #chek_residenza.check_value('Proseguire la compilazione') ? 'REQUISITI VERIFICATI! è possibile presentare la domanda' : 'ATTENZIONE! Non sono soddisfatti i requisiti necessari per presentare la domanda'" readonly>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <input type="hidden" id="permesso_salvare_domanda" name="permesso_salvare_domanda" dynamic_value="#Blocca_domanda.check_value('ATTENZIONE! Non sono soddisfatti i requisiti necessari per presentare la domanda') ? '' : 'OK'" style="width: 100%;" mandatory="true" label="La domanda non è completa o non soddisfa i requisiti di validità e non può pertanto essere inviata" readonly/>
+  
 <!--<p style="line-height: 1.8;" class="Modulo">L'iscrizione all'Albo dei presidenti, è stata effettuata in data: <input id="data_iscr_albo_pres" name="data_iscr_albo_pres" format="date" size="8">.<br>
 <input style="width:100%;" id="check_pres_domanda" name="check_pres_domanda" dynamic_value="moment(#data_iscr_albo_pres.value(), 'DD/MM/YYYY').diff(moment(#Data.value(), 'DD/MM/YYYY'), 'years') >= 1 ? 'Iscrizione all’albo successiva a XXXXXXXXX XXXX: non è possibile dare la disponibilità per le elezioni XXXXXX' : 'Iscrizione all’albo successiva a XXXXXXXXX XXXX: è possibile dare la disponibilità per le elezioni XXXXXX'">
 -->
 
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
 <h3 class="Modulo">NOTE</h3>
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="background-color: #eeeeee;">
@@ -237,19 +376,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
   </tbody>
 </table>
-
-<br>
-<br>
-
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Note" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td>
-        <p><b>NOTA BENE:</b> L'iscrizione all'Albo dei presidenti, condizione necessaria per dichiarare la propria disponibilità, deve essere stata perfezionata entro il mese di ottobre 2018. Non è pertanto possibile presentare contestualmente la richiesta di iscrizione all'albo e la domanda di disponibilità per le elezioni provinciali.</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+</div>
 
 <br>
 <br>
@@ -267,28 +394,27 @@ urn_report="report:CSP_SESSION_REPORT"
         <br>
         <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e delle disposizioni della normativa nazionale, si informa che:</p>
         <ul>
-          <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://www.comune.trento.it" target="_blank">http://comune.trento.it</a>);</li>
-          <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://www.comunitrentini.it</a>);</li>
-
-          <li>I dati vengono raccolti e trattati per le seguenti finalità: domanda disponibilità presidenti di seggio elezioni comunali e circoscrizionali;</li>
-          <li>la base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico ai sensi della normativa statale;</li>
-          <li>il trattamento riguarda anche categorie particolari di dati personali e/o dati relativi a condanne penali, ai sensi di quanto disposto dal DPR n. 223 del 20/03/1967;</li>
-          <li>i dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza;</li>
-          <li>i dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso.</li>
-          <li>I dati non sono oggetto di diffusione nè di trasferimento all'estero</li>
-          <li>i dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Servizi Demografici e decentramento;</li>
-          <li>il conferimento dei dati ha natura obbligatoria per la gestione del procedimento sopracitato. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa adempiere a quanto richiesto in relazione alla tipologia di procedimento;</li>
-          <li>i dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge;</li>
-          <li>I diritti dell'interessato sono: 
+          <li>&nbsp; - Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://www.comune.trento.it" target="_blank">http://comune.trento.it</a>);</li>
+          <li>&nbsp;- Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://www.comunitrentini.it</a>);</li>
+          <li>&nbsp;- I dati vengono raccolti e trattati per le seguenti finalità: domanda disponibilità presidenti di seggio elezioni europee e Camera dei deputati;</li>
+          <li>&nbsp;- La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico ai sensi della normativa statale;</li>
+          <li>&nbsp;- Il trattamento riguarda anche categorie particolari di dati personali e/o dati relativi a condanne penali, ai sensi di quanto disposto dal DPR n. 223 del 20/03/1967;</li>
+          <li>&nbsp;- I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza;</li>
+          <li>&nbsp;- I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso.</li>
+          <li>&nbsp;- I dati non sono oggetto di diffusione nè di trasferimento all'estero</li>
+          <li>&nbsp;- I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Servizi Demografici e decentramento;</li>
+          <li>&nbsp;- Il conferimento dei dati ha natura obbligatoria per la gestione del procedimento sopracitato. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa adempiere a quanto richiesto in relazione alla tipologia di procedimento;</li>
+          <li>&nbsp;- I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge;</li>
+          <li>&nbsp;- I diritti dell'interessato sono: 
             <ul>
-                <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano;</li>
-                <li>ottenere la loro comunicazione in forma intelligibile;</li>
-                <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici;</li>
-                <li>ottenere la rettifica, la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge;</li>
-                <li>richiedere la portabilità dei dati;</li>
-                <li>aggiornare, correggere o integrare i dati che lo riguardano;</li>
-                <li>opporsi, per motivi legittimi, al trattamento dei dati;</li>
-                <li>proporre reclamo al Garante per la protezione dei dati personali.</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;--- richiedere la conferma dell'esistenza o meno dei dati che lo riguardano;</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;--- ottenere la loro comunicazione in forma intelligibile;</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;--- richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici;</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;--- ottenere la rettifica, la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge;</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;--- richiedere la portabilità dei dati;</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;--- aggiornare, correggere o integrare i dati che lo riguardano;</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;--- opporsi, per motivi legittimi, al trattamento dei dati;</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;--- proporre reclamo al Garante per la protezione dei dati personali.</li>
             </ul>
           </li>
         </ul>
@@ -307,6 +433,7 @@ urn_report="report:CSP_SESSION_REPORT"
 </table>
 
 <br>
+
 
 <div class="simpatico-block">
   {{ utils.firma_hidden() }}
