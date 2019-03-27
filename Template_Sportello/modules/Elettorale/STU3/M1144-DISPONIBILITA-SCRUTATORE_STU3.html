@@ -101,6 +101,7 @@ urn_report="report:CSP_SESSION_REPORT"
   <input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
   
   <input type="hidden" id="chek_residenza" name="chek_residenza" dynamic_value="(#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai residenti a Trento'" style="width: 100%;" readonly/>
+  <input type="hidden" id="chek_cittadinanza" name="chek_cittadinanza" dynamic_value="(#AventeTitolo_Cittadinanza.check_value('ITALIANA') || #AventeTitolo_Cittadinanza.check_value('Italiana') || #AventeTitolo_Cittadinanza.check_value('italiana')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai cittadini Italiani'" style="width: 100%;" readonly/>
 
 
 </div>
@@ -259,6 +260,20 @@ urn_report="report:CSP_SESSION_REPORT"
           <input
             id="check_presentabilità1"
             name="check_presentabilità1"
+            dynamic_check="#AventeTitolo_Cittadinanza.value() != '' and (#AventeTitolo_Cittadinanza.check_value('ITALIANA') || #AventeTitolo_Cittadinanza.check_value('Italiana') || #AventeTitolo_Cittadinanza.check_value('italiana'))"
+            enabled="#AventeTitolo_Cittadinanza.value() != '' and (#AventeTitolo_Cittadinanza.check_value('ITALIANA') || #AventeTitolo_Cittadinanza.check_value('Italiana') || #AventeTitolo_Cittadinanza.check_value('italiana'))"
+            type="checkbox"
+            value="Cittadinanza italiana"/>
+        </td>
+        <td>
+          <p>Il richiedente è cittadino Italiano</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input
+            id="check_presentabilità2"
+            name="check_presentabilità2"
             dynamic_check="#AventeTitolo_ComuneResidenza.value() != '' and (#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento'))"
             enabled="#AventeTitolo_ComuneResidenza.value() != '' and (#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento'))"
             type="checkbox"
@@ -271,8 +286,8 @@ urn_report="report:CSP_SESSION_REPORT"
       <tr>
         <td style="vertical-align: top; width: 4%;">
           <input
-            id="check_presentabilità2"
-            name="check_presentabilità2"
+            id="check_presentabilità3"
+            name="check_presentabilità3"
             dynamic_check="#Data_iscrizione_albo1.checked()"
             enabled="#Data_iscrizione_albo1.checked()"
             type="checkbox"
@@ -284,7 +299,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
         <td colspan="2">
-          <input id="Blocca_domanda" name="Blocca_domanda" label="CONTROLLO PRESENTABILITÀ DELLE DOMANDE" style="width: 100%;" dynamic_value="#Data_iscrizione_albo1.checked() and #chek_residenza.check_value('Proseguire la compilazione') ? 'REQUISITI VERIFICATI! è possibile presentare la domanda' : 'ATTENZIONE! Non sono soddisfatti i requisiti necessari per presentare la domanda'" readonly>
+          <input id="Blocca_domanda" name="Blocca_domanda" label="CONTROLLO PRESENTABILITÀ DELLE DOMANDE" style="width: 100%;" dynamic_value="#Data_iscrizione_albo1.checked() and #chek_residenza.check_value('Proseguire la compilazione') and #chek_cittadinanza.check_value('Proseguire la compilazione') ? 'REQUISITI VERIFICATI! è possibile presentare la domanda' : 'ATTENZIONE! Non sono soddisfatti i requisiti necessari per presentare la domanda'" readonly>
         </td>
       </tr>
     </tbody>
