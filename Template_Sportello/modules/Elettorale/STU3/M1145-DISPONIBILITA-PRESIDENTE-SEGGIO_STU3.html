@@ -1,6 +1,6 @@
 {% set CodiceModulo = "M1145-DISPONIBILITA-PRESIDENTE-SEGGIO" %}
 {% set Urn =  "document:c_l378:albo.presidenti.seggio;dare.disponibilita.presidenti.seggio;disponibilita.incarico.presidenti.seggio;modulo.disponibilita.incarico.presidenti.seggio" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1145-DISPONIBILITA-PRESIDENTE-SEGGIO_vSTU3" %}-->
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1145-DISPONIBILITA-PRESIDENTE-SEGGIO_vSTU3" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -40,24 +40,21 @@ urn_report="report:CSP_SESSION_REPORT"
 
 {% endblock meta %}
 
-<!--{% block simpaticoconfig %}
-  {% set simpaticoEservice="2" %}
-  {% set simpaticoEserviceName="M1876 ISCRIZIONE NIDO" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1876-ISCRIZIONE-NIDO" %}
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="19" %}
+  {% set simpaticoEserviceName="M1145 DISPONIBILITA PRESIDENTE SEGGIO" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1145-DISPONIBILITA-PRESIDENTE-SEGGIO" %}
   {% set simpaticoForm="main" %}
-  {% set simpaticoCategory="Infanzia" %}
-  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale","AventeTitolo_DataNascita","AventeTitolo_EMailPEC","AventeTitolo_Sesso","AventeTitolo_ProvinciaResidenza","AventeTitolo_ComuneResidenza","AventeTitolo_ViaResidenza","AventeTitolo_CivicoResidenza","AventeTitolo_CAPResidenza","AventeTitolo_Telefono","AventeTitolo_Fax","AventeTitolo_Nazionalita","AventeTitolo_EMail","AventeTitolo_EnteProvv","AventeTitolo_NumProt","AventeTitolo_LuogoNascita","AventeTitolo_Data","Parametri_TipoLavoroPadre","Parametri_AziendaLavoroPadre","Parametri_IndirizzoAziendaLavoroPadre","Parametri_CivicoAziendaLavoroPadre","Parametri_CapAziendaLavoroPadre","Parametri_TelAziendaLavoroPadre","Parametri_EmailAziendaLavoroPadre","Parametri_AgenziaEntratePadre","Parametri_PIVAPadre","Parametri_ScuolaPadre","Parametri_TipoLavoroMadre","Parametri_AziendaLavoroMadre","Parametri_IndirizzoAziendaLavoroMadre","Parametri_CivicoAziendaLavoroMadre","Parametri_CapAziendaLavoroMadre","Parametri_TelAziendaLavoroMadre","Parametri_EmailAziendaLavoroMadre","Parametri_AgenziaEntrateMadre","Parametri_PIVAMadre","Parametri_ScuolaMadre"] %}
-  {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
-                          ('block2', 'Ruolo non specificato'),
+  {% set simpaticoCategory="Elettorale" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale","AventeTitolo_DataNascita","AventeTitolo_Sesso","AventeTitolo_Cittadinanza","AventeTitolo_LuogoNascita","AventeTitolo_ProvinciaResidenza","AventeTitolo_ComuneResidenza","AventeTitolo_ViaResidenza","AventeTitolo_CivicoResidenza","AventeTitolo_CAPResidenza","AventeTitolo_Fisso","AventeTitolo_Telefono","AventeTitolo_EMail","AventeTitolo_EMailPEC"] %}
+  {% set ERROR_LABELS=[   ('block1', 'Manca il codice fiscale oppure cittadino non italiano'),
+                          ('block2', 'Il richiedente deve risiedere a Trento'),
                           ('block3', 'Seleziona una delle opzioni'),
-                          ('block5', 'IMPOSSIBILE CONTINUARE LA COMPILAZIONE'),
-                          ('block9', 'Seleziona se avvalersi dell\'attestazione ICEF o meno'),
-                          ('block11', 'Seleziona Part-time / Full-time'),
-                          ('block26', 'Seleziona una delle opzioni'),
-                          ('block32', 'Seleziona una delle opzioni'),
-                          ('block37', 'Confermare presa visione dell’informativa')] %}
+                          ('block4', 'Non è stata selezionata alcuna opzione, oppure iscrizione non effettuata o oltre i termini'),
+                          ('block6', 'Per ogni coppia di opzioni indicare una scelta'),
+                          ('block9', 'Confermare presa visione dell’informativa')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}-->
+{% endblock simpaticoconfig %}
 
 {% block title %}DISPONIBILITA-PRESIDENTE-SEGGIO{% endblock title %}
 
@@ -82,20 +79,16 @@ urn_report="report:CSP_SESSION_REPORT"
 </h2>
 <br>
 <h2 class="Modulo" style="line-height:1.6;">
-    DISPONIBILITA' A SVOLGERE L'INCARICO DI PRESIDENTE DI SEGGIO
+    DICHIARAZIONE DI DISPONIBILITA' A SVOLGERE L'INCARICO DI<br> PRESIDENTE DI SEGGIO
 </h2>
 
 
-<div class="simpatico-block simpatico-query-and-answer">
   {{anagrafica_trento.richiedente_elettorale("AventeTitolo","Il/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility")}}
 
   <input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
 
   <input type="hidden" id="chek_residenza" name="chek_residenza" dynamic_value="(#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai residenti a Trento'" style="width: 100%;" readonly/>
   <input type="hidden" id="chek_cittadinanza" name="chek_cittadinanza" dynamic_value="(#AventeTitolo_Cittadinanza.check_value('ITALIANA') || #AventeTitolo_Cittadinanza.check_value('Italiana') || #AventeTitolo_Cittadinanza.check_value('italiana')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai cittadini Italiani'" style="width: 100%;" readonly/>
-
-
-</div>
 
 <br>
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey" enabled="true">
@@ -120,6 +113,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td>
         <p>studente regolarmente iscritto</p>
+        <p style="font-size:70%"><i>(se all'Università, in regola con gli esami o al massimo due anni fuori corso, sempreché non vi sia stato di occupazione o iscrizione al Centro per l'Impiego)</i></p>
       </td>
     </tr>
     <tr>
@@ -181,11 +175,13 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: center; width: 4%;">
+      <td style="vertical-align: top; width: 4%;" >
         <input id="Iscrizione_albo2" name="Iscrizione_albo" type="radio" value="Non iscritto albo"/>
       </td>
       <td colspan="2">
-        <p>di NON essere iscritto all'albo dei Presidenti di seggio</p>
+        <p style="line-height:1.8;">di NON essere iscritto all'albo dei Presidenti di seggio<br>
+        <input id="contatto_telefonico" name="contatto_telefonico" dynamic_value="#Iscrizione_albo2.checked() ? 'Contatta i numeri 0461-884299 o 0461-884298 per dare disponibilità alla sostituzione in caso di necessità' : ''" style="width: 100%;" enabled="#Iscrizione_albo2.checked()" label="contatti per manifestazione interesse" readonly/></p>
+        </p>
       </td>
     </tr>
   </tbody>
@@ -197,7 +193,7 @@ urn_report="report:CSP_SESSION_REPORT"
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-          <p><b>NOTA BENE: Non è possibile presentare contestualmente la richiesta di iscrizione all'albo e la domanda di disponibilità per le elezioni.</b><br>Per ulteriori informazioni si prega di contattare l'Ufficio Elettorale del Comune di Trento al numero 0461-884299</p>
+        <p><b>NOTA BENE: Non è possibile presentare contestualmente la richiesta di iscrizione all'albo e la domanda di disponibilità per le elezioni.</b><br>Per ulteriori informazioni si prega di contattare l'Ufficio Elettorale del Comune di Trento ai numeri 0461-884299 o 0461-884298</p>
       </td>
     </tr>
   </tbody>
@@ -360,7 +356,7 @@ urn_report="report:CSP_SESSION_REPORT"
             value="Iscrizione albo entro termini"/>
         </td>
         <td>
-          <p>L'iscrizione all'albo è avvenuta entro il 30 novembre 2018</p>
+          <p>L'iscrizione all'albo è avvenuta entro il 31 ottobre 2018</p>
         </td>
       </tr>
       <tr>
@@ -392,6 +388,37 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 </div>
+
+<br>
+<br>
+
+<h3 class="Modulo">Il richiedente, se intestatario o cointestatario di un conto corrente,</h3>
+<h3 class="Modulo">CHIEDE</h3>
+<br>
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione" >
+      <td>
+        <b>l’accredito del compenso</b> per l’incarico di presidente su:
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Denominazione della Banca: <input id="nome_banca" name="nome_banca" style="width: 75%;" mandatory="#nome_agenzia.value() != '' || #codice_IBAN.value() != ''" enabled="true" label="Nome Banca per accredito compenso"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Agenzia o filiale: <input id="nome_agenzia" name="nome_agenzia" style="width: 85%;" mandatory="#nome_banca.value() != '' || #codice_IBAN.value() != ''" enabled="true" label="Nome agenzia per accredito compenso"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Codice IBAN: <input class="" id="codice_IBAN" name="codice_IBAN" style="width:87%;" mandatory="#nome_banca.value() != '' || #nome_agenzia.value() != ''" enabled="true" maxlength="27" label="IBAN per accredito compenso"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 <br>

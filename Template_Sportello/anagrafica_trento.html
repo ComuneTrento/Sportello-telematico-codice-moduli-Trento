@@ -3226,10 +3226,10 @@
       </tr>
       <tr>
         <td colspan="2">
-          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del {{ Solo1 }}" readonly/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del {{ Solo1 }}" readonly/>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta" style="border-top:0px">
@@ -3245,13 +3245,13 @@
       </tr>
       <tr>
         <td>
-          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita del {{ Solo1 }}" readonly/>
         </td>
         <td>
           {{ utils.stato( prefix + '_Cittadinanza', 'Cittadinanza' )}}
         </td>
         <td>
-          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita del {{ Solo1 }}" readonly/>
         </td>
       </tr>
     </tbody>
@@ -3564,6 +3564,7 @@
 {% macro richiedente_elettorale( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
 
+<div class="simpatico-block simpatico-query-and-answer">
 <div type="Anagrafica_persona_fisica">
 
   <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
@@ -3668,9 +3669,13 @@
         </tr>
       </tbody>
     </table>
+</div>
+</div>
 
     <br>
 
+<div class="simpatico-block simpatico-query-and-answer">
+<div type="Residenza_persona_fisica">
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
       <tbody>
         <tr class="Rigaintestazione">
@@ -3703,7 +3708,7 @@
             {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza") }}
           </td>
           <td>
-            <input class="" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory_enabled="true" readonly/>
+            <input class="" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" readonly/>
           </td>
           <td>
             <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true"/>
@@ -3759,7 +3764,7 @@
   					<input class="inputNormal" id="{{ prefix }}_Telefono" mandatory_enabled="true" label="Telefono cellulare" name="{{ prefix }}_Telefono" style="width:100%" format="number" maxlength="13"/>
   				</td>
   				<td>
-  					<input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria" mandatory_enabled="true" name="{{ prefix }}_EMail" style="width:100%;" maxlength="60"/>
+  					<input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria" enabled="true" name="{{ prefix }}_EMail" style="width:100%;" maxlength="60"/>
   				</td>
   				<td>
             <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" maxlength="60"/>
@@ -3769,6 +3774,6 @@
     </table>
 
 </div>
-
+</div>
 {%- endmacro %}
 
