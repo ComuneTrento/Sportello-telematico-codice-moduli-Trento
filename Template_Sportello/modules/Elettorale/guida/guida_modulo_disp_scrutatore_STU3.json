@@ -12,21 +12,20 @@
                 "id": "block1",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Anagrafica del richiedente"
+                    "it": "Caricamento dati del richiedente"
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[1]",
                 "tags": [],
                 "fields": [
-                    "AventeTitolo_CodiceFiscale",
-                    "AventeTitolo_Cittadinanza"
+                    "AventeTitolo_CodiceFiscale"
                 ],
                 "blocks": [],
                 "dependencies": [],
                 "condition": null,
-                "completed": "context['AventeTitolo_CodiceFiscale'] != null && context['AventeTitolo_CodiceFiscale'] != '' && (context['AventeTitolo_Cittadinanza'] == 'ITALIANA' || context['AventeTitolo_Cittadinanza'] == 'Italiana' || context['AventeTitolo_Cittadinanza'] == 'italiana')",
+                "completed": "context['AventeTitolo_CodiceFiscale'] != null && context['AventeTitolo_CodiceFiscale'] != ''",
                 "annotations": [],
                 "description": {
-                    "it": "Una volta effettuato l’accesso con la carta dei servizi o con SPID, premendo l'icona nera sulla destra le informazioni anagrafiche verranno caricate automaticamente.<br>Verificare i dati e premere nuovamente l'icona in caso di voci mancanti.<br>NOTA: Se il richiedente non risiede nell'Unione Europea, selezionare come provincia di residenza l'opzione <i>“EE”</i> e inserire la nazione di residenza nel campo “Indirizzo”.<br><br><b>IMPORTANTE! La domanda può essere presentata solo da richiedenti aventi cittadinanza Italiana</b><br><br><b>ATTENZIONE! I campi evidenziati in arancione sono obbligatori.</b><br><br>Una volta compilati tutti i campi premere il pulsante <i>“SUCCESSIVO”</i> per proseguire."
+                    "it": "Una volta effettuato l’accesso con la carta dei servizi o con SPID, premere l'icona nera a forma di omino oppure digitare il proprio codice fiscale nel campo appostito; quindi premere il pulsante <i>“Carica dati anagrafici”</i> per recuperare automaticamente le informazioni anagrafiche.<br><br>Premere il pulsante <i>“SUCCESSIVO”</i> per proseguire la compilazione."
                 },
                 "concepts": null
             },
@@ -34,22 +33,23 @@
                 "id": "block2",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Dati di residenza del richiedente"
+                    "it": "Anagrafica del richiedente"
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
                 "tags": [],
                 "fields": [
                     "AventeTitolo_CodiceFiscale",
-                    "AventeTitolo_Cittadinanza",
-                    "AventeTitolo_ComuneResidenza"
+                    "AventeTitolo_Cittadinanza"
                 ],
                 "blocks": [],
-                "dependencies": [],
-                "condition": "context['AventeTitolo_CodiceFiscale'] != null && context['AventeTitolo_CodiceFiscale'] != '' && (context['AventeTitolo_Cittadinanza'] == 'ITALIANA' || context['AventeTitolo_Cittadinanza'] == 'Italiana' || context['AventeTitolo_Cittadinanza'] == 'italiana')",
-                "completed": "context['AventeTitolo_ComuneResidenza'] == 'TRENTO' || context['AventeTitolo_ComuneResidenza'] == 'Trento' || context['AventeTitolo_ComuneResidenza'] == 'trento'",
+                "dependencies": [
+                  "block1"
+                ],
+                "condition": "context['AventeTitolo_CodiceFiscale'] != null && context['AventeTitolo_CodiceFiscale'] != ''",
+                "completed": "context['AventeTitolo_Cittadinanza'] == 'ITALIANA' || context['AventeTitolo_Cittadinanza'] == 'Italiana' || context['AventeTitolo_Cittadinanza'] == 'italiana'",
                 "annotations": [],
                 "description": {
-                    "it": "Sono qui riportate le informazioni relative alla residenza del richiedente, in caso di informazioni mancanti tornare al blocco precedente e premere nuovamente l'icona nera sulla destra le informazioni anagrafiche verranno caricate automaticamente.<br><br><b>IMPORTANTE! La domanda può essere presentata solo da richiedenti residenti a Trento</b>"
+                    "it": "Verificare i dati caricati automaticamente.<br>NOTA: Se il richiedente non risiede nell'Unione Europea, selezionare come provincia di residenza l'opzione <i>“EE”</i> e inserire la nazione di residenza nel campo “Indirizzo”.<br><br><b>IMPORTANTE! La domanda può essere presentata solo da richiedenti aventi cittadinanza Italiana</b><br><br><b>ATTENZIONE! I campi evidenziati in arancione sono obbligatori.</b>"
                 },
                 "concepts": null
             },
@@ -57,9 +57,33 @@
                 "id": "block3",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Situazione lavorativa del richiedente"
+                    "it": "Dati di residenza del richiedente"
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[3]",
+                "tags": [],
+                "fields": [
+                    "AventeTitolo_Cittadinanza",
+                    "AventeTitolo_ComuneResidenza"
+                ],
+                "blocks": [],
+                "dependencies": [
+                  "block2"
+                ],
+                "condition": "context['AventeTitolo_Cittadinanza'] == 'ITALIANA' || context['AventeTitolo_Cittadinanza'] == 'Italiana' || context['AventeTitolo_Cittadinanza'] == 'italiana'",
+                "completed": "context['AventeTitolo_ComuneResidenza'] == 'TRENTO' || context['AventeTitolo_ComuneResidenza'] == 'Trento' || context['AventeTitolo_ComuneResidenza'] == 'trento'",
+                "annotations": [],
+                "description": {
+                    "it": "Sono qui riportate le informazioni relative alla residenza del richiedente, in caso di informazioni mancanti tornare al blocco iniziale e premere nuovamente <i>“Carica dati anagrafici”</i>.<br><br><b>IMPORTANTE! La domanda può essere presentata solo da richiedenti residenti a Trento</b>"
+                },
+                "concepts": null
+            },
+            {
+                "id": "block4",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Situazione lavorativa del richiedente"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[4]",
                 "tags": [],
                 "fields": [
                     "AventeTitolo_ComuneResidenza",
@@ -70,7 +94,7 @@
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block2"
+                    "block3"
                 ],
                 "condition": "context['AventeTitolo_ComuneResidenza'] == 'TRENTO' || context['AventeTitolo_ComuneResidenza'] == 'Trento' || context['AventeTitolo_ComuneResidenza'] == 'trento'",
                 "completed": "context['Lavoro_richiedente1']=='Lavoratore' || context['Lavoro_richiedente2']=='Studente' || context['Lavoro_richiedente3']=='Studente/Lavoratore' || context['Lavoro_richiedente4']=='Non occupato/Pensionato'",
@@ -81,12 +105,12 @@
                 "concepts": null
             },
             {
-                "id": "block4",
+                "id": "block5",
                 "type": "BLOCK",
                 "name": {
                     "it": "Dichiarazione iscrizione all'albo"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[4]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[5]",
                 "tags": [],
                 "fields": [
                     "Lavoro_richiedente1",
@@ -98,7 +122,7 @@
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block3"
+                    "block4"
                 ],
                 "condition": "context['Lavoro_richiedente1']=='Lavoratore' || context['Lavoro_richiedente2']=='Studente' || context['Lavoro_richiedente3']=='Studente/Lavoratore' || context['Lavoro_richiedente4']=='Non occupato/Pensionato'",
                 "completed": "context['Iscrizione_albo1']=='Iscritto albo' && context['Data_iscrizione_albo1']=='Iscritto entro termine ultimo'",
@@ -109,12 +133,12 @@
                 "concepts": null
             },
             {
-                "id": "block5",
+                "id": "block6",
                 "type": "BLOCK",
                 "name": {
                     "it": "Informazioni impegno richiesto"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[5]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[6]",
                 "tags": [],
                 "fields": [
                     "Iscrizione_albo1",
@@ -122,7 +146,7 @@
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block4"
+                    "block5"
                 ],
                 "condition": "context['Iscrizione_albo1']=='Iscritto albo' && context['Data_iscrizione_albo1']=='Iscritto entro termine ultimo'",
                 "completed": null,
@@ -133,31 +157,10 @@
                 "concepts": null
             },
             {
-                "id": "block6",
-                "type": "BLOCK",
-                "name": {
-                    "it": "Verifica ammissibilità domanda"
-                },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[6]",
-                "tags": [],
-                "fields": [],
-                "blocks": [],
-                "dependencies": [
-                    "block5"
-                ],
-                "condition": null,
-                "completed": null,
-                "annotations": [],
-                "description": {
-                    "it": "Verifica dell'ammissibilità della domanda: se tutte le voci sono spuntate sarà possibile inviare l'istanza."
-                },
-                "concepts": null
-            },
-            {
                 "id": "block7",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Indicazione IBAN per accredito compenso"
+                    "it": "Verifica ammissibilità domanda"
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[7]",
                 "tags": [],
@@ -170,7 +173,7 @@
                 "completed": null,
                 "annotations": [],
                 "description": {
-                    "it": "Il richiedente, se intestatario o cointestatario di conto corrente, può indicare le coordinate per l'accredito del compenso qualora svolga l'incarico di scrutatore."
+                    "it": "Verifica dell'ammissibilità della domanda: se tutte le voci sono spuntate sarà possibile inviare l'istanza."
                 },
                 "concepts": null
             },
@@ -178,16 +181,37 @@
                 "id": "block8",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Informativa trattamento dati personali"
+                    "it": "Indicazione IBAN per accredito compenso"
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[8]",
+                "tags": [],
+                "fields": [],
+                "blocks": [],
+                "dependencies": [
+                    "block7"
+                ],
+                "condition": null,
+                "completed": null,
+                "annotations": [],
+                "description": {
+                    "it": "Il richiedente, se intestatario o cointestatario di conto corrente, può indicare le coordinate per l'accredito del compenso qualora svolga l'incarico di scrutatore."
+                },
+                "concepts": null
+            },
+            {
+                "id": "block9",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Informativa trattamento dati personali"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[9]",
                 "tags": [],
                 "fields": [
                     "Presa_visione_check"
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block7"
+                    "block8"
                 ],
                 "condition": null,
                 "completed": "context['Presa_visione_check'] =='1'",
@@ -198,7 +222,7 @@
                 "concepts": null
             },
             {
-                "id": "block9",
+                "id": "block10",
                 "type": "BLOCK",
                 "name": {
                     "it": "Conclusione della domanda"
@@ -210,7 +234,7 @@
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block8"
+                    "block9"
                 ],
                 "condition": "context['Presa_visione_check'] =='1'",
                 "completed": null,

@@ -3626,45 +3626,45 @@
         </tr>
         <tr>
           <td colspan="2">
-            <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome"/>
+            <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome" readonly/>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome"/>
+            <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome" readonly/>
           </td>
           <td>
             <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale"/>
           </td>
            </tr>
         <tr class="Rigaintestazioneridotta">
-          <td style="width:24%;">
+          <td style="width:15%;">
             <p class="Labelcella">Data di nascita</p>
           </td>
           <td style="width:9%;">
-            <p class="Labelcella">Sesso (M/F)</p>
+            <p class="Labelcella">Sesso</p>
           </td>
-          <td style="width: 33%;">
+          <td style="width: 26%;">
             <p class="Labelcella">Cittadinanza</p>
           </td>
-          <td style="width: 34%;">
+          <td style="width: 50%;">
             <p class="Labelcella">Luogo di nascita</p>
           </td>
         </tr>
         <tr>
           <td>
-            <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita"/>
+            <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita" readonly/>
           </td>
           <td>
-            <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso">
+            <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso" readonly>
               <option value=""></option>
               <option value="M">M</option>
               <option value="F">F</option>
             </select>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_Cittadinanza" name="{{ prefix }}_Cittadinanza" style="width:100%;" label="Nazionalità" readonly/>
+            <input class="" id="{{ prefix }}_Cittadinanza" name="{{ prefix }}_Cittadinanza" style="width:100%;" label="Nazionalità"/>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita"/>
+            <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita" readonly/>
           </td>
         </tr>
       </tbody>
@@ -3711,16 +3711,16 @@
             <input class="" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" readonly/>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true"/>
+            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true" readonly/>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true"/>
+            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" readonly/>
           </td>
   				<td>
-            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3"/>
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" readonly/>
           </td>
           <td>
-            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'"/>
+            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" readonly/>
           </td>
         </tr>
       </tbody>
@@ -3777,3 +3777,224 @@
 </div>
 {%- endmacro %}
 
+
+{% macro richiedente_elettorale_new( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
+{% do all_prefix.append( prefix ) %}
+
+
+  <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+  <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+    <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; {{ visibility_intestazione }}">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td style="width: 40%; border-left:0px; border-right:0px">
+            <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}
+  					</p>
+          </td>
+  				<td style="width:3%; border-left:0px; border-right:0px">
+            <p class="Labeltabella">{{ carica_campi|safe }}</p>
+          </td>
+  				<td style="width: 3%; {{ pointer_carica_dati }}; border-left:0px; border-right:0px">
+  					<span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+  						{{ utils.recupero_dati( prefix, visibility_carica_dati ) }}
+  					</span>
+          </td>
+          <td style="width:27%; border-left:0px; border-right:0px">
+            <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true"/>
+          </td>
+  				<td style="width:25%; border-left:0px; border-right:0px">
+            <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
+          </td>
+        </tr>
+      </tbody>
+
+      {{ service.getPersonaREST( 'AventeTitolo_CodiceFiscale','TipoContesto', 'TipoLista',  {
+        'AventeTitolo_DataNascita':  'datanascita',
+        'AventeTitolo_Nome':  'nome',
+        'AventeTitolo_Cognome':  'cognome',
+        'AventeTitolo_Sesso':  'sesso',
+        'AventeTitolo_Nazionalita':  'stato',
+        'AventeTitolo_Cittadinanza':  'nazionalita',
+        'AventeTitolo_CodiceFamiglia':  'codiceFamiglia',
+        'AventeTitolo_CodiceVia':  'codiceVia',
+        'AventeTitolo_ProvinciaResidenza' : 'provincia',
+        'AventeTitolo_ComuneResidenza' : 'citta',
+        'AventeTitolo_ViaResidenza' : 'indirizzo',
+        'AventeTitolo_CivicoResidenza' : 'numeroCivico',
+        'AventeTitolo_BarraResidenza' : 'barra',
+        'AventeTitolo_CAPResidenza' : 'cap',
+        'AventeTitolo_Nazione' : 'nazione',
+        'AventeTitolo_LuogoNascita' : 'comuneNascita',
+        'AventeTitolo_CodiceComuneNascita' : 'codiceComuneNascita',
+        'AventeTitolo_MatricolaAnagrafe' : 'matricola',
+      },
+      '#RecuperaDatiAnagr:click','false') }}
+    </table>
+
+    <br>
+
+    <div type="Anagrafica_persona_fisica">
+    <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="4">
+            <p><b>Dati anagrafici:</b></p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td colspan="3">
+            <p class="Labelcella">Cognome</p>
+          </td>
+          <td>
+            <p class="Labelcella">Nome</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome" readonly/>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome" readonly/>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:15%;">
+            <p class="Labelcella">Data di nascita</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella">Sesso</p>
+          </td>
+          <td style="width: 26%;">
+            <p class="Labelcella">Cittadinanza</p>
+          </td>
+          <td style="width: 50%;">
+            <p class="Labelcella">Luogo di nascita</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita" readonly/>
+          </td>
+          <td>
+            <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso" readonly>
+              <option value=""></option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+            </select>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_Cittadinanza" name="{{ prefix }}_Cittadinanza" style="width:100%;" label="Nazionalità"/>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita" readonly/>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+    <br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<div type="Residenza_persona_fisica">
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="6">
+            <p><b>Residente a:</b></p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:9%;">
+            <p class="Labelcella">Provincia</p>
+          </td>
+          <td style="width:33%;">
+            <p class="Labelcella">Comune</p>
+          </td>
+          <td style="width:33%;">
+            <p class="Labelcella">Indirizzo</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella">Civico</p>
+          </td>
+  				<td style="width:9%;">
+            <p class="Labelcella">Barra</p>
+          </td>
+          <td style="width:16%;">
+            <p class="Labelcella">CAP</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza") }}
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" readonly/>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true" readonly/>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" readonly/>
+          </td>
+  				<td>
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" readonly/>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" readonly/>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+  		<tbody>
+  			<tr class="Rigaintestazioneridotta">
+  				<td style="width:16.5%;">
+  					<p class="Labelcella">
+  						Telefono fisso
+  					</p>
+  				</td>
+  				<td style="width:16.5%;">
+  					<p class="Labelcella">
+  						Cellulare
+  					</p>
+  				</td>
+  				<td style="width:33%;">
+  					<p class="Labelcella">
+  						E-mail
+  							<i>
+  								(posta elettronica ordinaria)
+  							</i>
+  					</p>
+  				</td>
+  				<td>
+  					<p class="Labelcella">
+  						E-mail PEC
+  							<i>
+  							(domicilio digitale)
+  							</i>
+  					</p>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>
+  					<input class="inputNormal" id="{{ prefix }}_Fisso" label="Telefono fisso" name="{{ prefix }}_Fisso" style="width:100%" format="number" maxlength="13"/>
+  				</td>
+  				<td>
+  					<input class="inputNormal" id="{{ prefix }}_Telefono" mandatory_enabled="true" label="Telefono cellulare" name="{{ prefix }}_Telefono" style="width:100%" format="number" maxlength="13"/>
+  				</td>
+  				<td>
+  					<input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria" enabled="true" name="{{ prefix }}_EMail" style="width:100%;" maxlength="60"/>
+  				</td>
+  				<td>
+            <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" maxlength="60"/>
+  				</td>
+  			</tr>
+  		</tbody>
+    </table>
+
+</div>
+</div>
+{%- endmacro %}

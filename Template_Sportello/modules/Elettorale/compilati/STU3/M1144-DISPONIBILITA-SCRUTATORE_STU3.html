@@ -31,7 +31,7 @@
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
 codice_modulo="M1144-DISPONIBILITA-SCRUTATORE"
-urn="document:c_l378:albo.scrutatori.seggio;dare.disponibilita.scrutatori.seggio;disponibilita.incarico.scrutatori;modulo.disponibilita.incarico.scrutatori"
+urn="document:c_l378:albo.scrutatori.seggio;disponibilita.incarico.scrutatori;modulo.disponibilita.incarico.scrutatori"
 sub_urn_list=""
 uo_globo_list=""
 contesto_procedurale="Disponibilità svolgimento incarico di scrutatore"
@@ -109,11 +109,12 @@ urn_report="report:CSP_SESSION_REPORT"
                             "AventeTitolo_EMailPEC",
                             ];
     var ERROR_LABELS = { 
-        'block1' : 'Manca il codice fiscale oppure cittadino non italiano',
-        'block2' : 'Il richiedente deve risiedere a Trento',
-        'block3' : 'Seleziona una delle opzioni',
-        'block4' : 'Non è stata selezionata alcuna opzione, oppure iscrizione non effettuata o oltre i termini',
-        'block8' : 'Confermare presa visione dell’informativa', 
+        'block1' : 'Manca il codice fiscale',
+        'block2' : 'Il richiedente deve essere cittadino Italiano',
+        'block3' : 'Il richiedente deve risiedere a Trento',
+        'block4' : 'Seleziona una delle opzioni',
+        'block5' : 'Nessuna opzione selezionata, oppure iscrizione non effettuata o oltre i termini',
+        'block9' : 'Confermare presa visione informativa', 
     }
   </script>
 <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
@@ -320,23 +321,21 @@ function get_ufficio_dest() {
 
   
 
-<div class="simpatico-block simpatico-query-and-answer">
-<div type="Anagrafica_persona_fisica">
 
   <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
   <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-    <table class="Modulo" style="border:1px solid grey; visibility:visibility">
+    <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; visibility:visibility">
       <tbody>
         <tr class="Rigaintestazione">
-          <td style="border-right:0px">
-            <p class="Labeltabella"  style="vertical-align:middle">Il/La sottoscritto/a:
+          <td style="width: 40%; border-left:0px; border-right:0px">
+            <p class="Labeltabella"  style="vertical-align:middle">Il/La sottoscritto/a, avente codice fiscale:
   					</p>
           </td>
-  				<td style="width:20%; border-left:0px; border-right:0px">
+  				<td style="width:3%; border-left:0px; border-right:0px">
             <p class="Labeltabella"></p>
           </td>
-  				<td style="width:30%; cursor:pointer; border-left:0px; border-right:0px">
+  				<td style="width: 3%; cursor:pointer; border-left:0px; border-right:0px">
   					<span style="pd4ml-visibility: hidden; pd4ml-display: none;">
   						
 
@@ -344,6 +343,12 @@ function get_ufficio_dest() {
 
 
   					</span>
+          </td>
+          <td style="width:27%; border-left:0px; border-right:0px">
+            <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true"/>
+          </td>
+  				<td style="width:25%; border-left:0px; border-right:0px">
+            <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
           </td>
         </tr>
       </tbody>
@@ -355,72 +360,73 @@ function get_ufficio_dest() {
   "contesto=TipoContesto;listaAut=TipoLista;codiceFiscale=AventeTitolo_CodiceFiscale"
   ws-param-out=
   "AventeTitolo_ProvinciaResidenza=provincia;AventeTitolo_ViaResidenza=indirizzo;AventeTitolo_CodiceComuneNascita=codiceComuneNascita;AventeTitolo_Cognome=cognome;AventeTitolo_CodiceFamiglia=codiceFamiglia;AventeTitolo_CodiceVia=codiceVia;AventeTitolo_CivicoResidenza=numeroCivico;AventeTitolo_MatricolaAnagrafe=matricola;AventeTitolo_Nazionalita=stato;AventeTitolo_Nazione=nazione;AventeTitolo_Cittadinanza=nazionalita;AventeTitolo_Sesso=sesso;AventeTitolo_ComuneResidenza=citta;AventeTitolo_CAPResidenza=cap;AventeTitolo_BarraResidenza=barra;AventeTitolo_LuogoNascita=comuneNascita;AventeTitolo_Nome=nome;AventeTitolo_DataNascita=datanascita"
-  ws-on="#AventeTitolo_CodiceFiscale:change"
+  ws-on="#RecuperaDatiAnagr:click"
   
-    ws-allow-edit="true"
+    ws-allow-edit="false"
    >
 </div>
     </table>
 
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+    <br>
+
+    <div type="Anagrafica_persona_fisica">
+    <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
       <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="4">
+            <p><b>Dati anagrafici:</b></p>
+          </td>
+        </tr>
         <tr class="Rigaintestazioneridotta">
-          <td colspan="2">
+          <td colspan="3">
             <p class="Labelcella">Cognome</p>
           </td>
           <td>
             <p class="Labelcella">Nome</p>
           </td>
-          <td>
-            <p class="Labelcella">Codice Fiscale</p>
-          </td>
         </tr>
         <tr>
-          <td colspan="2">
-            <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome"/>
+          <td colspan="3">
+            <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome" readonly/>
           </td>
           <td>
-            <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome"/>
+            <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome" readonly/>
           </td>
-          <td>
-            <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale"/>
-          </td>
-           </tr>
+        </tr>
         <tr class="Rigaintestazioneridotta">
-          <td style="width:24%;">
+          <td style="width:15%;">
             <p class="Labelcella">Data di nascita</p>
           </td>
           <td style="width:9%;">
-            <p class="Labelcella">Sesso (M/F)</p>
+            <p class="Labelcella">Sesso</p>
           </td>
-          <td style="width: 33%;">
+          <td style="width: 26%;">
             <p class="Labelcella">Cittadinanza</p>
           </td>
-          <td style="width: 34%;">
+          <td style="width: 50%;">
             <p class="Labelcella">Luogo di nascita</p>
           </td>
         </tr>
         <tr>
           <td>
-            <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita"/>
+            <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita" readonly/>
           </td>
           <td>
-            <select class="inputNormal" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso">
+            <select class="inputNormal" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso" readonly>
               <option value=""></option>
               <option value="M">M</option>
               <option value="F">F</option>
             </select>
           </td>
           <td>
-            <input class="" id="AventeTitolo_Cittadinanza" name="AventeTitolo_Cittadinanza" style="width:100%;" label="Nazionalità" readonly/>
+            <input class="" id="AventeTitolo_Cittadinanza" name="AventeTitolo_Cittadinanza" style="width:100%;" label="Nazionalità"/>
           </td>
           <td>
-            <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita"/>
+            <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita" readonly/>
           </td>
         </tr>
       </tbody>
     </table>
-</div>
 </div>
 
     <br>
@@ -575,16 +581,16 @@ function get_ufficio_dest() {
             <input class="" id="AventeTitolo_ComuneResidenza" name="AventeTitolo_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory="#AventeTitolo_ProvinciaResidenza.value() != 'EE'" readonly/>
           </td>
           <td>
-            <input class="" id="AventeTitolo_ViaResidenza" name="AventeTitolo_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true"/>
+            <input class="" id="AventeTitolo_ViaResidenza" name="AventeTitolo_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true" readonly/>
           </td>
           <td>
-            <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true"/>
+            <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" readonly/>
           </td>
   				<td>
-            <input class="" id="AventeTitolo_BarraResidenza" name="AventeTitolo_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3"/>
+            <input class="" id="AventeTitolo_BarraResidenza" name="AventeTitolo_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" readonly/>
           </td>
           <td>
-            <input class="" id="AventeTitolo_CAPResidenza" name="AventeTitolo_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#AventeTitolo_CodiceFiscale.value() != '' and #AventeTitolo_ProvinciaResidenza.value() != 'EE'" mandatory="#AventeTitolo_ProvinciaResidenza.value() != 'EE'"/>
+            <input class="" id="AventeTitolo_CAPResidenza" name="AventeTitolo_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#AventeTitolo_CodiceFiscale.value() != '' and #AventeTitolo_ProvinciaResidenza.value() != 'EE'" mandatory="#AventeTitolo_ProvinciaResidenza.value() != 'EE'" readonly/>
           </td>
         </tr>
       </tbody>
@@ -727,7 +733,8 @@ function get_ufficio_dest() {
         <input id="Data_iscrizione_albo2" name="Data_iscrizione_albo" type="radio" value="Iscritto oltre termine ultimo"/>
       </td>
       <td>
-        <p>che l'iscrizione è stata perfezionata <b>dopo il 30 novembre 2018</b></p>
+        <p>che l'iscrizione è stata perfezionata <b>dopo il 30 novembre 2018</b><br>
+        <input id="contatto_telefonico1" name="contatto_telefonico1" dynamic_value="#Data_iscrizione_albo2.checked() ? 'Contatta i numeri 0461-884299 o 0461-884298 per dare disponibilità a sostituzioni in caso di necessità' : ''" style="width: 100%;" enabled="#Data_iscrizione_albo2.checked()" label="contatti per manifestazione interesse" readonly/></p>
       </td>
     </tr>
     <tr>
