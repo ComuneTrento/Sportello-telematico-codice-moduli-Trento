@@ -144,43 +144,10 @@ urn_report="report:CSP_SESSION_REPORT"
     <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-DI-ACCESSO-CONSULTAZIONE-ATTI-IN-MATERIA-EDILIZIA_vSTU3" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
 
         
-<globo_fondo_pagina areaheight="150" scope="4">
-  <div type="firma">
-	<table class="Modulo" name="Firme" style="border:1px solid grey; margin-left: 28pt; display: none; pd4ml-display: inline">
-		<tbody>
-			<tr>
-				<td style="width: 33%; text-align: center;">
-					<input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
-				</td>
-				<td style="width: 33%; text-align: center;">
-					<input class="" id="Data_PDF" name="Data_PDF" style="width:50%;" type="text"/>
-				</td>
-				<td style="width: 34%; text-align: center; height: 1.5cm;"></td>
-			</tr>
-			<tr class="Rigaintestazioneridotta">
-				<td>
-					<p class="Labelcella" style="text-align: center">Luogo</p>
-				</td>
-				<td>
-					<p class="Labelcella" style="text-align: center">Data</p>
-				</td>
-				<td>
-					<p class="Labelcella" style="text-align: center">Il dichiarante</p>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<p><span style="font-size:70%"><i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (art. 13 Regolamento UE n. 2016/679).</i></span></p>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-</globo_fondo_pagina>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Domanda di accesso/consultazione agli atti in materia edilizia'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Domanda di ' + #part_rich.value()" id="Oggetto" name="Oggetto" type="hidden"/>
 
 <div type="intestazione_moduloprincipale_senzabollo">
 	<script>
@@ -433,10 +400,10 @@ function get_ufficio_dest() {
       </tr>
       <tr>
         <td colspan="2">
-          <input class="" id="Titolare_Cognome" name="Titolare_Cognome" style="width:100%" label="Cognome del Titolare"/>
+          <input class="" id="Titolare_Cognome" name="Titolare_Cognome" style="width:100%" label="Cognome del Titolare" readonly/>
         </td>
         <td>
-          <input class="" id="Titolare_Nome" name="Titolare_Nome" style="width:100%" label="Nome del Titolare"/>
+          <input class="" id="Titolare_Nome" name="Titolare_Nome" style="width:100%" label="Nome del Titolare" readonly/>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta" style="border-top:0px">
@@ -452,7 +419,7 @@ function get_ufficio_dest() {
       </tr>
       <tr>
         <td>
-          <input class="" id="Titolare_DataNascita" name="Titolare_DataNascita" style="width:100%;" format="date" label="Data di nascita del Titolare"/>
+          <input class="" id="Titolare_DataNascita" name="Titolare_DataNascita" style="width:100%;" format="date" label="Data di nascita del Titolare" readonly/>
         </td>
         <td>
           <select id="Titolare_Cittadinanza" name="Titolare_Cittadinanza" style="width:100%" label="Cittadinanza" >
@@ -706,7 +673,7 @@ function get_ufficio_dest() {
 </select>
         </td>
         <td>
-          <input class="" id="Titolare_LuogoNascita" name="Titolare_LuogoNascita" style="width:100%;" label="Luogo di nascita del Titolare"/>
+          <input class="" id="Titolare_LuogoNascita" name="Titolare_LuogoNascita" style="width:100%;" label="Luogo di nascita del Titolare" readonly/>
         </td>
       </tr>
     </tbody>
@@ -1441,6 +1408,10 @@ function get_ufficio_dest() {
 </table>
 </div>
 
+<input class="" type="hidden" id="part_cons" name="part_cons" dynamic_value="#Servizio_richiesto1.checked() ? 'consultazione p.ed: ' + #consultazione_CatNumero.value() + ' - comune: ' + #consultazione_ComuneCatastale_esteso.value() : ''"/>
+<input class="" type="hidden" id="part_acc" name="part_acc" dynamic_value="#Servizio_richiesto2.checked() ? 'accesso p.ed: ' + #accesso_CatNumero.value() + ' - comune: ' + #accesso_ComuneCatastale_esteso.value() : ''"/>
+<input class="" type="hidden" id="part_rich" name="part_rich" dynamic_value="#part_cons.value() != '' ? (#part_acc.value() == '' ? #part_cons.value() : #part_cons.value() + ' / ' + #part_acc.value()) : #part_acc.value()"/>
+
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
@@ -1732,38 +1703,32 @@ function get_ufficio_dest() {
 
 <br>
 
-<div class="simpatico-block">
- <table class="Modulo" id="firme" name="Firme" style="border:1px solid grey; pd4ml-display: none;">
-	<tbody>
-		<tr>
-			<td style="width: 33%; text-align: center;">
-				<input class="" id="Luogo" label="Luogo" mandatory="true" name="Luogo" style="width:80%;" type="text"/>
-			</td>
-			<td style="width: 33%; text-align: center;">
-				<input class="" format="date" id="Data" label="Data" mandatory="true" name="Data" style="width:50%;" type="text"/>
-			</td>
-			<td style="width: 34%; text-align: center; height: 1.5cm;">
-			</td>
-		</tr>
-		<tr class="Rigaintestazioneridotta">
-			<td>
-				<p class="Labelcella" style="text-align: center">Luogo</p>
-			</td>
-			<td>
-				<p class="Labelcella" style="text-align: center">Data</p>
-			</td>
-			<td>
-				<p class="Labelcella" style="text-align: center">Il dichiarante</p>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="3">
-				<p><span style="font-size:70%"><i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (art. 13 Regolamento UE n. 2016/679).</i></span></p>
-			</td>
-		</tr>
-	</tbody>
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente</p>
+      </td>
+    </tr>
+  </tbody>
 </table>
-</div>
 
 <br>
 
