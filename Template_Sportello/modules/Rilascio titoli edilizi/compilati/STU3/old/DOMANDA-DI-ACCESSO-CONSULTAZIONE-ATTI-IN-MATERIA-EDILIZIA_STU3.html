@@ -54,6 +54,12 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|23/02/2018" />
 
+<meta codice_modulo_figlio="GEN-MARCABOLLO"
+urn_modulo_figlio="document:c_l378:modulo.secondario.pagamento.marca.bollo"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <meta codice_allegato="AFFIDAMENTO-INCARICO"
 urn_allegato="document:c_l378:allegato.affidamento.incarico"
 descrizione_estesa="Documentazione comprovante l'incarico"
@@ -120,8 +126,8 @@ urn_report="report:CSP_SESSION_REPORT"
   <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
   <script type="text/javascript">
     var simpaticoEservice = "12"; //  the id corresponding to the e-service
-    var simpaticoEserviceName = "DOMANDA DI ACCESSO CONSULTAZIONE ATTI IN MATERIA EDILIZIA"; //  the name corresponding to the e-service
-    var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-DI-ACCESSO-CONSULTAZIONE-ATTI-IN-MATERIA-EDILIZIA" ; //  the url corresponding to the e-service
+    var simpaticoEserviceName = "DOMANDA ACCESSO CONSULTAZIONE ATTI EDILIZIA"; //  the name corresponding to the e-service
+    var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" ; //  the url corresponding to the e-service
     var simpaticoForm = "main";
     var simpaticoCategory = "Edilizia"; // the general category of the e-service
     var simpaticoMapping= ["Titolare_Telefono",
@@ -144,10 +150,43 @@ urn_report="report:CSP_SESSION_REPORT"
     <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-DI-ACCESSO-CONSULTAZIONE-ATTI-IN-MATERIA-EDILIZIA_vSTU3" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
 
         
+<globo_fondo_pagina areaheight="150" scope="4">
+  <div type="firma">
+	<table class="Modulo" name="Firme" style="border:1px solid grey; margin-left: 28pt; display: none; pd4ml-display: inline">
+		<tbody>
+			<tr>
+				<td style="width: 33%; text-align: center;">
+					<input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+				</td>
+				<td style="width: 33%; text-align: center;">
+					<input class="" id="Data_PDF" name="Data_PDF" style="width:50%;" type="text"/>
+				</td>
+				<td style="width: 34%; text-align: center; height: 1.5cm;"></td>
+			</tr>
+			<tr class="Rigaintestazioneridotta">
+				<td>
+					<p class="Labelcella" style="text-align: center">Luogo</p>
+				</td>
+				<td>
+					<p class="Labelcella" style="text-align: center">Data</p>
+				</td>
+				<td>
+					<p class="Labelcella" style="text-align: center">Il dichiarante</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<p><span style="font-size:70%"><i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (art. 13 Regolamento UE n. 2016/679).</i></span></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</globo_fondo_pagina>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Domanda di ' + #part_rich.value()" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Domanda di accesso/consultazione agli atti in materia edilizia'" id="Oggetto" name="Oggetto" type="hidden" />
 
 <div type="intestazione_moduloprincipale_senzabollo">
 	<script>
@@ -1408,10 +1447,6 @@ function get_ufficio_dest() {
 </table>
 </div>
 
-<input class="" type="hidden" id="part_cons" name="part_cons" dynamic_value="#Servizio_richiesto1.checked() ? 'consultazione p.ed: ' + #consultazione_CatNumero.value() + ' - comune: ' + #consultazione_ComuneCatastale_esteso.value() : ''"/>
-<input class="" type="hidden" id="part_acc" name="part_acc" dynamic_value="#Servizio_richiesto2.checked() ? 'accesso p.ed: ' + #accesso_CatNumero.value() + ' - comune: ' + #accesso_ComuneCatastale_esteso.value() : ''"/>
-<input class="" type="hidden" id="part_rich" name="part_rich" dynamic_value="#part_cons.value() != '' ? (#part_acc.value() == '' ? #part_cons.value() : #part_cons.value() + ' / ' + #part_acc.value()) : #part_acc.value()"/>
-
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
@@ -1567,51 +1602,6 @@ function get_ufficio_dest() {
 <br>
 <br>
 
-<!-- simpatico start -->
-<div class="simpatico-block simpatico-query-and-answer">
-<!-- simpatico end -->
-	<p class="Modulo">Valendosi della facoltà prevista dall'articolo 3 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti,</p>
-    <br> 
-    <h3 class="Modulo">DICHIARA</h3>
-	
-	<table class="Modulo" style="border: 1px solid grey">
-  		<tbody>
-   			<tr>
-    			<td style="width:2%; vertical-align: top;" rowspan="3">
-					<input mandatory_enabled="#Tipo_accesso4.checked()" dynamic_check="#Tipo_accesso4.checked()" id="Parametri_BolloDichiara1" name="Parametri_BolloDichiara1" type="checkbox" value="si"/>
-				</td>
-				<td style="border:0px;">
-					<p>che la seguente marca da bollo è stata annullata per la presentazione della documentazione sopra indicata</p>
-				</td>
-			</tr>
-			<tr class="Rigaintestazioneridotta">
-    			<td>
-     				<p class="Rigaintestazioneridotta"><b>Numero seriale marca da bollo</b></p>
-     				<p>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank"> <i> Come pagare? </i></a>)</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory="#Parametri_BolloDichiara1.checked()" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
-				</td>
-			</tr>
-			<tr>
-				<td style="width: 20px; vertical-align: top;">
-					<input mandatory_enabled="#Tipo_accesso4.checked()" dynamic_check="#Tipo_accesso4.checked()" id="Parametri_BolloDichiara2" name="Parametri_BolloDichiara2" type="checkbox" value="si"/>
-				</td>
-				<td>
-					<p>di impegnarsi a conservare l'originale della marca da bollo annullata</p>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-<!-- simpatico start -->  
-</div> 
-<!-- simpatico end -->
-
-<br>
-<br>
-
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
@@ -1623,31 +1613,53 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr>
-      <td style="width:4%">
-        <input id="AFFIDAMENTO_INCARICO" name="AFFIDAMENTO_INCARICO" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p>Documentazione comprovante l'affidamento dell'incarico</p>
-      </td>
+			<td style="width:4%">
+			 <input id="AFFIDAMENTO_INCARICO" name="AFFIDAMENTO_INCARICO" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+			  <p>
+			  Documentazione comprovante l'affidamento dell'incarico
+			 </p>
+			</td>
     </tr>
     <tr>
-      <td style="width:4%">
-        <input id="DOC_GIUST" name="DOC_GIUST" type="checkbox" enabled="true" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p>Eventuale documentazione giustificativa degli interessi giuridicamente rilevanti e motivi di legittimazione</p>
-      </td>
+			<td style="width:4%">
+			 <input id="DOC_GIUST" name="DOC_GIUST" type="checkbox" enabled="true" value="OBBLIGATORIO"/>
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+			  <p>
+			  Eventuale documentazione giustificativa degli interessi giuridicamente rilevanti e motivi di legittimazione
+			 </p>
+			</td>
     </tr>
     <tr>
-      <td style="width:4%">
-        <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="GEN_MARCABOLLO" name="GEN_MARCABOLLO" dynamic_check="#Tipo_accesso4.checked()" enabled="#Tipo_accesso4.checked()" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p>Altri allegati <i>(specificare)</i>: 
-          <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:77%;"/>
+        <p>
+          Pagamento dell'imposta di bollo
+        </p>
+        <p>
+          <select class="inputNormal" id="Tipo_Firma_pagamento_bollo" name="Tipo_Firma_pagamento_bollo" style="width:100%" label="Tipo firma bollo" mandatory_enabled="#GEN_MARCABOLLO.checked()">
+            <option value=""></option>
+            <option value="A">Si allega dichiarazione del pagamento dell'imposta di bollo con firma autografa del richiedente</option>
+            <option value="E">Si allega dichiarazione del pagamento dell'imposta di bollo con firma elettronica del richiedente</option>
+          </select>
         </p>
       </td>
     </tr>
+    <tr>
+			<td style="width:4%">
+			 <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+			  <p>
+			  Altri allegati <i>(specificare)</i>: 
+			  <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:77%;"/>
+			 </p>
+			</td>
+	  </tr>
   </tbody>
 </table>
 
@@ -1703,32 +1715,38 @@ function get_ufficio_dest() {
 
 <br>
 
-<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
-      </td>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
-      </td>
-      <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase()" style="width:90%;"/>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella" style="text-align: center">Luogo</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Data</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Il richiedente</p>
-      </td>
-    </tr>
-  </tbody>
+<div class="simpatico-block">
+ <table class="Modulo" id="firme" name="Firme" style="border:1px solid grey; pd4ml-display: none;">
+	<tbody>
+		<tr>
+			<td style="width: 33%; text-align: center;">
+				<input class="" id="Luogo" label="Luogo" mandatory="true" name="Luogo" style="width:80%;" type="text"/>
+			</td>
+			<td style="width: 33%; text-align: center;">
+				<input class="" format="date" id="Data" label="Data" mandatory="true" name="Data" style="width:50%;" type="text"/>
+			</td>
+			<td style="width: 34%; text-align: center; height: 1.5cm;">
+			</td>
+		</tr>
+		<tr class="Rigaintestazioneridotta">
+			<td>
+				<p class="Labelcella" style="text-align: center">Luogo</p>
+			</td>
+			<td>
+				<p class="Labelcella" style="text-align: center">Data</p>
+			</td>
+			<td>
+				<p class="Labelcella" style="text-align: center">Il dichiarante</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<p><span style="font-size:70%"><i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (art. 13 Regolamento UE n. 2016/679).</i></span></p>
+			</td>
+		</tr>
+	</tbody>
 </table>
+</div>
 
 <br>
 
@@ -1743,10 +1761,13 @@ function get_ufficio_dest() {
 <input id="GLOBO_allegato_cDOC-GIUSTIFICATIVA" name="GLOBO_allegato_cDOC-GIUSTIFICATIVA" obbligatorio="#DOC_GIUST.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
+<input firmare="'NO'" id="GLOBO_modulofiglio_cGEN-MARCABOLLO" name="GLOBO_modulofiglio_cGEN-MARCABOLLO" obbligatorio="#GEN_MARCABOLLO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="DOMANDA-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" />
 
+<input id="Metadati_firma_bollo" name="Metadati_firma_bollo" dynamic_value="#Tipo_Firma_pagamento_bollo.value()" type="hidden"/>
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
 

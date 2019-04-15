@@ -54,12 +54,6 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|23/02/2018" />
 
-<meta codice_modulo_figlio="GEN-MARCABOLLO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.pagamento.marca.bollo"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
-
 <meta codice_allegato="AFFIDAMENTO-INCARICO"
 urn_allegato="document:c_l378:allegato.affidamento.incarico"
 descrizione_estesa="Documentazione comprovante l'incarico"
@@ -126,8 +120,8 @@ urn_report="report:CSP_SESSION_REPORT"
   <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
   <script type="text/javascript">
     var simpaticoEservice = "12"; //  the id corresponding to the e-service
-    var simpaticoEserviceName = "DOMANDA ACCESSO CONSULTAZIONE ATTI EDILIZIA"; //  the name corresponding to the e-service
-    var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" ; //  the url corresponding to the e-service
+    var simpaticoEserviceName = "DOMANDA DI ACCESSO CONSULTAZIONE ATTI IN MATERIA EDILIZIA"; //  the name corresponding to the e-service
+    var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-DI-ACCESSO-CONSULTAZIONE-ATTI-IN-MATERIA-EDILIZIA" ; //  the url corresponding to the e-service
     var simpaticoForm = "main";
     var simpaticoCategory = "Edilizia"; // the general category of the e-service
     var simpaticoMapping= ["Titolare_Telefono",
@@ -135,13 +129,12 @@ urn_report="report:CSP_SESSION_REPORT"
                             "Titolare_EMailPEC",
                             ];
     var ERROR_LABELS = { 
-        'block1' : 'Inserire nome e cognome',
-        'block2' : 'Scegliere una delle opzioni',
-        'block3' : 'Scegliere una o entrambe le opzioni',
-        'block4' : 'Indicare i documenti di interesse',
-        'block5' : 'Specificare le motivazioni',
-        'block6' : 'Scegliere una delle opzioni',
-        'block8' : 'Confermare presa visione informativa sulla privacy', 
+        'block1' : 'Inserire il codice fiscale',
+        'block4' : 'Scegliere una delle opzioni',
+        'block5' : 'Scegliere una o entrambe le opzioni',
+        'block6' : 'Indicare i documenti di interesse',
+        'block8' : 'Scegliere una delle opzioni',
+        'block11' : 'Confermare presa visione informativa sulla privacy', 
     }
   </script>
 <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
@@ -150,43 +143,10 @@ urn_report="report:CSP_SESSION_REPORT"
     <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-DI-ACCESSO-CONSULTAZIONE-ATTI-IN-MATERIA-EDILIZIA_vSTU3" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
 
         
-<globo_fondo_pagina areaheight="150" scope="4">
-  <div type="firma">
-	<table class="Modulo" name="Firme" style="border:1px solid grey; margin-left: 28pt; display: none; pd4ml-display: inline">
-		<tbody>
-			<tr>
-				<td style="width: 33%; text-align: center;">
-					<input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
-				</td>
-				<td style="width: 33%; text-align: center;">
-					<input class="" id="Data_PDF" name="Data_PDF" style="width:50%;" type="text"/>
-				</td>
-				<td style="width: 34%; text-align: center; height: 1.5cm;"></td>
-			</tr>
-			<tr class="Rigaintestazioneridotta">
-				<td>
-					<p class="Labelcella" style="text-align: center">Luogo</p>
-				</td>
-				<td>
-					<p class="Labelcella" style="text-align: center">Data</p>
-				</td>
-				<td>
-					<p class="Labelcella" style="text-align: center">Il dichiarante</p>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<p><span style="font-size:70%"><i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (art. 13 Regolamento UE n. 2016/679).</i></span></p>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-</globo_fondo_pagina>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Domanda di accesso/consultazione agli atti in materia edilizia'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Domanda di ' + #part_rich.value()" id="Oggetto" name="Oggetto" type="hidden"/>
 
 <div type="intestazione_moduloprincipale_senzabollo">
 	<script>
@@ -372,7 +332,7 @@ function get_ufficio_dest() {
   Domanda di accesso/consultazione agli atti in materia edilizia
 </h1>
 
-<p align="justify" class="Modulo">
+<p class="Modulo">
   Ai sensi degli artt. 46 e 47 del D.P.R. 445/2000 e s.m., consapevole delle sanzioni penali, ai sensi dell’art. 76 del D.P.R. 445 del 28.12.2000 e s.m., nel caso di attestazioni non veritiere e falsità negli atti;
 </p>
 
@@ -381,370 +341,148 @@ function get_ufficio_dest() {
 
 
 
-<!-- visibility:visibility or display:none, cursor:pointer or default; visibility_mail: no_mail or mail_ordinaria or mail_pec; pec_obbligatoria: true or false or never, cciaa_visibile true or false -->
-<div type="Anagrafica_Società">
 
   <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
   <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-<!-- simpatico start -->
-  <div class="simpatico-block simpatico-query-and-answer">
-<!-- simpatico end -->
+    <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; visibility:visibility">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td style="width: 40%; border-left:0px; border-right:0px">
+            <p class="Labeltabella"  style="vertical-align:middle">Il/La sottoscritto/a, avente codice fiscale:
+  					</p>
+          </td>
+  				<td style="width:3%; border-left:0px; border-right:0px">
+            <p class="Labeltabella"></p>
+          </td>
+  				<td style="width: 3%; cursor:pointer; border-left:0px; border-right:0px">
+  					<span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+  						
 
-  
-  <input id="Titolare_Titolo" name="Titolare_Titolo" type="hidden" value="Titolare"/>
-  <table class="Modulo" style="border:1px solid grey; margin-bottom:-6px">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td style="border-right:0px">
-          <p class="Labeltabella"  style="vertical-align:middle">Il sottoscritto
-          </p>
-        </td>
-        <td style="width:25%; cursor:pointer; border-left:0px">
-          <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
-            
-
-<button type="button" class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility" title="Carica dati da profilo utente" onclick="recuperaAnagrafica( 'Titolare' )">Carica dati personali</button>
+<button type="button" class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility" title="Carica dati da profilo utente" onclick="recuperaAnagrafica( 'AventeTitolo' )">Carica dati personali</button>
 
 
-          </span>
-        </td>
-      </tr>
-    </tbody>
-    
+  					</span>
+          </td>
+          <td style="width:27%; border-left:0px; border-right:0px">
+            <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true"/>
+          </td>
+  				<td style="width:25%; border-left:0px; border-right:0px">
+            <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
+          </td>
+        </tr>
+      </tbody>
+
+      
 <div
   ws-name="getPersonaREST"
   ws-param-in=
-  "contesto=TipoContesto;listaAut=TipoLista;codiceFiscale=Titolare_CodiceFiscale"
+  "contesto=TipoContesto;listaAut=TipoLista;codiceFiscale=AventeTitolo_CodiceFiscale"
   ws-param-out=
-  "Titolare_DataNascita=datanascita;Titolare_CivicoResidenza=numeroCivico;Titolare_Nazionalita=nazionalita;Titolare_ComuneResidenza=citta;Titolare_CAPResidenza=cap;Titolare_Cittadinanza=stato;Titolare_BarraResidenza=barra;Titolare_Nazione=nazione;Titolare_Nome=nome;Titolare_CodiceVia=codiceVia;Titolare_LuogoNascita=comuneNascita;Titolare_ProvinciaResidenza=provincia;Titolare_CodiceComuneNascita=codiceComuneNascita;Titolare_Cognome=cognome;Titolare_MatricolaAnagrafe=matricola;Titolare_CodiceFamiglia=codiceFamiglia;Titolare_ViaResidenza=indirizzo;Titolare_Sesso=sesso"
-  ws-on="#Titolare_CodiceFiscale:change"
+  "AventeTitolo_ProvinciaResidenza=provincia;AventeTitolo_ViaResidenza=indirizzo;AventeTitolo_CodiceComuneNascita=codiceComuneNascita;AventeTitolo_Cognome=cognome;AventeTitolo_CodiceFamiglia=codiceFamiglia;AventeTitolo_CodiceVia=codiceVia;AventeTitolo_CivicoResidenza=numeroCivico;AventeTitolo_MatricolaAnagrafe=matricola;AventeTitolo_Nazionalita=stato;AventeTitolo_Nazione=nazione;AventeTitolo_Cittadinanza=nazionalita;AventeTitolo_Sesso=sesso;AventeTitolo_ComuneResidenza=citta;AventeTitolo_CAPResidenza=cap;AventeTitolo_BarraResidenza=barra;AventeTitolo_LuogoNascita=comuneNascita;AventeTitolo_Nome=nome;AventeTitolo_DataNascita=datanascita"
+  ws-on="#RecuperaDatiAnagr:click"
   
-    ws-allow-edit="true"
+    ws-allow-edit="false"
    >
 </div>
-  </table>
+    </table>
 
-  <input class="Modulo" id="Titolare_CodiceFiscale" name="Titolare_CodiceFiscale" style="width:50%" format="cf" label="Il codice fiscale del Titolare" type="hidden"/>
+    <br>
 
-  <table class="Modulo" style="border:1px solid grey" mandatory="true">
-    <tbody>
-      <tr class="Rigaintestazioneridotta">
-        <td colspan="2">
-          <p class="Labelcella">Cognome</p>
-        </td>
-        <td>
-          <p class="Labelcella">Nome</p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input class="" id="Titolare_Cognome" name="Titolare_Cognome" style="width:100%" label="Cognome del Titolare" readonly/>
-        </td>
-        <td>
-          <input class="" id="Titolare_Nome" name="Titolare_Nome" style="width:100%" label="Nome del Titolare" readonly/>
-        </td>
-      </tr>
-      <tr class="Rigaintestazioneridotta" style="border-top:0px">
-        <td style="width:15%;">
-          <p class="Labelcella">Data di nascita</p>
-        </td>
-        <td style="width: 35%;">
-          <p class="Labelcella">Nazionalità</p>
-        </td>
-        <td style="width: 50%;">
-          <p class="Labelcella">Luogo di nascita</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input class="" id="Titolare_DataNascita" name="Titolare_DataNascita" style="width:100%;" format="date" label="Data di nascita del Titolare" readonly/>
-        </td>
-        <td>
-          <select id="Titolare_Cittadinanza" name="Titolare_Cittadinanza" style="width:100%" label="Cittadinanza" >
-		<option value=""></option>
-    <optgroup label="Unione Europea">
-        <option value="ITALIA">Italia</option>
-        <option value="AUSTRIA">Austria</option>
-        <option value="BELGIO">Belgio</option>
-        <option value="BULGARIA">Bulgaria</option>
-        <option value="CIPRO">Cipro</option>
-        <option value="DANIMARCA">Danimarca</option>
-        <option value="EIRE">Eire</option>
-        <option value="ESTONIA">Estonia</option>
-        <option value="FINLANDIA">Finlandia</option>
-        <option value="FRANCIA">Francia</option>
-        <option value="GERMANIA">Germania</option>
-        <option value="GRECIA">Grecia</option>
-        <option value="LETTONIA">Lettonia</option>
-        <option value="LITUANIA">Lituania</option>
-        <option value="LUSSEMBURGO">Lussemburgo</option>
-        <option value="MALTA">Malta</option>
-        <option value="PAESI BASSI">Paesi Bassi</option>
-        <option value="POLONIA">Polonia</option>
-        <option value="PORTOGALLO">Portogallo</option>
-        <option value="REGNO UNITO">Regno Unito</option>
-        <option value="REPUBBLICA CECA">Repubblica Ceca</option>
-        <option value="ROMANIA">Romania</option>
-        <option value="SLOVACCHIA">Slovacchia</option>
-        <option value="SLOVENIA">Slovenia</option>
-        <option value="SPAGNA">Spagna</option>
-        <option value="SVEZIA">Svezia</option>
-        <option value="UNGHERIA">Ungheria</option>
-    </optgroup>
-    <optgroup label="NON Unione Europea">
-      <option value="AFGHANISTAN">Afghanistan</option>
-      <option value="ALBANIA">Albania</option>
-      <option value="ALGERIA">Algeria</option>
-      <option value="ANDORRA">Andorra</option>
-      <option value="ANGOLA">Angola</option>
-      <option value="ANGUILLA">Anguilla</option>
-      <option value="ANTARTIDE">Antartide</option>
-      <option value="ANTIGUA E BARBUDA">Antigua e Barbuda</option>
-      <option value="ANTILLE OLANDESI">Antille Olandesi</option>
-      <option value="ARABIA SAUDITA">Arabia Saudita</option>
-      <option value="ARGENTINA">Argentina</option>
-      <option value="ARMENIA">Armenia</option>
-      <option value="ARUBA">Aruba</option>
-      <option value="AUSTRALIA">Australia</option>
-      <option value="AZERBAIJAN">Azerbaijan</option>
-      <option value="BAHAMAS">Bahamas</option>
-      <option value="BAHRAIN">Bahrain</option>
-      <option value="BANGLADESH">Bangladesh</option>
-      <option value="BARBADOS">Barbados</option>
-      <option value="BELIZE">Belize</option>
-      <option value="BENIN">Benin</option>
-      <option value="BERMUDA">Bermuda</option>
-      <option value="BHUTAN">Bhutan</option>
-      <option value="BIELORUSSIA">Bielorussia</option>
-      <option value="BOLIVIA">Bolivia</option>
-      <option value="BOSNIA ERZEGOVINA">Bosnia Erzegovina</option>
-      <option value="BOTSWANA">Botswana</option>
-      <option value="BRASILE">Brasile</option>
-      <option value="BRUNEI DARUSSALAM">Brunei Darussalam</option>
-      <option value="BURKINA FASO">Burkina Faso</option>
-      <option value="BURUNDI">Burundi</option>
-      <option value="CAMBOGIA">Cambogia</option>
-      <option value="CAMERUN">Camerun</option>
-      <option value="CANADA">Canada</option>
-      <option value="CAPO VERDE">Capo Verde</option>
-      <option value="CIAD">Ciad</option>
-      <option value="CILE">Cile</option>
-      <option value="CINA">Cina</option>
-      <option value="CITTA' DEL VATICANO">Città del Vaticano</option>
-      <option value="COLOMBIA">Colombia</option>
-      <option value="COMORE">Comore</option>
-      <option value="COREA DEL NORD">Corea del Nord</option>
-      <option value="COREA DEL SUD">Corea del Sud</option>
-      <option value="COSTA D'AVORIO">Costa d'Avorio</option>
-      <option value="COSTA RICA">Costa Rica</option>
-      <option value="CROAZIA">Croazia</option>
-      <option value="CUBA">Cuba</option>
-      <option value="DOMINICA">Dominica</option>
-      <option value="ECUADOR">Ecuador</option>
-      <option value="EGITTO">Egitto</option>
-      <option value="EL SALVADOR">El Salvador</option>
-      <option value="EMIRATI ARABI UNITI">Emirati Arabi Uniti</option>
-      <option value="ERITREA">Eritrea</option>
-      <option value="ETIOPIA">Etiopia</option>
-      <option value="FEDERAZIONE RUSSA">Federazione Russa</option>
-      <option value="FIJI">Fiji</option>
-      <option value="FILIPPINE">Filippine</option>
-      <option value="GABON">Gabon</option>
-      <option value="GAMBIA">Gambia</option>
-      <option value="GEORGIA">Georgia</option>
-      <option value="GHANA">Ghana</option>
-      <option value="GIAMAICA">Giamaica</option>
-      <option value="GIAPPONE">Giappone</option>
-      <option value="GIBILTERRA">Gibilterra</option>
-      <option value="GIBUTI">Gibuti</option>
-      <option value="GIORDANIA">Giordania</option>
-      <option value="GRENADA">Grenada</option>
-      <option value="GROENLANDIA">Groenlandia</option>
-      <option value="GUADALUPA">Guadalupa</option>
-      <option value="GUAM">Guam</option>
-      <option value="GUATEMALA">Guatemala</option>
-      <option value="GUINEA EQUATORIALE">Guinea Equatoriale</option>
-      <option value="GUINEA">Guinea</option>
-      <option value="GUINEA-BISSAU">Guinea-Bissau</option>
-      <option value="GUYANA FRANCESE">Guyana Francese</option>
-      <option value="GUYANA">Guyana</option>
-      <option value="HAITI">Haiti</option>
-      <option value="HONDURAS">Honduras</option>
-      <option value="HONG KONG">Hong Kong</option>
-      <option value="INDIA">India</option>
-      <option value="INDONESIA">Indonesia</option>
-      <option value="IRAN">Iran</option>
-      <option value="IRAQ">Iraq</option>
-      <option value="ISLANDA">Islanda</option>
-      <option value="ISOLA BOUVET">Isola Bouvet</option>
-      <option value="ISOLA DI NATALE">Isola di Natale</option>
-      <option value="ISOLA HEARD E ISOLE MCDONALD">Isola Heard e Isole McDonald</option>
-      <option value="ISOLA NORFOLK">Isola Norfolk</option>
-      <option value="ISOLE CAYMAN">Isole Cayman</option>
-      <option value="ISOLE COCOS">Isole Cocos</option>
-      <option value="ISOLE COOK">Isole Cook</option>
-      <option value="ISOLE FALKLAND">Isole Falkland</option>
-      <option value="ISOLE FAROE">Isole Faroe</option>
-      <option value="ISOLE MARIANNE SETTENTRIONALI">Isole Marianne Settentrionali</option>
-      <option value="ISOLE MARSHALL">Isole Marshall</option>
-      <option value="ISOLE MINORI DEGLI STATI UNITI D'AMERICA">Isole Minori degli Stati Uniti d'America</option>
-      <option value="ISOLE SOLOMON">Isole Solomon</option>
-      <option value="ISOLE TURKS E CAICOS">Isole Turks e Caicos</option>
-      <option value="ISOLE VERGINI AMERICANE">Isole Vergini Americane</option>
-      <option value="ISOLE VERGINI BRITANNICHE">Isole Vergini Britanniche</option>
-      <option value="ISRAELE">Israele</option>
-      <option value="KAZAKHISTAN">Kazakhistan</option>
-      <option value="KENYA">Kenya</option>
-      <option value="KIRGHIZISTAN">Kirghizistan</option>
-      <option value="KIRIBATI">Kiribati</option>
-      <option value="KOSSOVO">Kossovo</option>
-      <option value="KUWAIT">Kuwait</option>
-      <option value="LAOS">Laos</option>
-      <option value="LESOTHO">Lesotho</option>
-      <option value="LIBANO">Libano</option>
-      <option value="LIBERIA">Liberia</option>
-      <option value="LIBIA">Libia</option>
-      <option value="LIECHTENSTEIN">Liechtenstein</option>
-      <option value="MACAO">Macao</option>
-      <option value="MACEDONIA">Macedonia</option>
-      <option value="MADAGASCAR">Madagascar</option>
-      <option value="MALAWI">Malawi</option>
-      <option value="MALDIVE">Maldive</option>
-      <option value="MALESIA">Malesia</option>
-      <option value="MALI">Mali</option>
-      <option value="MAROCCO">Marocco</option>
-      <option value="MARTINICA">Martinica</option>
-      <option value="MAURITANIA">Mauritania</option>
-      <option value="MAURIZIUS">Maurizius</option>
-      <option value="MAYOTTE">Mayotte</option>
-      <option value="MESSICO">Messico</option>
-      <option value="MOLDAVIA">Moldavia</option>
-      <option value="MONACO">Monaco</option>
-      <option value="MONGOLIA">Mongolia</option>
-      <option value="MONTENEGRO">Montenegro</option>
-      <option value="MONTSERRAT">Montserrat</option>
-      <option value="MOZAMBICO">Mozambico</option>
-      <option value="MYANMAR">Myanmar</option>
-      <option value="NAMIBIA">Namibia</option>
-      <option value="NAURU">Nauru</option>
-      <option value="NEPAL">Nepal</option>
-      <option value="NICARAGUA">Nicaragua</option>
-      <option value="NIGER">Niger</option>
-      <option value="NIGERIA">Nigeria</option>
-      <option value="NIUE">Niue</option>
-      <option value="NORVEGIA">Norvegia</option>
-      <option value="NUOVA CALEDONIA">Nuova Caledonia</option>
-      <option value="NUOVA ZELANDA">Nuova Zelanda</option>
-      <option value="OMAN">Oman</option>
-      <option value="PAKISTAN">Pakistan</option>
-      <option value="PALAU">Palau</option>
-      <option value="PANAMA">Panama</option>
-      <option value="PAPUA NUOVA GUINEA">Papua Nuova Guinea</option>
-      <option value="PARAGUAY">Paraguay</option>
-      <option value="PERU'">Perù</option>
-      <option value="PITCAIRN">Pitcairn</option>
-      <option value="POLINESIA FRANCESE">Polinesia Francese</option>
-      <option value="PORTO RICO">Porto Rico</option>
-      <option value="QATAR">Qatar</option>
-      <option value="REPUBBLICA CENTROAFRICANA">Repubblica Centroafricana</option>
-      <option value="REPUBBLICA DEL CONGO">Repubblica del Congo</option>
-      <option value="REPUBBLICA DEMOCRATICA DEL CONGO">Repubblica Democratica del Congo</option>
-      <option value="REPUBBLICA DOMINICANA">Repubblica Dominicana</option>
-      <option value="REUNION">Reunion</option>
-      <option value="RUANDA">Ruanda</option>
-      <option value="SAHARA OCCIDENTALE">Sahara Occidentale</option>
-      <option value="SAINT KITTS E NEVIS">Saint Kitts e Nevis</option>
-      <option value="SAINT PIERRE E MIQUELON">Saint Pierre e Miquelon</option>
-      <option value="SAINT VINCENT E GRENADINE">Saint Vincent e Grenadine</option>
-      <option value="SAMOA AMERICANE">Samoa Americane</option>
-      <option value="SAMOA">Samoa</option>
-      <option value="SAN MARINO">San Marino</option>
-      <option value="SANTA LUCIA">Santa Lucia</option>
-      <option value="SANT'ELENA">Sant'Elena</option>
-      <option value="SAO TOME E PRINCIPE">Sao Tome e Principe</option>
-      <option value="SENEGAL">Senegal</option>
-      <option value="SERBIA">Serbia</option>
-      <option value="SEYCHELLES">Seychelles</option>
-      <option value="SIERRA LEONE">Sierra Leone</option>
-      <option value="SINGAPORE">Singapore</option>
-      <option value="SIRIA">Siria</option>
-      <option value="SOMALIA">Somalia</option>
-      <option value="SRI LANKA">Sri Lanka</option>
-      <option value="STATI FEDERATI DELLA MICRONESIA">Stati Federati della Micronesia</option>
-      <option value="STATI UNITI D'AMERICA">Stati Uniti d'America</option>
-      <option value="SUD AFRICA">Sud Africa</option>
-      <option value="SUD GEORGIA E ISOLE SANDWICH">Sud Georgia e Isole Sandwich</option>
-      <option value="SUDAN">Sudan</option>
-      <option value="SURINAME">Suriname</option>
-      <option value="SVALBARD E JAN MAYEN">Svalbard e Jan Mayen</option>
-      <option value="SVIZZERA">Svizzera</option>
-      <option value="SWAZILAND">Swaziland</option>
-      <option value="TAGIKISTAN">Tagikistan</option>
-      <option value="THAILANDIA">Thailandia</option>
-      <option value="TAIWAN">Taiwan</option>
-      <option value="TANZANIA">Tanzania</option>
-      <option value="TERRITORI BRITANNICI DELL'OCEANO INDIANO">Territori Britannici dell'Oceano Indiano</option>
-      <option value="TERRITORI FRANCESI DEL SUD">Territori Francesi del Sud</option>
-      <option value="TERRITORI PALESTINESI OCCUPATI">Territori Palestinesi Occupati</option>
-      <option value="TIMOR EST">Timor Est</option>
-      <option value="TOGO">Togo</option>
-      <option value="TOKELAU">Tokelau</option>
-      <option value="TONGA">Tonga</option>
-      <option value="TRINIDAD E TOBAGO">Trinidad e Tobago</option>
-      <option value="TUNISIA">Tunisia</option>
-      <option value="TURCHIA">Turchia</option>
-      <option value="TURKMENISTAN">Turkmenistan</option>
-      <option value="TUVALU">Tuvalu</option>
-      <option value="UCRAINA">Ucraina</option>
-      <option value="UGANDA">Uganda</option>
-      <option value="URUGUAY">Uruguay</option>
-      <option value="UZBEKISTAN">Uzbekistan</option>
-      <option value="VANUATU">Vanuatu</option>
-      <option value="VENEZUELA">Venezuela</option>
-      <option value="VIETNAM">Vietnam</option>
-      <option value="WALLIS E FUTUNA">Wallis e Futuna</option>
-      <option value="YEMEN">Yemen</option>
-      <option value="ZAMBIA">Zambia</option>
-      <option value="ZIMBABWE">Zimbabwe</option>
-      <option value="APOLIDE">Apolide</option>
- </optgroup>
-</select>
-        </td>
-        <td>
-          <input class="" id="Titolare_LuogoNascita" name="Titolare_LuogoNascita" style="width:100%;" label="Luogo di nascita del Titolare" readonly/>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div type="Anagrafica_persona_fisica">
+    <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="4">
+            <p><b>Dati anagrafici:</b></p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td colspan="3">
+            <p class="Labelcella">Cognome</p>
+          </td>
+          <td>
+            <p class="Labelcella">Nome</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome" readonly/>
+          </td>
+          <td>
+            <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome" readonly/>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:15%;">
+            <p class="Labelcella">Data di nascita</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella">Sesso</p>
+          </td>
+          <td style="width: 26%;">
+            <p class="Labelcella">Cittadinanza</p>
+          </td>
+          <td style="width: 50%;">
+            <p class="Labelcella">Luogo di nascita</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita" readonly/>
+          </td>
+          <td>
+            <select class="inputNormal" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso" readonly>
+              <option value=""></option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+            </select>
+          </td>
+          <td>
+            <input class="" id="AventeTitolo_Cittadinanza" name="AventeTitolo_Cittadinanza" style="width:100%;" label="Nazionalità"/>
+          </td>
+          <td>
+            <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita" readonly/>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
 
-  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory="true">
-    <tbody>
-      <tr class="Rigaintestazioneridotta">
-        <td colspan="6">
-          <p class="Labelcella">Residenza</p>
-        </td>
-      </tr>
-      <tr class="Rigaintestazioneridotta">
-        <td style="width:9%;">
-          <p class="Labelcella">Provincia</p>
-        </td>
-        <td style="width:33%;">
-          <p class="Labelcella">Comune</p>
-        </td>
-        <td style="width:33%;">
-          <p class="Labelcella">Indirizzo</p>
-        </td>
-        <td style="width:9%;">
-          <p class="Labelcella">Civico</p>
-        </td>
-        <td style="width:16%;">
-          <p class="Labelcella">CAP</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <select id="Titolare_ProvinciaResidenza" name="Titolare_ProvinciaResidenza" style="width:100%" label="Provincia di residenza" >
+    <br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<div type="Residenza_persona_fisica">
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="6">
+            <p><b>Residente a:</b></p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:9%;">
+            <p class="Labelcella">Provincia</p>
+          </td>
+          <td style="width:33%;">
+            <p class="Labelcella">Comune</p>
+          </td>
+          <td style="width:33%;">
+            <p class="Labelcella">Indirizzo</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella">Civico</p>
+          </td>
+  				<td style="width:9%;">
+            <p class="Labelcella">Barra</p>
+          </td>
+          <td style="width:16%;">
+            <p class="Labelcella">CAP</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <select id="AventeTitolo_ProvinciaResidenza" name="AventeTitolo_ProvinciaResidenza" style="width:100%" label="Provincia di residenza" >
     <option value=""></option>
     <option value="AG">AG</option>
     <option value="AL">AL</option>
@@ -858,62 +596,75 @@ function get_ufficio_dest() {
     <option value="VV">VV</option>
     <option value="EE">EE</option>
 </select>
-        </td>
-        <td>
-          <select class="inputNormal" id="Titolare_ComuneResidenza" name="Titolare_ComuneResidenza" style="width:100%" label="Comune di residenza del Titolare"
-					     dynamic_value="getComuniFromProvincia( #Titolare_ProvinciaResidenza.value(), 'Titolare_ComuneResidenza')">
-					</select>
-        </td>
-        <td>
-          <input class="" id="Titolare_ViaResidenza" name="Titolare_ViaResidenza" style="width:100%;" label="Via di residenza del Titolare"/>
-        </td>
-        <td>
-          <input class="" id="Titolare_CivicoResidenza" name="Titolare_CivicoResidenza" style="width:100%;" label="Civico di residenza del Titolare" maxlength="10"/>
-        </td>
-        <td>
-          <input class="" id="Titolare_CAPResidenza" name="Titolare_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del Titolare" mandatory="#Titolare_ProvinciaResidenza.value() != 'EE'"/>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          </td>
+          <td>
+            <input class="" id="AventeTitolo_ComuneResidenza" name="AventeTitolo_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory="#AventeTitolo_ProvinciaResidenza.value() != 'EE'" />
+          </td>
+          <td>
+            <input class="" id="AventeTitolo_ViaResidenza" name="AventeTitolo_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true" />
+          </td>
+          <td>
+            <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" />
+          </td>
+  				<td>
+            <input class="" id="AventeTitolo_BarraResidenza" name="AventeTitolo_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" />
+          </td>
+          <td>
+            <input class="" id="AventeTitolo_CAPResidenza" name="AventeTitolo_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#AventeTitolo_CodiceFiscale.value() != '' and #AventeTitolo_ProvinciaResidenza.value() != 'EE'" mandatory="#AventeTitolo_ProvinciaResidenza.value() != 'EE'" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-	<table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory="true">
-    <tbody>
-      <tr class="Rigaintestazioneridotta">
-        <td style="width:20%;">
-          <p class="Labelcella">
-            Telefono
-          </p>
-        </td>
-				<td style="width:40%;">
-					<p class="Labelcella">
-						E-mail <i>(posta elettronica ordinaria)</i>
-					</p>
-				</td>
-				<td style="width:40%;">
-					<p class="Labelcella">
-						E-mail PEC
-							<i>
-							(domicilio digitale)
-							</i>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input class="inputNormal" id="Titolare_Telefono" label="Telefono del Titolare" name="Titolare_Telefono" style="width:100%"/>
-				</td>
-				<td>
-					<input class="inputNormal" format="email" id="Titolare_EMail" label="E-mail ordinaria del Titolare" mandatory="false" name="Titolare_EMail" style="width:100%;"/>
-				</td>
-				<td>
-					<input class="inputNormal" format="pec" id="Titolare_EMailPEC" label="E-mail PEC del Titolare" mandatory="false" name="Titolare_EMailPEC" style="width:100%;" />
-				</td>
-			</tr>
-		</tbody>
-	</table>
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+  		<tbody>
+  			<tr class="Rigaintestazioneridotta">
+  				<td style="width:16.5%;">
+  					<p class="Labelcella">
+  						Telefono fisso
+  					</p>
+  				</td>
+  				<td style="width:16.5%;">
+  					<p class="Labelcella">
+  						Cellulare
+  					</p>
+  				</td>
+  				<td style="width:33%;">
+  					<p class="Labelcella">
+  						E-mail
+  							<i>
+  								(posta elettronica ordinaria)
+  							</i>
+  					</p>
+  				</td>
+  				<td>
+  					<p class="Labelcella">
+  						E-mail PEC
+  							<i>
+  							(domicilio digitale)
+  							</i>
+  					</p>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>
+  					<input class="inputNormal" id="AventeTitolo_Fisso" label="Telefono fisso" name="AventeTitolo_Fisso" style="width:100%" format="number" maxlength="13"/>
+  				</td>
+  				<td>
+  					<input class="inputNormal" id="AventeTitolo_Telefono" mandatory_enabled="true" label="Telefono cellulare" name="AventeTitolo_Telefono" style="width:100%" format="number" maxlength="13"/>
+  				</td>
+  				<td>
+  					<input class="inputNormal" format="email" id="AventeTitolo_EMail" label="E-mail ordinaria" enabled="true" name="AventeTitolo_EMail" style="width:100%;" maxlength="60"/>
+  				</td>
+  				<td>
+            <input class="inputNormal" format="pec" id="AventeTitolo_EMailPEC" label="E-mail PEC del " name="AventeTitolo_EMailPEC" style="width:100%;" maxlength="60"/>
+  				</td>
+  			</tr>
+  		</tbody>
+    </table>
+
 </div>
-</div>
+</div> 
 
 <br>
 
@@ -1140,7 +891,6 @@ function get_ufficio_dest() {
 </table>
 
 <br>
-
 
 <div class="simpatico-block simpatico-query-and-answer">
 
@@ -1447,6 +1197,10 @@ function get_ufficio_dest() {
 </table>
 </div>
 
+<input class="" type="hidden" id="part_cons" name="part_cons" dynamic_value="#Servizio_richiesto1.checked() ? 'consultazione p.ed: ' + #consultazione_CatNumero.value() + ' - comune: ' + #consultazione_ComuneCatastale_esteso.value() : ''"/>
+<input class="" type="hidden" id="part_acc" name="part_acc" dynamic_value="#Servizio_richiesto2.checked() ? 'accesso p.ed: ' + #accesso_CatNumero.value() + ' - comune: ' + #accesso_ComuneCatastale_esteso.value() : ''"/>
+<input class="" type="hidden" id="part_rich" name="part_rich" dynamic_value="#part_cons.value() != '' ? (#part_acc.value() == '' ? #part_cons.value() : #part_cons.value() + ' / ' + #part_acc.value()) : #part_acc.value()"/>
+
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
@@ -1602,6 +1356,51 @@ function get_ufficio_dest() {
 <br>
 <br>
 
+<!-- simpatico start -->
+<div class="simpatico-block simpatico-query-and-answer">
+<!-- simpatico end -->
+	<p class="Modulo">Valendosi della facoltà prevista dall'articolo 3 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti,</p>
+    <br> 
+    <h3 class="Modulo">DICHIARA</h3>
+	
+	<table class="Modulo" style="border: 1px solid grey">
+  		<tbody>
+   			<tr>
+    			<td style="width:2%; vertical-align: top;" rowspan="3">
+					<input mandatory_enabled="#Tipo_accesso4.checked()" dynamic_check="#Tipo_accesso4.checked()" id="Parametri_BolloDichiara1" name="Parametri_BolloDichiara1" type="checkbox" value="si"/>
+				</td>
+				<td style="border:0px;">
+					<p>che la seguente marca da bollo è stata annullata per la presentazione della documentazione sopra indicata</p>
+				</td>
+			</tr>
+			<tr class="Rigaintestazioneridotta">
+    			<td>
+     				<p class="Rigaintestazioneridotta"><b>Numero seriale marca da bollo</b></p>
+     				<p>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank"> <i> Come pagare? </i></a>)</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory="#Parametri_BolloDichiara1.checked()" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20px; vertical-align: top;">
+					<input mandatory_enabled="#Tipo_accesso4.checked()" dynamic_check="#Tipo_accesso4.checked()" id="Parametri_BolloDichiara2" name="Parametri_BolloDichiara2" type="checkbox" value="si"/>
+				</td>
+				<td>
+					<p>di impegnarsi a conservare l'originale della marca da bollo annullata</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+<!-- simpatico start -->  
+</div> 
+<!-- simpatico end -->
+
+<br>
+<br>
+
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
@@ -1613,60 +1412,39 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr>
-			<td style="width:4%">
-			 <input id="AFFIDAMENTO_INCARICO" name="AFFIDAMENTO_INCARICO" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
-			</td>
-			<td style="background-color: #eeeeee;" colspan="2">
-			  <p>
-			  Documentazione comprovante l'affidamento dell'incarico
-			 </p>
-			</td>
-    </tr>
-    <tr>
-			<td style="width:4%">
-			 <input id="DOC_GIUST" name="DOC_GIUST" type="checkbox" enabled="true" value="OBBLIGATORIO"/>
-			</td>
-			<td style="background-color: #eeeeee;" colspan="2">
-			  <p>
-			  Eventuale documentazione giustificativa degli interessi giuridicamente rilevanti e motivi di legittimazione
-			 </p>
-			</td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="GEN_MARCABOLLO" name="GEN_MARCABOLLO" dynamic_check="#Tipo_accesso4.checked()" enabled="#Tipo_accesso4.checked()" type="checkbox" value="OBBLIGATORIO" />
+      <td style="width:4%">
+        <input id="AFFIDAMENTO_INCARICO" name="AFFIDAMENTO_INCARICO" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p>
-          Pagamento dell'imposta di bollo
-        </p>
-        <p>
-          <select class="inputNormal" id="Tipo_Firma_pagamento_bollo" name="Tipo_Firma_pagamento_bollo" style="width:100%" label="Tipo firma bollo" mandatory_enabled="#GEN_MARCABOLLO.checked()">
-            <option value=""></option>
-            <option value="A">Si allega dichiarazione del pagamento dell'imposta di bollo con firma autografa del richiedente</option>
-            <option value="E">Si allega dichiarazione del pagamento dell'imposta di bollo con firma elettronica del richiedente</option>
-          </select>
-        </p>
+        <p>Documentazione comprovante l'affidamento dell'incarico</p>
       </td>
     </tr>
     <tr>
-			<td style="width:4%">
-			 <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
-			</td>
-			<td style="background-color: #eeeeee;" colspan="2">
-			  <p>
-			  Altri allegati <i>(specificare)</i>: 
-			  <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:77%;"/>
-			 </p>
-			</td>
-	  </tr>
+      <td style="width:4%">
+        <input id="DOC_GIUST" name="DOC_GIUST" type="checkbox" enabled="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>Eventuale documentazione giustificativa degli interessi giuridicamente rilevanti e motivi di legittimazione</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>Altri allegati <i>(specificare)</i>: 
+          <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:77%;"/>
+        </p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+<div class=" simpatico-block simpatico-query-and-answer">
+<table class="Modulo" name="Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
@@ -1701,52 +1479,52 @@ function get_ufficio_dest() {
           </ul>
       </td>
     </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p><b>Dichiaro di aver ricevuto e preso visione dell'informativa sul trattamento dei dati personali</b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
     <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
-        <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
       </td>
-      <td colspan="2" style="background-color: #eeeeee;">
-        <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente</p>
       </td>
     </tr>
   </tbody>
 </table>
-
-<br>
-
-<div class="simpatico-block">
- <table class="Modulo" id="firme" name="Firme" style="border:1px solid grey; pd4ml-display: none;">
-	<tbody>
-		<tr>
-			<td style="width: 33%; text-align: center;">
-				<input class="" id="Luogo" label="Luogo" mandatory="true" name="Luogo" style="width:80%;" type="text"/>
-			</td>
-			<td style="width: 33%; text-align: center;">
-				<input class="" format="date" id="Data" label="Data" mandatory="true" name="Data" style="width:50%;" type="text"/>
-			</td>
-			<td style="width: 34%; text-align: center; height: 1.5cm;">
-			</td>
-		</tr>
-		<tr class="Rigaintestazioneridotta">
-			<td>
-				<p class="Labelcella" style="text-align: center">Luogo</p>
-			</td>
-			<td>
-				<p class="Labelcella" style="text-align: center">Data</p>
-			</td>
-			<td>
-				<p class="Labelcella" style="text-align: center">Il dichiarante</p>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="3">
-				<p><span style="font-size:70%"><i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (art. 13 Regolamento UE n. 2016/679).</i></span></p>
-			</td>
-		</tr>
-	</tbody>
-</table>
-</div>
 
 <br>
 
@@ -1755,19 +1533,16 @@ function get_ufficio_dest() {
 </p>
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_cDOMANDA-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" name="GLOBO_modulo_cDOMANDA-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" type="hidden" value="" />
 
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
 
 <input id="GLOBO_allegato_cAFFIDAMENTO-INCARICO" name="GLOBO_allegato_cAFFIDAMENTO-INCARICO" obbligatorio="#AFFIDAMENTO_INCARICO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cDOC-GIUSTIFICATIVA" name="GLOBO_allegato_cDOC-GIUSTIFICATIVA" obbligatorio="#DOC_GIUST.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<input firmare="'NO'" id="GLOBO_modulofiglio_cGEN-MARCABOLLO" name="GLOBO_modulofiglio_cGEN-MARCABOLLO" obbligatorio="#GEN_MARCABOLLO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="DOMANDA-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" />
 
-<input id="Metadati_firma_bollo" name="Metadati_firma_bollo" dynamic_value="#Tipo_Firma_pagamento_bollo.value()" type="hidden"/>
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
 
@@ -1826,7 +1601,7 @@ function get_ufficio_dest() {
 
 			 $('#UfficioDestinatario').val(get_ufficio_dest());
 
-                loadForm( ["Titolare", "Titolare"] ); //autoload prefix.
+                loadForm( ["AventeTitolo"] ); //autoload prefix.
 
 
 
