@@ -32,14 +32,20 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
-<meta codice_modulo_figlio="GEN-MARCABOLLO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.pagamento.marca.bollo"
+<meta codice_modulo_figlio="GEN-IMMAGG"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-IMMAGG"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -468,7 +474,8 @@ urn_report="report:CSP_SESSION_REPORT"
                           ('block13' , 'Definire il ruolo'),
                           ('block14' , 'Inserire il codice fiscale'),
                           ('block15' , 'Selezionare una delle opzioni'),
-                          ('block17' , 'Confermare presa visione informativa sulla privacy')] %}
+                          ('block16' , 'Inserire numero seriale marca da bollo'),
+                          ('block18' , 'Confermare presa visione informativa sulla privacy')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
 {% endblock simpaticoconfig %}
 
@@ -987,8 +994,51 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <br>
 <br>
-<br>
 
+<!-- simpatico start -->
+<div class="simpatico-block simpatico-query-and-answer">
+<!-- simpatico end -->
+	<p class="Modulo">Valendosi della facoltà prevista dall'articolo 3 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti,</p>
+    <br> 
+    <h3 class="Modulo">DICHIARA</h3>
+	
+	<table class="Modulo" style="border: 1px solid grey">
+  		<tbody>
+   			<tr>
+    			<td style="width:2%; vertical-align: top;" rowspan="3">
+					<input checked="checked" dynamic_check="true" id="Parametri_BolloDichiara1" name="Parametri_BolloDichiara1" type="checkbox" value="si"/>
+				</td>
+				<td style="border:0px;">
+					<p>che la seguente marca da bollo è stata annullata per la presentazione della documentazione sopra indicata</p>
+				</td>
+			</tr>
+			<tr class="Rigaintestazioneridotta">
+    			<td>
+     				<p class="Rigaintestazioneridotta"><b>Numero seriale marca da bollo</b></p>
+     				<p>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank"> <i> Come pagare? </i></a>)</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory="true" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20px; vertical-align: top;">
+					<input checked="checked" dynamic_check="true" id="Parametri_BolloDichiara2" name="Parametri_BolloDichiara2" type="checkbox" value="si"/>
+				</td>
+				<td>
+					<p>di impegnarsi a conservare l'originale della marca da bollo annullata</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+<!-- simpatico start -->  
+</div> 
+<!-- simpatico end -->
+
+<br>
+<br>
 
     <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
     <tbody>
@@ -1221,26 +1271,6 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
       </tr>
       <tr>
-        <td style="width: 4%; vertical-align: top;">
-          <input id="GEN_MARCABOLLO" name="GEN_MARCABOLLO" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" />
-        </td>
-        <td style="background-color: #eeeeee;" colspan="2">
-          <p>
-            <b>pagamento dell'imposta di bollo</b> per la richiesta di autorizzazione
-          </p>
-          <p style="font-size:70%;">
-            (da non allegare se l'istanza è presentata da ente pubblico)
-          </p>
-          <p>
-            <select class="inputNormal" id="Tipo_Firma_pagamento_bollo" name="Tipo_Firma_pagamento_bollo" style="width:100%" label="Tipo firma bollo" mandatory_enabled="#Tipo_richiedente2.checked()">
-              <option value=""></option>
-              <option value="A">Si allega dichiarazione del pagamento dell'imposta di bollo con firma autografa del richiedente</option>
-              <option value="E">Si allega dichiarazione del pagamento dell'imposta di bollo con firma elettronica del richiedente</option>
-            </select>
-          </p>
-        </td>
-      </tr>
-      <tr>
         <td style="width:4%">
           <input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" />
         </td>
@@ -1264,8 +1294,8 @@ urn_report="report:CSP_SESSION_REPORT"
         <p>
           <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
             <option value=""></option>
-            <option value="A">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
-            <option value="E">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
+						<option value="Firmato con firma autografa">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
+						<option value="Firmato con firma elettronica">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
           </select>
         </p>
        </td>
@@ -1292,8 +1322,8 @@ urn_report="report:CSP_SESSION_REPORT"
           <p><b>Domanda firmata dal richiedente</b> nella seguente modalità: 
               <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:46%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
                 <option value=""></option>
-                <option value="A">Firma autografa</option>
-                <option value="E">Firma elettronica</option>
+                <option value="Firma autografa">Firma autografa</option>
+                <option value="Firma elettronica">Firma elettronica</option>
               </select>
           <br/>
           <span style="font-size:70%">
@@ -1304,7 +1334,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
        <td style="vertical-align: top; width:3%">
-         <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" enabled="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" value="OBBLIGATORIO"/>
+         <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'Firma autografa'" enabled="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'Firma autografa'" value="OBBLIGATORIO"/>
        </td>
        <td style="background-color: #eeeeee;" colspan="2">
           <p>
@@ -1313,20 +1343,17 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
       </tr>
       <tr>
-              <td>
-               <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
-              </td>
-              <td style="background-color: #eeeeee;" colspan="2">
-                <p>
-                <b>altri allegati</b>
-                <span style="font-size:70%">
-                 (per i quali non è richiesta firma elettronica - es. pareri di altri enti) 
-          </span>
-          <br>
+        <td>
+            <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;" colspan="2">
+            <p><b>altri allegati</b>
+                <span style="font-size:70%">(per i quali non è richiesta firma elettronica - es. pareri di altri enti) </span>
+                <br>
                 <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:100%;"/>
-               </p>
-              </td>
-          </tr>
+            </p>
+        </td>
+      </tr>
     </tbody>
   </table>
   
@@ -1398,11 +1425,13 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
 
-<input firmare="'NO'" id="GLOBO_modulofiglio_cGEN-MARCABOLLO" name="GLOBO_modulofiglio_cGEN-MARCABOLLO" obbligatorio="#GEN_MARCABOLLO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <!-- Calcolo numero di moduli da richiedere per ulteriori particelle -->
 <input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
-<input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#GEN_IMMAGG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_modulofiglio_cGEN-INTAGG-EL" name="GLOBO_modulofiglio_cGEN-INTAGG-EL" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-INTAGG-AU" name="GLOBO_modulofiglio_cGEN-INTAGG-AU" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
@@ -1435,14 +1464,13 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cRIC-DIR-SEG" name="GLOBO_allegato_cRIC-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'A' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'E' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" dynamic_value="#NschedeAllegateAu.value()" type="hidden"/>
 <input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" dynamic_value="#NschedeAllegateEl.value()" type="hidden"/>
-<input id="Metadati_firma_bollo" name="Metadati_firma_bollo" dynamic_value="#Tipo_Firma_pagamento_bollo.value()" type="hidden"/>
 <input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" dynamic_value="#Tipo_Firma_ult_particelle.value()" type="hidden"/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
