@@ -1,21 +1,21 @@
-{% set CodiceModulo = "DOMANDA-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" %}
-{% set Urn =  "document:c_l378:accesso.atti.edilizia;richiesta.accesso.atti.edilizia;modulo.accesso.atti.materia.edilizia" %}
+{% set CodiceModulo = "ACCESSO-ATTI-EDILIZIA" %}
+{% set Urn =  "document:c_l378:accesso.atti.edilizia;richiesta.accesso;modulo.accesso" %}
 {% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-DI-ACCESSO-CONSULTAZIONE-ATTI-IN-MATERIA-EDILIZIA_vSTU3" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
 
-<meta campi_firma="Titolare_CodiceFiscale"
+<meta campi_firma="AventeTitolo_CodiceFiscale"
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
 sub_urn_list=""
 uo_globo_list=""
-contesto_procedurale="Richiesta di accesso/consultazione atti in materia edilizia"
-descrizione="Richiesta di accesso/consultazione atti in materia edilizia"
+contesto_procedurale="Richiesta di accesso consultazione atti in materia edilizia"
+descrizione="Richiesta di accesso consultazione atti in materia edilizia"
 destinatario_amministrazione=""
-destinatario_ufficio="6UUMOF"
+destinatario_ufficio="94SMCB"
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
@@ -26,7 +26,7 @@ istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
 procura="NO,,"
-segnatura="Titolare"
+segnatura="AventeTitolo"
 tipo_modulo="principale"
 urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
@@ -75,11 +75,11 @@ urn_report="report:CSP_SESSION_REPORT"
 
 {% block simpaticoconfig %}
   {% set simpaticoEservice="12" %}
-  {% set simpaticoEserviceName="DOMANDA DI ACCESSO CONSULTAZIONE ATTI IN MATERIA EDILIZIA" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-DI-ACCESSO-CONSULTAZIONE-ATTI-IN-MATERIA-EDILIZIA" %}
+  {% set simpaticoEserviceName="DOMANDA ACCESSO CONSULTAZIONE ATTI EDILIZIA" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/DOMANDA-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" %}
   {% set simpaticoForm="main" %}
   {% set simpaticoCategory="Edilizia" %}
-  {% set simpaticoMapping=[ "Titolare_Telefono","Titolare_EMail","Titolare_EMailPEC"] %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale"] %}
   {% set ERROR_LABELS=[ ('block1' , 'Inserire il codice fiscale'),
                         ('block4' , 'Scegliere una delle opzioni'),
                         ('block5' , 'Scegliere una o entrambe le opzioni'),
@@ -237,7 +237,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="consultazione_DatiCatastaliObbligatori" name="consultazione_DatiCatastaliObbligatori" dynamic_check="#Servizio_richiesto1.checked()" type="hidden"/>
         {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
         <tr>
-            <td style="vertical-align: top; width: 4%;" rowspan="7">
+            <td style="vertical-align: top; width: 4%;" rowspan="9">
                 <input group="Servizio_richiesto" id="Servizio_richiesto2" name="Servizio_richiesto2" type="checkbox" value="2" /> 
             </td>
             <td colspan="10">
@@ -259,10 +259,23 @@ urn_report="report:CSP_SESSION_REPORT"
             <td colspan="9">Estrazione copia in carta semplice</td>
         </tr>
         <tr>
-            <td style="vertical-align: top; width: 4%;">
+            <td style="vertical-align: top; width: 4%;" rowspan="3">
                 <input group="Tipo_accesso" id="Tipo_accesso4" name="Tipo_accesso4" type="checkbox" value="4" /> 
             </td>
-            <td colspan="9">Estrazione copia conforme all'originale</td>
+            <td colspan="9">
+              <p>Estrazione copia conforme all'originale, per la quale viene annullata la seguente <b>marca da bollo</b>:</p>
+              <span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span>
+            </td>
+        </tr>
+        <tr>
+          <td colspan="9">
+            <input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory="#Tipo_accesso4.checked()" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="9">
+            <p><b>Il richiedente si impegna a conservare l'originale della marca da bollo annullata</b></p>
+          </td>
         </tr>
             <input id="accesso_DatiCatastaliObbligatori" name="accesso_DatiCatastaliObbligatori" dynamic_check="#Servizio_richiesto2.checked()" type="hidden"/>
             {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='accesso', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
@@ -404,7 +417,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: top; width: 4%;">
         <input group="Metodo_ricezione" id="Metodo_ricezione2" name="Metodo_ricezione" type="radio" value="2" dynamic_check="#Tipo_richiedente2.checked()"/> 
       </td>
-      <td>di riceverli all'indirizzo PEC sopra indicato: <input class="" id="PEC_invio_doc" name="PEC_invio_doc" enabled="#Metodo_ricezione2.checked()" dynamic_value="#Titolare_EMailPEC.value()" size="56" readonly/><br>
+      <td>di riceverli all'indirizzo PEC sopra indicato: <input class="" id="PEC_invio_doc" name="PEC_invio_doc" enabled="#Metodo_ricezione2.checked()" dynamic_value="#AventeTitolo_EMailPEC.value()" size="56" readonly/><br>
           o tramite servizio di trasferimento dati informatici (es. Pydio, WeTransfer, ecc.)    
       </td>
     </tr>
@@ -412,7 +425,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: top; width: 4%;">
         <input group="Metodo_ricezione" id="Metodo_ricezione3" name="Metodo_ricezione" type="radio" value="3" /> 
       </td>
-      <td>di riceverli all'indirizzo mail sopra indicato: <input class="" id="mail_invio_doc" name="mail_invio_doc" enabled="#Metodo_ricezione3.checked()" dynamic_value="#Titolare_EMail.value()" size="56" readonly/><br>
+      <td>di riceverli all'indirizzo mail sopra indicato: <input class="" id="mail_invio_doc" name="mail_invio_doc" enabled="#Metodo_ricezione3.checked()" dynamic_value="#AventeTitolo_EMail.value()" size="56" readonly/><br>
           o tramite servizio di trasferimento dati informatici (es. Pydio, WeTransfer, ecc.) 
       </td>
     </tr>
@@ -425,51 +438,6 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 </div>
-
-<br>
-<br>
-
-<!-- simpatico start -->
-<div class="simpatico-block simpatico-query-and-answer">
-<!-- simpatico end -->
-	<p class="Modulo">Valendosi della facoltà prevista dall'articolo 3 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti,</p>
-    <br> 
-    <h3 class="Modulo">DICHIARA</h3>
-	
-	<table class="Modulo" style="border: 1px solid grey">
-  		<tbody>
-   			<tr>
-    			<td style="width:2%; vertical-align: top;" rowspan="3">
-					<input mandatory_enabled="#Tipo_accesso4.checked()" dynamic_check="#Tipo_accesso4.checked()" id="Parametri_BolloDichiara1" name="Parametri_BolloDichiara1" type="checkbox" value="si"/>
-				</td>
-				<td style="border:0px;">
-					<p>che la seguente marca da bollo è stata annullata per la presentazione della documentazione sopra indicata</p>
-				</td>
-			</tr>
-			<tr class="Rigaintestazioneridotta">
-    			<td>
-     				<p class="Rigaintestazioneridotta"><b>Numero seriale marca da bollo</b></p>
-     				<p>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank"> <i> Come pagare? </i></a>)</p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory="#Parametri_BolloDichiara1.checked()" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
-				</td>
-			</tr>
-			<tr>
-				<td style="width: 20px; vertical-align: top;">
-					<input mandatory_enabled="#Tipo_accesso4.checked()" dynamic_check="#Tipo_accesso4.checked()" id="Parametri_BolloDichiara2" name="Parametri_BolloDichiara2" type="checkbox" value="si"/>
-				</td>
-				<td>
-					<p>di impegnarsi a conservare l'originale della marca da bollo annullata</p>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-<!-- simpatico start -->  
-</div> 
-<!-- simpatico end -->
 
 <br>
 <br>
