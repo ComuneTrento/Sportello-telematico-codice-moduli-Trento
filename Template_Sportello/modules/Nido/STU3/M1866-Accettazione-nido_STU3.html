@@ -57,7 +57,22 @@ urn_report="report:CSP_SESSION_REPORT"
   {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1866-ACCETTAZIONE-NIDO" %}
   {% set simpaticoForm="main" %}
   {% set simpaticoCategory="Infanzia" %}
-  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale","AventeTitolo_DataNascita","AventeTitolo_Telefono","AventeTitolo_Fisso","AventeTitolo_EMail","AventeTitolo_EMailPEC","AventeTitolo_Sesso","AventeTitolo_ProvinciaResidenza","AventeTitolo_ComuneResidenza","AventeTitolo_ViaResidenza","AventeTitolo_CivicoResidenza","AventeTitolo_CAPResidenza","AventeTitolo_Cittadinanza"] %}
+  {% set simpaticoMapping=[ "AventeTitolo_Cognome",
+                            "AventeTitolo_Nome",
+                            "AventeTitolo_CodiceFiscale",
+                            "AventeTitolo_DataNascita",
+                            "AventeTitolo_Telefono",
+                            "AventeTitolo_Fisso",
+                            "AventeTitolo_EMail",
+                            "AventeTitolo_EMailPEC",
+                            "AventeTitolo_Sesso",
+                            "AventeTitolo_ProvinciaResidenza",
+                            "AventeTitolo_ComuneResidenza",
+                            "AventeTitolo_ViaResidenza",
+                            "AventeTitolo_CivicoResidenza",
+                            "AventeTitolo_CAPResidenza",
+                            "AventeTitolo_Cittadinanza"] %}
+
   {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
                           ('block4', 'Ruolo non specificato'),
                           ('block5', 'Seleziona una delle opzioni'),
@@ -91,15 +106,29 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <tr>
         <td colspan="3">
-          <select class="inputNormal" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" mandatory_enabled="true" label="Ruolo del genitore/affidatario">
-            <option value=""></option>
-            <option value="padre">Padre</option>
-            <option value="madre">Madre</option>
-          </select>
+          <input class="inputNormal" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" dynamic_value="#AventeTitolo_Sesso.check_value(['M']) ? 'padre' : 'madre'" enabled="#AventeTitolo_Sesso.value() != ''" label="Ruolo del genitore/affidatario" readonly />
         </td>
       </tr>
   </tbody>
 </table>
+
+<!--<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione" >
+        <td colspan="3">
+          <b>in qualità di</b>
+        </td>
+        <tr>
+          <td colspan="3">
+            <select class="inputNormal" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" mandatory_enabled="true" label="Ruolo del genitore/affidatario">
+              <option value=""></option>
+              <option value="padre">Padre</option>
+              <option value="madre">Madre</option>
+            </select>
+          </td>
+        </tr>
+    </tbody>
+  </table>-->
 
 <br>
 
@@ -164,95 +193,57 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <!-- simpatico add start -->
 <div class="simpatico-block simpatico-query-and-answer">
-  <!-- simpatico add end -->
-    {{ anagrafica_trento.anagrafica_bambino('Bambino', 'Anagrafica del/la bambino/a') }}
-    <input name="SvCodiceFamiglia" id="SvCodiceFamiglia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFamiglia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceFamiglia.value() : 0)" >
-    <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceVia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceVia.value() : 0 )" >
-    <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CivicoResidenza.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CivicoResidenza.value() : 0 )" format="number">
-    <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
-    <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
-    <input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" >
+<!-- simpatico add end -->
+  {{ anagrafica_trento.anagrafica_bambino('Bambino', 'Anagrafica del/la bambino/a') }}
+  <input name="SvCodiceFamiglia" id="SvCodiceFamiglia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFamiglia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceFamiglia.value() : 0)" >
+  <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceVia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceVia.value() : 0 )" >
+  <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CivicoResidenza.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CivicoResidenza.value() : 0 )" format="number">
+  <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
+  <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
+  <input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" >
    
-    <input id="check_CFBambino" name="check_CFBambino" type="hidden" label="ATTENZIONE! Il codice fiscale del bambino non risulta essere stato ancora convalidato dall'Agenzia delle Entrate" dynamic_value="!#Tassonomia_CF3.checked() and #Bambino_CFBambino.value() == '' ? '' : 'OK'" mandatory="true"/>
+  <input id="check_CFBambino" name="check_CFBambino" type="hidden" label="ATTENZIONE! Il codice fiscale del bambino non risulta essere stato ancora convalidato dall'Agenzia delle Entrate" dynamic_value="!#Tassonomia_CF3.checked() and #Bambino_CFBambino.value() == '' ? '' : 'OK'" mandatory="true"/>
   
   
-    <!-- simpatico add start -->
-  </div>
-    <!-- simpatico add end -->
+<!-- simpatico add start -->
+</div>
+<!-- simpatico add end -->
 
 <br>
 <br>
 
 <!-- simpatico add start -->
 <div class="simpatico-block simpatico-query-and-answer">
-  <!-- simpatico add end -->
-<h1 class="Modulo">DICHIARA</h1>
+<!-- simpatico add end -->
+  <h1 class="Modulo">DICHIARA</h1>
 
-<p class="Modulo"><b>Qui ci sarà il webservice per il recupero del nido assegnato, il codice relativo e indicazione se 1° o 2° scelta e verifica se esistono domande già accettate</b></p>
+  <p class="Modulo"><b>Qui ci sarà il webservice per il recupero del nido assegnato, il codice relativo e indicazione se 1° o 2° scelta e verifica se esistono domande già accettate</b></p>
 
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td>
-        <p>di <b>ACCETTARE</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <p>il posto assegnato al nido: <input id="posto_nido_assegnato" name="posto_nido_assegnato" label="posto nido assegnato" style="width:77%;" readonly/></p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <p>indicato come <input id="tipo_scelta_nido" name="tipo_scelta_nido" label="Nido indicato come prima o seconda scelta" style="width:40%;"readonly/> al momento della domanda di iscrizione</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-    <!-- simpatico add start -->
-  </div>
-    <!-- simpatico add end -->
-
-<br>
-
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <table class="Modulo" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
-        <td style="vertical-align: top; width: 4%;" rowspan="4">
-          <div id="accettazione_provvisoria" name="accettazione_provvisoria" label="Condizioni per accettazione provvisoria" mandatory="true"> </div>
-          <input group="accettazione_provvisoria" id="dich_accettazione_provvisoria" name="dich_accettazione_provvisoria" type="checkbox" enabled="#tipo_scelta_nido.value() == 'seconda scelta'" value="accettazione provvisoria" />
-        </td>
-        <td colspan="2">
-          <p style="line-height:1.6;">nel caso in cui il/la bambino/a sia stato assegnato/a ad un nido indicato come seconda scelta,<br><b>DICHIARA INOLTRE DI ACCETTARE LE SEGUENTI CONDIZIONI:</b></p>
+        <td>
+          <p>di <b>ACCETTARE</b></p>
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <input id="cond_accettazione_provvisoria1" name="cond_accettazione_provvisoria1" type="checkbox" enabled="#tipo_scelta_nido.value() == 'seconda scelta'" dynamic_check="#dich_accettazione_provvisoria.checked()" value="condizione accettazione provvisoria 1" />
-        </td>
         <td>
-          <p>di accettare fin d’ora senza alcuna altra formalizzazione il posto nel nido di prima scelta da me richiesto <b>qualora entro il 5 giugno si renda disponibile</b></p>
+          <p>il posto assegnato al nido: <input id="posto_nido_assegnato" name="posto_nido_assegnato" label="posto nido assegnato" style="width:77%;" readonly/></p>
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <input id="cond_accettazione_provvisoria2" name="cond_accettazione_provvisoria2" type="checkbox" enabled="#tipo_scelta_nido.value() == 'seconda scelta'" dynamic_check="#dich_accettazione_provvisoria.checked()" value="condizione accettazione provvisoria 2" />
-        </td>
         <td>
-          <p>di prendere atto che la conferma dell’avvenuta assegnazione del nido di prima scelta avverrà esclusivamente tramite comunicazione telefonica (sms/chiamata)</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <input id="cond_accettazione_provvisoria3" name="cond_accettazione_provvisoria3" type="checkbox" enabled="#tipo_scelta_nido.value() == 'seconda scelta'" dynamic_check="#dich_accettazione_provvisoria.checked()" value="condizione accettazione provvisoria 3" />
-        </td>
-        <td>
-          <p>di prendere atto che il verificarsi delle condizioni di cui sopra comporta automaticamente la rinuncia al posto accettato presso il nido: <input id="acc_provv_nido_sec_scelta" name="acc_provv_nido_sec_scelta" dynamic_value="#posto_nido_assegnato.value()"/></p>
+          <p>indicato come <input id="tipo_scelta_nido" name="tipo_scelta_nido" label="Nido indicato come prima o seconda scelta" style="width:40%;"readonly/> al momento della domanda di iscrizione</p>
         </td>
       </tr>
     </tbody>
-</table>
+  </table>
+
+<!-- simpatico add start -->
+</div>
+<!-- simpatico add end -->
+
+<br>
 
 <p class="Modulo"><b>Qui ci sarà il webservice per il recupero dei servizi opzionali del nido assegnato</b></p>
 
@@ -264,72 +255,107 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-        <td>         
-        </td>
-        <td>
-          <p class="Labelcella">Servizio opzionale</p>
-        </td>
-        <td style="width:20%;">
-          <p class="Labelcella">Codice del servizio opzionale</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <div id="servizi_nido_assegnato" name="servizi_nido_assegnato" label="Servizi opzionali disponibili per il nido assegnato" mandatory="true"> </div>
-          <input group="servizi_nido_assegnato" id="servizio_nido_assegnato0" name="servizio_nido_assegnato0" type="checkbox" dynamic_check="#codice_servizio_nido1.value() == '' and #codice_servizio_nido2.value() == ''" enabled="#codice_servizio_nido1.value() == '' and #codice_servizio_nido2.value() == ''" value="0" />
-        </td>
-        <td colspan="2">
-          nessun servizio opzionale disponibile
-        </td>
-      </tr>
+      <td></td>
+      <td>
+        <p class="Labelcella">Servizio opzionale</p>
+      </td>
+      <td style="width:20%;">
+        <p class="Labelcella">Codice del servizio opzionale</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="servizi_nido_assegnato" name="servizi_nido_assegnato" label="Servizi opzionali disponibili per il nido assegnato" mandatory="true"> </div>
+        <input group="servizi_nido_assegnato" id="servizio_nido_assegnato0" name="servizio_nido_assegnato0" type="checkbox" dynamic_check="#codice_servizio_nido1.value() == '' and #codice_servizio_nido2.value() == ''" enabled="#codice_servizio_nido1.value() == '' and #codice_servizio_nido2.value() == ''" value="0" />
+      </td>
+      <td colspan="2">
+        <p>nessun servizio opzionale disponibile</p>
+      </td>
+    </tr>
   
-      {{ service.getServiziNido('posto_nido_assegnato', 'codice_servizio_nido*', '#posto_nido_assegnato:change', 'listaServizi14') }}
+    {{ service.getServiziNido('posto_nido_assegnato', 'codice_servizio_nido*', '#posto_nido_assegnato:change', 'listaServizi14') }}
   
-      {% macro Servizio_Opzionale_Asilo(codice_nido_assegnato, prefix) %}
-      {% set prefix = prefix|string %}
+    {% macro Servizio_Opzionale_Asilo(codice_nido_assegnato, prefix) %}
+    {% set prefix = prefix|string %}
   
       {{ service.getDettaglioServizioNido(codice_nido_assegnato, 'codice_servizio_nido' + prefix, {
         'dettaglio_servizio_opz' + prefix: 'descrizione'
       }, '#codice_servizio_nido' + prefix + ':change' )}}
   
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <input group="servizi_nido_assegnato" id="servizio_nido_assegnato{{ prefix }}" name="servizio_nido_assegnato{{ prefix }}" type="checkbox" value="{{ prefix }}" enabled=!#servizio_nido_assegnato0.checked()/>
-        </td>
-        <td>
-          <input class="inputNormal" id="dettaglio_servizio_opz{{ prefix }}" name="dettaglio_servizio_opz{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" readonly>
-        </td>
-        <td>
-          <input id="codice_servizio_nido{{ prefix }}" name="codice_servizio_nido{{ prefix }}" style="width: 100%;" label="Codice servizio opzionale offerto">
-        </td>
-      </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="servizi_nido_assegnato" id="servizio_nido_assegnato{{ prefix }}" name="servizio_nido_assegnato{{ prefix }}" type="checkbox" value="{{ prefix }}" enabled=!#servizio_nido_assegnato0.checked()/>
+      </td>
+      <td>
+        <input class="inputNormal" id="dettaglio_servizio_opz{{ prefix }}" name="dettaglio_servizio_opz{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" readonly>
+      </td>
+      <td>
+        <input id="codice_servizio_nido{{ prefix }}" name="codice_servizio_nido{{ prefix }}" style="width: 100%;" label="Codice servizio opzionale offerto">
+      </td>
+    </tr>
   
-      {%- endmacro %}
+    {%- endmacro %}
   
-      {% for i in range(1, 3) %}
-      {{ Servizio_Opzionale_Asilo('codice_nido_assegnato', i) }}
+    {% for i in range(1, 3) %}
+    {{ Servizio_Opzionale_Asilo('codice_nido_assegnato', i) }}
+    {% endfor %}
+
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="servizi_nido_assegnato" id="servizio_nido_assegnato3" name="servizio_nido_assegnato3" type="checkbox" value="3" enabled=!#servizio_nido_assegnato0.checked()/>
+      </td>
+      <td colspan="2">
+        <p><b>non sono interessato ai servizi opzionali proposti</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <input class="inputNormal" id="check_serv_opz" name="check_serv_opz" style="width: 100%;" label="Controllo validità scelte per servizi opzionali" dynamic_value="#servizio_nido_assegnato0.checked() ? 'Per il nido assegnato non sono previsti servizi opzionali' : (#servizio_nido_assegnato3.checked() and (#servizio_nido_assegnato1.checked() || #servizio_nido_assegnato2.checked()) ? 'ATTENZIONE: scelta non corretta!' : (!#servizio_nido_assegnato3.checked() and !#servizio_nido_assegnato1.checked() and !#servizio_nido_assegnato2.checked() ? 'Selezionare uno o entrambi i servizi opzionali proposti, oppure indicare di non voler usufruire dei servizi opzionali' : ''))">
+      </td>
+    </tr>
+  </tbody>
+</table>
   
-      {% endfor %}
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <input group="servizi_nido_assegnato" id="servizio_nido_assegnato3" name="servizio_nido_assegnato3" type="checkbox" value="3" enabled=!#servizio_nido_assegnato0.checked()/>
-        </td>
-        <td colspan="2">
-          <p><b>non sono interessato ai servizi opzionali proposti</b></p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3">
-          <input class="inputNormal" id="check_serv_opz" name="check_serv_opz" style="width: 100%;" label="Controllo validità scelte per servizi opzionali" dynamic_value="#servizio_nido_assegnato0.checked() ? 'Per il nido assegnato non sono previsti servizi opzionali' : (#servizio_nido_assegnato3.checked() and (#servizio_nido_assegnato1.checked() || #servizio_nido_assegnato2.checked()) ? 'ATTENZIONE: scelta non corretta!' : (!#servizio_nido_assegnato3.checked() and !#servizio_nido_assegnato1.checked() and !#servizio_nido_assegnato2.checked() ? 'Selezionare uno o entrambi i servizi opzionali proposti, oppure indicare di non voler usufruire dei servizi opzionali' : ''))">
-        </td>
-      </tr>
+<input class="Modulo" id="serv_opz_ok" name="serv_opz_ok" dynamic_value="(#check_serv_opz.value() == '' || #check_serv_opz.value() == 'Per il nido assegnato non sono previsti servizi opzionali') ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi opzionali del nido assegnato">
+<input class="" id="check_codice_nido_assegnato" name="check_codice_nido_assegnato" dynamic_value="#codice_nido_assegnato.value()" enabled="true" />
   
-    </tbody>
-  </table>
-  
-  <input class="Modulo" id="serv_opz_ok" name="serv_opz_ok" dynamic_value="(#check_serv_opz.value() == '' || #check_serv_opz.value() == 'Per il nido assegnato non sono previsti servizi opzionali') ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi opzionali del nido assegnato">
-  <input class="" id="check_codice_nido_assegnato" name="check_codice_nido_assegnato" dynamic_value="#codice_nido_assegnato.value()" enabled="true" />
-  
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="vertical-align: top; width: 4%;" rowspan="4">
+        <input id="dich_accettazione_provvisoria0" name="dich_accettazione_provvisoria0" type="checkbox" enabled="#tipo_scelta_nido.value() == 'seconda scelta'" value="accettazione provvisoria" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;">nel caso in cui il/la bambino/a sia stato assegnato/a ad un nido indicato come seconda scelta,<br><b>DICHIARA INOLTRE DI ACCETTARE LE SEGUENTI CONDIZIONI:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="cond_accettazione_provvisoria1" name="cond_accettazione_provvisoria1" type="checkbox" enabled="#tipo_scelta_nido.value() == 'seconda scelta'" dynamic_check="#dich_accettazione_provvisoria0.checked()" value="condizione accettazione provvisoria 1" />
+      </td>
+      <td>
+        <p>di accettare fin d’ora senza alcuna altra formalizzazione il posto nel nido di prima scelta da me richiesto <b>qualora entro il 5 giugno si renda disponibile</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="cond_accettazione_provvisoria2" name="cond_accettazione_provvisoria2" type="checkbox" enabled="#tipo_scelta_nido.value() == 'seconda scelta'" dynamic_check="#dich_accettazione_provvisoria0.checked()" value="condizione accettazione provvisoria 2" />
+      </td>
+      <td>
+        <p>di prendere atto che la conferma dell’avvenuta assegnazione del nido di prima scelta avverrà esclusivamente tramite comunicazione telefonica (sms/chiamata)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="cond_accettazione_provvisoria3" name="cond_accettazione_provvisoria3" type="checkbox" enabled="#tipo_scelta_nido.value() == 'seconda scelta'" dynamic_check="#dich_accettazione_provvisoria0.checked()" value="condizione accettazione provvisoria 3" />
+      </td>
+      <td>
+        <p>di prendere atto che il verificarsi delle condizioni di cui sopra comporta automaticamente la rinuncia al posto accettato presso il nido: <input id="acc_provv_nido_sec_scelta" name="acc_provv_nido_sec_scelta" dynamic_value="#posto_nido_assegnato.value()"/></p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -338,122 +364,123 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <!-- simpatico add start -->
 <div class="simpatico-block simpatico-query-and-answer">
-  <!-- simpatico add end -->
+<!-- simpatico add end -->
 
-<h1 class="Modulo">DICHIARA INOLTRE</h1>
+  <h1 class="Modulo">DICHIARA INOLTRE</h1>
 
-<table class="Modulo" name="dichiarazioni" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione2" name="dichiarazione2" dynamic_check="true" type="checkbox" value="2"/>
-      </td>
-      <td colspan="2">
-        <p>di essere a conoscenza che l'accettazione del posto assegnato determina la cancellazione definitiva del nominativo del/la bambino/a dalla graduatoria per le altre scelte di servizio effettuate</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione3" name="dichiarazione3" dynamic_check="true" type="checkbox" value="3"/>
-      </td>
-      <td colspan="2">
-        <p>di aver versato la quota di anticipo tariffario pari a € <input class="" id="quota_anticipo" name="quota_anticipo" size="5" label="quota anticipo tariffario" mandatory_enabled="true"/> come risulta dall’allegata ricevuta di versamento di data <input class="" id="data_versamento" name="data_versamento" size="7" format="date" label="data versamento" mandatory_enabled="true"/></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione4" name="dichiarazione4" dynamic_check="true" type="checkbox" value="4"/>
-      </td>
-      <td colspan="2">
-        <p>di essere a conoscenza che nel caso di rinuncia del posto accettato la quota sopra citata sarà trattenuta dall’Amministrazione</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione5" name="dichiarazione5" dynamic_check="true" type="checkbox" value="5"/>
-      </td>
-      <td colspan="2">
-        <p>di essere a conoscenza che in caso di perdita del requisito della residenza nel Comune di Trento dopo l'accettazione ma prima dell'ambientamento, il/la bambino/a non può più essere ammesso al nido</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione6" name="dichiarazione6" dynamic_check="true" type="checkbox" value="6"/>
-      </td>
-      <td colspan="2">
-        <p>di aver adempiuto agli obblighi previsti in tema di vaccinazioni come da documentazione allegata</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione7" name="dichiarazione7" dynamic_check="true" type="checkbox" value="7"/>
-      </td>
-      <td colspan="2">
-        <p>di aver preso visione del "Regolamento per la disciplina dei servizi socio educativi per la prima infanzia", di cui alla <i>Delibera del Consiglio n. 70 dd 28/06/2007 e s.m.</i> e dei "Criteri e modalità di presentazione delle domande, formazione delle graduatorie, assegnazione e accettazione del posto nei nidi d’infanzia comunali", di cui al testo coordinato da ultimo approvato con <i>Deliberazione della Giunta comunale n. 67 dd 07/04/2014</i></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione8" name="dichiarazione8" dynamic_check="true" type="checkbox" value="8"/>
-      </td>
-      <td colspan="2">
-        <p>di aver preso visione della “Carta della qualità del servizio di nido d’infanzia” e delle relative schede annuali disponibili nel sito del Comune di Trento www.comune.trento.it, area tematica servizi all’infanzia e istruzione</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione9" name="dichiarazione9" dynamic_check="true" type="checkbox" value="9"/>
-      </td>
-      <td colspan="2">
-        <p>di dare atto che la retta di frequenza mensile per il servizio di nido d'infanzia è stabilita in base al valore dell'indicatore ICEF da richiedere a un CAF abilitato a partire da luglio 2018 ed <b>entro il mese di ammissione</b>, che tale valore verrà acquisito direttamente dall'Amministrazione dagli archivi provinciali e che <b>la mancata determinazione del valore ICEF entro i termini stabiliti, comporta l'applicazione della retta mensile massima</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione10" name="dichiarazione10" dynamic_check="true" type="checkbox" value="10"/>
-      </td>
-      <td colspan="2">
-        <p>di prendere atto che, salvo diversa comunicazione, i bollettini di pagamento della retta verranno emessi a nome del genitore che ha sottoscritto l'accettazione del posto al nido e che in caso di mancato pagamento l'altro genitore sarà chiamato a corrispondere il dovuto in quanto coobbligato</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="dichiarazione11" name="dichiarazione11" dynamic_check="true" type="checkbox" value="11"/>
-      </td>
-      <td colspan="2">
-        <p>di prendere atto che in caso di concessione dei servizi aggiuntivi di anticipo o posticipo e/o per il sabato mattina (nei nidi in cui sono previsti), l'Amministrazione provvederà, sulla base di tali dati, a ricalcolare la retta mensile comprensiva della quota aggiuntiva per tali servizi</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;" rowspan="3">
-        <input id="dichiarazione12" name="dichiarazione12" dynamic_check="true" type="checkbox" value="12"/>
-      </td>
-      <td colspan="2">
-        <p>di chiedere, ai fini del calcolo della retta, l'applicazione delle seguenti agevolazioni:</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="richieste1" name="richieste1" enabled="true" type="checkbox" value="1"/>
-      </td>
-      <td>
-        <p>riduzione della retta in presenza di fratelli che fruiscono contemporaneamente del nido</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <input id="richieste2" name="richieste2" enabled="true" type="checkbox" value="2"/>
-      </td>
-      <td>
-        <p>riduzione della retta in presenza di gemelli che fruiscono contemporaneamente del nido</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table class="Modulo" name="dichiarazioni" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione2" name="dichiarazione2" dynamic_check="true" type="checkbox" value="2"/>
+        </td>
+        <td colspan="2">
+          <p>di essere a conoscenza che l'accettazione del posto assegnato determina la cancellazione definitiva del nominativo del/la bambino/a dalla graduatoria per le altre scelte di servizio effettuate</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione3" name="dichiarazione3" dynamic_check="true" type="checkbox" value="3"/>
+        </td>
+        <td colspan="2">
+          <p>di aver versato la quota di anticipo tariffario pari a € <input class="" id="quota_anticipo" name="quota_anticipo" size="5" label="quota anticipo tariffario" mandatory_enabled="true"/> come risulta dall’allegata ricevuta di versamento di data <input class="" id="data_versamento" name="data_versamento" size="7" format="date" label="data versamento" mandatory_enabled="true"/></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione4" name="dichiarazione4" dynamic_check="true" type="checkbox" value="4"/>
+        </td>
+        <td colspan="2">
+          <p>di essere a conoscenza che nel caso di rinuncia del posto accettato la quota sopra citata sarà trattenuta dall’Amministrazione</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione5" name="dichiarazione5" dynamic_check="true" type="checkbox" value="5"/>
+        </td>
+        <td colspan="2">
+          <p>di essere a conoscenza che in caso di perdita del requisito della residenza nel Comune di Trento dopo l'accettazione ma prima dell'ambientamento, il/la bambino/a non può più essere ammesso al nido</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione6" name="dichiarazione6" dynamic_check="true" type="checkbox" value="6"/>
+        </td>
+        <td colspan="2">
+          <p>di aver adempiuto agli obblighi previsti in tema di vaccinazioni come da documentazione allegata</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione7" name="dichiarazione7" dynamic_check="true" type="checkbox" value="7"/>
+        </td>
+        <td colspan="2">
+          <p>di aver preso visione del "Regolamento per la disciplina dei servizi socio educativi per la prima infanzia", di cui alla <i>Delibera del Consiglio n. 70 dd 28/06/2007 e s.m.</i> e dei "Criteri e modalità di presentazione delle domande, formazione delle graduatorie, assegnazione e accettazione del posto nei nidi d’infanzia comunali", di cui al testo coordinato da ultimo approvato con <i>Deliberazione della Giunta comunale n. 67 dd 07/04/2014</i></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione8" name="dichiarazione8" dynamic_check="true" type="checkbox" value="8"/>
+        </td>
+        <td colspan="2">
+          <p>di aver preso visione della “Carta della qualità del servizio di nido d’infanzia” e delle relative schede annuali disponibili nel sito del Comune di Trento www.comune.trento.it, area tematica servizi all’infanzia e istruzione</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione9" name="dichiarazione9" dynamic_check="true" type="checkbox" value="9"/>
+        </td>
+        <td colspan="2">
+          <p>di dare atto che la retta di frequenza mensile per il servizio di nido d'infanzia è stabilita in base al valore dell'indicatore ICEF da richiedere a un CAF abilitato a partire da luglio 2018 ed <b>entro il mese di ammissione</b>, che tale valore verrà acquisito direttamente dall'Amministrazione dagli archivi provinciali e che <b>la mancata determinazione del valore ICEF entro i termini stabiliti, comporta l'applicazione della retta mensile massima</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione10" name="dichiarazione10" dynamic_check="true" type="checkbox" value="10"/>
+        </td>
+        <td colspan="2">
+          <p>di prendere atto che, salvo diversa comunicazione, i bollettini di pagamento della retta verranno emessi a nome del genitore che ha sottoscritto l'accettazione del posto al nido e che in caso di mancato pagamento l'altro genitore sarà chiamato a corrispondere il dovuto in quanto coobbligato</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="dichiarazione11" name="dichiarazione11" dynamic_check="true" type="checkbox" value="11"/>
+        </td>
+        <td colspan="2">
+          <p>di prendere atto che in caso di concessione dei servizi aggiuntivi di anticipo o posticipo e/o per il sabato mattina (nei nidi in cui sono previsti), l'Amministrazione provvederà, sulla base di tali dati, a ricalcolare la retta mensile comprensiva della quota aggiuntiva per tali servizi</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;" rowspan="3">
+          <input id="dichiarazione12" name="dichiarazione12" dynamic_check="true" type="checkbox" value="12"/>
+        </td>
+        <td colspan="2">
+          <p>di chiedere, ai fini del calcolo della retta, l'applicazione delle seguenti agevolazioni:</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="richieste1" name="richieste1" enabled="true" type="checkbox" value="1"/>
+        </td>
+        <td>
+          <p>riduzione della retta in presenza di fratelli che fruiscono contemporaneamente del nido</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="richieste2" name="richieste2" enabled="true" type="checkbox" value="2"/>
+        </td>
+        <td>
+          <p>riduzione della retta in presenza di gemelli che fruiscono contemporaneamente del nido</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 <!-- simpatico add start -->
 </div>
-  <!-- simpatico add end -->
+<!-- simpatico add end -->
+
 <br>
 <br>
 
@@ -577,6 +604,5 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
 <input id="GLOBO_allegato_cRICEVUTA-PAGAMENTO" name="GLOBO_allegato_cRICEVUTA-PAGAMENTO" obbligatorio="#RIC_VER_QUOTA.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 
 {% endblock content %}

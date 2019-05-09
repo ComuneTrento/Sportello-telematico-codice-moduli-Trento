@@ -177,7 +177,7 @@ M1876-ISCRIZIONE-NIDO
       </tr>
     </tbody>
   </table>
-  <input type="hidden" dynamic_value="#Tassonomia_CF.check_value('3') ? 'true' : 'false' " name="Tassonomia_ListaFam1_allowEdit" id="Tassonomia_ListaFam1_allowEdit" />
+  <input type="hidden" dynamic_value="#Tassonomia_CF.check_value(['3']) ? 'true' : 'false' " name="Tassonomia_ListaFam1_allowEdit" id="Tassonomia_ListaFam1_allowEdit" />
 
   <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()">
     <tbody>
@@ -602,15 +602,29 @@ M1876-ISCRIZIONE-NIDO
       </td>
       <tr>
         <td colspan="3">
-          <select class="inputNormal" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" mandatory_enabled="true" label="Ruolo del genitore/affidatario">
-            <option value=""></option>
-            <option value="padre">Padre</option>
-            <option value="madre">Madre</option>
-          </select>
+          <input class="inputNormal" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" dynamic_value="#AventeTitolo_Sesso.check_value(['M']) ? 'padre' : 'madre'" enabled="#AventeTitolo_Sesso.value() != ''" label="Ruolo del genitore/affidatario" readonly />
         </td>
       </tr>
   </tbody>
 </table>
+
+<!--<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione" >
+        <td colspan="3">
+          <b>in qualità di</b>
+        </td>
+        <tr>
+          <td colspan="3">
+            <select class="inputNormal" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" mandatory_enabled="true" label="Ruolo del genitore/affidatario">
+              <option value=""></option>
+              <option value="padre">Padre</option>
+              <option value="madre">Madre</option>
+            </select>
+          </td>
+        </tr>
+    </tbody>
+  </table>-->
 
 <br>
 
@@ -682,12 +696,10 @@ M1876-ISCRIZIONE-NIDO
     <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CivicoResidenza.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CivicoResidenza.value() : 0 )" format="number">
     <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
     <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
-    <input name="SvCFBambino" id="SvCFBambino" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : '') || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : '')" >
-    <input id="prova" name="prova" enabled="true"/>
-    <button type="button" class="real-button" id="Recuperadomanda">Recupera dati domanda</button>
+    <input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" >
+   
     <input id="check_CFBambino" name="check_CFBambino" type="hidden" label="ATTENZIONE! Il codice fiscale del bambino non risulta essere stato ancora convalidato dall'Agenzia delle Entrate" dynamic_value="!#Tassonomia_CF3.checked() and #Bambino_CFBambino.value() == '' ? '' : 'OK'" mandatory="true"/>
   
-    
   
     <!-- simpatico add start -->
   </div>
@@ -709,7 +721,7 @@ M1876-ISCRIZIONE-NIDO
    'Parametri_DataDomValFT': 'dtDomanda',
    'Parametri_RichDomValFT': 'richiedente',
   },
-  '#prova:change' ) }}
+  '#SvCFBambino:change' ) }}
   
   {{ service.getDomandaAttiva('SvCFBambino','TipoDomandaPartTime',   {
    'Parametri_TipoDomandaPT': 'tipoServizio',
@@ -718,18 +730,18 @@ M1876-ISCRIZIONE-NIDO
    'Parametri_RichDomValPT': 'richiedente',
    'Parametri_DataDomValPT': 'dtDomanda',
   },
-  '#Recuperadomanda:click' ) }}
+  '#SvCFBambino:change' ) }}
   
-  <input id="Parametri_TipoDomandaFT" name="Parametri_TipoDomandaFT" />
-  <input id="Parametri_NumeroDomandaValFT" name="Parametri_NumeroDomandaValFT"/>
-  <input id="Parametri_RichDomValFT" name="Parametri_RichDomValFT" />
-  <input id="Parametri_TipoOperazioneFT" name="Parametri_TipoOperazioneFT" />
+  <input type="hidden" id="Parametri_TipoDomandaFT" name="Parametri_TipoDomandaFT" />
+  <input type="hidden" id="Parametri_NumeroDomandaValFT" name="Parametri_NumeroDomandaValFT"/>
+  <input type="hidden" id="Parametri_RichDomValFT" name="Parametri_RichDomValFT" />
   <input type="hidden" id="Parametri_DataDomValFT" name="Parametri_DataDomValFT" />
-  <input id="Parametri_TipoDomandaPT" name="Parametri_TipoDomandaPT"/>
-  <input id="Parametri_NumeroDomandaValPT" name="Parametri_NumeroDomandaValPT"/>
-  <input id="Parametri_RichDomValPT" name="Parametri_RichDomValPT" />
+  <input type="hidden" id="Parametri_TipoDomandaPT" name="Parametri_TipoDomandaPT"/>
+  <input type="hidden" id="Parametri_NumeroDomandaValPT" name="Parametri_NumeroDomandaValPT"/>
+  <input type="hidden" id="Parametri_RichDomValPT" name="Parametri_RichDomValPT" />
   <input type="hidden" id="Parametri_DataDomValPT" name="Parametri_DataDomValPT" />
-  <input id="Parametri_TipoOperazionePT" name="Parametri_TipoOperazionePT" />
+  <input type="hidden" id="Parametri_TipoOperazioneFT" name="Parametri_TipoOperazioneFT" />
+  <input type="hidden" id="Parametri_TipoOperazionePT" name="Parametri_TipoOperazionePT" />
   
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
