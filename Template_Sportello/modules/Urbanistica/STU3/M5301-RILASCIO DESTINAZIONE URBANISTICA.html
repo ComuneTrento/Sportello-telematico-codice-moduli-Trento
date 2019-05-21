@@ -1,0 +1,226 @@
+{% set CodiceModulo = "M1234-TEST-ANDREA" %}
+{% set Urn = "document:c_l378:test.modulo.andrea;servizio.test.andrea;modulo.test.andrea" %}
+<!--{% set modulo_workflow_model =  "M1462-IMIS_v1.0" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Ambito di Test"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Procedure Test Andrea"
+descrizione="Test Andrea"
+destinatario_amministrazione=""
+destinatario_ufficio="KT5TBQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+
+{% block title %}TEST ANDREA{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Indirizzo di posta elettronica'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+    TEST ANDREA - Indirizzo di posta elettronica 
+</h1>
+<h3 class="Modulo">
+    <i>TEST ANDREA - Liberatoria alla comunicazione al Servizio Risorse finanziarie del Comune di Trento</i>
+</h3>
+
+<br>
+
+{{anagrafica_trento.richiedente_IMIS("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+
+<h2 class="Modulo">
+  COMUNICA
+</h2>
+
+<!-- il mio primo pezzo di codice sullo sportello ^_^ -->
+<div class="simpatico-block simpatico-query-and-answer">
+  <p class="Modulo" style="line-height:1.6;">il seguente indirizzo di posta elettronica a cui inviare le indicazioni e i prospetti di calcolo riguardanti l'Imposta Immobiliare Semplice (IMIS) e gli altri tributi comunali:<br></p>
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione" >
+          <td>
+            <b>Indirizzo posta elettronica:</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+              <input id="Mail_invio_indicazioni_IMIS" name="Mail_invio_indicazioni_IMIS" mandatory_enabled="true" label="Indicare una mail valida" format="email" style="width:100%;"/>
+          </td>
+        </tr>  
+    </tbody>
+  </table>
+</div>
+<!-- fine del mio primo pezzo di codice sullo sportello ^_^ -->
+
+<!--<p class="Modulo" style="line-height:1.6;">il seguente indirizzo di posta elettronica a cui inviare le indicazioni e i prospetti di calcolo riguardanti l'Imposta Immobiliare Semplice (IMIS) e gli altri tributi comunali:<br>
+    <input id="Mail_invio_indicazioni_IMIS" name="Mail_invio_indicazioni_IMIS" mandatory_enabled="true" label="Indicare una mail valida" format="email" style="width:100%;"/></p>
+-->
+
+<br>
+<br>
+
+<h2 class="Modulo">
+  DICHIARA
+</h2>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border: 1px solid grey">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top; width: 4%;">
+            <div id="Tassonomia_Dichiarazioni" name="Tassonomia_Dichiarazioni" label="Dichiarazione obbligatoria" mandatory="true"> </div>
+            <input group="Tassonomia_Dichiarazioni" id="Tassonomia_Dichiarazioni1" name="Tassonomia_Dichiarazioni1" type="checkbox" value="1" />
+          </td>
+          <td>
+            <p>di essere informato che sarà possibile chiedere la cancellazione dell'indirizzo e-mail qualora riterrà di non avvalersi dell'invio telematico dei prospetti di calcolo dell'imposta</p>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" name="Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
+          <p style="text-align: center; font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <br>
+          <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e delle disposizioni della normativa nazionale, si informa che:</p>
+          <ul>
+            <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://comune.trento.it" target="_blank">http://comune.trento.it</a>)</li>
+            <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://comune.trento.it</a>)</li>
+            <li>I dati vengono raccolti e trattati per le seguenti finalità istruttoria relativa all'istanza presentata</li>
+            <li>I dati possono essere trattati dal Comune di Trento per finalità statistiche</li>
+            <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico</li>
+            <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza</li>
+            <li>I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso</li>
+            <li>I dati non sono oggetto di diffusione</li>
+            <li>I dati non sono oggetto di trasferimento all'estero</li>
+            <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Risorse finanziarie</li>
+            <li>Il conferimento dei dati ha natura obbligatoria. Non fornire i dati comporta il mancato accoglimento dell'istanza</li>
+            <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge</li>
+            <li>I diritti dell'interessato sono:
+                <ul>
+                  <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano</li>
+                  <li>ottenere la loro comunicazione in forma intelligibile</li>
+                  <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici</li>
+                  <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge</li>
+                  <li>richiedere la portabilità dei dati</li>
+                  <li>aggiornare, correggere o integrare i dati che lo riguardano</li>
+                  <li>opporsi, per motivi legittimi, al trattamento dei dati</li>
+                  <li>proporre reclamo al Garante per la protezione dei dati personali</li>
+                </ul>
+              </li>
+            </ul>        
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p><b>Dichiaro di aver ricevuto e preso visione dell'informativa sul trattamento dei dati personali</b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 33%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 33%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:50%;" type="text"/>
+      </td>
+      <td style="width: 34%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+{% endblock content %}
