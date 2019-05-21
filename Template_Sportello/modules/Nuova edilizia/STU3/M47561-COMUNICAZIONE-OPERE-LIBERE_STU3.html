@@ -1,11 +1,11 @@
 {% set CodiceModulo = "M47561-COMUNICAZIONE-OPERE-LIBERE" %}
 {% set Urn =  "document:c_l378:opere.libere;comunicazione.opere.libere;modulo.comunicazione.opere.libere" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47561-COMUNICAZIONE-OPERE-LIBERE_v1.0" %}-->
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47561-COMUNICAZIONE-OPERE-LIBERE_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
 
-<meta campi_firma="Titolare_CodiceFiscale"
+<meta campi_firma="AventeTitolo_CodiceFiscale"
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
@@ -26,7 +26,7 @@ istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
 procura="NO,,"
-segnatura="Titolare"
+segnatura="AventeTitolo"
 tipo_modulo="principale"
 urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
@@ -97,122 +97,118 @@ urn_report="report:CSP_SESSION_REPORT"
 
 
 {% block content %}
-<globo_fondo_pagina areaheight="150" scope="4">
-  {{ utils.firma() }}
-</globo_fondo_pagina>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Comunicazione opere libere'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Comunicazione opere libere'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
 <div class="simpatico-block simpatico-query-and-answer">
-<h1 class="Modulo" style="text-align: center;">
+  <h1 class="Modulo" style="text-align: center;">
     COMUNICAZIONE OPERE LIBERE<br>
     <span style="font-size:75%">(art. 78, comma 3, della legge provinciale del 4 agosto 2015, n. 15)</span>
-</h1>
+  </h1>
 
-<br>
+  <br>
 
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p><b>La compilazione del modulo seguente viene eseguita da:</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
-        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
-      </td>
-      <td>
-        <p>Titolare o soggetto in possesso di titolo idoneo alla presentazione dell'istanza</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
-      </td>
-      <td>
-        <p>Progettista incaricato</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<br>
-
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <table class="Modulo" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
-          <p><b>I lavori vengono eseguiti</b></p>
+          <p><b>La compilazione del modulo seguente viene eseguita da:</b></p>
         </td>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
-          <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
+          <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+          <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
         </td>
         <td>
-          <p>in economia</p>
-          <span style="font-size:80%;"><i>(in quanto opere di modesta entità che non interessano le specifiche normative di settore)</i></span>
+          <p>Titolare o soggetto in possesso di titolo idoneo alla presentazione dell'istanza</p>
         </td>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2" />
+          <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
         </td>
         <td>
-          <p>dall'impresa incaricata</p>
+          <p>Progettista incaricato</p>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<br>
+
+{{anagrafica_trento.titolare("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <br>
 <br>
 
-{{anagrafica_trento.societa("Titolare","DATI DEL TITOLARE",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+<h1 class="Modulo" style="text-align: center;">DICHIARA</h1>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>I lavori vengono eseguiti</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
+        <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
+      </td>
+      <td>
+        <p>in economia</p>
+        <span style="font-size:80%;"><i>(in quanto opere di modesta entità che non interessano le specifiche normative di settore)</i></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2" />
+      </td>
+      <td>
+        <p>dall'impresa incaricata</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 <br>
 
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
 
-    {{ immobili_trento.immobile_trento("Immobile", "I lavori interessano le seguenti realtà immobiliari:", disattivato="true") }}
+  {{ immobili_trento.immobile_trento("Immobile", "I lavori interessano le seguenti realtà immobiliari:", disattivato="true") }}
 
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td>
-          <p> <b>DESCRIZIONE DELL'INTERVENTO </b> </p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="Per esecuzione intervento di:" style="width:100%;height:3cm" mandatory_enabled="true" >
-          </textarea>
-        </td>
-      </tr>
-    </tbody>
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p> <b>DESCRIZIONE DELL'INTERVENTO </b> </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="Per esecuzione intervento di:" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
-  <br>
-  <br>
+<br>
+<br>
 
 <div class="simpatico-block simpatico-query-and-answer">
 
-<p class="Modulo">Ciò premesso, il <b>titolare</b></p>
+  <h1 class="Modulo">COMUNICA</h1>
 
-<h1 class="Modulo">COMUNICA</h1>
-
-<table class="Modulo" style="border: 1px solid grey">
+  <table class="Modulo" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
@@ -238,7 +234,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
     </tbody>
   </table>
- </div>
+</div>
 
 <br>
 <br>
@@ -400,65 +396,72 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<div class="simpatico-block simpatico-query-and-answer">
-
-<p class="Modulo">Il <b>titolare</b> consapevole delle sanzioni penali previste dal codice penale e dalle leggi speciali in materia per le  dichiarazioni non veritiere e per la falsità in atti, risponde ai sensi degli articoli 47 e 76 del D.P.R. 28 dicembre 2000, n. 445 recante <i>"Testo unico delle disposizioni legislative e regolamentari in materia di documentazione amministrativa"</i>, per le attestazioni e le dichiarazioni contenute nel presente modello, fatta salva ogni altra forma di responsabilità prevista dall'ordinamento vigente</p>
-
-<h1 class="Modulo">DICHIARA</h1>
-
-<table class="Modulo" style="border:1px solid grey;">
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p>
-          <b>di essere soggetto abilitato alla presentazione dell'istanza in quanto</b>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
-        <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
-      </td>
       <td>
-        <p>Proprietario</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
-      </td>
-      <td>
-        <p>Comproprietario</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Parametri_Titolo4" name="Parametri_Titolo" type="radio" value="4" />
-      </td>
-      <td>
-        <p>Titolare di diritto contrattuale (locatario, titolare di leasing, etc.)</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
-      </td>
-      <td>
-        <p>Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+        <p>Il <b>titolare</b> consapevole delle sanzioni penali previste dal codice penale e dalle leggi speciali in materia per le  dichiarazioni non veritiere e per la falsità in atti, risponde ai sensi degli articoli 47 e 76 del D.P.R. 28 dicembre 2000, n. 445 recante <i>"Testo unico delle disposizioni legislative e regolamentari in materia di documentazione amministrativa"</i>, per le attestazioni e le dichiarazioni contenute nel presente modello, fatta salva ogni altra forma di responsabilità prevista dall'ordinamento vigente</p>
       </td>
     </tr>
   </tbody>
 </table>
+ 
+<div class="simpatico-block simpatico-query-and-answer">  
+  <h1 class="Modulo">DICHIARA</h1>
+  
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p>
+            <b>di essere soggetto abilitato alla presentazione dell'istanza in quanto</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
+          <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+        </td>
+        <td>
+          <p>Proprietario</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+        </td>
+        <td>
+          <p>Comproprietario</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_Titolo4" name="Parametri_Titolo" type="radio" value="4" />
+        </td>
+        <td>
+          <p>Titolare di diritto contrattuale (locatario, titolare di leasing, etc.)</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+        </td>
+        <td>
+          <p>Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+ 
+<br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
-        <p>
-          <b>Esclusivita' del titolo</b>
-        </p>
+        <p><b>Esclusivita' del titolo</b></p>
       </td>
     </tr>
     <tr>
@@ -480,7 +483,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
   </tbody>
 </table>
-
+  
 <br>
 <br>
 
@@ -534,35 +537,32 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <div id="Assenso_compropr" name="Assenso_compropr" label="Richiesto atto assenso dei comproprietari" mandatory_enabled="#Tipo_opere3.checked()"> </div>
-          <input group="Assenso_compropr" id="Assenso_compropr_no" name="Assenso_compropr" type="radio" value="1" />
-        </td>
-        <td colspan="2">
-          <p>non necessita di atto di assenso dei comproprietari</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <input group="Assenso_compropr" id="Assenso_compropr_si" name="Assenso_compropr" type="radio" value="2" />
-        </td>
-        <td colspan="2">
-          <p>necessita di atto di assenso dei comproprietari</p>
-        </td>
-      </tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Assenso_compropr" name="Assenso_compropr" label="Richiesto atto assenso dei comproprietari" mandatory_enabled="#Tipo_opere3.checked()"> </div>
+        <input group="Assenso_compropr" id="Assenso_compropr_no" name="Assenso_compropr" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p>non necessita di atto di assenso dei comproprietari</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Assenso_compropr" id="Assenso_compropr_si" name="Assenso_compropr" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p>necessita di atto di assenso dei comproprietari</p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
 <br>
 <br>
 
+<h1 class="Modulo">DICHIARA INOLTRE</h1>
+
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p><b>dichiara inoltre:</b></p>
-      </td>
-    </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
         <input id="Ulteriori_dichiarazioni1" name="Ulteriori_dichiarazioni1" type="checkbox" value="1" dynamic_check="true"/>
@@ -625,74 +625,74 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr class="Rigaintestazione">
       <td style="width: 30%;">
-          <p style="font-size:70%"> Tipologia di atto</p>
+        <p style="font-size:70%"> Tipologia di atto</p>
       </td>
       <td style="width: 15%;">
-          <p style="font-size:70%"> Numero/protocollo </p>
+        <p style="font-size:70%"> Numero/protocollo </p>
       </td>
       <td style="width: 15%;">
-          <p style="font-size:70%"> Data </p>
+        <p style="font-size:70%"> Data </p>
       </td>
       <td style="width: 15%;">
-          <p style="font-size:70%"> Autorità competente </p>
+        <p style="font-size:70%"> Autorità competente </p>
       </td>
-  </tr>
-  <tr>
+    </tr>
+    <tr>
       <td>
-          <input class="inputNormal" id="Parametri_TipProc1" name="Parametri_TipProc1" style="width: 100%;" label="Tipo Atto1" mandatory_enabled="#richiesta_atto2.checked()">
-      </td>
-      <td>
-          <input class="inputNormal" id="Parametri_Numero1" name="Parametri_Numero1" style="width: 100%;" label="Numero Atto1" mandatory_enabled="#richiesta_atto2.checked()">
+        <input class="inputNormal" id="Parametri_TipProc1" name="Parametri_TipProc1" style="width: 100%;" label="Tipo Atto1" mandatory_enabled="#richiesta_atto2.checked()">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_Data1" name="Parametri_Data1" style="width: 100%;" format="date" label="Data Atto1" mandatory_enabled="#richiesta_atto2.checked()">
+        <input class="inputNormal" id="Parametri_Numero1" name="Parametri_Numero1" style="width: 100%;" label="Numero Atto1" mandatory_enabled="#richiesta_atto2.checked()">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_OrgComp1" name="Parametri_OrgComp1" style="width: 100%;" label="Organo Competente1" mandatory_enabled="#richiesta_atto2.checked()">
-      </td>
-  </tr>
-  <tr>
-      <td>
-          <input class="inputNormal" id="Parametri_TipProc2" name="Parametri_TipProc2" style="width: 100%;" label="Tipo Atto2" enabled="#Parametri_TipProc1.value() != ''">
+        <input class="inputNormal" id="Parametri_Data1" name="Parametri_Data1" style="width: 100%;" format="date" label="Data Atto1" mandatory_enabled="#richiesta_atto2.checked()">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_Numero2" name="Parametri_Numero2" style="width: 100%;" label="Numero Atto2" enabled="#Parametri_Numero1.value() != ''">
+        <input class="inputNormal" id="Parametri_OrgComp1" name="Parametri_OrgComp1" style="width: 100%;" label="Organo Competente1" mandatory_enabled="#richiesta_atto2.checked()">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TipProc2" name="Parametri_TipProc2" style="width: 100%;" label="Tipo Atto2" enabled="#Parametri_TipProc1.value() != ''">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_Data2" name="Parametri_Data2" style="width: 100%;" label="Data Atto2" format="date" enabled="#Parametri_Data1.value() != ''">
+        <input class="inputNormal" id="Parametri_Numero2" name="Parametri_Numero2" style="width: 100%;" label="Numero Atto2" enabled="#Parametri_Numero1.value() != ''">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_OrgComp2" name="Parametri_OrgComp2" style="width: 100%;" label="Organo Competente2" enabled="#Parametri_OrgComp1.value() != ''">
-      </td>
-  </tr>
-  <tr>
-      <td>
-          <input class="inputNormal" id="Parametri_TipProc3" name="Parametri_TipProc3" style="width: 100%;" label="Tipo Atto3" enabled="#Parametri_TipProc2.value() != ''">
+        <input class="inputNormal" id="Parametri_Data2" name="Parametri_Data2" style="width: 100%;" label="Data Atto2" format="date" enabled="#Parametri_Data1.value() != ''">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_Numero3" name="Parametri_Numero3" style="width: 100%;" label="Numero Atto3" enabled="#Parametri_Numero2.value() != ''">
+        <input class="inputNormal" id="Parametri_OrgComp2" name="Parametri_OrgComp2" style="width: 100%;" label="Organo Competente2" enabled="#Parametri_OrgComp1.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TipProc3" name="Parametri_TipProc3" style="width: 100%;" label="Tipo Atto3" enabled="#Parametri_TipProc2.value() != ''">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_Data3" name="Parametri_Data3" style="width: 100%;" label="Data Atto3" format="date" enabled="#Parametri_Data2.value() != ''">
+        <input class="inputNormal" id="Parametri_Numero3" name="Parametri_Numero3" style="width: 100%;" label="Numero Atto3" enabled="#Parametri_Numero2.value() != ''">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_OrgComp3" name="Parametri_OrgComp3" style="width: 100%;" label="Organo Competente3" enabled="#Parametri_OrgComp2.value() != ''">
-      </td>
-  </tr>
-  <tr>
-      <td>
-          <input class="inputNormal" id="Parametri_TipProc4" name="Parametri_TipProc4" style="width: 100%;" label="Tipo Atto4" enabled="#Parametri_TipProc3.value() != ''">
+        <input class="inputNormal" id="Parametri_Data3" name="Parametri_Data3" style="width: 100%;" label="Data Atto3" format="date" enabled="#Parametri_Data2.value() != ''">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_Numero4" name="Parametri_Numero4" style="width: 100%;" label="Numero Atto4" enabled="#Parametri_Numero3.value() != ''">
+        <input class="inputNormal" id="Parametri_OrgComp3" name="Parametri_OrgComp3" style="width: 100%;" label="Organo Competente3" enabled="#Parametri_OrgComp2.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TipProc4" name="Parametri_TipProc4" style="width: 100%;" label="Tipo Atto4" enabled="#Parametri_TipProc3.value() != ''">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_Data4" name="Parametri_Data4" style="width: 100%;" label="Data Atto4" format="date" enabled="#Parametri_Data3.value() != ''">
+        <input class="inputNormal" id="Parametri_Numero4" name="Parametri_Numero4" style="width: 100%;" label="Numero Atto4" enabled="#Parametri_Numero3.value() != ''">
       </td>
       <td>
-          <input class="inputNormal" id="Parametri_OrgComp4" name="Parametri_OrgComp4" style="width: 100%;" label="Organo Competente4" enabled="#Parametri_OrgComp3.value() != ''">
+        <input class="inputNormal" id="Parametri_Data4" name="Parametri_Data4" style="width: 100%;" label="Data Atto4" format="date" enabled="#Parametri_Data3.value() != ''">
       </td>
-  </tr>
+      <td>
+        <input class="inputNormal" id="Parametri_OrgComp4" name="Parametri_OrgComp4" style="width: 100%;" label="Organo Competente4" enabled="#Parametri_OrgComp3.value() != ''">
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -720,174 +720,146 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="progetto_richiesto" id="progetto_richiesto2" name="progetto_richiesto" type="radio" value="2"/>
       </td>
       <td>
-        <p>è necessaria la redazione di un progetto da parte di un progettista incaricato</p>
+        <p>è necessaria la redazione di un progetto da parte di un <b>progettista incaricato</b></p>
       </td>
     </tr>
   </tbody>
 </table>
+
+<br>
+<br>
 
 <input id="Titolare1_DatiProfessionistaObbligatori" name="Titolare1_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
 <input id="Titolare1_DatiAlboProfessionistaObbligatori" name="Titolare1_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
 <div class="simpatico-block simpatico-query-and-answer">
-{{anagrafica.progettista_opzionale("Titolare1","Progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
-<table class="Modulo" style="border:1px solid grey;">
-  <tbody>
-    <tr>
-      <td>
-        <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente2.checked() and #Titolare_CodiceFiscale.value() == #Titolare1_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
-      </td>
-    </tr>
-  </tbody>
-</table>
+  {{anagrafica.progettista_opzionale("Titolare1","Progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr>
+        <td>
+          <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente2.checked() and #AventeTitolo_CodiceFiscale.value() == #Titolare1_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
+  <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
 
 </div>
 
 <br>
 <br>
-
-<div class="simpatico-block simpatico-query-and-answer">
-
-    <h1 class="Modulo">DICHIARA
-      <br>
-      altresì di essere informato sui seguente obblighi:
-    </h1> 
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Altre_dichiarazioni1" name="Altre_dichiarazioni1" type="checkbox" value="1" dynamic_check="true"/>
-      </td>
-      <td>
-        <p>l'intervento deve essere realizzato nel rispetto degli strumenti di pianificazione e di ogni altra disciplina e normativa relativa alla loro realizzazione, in particolare delle norme:</p>
-          <ul>
-            <li>in materia antisismica</li>
-            <li>in materia di sicurezza</li>
-            <li>in materia di paesaggio e qualità architettonica</li>
-            <li>in materia igienico-sanitaria, in particolare in osservanza dei criteri fissati dal regolamento edilizio comunale (ad esempio la dimensione minima dei locali, fori, servizi igienici etc.)</li>
-            <li>in materia di efficienza energetica</li>
-            <li>in materia di impianti e di barriere architettoniche</li>
-            <li>in materia di altezze e distanze</li>
-          </ul>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Altre_dichiarazioni2" name="Altre_dichiarazioni2" type="checkbox" value="2" dynamic_check="true"/>
-      </td>
-      <td>
-        <p>le opere di progetto non possono avere inizio <b>prima della data</b> di presentazione della presente comunicazione e che <b>l'omissione della presente comunicazione comporta il pagamento della sanzione pecuniaria prevista dall'art. 78, comma 4, della legge provinciale 4 agosto 2015, n. 15</b></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="text-align: center;"><b>Elenco degli allegati</b>
-          <br>
-          <span style="font-size:70%">
-            <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
-          </span>
-        </p>
+      <td colspan="3">
+        <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>Altri allegati (per i quali non è richiesta firma)</p>
+        <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:100%;"/>
       </td>
     </tr>
   </tbody>
 </table>
-  
+
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+<div class=" simpatico-block simpatico-query-and-answer"></div>
+  <table class="Modulo" name="Informativa_dati" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
-        <td>
-          <p><b>Adempimenti ulteriori:</b></p>
+        <td colspan="2">
+          <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
+          <p style="text-align: center; font-size:85%"><i>art. 13 Regolamento UE n. 2016/679</i></p>
         </td>
       </tr>
       <tr>
-        <td>
+        <td colspan="2">
           <br>
-          <p>Ai sensi dell'art. 13 del codice in materia di protezione dei dati personali si forniscono le seguenti informazioni:</p>
+          <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e del decreto legislativo n. 196/2003, si informa che:</p>
           <ul>
-            <li>qualora le opere comportino modificazioni catastali andrà presentata denuncia di variazione catastale ai competenti uffici ai sensi della normativa vigente</li>
-            <br>
-            <li>al termine dei lavori l'impresa installatrice dovrà rilasciare al committente la dichiarazione di conformità degli impianti realizzati nel rispetto delle norme di cui all'art. 6 del D.M. 37/2008 e che, ai sensi del medesimo decreto, la dichiarazione di conformità o il certificato di collaudo degli impianti, ove previsto, andrà depositato in Comune</li>
-            <br>
-            <li>nel caso in cui l'intervento riguardi la copertura dell'edificio va osservato il D.P.P. 25 febbraio 2008, n. 7-117/Leg.: "Regolamento tecnico per la prevenzione dei rischi di infortunio a seguito di cadute dall'alto nei lavori di manutenzione ordinaria sulle coperture"</li>
-            <br>
-            <li>la presente comunicazione non è soggetta a vincoli temporali e per la stessa <b>non è previsto il deposito della comunicazione di fine lavori</b></li>
+            <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://www.comune.trento.it" target="_blank">http://comune.trento.it</a>);</li>
+            <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://www.comunitrentini.it</a>);</li>
+            <li>I dati vengono raccolti e trattati nell'ambito del procedimento per il quale la presente dichiarazione viene resa;</li>
+            <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico;</li>
+            <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza;</li>
+            <li>I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso;</li>
+            <li>I dati sono oggetto di diffusione, nel rispetto del principio di minimizzazione, esclusivamente per l'ottemperanza agli obblighi di pubblicazione dei dati imposti dalla normativa vigente in materia di amministrazione trasparente;</li>
+            <li>I dati non sono oggetto di trasferimento all'estero;</li>
+            <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Attività edilizia sito in Trento, Via del Brennero n. 312, 38121 – Trento, tel. 0461/884798, fax 0461/884701, PEC: servizio.attivitaedilizia@pec.comune.trento.it;</li>
+            <li>Il conferimento dei dati ha natura obbligatoria per le finalità di cui sopra e per tutte quelle ausiliarie e connesse. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa corrispondere alla richiesta connessa alla specifica finalità;</li>
+            <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge;</li>
+            <li>I diritti dell'interessato sono: 
+              <ul>
+                <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano;</li>
+                <li>ottenere la loro comunicazione in forma intelligibile; </li>
+                <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici; </li>
+                <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge; </li>
+                <li>richiedere la portabilità dei dati;</li>
+                <li>aggiornare, correggere o integrare i dati che lo riguardano; </li>
+                <li>opporsi, per motivi legittimi, al trattamento dei dati;</li>
+                <li>proporre reclamo al Garante per la protezione dei dati personali.</li>
+              </ul>
+            </li>
           </ul>
         </td>
       </tr>
     </tbody>
   </table>
 
+  <table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p><b>Dichiaro di aver ricevuto e preso visione dell'informativa sul trattamento dei dati personali</b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
-        <p style="text-align: center; font-size:85%"><i>art. 13 Regolamento UE n. 2016/679</i></p>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
       </td>
     </tr>
-    <tr>
-      <td colspan="2">
-        <br>
-        <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e del decreto legislativo n. 196/2003, si informa che:</p>
-        <ul>
-          <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://www.comune.trento.it" target="_blank">http://comune.trento.it</a>);</li>
-          <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://www.comunitrentini.it</a>);</li>
-          <li>I dati vengono raccolti e trattati nell'ambito del procedimento per il quale la presente dichiarazione viene resa;</li>
-          <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico;</li>
-          <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza;</li>
-          <li>I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso;</li>
-          <li>I dati sono oggetto di diffusione, nel rispetto del principio di minimizzazione, esclusivamente per l'ottemperanza agli obblighi di pubblicazione dei dati imposti dalla normativa vigente in materia di amministrazione trasparente;</li>
-          <li>I dati non sono oggetto di trasferimento all'estero;</li>
-          <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Attività edilizia sito in Trento, Via del Brennero n. 312, 38121 – Trento, tel. 0461/884798, fax 0461/884701, PEC: servizio.attivitaedilizia@pec.comune.trento.it;</li>
-          <li>Il conferimento dei dati ha natura obbligatoria per le finalità di cui sopra e per tutte quelle ausiliarie e connesse. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa corrispondere alla richiesta connessa alla specifica finalità;</li>
-          <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge;</li>
-          <li>I diritti dell'interessato sono: 
-            <ul>
-              <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano;</li>
-              <li>ottenere la loro comunicazione in forma intelligibile; </li>
-              <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici; </li>
-              <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge; </li>
-              <li>richiedere la portabilità dei dati;</li>
-              <li>aggiornare, correggere o integrare i dati che lo riguardano; </li>
-              <li>opporsi, per motivi legittimi, al trattamento dei dati;</li>
-              <li>proporre reclamo al Garante per la protezione dei dati personali.</li>
-            </ul>
-          </li>
-        </ul>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
       </td>
-    </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top;">
-        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
-        <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
       </td>
-      <td style="background-color: #eeeeee;">
-        <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente</p>
       </td>
     </tr>
   </tbody>
 </table>
 
-<br>
-<br>
-
-<div class="simpatico-block">
- {{ utils.firma_hidden() }}
-</div>
 <br>
 
 <p class="Modulo">
