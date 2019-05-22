@@ -41,7 +41,7 @@ urn_report="report:CSP_SESSION_REPORT"
 {% endblock meta %}
 
 
-{% block title %}Richiesta Certificato di Destinazione Urbanistica{% endblock title %}
+{% block title %}M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA{% endblock title %}
 
 {% block content %}
 
@@ -52,8 +52,7 @@ urn_report="report:CSP_SESSION_REPORT"
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
 <h1 class="Modulo">
-  M5301-Richiesta Certificato di Destinazione Urbanistica
-</h1>
+  M5301-RICHIESTA CERTIFICATO DI DESTINAZIONE URBANISTICA</h1>
 <!--<h3 class="Modulo">
     <i>Sottotitolo</i>
 </h3> -->
@@ -95,10 +94,54 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>-->
 
-<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" />
 
     {{ immobili_trento.immobile_destinazione_urbanistica("Immobile", "dei beni immobili individuati con le seguenti indicazioni catastali:", disattivato="true") }}
 
+<div id="content"></div>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 0px">
+  <tbody>
+    <th colspan="6">
+      <button type="button" class="real-button" id="RecuperaListaFam" onclick="addRow()">Aggiungi particella</button>
+    </th>
+  </tbody>
+</table>
+
+<div class="simpatico-block simpatico-query-and-answer">  
+<!--  <h1 class="Modulo">DICHIARA</h1> -->
+  
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p>
+            <b>Consortalità</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
+          <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+        </td>
+        <td>
+          <p>SI <br>particelle nn. <input class="" id="Tipo_Parametri_Titolo1" name="Tipo_Parametri_Titolo1" label="Altro titolo" mandatory_enabled="#Parametri_Titolo1.checked()" style="width:84%;"/></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+        </td>
+        <td>
+          <p>NO</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -142,6 +185,49 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 -->
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <!-- simpatico end -->
+    <p class="Modulo">Valendosi della facoltà prevista dall'articolo 3 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti,</p>
+      <br> 
+      <h3 class="Modulo">DICHIARA</h3>
+    
+    <table class="Modulo" style="border: 1px solid grey">
+        <tbody>
+           <tr>
+            <td style="width:2%; vertical-align: top;" rowspan="3">
+            <input checked="checked" dynamic_check="true" id="Parametri_BolloDichiara1" name="Parametri_BolloDichiara1" type="checkbox" value="si"/>
+          </td>
+          <td style="border:0px;">
+            <p>che la seguente marca da bollo è stata annullata per la presentazione della documentazione sopra indicata</p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td>
+               <p class="Rigaintestazioneridotta"><b>Numero seriale marca da bollo</b></p>
+               <p>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank"> <i> Come pagare? </i></a>)</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory="true" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20px; vertical-align: top;">
+            <input checked="checked" dynamic_check="true" id="Parametri_BolloDichiara2" name="Parametri_BolloDichiara2" type="checkbox" value="si"/>
+          </td>
+          <td>
+            <p>di impegnarsi a conservare l'originale della marca da bollo annullata</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <!-- simpatico start -->  
+  </div> 
+
+<br>
+
 <div class="simpatico-block simpatico-query-and-answer">
 <table class="Modulo" name="Informativa_dati" style="border: 1px solid grey">
     <tbody>
@@ -246,5 +332,23 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<script type="text/javascript">
+  function addRow () {
+    document.querySelector('#content').insertAdjacentHTML(
+      'afterbegin',
+      `<br>
+      <div class="row">
+        {{ immobili_trento.immobile_destinazione_urbanistica("Immobile", "dei beni immobili individuati con le seguenti indicazioni catastali:", disattivato="true") }}
+        <input type="button" value="Rimuovi particella" onclick="removeRow(this)">
+      </div>`      
+    )
+  }
+
+  function removeRow (input) {
+    input.parentNode.remove()
+  }
+
+</script>
 
 {% endblock content %}
