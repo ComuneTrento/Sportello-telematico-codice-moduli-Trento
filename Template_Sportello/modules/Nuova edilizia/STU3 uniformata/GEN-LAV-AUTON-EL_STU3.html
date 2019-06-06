@@ -1,0 +1,318 @@
+{% set CodiceModulo =  "GEN-LAV-AUTON-EL" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.lavoratori.autonomi.firma.elettronica" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-EL_vSTU3" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Anagrafica dei lavoratori autonomi (firma elettronica)"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_ELETTRONICA"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/GEN-LAV-AUTON-EL"
+verifica_pagamento="NO"
+versione="1.1|14/02/2018"/>
+
+{% endblock meta %}
+
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="5_4" %}
+  {% set simpaticoEserviceName="GEN LAV-AUTON EL" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-EL" %}
+  {% set simpaticoForm="modulo_secondario" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=[ "AventeTitolo_Cognome",
+                           "AventeTitolo_Nome",
+                           "AventeTitolo_CodiceFiscale",
+                           "AventeTitolo_APEC",
+                           "AventeTitolo_CFPI"] %}
+
+  {% set ERROR_LABELS=[ ('block1' , 'Inserire i dati anagrafici richiesti'),
+                        ('block2' , 'Confermare presa visione informativa sulla privacy')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
+
+
+{% block title %}
+   Anagrafica lavoratore autonomo
+{% endblock title %}
+
+{% block content %}
+ <globo_fondo_pagina areaheight="150" scope="1">
+ {{ utils.firma() }}
+</globo_fondo_pagina>
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+<input checked="checked" dynamic_check="true" id="SempreSI" name="SempreSI" type="hidden" value="SI"/>
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - anagrafica lavoratori autonomi firma elettronica'" id="Oggetto" name="Oggetto" type="hidden"/>
+
+ <div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo">
+ Anagrafica lavoratore autonomo
+</h1>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+   <tbody>
+     <tr class="Rigaintestazione">
+       <td colspan="6">
+         <p><b>Il sottoscritto</b></p>
+       </td>
+     </tr>
+     <tr class="Rigaintestazioneridotta">
+       <td colspan="2" style="width:33%;">
+         <p class="Labelcella">Cognome</p>
+       </td>
+       <td colspan="2" style="width:33%;">
+         <p class="Labelcella">Nome</p>
+       </td>
+       <td colspan="2" style="width:33%;">
+         <p class="Labelcella">Codice Fiscale</p>
+       </td>
+      </tr>
+      <tr>
+       <td colspan="2" style="width:33%;">
+         <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome del firmatario"/>
+       </td>
+       <td colspan="2" style="width:33%;">
+         <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome del firmatario"/>
+       </td>
+       <td colspan="2" style="width:33%;">
+         <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del firmatario"/>
+       </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta" style="border-top:0px">
+       <td style="width:20%;">
+         <p class="Labelcella">Data di nascita</p>
+       </td>
+       <td style="width:10;">
+         <p class="Labelcella">Sesso (M/F)</p>
+       </td>
+       <td colspan="2">
+         <p class="Labelcella">Nazionalità</p>
+       </td>
+       <td colspan="2">
+         <p class="Labelcella">Luogo di nascita</p>
+       </td>
+      </tr>
+      <tr>
+       <td style="width:20%;">
+         <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita del firmatario"/>
+       </td>
+       <td style="width:10%;">
+         <select class="inputNormal" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso del firmatario">
+           <option value=""></option>
+           <option value="M">M</option>
+           <option value="F">F</option>
+         </select>
+       </td>
+       <td colspan="2">
+         {{ utils.nazionalita("AventeTitolo_Nazionalita", "Nazionalità")}}
+       </td>
+       <td colspan="2">
+         <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita del firmatario"/>
+       </td>
+     </tr>
+   </tbody>
+ </table>
+
+ <table class="Modulo" style="border:1px solid grey" mandatory="true">
+   <tbody>
+     <tr class="Rigaintestazioneridotta">
+       <td colspan="5">
+         <p class="Labelcella"><b>Residenza</b></p>
+       </td>
+     </tr>
+     <tr class="Rigaintestazioneridotta">
+       <td style="width:10%;">
+         <p class="Labelcella">Provincia</p>
+       </td>
+       <td style="width:33%;">
+         <p class="Labelcella">Comune</p>
+       </td>
+       <td style="width:33%;">
+         <p class="Labelcella">Indirizzo</p>
+       </td>
+       <td style="width:12%;">
+         <p class="Labelcella">Civico</p>
+       </td>
+       <td style="width:12%;">
+         <p class="Labelcella">CAP</p>
+       </td>
+    </tr>
+    <tr>
+      <td style="width:10%;">
+       {{ utils.provincie("AventeTitolo_ProvinciaResidenza", "Provincia di residenza")}}
+      </td>
+      <td style="width:33%;">
+        <select class="inputNormal" id="AventeTitolo_ComuneResidenza" name="AventeTitolo_ComuneResidenza" style="width:100%" label="Comune di residenza del firmatario"
+        dynamic_value="getComuniFromProvincia( #AventeTitolo_ProvinciaResidenza.value(), 'AventeTitolo_ComuneResidenza')">
+        </select>
+      </td>
+      <td style="width:33%;">
+       <input class="" id="AventeTitolo_ViaResidenza" name="AventeTitolo_ViaResidenza" style="width:100%;" label="Via di residenza del firmatario"/>
+      </td>
+      <td style="width:12%;">
+       <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" style="width:100%;" label="Civico di residenza del firmatario" maxlength="10"/>
+      </td>
+      <td style="width:12%;">
+       <input class="" id="AventeTitolo_CAPResidenza" name="AventeTitolo_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del firmatario" mandatory="#AventeTitolo_ProvinciaResidenza.value() != 'EE'"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Partita IVA </p>
+      </td>
+      <td>
+        <p class="Labelcella">E-mail PEC (domicilio digitale)</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="" id="AventeTitolo_CFPI" name="AventeTitolo_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_APEC" name="AventeTitolo_APEC" label="PEC Azienda" style="width:100%;" format="pec" mandatory_enabled="true"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Telefono</p>
+      </td>
+      <td>
+        <p class="Labelcella">Fax</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="" id="AventeTitolo_TelefonoSede" name="AventeTitolo_TelefonoSede" label="Telefono della sede legale" style="width:100%;" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <input class="" id="AventeTitolo_FaxSede" name="AventeTitolo_FaxSede" label="Fax della sede legale" style="width:100%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:50%">
+        <p class="Labelcella">Iscrizione al Registro Imprese della Camera di Commercio</p>
+      </td>
+      <td style="width:9%">
+        <p class="Labelcella">Provincia</p>
+      </td>
+      <td style="width:41%">
+        <p class="Labelcella">Numero iscrizione</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <select class="inputNormal" id="AventeTitolo_Attributi_IscrittoCCIAA" name="AventeTitolo_Attributi_IscrittoCCIAA" label="Iscrizione al Registro Imprese della Camera di Commercio" style="width:100%">
+          <option value=""></option>
+          <option value="iscritto">iscritto</option>
+          <option value="in attesa di iscrizione">in attesa di iscrizione</option>
+          <option value="non tenuto all'iscrizione">non tenuto all'iscrizione</option>
+        </select>
+      </td>
+      <td mandatory_enabled="#AventeTitolo_Attributi_IscrittoCCIAA.check_value([ 'iscritto','in attesa di iscrizione' ])">
+        {{utils.provincie( 'AventeTitolo_Attributi_CCIAAProv', label="Provincia iscrizione al Registro Imprese della Camera di Commercio")}}
+      </td>
+      <td mandatory_enabled="#AventeTitolo_Attributi_IscrittoCCIAA.check_value([ 'iscritto' ])">
+        <input class="" id="AventeTitolo_Attributi_CCIAANumero" name="AventeTitolo_Attributi_CCIAANumero" label="Numero iscrizione al Registro Imprese della Camera di Commercio" style="width:100%"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
+        <p style="text-align: center; font-size:85%"><i>art. 13 Regolamento UE n. 2016/679</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <br>
+        <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e del decreto legislativo n. 196/2003, si informa che:</p>
+        <ul>
+          <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://www.comune.trento.it" target="_blank">http://comune.trento.it</a>);</li>
+          <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://www.comunitrentini.it</a>);</li>
+          <li>I dati vengono raccolti e trattati nell'ambito del procedimento per il quale la presente dichiarazione viene resa;</li>
+          <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico;</li>
+          <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza;</li>
+          <li>I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso;</li>
+          <li>I dati sono oggetto di diffusione, nel rispetto del principio di minimizzazione, esclusivamente per l'ottemperanza agli obblighi di pubblicazione dei dati imposti dalla normativa vigente in materia di amministrazione trasparente;</li>
+          <li>I dati non sono oggetto di trasferimento all'estero;</li>
+          <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Attività edilizia sito in Trento, Via del Brennero n. 312, 38121 – Trento, tel. 0461/884798, fax 0461/884701, PEC: servizio.attivitaedilizia@pec.comune.trento.it;</li>
+          <li>Il conferimento dei dati ha natura obbligatoria per le finalità di cui sopra e per tutte quelle ausiliarie e connesse. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa corrispondere alla richiesta connessa alla specifica finalità;</li>
+          <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge;</li>
+          <li>I diritti dell'interessato sono: 
+            <ul>
+              <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano;</li>
+              <li>ottenere la loro comunicazione in forma intelligibile; </li>
+              <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici; </li>
+              <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge; </li>
+              <li>richiedere la portabilità dei dati;</li>
+              <li>aggiornare, correggere o integrare i dati che lo riguardano; </li>
+              <li>opporsi, per motivi legittimi, al trattamento dei dati;</li>
+              <li>proporre reclamo al Garante per la protezione dei dati personali.</li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+        <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<div class="simpatico-block">
+ {{ utils.firma_hidden() }}
+</div>
+ <br/>
+
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+{{ utils.passaggio_metadati() }}
+
+{% endblock content %}

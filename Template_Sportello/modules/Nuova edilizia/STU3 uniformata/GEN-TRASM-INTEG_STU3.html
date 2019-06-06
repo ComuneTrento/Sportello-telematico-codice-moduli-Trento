@@ -1,0 +1,270 @@
+{% set CodiceModulo = "GEN-TRASM-INTEG" %}
+{% set Urn =  "document:c_l378:modulo.trasmissione.documentazione.integrativa" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-TRASM-INTEG_vSTU3" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Trasmissione documentazione integrativa"
+descrizione="Trasmissione di documentazione integrativa"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="Titolare"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016"
+generabile_da="M47005-COMUNICAZIONE-INIZIO-LAVORI,M47750-AUTORIZZAZIONE-CPC" />
+
+<meta codice_allegato="ALTRI-ALLEGATI"
+urn_allegato="document:c_l378:allegato.altri.allegati"
+descrizione_estesa="Documentazione integrativa richiesta"
+filename="Integrazione.pdf"
+firmato="SI"
+firmatari="Titolare1_CodiceFiscale"
+firmatari_label="Progettista"
+istruzioni="/modulistica/moduli/ALTRI-ALLEGATI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="6" %}
+  {% set simpaticoEserviceName="Trasmissione documentazione integrativa" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-TRASM-INTEG" %}  
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=["Titolare_Cognome",
+                          "Titolare_Nome",
+                          "Titolare_CodiceFiscale",
+                          "Titolare_DataNascita",
+                          "Titolare_Sesso",
+                          "Titolare_Cittadinanza",
+                          "Titolare_LuogoNascita",
+                          "Titolare_ProvinciaResidenza",
+                          "Titolare_ComuneResidenza",
+                          "Titolare_ViaResidenza",
+                          "Titolare_CivicoResidenza",
+                          "Titolare_CAPResidenza",
+                          "Titolare_Telefono",
+                          "Titolare_Fax",
+                          "Titolare_EMail",
+                          "Titolare_EMailPEC",
+                          "Titolare1_Cognome",
+                          "Titolare1_Nome",
+                          "Titolare1_CodiceFiscale",
+                          "Titolare1_DataNascita",
+                          "Titolare1_Sesso",
+                          "Titolare1_Cittadinanza",
+                          "Titolare1_LuogoNascita",
+                          "Titolare1_PartitaIVA",
+                          "Titolare1_Attributi_Albo",
+                          "Titolare1_Attributi_DellaProvincia",
+                          "Titolare1_Attributi_AlNumero",
+                          "Titolare1_ProvinciaStudio",
+                          "Titolare1_ComuneStudio",
+                          "Titolare1_ViaStudio",
+                          "Titolare1_CivicoStudio",
+                          "Titolare1_CAPStudio",
+                          "Titolare1_TelefonoStudio",
+                          "Titolare1_FaxStudio",
+                          "Titolare1_EMailPEC"] %}
+
+  {% set ERROR_LABELS=[ ('block1' , 'Selezionare una delle opzioni'),
+                        ('block2' , 'Inserire il nominativo del proprietario o soggetto avente titolo idoneo'),
+                        ('block3' , 'Selezionare il ruolo'),
+                        ('block5' , 'Inserire il nominativo del progettista'),
+                        ('block6' , 'Inserire i riferimenti alla pratica per cui si sta trasmettendo una integrazione'),
+                        ('block7' , 'Particella edilizia non valida'),
+                        ('block8' , 'Indirizzo non inserito'),
+                        ('block9' , 'Indirizzo non verificato'),
+                        ('block10' , 'Selezionare una delle opzioni'),
+                        ('block11' , 'Selezionare una delle opzioni'),
+                        ('block13' , 'Selezionare una delle opzioni')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
+
+
+{% block title %}M47011-TRASMISSIONE-DOCUMENTAZIONE-INTEGRATIVA{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+{{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Trasmissione documentazione integrativa'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+  Trasmissione documentazione integrativa
+</h1>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Proprietario dell'immobile o soggetto in possesso di titolo idoneo</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Progettista incaricato</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+{{anagrafica_trento.persona_trasmissione("Titolare","Il proprietario o soggetto in possesso di titolo idoneo",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer")}}
+<br>
+
+<input id="Titolare1_DatiProfessionistaObbligatori" name="Titolare1_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+<input id="Titolare1_DatiAlboProfessionistaObbligatori" name="Titolare1_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+
+
+{{anagrafica.professionista("Titolare1","progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p>
+          <b>In riferimento all'istanza</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <p>Intestata a: <input class="" label="Intestatario" id="Intestatario_istanza" name="Intestatario_istanza" dynamic_value="'  ' + #Titolare_Cognome.value().toUpperCase() + ',' + #Titolare_Nome.value().toUpperCase()" style="width:89%;"/> </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td class="Labelcella">
+        <p style="font-size:75%;">Tipologia istanza</p>
+      </td>
+      <td class="Labelcella">
+        <p style="font-size:75%;">Num. Protocollo</p>
+      </td>
+      <td class="Labelcella">
+        <p style="font-size:75%;">Data</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <select class="inputNormal" id="Tipo_istanza" name="Tipo_istanza" style="width:100%" label="Tipo istanza" mandatory_enabled="true">
+          <option value=""></option>
+          <option value="Pratica CPC">Pratica CPC</option>
+          <option value="Comunicazione">Comunicazione di inizio lavori</option>
+          <option value="Permesso di costruire">Permesso di costruire</option>
+          <option value="SCIA">SCIA</option>
+          <option value="Permesso di costruire in sanatoria">Permesso di costruire in sanatoria</option>
+          <option value="Provvedimento in sanatoria">Provvedimento in sanatoria</option>          
+        </select>
+      </td>
+      <td>
+        <input class="" label="Numero protocollo" id="Numero_protocollo" name="Numero_protocollo" mandatory_enabled="true" style="width:100%"/>
+      </td>
+      <td>
+        <input class="" label="Data protocollazione" id="Data_protocollazione" name="Data_protocollazione" format="date" mandatory_enabled="true" style="width:100%"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+<br>
+{{ immobili_trento.immobile_no_ult_part("Immobile", "Relativamente alla particella", disattivato="true") }}
+
+<br>
+
+<h1 class="Modulo">TRASMETTE LA SEGUENTE DOCUMENTAZIONE</h1>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <textarea class="inputNormal" id="Documentazione_integrativa" name="Documentazione_integrativa" label="Documentazione_integrativa" style="width:100%;height:5cm" mandatory_enabled="true" maxlength="270">
+        </textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+			<td style="width: 4%; vertical-align: top;">
+				<input id="Integrazione_documentazione" name="Integrazione_documentazione" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+				<p>Inserire il numero di file che verranno allegati:  <input class="" format="number" id="Nintegr" label="Numero file integrativi" mandatory_enabled="true" name="Nintegr" size="1"/><br><b>Attenzione!</b> Limite max di 20 MB per allegato
+        </p>
+			</td>
+		</tr>
+  </tbody>
+</table>
+
+</div>
+<br>
+<!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->
+ {{ utils.firma_hidden() }}
+ </div>
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" numero="#Nintegr.value()" obbligatorio="#Integrazione_documentazione.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+{% endblock content %}

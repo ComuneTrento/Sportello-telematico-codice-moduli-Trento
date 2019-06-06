@@ -1,0 +1,929 @@
+{% set CodiceModulo = "M47561-COMUNICAZIONE-OPERE-LIBERE" %}
+{% set Urn =  "document:c_l378:opere.libere;comunicazione.opere.libere;modulo.comunicazione.opere.libere" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47561-COMUNICAZIONE-OPERE-LIBERE_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Comunicazione opere libere"
+descrizione="Comunicazione opere libere"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|09/02/2018" />
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+<!--<script type="text/javascript">
+    var simpaticoEservice="7"
+    var simpaticoForm="main"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Fax",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                        'block1' : 'Selezionare una delle opzioni',
+                        'block2' : 'Inserire il codice fiscale',
+                        'block3' : 'Selezionare il ruolo',
+                        'block5' : 'Inserire i dati richiesti',
+                        'block6' : 'Data inizio lavori non inserita oppure particella edilizia non valida',
+                        'block7' : 'Indirizzo non inserito',
+                        'block8' : 'Indirizzo non verificato',
+                        'block10' : 'Inserire il codice fiscale e indicare presa conoscenza',
+                        'block11' : 'Selezionare una delle opzioni',
+                        'block12' : 'Inserire il codice fiscale',
+                        'block13' : 'Selezionare una delle opzioni',
+                        'block14' : 'Selezionare una delle opzioni',
+                        'block15' : 'Selezionare una delle opzioni',
+                        'block16' : 'Indicare se richiesto invio della notifica',
+                        'block18' : 'Confermare presa visione informativa sulla privacy'
+      }
+  
+    </script>-->
+  <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+{% set simpaticoEservice="1" %}
+{% set simpaticoEserviceName="M47750 AUTORIZZAZIIONE CPC" %}
+{% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC" %}
+{% set simpaticoForm="main" %}
+{% set simpaticoCategory="Edilizia" %}
+{% set simpaticoMapping=[ "AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"] %}
+{% set ERROR_LABELS=[   ('block1' , 'Selezionare una delle opzioni'),
+                        ('block2' , 'Inserire il codice fiscale'),
+                        ('block3' , 'Selezionare il ruolo'),
+                        ('block5' , 'Selezionare la tipologia di autorizzazione/parere richiesta'),
+                        ('block7' , 'Specificare la tipologia di intervento'),
+                        ('block8' , 'Particella edilizia non valida'),
+                        ('block9' , 'Indirizzo non inserito'),
+                        ('block10' , 'Indirizzo non verificato'),
+                        ('block12' , 'Selezionare una delle opzioni'),
+                        ('block13' , 'Definire il ruolo'),
+                        ('block14' , 'Inserire il codice fiscale'),
+                        ('block15' , 'Selezionare una delle opzioni'),
+                        ('block17' , 'Confermare presa visione informativa sulla privacy')] %}
+{{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+
+{% block title %}M47561-COMUNICAZIONE-OPERE-LIBERE{% endblock title %}
+
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Comunicazione opere libere'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo" style="text-align: center;">
+    COMUNICAZIONE OPERE LIBERE<br>
+    <span style="font-size:75%">(art. 78, comma 3, della legge provinciale del 4 agosto 2015, n. 15)</span>
+  </h1>
+
+  <br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.4;"><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+          <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">Titolare o soggetto in possesso di titolo idoneo alla presentazione dell'istanza</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">Progettista incaricato</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+{{anagrafica_trento.titolare("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+<br>
+
+<h1 class="Modulo" style="text-align: center;">DICHIARA</h1>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.4;"><b>che per le opere da realizzare:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="progetto_richiesto" name="progetto_richiesto" label="Richiesta redazione di un progetto" mandatory_enabled="true"> </div>
+        <input group="progetto_richiesto" id="progetto_richiesto1" name="progetto_richiesto" type="radio" value="1"/>
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>NON</b> è necessaria la redazione di un progetto a firma di un tecnico abilitato in quanto non comportano la costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari esistenti o degli impianti esistenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="progetto_richiesto" id="progetto_richiesto2" name="progetto_richiesto" type="radio" value="2"/>
+      </td>
+      <td>
+        <p style="line-height:1.4;">è necessaria la redazione di un progetto da parte di un <b>progettista incaricato</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<input id="Titolare1_DatiProfessionistaObbligatori" name="Titolare1_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+<input id="Titolare1_DatiAlboProfessionistaObbligatori" name="Titolare1_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+<div class="simpatico-block simpatico-query-and-answer">
+  {{anagrafica.progettista_opzionale("Titolare1","il progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr>
+        <td>
+          <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente2.checked() and #AventeTitolo_CodiceFiscale.value() == #Titolare1_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
+
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.4;"><b>I lavori vengono eseguiti</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
+        <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">in economia</p>
+        <span style="font-size:80%;"><i>(in quanto opere di modesta entità che non interessano le specifiche normative di settore)</i></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">dall'impresa incaricata</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+  
+{{ immobili_trento.immobile_trento("Immobile", "I lavori interessano le seguenti realtà immobiliari", disattivato="true") }}
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.4;"> <b>DESCRIZIONE DELL'INTERVENTO </b> </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="Per esecuzione intervento di:" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+{{anagrafica_trento.professionista_direttore_lavori("Titolare2","che incarica quale <b>DIRETTORE DEI LAVORI</b>:","Direttore dei lavori") }}
+
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+  <h1 class="Modulo">COMUNICA</h1>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.4;"><b>che in data <input class="" format="date" id="data_lavori" name="data_lavori" label="data inizio lavori" mandatory_enabled="true" size="7"/>:</b></p>       
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="inizio_lavori" name="inizio_lavori" label="Inizio lavori" mandatory_enabled="true"> </div>
+          <input group="inizio_lavori" id="inizio_lavori1" name="inizio_lavori" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">avranno inizio i lavori sopradescritti</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="inizio_lavori" id="inizio_lavori2" name="inizio_lavori" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">sono stati eseguiti i lavori sopradescritti in assenza della necessaria comunicazione preventiva, con gli effetti sanzionatori previsti dall’art. 78, comma 4, della L.P. n. 15/2015</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.4;">che, ai sensi dell'art. 84 della l.p. 1/2008 e del D.P.P. n. 11-13/Leg. del 13 luglio 2009:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Incarico_soggetto_certificatore" name="Incarico_soggetto_certificatore" label="Incarico di un soggetto certificatore" mandatory_enabled="true"> </div>
+        <input group="Incarico_soggetto_certificatore" id="Incarico_soggetto_certificatore1" name="Incarico_soggetto_certificatore" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">non è necessario incaricare un soggetto certificatore</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Incarico_soggetto_certificatore" id="Incarico_soggetto_certificatore2" name="Incarico_soggetto_certificatore" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">viene incaricato un <b>soggetto abilitato alla certificazione energetica</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+{{anagrafica_trento.soggetto_certificazione("Titolare3","SOGGETTO ABILITATO ALLA CERTIFICAZIONE ENERGETICA","Soggetto_certificatore") }}
+
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.4;"><b>che tali lavori rientrano nelle seguenti tipologie di opere:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere1" name="Tipo_opere1" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>manutenzione straordinaria</b> che NON interessano elementi strutturali dell'edificio</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera a) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere2" name="Tipo_opere2" type="checkbox" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">interventi che interessano le <b>parti esterne dell'edificio</b> nel rispetto dei materiali o tinteggiatura previsti dal PRG o dal piano colore se adottato</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera b) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere3" name="Tipo_opere3" type="checkbox" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">interventi di <b>sostituzione di parti esterne dell'edificio</b> con materiali o tinteggiatura uguali a quelli esistenti (in assenza di disposizioni del PRG o del piano colore)</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera b) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere4" name="Tipo_opere4" type="checkbox" value="4" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">installazione di <b>pannelli solari o fotovoltaici e dei relativi impianti</b> collocati negli edifici o nelle relative pertinenze nel rispetto dei criteri e dei limiti stabiliti dal regolamento urbanistico – edilizio provinciale</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera c) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere5" name="Tipo_opere5" type="checkbox" value="5" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>legnaie pertinenziali</b> degli edifici nel rispetto delle tipologie e dei limiti dimensionali stabiliti dal PRG</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera d) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere6" name="Tipo_opere6" type="checkbox" value="6" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>tende da sole avvolgibili</b> prive di sostegni a palo su edifici posti nelle aree di tutela ambientale o soggetti alla disciplina in materia di beni culturali o compresi negli insediamenti storici nel rispetto dei criteri stabiliti dal comune per la loro installazione</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera e) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere7" name="Tipo_opere7" type="checkbox" value="7" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>recinzioni di altezza inferiore a 150 centimetri</b></p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera f) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere8" name="Tipo_opere8" type="checkbox" value="8" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>attrezzature e gli elementi di arredo</b> di pertinenza di esercizi pubblici e commerciali eseguiti nel rispetto delle disposizioni comunali;</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera g) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere9" name="Tipo_opere9" type="checkbox" value="9" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">interventi di <b>installazione</b> e di modifica di <b>impianti fissi di telecomunicazione e di radiodiffusione</b> su strutture esistenti</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera h) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere10" name="Tipo_opere10" type="checkbox" value="10" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">interventi di <b>demolizione</b> delle strutture che ospitano <b>impianti fissi di telecomunicazione e di radiodiffusione</b> e la modifica delle medesime strutture nei limiti del 20 per cento delle dimensioni della struttura esistente</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera i) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere11" name="Tipo_opere11" type="checkbox" value="11" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">interventi di <b>trasformazione del bosco</b> volti al ripristino di aree prative o pascolive o alla realizzazione di bonifiche agrarie che non richiedono alcuna opera di infrastrutturazione o di edificazione, nell'ambito delle fattispecie disciplinate dall'articolo 16, comma 1, lettere c) e c bis), della legge provinciale sulle foreste e sulla protezione della natura 2007 non riconducibili agli interventi di cui all'art. 85 della L.P. n. 15/2015</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera j) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere12" name="Tipo_opere12" type="checkbox" value="12" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>opere precarie</b> facilmente rimovibili e destinate a soddisfare esigenze improrogabili e temporanee</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera k) della legge provinciale del 4 agosto 2015, n. 15. Si ricorda che la comunicazione deve essere presentata al comune <b>almeno 10 giorni prima dell’inizio lavori</b> ai sensi dell’art. 32, comma 5, del regolamento urbanistico-edilizio provinciale)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere13" name="Tipo_opere13" type="checkbox" value="13" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>segnaletica sentieristica ed escursionistica</b> e quella di denominazione di <b>percorsi storici e culturali</b>, <i>nel rispetto dei criteri eventualmente previsti dalla normativa vigente relativamente alla segnaletica e alla cartellonistica</i></p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera l) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere14" name="Tipo_opere14" type="checkbox" value="14" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>cartelli o altri mezzi pubblicitari</b> all'interno dei centri abitati nel rispetto dei criteri dettati dal regolamento edilizio comunale</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera m) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere15" name="Tipo_opere15" type="checkbox" value="15" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>cippi o simboli commemorativi</b> posti all'esterno delle aree pertinenziali degli edifici, se di limitate dimensioni e se privi di opere murarie di fondazione</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera n) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_opere16" name="Tipo_opere16" type="checkbox" value="16" />
+      </td>
+      <td>
+        <p style="line-height:1.4;"><b>coltivazione delle cave, miniere e torbiere</b> nel rispetto delle disposizioni provinciali in materia</p>
+        <span style="font-size:75%">(articolo 78, comma 3, lettera o) della legge provinciale del 4 agosto 2015, n. 15)</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.4;">Il <b>titolare</b> consapevole delle sanzioni penali previste dal codice penale e dalle leggi speciali in materia per le  dichiarazioni non veritiere e per la falsità in atti, risponde ai sensi degli articoli 47 e 76 del D.P.R. 28 dicembre 2000, n. 445 recante <i>"Testo unico delle disposizioni legislative e regolamentari in materia di documentazione amministrativa"</i>, per le attestazioni e le dichiarazioni contenute nel presente modello, fatta salva ogni altra forma di responsabilità prevista dall'ordinamento vigente</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+ 
+<div class="simpatico-block simpatico-query-and-answer">  
+  <h1 class="Modulo">DICHIARA</h1>
+  
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.4;">
+            <b>di essere soggetto abilitato alla presentazione dell'istanza in quanto</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
+          <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">Proprietario</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">Comproprietario</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_Titolo4" name="Parametri_Titolo" type="radio" value="4" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">Titolare di diritto contrattuale (locatario, titolare di leasing, etc.)</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+ 
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.4;"><b>Esclusivita' del titolo</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tassonomia_Titolo" name="Tassonomia_Titolo" label="Titolo sottoscrivente" mandatory_enabled="true"></div>
+        <input id="Tassonomia_Titolo1" name="Tassonomia_Titolo" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">intestatario unico</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tassonomia_Titolo2" name="Tassonomia_Titolo" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">primo intestatario di altri soggetti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+  
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.4;"><b>che le opere oggetto della presente comunicazione di inizio lavori:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipologia_opere" name="Tipologia_opere" label="Tipologia opere" mandatory_enabled="true"> </div>
+        <input group="Tipologia_opere" id="Tipologia_opere1" name="Tipologia_opere" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.4;">non riguardano parti comuni</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <input group="Tipologia_opere" id="Tipologia_opere2" name="Tipologia_opere" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.4;">riguardano le parti comuni di un fabbricato condominiale e</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Assenso_richiesto" name="Assenso_richiesto" label="Richiesto atto assenso del condominio" mandatory_enabled="#Tipo_opere2.checked()"> </div>
+        <input group="Assenso_richiesto" id="Assenso_richiesto_no" name="Assenso_richiesto" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.4;">non necessita di atto di assenso del condominio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Assenso_richiesto" id="Assenso_richiesto_si" name="Assenso_richiesto" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.4;">necessita di atto di assenso del condominio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <input group="Tipologia_opere" id="Tipologia_opere3" name="Tipologia_opere" type="radio" value="3" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.4;">riguardano parti comuni di un fabbricato con più proprietà, non costituito in condominio e</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Assenso_compropr" name="Assenso_compropr" label="Richiesto atto assenso dei comproprietari" mandatory_enabled="#Tipo_opere3.checked()"> </div>
+        <input group="Assenso_compropr" id="Assenso_compropr_no" name="Assenso_compropr" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.4;">non necessita di atto di assenso dei comproprietari</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Assenso_compropr" id="Assenso_compropr_si" name="Assenso_compropr" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.4;">necessita di atto di assenso dei comproprietari</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<h1 class="Modulo">DICHIARA INOLTRE</h1>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Ulteriori_dichiarazioni1" name="Ulteriori_dichiarazioni1" type="checkbox" value="1" dynamic_check="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.4;">che <b>non sussistono vincoli iscritti al Libro Fondiario</b> che creano impedimento alla realizzazione dell'intervento richiesto</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Ulteriori_dichiarazioni2" name="Ulteriori_dichiarazioni2" type="checkbox" value="2" dynamic_check="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.4;">di essere a conoscenza che, per l'esecuzione delle opere precarie di cui all'art. 78, comma 3, lettera k) della legge provinciale 4 agosto 2015, n. 15, l'Amministrazione comunale ha la facoltà di richiedere la presentazione di  idonee garanzie, anche di carattere finanziario, ai fini del rispetto dei termini e delle modalità di rimessa in pristino dei luoghi</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Ulteriori_dichiarazioni3" name="Ulteriori_dichiarazioni3" type="checkbox" value="3" dynamic_check="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.4;">che l'intervento <b>NON</b> comporta alcuna modifica dei seguenti aspetti:</p>
+          <ul>
+            <li>destinazione d'uso</li>
+            <li>carico urbanistico ai fini del pagamento del contributo di costruzione</li>
+            <li>standard urbanistici (ad esempio spazi di parcheggio)</li>
+            <li>non interessa parti strutturali dell’edificio</li>
+          </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p style="line-height:1.4;"><b>che per i lavori oggetto della presente comunicazione:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="richiesta_atto" name="richiesta_atto" label="Richiesta atto di assenso" mandatory_enabled="true"> </div>
+        <input group="richiesta_atto" id="richiesta_atto1" name="richiesta_atto" type="radio" value="1"/>
+      </td>
+      <td colspan="4">
+        <p style="line-height:1.4;"><b>NON</b> sono necessari altri atti di assenso (ad es. autorizzazione paesaggistica, ecc.)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="6">
+        <input id="richiesta_atto2" name="richiesta_atto" type="radio" value="2" />
+      </td>
+      <td colspan="4">
+        <p style="line-height:1.4;">sono necessari i seguenti atti di assenso, già rilasciati dalle competenti amministrazioni:</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width: 30%;">
+        <p style="font-size:70%"> Tipologia di atto</p>
+      </td>
+      <td style="width: 15%;">
+        <p style="font-size:70%"> Numero/protocollo </p>
+      </td>
+      <td style="width: 15%;">
+        <p style="font-size:70%"> Data </p>
+      </td>
+      <td style="width: 15%;">
+        <p style="font-size:70%"> Autorità competente </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TipProc1" name="Parametri_TipProc1" style="width: 100%;" label="Tipo Atto1" mandatory_enabled="#richiesta_atto2.checked()">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Numero1" name="Parametri_Numero1" style="width: 100%;" label="Numero Atto1" mandatory_enabled="#richiesta_atto2.checked()">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Data1" name="Parametri_Data1" style="width: 100%;" format="date" label="Data Atto1" mandatory_enabled="#richiesta_atto2.checked()">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_OrgComp1" name="Parametri_OrgComp1" style="width: 100%;" label="Organo Competente1" mandatory_enabled="#richiesta_atto2.checked()">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TipProc2" name="Parametri_TipProc2" style="width: 100%;" label="Tipo Atto2" enabled="#Parametri_TipProc1.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Numero2" name="Parametri_Numero2" style="width: 100%;" label="Numero Atto2" enabled="#Parametri_Numero1.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Data2" name="Parametri_Data2" style="width: 100%;" label="Data Atto2" format="date" enabled="#Parametri_Data1.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_OrgComp2" name="Parametri_OrgComp2" style="width: 100%;" label="Organo Competente2" enabled="#Parametri_OrgComp1.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TipProc3" name="Parametri_TipProc3" style="width: 100%;" label="Tipo Atto3" enabled="#Parametri_TipProc2.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Numero3" name="Parametri_Numero3" style="width: 100%;" label="Numero Atto3" enabled="#Parametri_Numero2.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Data3" name="Parametri_Data3" style="width: 100%;" label="Data Atto3" format="date" enabled="#Parametri_Data2.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_OrgComp3" name="Parametri_OrgComp3" style="width: 100%;" label="Organo Competente3" enabled="#Parametri_OrgComp2.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TipProc4" name="Parametri_TipProc4" style="width: 100%;" label="Tipo Atto4" enabled="#Parametri_TipProc3.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Numero4" name="Parametri_Numero4" style="width: 100%;" label="Numero Atto4" enabled="#Parametri_Numero3.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Data4" name="Parametri_Data4" style="width: 100%;" label="Data Atto4" format="date" enabled="#Parametri_Data3.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_OrgComp4" name="Parametri_OrgComp4" style="width: 100%;" label="Organo Competente4" enabled="#Parametri_OrgComp3.value() != ''">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.4;">Altri allegati (per i quali non è richiesta firma)</p>
+        <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:100%;"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class=" simpatico-block simpatico-query-and-answer"></div>
+  <table class="Modulo" name="Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
+          <p style="text-align: center; font-size:85%"><i>art. 13 Regolamento UE n. 2016/679</i></p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <br>
+          <p style="line-height:1.4;">Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e del decreto legislativo n. 196/2003, si informa che:</p>
+          <ul>
+            <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://www.comune.trento.it" target="_blank">http://comune.trento.it</a>);</li>
+            <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://www.comunitrentini.it</a>);</li>
+            <li>I dati vengono raccolti e trattati nell'ambito del procedimento per il quale la presente dichiarazione viene resa;</li>
+            <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico;</li>
+            <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza;</li>
+            <li>I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso;</li>
+            <li>I dati sono oggetto di diffusione, nel rispetto del principio di minimizzazione, esclusivamente per l'ottemperanza agli obblighi di pubblicazione dei dati imposti dalla normativa vigente in materia di amministrazione trasparente;</li>
+            <li>I dati non sono oggetto di trasferimento all'estero;</li>
+            <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Attività edilizia sito in Trento, Via del Brennero n. 312, 38121 – Trento, tel. 0461/884798, fax 0461/884701, PEC: servizio.attivitaedilizia@pec.comune.trento.it;</li>
+            <li>Il conferimento dei dati ha natura obbligatoria per le finalità di cui sopra e per tutte quelle ausiliarie e connesse. Non fornire i dati comporta non osservare obblighi di legge e/o impedire che il Comune di Trento possa corrispondere alla richiesta connessa alla specifica finalità;</li>
+            <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge;</li>
+            <li>I diritti dell'interessato sono: 
+              <ul>
+                <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano;</li>
+                <li>ottenere la loro comunicazione in forma intelligibile; </li>
+                <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici; </li>
+                <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge; </li>
+                <li>richiedere la portabilità dei dati;</li>
+                <li>aggiornare, correggere o integrare i dati che lo riguardano; </li>
+                <li>opporsi, per motivi legittimi, al trattamento dei dati;</li>
+                <li>proporre reclamo al Garante per la protezione dei dati personali.</li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'informativa sul trattamento dei dati personali</b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<!-- MODULI SECONDARI -->
+
+
+<!-- ALLEGATI -->
+
+
+<!-- METADATI -->
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+
+{% endblock content %}
