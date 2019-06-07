@@ -114,9 +114,6 @@ urn_report="report:CSP_SESSION_REPORT"
 {% block title %}M47011-TRASMISSIONE-DOCUMENTAZIONE-INTEGRATIVA{% endblock title %}
 
 {% block content %}
-<globo_fondo_pagina areaheight="150" scope="4">
-{{ utils.firma() }}
-</globo_fondo_pagina>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
@@ -157,14 +154,31 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <br>
 
-{{anagrafica_trento.persona_trasmissione("AventeTitolo","Il proprietario o soggetto in possesso di titolo idoneo",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:visibility", "cursor:pointer")}}
+{{anagrafica_trento_uniformata.titolare("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio","Procuratore","Amministratore di sostegno"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
 <br>
 
 <input id="Progettista_DatiProfessionistaObbligatori" name="Progettista_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
 <input id="Progettista_DatiAlboProfessionistaObbligatori" name="Progettista_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
 
 
-{{anagrafica.professionista("Progettista","progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+<div class="simpatico-block simpatico-query-and-answer">
+{{anagrafica_trento_uniformata.professionista("Progettista","progettista incaricato","Professionista","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr>
+      <td>
+        <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente2.checked() and #AventeTitolo_CodiceFiscale.value() == #Progettista_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
+</div>
+
+<br>
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
@@ -196,12 +210,14 @@ urn_report="report:CSP_SESSION_REPORT"
       <td>
         <select class="inputNormal" id="Tipo_istanza" name="Tipo_istanza" style="width:100%" label="Tipo istanza" mandatory_enabled="true">
           <option value=""></option>
-          <option value="Pratica CPC">Pratica CPC</option>
-          <option value="Comunicazione">Comunicazione di inizio lavori</option>
-          <option value="Permesso di costruire">Permesso di costruire</option>
-          <option value="SCIA">SCIA</option>
-          <option value="Permesso di costruire in sanatoria">Permesso di costruire in sanatoria</option>
-          <option value="Provvedimento in sanatoria">Provvedimento in sanatoria</option>          
+          <option value="CPC">Domnada di autorizzazione paesaggistica (CPC)</option>
+          <option value="Comunicazione inizio lavori">Comunicazione di inizio lavori</option>      
+          <option value="Ultimazione lavori">Dichiarazione di ultimazione lavori</option>  
+          <option value="SCIA">Segnalazione certificata di inizio attività (SCIA)</option>  
+          <option value="Comunicazione opere libere">Comunicazione opere libere</option>  
+          <option value="SCAGI">Segnalazione certificata di agibilità (SCAGI)</option>  
+          <option value="Conformità edifici">Certificato di conformità edifici esistenti</option>  
+          <option value="Conformità impianti">Dichiarazione di conformità impianti</option>  
         </select>
       </td>
       <td>
@@ -250,10 +266,36 @@ urn_report="report:CSP_SESSION_REPORT"
 </table>
 
 </div>
+
 <br>
-<!-- simpatico start --><div class="simpatico-block"><!-- simpatico end -->
- {{ utils.firma_hidden() }}
- </div>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il titolare</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 <br>
 
 <p class="Modulo">
