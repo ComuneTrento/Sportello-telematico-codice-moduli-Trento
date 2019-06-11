@@ -5,7 +5,7 @@
 
 {% block meta %}
 
-<meta campi_firma="Titolare_CodiceFiscale"
+<meta campi_firma="AventeTitolo_CodiceFiscale"
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
@@ -88,6 +88,17 @@ numero="0"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<meta codice_allegato="INFORM-TRATT-DATI-AMBIENTE"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.ambiente"
+descrizione_estesa="Informativa trattamento dati AMBIENTE"
+filename="INFORM-TRATT-DATI-AMBIENTE.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-AMBIENTE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
@@ -102,37 +113,37 @@ urn_report="report:CSP_SESSION_REPORT"
   {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M22040-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" %}
   {% set simpaticoForm="main" %}
   {% set simpaticoCategory="Ambiente" %}
-  {% set simpaticoMapping=["Titolare_Cognome",
-							"Titolare_Nome",
-							"Titolare_CodiceFiscale",
-							"Titolare_DataNascita",
-							"Titolare_Sesso",
-							"Titolare_ProvinciaResidenza",
-							"Titolare_ComuneResidenza",
-							"Titolare_ViaResidenza",
-							"Titolare_CivicoResidenza",
-							"Titolare_CAPResidenza",
-							"Titolare_Telefono",
-							"Titolare_Cittadinanza",
-							"Titolare_LuogoNascita",
-							"Titolare_Fax",
-							"Titolare_EMail",
-							"Titolare_EMailPEC",
-							"Titolare_Telefono",
-							"Titolare_TipologiaImpresa",
-							"Titolare_Denominazione",
-							"Titolare_ComuneSede",
-							"Titolare_ProvinciaSede",
-							"Titolare_ViaSede",
-							"Titolare_CivicoSede",
-							"Titolare_CAPSede",
-							"Titolare_CFPI",
-							"Titolare_APEC",
-							"Titolare_TelefonoSede",
-							"Titolare_FaxSede",
-							"Titolare_Attributi_IscrittoCCIAA",
-							"Titolare_Attributi_CCIAAProv",
-							"Titolare_Attributi_CCIAANumero"] %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome",
+							"AventeTitolo_Nome",
+							"AventeTitolo_CodiceFiscale",
+							"AventeTitolo_DataNascita",
+							"AventeTitolo_Sesso",
+							"AventeTitolo_ProvinciaResidenza",
+							"AventeTitolo_ComuneResidenza",
+							"AventeTitolo_ViaResidenza",
+							"AventeTitolo_CivicoResidenza",
+							"AventeTitolo_CAPResidenza",
+							"AventeTitolo_Telefono",
+							"AventeTitolo_Cittadinanza",
+							"AventeTitolo_LuogoNascita",
+							"AventeTitolo_Fax",
+							"AventeTitolo_EMail",
+							"AventeTitolo_EMailPEC",
+							"AventeTitolo_Telefono",
+							"AventeTitolo_TipologiaImpresa",
+							"AventeTitolo_Denominazione",
+							"AventeTitolo_ComuneSede",
+							"AventeTitolo_ProvinciaSede",
+							"AventeTitolo_ViaSede",
+							"AventeTitolo_CivicoSede",
+							"AventeTitolo_CAPSede",
+							"AventeTitolo_CFPI",
+							"AventeTitolo_APEC",
+							"AventeTitolo_TelefonoSede",
+							"AventeTitolo_FaxSede",
+							"AventeTitolo_Attributi_IscrittoCCIAA",
+							"AventeTitolo_Attributi_CCIAAProv",
+							"AventeTitolo_Attributi_CCIAANumero"] %}
 
   {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
                           ('block2', 'Seleziona il ruolo'),
@@ -156,12 +167,9 @@ urn_report="report:CSP_SESSION_REPORT"
 {% endblock title %}
 
 {% block content %}
-<globo_fondo_pagina areaheight="150" scope="3">
-{{ utils.firma() }}
-</globo_fondo_pagina>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden"/>
-<input dynamic_value="#Titolare_Cognome.value().toUpperCase()+ ' - Domanda di autorizzazione di deroga acustica' " id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase()+ ' - Domanda di autorizzazione di deroga acustica' " id="Oggetto" name="Oggetto" type="hidden"/>
 
 {{ intestazioni.intestazione_moduloprincipale_conbollo() }}
 
@@ -548,7 +556,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
-{{anagrafica.domicilio_digitale2(id_pec_personale="Titolare_EMailPEC",id_pec_societa="Titolare_APEC")}}
+{{anagrafica.domicilio_digitale2(id_pec_personale="AventeTitolo_EMailPEC",id_pec_societa="AventeTitolo_APEC")}}
 </div>
 
 <br>
@@ -660,10 +668,51 @@ urn_report="report:CSP_SESSION_REPORT"
 </table>
 
 <br>
+<br>
 
-<div class="simpatico-block">
-{{ utils.firma_hidden() }}
-</div>
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-ambiente" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il titolare</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 
@@ -671,7 +720,7 @@ urn_report="report:CSP_SESSION_REPORT"
    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
 </p>
 
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="#Titolare_Cognome.value()" type="hidden"/>
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
 
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 
@@ -692,5 +741,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 <input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" dynamic_value="#Tipo_Firma_ult_particelle.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-AMBIENTE" name="GLOBO_allegato_cINFORM-TRATT-DATI-AMBIENTE" obbligatorio="''" type="hidden" value=""/>
 
 {% endblock content %}

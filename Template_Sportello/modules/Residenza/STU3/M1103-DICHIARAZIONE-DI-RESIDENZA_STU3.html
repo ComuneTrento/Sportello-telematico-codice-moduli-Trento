@@ -5,7 +5,7 @@
 
 {% block meta %}
 
-<meta campi_firma="Titolare_CodiceFiscale"
+<meta campi_firma="AventeTitolo_CodiceFiscale"
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
@@ -26,7 +26,7 @@ istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
 procura="NO,,"
-segnatura="Titolare"
+segnatura="AventeTitolo"
 tipo_modulo="principale"
 urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
@@ -109,6 +109,17 @@ numero="0"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<meta codice_allegato="INFORM-TRATT-DATI-RESIDENZA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.residenza"
+descrizione_estesa="Informativa trattamento dati RESIDENZA"
+filename="INFORM-TRATT-DATI-RESIDENZA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-RESIDENZA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
@@ -120,18 +131,18 @@ urn_report="report:CSP_SESSION_REPORT"
   var simpaticoEservice = "4"; //  the id corresponding to the e-service
   var simpaticoForm = "main";
   var simpaticoCategory = "Generale"; // the general category of the e-service
-  var simpaticoMapping=["Titolare_Cognome",
-	                      "Titolare_Nome",
-	                      "Titolare_CodiceFiscale",
-	                      "Titolare_DataNascita",
-	                      "Titolare_Sesso",
-	                      "Titolare_Cittadinanza",
-	                      "Titolare_LuogoNascita",
-	                      "Titolare_Telefono",
-	                      "Titolare_Cellulare",
-	                      "Titolare_Fax",
-	                      "Titolare_EMail",
-	                      "Titolare_EMailPEC"];
+  var simpaticoMapping=["AventeTitolo_Cognome",
+	                      "AventeTitolo_Nome",
+	                      "AventeTitolo_CodiceFiscale",
+	                      "AventeTitolo_DataNascita",
+	                      "AventeTitolo_Sesso",
+	                      "AventeTitolo_Cittadinanza",
+	                      "AventeTitolo_LuogoNascita",
+	                      "AventeTitolo_Telefono",
+	                      "AventeTitolo_Cellulare",
+	                      "AventeTitolo_Fax",
+	                      "AventeTitolo_EMail",
+	                      "AventeTitolo_EMailPEC"];
 
   var serviceName = "DICHIARAZIONE DI RESIDENZA"; // 
   var serviceURL="https://sportello.comune.trento.it/sites/default/files/sportello_telematico/M1103-DICHIARAZIONE-RESIDENZA.html";
@@ -178,13 +189,10 @@ urn_report="report:CSP_SESSION_REPORT"
 
 
 {% block content %}
-<globo_fondo_pagina areaheight="150" scope="4">
-  {{ utils.firma() }}
-</globo_fondo_pagina>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Dichiarazione di residenza'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Dichiarazione di residenza'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -287,8 +295,8 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
         <td>
           <p>Dichiarazione di residenza con provenienza dal seguente comune:<br>
-          {{ utils.provincie_cambio_res( 'Titolare_provincia_provenienza', 'Provincia di provenienza del richiedente' )}}
-          <select class="inputNormal" id="Titolare_comune_provenienza" name="Titolare_comune_provenienza" style="width:60%" label="Comune di provenienza" dynamic_value="getComuniFromProvincia( #Titolare_provincia_provenienza.value(), 'Titolare_comune_provenienza')" mandatory_enabled="#Titolare_provincia_provenienza.value() != ''"></select></p>
+          {{ utils.provincie_cambio_res( 'AventeTitolo_provincia_provenienza', 'Provincia di provenienza del richiedente' )}}
+          <select class="inputNormal" id="AventeTitolo_comune_provenienza" name="AventeTitolo_comune_provenienza" style="width:60%" label="Comune di provenienza" dynamic_value="getComuniFromProvincia( #AventeTitolo_provincia_provenienza.value(), 'AventeTitolo_comune_provenienza')" mandatory_enabled="#AventeTitolo_provincia_provenienza.value() != ''"></select></p>
         </td>
       </tr>
       <tr>
@@ -297,7 +305,7 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
         <td>
           <p>Dichiarazione di residenza con provenienza dalla seguente nazione estera:<br>
-          {{ utils.stato_cambio_res( 'Titolare_nazione_provenienza', 'Nazione di provenienza del richiedente' )}}
+          {{ utils.stato_cambio_res( 'AventeTitolo_nazione_provenienza', 'Nazione di provenienza del richiedente' )}}
           </p>
         </td>
       </tr>
@@ -307,10 +315,10 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
         <td>
           <p>Dichiarazione di residenza di cittadini italiani iscritti all'AIRE (Anagrafe degli Italiani residenti all'estero),<br>
-             presso il seguente comune: {{ utils.provincie_cambio_res_aire( 'Titolare_provincia_iscr_aire', 'Provincia di iscrizione AIRE del richiedente' )}}
-             <select class="inputNormal" id="Titolare_comune_iscr_aire" name="Titolare_comune_iscr_aire" style="width:64%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #Titolare_provincia_iscr_aire.value(), 'Titolare_comune_iscr_aire')" mandatory_enabled="#Titolare_provincia_iscr_aire.value() != ''"></select><br>
+             presso il seguente comune: {{ utils.provincie_cambio_res_aire( 'AventeTitolo_provincia_iscr_aire', 'Provincia di iscrizione AIRE del richiedente' )}}
+             <select class="inputNormal" id="AventeTitolo_comune_iscr_aire" name="AventeTitolo_comune_iscr_aire" style="width:64%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #AventeTitolo_provincia_iscr_aire.value(), 'AventeTitolo_comune_iscr_aire')" mandatory_enabled="#AventeTitolo_provincia_iscr_aire.value() != ''"></select><br>
              con provenienza dalla seguente nazione estera:
-             {{ utils.stato_cambio_res_aire( 'Titolare_comune_iscr_aire_nazione_provenienza', 'Nazione di provenienza del richiedente' )}}
+             {{ utils.stato_cambio_res_aire( 'AventeTitolo_comune_iscr_aire_nazione_provenienza', 'Nazione di provenienza del richiedente' )}}
           </p>
         </td>
       </tr>
@@ -338,7 +346,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <br>
 
-{{anagrafica_trento.richiedente_cambio_res("Titolare","Il/La richiedente","visibility:visibility", "cursor:pointer", "visibility:visibility")}}
+{{anagrafica_trento.richiedente_cambio_res("AventeTitolo","Il/La richiedente","visibility:visibility", "cursor:pointer", "visibility:visibility")}}
 
 <br>
 
@@ -364,11 +372,11 @@ urn_report="report:CSP_SESSION_REPORT"
     <tr>
       <td>
         <p>TN</p>
-        <!--{{ utils.provincie( 'Titolare_prov_res', 'Provincia nuova residenza del richiedente' )}}-->
+        <!--{{ utils.provincie( 'AventeTitolo_prov_res', 'Provincia nuova residenza del richiedente' )}}-->
       </td>
       <td colspan="2">
         <P>TRENTO</P>
-        <!--<select class="inputNormal" id="Titolare_comune_res" name="Titolare_comune_res" style="width:100%" label="Comune nuova residenza del richiedente" dynamic_value="getComuniFromProvincia( #Titolare_prov_res.value(), 'Titolare_comune_res')" mandatory_enabled="true"></select><br>-->
+        <!--<select class="inputNormal" id="AventeTitolo_comune_res" name="AventeTitolo_comune_res" style="width:100%" label="Comune nuova residenza del richiedente" dynamic_value="getComuniFromProvincia( #AventeTitolo_prov_res.value(), 'AventeTitolo_comune_res')" mandatory_enabled="true"></select><br>-->
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -381,7 +389,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td colspan="2">
-        <input style="width:100%" class="Modulo" id="Titolare_via_res" name="Titolare_via_res" label="Via nuova residenza del richiedente" mandatory_enabled="true">
+        <input style="width:100%" class="Modulo" id="AventeTitolo_via_res" name="AventeTitolo_via_res" label="Via nuova residenza del richiedente" mandatory_enabled="true">
       </td>
       <td>
         <input style="width:100%" class="Modulo" id="num_civ_res" name="num_civ_res" label="Numero civico nuova residenza del richiedente" mandatory_enabled="true">
@@ -1184,7 +1192,7 @@ urn_report="report:CSP_SESSION_REPORT"
     <tr>
       <td><input name="prov_recapito" id="prov_recapito" style="width:100%;" label="Provincia per il recapito comunicazioni" dynamic_value="#recapito_scelto1.checked() ? 'TN' : ''" enabled="#recapito_scelto1.checked()" readonly /></td>
       <td><input name="comune_recapito" id="comune_recapito" style="width:100%;" label="Comune per il recapito comunicazioni" dynamic_value="#recapito_scelto1.checked() ? 'TRENTO' : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
-      <td colspan="2"><input name="indirizzo_recapito" id="indirizzo_recapito" style="width:100%;" label="Infdirizzo per il recapito comunicazioni" dynamic_value="#Titolare_via_res.value()" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td colspan="2"><input name="indirizzo_recapito" id="indirizzo_recapito" style="width:100%;" label="Infdirizzo per il recapito comunicazioni" dynamic_value="#AventeTitolo_via_res.value()" enabled="#recapito_scelto1.checked()" readonly/></td>
       <td><input name="num_civ_recapito" id="num_civ_recapito" style="width:100%;" label="Numero civico per il recapito comunicazioni" dynamic_value="#num_civ_res.value()" enabled="#recapito_scelto1.checked()" readonly/></td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -1195,11 +1203,11 @@ urn_report="report:CSP_SESSION_REPORT"
       <td><p class="Labelcella">PEC</p></td>
     </tr>
     <tr>
-      <td><input name="Telefono_recapito" id="Telefono_recapito" style="width:100%;" label="Telefono per il recapito comunicazioni" dynamic_value="#Titolare_Telefono.value() != '' ? #Titolare_Telefono.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
-      <td><input name="Cellulare_recapito" id="Cellulare_recapito" style="width:100%;" label="Cellulare per il recapito comunicazioni" dynamic_value="#Titolare_Cellulare.value() != '' ? #Titolare_Cellulare.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
-      <td><input name="Fax_recapito" id="Fax_recapito" style="width:100%;" label="Fax per il recapito comunicazioni" dynamic_value="#Titolare_Fax.value() != '' ? #Titolare_Fax.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
-      <td><input name="EMail_recapito" id="EMail_recapito" style="width:100%;" label="Email per il recapito comunicazioni" dynamic_value="#Titolare_EMail.value() != '' ? #Titolare_EMail.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
-      <td><input name="EMailPEC_recapito" id="EMailPEC_recapito" style="width:100%;" label="PEC per il recapito comunicazioni" dynamic_value="#Titolare_EMailPEC.value() != '' ? #Titolare_EMailPEC.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="Telefono_recapito" id="Telefono_recapito" style="width:100%;" label="Telefono per il recapito comunicazioni" dynamic_value="#AventeTitolo_Telefono.value() != '' ? #AventeTitolo_Telefono.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="Cellulare_recapito" id="Cellulare_recapito" style="width:100%;" label="Cellulare per il recapito comunicazioni" dynamic_value="#AventeTitolo_Cellulare.value() != '' ? #AventeTitolo_Cellulare.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="Fax_recapito" id="Fax_recapito" style="width:100%;" label="Fax per il recapito comunicazioni" dynamic_value="#AventeTitolo_Fax.value() != '' ? #AventeTitolo_Fax.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="EMail_recapito" id="EMail_recapito" style="width:100%;" label="Email per il recapito comunicazioni" dynamic_value="#AventeTitolo_EMail.value() != '' ? #AventeTitolo_EMail.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
+      <td><input name="EMailPEC_recapito" id="EMailPEC_recapito" style="width:100%;" label="PEC per il recapito comunicazioni" dynamic_value="#AventeTitolo_EMailPEC.value() != '' ? #AventeTitolo_EMailPEC.value() : ''" enabled="#recapito_scelto1.checked()" readonly/></td>
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;" rowspan="5">
@@ -1270,7 +1278,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td>
-        <input id="DICH_RES_ALL_A" name="DICH_RES_ALL_A" type="checkbox" dynamic_check="#Titolare_Cittadinanza.value() != '' and !#Titolare_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="#Titolare_Cittadinanza.value() != '' and !#Titolare_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>
+        <input id="DICH_RES_ALL_A" name="DICH_RES_ALL_A" type="checkbox" dynamic_check="#AventeTitolo_Cittadinanza.value() != '' and !#AventeTitolo_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" enabled="#AventeTitolo_Cittadinanza.value() != '' and !#AventeTitolo_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA'])" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         Allegato A - Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati non appartenenti all'UE</b>
@@ -1278,7 +1286,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td>
-        <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" enabled="#Titolare_Cittadinanza.value() != '' and #Titolare_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" value="OBBLIGATORIO"/>
+        <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#AventeTitolo_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" enabled="#AventeTitolo_Cittadinanza.value() != '' and #AventeTitolo_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         Allegato B - Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini di Stati appartenenti all'UE</b>
@@ -1331,49 +1339,15 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="text-align: center;"><b>INFORMATIVA SULLA PRIVACY</b></p>
-        <p style="text-align: center; font-size:85%"><i>Art. 13 del D. Lgs. n. 196/2003, Regolamento UE 2016/679 in vigore dal 24.05.2016 e pienamente dal 25.05.2018</i></p>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <br>
-        <p>Ai sensi dell'art. 13 del codice in materia di protezione dei dati personali si forniscono le seguenti informazioni:</p>
-        <ul>
-          <li><b>Finalità del trattamento:</b> i dati personali sono raccolti dal Servizio Servizi Demografici e Decentramento esclusivamente per lo svolgimento dell’attività di competenza e per lo svolgimento di funzioni istituzionali</li>
-          <li><b>Modalità del trattamento:</b> i dati vengono trattati con sistemi informatici e/o manuali attraverso procedure adeguate a garantire la sicurezza e la riservatezza degli stessi.</li>
-          <li><b>Il conferimento dei dati ha natura obbligatoria per l’espletamento del servizio.</b></li>
-          <li>Non fornire i dati comporta l’inosservanza di obblighi di legge e/o impedire l’espletamento del servizio</li>
-          <li>I dati possono essere comunicati a tutti i soggetti (Uffici, Enti ed Organi della Pubblica Amministrazione, Aziende o Istituzioni) che, secondo le norme, sono tenuti a conoscerli, nonché ai soggetti che devono o possono intervenire nel procedimento amministrativo</li>
-          <li>I dati possono essere conosciuti dal responsabile e dagli incaricati del Servizio Servizi Demografici e Decentramento</li>
-          <li>diritti dell’interessato sono (art. 7 del D.Lgs. 196/2003):
-            <ul>
-              <li>richiedere la conferma dell’esistenza o meno dei dati che lo riguardano</li>
-              <li>ottenere la loro comunicazione in forma intelligibile</li>
-              <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici</li>
-              <li>ottenere la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge</li>
-              <li>aggiornare, correggere o integrare i dati che lo riguardano</li>
-              <li>opporsi, per motivi legittimi, al trattamenti dei dati</li>
-            </ul>
-          </li>
-          <li><b>Titolare del trattamento dei dati:</b> COMUNE DI TRENTO – VIA BELENZANI, 19</li>
-          <li><b>Responsabile del trattamento dei dati:</b> Dirigente del Servizio Servizi Demografici e Decentramento<br>
-                  Il Responsabile designato per l’esercizio dei diritti dell’interessato è il Segretario generale – Via Belenzani, 19 (indicazione consultabile anche sul sito internet <a href="http://www.comune.trento.it" target="_blank">www.comune.trento.it</a>)
-          </li>
-        </ul>
-      </td>
-    </tr>
     <tr>
       <td style="width: 4%; vertical-align: top;">
-        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
-        <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
       <td colspan="2" style="background-color: #eeeeee;">
-        <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-residenza" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
       </td>
     </tr>
   </tbody>
@@ -1382,9 +1356,35 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<div class="simpatico-block">
-  {{ utils.firma_hidden() }}
-</div>
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
 
 <br>
 <p class="Modulo">
@@ -1410,25 +1410,27 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_allegato_cGEN-ENTR-CONV" name="GLOBO_allegato_cGEN-ENTR-CONV" obbligatorio="#GEN_ENTR_CONV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-RESIDENZA" name="GLOBO_allegato_cINFORM-TRATT-DATI-RESIDENZA" obbligatorio="''" type="hidden" value=""/>
+
 
 <!-- METADATI DICHIARANTE -->
 <input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome" dynamic_value="#compilante_Cognome.value()" type="hidden"/>
 <input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome" dynamic_value="#compilante_Nome.value()" type="hidden"/>
 <input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale" dynamic_value="#compilante_CodiceFiscale.value()" type="hidden"/>
 <br>
-<!-- METADATI TITOLARE -->
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Cognome.value() : ''" type="hidden"/>
-<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" dynamic_value="!#check_minorenne.checked() ? #Titolare_Nome.value() : ''" type="hidden"/>
-<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" dynamic_value="!#check_minorenne.checked() ? #Titolare_CodiceFiscale.value() : ''" type="hidden"/>
-<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_DataNascita.value() : ''" type="hidden"/>
-<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc" dynamic_value="!#check_minorenne.checked() ? #Titolare_LuogoNascita.value() : ''" type="hidden"/>
+<!-- METADATI AventeTitolo -->
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_Cognome.value() : ''" type="hidden"/>
+<input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_Nome.value() : ''" type="hidden"/>
+<input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_CodiceFiscale.value() : ''" type="hidden"/>
+<input id="Metadati_AventeTitolo_datanasc" name="Metadati_AventeTitolo_datanasc" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_DataNascita.value() : ''" type="hidden"/>
+<input id="Metadati_AventeTitolo_luogonasc" name="Metadati_AventeTitolo_luogonasc" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_LuogoNascita.value() : ''" type="hidden"/>
 <br>
 <!-- METADATI MINORE -->
-<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Cognome.value() : ''" type="hidden"/>
-<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_Nome.value() : ''" type="hidden"/>
-<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_CodiceFiscale.value() : ''" type="hidden"/>
-<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_DataNascita.value() : ''" type="hidden"/>
-<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #Titolare_LuogoNascita.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_Cognome.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_Nome.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_CodiceFiscale.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_DataNascita.value() : ''" type="hidden"/>
+<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_LuogoNascita.value() : ''" type="hidden"/>
 <br>
 <!-- METADATI PERSONA GIA' RESIDENTE AL NUOVO INDIRIZZO-->
 <input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto" dynamic_value="#cognome_fam_iscritto.value()" type="hidden"/>

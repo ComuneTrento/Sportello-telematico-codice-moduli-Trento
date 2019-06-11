@@ -126,6 +126,17 @@ numero="0"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<meta codice_allegato="INFORM-TRATT-DATI-RESIDENZA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.residenza"
+descrizione_estesa="Informativa trattamento dati RESIDENZA"
+filename="INFORM-TRATT-DATI-RESIDENZA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-RESIDENZA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 
 <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO ***********
 <script type="text/javascript">
@@ -180,9 +191,6 @@ Allegato A - documentazione necessaria per l'iscrizione anagrafica di cittadini 
 {% endblock title %}
 
 {% block content %}
- <globo_fondo_pagina areaheight="150" scope="1">
-  {{ utils.firma() }}
- </globo_fondo_pagina>
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
  <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#dichiarante_Cognome.value().toUpperCase() + ' - Allegato A - documentazione necessaria per iscrizione anagrafica cittadini di Stati non UE'"/>
@@ -217,13 +225,13 @@ Allegato A - documentazione necessaria per l'iscrizione anagrafica di cittadini 
     </tr>
     <tr>
       <td>
-        <input id="dichiarante_Cognome" name="dichiarante_Cognome" style="width:100%" label="Cognome del dichiarante" dynamic_value="#Metadati_Titolare_Cognome.value() != '' ? #Metadati_Titolare_Cognome.value() : #Metadati_Minore_Cognome.value()"/>
+        <input id="dichiarante_Cognome" name="dichiarante_Cognome" style="width:100%" label="Cognome del dichiarante" dynamic_value="#Metadati_AventeTitolo_Cognome.value() != '' ? #Metadati_AventeTitolo_Cognome.value() : #Metadati_Minore_Cognome.value()"/>
       </td>
       <td>
-        <input id="dichiarante_Nome" name="dichiarante_Nome" style="width:100%" label="Nome del dichiarante" dynamic_value="#Metadati_Titolare_Nome.value() != '' ? #Metadati_Titolare_Nome.value() : #Metadati_Minore_Nome.value()"/>
+        <input id="dichiarante_Nome" name="dichiarante_Nome" style="width:100%" label="Nome del dichiarante" dynamic_value="#Metadati_AventeTitolo_Nome.value() != '' ? #Metadati_AventeTitolo_Nome.value() : #Metadati_Minore_Nome.value()"/>
       </td>
       <td>
-        <input format="cf" id="dichiarante_CodiceFiscale" name="dichiarante_CodiceFiscale" style="width:100%" label="Codice fiscale del dichiarante" dynamic_value="#Metadati_Titolare_CodiceFiscale.value() != '' ? #Metadati_Titolare_CodiceFiscale.value() : #Metadati_Minore_CodiceFiscale.value()"/>
+        <input format="cf" id="dichiarante_CodiceFiscale" name="dichiarante_CodiceFiscale" style="width:100%" label="Codice fiscale del dichiarante" dynamic_value="#Metadati_AventeTitolo_CodiceFiscale.value() != '' ? #Metadati_AventeTitolo_CodiceFiscale.value() : #Metadati_Minore_CodiceFiscale.value()"/>
       </td>
     </tr>
   </tbody>
@@ -365,12 +373,54 @@ Allegato A - documentazione necessaria per l'iscrizione anagrafica di cittadini 
    </tbody>
 </table>
 
-     <br>
+<br>
+<br>
 
-<div class="simpatico-block simpatico-query-and-answer">
-{{ utils.firma_hidden() }}
-</div>
-<br/>
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-residenza" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #dichiarante_Cognome.value().toUpperCase() + ' ' + #dichiarante_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il dichiarante</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
 
 
  <p class="Modulo">
@@ -392,14 +442,16 @@ Allegato A - documentazione necessaria per l'iscrizione anagrafica di cittadini 
  <input id="GLOBO_allegato_cGEN-PERM-SOGG-LAV-SUB" name="GLOBO_allegato_cGEN-PERM-SOGG-LAV-SUB" obbligatorio="#GEN_PERM_SOGG_LAV_SUB.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
  <input id="GLOBO_allegato_cGEN-NULLA-OSTA" name="GLOBO_allegato_cGEN-NULLA-OSTA" obbligatorio="#GEN_NULLA_OSTA.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
  
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-RESIDENZA" name="GLOBO_allegato_cINFORM-TRATT-DATI-RESIDENZA" obbligatorio="''" type="hidden" value=""/>
+ 
 
  {{ utils.passaggio_metadati() }}
 <!-- METADATI TITOLARE -->
-<input id="Metadati_Titolare_Cognome" name="Metadati_Titolare_Cognome" type="hidden"/>
-<input id="Metadati_Titolare_Nome" name="Metadati_Titolare_Nome" type="hidden"/>
-<input id="Metadati_Titolare_CodiceFiscale" name="Metadati_Titolare_CodiceFiscale" type="hidden"/>
-<input id="Metadati_Titolare_datanasc" name="Metadati_Titolare_datanasc" type="hidden"/>
-<input id="Metadati_Titolare_luogonasc" name="Metadati_Titolare_luogonasc" type="hidden"/>
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" type="hidden"/>
+<input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" type="hidden"/>
+<input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" type="hidden"/>
+<input id="Metadati_AventeTitolo_datanasc" name="Metadati_AventeTitolo_datanasc" type="hidden"/>
+<input id="Metadati_AventeTitolo_luogonasc" name="Metadati_AventeTitolo_luogonasc" type="hidden"/>
 <br>
 <!-- METADATI MINORE -->
 <input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" type="hidden"/>
