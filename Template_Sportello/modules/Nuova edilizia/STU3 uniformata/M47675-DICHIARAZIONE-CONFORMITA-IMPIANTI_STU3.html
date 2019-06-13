@@ -38,6 +38,18 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <meta codice_allegato="GEN-CDI"
 urn_allegato="document:c_l378:allegato.copia.documento.identita"
 descrizione_estesa="Copia del documento di identità del richiedente"
@@ -568,8 +580,8 @@ urn_report="report:CSP_SESSION_REPORT"
           <p style="line-height:1.4;">
             <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
               <option value=""></option>
-              <option value="A">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
-              <option value="E">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
+              <option value="Firmato con firma autografa">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
+              <option value="Firmato con firma elettronica">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
             </select>
           </p>
         </td>
@@ -661,6 +673,8 @@ urn_report="report:CSP_SESSION_REPORT"
 <!-- Calcolo numero di moduli da richiedere per ulteriori particelle -->
 <input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#GEN_IMMAGG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cIMP_PROD_ELETTR" name="GLOBO_allegato_cIMP_PROD_ELETTR" numero="#Ncopie_Imp_prod_ener_elett.value()" obbligatorio="#Imp_prod_ener_elett.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
@@ -677,11 +691,6 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'A' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'E' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
-
-<input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" dynamic_value="#NschedeAllegateAu.value()" type="hidden"/>
-<input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" dynamic_value="#NschedeAllegateEl.value()" type="hidden"/>
-<input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" dynamic_value="#Tipo_Firma_ult_particelle.value()" type="hidden"/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 

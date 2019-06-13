@@ -430,7 +430,6 @@
                  GEN-IMPRESE-EL
                  M47005-COMUNICAZIONE-INIZIO-LAVORI
                  M47010-DICHIARAZIONE-ULTIMAZIONE-LAVORI
-                 M47561-COMUNICAZIONE-OPERE-LIBERE
                  M47620-SEGNALAZIONE-CERTIFICATA-AGIBILITA
                  M47622-CERTIFICATO-CONFORMITA-EDIFICI-ESISTENTI
                  M47675-DEPOSITO-DICHIARAZIONI-CONFORMITA-IMPIANTI
@@ -864,7 +863,6 @@
                  M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA
                  M47561-COMUNICAZIONE-OPERE-LIBERE
                  M47620-SEGNALAZIONE-CERTIFICATA-AGIBILITA
-                 M47622-CERTIFICATO-CONFORMITA-EDIFICI-ESISTENTI
                  M47675-DEPOSITO-DICHIARAZIONI-CONFORMITA-IMPIANTI -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -1247,7 +1245,8 @@
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!-- compare in: M47005-COMUNICAZIONE-INIZIO-LAVORI
                  M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA (X2)
-                 M47561-COMUNICAZIONE-OPERE-LIBERE
+                 M47561-COMUNICAZIONE-OPERE-LIBERE 
+                 GEN-DICH-PROG
                  GEN-TRASM-INTEG -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -1256,12 +1255,11 @@
 {% do all_prefix.append( prefix ) %}
 <!-- visibility:visibility or display:none, cursor:pointer or default, albo: provinciale or regionale -->
 <div type="Anagrafica_professionista">
-  <!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiProfessionistaObbligatori" per settare l'obbligatorietà dei dati del professionista fuori dal <div> -->
-  <!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiAlboProfessionistaObbligatori" per settare l'obbligatorietà dei dati dell'Albo del professionista fuori dal <div> -->
+
   <input id="{{ prefix }}_Titolo" name="{{ prefix }}_Titolo" type="hidden" value="{{ Solo1 }}"/>
   <input id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" type="hidden" value="{{ Solo1 }}"/>
 
-  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="#{{ prefix }}_checkobbligatorio.checked()" enabled="#{{ prefix }}_checkabilitato.checked()">
     <tbody>
       <tr class="Rigaintestazione">
         <td style="border-right:0px" colspan="4">
@@ -1313,36 +1311,28 @@
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-<!-- compare in: GEN-DICH-PROG
-                 M47005-COMUNICAZIONE-INIZIO-LAVORI
-                 M47561-COMUNICAZIONE-OPERE-LIBERE -->
+<!-- compare in: M47622-CERTIFICATO-CONFORMITA-EDIFICI-ESISTENTI -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-{% macro soggetto_certificazione( prefix='Referente1', intestazione="Il sottoscritto professionista abilitato", Solo1="Professionista") -%}
+{% macro solo_nominativo( prefix='Referente1', intestazione="L'interessato") -%}
 {% do all_prefix.append( prefix ) %}
 <!-- visibility:visibility or display:none, cursor:pointer or default, albo: provinciale or regionale -->
-<div type="Anagrafica_professionista">
-  <!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiProfessionistaObbligatori" per settare l'obbligatorietà dei dati del professionista fuori dal <div> -->
-  <!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiAlboProfessionistaObbligatori" per settare l'obbligatorietà dei dati dell'Albo del professionista fuori dal <div> -->
-  <input id="{{ prefix }}_Titolo" name="{{ prefix }}_Titolo" type="hidden" value="{{ Solo1 }}"/>
-  <input id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" type="hidden" value="{{ Solo1 }}"/>
+<div type="nominativo_interessato">
 
-  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="#Incarico_soggetto_certificatore2.checked()">
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" enabled="true">
     <tbody>
       <tr class="Rigaintestazione">
-        <td colspan="4">
-          <p><b>SOGGETTO ABILITATO ALLA CERTIFICAZIONE ENERGETICA</b></p>
+        <td style="border-right:0px" colspan="3">
+          <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}
+          </p>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta">
-        <td style="width:13%">
-          <p class="Labelcella">Titolo</p>
-        </td>
-        <td style="width:31%">
+        <td style="width:38%">
           <p class="Labelcella">Cognome</p>
         </td>
-        <td>
+        <td style="width:37%">
           <p class="Labelcella">Nome</p>
         </td>
         <td style="width:25%">
@@ -1351,24 +1341,13 @@
       </tr>
       <tr>
         <td>
-          <select class="inputNormal" id="{{ prefix }}_TitoloPersona" name="{{ prefix }}_TitoloPersona" style="width:100%;" label="Titolo del {{ Solo1 }}">
-            <option value=""></option>
-            <option value="Dott.">Dott.</option>
-            <option value="Dott.ssa">Dott.ssa</option>
-            <option value="Arch.">Arch.</option>
-            <option value="Ing.">Ing.</option>
-            <option value="Comm.">Perito</option>
-            <option value="Geom.">Geom.</option>
-          </select>
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del soggetto interessato"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del soggetto interessato"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del {{ Solo1 }}"/>
-        </td>
-        <td>
-          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del {{ Solo1 }}" mandatory="true"/>
+          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Codice fiscale del soggetto interessato"/>
         </td>
       </tr>
     </tbody>

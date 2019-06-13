@@ -391,7 +391,25 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
+  <input id="Progettista_checkobbligatorio" name="Progettista_checkobbligatorio" dynamic_check="true" type="hidden" />
+  <input id="Progettista_checkabilitato" name="Progettista_checkabilitato" dynamic_check="true" type="hidden" />
   {{anagrafica_trento_uniformata.professionista_direttore_lavori("Progettista","<b>DATI DEL PROGETTISTA</b>:","Progettista") }}
+
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Progettista_direttorelavori" name="Progettista_direttorelavori" type="checkbox" enabled="true"/>
+        </td>
+        <td>
+          <p><b>Il progettista è anche il direttore dei lavori</b></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
   <table class="Modulo" style="border:1px solid grey;">
     <tbody>
       <tr>
@@ -411,7 +429,10 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
-  {{anagrafica_trento_uniformata.professionista_direttore_lavori("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b>:","Direttore dei lavori") }}
+    
+  <input id="DirettoreLavori_checkobbligatorio" name="DirettoreLavori_checkobbligatorio" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
+  <input id="DirettoreLavori_checkabilitato" name="DirettoreLavori_checkabilitato" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
+  {{anagrafica_trento_uniformata.professionista_direttore_lavori("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente):","Direttore dei lavori") }}
   
 </div>
 
@@ -825,7 +846,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input dynamic_check="true" enabled="true" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p>Modulo secondario - <b>Anagrafica del progettista incaricato</b> <input enabled="#Tipo_richiedente1.checked()" dynamic_value="'fimato con firma elettronica'" id="Tipo_firma_anag_prog" name="Tipo_firma_anag_prog" style="width:45.5%;"/></p>
+        <p>Modulo secondario - <b>Anagrafica del progettista incaricato</b> <input enabled="true" dynamic_value="'firmato con firma elettronica'" id="Tipo_firma_anag_prog" name="Tipo_firma_anag_prog" style="width:45.5%;"/></p>
       </td>
     </tr>
     <tr>
@@ -871,7 +892,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top;">
-        <input dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and (#DirettoreLavori_CodiceFiscale.value() != #Progettista_CodiceFiscale.value())" enabled="true" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
+        <input dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="true" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p>Modulo secondario - <b>Anagrafica del direttore dei lavori</b> <input  enabled="#GEN_DIR_LAV.checked()" dynamic_value="'fimato con firma elettronica'" id="Tipo_Firma_dir_lav" name="Tipo_Firma_dir_lav" style="width:48%;" readonly/></p>
@@ -1013,9 +1034,9 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cModulo_compilato_firma_elettronica" name="GLOBO_allegato_cModulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="(#DirettoreLavori_CodiceFiscale.value() != #Progettista_CodiceFiscale.value()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" obbligatorio="(#DirettoreLavori_CodiceFiscale.value() == #Progettista_CodiceFiscale.value()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_modulofiglio_cGEN-DICH-CONG-TIT-PROG-FIRMA-PROG" name="GLOBO_modulofiglio_cGEN-DICH-CONG-TIT-PROG-FIRMA-PROG" obbligatorio="#Firmatario_dich_cong1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
