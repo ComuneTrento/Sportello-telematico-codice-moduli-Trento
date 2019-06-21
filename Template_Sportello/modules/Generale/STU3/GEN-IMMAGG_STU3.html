@@ -1,6 +1,6 @@
-{% set CodiceModulo =  "GEN-IMMAGG-EL" %}
-{% set Urn =  "document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG-EL_vSTU3" %}
+{% set CodiceModulo =  "GEN-IMMAGG" %}
+{% set Urn =  "document:c_l378:modulo.secondario.ulteriori.particelle" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -8,14 +8,14 @@
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Ulteriori particelle oggetto del procedimento (firma elettronica)"
+descrizione="Ulteriori particelle oggetto del procedimento"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="P7M_ELETTRONICA"
+firmare="NO"
 istruzioni_compilazione=""
 istruzioni_invio=""
 metodo_invio=""
@@ -23,16 +23,16 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-IMMAGG-EL"
+urlhelp="/modulistica/moduli/GEN-IMMAGG"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
 {% endblock meta %}
 
-{% block simpaticoconfig %}
-  {% set simpaticoEservice="1_3_1" %}
-  {% set simpaticoEserviceName="GEN IMMAGG EL" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG-EL" %}
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="1_3" %}
+  {% set simpaticoEserviceName="GEN IMMAGG" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG" %}
   {% set simpaticoForm="modulo_secondario" %}
   {% set simpaticoCategory="Edilizia" %}
   {% set simpaticoMapping=[ "AventeTitolo_EMailPEC",
@@ -52,7 +52,7 @@ versione="1.0|01/01/2015"/>
                         ('block12' , 'Particella inesistente'),
                         ('block13' , 'Particella inesistente')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}
+{% endblock simpaticoconfig %}-->
 
 
 {% block title %}
@@ -69,16 +69,32 @@ versione="1.0|01/01/2015"/>
   Ulteriori particelle o subalterni oggetto del procedimento
  </h1>
 
-{{anagrafica_trento_uniformata.societa("AventeTitolo","Il proprietario o soggetto in possesso di titolo idoneo",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:hidden", "cursor:default", "mail_ordinaria","false")}}
+<div class="simpatico-block simpatico-query-and-answer">
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + #AventeTitolo_Nome.value()" size="87"/>
+        <br>valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 <br>
 
-<div class="simpatico-block simpatico-query-and-answer">
-{{ utils.Dichiara_445() }}
+<h1 class="Modulo">DICHIARA</h1>
 
-<p class="Modulo">
-  che il procedimento riguarda anche le particelle o i subalterni di seguito indicati.
-</p>
-
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;"><b>che il procedimento riguarda anche le particelle o i subalterni di seguito indicati:</b>
+      </td>
+    </tr>
+  </tbody>
+</table>
 {{immobili_trento.immobile_semplice("Immobile1")}}
 </div>
 
@@ -158,7 +174,6 @@ versione="1.0|01/01/2015"/>
  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
-<br>
 <br>
 
  {{ utils.passaggio_metadati() }}
