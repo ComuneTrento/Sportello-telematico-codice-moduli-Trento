@@ -1,21 +1,21 @@
-{% set CodiceModulo =  "GEN-ULT-TIT-ABIT-EL" %}
-{% set Urn =  "document:c_l378:modulo.secondario.ulteriori.titoli.abitativi.firma.elettronica" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-ULT-TIT-ABIT-EL_vSTU3" %}
+{% set CodiceModulo =  "CONF-EDI-ULT-TIT-ABIT" %}
+{% set Urn =  "document:c_l378:modulo.secondario.ulteriori.titoli.abitativi.conf.edifici" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/CONF-EDI-ULT-TIT-ABIT_vSTU3" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="AventeTitolo_CodiceFiscale"
+<meta campi_firma="Progettista_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Ulteriori titoli abitativi (firma elettronica)"
+descrizione="Ulteriori titoli abitativi"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="P7M_ELETTRONICA"
+firmare="NO"
 istruzioni_compilazione=""
 istruzioni_invio=""
 metodo_invio=""
@@ -23,13 +23,13 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-ULT-TIT-ABIT-EL"
+urlhelp="/modulistica/moduli/CONF-EDI-ULT-TIT-ABIT"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
 {% endblock meta %}
 
-<!---{% block simpaticoconfig %}
+<!--{% block simpaticoconfig %}
   {% set simpaticoEservice="1_3" %}
   {% set simpaticoEserviceName="GEN IMMAGG" %}
   {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG" %}
@@ -63,7 +63,7 @@ versione="1.0|01/01/2015"/>
 
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - ulteriori titoli abitativi'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Progettista_Cognome.value().toUpperCase() + ' - ulteriori titoli abitativi'"/>
 
  <h1 class="Modulo">
   Ulteriori titoli abitativi
@@ -75,7 +75,7 @@ versione="1.0|01/01/2015"/>
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + #AventeTitolo_Nome.value()" size="87"/></p>
+        <p style="line-height:1.6;"><b>Il tecnico abilitato</b>, <input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Progettista_TitoloPersona.value() + #Progettista_Cognome.value() + #Progettista_Nome.value()" size="79"/>
       </td>
     </tr>
   </tbody>
@@ -92,14 +92,17 @@ versione="1.0|01/01/2015"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td style="width:65%;">
+      <td style="width:40%;">
         <p style="font-size: 85%;"><b>Titolo abilitativo</b></p>
       </td>
-      <td style="width:20%;">
+      <td style="width:17%;">
         <p style="font-size: 85%;"><b>Protocollo/numero</b></p>
       </td>
-      <td style="width:15%;">
+      <td style="width:13%;">
         <p style="font-size: 85%;"><b>Data</b></p>
+      </td>
+      <td style="width:30%;">
+        <p style="font-size: 85%;"><b>Redattore</b></p>
       </td>
     </tr>
   
@@ -114,6 +117,9 @@ versione="1.0|01/01/2015"/>
       </td>
       <td>
         <input class="" id="Data_documento_ult{{ prefix }}" name="Data_documento_ult{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%;" format="date"/>
+      </td>
+      <td>
+        <input class="" id="Redatt_documento_ult{{ prefix }}" name="Redatt_documento_ult{{ prefix }}" enabled="true" label="Redattore documento {{ prefix }}" style="width:100%;"/>
       </td>
     </tr>
     {%- endmacro %}
@@ -137,7 +143,7 @@ versione="1.0|01/01/2015"/>
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Progettista_Cognome.value().toUpperCase() + ' ' + #Progettista_Nome.value().toUpperCase()" style="width:90%;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -148,7 +154,7 @@ versione="1.0|01/01/2015"/>
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il titolare</p>
+        <p class="Labelcella" style="text-align: center">Il tecnico abilitato</p>
       </td>
     </tr>
   </tbody>
@@ -163,5 +169,7 @@ versione="1.0|01/01/2015"/>
  <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<br>
 
 {% endblock content %}
