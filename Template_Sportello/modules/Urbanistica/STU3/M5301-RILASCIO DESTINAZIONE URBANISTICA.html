@@ -32,6 +32,29 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|23/02/2018" />
 
+<meta codice_allegato="RIC-DIR-SEG"
+urn_allegato="document:c_l378:allegato.ricevuta.pagamento.diritti.segreteria.istruttoria"
+descrizione_estesa="Ricevuta del pagamento di 71,00 euro per diritti di segreteria (16,00 euro) e di istruttoria della pratica (55,00 euro)"
+filename="Ricevuta diritti segreteria.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/RIC-DIR-SEG"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
@@ -47,7 +70,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Indirizzo di posta elettronica'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - RICHIESTA CERTIFICATO DI DESTINAZIONE URBANISTICA'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -286,39 +309,42 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
-  <tbody >
-      <tr class="Rigaintestazione">
-          <td colspan="3">
-            <p style="text-align: center;">
-              <b>Elenco degli allegati</b>
-              <br>
-              <span style="font-size:70%">
-                <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
-              </span>
-            </p>
-          </td>
-        </tr>
-    <tr>
-      <td>
-        <input dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;"  style="width:100%">
-        <p>
-          <b>ulteriori particelle o subalterni</b> oggetto del procedimento                                                                        
-        </p>
-        <p>
-          <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#GEN_IMMAGG.checked()">
-            <option value=""></option>
-            <option value="Firmato con firma autografa">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
-            <option value="Firmato con firma elettronica">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
-          </select>
-        </p>
-      </td>
-    </tr>
-     
-  </tbody>
-</table>
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo">ALLEGA</h1>
+  <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <tbody >
+        <tr class="Rigaintestazione">
+            <td colspan="3">
+              <p style="text-align: center;">
+                <b>Elenco degli allegati</b>
+                <br>
+                <span style="font-size:70%">
+                  <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+                </span>
+              </p>
+            </td>
+          </tr>
+      <tr>
+        <td>
+          <input dynamic_check="(parseInt(#Immobile3_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile3_NumeroAltriImmobili.value()) / 10) &gt; 0" id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;"  style="width:100%">
+          <p>
+            <b>ulteriori particelle o subalterni</b> oggetto del procedimento                                                                        
+          </p>
+          <p>
+            <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#GEN_IMMAGG.checked()">
+              <option value=""></option>
+              <option value="Firmato con firma autografa">Si allega il modulo per le ulteriori particelle con firma autografa del richiedente</option>
+              <option value="Firmato con firma elettronica">Si allega il modulo per le ulteriori particelle con firma elettronica del richiedente</option>
+            </select>
+          </p>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
 
 <br>
 
@@ -408,6 +434,8 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <!-- Calcolo numero di moduli da richiedere per ulteriori particelle -->
 <input id="GLOBO_allegato_cRIC-DIR-SEG" name="GLOBO_allegato_cRIC-DIR-SEG" obbligatorio="OBBLIGATORIO" type="hidden" value=""/>
+
+<input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile3_NumeroAltriImmobili.value()) /10" type="hidden" />
 
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="GEN_IMMAGG.checked()" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
