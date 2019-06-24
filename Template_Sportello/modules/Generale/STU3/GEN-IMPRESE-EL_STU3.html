@@ -1,10 +1,10 @@
 {% set CodiceModulo =  "GEN-IMPRESE-EL" %}
 {% set Urn =  "document:c_l378:modulo.secondario.anagrafica.imprese.firma.elettronica" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMPRESE-EL_vSTU3" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMPRESE-EL_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="ImpreseCoinvolte_CodiceFiscale"
+<meta campi_firma="Legale_ImpreseCoinvolte_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -40,24 +40,24 @@ tipo_mime="application/pdf"/>
 
 {% endblock meta %}
 
-{% block simpaticoconfig %}
+<!--{% block simpaticoconfig %}
   {% set simpaticoEservice="5_6" %}
   {% set simpaticoEserviceName="GEN IMPRESE EL" %}
   {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-IMPRESE-EL" %}
   {% set simpaticoForm="modulo_secondario" %}
   {% set simpaticoCategory="Edilizia" %}
-  {% set simpaticoMapping=[ "ImpreseCoinvolte_Cognome",
-                           "ImpreseCoinvolte_Nome",
-                           "ImpreseCoinvolte_CodiceFiscale",
-                           "ImpreseCoinvolte_Denominazione",
-                           "ImpreseCoinvolte_APEC",
-                           "ImpreseCoinvolte_CFPI"] %}
+  {% set simpaticoMapping=[ "Legale_ImpreseCoinvolte_Cognome",
+                           "Legale_ImpreseCoinvolte_Nome",
+                           "Legale_ImpreseCoinvolte_CodiceFiscale",
+                           "Legale_ImpreseCoinvolte_Denominazione",
+                           "Legale_ImpreseCoinvolte_APEC",
+                           "Legale_ImpreseCoinvolte_CFPI"] %}
 
   {% set ERROR_LABELS=[ ('block1' , 'Inserire la denominazione/ragione sociale'),
                         ('block2' , 'Inserire il codice fiscale del legale rappresentante'),
                         ('block3' , 'Confermare presa visione informativa sulla privacy')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}
+{% endblock simpaticoconfig %}-->
 
 {% block title %}
    Anagrafica impresa
@@ -67,7 +67,7 @@ tipo_mime="application/pdf"/>
 
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#ImpreseCoinvolte_Denominazione.value().toUpperCase() + ' - anagrafica imprese'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Legale_ImpreseCoinvolte_Denominazione.value().toUpperCase() + ' - anagrafica imprese'"/>
 
  <div class="simpatico-block simpatico-query-and-answer">
 <h1 class="Modulo">
@@ -86,10 +86,10 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:75%;">
-        <input class="" id="ImpreseCoinvolte_Denominazione" name="ImpreseCoinvolte_Denominazione" style="width:100%" label="Denominazione/Ragione sociale"/>
+        <input class="" id="Legale_ImpreseCoinvolte_Denominazione" name="Legale_ImpreseCoinvolte_Denominazione" style="width:100%" label="Denominazione/Ragione sociale"/>
       </td>
       <td style="width:25%;">
-        {{ utils.tipologiaimpresa('ImpreseCoinvolte_TipologiaImpresa')}}
+        {{ utils.tipologiaimpresa('Legale_ImpreseCoinvolte_TipologiaImpresa')}}
       </td>
     </tr>
   </tbody>
@@ -121,20 +121,20 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td>
-        {{utils.provincie( 'ImpreseCoinvolte_ProvinciaSede', label="Provincia della sede legale")}}
+        {{utils.provincie( 'Legale_ImpreseCoinvolte_ProvinciaSede', label="Provincia della sede legale")}}
       </td>
       <td>
-        <select class="inputNormal" id="ImpreseCoinvolte_ComuneSede" name="ImpreseCoinvolte_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #ImpreseCoinvolte_ProvinciaSede.value(), 'ImpreseCoinvolte_ComuneSede')">
+        <select class="inputNormal" id="Legale_ImpreseCoinvolte_ComuneSede" name="Legale_ImpreseCoinvolte_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #Legale_ImpreseCoinvolte_ProvinciaSede.value(), 'Legale_ImpreseCoinvolte_ComuneSede')">
         </select>
       </td>
       <td>
-        <input class="" id="ImpreseCoinvolte_ViaSede" name="ImpreseCoinvolte_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
+        <input class="" id="Legale_ImpreseCoinvolte_ViaSede" name="Legale_ImpreseCoinvolte_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
       </td>
       <td>
-        <input class="" id="ImpreseCoinvolte_CivicoSede" name="ImpreseCoinvolte_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
+        <input class="" id="Legale_ImpreseCoinvolte_CivicoSede" name="Legale_ImpreseCoinvolte_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
       </td>
       <td>
-        <input class="" id="ImpreseCoinvolte_CAPSede" name="ImpreseCoinvolte_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" mandatory="#ImpreseCoinvolte_ProvinciaSede.value() != 'EE'"/>
+        <input class="" id="Legale_ImpreseCoinvolte_CAPSede" name="Legale_ImpreseCoinvolte_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" mandatory="#Legale_ImpreseCoinvolte_ProvinciaSede.value() != 'EE'"/>
       </td>
     </tr>
   </tbody>
@@ -152,10 +152,10 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td colspan="2">
-        <input class="" id="ImpreseCoinvolte_CFPI" name="ImpreseCoinvolte_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva"/>
+        <input class="" id="Legale_ImpreseCoinvolte_CFPI" name="Legale_ImpreseCoinvolte_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva"/>
       </td>
       <td>
-        <input class="" id="ImpreseCoinvolte_APEC" name="ImpreseCoinvolte_APEC" label="PEC Azienda" style="width:100%;" format="pec" />
+        <input class="" id="Legale_ImpreseCoinvolte_APEC" name="Legale_ImpreseCoinvolte_APEC" label="PEC Azienda" style="width:100%;" format="pec" />
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -168,10 +168,10 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td colspan="2">
-        <input class="" id="ImpreseCoinvolte_TelefonoSede" name="ImpreseCoinvolte_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
+        <input class="" id="Legale_ImpreseCoinvolte_TelefonoSede" name="Legale_ImpreseCoinvolte_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
       </td>
       <td>
-        <input class="" id="ImpreseCoinvolte_FaxSede" name="ImpreseCoinvolte_FaxSede" label="Fax della sede legale" style="width:100%;" mandatory="false"/>
+        <input class="" id="Legale_ImpreseCoinvolte_FaxSede" name="Legale_ImpreseCoinvolte_FaxSede" label="Fax della sede legale" style="width:100%;" mandatory="false"/>
       </td>
     </tr>
   </tbody>
@@ -182,7 +182,7 @@ tipo_mime="application/pdf"/>
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
-  {{anagrafica_trento_uniformata.professionista_direttore_lavori("ImpreseCoinvolte","indica quale <b>LEGALE RAPPRESENTANTE</b>:","Legale rappresentante") }}
+  {{anagrafica_trento_uniformata.solo_nominativo("Legale_ImpreseCoinvolte","indica quale <b>LEGALE RAPPRESENTANTE</b>:") }}
 </div>
 
 <br>
@@ -215,7 +215,7 @@ tipo_mime="application/pdf"/>
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #ImpreseCoinvolte_Cognome.value().toUpperCase() + ' ' + #ImpreseCoinvolte_Nome.value().toUpperCase()" style="width:90%;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Legale_ImpreseCoinvolte_Cognome.value().toUpperCase() + ' ' + #Legale_ImpreseCoinvolte_Nome.value().toUpperCase()" style="width:90%;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">

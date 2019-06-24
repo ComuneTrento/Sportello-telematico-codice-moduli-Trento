@@ -1,6 +1,6 @@
-{% set CodiceModulo =  "GEN-INTAGG-EL" %}
-{% set Urn =  "document:c_l378:modulo.secondario.ulteriori.intestatari.firma.elettronica" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-EL_vSTU3" %}
+{% set CodiceModulo =  "GEN-INTAGG-AU" %}
+{% set Urn =  "document:c_l378:modulo.secondario.ulteriori.intestatari.firma.autografa" %}
+<!--{% set modulo_workflow_model = "https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-AU_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -8,14 +8,14 @@
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Ulteriori intestatari del procedimento (firma elettronica)"
+descrizione="Ulteriori intestatari del procedimento (firma autografa)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="P7M_ELETTRONICA"
+firmare="NO"
 istruzioni_compilazione="ATTENZIONE: questo modulo deve essere compilato con i dati del sottoscrivente."
 istruzioni_invio=""
 metodo_invio=""
@@ -23,9 +23,31 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-INTAGG-EL"
+urlhelp="/modulistica/moduli/GEN-INTAGG-AU"
 verifica_pagamento="NO"
 versione="1.1|03/06/2016"/>
+
+<meta codice_allegato="GEN-CDI"
+urn_allegato="document:c_l378:allegato.copia.documento.identita"
+descrizione_estesa="Documento di identità"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="Modulo_compilato_firma_autografa"
+urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
+descrizione_estesa="Scansione del modulo ulteriori intestatari compilato e firmato manualmente"
+filename="modulo-ult-int.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/Modulo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
@@ -40,10 +62,10 @@ tipo_mime="application/pdf"/>
 
 {% endblock meta %}
 
-{% block simpaticoconfig %}
-  {% set simpaticoEservice="1_4" %}
-  {% set simpaticoEserviceName="GEN INTAGG EL" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-EL" %}
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="1_2" %}
+  {% set simpaticoEserviceName="GEN INTAGG AU" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-INTAGG-AU" %}
   {% set simpaticoForm="modulo_secondario" %}
   {% set simpaticoCategory="Edilizia" %}
   {% set simpaticoMapping=[ "AltroIntestatario_EMailPEC",
@@ -54,7 +76,7 @@ tipo_mime="application/pdf"/>
                         ('block2' , 'Selezionare il ruolo'),
                         ('block4' , 'Definire il titolo del sottoscrivente')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}
+{% endblock simpaticoconfig %}-->
 
 
 {% block title %}
@@ -241,7 +263,7 @@ tipo_mime="application/pdf"/>
 </div>
 <!-- simpatico end -->
 
-<input dynamic_value="#AltroIntestatario_Cognome.value().toUpperCase() + ' - ulteriore intestatario firma elettronica'" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="#AltroIntestatario_Cognome.value().toUpperCase() + ' - ulteriore intestatario firma autografa'" id="Oggetto" name="Oggetto" type="hidden"/>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
   <tbody>
@@ -412,17 +434,24 @@ tipo_mime="application/pdf"/>
 <div class="simpatico-block simpatico-query-and-answer">
 <!-- simpatico end -->
 
-{{ utils.Dichiara_445() }}
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height: 1.4;">Valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<p>di essere soggetto abilitato alla presentazione dell'istanza in quanto</p>
+  <h1 class="Modulo">DICHIARA</h1>
+
 <!-- Tabella dei titoli Inizio -->
 <table class="Modulo" style="border:1px solid grey;">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
-        <p>
-          <b>Titolo sottoscrivente (proprietario, comproprietario, ecc.)</b>
-        </p>
+        <p><b>di essere soggetto abilitato alla presentazione dell'istanza in quanto</b></p>
       </td>
     </tr>
     <tr>
@@ -450,17 +479,53 @@ tipo_mime="application/pdf"/>
         <p>Altro: <input class="" id="Spec_Titolo_ult_int3" name="Spec_Titolo_ult_int3" label="Altro titolo" mandatory_enabled="#Titolo_ult_int3.checked()" style="width:94%;"/></p>
       </td>
     </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height: 1.6;">e di essere informato che tutte le comunicazioni inerenti questa istanza verranno inviate al domicilio digitale eletto per questo procedimento, ovvero: <input id="dom_digi_rif" name="dom_digi_rif" dynamic_value=#Metadati_Dom_Digi.value() style="width: 50%;" readonly/></p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
-<p class="Modulo">e di essere informato che tutte le comunicazioni inerenti questa istanza verranno inviate al domicilio digitale eletto per questo procedimento, ovvero:
-<input id="dom_digi_rif" name="dom_digi_rif" dynamic_value=#Metadati_Dom_Digi.value() readonly/>
-</p>
 <br>
 
 <!-- simpatico start -->
 </div>
 <!-- simpatico end -->
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
+ <tbody>
+  <tr class="Rigaintestazione">
+   <td colspan="2">
+    <p style="text-align: center;">
+     <b>Elenco degli allegati</b></p>
+   </td>
+  </tr>
+  <tr>
+   <td style="vertical-align: top; width:4%">
+    <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
+   </td>
+   <td style="background-color: #eeeeee;">
+    <p>
+     copia del documento d'identità
+     <br/>
+   </p>
+   </td>
+  </tr>
+  <tr>
+   <td style="vertical-align: top; width:4%">
+    <input id="ULT_INT_AU" name="ULT_INT_AU" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
+   </td>
+   <td style="background-color: #eeeeee;">
+    <p>
+     scansione della stampa di questo modulo firmata
+     <br/>
+   </p>
+   </td>
+  </tr>
+
+ </tbody>
+</table>
 
 <br>
 <br>
@@ -508,24 +573,29 @@ tipo_mime="application/pdf"/>
     </tr>
   </tbody>
 </table>
+
  <br/>
 
-<p class="Modulo">
- <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
-</p>
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+ 
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ 
+ <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ 
+ <input id="GLOBO_allegato_cModulo_compilato_firma_autografa" name="GLOBO_allegato_cModulo_compilato_firma_autografa" obbligatorio="#ULT_INT_AU.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ 
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ 
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ 
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
-<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
-
-<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
-
-<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
-
-<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
-
-<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
-
-<!-- passaggio dati tra moduli -->
-{{ utils.passaggio_metadati() }}
-<input id="Metadati_Dom_Digi" name="Metadati_Dom_Digi" type="hidden"/>
-<input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" type="hidden"/>
-{% endblock content %}
+ <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+ 
+ <!-- passaggio dati tra moduli -->
+ {{ utils.passaggio_metadati() }}
+ <input id="Metadati_Dom_Digi" name="Metadati_Dom_Digi" type="hidden"/>
+ <input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" type="hidden"/>
+ {% endblock content %}
