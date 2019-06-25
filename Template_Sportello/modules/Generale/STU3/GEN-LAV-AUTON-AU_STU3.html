@@ -1,6 +1,6 @@
-{% set CodiceModulo =  "GEN-LAV-AUTON-EL" %}
-{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.lavoratori.autonomi.firma.elettronica" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-EL_vSTU3" %}
+{% set CodiceModulo =  "GEN-LAV-AUTON-AU" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.lavoratori.autonomi.firma.autografa" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-AU_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -8,24 +8,35 @@
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Anagrafica dei lavoratori autonomi (firma elettronica)"
+descrizione="Anagrafica dei lavoratori autonomi (firma autografa)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="P7M_ELETTRONICA"
-istruzioni_compilazione=""
+firmare="NO"
+istruzioni_compilazione="ATTENZIONE: questo modulo deve essere compilato con i dati del sottoscrivente."
 istruzioni_invio=""
 metodo_invio=""
 name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-LAV-AUTON-EL"
+urlhelp="/modulistica/moduli/GEN-LAV-AUTON-AU"
 verifica_pagamento="NO"
-versione="1.1|14/02/2018"/>
+versione="1.1|03/06/2016"/>
+
+<meta codice_allegato="GEN-Modulo_compilato_firma_autografa"
+urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
+descrizione_estesa="Scansione del modulo anagrafica lavoratore compilato e firmato manualmente"
+filename="Anagrafica_lavoratore_autonomo_AU.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-Modulo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
@@ -40,10 +51,10 @@ tipo_mime="application/pdf"/>
 
 {% endblock meta %}
 
-{% block simpaticoconfig %}
-  {% set simpaticoEservice="5_4" %}
-  {% set simpaticoEserviceName="GEN LAV-AUTON EL" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-EL" %}
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="5_5" %}
+  {% set simpaticoEserviceName="GEN LAV-AUTON AU" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-AU" %}
   {% set simpaticoForm="modulo_secondario" %}
   {% set simpaticoCategory="Edilizia" %}
   {% set simpaticoMapping=[ "LavoratoreAutonomo_Cognome",
@@ -53,25 +64,28 @@ tipo_mime="application/pdf"/>
                            "LavoratoreAutonomo_CFPI"] %}
 
   {% set ERROR_LABELS=[ ('block1' , 'Inserire i dati anagrafici richiesti'),
-                        ('block2' , 'Confermare presa visione informativa sulla privacy')] %}
+                        ('block3' , 'Confermare presa visione informativa sulla privacy')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}
+{% endblock simpaticoconfig %}-->
 
 
 {% block title %}
    Anagrafica lavoratore autonomo
 {% endblock title %}
 
+
 {% block content %}
 
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
-<input checked="checked" dynamic_check="true" id="SempreSI" name="SempreSI" type="hidden" value="SI"/>
-<input dynamic_value="#LavoratoreAutonomo_Cognome.value().toUpperCase() + ' - anagrafica lavoratori autonomi firma elettronica'" id="Oggetto" name="Oggetto" type="hidden"/>
+ <input checked="checked" dynamic_check="true" id="SempreSI" name="SempreSI" type="hidden" value="SI"/>
+ <input dynamic_value="#LavoratoreAutonomo_Cognome.value().toUpperCase() + ' - anagrafica lavoratori autonomi firma autografa'" id="Oggetto" name="Oggetto" type="hidden"/>
 
- <div class="simpatico-block simpatico-query-and-answer">
+ <!-- simpatico start -->
+<div class="simpatico-block simpatico-query-and-answer">
+    <!-- simpatico end -->
 <h1 class="Modulo">
- Anagrafica lavoratore autonomo
+    Anagrafica lavoratore autonomo
 </h1>
 
 <table class="Modulo" style="border:1px solid grey" mandatory="true">
@@ -188,7 +202,7 @@ tipo_mime="application/pdf"/>
   <tbody>
     <tr class="Rigaintestazioneridotta">
       <td colspan="2">
-        <p class="Labelcella">Partita IVA </p>
+        <p class="Labelcella">Codice Fiscale / Partita IVA </p>
       </td>
       <td>
         <p class="Labelcella">E-mail PEC (domicilio digitale)</p>
@@ -247,7 +261,46 @@ tipo_mime="application/pdf"/>
     </tr>
   </tbody>
 </table>
+
+<!-- simpatico start -->
 </div>
+<!-- simpatico end -->
+
+<br>
+<br>
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
+ <tbody>
+  <tr class="Rigaintestazione">
+   <td colspan="2">
+    <p style="text-align: center;">
+     <b>
+      Elenco degli allegati
+     </b>
+     <br/>
+     <span style="font-size:70%">
+      <i>
+       (barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)
+      </i>
+     </span>
+    </p>
+   </td>
+  </tr>
+  <tr>
+   <td style="vertical-align: top; width:4%">
+    <input id="Anag_lav_aut" name="Anag_lav_aut" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
+   </td>
+   <td style="background-color: #eeeeee;">
+    <p>
+     scansione della stampa di questo modulo firmata
+     <br/>
+   </p>
+   </td>
+  </tr>
+
+ </tbody>
+</table>
 
 <br>
 <br>
@@ -295,22 +348,26 @@ tipo_mime="application/pdf"/>
     </tr>
   </tbody>
 </table>
+
  <br/>
 
-<p class="Modulo">
- <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
-</p>
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+ 
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 
-<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ <input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="#Anag_lav_aut.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ 
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ 
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ 
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+ <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+ 
 
-<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ {{ utils.passaggio_metadati() }}
 
-<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 
-<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
-
-<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
-
-{{ utils.passaggio_metadati() }}
-
-{% endblock content %}
+ {% endblock content %}

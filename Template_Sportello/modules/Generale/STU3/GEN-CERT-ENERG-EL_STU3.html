@@ -1,14 +1,14 @@
-{% set CodiceModulo =  "GEN-DIR-LAV-EL" %}
-{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.direttore.lavori.firma.elettronica" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-DIR-LAV-EL_vSTU3" %}
+{% set CodiceModulo =  "GEN-CERT-ENERG-EL" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.certificatore.energetico.firma.elettronica" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-CERT-ENERG-EL_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="DirettoreLavori_CodiceFiscale"
+<meta campi_firma="CertificatoreEnergetico_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Anagrafica del direttore dei lavori (firma elettronica)"
+descrizione="Anagrafica del soggetto abilitato alla certificazione energetica (firma elettronica)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
@@ -23,7 +23,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-DIR-LAV-EL"
+urlhelp="/modulistica/moduli/GEN-CERT-ENERG-EL"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
@@ -40,51 +40,52 @@ tipo_mime="application/pdf"/>
 
 {% endblock meta %}
 
-{% block simpaticoconfig %}
-  {% set simpaticoEservice="5_8_1" %}
-  {% set simpaticoEserviceName="GEN DIR LAV EL" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-DIR-LAV-EL" %}
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="5_9_1" %}
+  {% set simpaticoEserviceName="GEN CERT ENERG EL" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-CERT-ENERG-EL" %}
   {% set simpaticoForm="modulo_secondario" %}
   {% set simpaticoCategory="Edilizia" %}
-  {% set simpaticoMapping=[ "DirettoreLavori_CodiceFiscale",
-                           "DirettoreLavori_Cognome",
-                           "DirettoreLavori_Nome",
-                           "DirettoreLavori_PartitaIVA",
-                           "DirettoreLavori_EMailPEC"] %}
+  {% set simpaticoMapping=[ "CertificatoreEnergetico_CodiceFiscale",
+                           "CertificatoreEnergetico_Cognome",
+                           "CertificatoreEnergetico_Nome",
+                           "CertificatoreEnergetico_PartitaIVA",
+                           "CertificatoreEnergetico_EMailPEC"] %}
 
-  {% set ERROR_LABELS=[ ('block1' , 'Inserire il codice fiscale e dichiarare presa coscienza dei contenuti progettuali'),
+  {% set ERROR_LABELS=[ ('block1' , 'Inserire il codice fiscale e dichiarare presa coscienza del ruolo da svolgere'),
                         ('block2' , 'Confermare presa visione informativa sulla privacy')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}
+{% endblock simpaticoconfig %}-->
 
 {% block title %}
-   Anagrafica direttore dei lavori
+   Anagrafica soggetto abilitato alla certificazione energetica
 {% endblock title %}
 
 {% block content %}
 
+
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#DirettoreLavori_Cognome.value().toUpperCase() + ' - anagrafica direttore dei lavori'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#CertificatoreEnergetico_Cognome.value().toUpperCase() + ' - anagrafica soggetto abilitato alla certificazione energetica'"/>
 
  <h1 class="Modulo">
-  Anagrafica direttore dei lavori
+  Anagrafica soggetto abilitato alla certificazione energetica
  </h1>
 
- <input id="DirettoreLavori_DatiProfessionistaObbligatori" name="DirettoreLavori_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
- <input id="DirettoreLavori_DatiAlboProfessionistaObbligatori" name="DirettoreLavori_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+ <input id="CertificatoreEnergetico_DatiProfessionistaObbligatori" name="CertificatoreEnergetico_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+ <input id="CertificatoreEnergetico_DatiAlboProfessionistaObbligatori" name="CertificatoreEnergetico_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
  
  <div class="simpatico-block simpatico-query-and-answer">
 
-{{anagrafica_trento_uniformata.professionista("DirettoreLavori","Il direttore dei lavori","Direttore_lavori","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+{{anagrafica_trento_uniformata.professionista("CertificatoreEnergetico","Il soggetto abilitato alla certificazione energetica","Certificatore_energ","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input id="Dichiarazione_direttore_lavori" name="Dichiarazione_direttore_lavori" type="radio" value="1" mandatory_enabled="true"/>
+        <input id="Dichiarazione_cert_energ" name="Dichiarazione_cert_energ" type="radio" value="1" mandatory_enabled="true"/>
       </td>
       <td>
-        <p>Il sottoscritto Direttore dei lavori dichiara di aver preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto, nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo.</p>
+        <p>Io sottoscritto dichiaro di aver preso conoscenza di aver ricevuto l'incarico di soggetto abilitato alla certificazione energetica</p>
       </td>
     </tr>
   </tbody>
@@ -121,7 +122,7 @@ tipo_mime="application/pdf"/>
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #DirettoreLavori_Cognome.value().toUpperCase() + ' ' + #DirettoreLavori_Nome.value().toUpperCase()" style="width:90%;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #CertificatoreEnergetico_Cognome.value().toUpperCase() + ' ' + #CertificatoreEnergetico_Nome.value().toUpperCase()" style="width:90%;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -132,7 +133,7 @@ tipo_mime="application/pdf"/>
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il direttore dei lavori</p>
+        <p class="Labelcella" style="text-align: center">Il sottoscritto</p>
       </td>
     </tr>
   </tbody>
@@ -151,6 +152,6 @@ tipo_mime="application/pdf"/>
  <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
  {{ utils.passaggio_metadati() }}
- <input id="Metadati_Tipo_Firma_dir_lav" name="Metadati_Tipo_Firma_dir_lav" type="hidden"/>
+ <input id="Metadati_Tipo_Firma_cert_energ" name="Metadati_Tipo_Firma_cert_energ" type="hidden"/>
 
 {% endblock content %}
