@@ -1,10 +1,10 @@
-{% set CodiceModulo =  "M47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL" %}
-{% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec04.m47500.dich.cong.tit.prog.firma.entr.el" %}
+{% set CodiceModulo =  "M47500-MSEC03-DICH-CONG-TIT-PROG-FIRMA-ENTR-AU" %}
+{% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec03.m47500.dich.cong.tit.prog.firma.entr.au" %}
 <!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-DICHIARAZIONI-CONGIUNTE-TITOLARE-PROGETTISTA_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Progettista_CodiceFiscale,AventeTitolo_CodiceFiscale"
+<meta campi_firma="Progettista_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -23,7 +23,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/M47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL"
+urlhelp="/modulistica/moduli/M47500-MSEC03-DICH-CONG-TIT-PROG-FIRMA-ENTR-AU"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
@@ -38,23 +38,34 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="M47500-A01-PREV-CONTR"
-urn_allegato="document:c_l378:segnalazione.certificata.inizio.attivita;scia;a01.m47500.preventivo.contributo.costruzione"
+<meta codice_allegato="GEN-PREV-CONTR"
+urn_allegato="document:c_l378:allegato.preventivo.contributo.costruzione"
 descrizione_estesa="Prospetto di calcolo preventivo del contributo di costruzione"
 filename="Preventivo contributo costruzione.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/M47500-A01-PREV-CONTR"
+istruzioni="/modulistica/moduli/GEN-PREV-CONTR"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="M47500-A01-PROG-URB"
-urn_allegato="document:c_l378:segnalazione.certificata.inizio.attivita;scia;a02.m47500.progetto.oneri.urbanizzazione"
+<meta codice_allegato="GEN-PROG-ONERI-URB"
+urn_allegato="document:c_l378:allegato.progetto.oneri.urbanizzazione"
 descrizione_estesa="Proposta di progetto realizzazione opere di urbanizzazione"
 filename="Proposta progetto opere.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/M47500-A01-PROG-URB"
+istruzioni="/modulistica/moduli/GEN-PROG-ONERI-URB"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-Modulo_compilato_firma_autografa"
+urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
+descrizione_estesa="Modulo compilato e firmato manualmente"
+filename="Modulo_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-Modulo_compilato_firma_autografa"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -87,8 +98,6 @@ tipo_mime="application/pdf"/>
 
 {{ intestazioni.intestazione_modulosecondario_senzabollo() }}
  <input id="Oggetto" name="Oggetto" dynamic_value="#Progettista_Cognome.value().toUpperCase() + ' - dichiarazioni congiunte del titolare e del progettista'" type="hidden"/>
-
-
 
 <h1 class="Modulo">DICHIARAZIONI CONGIUNTE DEL TITOLARE E DEL PROGETTISTA</h1>
 
@@ -324,7 +333,7 @@ tipo_mime="application/pdf"/>
       </tr>
     </tbody>
   </table>
-
+  
 <br>
 
 <p class="Modulo">
@@ -337,7 +346,9 @@ tipo_mime="application/pdf"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
 <input id="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO" name="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO" obbligatorio="#tipo_contributo3.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_allegato_cM47500-A01-PREV-CONTR" name="GLOBO_allegato_cM47500-A01-PREV-CONTR" obbligatorio="#tipo_contributo4.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_allegato_cM47500-A01-PROG-URB" name="GLOBO_allegato_cM47500-A01-PROG-URB" obbligatorio="#oneri_urb.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-PREV-CONTR" name="GLOBO_allegato_cGEN-PREV-CONTR" obbligatorio="#tipo_contributo4.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-PROG-ONERI-URB" name="GLOBO_allegato_cGEN-PROG-ONERI-URB" obbligatorio="#oneri_urb.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
 
 {% endblock content %}
