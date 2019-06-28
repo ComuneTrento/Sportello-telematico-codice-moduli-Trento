@@ -1,6 +1,6 @@
-{% set CodiceModulo = "M1114-ISCRIZIONE-ALBO-SCRUTATORI" %}
-{% set Urn =  "document:c_l378:elettorale.scrutatori;iscriversi.albo.scrutatori;iscrizione;m1114.iscrizione.scrutatore" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1114-ISCRIZIONE-ALBO-SCRUTATORI_v1.0" %}-->
+{% set CodiceModulo = "M1131-INTEGRAZIONE-CONTATTI-PRESIDENTE" %}
+{% set Urn =  "document:elettorale.presidenti;integrare.contatto;integrazione;m1131.integrazione.contatti" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/CellulareM1131-INTEGRAZIONE-CONTATTI-PRESIDENTE_v1.0" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -12,8 +12,8 @@ codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
 sub_urn_list=""
 uo_globo_list=""
-contesto_procedurale="Iscrizione all'albo degli scrutatori"
-descrizione="Iscrizione all'albo degli scrutatori"
+contesto_procedurale="Integrazione informazioni di contatto presidente di seggio"
+descrizione="Integrazione informazioni di contatto presidente di seggio"
 destinatario_amministrazione=""
 destinatario_ufficio="B6PZ17" 
 dinamico="SI"
@@ -28,7 +28,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 segnatura="AventeTitolo"
 tipo_modulo="principale"
-urlhelp="/modulistica/moduli/M1114-ISCRIZIONE-ALBO-SCRUTATORI"
+urlhelp="/modulistica/moduli/CellulareM1131-INTEGRAZIONE-CONTATTI-PRESIDENTE"
 verifica_pagamento="NO"
 versione="1.0|23/02/2018" />
 
@@ -114,124 +114,51 @@ urn_report="report:CSP_SESSION_REPORT"
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
 {% endblock simpaticoconfig %}-->
 
-{% block title %}ISCRIZIONE-ALBO-SCRUTATORI{% endblock title %}
+{% block title %}INTEGRAZIONE-CONTATTO-PRESIDENTE{% endblock title %}
 
 {% block content %}
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#nominativo_oggetto.value() + ' - Iscrizione albo degli scrutatori di seggio elettorale'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#nominativo_oggetto.value() + ' - Integrazione informazioni di contatto albo presidenti di seggio'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
 <h1 class="Modulo" style="line-height:1.6;">
-  Domanda per l’iscrizione all’albo unico delle persone idonee<br>all’ufficio di scrutatore di seggio elettorale
+   Aggiornamento albo degli presidenti di seggio elettorale
+   <br>Integrazione informazioni di contatto 
 </h1>
 
-{{anagrafica_trento_uniformata.richiedente("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+<input id="AventeTitolo_checkobbligatorio" name="AventeTitolo_checkobbligatorio" dynamic_check="true" type="hidden" />
+<input id="AventeTitolo_checkabilitato" name="AventeTitolo_checkabilitato" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.professionista_direttore_lavori("AventeTitolo","Il/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility")}}  
   
 <input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
 
 <br>
-<br>
 
-<p>ai sensi dell’art. 1 della legge 8 marzo 1989, n. 95, come sostituito dall’art. 9, comma 1, della legge 30 aprile 1999, n. 120,</p>
-
-<h3 class="Modulo">CHIEDE</h3>
-
-<p class="Modulo"><input id="richiesta" name="richiesta" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" enabled="true"/><b>di essere inserito/a nell’albo delle persone idonee all’ufficio di scrutatore di seggio elettorale.</b></p>
-
-<br><br>
-
-<p>A tal fine, sotto la propria personale responsabilità ai sensi degli artt. 46 e 47 del D.P.R. 28 dicembre 2000, n. 445, </p>
-<h3 class="Modulo">DICHIARA</h3>
+<div class="simpatico-block simpatico-query-and-answer">
+<h2 class="Modulo">
+  COMUNICA
+</h2>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
-    <tr>
-      <td style="background-color: #eeeeee; width:4%;">
-        <input id="iscr_liste" name="iscr_liste" dynamic_check="true" type="checkbox" value="1" enabled="true"/>
-      </td>
-      <td colspan="2">
-        <p>di essere iscritto/a nelle liste elettorali di questo Comune</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="background-color: #eeeeee; width:4%;">
-        <input id="titolo_studio" name="titolo_studio" dynamic_check="true" type="checkbox" value="2" enabled="true"/>
-      </td>
-      <td>
-        <p style="line-height:1.8;">di essere in possesso del seguente titolo di studio:
-          <select class="inputNormal" id="{{ prefix }}_titolo_studio" name="{{ prefix }}_titolo_studio" style="width:55%" label="Titolo di studio" mandatory_enabled="true">
-            <option value=""></option>
-            <option value="No_Elementare">Nessun titolo/Lic. Elementare</option>
-            <option value="Media">Lic. Media</option>
-            <option value="Diploma">Diploma</option>
-            <option value="Laurea_triennale">Laurea triennale</option>
-            <option value="Laurea">Laurea</option>
-            <option value="Dottorato">Dottorato</option>
-          </select>
-        <br>conseguito presso l'Istituto: <input class="inputNormal" id="istituto_studi" name="istituto_studi" style="width:75%" mandatory_enabled="true"/> 
-        <br>con sede nel Comune di: <input class="inputNormal" id="comune_istituto" name="comune_istituto" style="width:77%" mandatory_enabled="true"/></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="background-color: #eeeeee; width:4%;">
-        <input id="impiego" name="impiego" dynamic_check="true" type="checkbox" value="3" enabled="true"/>
-      </td>
-      <td>
-        <p style="line-height:1.8;">di esercitare la professione / essere nella condizione di: <input class="inputNormal" id="tipo_lavoro" name="tipo_lavoro" style="width:50.5%" mandatory_enabled="true"/></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="background-color: #eeeeee; width:4%;">
-        <input id="dich_necessarie" name="dich_necessarie" type="checkbox" value="4" mandatory_enabled="true"/>
-      </td>
-      <td>
-        <p style="line-height:1.8;">di non trovarsi in nessuna delle condizioni previste dagli artt. 38 del T.U. 361/1957 e 23 del T.U. 570/1960, e cioè:</p>
-        <ul>
-          <li>di non aver superato il settantesimo anno di età</li>
-          <li>di non essere dipendente dei Ministeri dell’Interno, delle Poste e Telecomunicazioni e dei Trasporti</li>
-          <li>di non essere in servizio nelle Forze armate</li>
-          <li>di non essere medico provinciale, ufficiale sanitario, medico condotto</li>
-          <li>di non essere segretario comunale né dipendente comunale addetto o comandato a prestare servizio presso l’Ufficio elettorale comunale</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td style="background-color: #eeeeee; width:4%;">
-        <input id="non_present" name="non_present" dynamic_check="true" type="checkbox" value="5" enabled="true"/>
-      </td>
-      <td>
-        <p>di non trovarsi nella condizione di non essersi presentato/a, senza giustificato motivo, dopo essere stato/a chiamato/a a svolgere le funzioni di scrutatore</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="background-color: #eeeeee; width:4%;">
-        <input id="no_cond" name="no_cond" dynamic_check="true" type="checkbox" value="6" enabled="true"/>
-      </td>
-      <td>
-        <p>di non essere stato/a condannato/a, anche con sentenza non definitiva, per i reati previsti dall’art. 96 del D.P.R. 570/1960 e dall’art. 104, comma 2, del D.P.R. 361/1957</p>
-      </td>
-    </tr>
+      <tr class="Rigaintestazione" >
+        <td>
+          <p>il seguente indirizzo di posta elettronica per l'aggiornamento dell'albo dei presidenti di seggio:</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <input id="Mail_contatto" name="Mail_contatto" mandatory_enabled="true" label="Indicare una mail valida" format="email" style="width:100%;"/>
+        </td>
+      </tr>  
   </tbody>
 </table>
-
-<br>
-<br>
-
-<h3 class="Modulo">NOTE</h3>
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="background-color: #eeeeee;">
-        <p><b>L'Amministrazione è tenuta a procedere ad idonei controlli, anche a campione, sulla veridicità delle dichiarazioni sostitutive (art. 71, D.P.R. 28 dicembre 2000, n. 445).<br><br>Fermo restando quanto previsto dall'art. 76 del D.P.R. 28 dicembre 2000, n. 445, qualora dal controllo emerga la non veridicità del contenuto della dichiarazione, il dichiarante decade dai benefici eventualmente conseguenti al provvedimento emanato sulla base della dichiarazione non veritiera (art. 75, D.P.R. 28 dicembre 2000, n. 445).</b></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+</div>
 
 <br>
 <br>
@@ -292,8 +219,6 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
-
-<input id="data_iscr_albo_scrut" name="data_iscr_albo_scrut" dynamic_value="#Data.value()" format="date" type="hidden">
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" name="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" obbligatorio="''" type="hidden" value=""/>
 
