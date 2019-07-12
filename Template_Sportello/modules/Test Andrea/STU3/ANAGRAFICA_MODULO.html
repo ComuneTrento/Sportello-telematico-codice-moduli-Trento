@@ -32,8 +32,19 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|23/02/2018" />
 
-<meta codice_modulo_figlio="GEN-DIR-LAV-EL"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.direttore.lavori.firma.elettronica"
+<meta codice_allegato="GEN-CDI"
+urn_allegato="document:c_l378:allegato.copia.documento.identita"
+descrizione_estesa="Copia del documento di identità del richiedente"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_modulo_figlio="GEN-PROGETTISTA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -57,12 +68,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
 <h1 class="Modulo">
-    TEST ANDREA - Indirizzo di posta elettronica 
+    MODULO ANAGRAFICA DOPPIA 
 </h1>
-<h3 class="Modulo">
-    <i>TEST ANDREA - Liberatoria alla comunicazione al Servizio Risorse finanziarie del Comune di Trento</i>
-</h3>
-
 
 <table class="Modulo" style="border: 1px solid grey">
     <tbody>
@@ -96,10 +103,6 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <br>
 
-<h2 class="Modulo">
-    Ai sensi della Legge urbanistica provinciale 04/08/2015, n. 15
-</h2>
-
 {{anagrafica_trento.richiedente_IMIS("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <br>
@@ -120,34 +123,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </table>
   
     <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
-  
-    <table class="Modulo" style="border:1px solid grey;">
-      <tbody>
-        <tr>
-          <td style="vertical-align: top; width: 4%;">
-            <input id="Progettista_direttorelavori" name="Progettista_direttorelavori" type="checkbox" enabled="true"/>
-          </td>
-          <td>
-            <p style="line-height:1.6;"><b>Il progettista è anche il direttore dei lavori</b></p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
   
 </div>
 
-<br>
-<br>
-
-<div class="simpatico-block simpatico-query-and-answer">
-    
-<input id="DirettoreLavori_checkobbligatorio" name="DirettoreLavori_checkobbligatorio" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
-<input id="DirettoreLavori_checkabilitato" name="DirettoreLavori_checkabilitato" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
-{{anagrafica_trento_uniformata.solo_nominativo("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b>:") }}
-
-</div>
-  
-<br>
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
@@ -167,18 +146,26 @@ urn_report="report:CSP_SESSION_REPORT"/>
             </td>
         </tr>
         <tr>
-            <td style="width:4%; vertical-align: top;">
-            <input dynamic_check="true" enabled="true" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
-            </td>
-            <td style="background-color: #eeeeee;" colspan="2">
-            <p style="line-height:1.6;">Anagrafica e dichiarazioni del <b>direttore dei lavori</b>, che firma con: 
-                <select class="inputNormal" id="Tipo_Firma_dir_lav" name="Tipo_Firma_dir_lav" style="width:42%" label="Tipo firma anagrafica direttore dei lavori" mandatory_enabled="true">
+          <td style="width:4%; vertical-align: top;">
+            <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" mandatory_enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
+          </td>
+          <td style="background-color: #eeeeee;" colspan="2">
+            <p style="line-height:1.6;">Domanda firmata dal richiedente nella seguente modalità: 
+              <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:48%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
                 <option value=""></option>
-                <option value="Firmato con firma autografa">firma autografa</option>
-                <option value="Firmato con firma elettronica">firma elettronica</option>
-                </select>
-            </p>
-            </td>
+                <option value="Firma autografa">Firma autografa</option>
+                <option value="Firma elettronica">Firma elettronica</option>
+              </select>
+              <br>
+              <span style="font-size:70%">(da allegare se la compilazione della domanda è stata eseguita dal professionista incaricato)</span></p>
+          </td>
+        </tr>
+          <td style="width:4%; vertical-align: top;">
+            <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" enabled="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'A'" value="OBBLIGATORIO"/>
+          </td>
+          <td style="background-color: #eeeeee;" colspan="2">
+            <p style="line-height:1.6;">Copia del documento d'identità del titolare del permesso di costruire</p>
+          </td>
         </tr>
         <tr>
             <td style="width:4%; vertical-align: top;">
@@ -187,79 +174,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
             <td style="background-color: #eeeeee;" colspan="2">
                 <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista incaricato</b> <input enabled="true" dynamic_value="'firmato con firma elettronica'" id="Tipo_firma_anag_prog" name="Tipo_firma_anag_prog" style="width:46%;"/></p>
             </td>
-            </tr>
-            <tr>
-            <td style="width:4%; vertical-align: top;">
-                <input dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
-            </td>
-            <td style="background-color: #eeeeee;" colspan="2">
-                <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore lavori</b> <input  enabled="#GEN_DIR_LAV.checked()" dynamic_value="'firmato con firma elettronica'" id="Tipo_Firma_dir_lav" name="Tipo_Firma_dir_lav" style="width:52.5%;" readonly/></p>
-            </td>
         </tr>
+
         </tbody>
     </table>
-</div>
-
-<br>
-<br>
-
-<div class="simpatico-block simpatico-query-and-answer">
-<table class="Modulo" name="Informativa_dati" style="border: 1px solid grey">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td colspan="2">
-          <p style="text-align: center;"><b>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</b></p>
-          <p style="text-align: center; font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <br>
-          <p>Ai sensi del Regolamento UE n. 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali e delle disposizioni della normativa nazionale, si informa che:</p>
-          <ul>
-            <li>Titolare del trattamento dei dati è il Comune di Trento (email: segreteria_generale@comune.trento.it; sito web: <a href="http://comune.trento.it" target="_blank">http://comune.trento.it</a>)</li>
-            <li>Responsabile per la protezione dei dati è il Consorzio dei Comuni Trentini (email: servizioRPD@comunitrentini.it; sito web: <a href="http://www.comunitrentini.it" target="_blank">http://comune.trento.it</a>)</li>
-            <li>I dati vengono raccolti e trattati per le seguenti finalità istruttoria relativa all'istanza presentata</li>
-            <li>I dati possono essere trattati dal Comune di Trento per finalità statistiche</li>
-            <li>La base giuridica del trattamento consiste nell'esecuzione di un compito o di una funzione di interesse pubblico</li>
-            <li>I dati vengono trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantirne la sicurezza e la riservatezza</li>
-            <li>I dati possono essere comunicati ad altri soggetti pubblici o privati che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso</li>
-            <li>I dati non sono oggetto di diffusione</li>
-            <li>I dati non sono oggetto di trasferimento all'estero</li>
-            <li>I dati possono essere conosciuti dal responsabile o dagli incaricati del Servizio Risorse finanziarie</li>
-            <li>Il conferimento dei dati ha natura obbligatoria. Non fornire i dati comporta il mancato accoglimento dell'istanza</li>
-            <li>I dati sono conservati per il periodo strettamente necessario all'esecuzione del compito o della funzione di interesse pubblico e comunque a termini di legge</li>
-            <li>I diritti dell'interessato sono:
-                <ul>
-                  <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano</li>
-                  <li>ottenere la loro comunicazione in forma intelligibile</li>
-                  <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici</li>
-                  <li>ottenere la rettifica , la cancellazione, la limitazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge</li>
-                  <li>richiedere la portabilità dei dati</li>
-                  <li>aggiornare, correggere o integrare i dati che lo riguardano</li>
-                  <li>opporsi, per motivi legittimi, al trattamento dei dati</li>
-                  <li>proporre reclamo al Garante per la protezione dei dati personali</li>
-                </ul>
-              </li>
-            </ul>        
-        </td>
-      </tr>
-    </tbody>
-</table>
-
-<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
-  <tbody>
-      <tr>
-        <td style="width: 4%; vertical-align: top;">
-          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
-          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
-        </td>
-        <td colspan="2" style="background-color: #eeeeee;">
-          <p><b>Dichiaro di aver ricevuto e preso visione dell'informativa sul trattamento dei dati personali</b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </div>
 
 <br>
@@ -309,6 +227,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
 <!-- META DATI MODULI ALLEGATI-->
-<input id="GLOBO_modulofiglio_cGEN-DIR-LAV-EL" name="GLOBO_modulofiglio_cGEN-DIR-LAV-EL" obbligatorio="#Tipo_Firma_dir_lav.value() == 'firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
 
 {% endblock content %}
