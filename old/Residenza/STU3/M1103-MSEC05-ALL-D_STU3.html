@@ -1,0 +1,546 @@
+{% set CodiceModulo =  "M1103-MSEC05-ALL-D" %}
+{% set Urn =  "document:c_l378:residenza;cambio.residenza;msec05.m1103.allegatoD" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1103-MSEC05-ALL-D_v1.0" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="Cognome_dichiarante"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Allegato D - Dichiarazione sostitutiva atto di notorietà - da compilarsi da parte dell'intestatario della scheda di famiglia"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M1103-MSEC05-ALL-D"
+verifica_pagamento="NO"
+versione="1.0|01/01/2015"/>
+
+<meta codice_allegato="GEN-CDI"
+urn_allegato="document:c_l378:allegato.copia.documento.identita"
+descrizione_estesa="Copia del documento di identità del richiedente"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-Modulo_compilato_firma_autografa"
+urn_allegato="document:c_l378:modulo.secondario.anagrafica.imprese.firma.autografa"
+descrizione_estesa="Scansione del modulo compilato e firmato manualmente"
+filename="Modulo_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-Modulo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-RESIDENZA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.residenza"
+descrizione_estesa="Informativa trattamento dati RESIDENZA"
+filename="INFORM-TRATT-DATI-RESIDENZA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-RESIDENZA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO ***********
+<script type="text/javascript">
+  var simpaticoEservice="1_3"
+  var simpaticoForm="modulo_secondario_ulteriori_particelle_o_subalterni"
+  var simpaticoCategory="Edilizia"
+  var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                         "AventeTitolo_Tel_Fisso",
+                         "AventeTitolo_EMail"]
+  var ERROR_LABELS= {   
+                        'block1' :'Inserire il codice fiscale',
+                        'block2' : 'Selezionare il ruolo',
+                        'block4' : 'Particella inesistente',
+                        'block5' : 'Particella inesistente',
+                        'block6' : 'Particella inesistente',
+                        'block7' : 'Particella inesistente',
+                        'block8' : 'Particella inesistente',
+                        'block9' : 'Particella inesistente',
+                        'block10' : 'Particella inesistente',
+                        'block11' : 'Particella inesistente',
+                        'block12' : 'Particella inesistente',
+                        'block13' : 'Particella inesistente'
+    }
+
+  </script>
+ *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="2" %}
+  {% set simpaticoEserviceName="M1876 ISCRIZIONE NIDO" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1876-ISCRIZIONE-NIDO" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Infanzia" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale","AventeTitolo_DataNascita","AventeTitolo_EMailPEC","AventeTitolo_Sesso","AventeTitolo_ProvinciaResidenza","AventeTitolo_ComuneResidenza","AventeTitolo_ViaResidenza","AventeTitolo_CivicoResidenza","AventeTitolo_CAPResidenza","AventeTitolo_Telefono","AventeTitolo_Tel_Fisso","AventeTitolo_Nazionalita","AventeTitolo_EMail","AventeTitolo_EnteProvv","AventeTitolo_NumProt","AventeTitolo_LuogoNascita","AventeTitolo_Data","Parametri_TipoLavoroPadre","Parametri_AziendaLavoroPadre","Parametri_IndirizzoAziendaLavoroPadre","Parametri_CivicoAziendaLavoroPadre","Parametri_CapAziendaLavoroPadre","Parametri_TelAziendaLavoroPadre","Parametri_EmailAziendaLavoroPadre","Parametri_AgenziaEntratePadre","Parametri_PIVAPadre","Parametri_ScuolaPadre","Parametri_TipoLavoroMadre","Parametri_AziendaLavoroMadre","Parametri_IndirizzoAziendaLavoroMadre","Parametri_CivicoAziendaLavoroMadre","Parametri_CapAziendaLavoroMadre","Parametri_TelAziendaLavoroMadre","Parametri_EmailAziendaLavoroMadre","Parametri_AgenziaEntrateMadre","Parametri_PIVAMadre","Parametri_ScuolaMadre"] %}
+  {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
+                          ('block2', 'Ruolo non specificato'),
+                          ('block3', 'Seleziona una delle opzioni'),
+                          ('block5', 'IMPOSSIBILE CONTINUARE LA COMPILAZIONE'),
+                          ('block9', 'Seleziona se avvalersi dell\'attestazione ICEF o meno'),
+                          ('block11', 'Seleziona Part-time / Full-time'),
+                          ('block26', 'Seleziona una delle opzioni'),
+                          ('block32', 'Seleziona una delle opzioni'),
+                          ('block37', 'Confermare presa visione dell’informativa')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+
+{% block title %}
+Allegato D - Dichiarazione sostitutiva atto di notorietà
+{% endblock title %}
+
+{% block content %}
+
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Cognome_dichiarante.value().toUpperCase() + ' - Allegato D - Dichiarazione sostitutiva atto di notorietà'"/>
+
+ <h1 class="Modulo">
+  Allegato D - Dichiarazione sostitutiva atto di notorietà
+</h1>
+<h2 class="Modulo" style="font-size: 100%;">
+  <i>resa in conformità dell'art. 47 del D.P.R. 28.12.2000 n. 445</i>
+</h2>
+
+
+<br>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <b>Il/La sottoscritto/a</b>
+            </td>
+        </tr>    
+        <tr class="Rigaintestazioneridotta">
+            <td>
+                <p class="Labelcella">Cognome</p>
+            </td>
+            <td>
+                <p class="Labelcella">Nome</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input dynamic_value="#Metadati_cognome_fam_iscritto.value()" id="Cognome_dichiarante" name="Cognome_dichiarante" style="width:100%" label="Cognome del dichiarante"/>
+            </td>
+            <td>
+                <input dynamic_value="#Metadati_nome_fam_iscritto.value()" id="Nome_dichiarante" name="Nome_dichiarante" style="width:100%" label="Nome del dichiarante"/>
+            </td>
+        </tr>   
+        <tr class="Rigaintestazioneridotta" style="border-top:0px">
+            <td>
+                <p class="Labelcella">Data di nascita</p>
+            </td>
+            <td>
+                <p class="Labelcella">Luogo di nascita</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="" dynamic_value="#Metadati_data_nasc_fam_iscritto.value()" id="DataNascita_dichiarante" name="DataNascita_dichiarante" style="width:100%;" format="date" label="Data di nascita del dichiarante"/>
+            </td>
+            <td>
+                <input class="" dynamic_value="#Metadati_luogo_nasc_fam_iscritto.value()" id="LuogoNascita_dichiarante"name="LuogoNascita_dichiarante" style="width:100%;" label="Luogo di nascita del dichiarante"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory="true">
+    <tbody>
+        <tr class="Rigaintestazioneridotta">
+            <td style="width:9%;">
+                <p class="Labelcella">Provincia</p>
+            </td>
+            <td style="width:33%;">
+                <p class="Labelcella">Comune</p>
+            </td>
+            <td style="width:33%;">
+                <p class="Labelcella">Indirizzo</p>
+            </td>
+            <td style="width:9%;">
+                <p class="Labelcella">Civico</p>
+            </td>
+            <td style="width:16%;">
+                <p class="Labelcella">CAP</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                {{ utils.provincie( 'ProvinciaResidenza_dichiarante', label='Provincia di residenza' )}}
+            </td>
+            <td>
+                <select class="inputNormal" id="ComuneResidenza_dichiarante" name="ComuneResidenza_dichiarante" style="width:100%" label="Comune di residenza del dichiarante"
+                        dynamic_value="getComuniFromProvincia( #ProvinciaResidenza_dichiarante.value(), 'ComuneResidenza_dichiarante')">
+                </select>
+            </td>
+            <td>
+                <input class="" id="ViaResidenza_dichiarante" name="ViaResidenza_dichiarante" style="width:100%;" label="Via di residenza del dichiarante"/>
+            </td>
+            <td>
+                <input class="" id="CivicoResidenza_dichiarante" name="CivicoResidenza_dichiarante" style="width:100%;" label="Civico di residenza del dichiarante" maxlength="10"/>
+            </td>
+            <td>
+                <input class="" id="CAPResidenza_dichiarante" name="CAPResidenza_dichiarante" style="width:100%;" format="cap" label="CAP di residenza del dichiarante" mandatory="#ProvinciaResidenza_dichiarante.value() != 'EE'"/>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="11">
+        <p><b>In qualità di:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+      </td>
+      <td colspan="10">
+        <p>inquilino</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="4">
+        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+      </td>
+      <td colspan="10">
+        <p>proprietario dell'abitazione contraddistinta dai seguenti estremi catastali:</p>
+      </td>
+    </tr>
+        <tr class="Rigaintestazioneridotta">
+      <td style="width: 20%;" colspan="2">
+        <p class="Labelcella">Tipo</p>
+      </td>
+      <td style="width: 15%;">
+        <p class="Labelcella">Comune catastale (codice)</p>
+      </td>
+      <td style="width: 25%;">
+        <p class="Labelcella">Comune catastale (nome esteso)</p>
+      </td>
+      <td style="width: 7%;">
+        <p class="Labelcella">Numero</p>
+      </td>
+      <td style="width: 6%;">
+        <p class="Labelcella">Barra</p>
+      </td>
+      <td style="width: 6%;">
+        <p class="Labelcella">Porzione Materiale</p>
+      </td>
+      <td style="width: 6%;">
+        <p  class="Labelcella">Subalterno</p>
+      </td>
+      <td style="width: 5%;">
+        <p class="Labelcella">Controllo particella</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Mappa</p>
+      </td>
+    </tr>
+    <tr valid="#RisultatoVerificaCatastale.value() == 'SI' || #RisultatoVerificaCatastale.value() == ''">
+      <td colspan="2">
+        <select class="inputNormal" id="TipoImmobile_dichiarante" name="TipoImmobile_dichiarante" style="width:100%" label="Tipo immobile" mandatory_enabled="#Tipo_richiedente2.checked()">
+          <option value=""></option>
+          <option value="S">Abitazione</option>
+        </select>
+      </td>
+      <td>
+        <select class="inputNorma2" id="CatComune_dichiarante" name="CatComune_dichiarante" style="width:100%" label="Comune Catastale" mandatory_enabled="#Tipo_richiedente2.checked()">
+          <option value=""></option>
+          <option value="17">Baselga del Bondone</option>
+          <option value="50">Cadine</option>
+          <option value="108">Cognola</option>
+          <option value="161">Gardolo</option>
+          <option value="222">Mattarello</option>
+          <option value="224">Meano</option>
+          <option value="244">Montevaccino</option>
+          <option value="285">Povo</option>
+          <option value="305">Ravina</option>
+          <option value="308">Romagnano</option>
+          <option value="337">Sardagna</option>
+          <option value="355">Sopramonte</option>
+          <option value="406" selected>Trento</option>
+          <option value="432">Vigolo Baselga</option>
+          <option value="437">Villamontagna</option>
+          <option value="439">Villazzano</option>
+          <option value="4">Aldeno</option>
+          <option value="101">Cimone</option>
+          <option value="162">Garniga</option>
+        </select>
+      </td>
+      <td>
+        <input name="ComuneCatastale_esteso_dichiarante" id="ComuneCatastale_esteso_dichiarante" style="width:100%;" label="Comune catastale" dynamic_value="switch(#CatComune_dichiarante.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+      </td>
+      <td>
+        <input name="CatNumero_dichiarante" id="CatNumero_dichiarante" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Tipo_richiedente2.checked()"/>
+      </td>
+      <td>
+        <input name="CatBarra_dichiarante" id="CatBarra_dichiarante" style="width:100%;" label="Barra particella catastale" enabled="true"/>
+      </td>
+      <td>
+        <input name="CatPM_dichiarante" id="CatPM_dichiarante" style="width:100%;" label="Porzione Materiale" enabled="true" />
+      </td>
+      <td>
+        <input name="CatSubalterno_dichiarante" id="CatSubalterno_dichiarante" style="width:100%;" label="Subalterno" mandatory_enabled="#Tipo_richiedente2.checked()"/>
+      </td>
+      <td>
+        <button type="button" class="real-button" style="width:34px; height:28px" id="ControlloDatiCatastaliButton" name="ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+          {{ service.verifica_particella(
+            'CatComune_dichiarante',
+            'CatNumero_dichiarante',
+            'CatBarra_dichiarante',
+            'TipoImmobile_dichiarante',
+            'CatSubalterno_dichiarante',
+            {
+            'RisultatoVerificaCatastale': 'esiste',
+            'Particella': particella
+            },
+            '#' + 'ControlloDatiCatastaliButton:click') }}
+
+        <input id="RisultatoVerificaCatastale" name="RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+          {{ service.lista_vie(
+            'CatComune_dichiarante',
+            'CatNumero_dichiarante',
+            'CatBarra_dichiarante',
+            'TipoImmobile_dichiarante',
+            'lista_vie1',
+            '#' + 'RisultatoVerificaCatastale:change'
+            )}}
+      </td>
+      <td>
+        <button type="button" class="real-button" enabled="#RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('CatComune_dichiarante').value; num = document.getElementById('CatNumero_dichiarante').value; barra = document.getElementById('CatBarra_dichiarante').value; tipo = document.getElementById('TipoImmobile_dichiarante').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="10">
+        <b>Verifica esito particella:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input
+          id="CheckVerificaCatastale"
+          name="CheckVerificaCatastale"
+          dynamic_check="#RisultatoVerificaCatastale.value()=='SI'"
+          enabled="#RisultatoVerificaCatastale.value()=='SI'"
+          type="checkbox"
+          label="Modulo"/>
+
+        Particella esistente&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <input
+           id="CheckVerificaCatastale1"
+           name="CheckVerificaCatastale1"
+           dynamic_check="#RisultatoVerificaCatastale.value()=='NO'"
+           enabled="#RisultatoVerificaCatastale.value()=='NO'"
+           type="checkbox"/>
+
+        Particella NON esistente
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+ 
+  <table class="Modulo" style="border: 1px solid grey">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td>
+            <p style="line-height:1.6;">Consapevole che in caso di mendaci dichiarazioni saranno applicate le sanzioni stabilite dall'art. 76 del D.P.R. 28.12.2000 n. 45</p>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+<br>
+  
+<h2 class="Modulo">
+    DICHIARA
+</h2>
+
+<table class="Modulo" name="Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;" rowspan="3">
+        <div id="dich_inform" name="dich_inform" label="Dichiarazione di essere a conoscenza trasferimento" mandatory_enabled="true"></div> 
+        <input id="dich_inform_check" name="dich_inform" type="radio" value="1"/>
+      </td>
+      <td colspan="2">
+        <p>di essere a conoscenza che il signor/la signora: <input dynamic_value="#Metadati_AventeTitolo_Cognome.value() != '' ? #Metadati_AventeTitolo_Cognome.value() + ' ' + #Metadati_AventeTitolo_Nome.value() : #Metadati_Minore_Cognome.value() + ' ' + #Metadati_Minore_Nome.value()" id="Nominativo_titolare" name="Nominativo_titolare" size="50" enabled="#dich_inform_check.checked()" readonly/></p>
+        <p>nato/a a: <input dynamic_value="#Metadati_AventeTitolo_luogonasc.value() != '' ? #Metadati_AventeTitolo_luogonasc.value() : #Metadati_Minore_LuogoNascita.value()" id="luogonasc_titolare" name="luogonasc_titolare" size="50" enabled="#dich_inform_check.checked()" readonly/> &nbsp;&nbsp;&nbsp;&nbsp; il: <input dynamic_value="#Metadati_AventeTitolo_datanasc.value() != '' ? #Metadati_AventeTitolo_datanasc.value() : #Metadati_Minore_DataNascita.value()" id="datanasc_titolare" name="datanasc_titolare" size="24" enabled="#dich_inform_check.checked()" readonly/></p>
+        <br>
+        <p style="line-height:1.6;">ha la dimora abituale presso di sé, al proprio indirizzo e che lo/la stesso/a, ai sensi della vigente normativa (art. 4 D.P.R. 30.05.1989 n. 223: “agli effetti anagrafici per famiglia si intende un insieme di persone legate da vincoli di matrimonio, parentela, affinità, adozione, tutela o da vincoli affettivi, coabitanti ed aventi dimora abituale nello stesso comune”)</p>
+      </td>
+    </tr>
+    <tr>
+        <td style="width: 4%; vertical-align: top;">
+            <div id="tipo_legame" name="tipo_legame" label="Legame parentela o affettivo con il dichiarante" mandatory_enabled="true"></div> 
+            <input id="tipo_legame1" name="tipo_legame" group="tipo_legame" type="radio" value="1"/>
+        </td>
+        <td>
+            <p><b>HA</b> legami di parentela o affettivi con il dichiarante</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input id="tipo_legame2" name="tipo_legame" group="tipo_legame" type="radio" value="2"/>
+        </td>
+        <td>
+            <p><b>NON HA</b> legami di parentela o affettivi con il dichiarante</p> 
+        </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: top;">
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>Domanda firmata dal richiedente con firma autografa
+      </td>
+    </tr>
+    <tr>
+       <td style="vertical-align: top; width:3%">
+         <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
+       </td>
+       <td style="background-color: #eeeeee;" colspan="2">
+          <p>
+            Copia del documento d'identità del dichiarante
+          </p>
+        </td>
+      </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-residenza" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Cognome_dichiarante.value().toUpperCase() + ' ' + #Nome_dichiarante.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il dichiarante</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+ <input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="#Modulo_compilato_firmato.checked()" type="hidden" value=""/>
+ <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+ 
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-RESIDENZA" name="GLOBO_allegato_cINFORM-TRATT-DATI-RESIDENZA" obbligatorio="''" type="hidden" value=""/>
+
+ {{ utils.passaggio_metadati() }}
+<!-- METADATI DICHIARANTE -->
+<input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome" type="hidden"/>
+<input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome" type="hidden"/>
+<input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale" type="hidden"/>
+<br>
+<!-- METADATI TITOLARE -->
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" type="hidden"/>
+<input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" type="hidden"/>
+<input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" type="hidden"/>
+<input id="Metadati_AventeTitolo_datanasc" name="Metadati_AventeTitolo_datanasc" type="hidden"/>
+<input id="Metadati_AventeTitolo_luogonasc" name="Metadati_AventeTitolo_luogonasc" type="hidden"/>
+<br>
+<!-- METADATI MINORE -->
+<input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" type="hidden"/>
+<input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" type="hidden"/>
+<input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" type="hidden"/>
+<input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" type="hidden"/>
+<input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" type="hidden"/>
+<br>
+<!-- METADATI PERSONA GIA' RESIDENTE AL NUOVO INDIRIZZO-->
+<input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto" type="hidden"/>
+<input id="Metadati_nome_fam_iscritto" name="Metadati_nome_fam_iscritto" type="hidden"/>
+<input id="Metadati_luogo_nasc_fam_iscritto" name="Metadati_luogo_nasc_fam_iscritto" type="hidden"/>
+<input id="Metadati_data_nasc_fam_iscritto" name="Metadati_data_nasc_fam_iscritto" type="hidden"/>
+{% endblock content %}

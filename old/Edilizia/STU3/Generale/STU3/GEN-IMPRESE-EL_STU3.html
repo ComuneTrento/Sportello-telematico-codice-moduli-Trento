@@ -1,0 +1,249 @@
+{% set CodiceModulo =  "GEN-IMPRESE-EL" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.imprese.firma.elettronica" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMPRESE-EL_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="Legale_ImpreseCoinvolte_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Anagrafica delle imprese (firma elettronica)"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_ELETTRONICA"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/GEN-IMPRESE-EL"
+verifica_pagamento="NO"
+versione="1.1|14/02/2018"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="5_6" %}
+  {% set simpaticoEserviceName="GEN IMPRESE EL" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-IMPRESE-EL" %}
+  {% set simpaticoForm="modulo_secondario" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=[ "Legale_ImpreseCoinvolte_Cognome",
+                           "Legale_ImpreseCoinvolte_Nome",
+                           "Legale_ImpreseCoinvolte_CodiceFiscale",
+                           "Legale_ImpreseCoinvolte_Denominazione",
+                           "Legale_ImpreseCoinvolte_APEC",
+                           "Legale_ImpreseCoinvolte_CFPI"] %}
+
+  {% set ERROR_LABELS=[ ('block1' , 'Inserire la denominazione/ragione sociale'),
+                        ('block2' , 'Inserire il codice fiscale del legale rappresentante'),
+                        ('block3' , 'Confermare presa visione informativa sulla privacy')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+{% block title %}
+   Anagrafica impresa
+{% endblock title %}
+
+{% block content %}
+
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Legale_ImpreseCoinvolte_Denominazione.value().toUpperCase() + ' - anagrafica imprese'"/>
+
+ <div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo">
+ Anagrafica impresa
+</h1>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="width:75%;">
+        <p><b>Denominazione/Ragione sociale</b></p>
+      </td>
+      <td style="width:25%;">
+        <p><b>Tipologia</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:75%;">
+        <input class="" id="Legale_ImpreseCoinvolte_Denominazione" name="Legale_ImpreseCoinvolte_Denominazione" style="width:100%" label="Denominazione/Ragione sociale"/>
+      </td>
+      <td style="width:25%;">
+        {{ utils.tipologiaimpresa('Legale_ImpreseCoinvolte_TipologiaImpresa')}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="6">
+        <p class="Labelcella"><b>Sede legale</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:10%;">
+        <p class="Labelcella">Provincia</p>
+      </td>
+      <td style="width:33%;">
+        <p class="Labelcella">Comune</p>
+      </td>
+      <td style="width:33%;">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+      <td style="width:12%;">
+        <p class="Labelcella">Civico</p>
+      </td>
+      <td style="width:12%;">
+        <p class="Labelcella">CAP</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{utils.provincie( 'Legale_ImpreseCoinvolte_ProvinciaSede', label="Provincia della sede legale")}}
+      </td>
+      <td>
+        <select class="inputNormal" id="Legale_ImpreseCoinvolte_ComuneSede" name="Legale_ImpreseCoinvolte_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #Legale_ImpreseCoinvolte_ProvinciaSede.value(), 'Legale_ImpreseCoinvolte_ComuneSede')">
+        </select>
+      </td>
+      <td>
+        <input class="" id="Legale_ImpreseCoinvolte_ViaSede" name="Legale_ImpreseCoinvolte_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
+      </td>
+      <td>
+        <input class="" id="Legale_ImpreseCoinvolte_CivicoSede" name="Legale_ImpreseCoinvolte_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
+      </td>
+      <td>
+        <input class="" id="Legale_ImpreseCoinvolte_CAPSede" name="Legale_ImpreseCoinvolte_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" mandatory="#Legale_ImpreseCoinvolte_ProvinciaSede.value() != 'EE'"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Codice Fiscale / Partita IVA </p>
+      </td>
+      <td>
+        <p class="Labelcella">E-mail PEC (domicilio digitale)</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="" id="Legale_ImpreseCoinvolte_CFPI" name="Legale_ImpreseCoinvolte_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva"/>
+      </td>
+      <td>
+        <input class="" id="Legale_ImpreseCoinvolte_APEC" name="Legale_ImpreseCoinvolte_APEC" label="PEC Azienda" style="width:100%;" format="pec" />
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Telefono fisso</p>
+      </td>
+      <td>
+        <p class="Labelcella">Cellulare</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="" id="Legale_ImpreseCoinvolte_Tel_FissoSede" name="Legale_ImpreseCoinvolte_Tel_FissoSede" label="Tel_Fisso della sede legale" style="width:100%;" mandatory="false"/>
+      </td>
+      <td>
+       <input class="" id="Legale_ImpreseCoinvolte_TelefonoSede" name="Legale_ImpreseCoinvolte_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/> 
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  {{anagrafica_trento_uniformata.solo_nominativo("Legale_ImpreseCoinvolte","indica quale <b>LEGALE RAPPRESENTANTE</b>:") }}
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Legale_ImpreseCoinvolte_Cognome.value().toUpperCase() + ' ' + #Legale_ImpreseCoinvolte_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il legale rappresentante</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+ <br/>
+
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+{% endblock content %}

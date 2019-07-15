@@ -1,0 +1,405 @@
+{% set CodiceModulo = "M47270-SCIA-VENDITA-TEMPORANEA" %}
+<!-- {% set modulo_workflow_model =  "M47270-SCIA-VENDITA-TEMPORANEA_v1.0" %} -->
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="SCIA di vendita al dettaglio temporanea"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="Titolare"
+tipo_modulo="secondario"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016" />
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
+<script type="text/javascript">
+    var simpaticoEservice="4"
+    var simpaticoForm="main"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Fax",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                        'block1' : 'Selezionare una delle opzioni',
+                        'block2' : 'Inserire il codice fiscale',
+                        'block3' : 'Selezionare il ruolo',
+                        'block6' : 'Particella edilizia non valida',
+                        'block7' : 'Indirizzo non inserito',
+                        'block8' : 'Indirizzo non verificato',
+                        'block11' : 'Inserire il codice fiscale',
+                        'block13' : 'Confermare presa visione informativa sulla privacy'
+      }
+  
+    </script>
+   *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+
+{% block title %}SCIA VENDITA AL DETTAGLIO TEMPORANEA{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - SCIA di vendita al dettaglio temporanea'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+
+<h1 class="Modulo">
+        SEGNALAZIONE CERTIFICATA DI INIZIO ATTIVITA' DI VENDITA AL DETTAGLIO TEMPORANEA
+        <br><br><span style="font-size:75%">(legge provinciale 30 luglio 2010, n. 17 - Decreto del Presidente della Provincia 23 aprile 2013, n. 6-108/Leg)</span>
+</h1>
+    
+<!-- ELENCO POSSIBILI MODULI SECONDARI E ALLEGATI -->
+<p>ELENCO MODULI SECONDARI E ALLEGATI DA PREVEDERE
+    - DOCUMENTO IDENTITA
+    - STATUTO ASSOCIAZIONI
+    - CERTIFICAZIONE REQUISITI MORALI PERSONE DIVERSE DAL TITOLARE
+    - CARTA SOGGIORNO PER EXTRACOMUNITARI
+    - RICEVUTA PAGAMENTO DIRITTI DI ISTRUTTORIA
+</p>
+<br> 
+
+{{anagrafica_trento.societa("Titolare","Il sottoscritto",["Titolare omonima ditta individuale","Legale rappresentante"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+    <h1 class="Modulo">
+        SEGNALA
+    </h1>
+
+<table class="Modulo" style="border:1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="3">
+                <p>l'inizio dell'<b>attività temporanea di vendita al dettaglio</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <p>in occasione della manifestazione denominata: <input class="" id="Nome_manifestazione" name="Nome_manifestazione" style="width:59%;" label="Nome della manifestazione" mandatory_enabled="true"/></p>
+                <p>in via/piazza: <input class="" id="Via_manifestazione" name="Via_manifestazione" style="width:50%;" label="via/piazza luogo della manifestazione" mandatory_enabled="true"/> n. <input class="" id="civ_manifestazione" name="civ_manifestazione" style="width:10%;" label="Civico della manifestazione" mandatory_enabled="true"/></p>
+                <p>che avrà luogo nei giorni dal: <input class="" format="date" id="inizio_manifestazione" name="inizio_manifestazione" size="7" label="Giorno iniziale della manifestazione" mandatory_enabled="true"/> al: <input class="" format="date" id="fine_manifestazione" name="fine_manifestazione" size="7" label="Giorno finale della manifestazione" mandatory_enabled="true"/></p>
+                <p><i>N.B.: l'attività di vendita temporanea ha la durata massima pari a quella della manifestazione</i></p>    
+            </td>
+        </tr>
+        <tr class="Rigaintestazione">
+            <td colspan="3">
+                <p>L'attività di vendita temporanea si terrà:</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;" rowspan="7">
+                <div id="Luogo_vendita" name="Luogo_vendita" label="Tipologia luogo vendita" mandatory_enabled="true"></div> 
+                <input id="Luogo_vendita1" name="Luogo_vendita" group="Luogo_vendita" type="radio" value="1"/>
+            </td>
+            <td colspan="2">
+                <p>all'aperto su area:</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Tipo_luogo_vendita" name="Tipo_luogo_vendita" label="Caratteristiche luogo vendita" mandatory_enabled="#Luogo_vendita1.checked()"></div> 
+                <input id="Tipo_luogo_vendita1" name="Tipo_luogo_vendita" group="Tipo_luogo_vendita" type="radio" value="1"/>
+            </td>
+            <td>
+                <p>pubblica</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tipo_luogo_vendita2" name="Tipo_luogo_vendita" group="Tipo_luogo_vendita" type="radio" value="2"/>
+            </td>
+            <td>
+                <p>privata</p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td colspan="3"></td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Copertura_luogo_vendita" name="Copertura_luogo_vendita" label="Caratteristiche copertura luogo vendita" mandatory_enabled="#Luogo_vendita1.checked()"></div> 
+                <input id="Copertura_luogo_vendita1" name="Copertura_luogo_vendita" group="Copertura_luogo_vendita" type="radio" value="1"/>
+            </td>
+            <td>
+                <p>coperta</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Copertura_luogo_vendita2" name="Copertura_luogo_vendita" group="Copertura_luogo_vendita" type="radio" value="2"/>
+            </td>
+            <td>
+                <p>scoperta</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>con strutture tipo: <input class="" id="strutture_vendita" name="strutture_vendita" style="width:83%;" label="strutture per la vendita" enabled="#Luogo_vendita1.checked()"/></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey">
+    <tbody>
+        <tr>
+            <td style="vertical-align: top; width: 4%;" rowspan="2">
+                <input id="Luogo_vendita2" name="Luogo_vendita" group="Luogo_vendita" type="radio" value="2"/>
+            </td>
+            <td colspan="9">
+                <p>nel locale identificato come:</p>
+                {{ immobili_trento.immobile_solo_part_ed("Immobile", "Particelle", disattivato="true") }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>su di una superficie:</p>
+                <p>complessiva MQ <input class="" id="mq_luogo_evento" name="mq_luogo_evento" label="Metri quadrati luogo dell'evento" mandatory_enabled="true" size="10"/> (compresi sale, magazzini, locali di lavorazione, cucine, uffici, servizi, ecc.)</p>
+                <p>di cui MQ <input class="" id="mq_vendita" name="mq_vendita" label="Metri quadrati dedicati alla vendita al dettaglio" mandatory_enabled="true" size="10"/> destinati alla vendita al dettaglio</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p><b>Settore merceologico</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Sett_merc" name="Sett_merc" label="Settore merceologico" mandatory_enabled="true"></div> 
+                <input id="Sett_merc1" name="Sett_merc" group="Sett_merc" type="radio" value="1"/>
+            </td>
+            <td>
+                <p>Alimentare</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Sett_merc2" name="Sett_merc" group="Sett_merc" type="radio" value="2"/>
+            </td>
+            <td>
+                <p>Non alimentare</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+      
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Note_finali" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td>
+                <p style="text-align: center;"><b>NOTA BENE</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    L'efficacia della presente SCIA è subordinata alla preventiva concessione degli spazi da parte del Comune (siano essi su aree pubbliche o, previo assenso al Comune da parte del proprietario, su aree o in locali privati) al quale deve essere presentata preventivamente domanda di concessione
+                </p>
+                <br>
+            </td>
+        </tr>
+        <tr class="Rigaintestazione">
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    A tal fine, consapevole delle sanzioni penali, nel caso di dichiarazioni non veritiere, di formazione o uso di atti falsi, richiamate dall'articolo 76 del D.P.R. 28 dicembre 2000, n. 445, nonché della decadenza dei benefici conseguenti al provvedimento eventualmente emanato sulla base della dichiarazione non veritiera, qualora dal controllo effettuato emerga la non veridicità del contenuto di taluna delle dichiarazioni rese (art. 75 D.P.R. 28 dicembre 2000, n. 445)
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+        <h1 class="Modulo">
+            DICHIARA
+            <br><span style="font-size: 75%;">ai sensi degli artt. 46 e 47 del D.P.R. 28 dicembre 2000, n. 445</span>
+        </h1>
+
+<table class="Modulo" style="border:1px solid grey">
+    <tbody>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Dichiarazioni" name="Dichiarazioni" label="Dichiarazioni" enabled="true"></div> 
+                <input id="Dichiarazioni1" name="Dichiarazioni" group="Dichiarazioni" type="checkbox" value="1" mandatory="true"/>
+            </td>
+            <td>
+                <p>di essere in possesso dei requisiti morali previsti dall'articolo 5 della legge provinciale 30 luglio 2010, n. 17 (art. 71, commi 1, 3, 4 e 5 del D. Lgs. n. 59 del 26 marzo 2010)</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Dichiarazioni2" name="Dichiarazioni" group="Dichiarazioni" type="checkbox" value="2" mandatory="true"/>
+            </td>
+            <td>
+                <p>che non sussistono nei propri confronti le cause di divieto, di decadenza o di sospensione di cui all'articolo 67 del D. Lgs. 6 settembre 2011, n. 159 (antimafia)</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Dichiarazioni3" name="Dichiarazioni" group="Dichiarazioni" type="checkbox" value="3"/>
+            </td>
+            <td>
+                <p><b>(da compilare solo per la vendita di prodotti alimentari)</b> che in data <input class="" format="date" id="data_comunicazione" name="data_comunicazione" size="7" label="Data avvenuta comunicazione all'APSS" mandatory_enabled="#Dichiarazioni3.checked()"/> è stata comunicata all'Azienda Provinciale per i Servizi Sanitari, Distretto di <input class="" id="distretto_apss" name="distretto_apss" size="10" label="Distretto APSS" mandatory_enabled="#Dichiarazioni3.checked()"/>, l'effettuazione della manifestazione occasionale o temporanea di vendita dal: <input class="" dynamic_value="#inizio_manifestazione.value()" format="date" id="inizio_manifestazione_apss" name="inizio_manifestazione_apss" size="7" label="Giorno iniziale della manifestazione" enabled="#Dichiarazioni3.checked()" readonly/> al: <input class="" dynamic_value="#fine_manifestazione.value()" format="date" id="fine_manifestazione_apss" name="fine_manifestazione_apss" size="7" label="Giorno finale della manifestazione" enabled="#Dichiarazioni3.checked()" readonly/> </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Dichiarazioni4" name="Dichiarazioni" group="Dichiarazioni" type="checkbox" value="4" mandatory="true"/>
+            </td>
+            <td>
+                <p>che i locali e le strutture rispondono alle vigenti norme legislative e regolamentari in materia di sicurezza e igienico-sanitarie</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+      
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Note_finali" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td>
+                <p style="text-align: center;"><b>NOTA ESPLICATIVA</b></p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td>
+                <p><b>Art. 71 del D. Lgs. 26 marzo 2010, n. 59</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <ol>
+                        <li>Non possono esercitare l'attività commerciale di vendita e di somministrazione:
+                            <ol type="a">
+                                <li>coloro che sono stati dichiarati delinquenti abituali, professionali o per tendenza, salvo che abbiano ottenuto la riabilitazione</li>
+                                <li>coloro che hanno riportato una condanna, con sentenza passata in giudicato, per delitto non colposo, per il quale è prevista una pena detentiva non inferiore nel minimo a tre anni, sempre che sia stata applicata, in concreto, una pena superiore al minimo edittale</li>
+                                <li>coloro che hanno riportato, con sentenza passata in giudicato, una condanna a pena detentiva per uno dei delitti di cui al libro II, Titolo VIII, capo II (Dei delitti contro l’industria e il commercio) del codice penale, ovvero per ricettazione, riciclaggio, insolvenza fraudolenta, bancarotta fraudolenta, usura, rapina, delitti contro la persona commessi con violenza, estorsione</li>
+                                <li>coloro che hanno riportato, con sentenza passata in giudicato, una condanna per reati contro l’igiene e la sanità pubblica, compresi i delitti di cui al libro II, Titolo, VI, capo II (Dei delitti di comune pericolo mediante frode) del codice penale</li>
+                                <li>coloro che hanno riportato, con sentenza passata in giudicato, due o più condanne, nel quinquennio precedente all’inizio dell’esercizio dell’attività, per delitti di frode nella preparazione e nel commercio degli alimenti previsti da leggi speciali</li>
+                                <li>coloro che sono sottoposti a una delle misure di prevenzione di cui alla legge 27/12/1956 n. 1423 (Misure di prevenzione nei confronti delle persone pericolose per la sicurezza e per la pubblica moralità), o nei cui confronti sia stata applicata una delle misure previste dalla legge 31/05/1965 n. 575 (Disposizioni contro la mafia), ovvero a misure di sicurezza</li>
+                            </ol>
+                        </li>
+                        <li>(...)</li>
+                        <li>Il divieto di esercizio dell’attività, ai sensi del comma 1, lettere b., c., d., e. e f. permane per la durata di cinque anni a decorrere dal giorno in cui la pena è stata scontata. Qualora la pena si sia estinta in altro modo, il termine di cinque anni decorre dal giorno del passaggio in giudicato della sentenza, salvo riabilitazione</li>
+                        <li>Il divieto di esercizio dell’attività non si applica qualora, con sentenza passata in giudicato sia stata concessa la sospensione condizionale della pena sempre che non intervengano circostanze idonee a incidere sulla revoca della sospensione</li>
+                        <li>In caso di società, associazioni od organismi collettivi i requisiti morali di cui ai commi 1 e 2 devono essere posseduti dal legale rappresentante, da altra persona preposta all’attività commerciale e da tutti i soggetti individuati dall’art. 2, comma 3, del D.P.R. 3 giugno 1998 n. 252. In caso di impresa individuale i requisiti di cui ai commi 1 e 2 devono essere posseduti dal titolare e dall’eventuale altra persona preposta all’attività commerciale</li>
+                    </ol>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p style="text-align: center;"><b>INFORMATIVA SULLA PRIVACY</b></p>
+                <p style="text-align: center; font-size:85%"><i>Art. 13 del D. Lgs. n. 196/2003, Regolamento UE 2016/679 in vigore dal 24.05.2016 e pienamente dal 25.05.2018</i></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <ul>
+                    <li>i dati forniti verranno trattati esclusivamente con riferimento al procedimento per il quale è stata presentata la documentazione</li>
+                    <li>il trattamento sarà effettuato con supporto cartaceo e/o informatico</li>
+                    <li>il conferimento dei dati è obbligatorio per dar corso alla procedura</li>
+                    <li>titolare del trattamento è il Comune a cui viene indirizzata la segnalazione</li>
+                    <li>responsabile del trattamento è il Dirigente del Comune a cui viene indirizzata la segnalazione</li>
+                    <li>in ogni momento potranno essere esercitati nei confronti del titolare del trattamento i diritti di cui all'art. 7 del D. Lgs. 196/2003</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+                <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+            </td>
+            <td colspan="2" style="background-color: #eeeeee;">
+                <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<div class="simpatico-block">
+    {{ utils.firma_hidden() }}
+</div>
+<br>
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+
+
+{% endblock content %}

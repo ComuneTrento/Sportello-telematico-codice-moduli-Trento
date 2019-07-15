@@ -1,0 +1,402 @@
+{% set CodiceModulo = "M47010-MSEC06-SCAGI-SEZIONE-A-AU" %}
+{% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec06.m47010.scagi.seza.au" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47620-SEGNALAZIONE-CERTIFICATA-AGIBILITA_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Segnalazione certificata di agibilità - sezione A (firma autografa)"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M47010-MSEC06-SCAGI-SEZIONE-A-AU"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016" />
+
+<meta codice_allegato="GEN-Modulo_compilato_firma_autografa"
+urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
+descrizione_estesa="Scansione del modulo SCAGI - sezione A compilato e firmato manualmente"
+filename="Modulo_scagi_sezA_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-Modulo_compilato_firma_autografa"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-RICEVUTA-PAGAMENTO"
+urn_allegato="document:c_l378:allegato.ricevuta.pagamento"
+descrizione_estesa="Documentazione versamento del saldo del contributo"
+filename="Versamento saldo contributo.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-RICEVUTA-PAGAMENTO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-RELAZIONE_TECNICA"
+urn_allegato="document:c_l378:allegato.relazione.tecnica"
+descrizione_estesa="Dichiarazione in merito alla conformità acustica"
+filename="Dichiarazione conformità acustica.pdf"
+firmato="SI"
+firmatari="Progettista_CodiceFiscale"
+firmatari_label="Tecnico abilitato"
+istruzioni="/modulistica/moduli/GEN-RELAZIONE_TECNICA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO ***********
+<script type="text/javascript">
+    var simpaticoEservice="4"
+    var simpaticoForm="main"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Tel_Fisso",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                        'block1' : 'Selezionare una delle opzioni',
+                        'block2' : 'Inserire il codice fiscale',
+                        'block3' : 'Selezionare il ruolo',
+                        'block6' : 'Particella edilizia non valida',
+                        'block7' : 'Indirizzo non inserito',
+                        'block8' : 'Indirizzo non verificato',
+                        'block11' : 'Inserire il codice fiscale',
+                        'block13' : 'Confermare presa visione informativa sulla privacy'
+      }
+  
+    </script>
+*********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+{% set simpaticoEservice="1" %}
+{% set simpaticoEserviceName="M47750 AUTORIZZAZIIONE CPC" %}
+{% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC" %}
+{% set simpaticoForm="main" %}
+{% set simpaticoCategory="Edilizia" %}
+{% set simpaticoMapping=[ "AventeTitolo_EMailPEC","AventeTitolo_Tel_Fisso","AventeTitolo_EMail"] %}
+{% set ERROR_LABELS=[   ('block1' , 'Selezionare una delle opzioni'),
+                        ('block2' , 'Inserire il codice fiscale'),
+                        ('block3' , 'Selezionare il ruolo'),
+                        ('block5' , 'Selezionare la tipologia di autorizzazione/parere richiesta'),
+                        ('block7' , 'Specificare la tipologia di intervento'),
+                        ('block8' , 'Particella edilizia non valida'),
+                        ('block9' , 'Indirizzo non inserito'),
+                        ('block10' , 'Indirizzo non verificato'),
+                        ('block12' , 'Selezionare una delle opzioni'),
+                        ('block13' , 'Definire il ruolo'),
+                        ('block14' , 'Inserire il codice fiscale'),
+                        ('block15' , 'Selezionare una delle opzioni'),
+                        ('block17' , 'Confermare presa visione informativa sulla privacy')] %}
+{{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+
+{% block title %}SEGNALAZIONE CERTIFICATA DI AGIBILITA'{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Segnalazione certificata di agibilità - sezione A'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo" style="line-height:1.4;">SEGNALAZIONE CERTIFICATA DI AGIBILITA' - sezione A<br><span style="font-size:75%">(art. 93, comma2, della legge provinciale 4 agosto 2015, n. 15)</span></h1>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + #AventeTitolo_Nome.value()" size="87"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.4;"><b>con riferimento alla dichiarazione di ultimazione lavori relativa all'immobile:</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+{{immobili_trento.immobile_semplice("Immobile")}}
+</div>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>e relativa ai seguenti titoli edilizi:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:65%;">
+        <p style="font-size: 85%;"><b>Titolo abilitativo</b></p>
+      </td>
+      <td style="width:20%;">
+        <p style="font-size: 85%;"><b>Protocollo/numero</b></p>
+      </td>
+      <td style="width:15%;">
+        <p style="font-size: 85%;"><b>Data</b></p>
+      </td>
+    </tr>
+
+    {% macro titoli_edilizi(prefix) %}
+    {% set prefix = prefix|string %}
+    <tr>
+      <td>
+        <input class="" id="Tipo_documento{{ prefix }}" name="Tipo_documento{{ prefix }}" enabled="true" label="Dati documento {{ prefix }}" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_documento{{ prefix }}" name="Prot_documento{{ prefix }}" enabled="true" label="Numero protocollo documento {{ prefix }}" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%;" format="date"/>
+      </td>
+    </tr>
+    {%- endmacro %}
+
+    {% for i in range(1, 6) %}
+    {{ titoli_edilizi(i) }}
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo" style="line-height:1.4;">PRESENTA</h1>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="3">
+          <p style="line-height:1.6;"><b>Segnalazione certificata di agibilità per:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Richiesta_scagi" name="Richiesta_scagi" label="Motivo richiesta scagi" mandatory_enabled="true"> </div>
+          <input group="Richiesta_scagi" id="Richiesta_scagi1" name="Richiesta_scagi" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">nuove costruzioni</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Richiesta_scagi" id="Richiesta_scagi2" name="Richiesta_scagi" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">lavori di recupero di edifici esistenti che interessino parti strutturali degli edifici</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Richiesta_scagi" id="Richiesta_scagi3" name="Richiesta_scagi" type="radio" value="3" />
+        </td>
+        <td>
+          <p style="line-height:1.4;">cambi di destinazione d'uso con o senza opere, anche di singole unità immobiliari</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>la Segnalazione certificata di agibilità si riferisce a:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Riferim_scagi" name="Riferim_scagi" label="Riferimento segnalazione scagi" mandatory_enabled="true"> </div>
+        <input group="Riferim_scagi" id="Riferim_scagi1" name="Riferim_scagi" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">l’agibilità dell’intero immobile oggetto dell’intervento edilizio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Riferim_scagi" id="Riferim_scagi2" name="Riferim_scagi" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">l'agibilità parziale di singoli edifici o porzioni della costruzione, se funzionalmente autonomi, se sono state realizzate e collaudate le opere di urbanizzazione primaria relative all'intero intervento edilizio, sono state completate e collaudate le parti strutturali connesse, sono stati collaudati e certificati gli impianti relativi alle parti comuni (art. 93, comma 4, lettera a) LP 15/2015)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Riferim_scagi" id="Riferim_scagi3" name="Riferim_scagi" type="radio" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">l'agibilità parziale di singole unità immobiliari se sono state completate e collaudate le opere strutturali connesse, sono certificati gli impianti, sono completate le parti comuni e le opere di urbanizzazione primaria dichiarate funzionali rispetto all'edificio oggetto di agibilità parziale (art. 93, comma 4, lettera b) LP 15/2015) . Il sottoscritto titolare dichiara di aver verificato l'avvenuta prosciugatura dei muri e la salubrità degli ambienti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<input id="Progettista_checkobbligatorio" name="Progettista_checkobbligatorio" dynamic_check="true" type="hidden" />
+<input id="Progettista_checkabilitato" name="Progettista_checkabilitato" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.professionista_direttore_lavori("Progettista","<b>DATI DEL PROGETTISTA</b>:","Progettista") }}
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+         <input id="Modulo_ult_tit_firma_autografa" name="Modulo_ult_tit_firma_autografa" dynamic_check="true" enabled="true" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Scansione della stampa di questo modulo firmata</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="saldo_contr" name="saldo_contr" type="checkbox" enabled="true" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.4;">Documentazione attestante il versamento del saldo del contributo se il regolamento edilizio comunale ammette la rateizzazione</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <input id="dich_tecm_conf_acust" name="dich_tecm_conf_acust" type="checkbox" enabled="true" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.4;">Dichiarazione del tecnico abilitato in merito alla conformità acustica ai sensi dell'art. 15, comma2, del D.P.G.P. 4 agosto 1992, n. 12-65 Leg.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il titolare</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO" name="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO" obbligatorio="#saldo_contr.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-RELAZIONE_TECNICA" name="GLOBO_allegato_cGEN-RELAZIONE_TECNICA" obbligatorio="#dich_tecm_conf_acust.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
