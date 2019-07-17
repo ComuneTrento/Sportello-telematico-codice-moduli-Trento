@@ -138,9 +138,19 @@ urn_report="report:CSP_SESSION_REPORT"
         </tr>
         <tr>
           <td>
-              <input id="Totale_particelle" name="Totale_particelle" mandatory_enabled="true" label="Indicare numero totale particelle" format="number" style="width:5%;"  value="1"/>
+              <input id="Totale_particelle" name="Totale_particelle" mandatory_enabled="true" onchange="calcolaTotale()" label="Indicare numero totale particelle" format="number" style="width:5%;"  value=""/>
           </td>
-        </tr>  
+        </tr> 
+        <tr class="Rigaintestazione" >
+            <td>
+              <b>Importo da pagare in base al numero di particelle</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <input id="Totale_importo" name="Totale_importo"  label="Indicare numero totale particelle" style="width:5%;" readonly/> Euro
+            </td>
+          </tr>  
     </tbody>
   </table>
 </div>
@@ -155,7 +165,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <tr class="Rigaintestazione">
         <td colspan="2">
           <p>
-            <b>Consortalità</b>
+            <b>Consortalità (TODO da spiegare meglio cosa sono usando link)</b>
           </p>
         </td>
       </tr>
@@ -165,7 +175,7 @@ urn_report="report:CSP_SESSION_REPORT"
           <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
         </td>
         <td>
-          <p>SI <br>particelle nn. <input class="" id="Tipo_Parametri_Titolo1" name="Tipo_Parametri_Titolo1" label="Altro titolo" mandatory_enabled="#Parametri_Titolo1.checked()" style="width:84%;"/></p>
+          <p>SI 
         </td>
       </tr>
       <tr>
@@ -179,6 +189,46 @@ urn_report="report:CSP_SESSION_REPORT"
     </tbody>
   </table>
 </div>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">  
+    <!--  <h1 class="Modulo">DICHIARA</h1> -->
+      
+    <table class="Modulo" style="border:1px solid grey;">
+        <tbody>
+          <tr class="Rigaintestazione">
+            <td colspan="3">
+              <p>
+                <b>Richiesta certificato storico </b>
+              </p>
+            </td>
+          </tr>
+          <tr>
+              <td style="vertical-align: top; width: 4%;">
+                <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+              </td>
+              <td colspan="3">
+                <p>NO</p>
+              </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: center; width: 4%;">
+              <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
+              <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+            </td>
+            <td >
+              <p>SI</p>
+              <td>
+                  <p style="line-height:1.6;"> <input id="Parametri_Storici_Attuali" name="Parametri_Titolo" type="radio" value="1" style="vertical-align: top; width: 4%;" />Configurazione attuale</p>
+                  <p style="line-height:1.6;"> <input id="Parametri_Storici_Post" name="Parametri_Titolo" type="radio" value="2" style="vertical-align: top; width: 4%;"/>Configurazione storica (la presente richiesta prevede un suplemento di 51,64 Euro)</p>
+              </td> 
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
 
 <br>
 
@@ -250,8 +300,8 @@ urn_report="report:CSP_SESSION_REPORT"
                       - IBAN IT 73 I 02008 01820 000001202801<br>
                       O<br>
                       - SWIFT/BIC IT 73 I 02008 01820 000001202801 UNCRITM10HV<br>
-                      con causale : € _____ per diritti sugli atti in materia urbanistico-edilizia su CDU<br>
-                      + € 16,00 di marca da bollo per l'emissione del cdu
+                      con causale : € <input id="Totale_spesa_causale" name="Totale_spesa_causale" dynamic_value="#Parametri_Storici_Post.checked() ? (parseInt(#Totale_importo.value()) + 51.64) : parseInt(#Totale_importo.value())" label="Indicare numero totale causale" style="width:5%;"  value="" readonly/>
+                      per diritti di segreteria CDU più marca da bollo<br>
                   </p>
                 </td>
               </tr>
@@ -441,5 +491,37 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
+<script>
+    function calcolaTotale() {
+      var particelle = document.getElementById("Totale_particelle").value;
+      var totaleSpesa = 0;
+      if(particelle < 4){
+        totaleSpesa = 14;
+      } else if(particelle == 4){
+        totaleSpesa = 18;
+      } else if(particelle == 5){
+        totaleSpesa = 22;
+      } else if(particelle == 6){
+        totaleSpesa = 26;
+      } else if(particelle == 7){
+        totaleSpesa = 30;
+      } else if(particelle == 8){
+        totaleSpesa = 34;
+      } else if(particelle == 9){
+        totaleSpesa = 38;
+      } else if(particelle == 10){
+        totaleSpesa = 42;
+      } else if(particelle == 11){
+        totaleSpesa = 46;
+      } else if(particelle == 12){
+        totaleSpesa = 50;
+      } else if(particelle >= 13){
+        totaleSpesa = 51,64;
+      }
 
+      document.getElementById("Totale_importo").value = totaleSpesa;
+    }
+  </script>
 {% endblock content %}
+
+
