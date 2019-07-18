@@ -147,6 +147,17 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<meta codice_allegato="GEN-DOC-DIRITTO-CONTRATTUALE"
+urn_allegato="document:c_l378:allegato.doc.diritto.contrattuale"
+descrizione_estesa="Documentazione comprovante il diritto contrattuale"
+filename="Doc_diritto_contrattuale.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-DOC-DIRITTO-CONTRATTUALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <meta codice_allegato="GEN-VERB-ASS-COND"
 urn_allegato="document:c_l378:allegato.assenso.condominio"
 descrizione_estesa="Verbale di assenso del condominio"
@@ -731,43 +742,58 @@ urn_report="report:CSP_SESSION_REPORT"
   <table class="Modulo" style="border:1px solid grey;">
     <tbody>
       <tr class="Rigaintestazione">
-        <td colspan="2">
-          <p style="line-height:1.4;">
-            <b>di essere soggetto abilitato alla presentazione dell'istanza in quanto</b>
-          </p>
+        <td colspan="3">
+          <p><b>di essere soggetto abilitato alla presentazione dell'istanza in quanto</b></p>
         </td>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
           <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
-          <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+          <input group="Parametri_Titolo" id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
         </td>
-        <td>
-          <p style="line-height:1.4;">Proprietario</p>
+        <td colspan="2">
+          <p>Proprietario</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;" rowspan="4">
+          <input group="Parametri_Titolo" id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+        </td>
+        <td colspan="2">
+          <p>Titolare di altro diritto reale:</p>
         </td>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+          <div id="Altro_titolo_reale" name="Altro_titolo_reale" label="Altro titolo reale sottoscrivente" mandatory_enabled="true"></div>
+          <input group="Altro_titolo_reale" id="Altro_titolo_reale1" name="Altro_titolo_reale" type="radio" value="1" />
         </td>
         <td>
-          <p style="line-height:1.4;">Comproprietario</p>
+          <p>Comproprietario</p>
         </td>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input id="Parametri_Titolo4" name="Parametri_Titolo" type="radio" value="4" />
+          <input group="Altro_titolo_reale" id="Altro_titolo_reale2" name="Altro_titolo_reale" type="radio" value="2" />
         </td>
         <td>
-          <p style="line-height:1.4;">Titolare di diritto contrattuale (locatario, titolare di leasing, etc.)</p>
+          <p>Usufruttuario</p>
         </td>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+          <input group="Altro_titolo_reale" id="Altro_titolo_reale3" name="Altro_titolo_reale" type="radio" value="3" />
         </td>
         <td>
-          <p style="line-height:1.4;">Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+          <p>Altro: <input class="" id="Spec_Altro_titolo_reale" name="Spec_Altro_titolo_reale" label="Altro titolo reale" mandatory_enabled="#Altro_titolo_reale3.checked()" style="width:94%;"/></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Parametri_Titolo" id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+        </td>
+        <td colspan="2">
+          <p>Titolare di diritto contrattuale (locatario, titolare di leasing, etc.)</p>
         </td>
       </tr>
     </tbody>
@@ -1268,6 +1294,14 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height:1.4;"><b>Ricevuta di deposito della richiesta di accatastamento dell'immobile</b></p>
       </td>
     </tr>
+    <tr>
+      <td style="vertical-align: top; width:4%">
+        <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Parametri_Titolo3.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p><b>Documentazione comprovante il diritto contrattuale</b></p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -1400,6 +1434,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="GLOBO_allegato_cGEN-RIC-RICH-ACCATAST" name="GLOBO_allegato_cGEN-RIC-RICH-ACCATAST" obbligatorio="#rich_accatast_immobile.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
+<input id="GLOBO_allegato_cGEN-DOC-DIRITTO-CONTRATTUALE" name="GLOBO_allegato_cGEN-DOC-DIRITTO-CONTRATTUALE" obbligatorio="#Contr_locaz.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <!-- METADATI -->
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
