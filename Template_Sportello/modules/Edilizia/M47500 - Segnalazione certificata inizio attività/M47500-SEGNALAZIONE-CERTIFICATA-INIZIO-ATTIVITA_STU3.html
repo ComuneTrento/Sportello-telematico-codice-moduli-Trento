@@ -469,7 +469,7 @@ urn_report="report:CSP_SESSION_REPORT"
       
     <input id="DirettoreLavori_checkobbligatorio" name="DirettoreLavori_checkobbligatorio" type="hidden" />
     <input id="DirettoreLavori_checkabilitato" name="DirettoreLavori_checkabilitato" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
-    {{anagrafica_trento_uniformata.solo_nominativo("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente):") }}
+    {{anagrafica_trento_uniformata.solo_nominativo("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se diverso dal progettista):") }}
     
   </div>
 
@@ -479,8 +479,13 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>I lavori vengono eseguiti</b></p>
+      <td colspan="4">
+        <p style="line-height:1.6;"><b>IMPRESA ESECUTRICE</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="line-height:1.6;">I lavori vengono eseguiti</p>
       </td>
     </tr>
     <tr>
@@ -488,19 +493,54 @@ urn_report="report:CSP_SESSION_REPORT"
         <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
         <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
       </td>
-      <td>
+      <td colspan="3">
         <p style="line-height:1.6;">in economia</p>
-        <span style="font-size:80%;"><i>(in quanto opere di modesta entità che non interessano le specifiche normative di settore)</i></span>
+        <span style="font-size:80%;"><i>(trattasi di lavori eseguiti direttamente dal titolare del provvedimento senza intervento di imprese esecutrici dei lavori o di lavoratori autonomi)</i></span>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; width: 4%;" rowspan="23">
         <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2" />
       </td>
-      <td>
-        <p style="line-height:1.6;">dall'impresa/e incaricata/e</p>
+      <td colspan="3">
+        <p style="line-height:1.6;">con le imprese / lavoratori autonomi come di seguito indicato:</p>
       </td>
     </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="11">
+        <div id="Tipo_Esecuzione_lavori" name="Tipo_Esecuzione_lavori" label="Lavori svolti mediante:" mandatory_enabled="#Modalita_lavori2.checked()"> </div>
+        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori1" name="Esecuzione_lavori1" type="checkbox" value="1"/>
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;">Numero imprese coinvolte: <input class="" format="number" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2"/>, si indicano di seguito i dati della prima</p>
+      </td>
+    </tr>
+    
+    {% macro Ragione_sociale_imprese_coinvolte(prefix) %}
+    {% set prefix = prefix|string %}
+       
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Ragione sociale</p>
+      </td>
+      <td>
+        <p class="Labelcella">P.IVA/Codice Fiscale</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Ragione_sociale{{ prefix }}" name="Ragione_sociale{{ prefix }}" style="width: 100%;" label="Ragione sociale imprese" enabled="#Esecuzione_lavori1.checked()" mandatory="#PIVA{{ prefix }}.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="PIVA{{ prefix }}" name="PIVA{{ prefix }}" style="width: 100%;" label="Partita IVA / Codice fiscale" enabled="#Esecuzione_lavori1.checked()" mandatory="#Ragione_sociale{{ prefix }}.value() != ''">
+      </td>
+    </tr>
+    {%- endmacro %}
+        
+    {% for i in range(1, 2) %}
+      {{ Ragione_sociale_imprese_coinvolte(i) }}
+    {% endfor %}
+
   </tbody>
 </table>
 
@@ -548,6 +588,11 @@ urn_report="report:CSP_SESSION_REPORT"
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
+          <p style="line-height:1.6;"><b>CORRISPONDENZA TRA STATO AUTORIZZATO E STATO ATTUALE</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
           <p style="line-height:1.6;">In riferimento alle opere oggetto della presente Segnalazione certificata d'inizio attività (SCIA), il titolare dichiara che si tratta di:</p>
         </td>
       </tr>
@@ -585,6 +630,11 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
+     <tr class="Rigaintestazione">
+        <td colspan="3">
+          <p style="line-height:1.6;"><b>OPERE SU PARTI COMUNI O MODIFICHE ESTERNE</b></p>
+        </td>
+      </tr>
     <tr class="Rigaintestazione">
       <td colspan="3">
         <p style="line-height:1.6;">Le <b>opere</b> oggetto della presente segnalazione certificata di inizio attività:</p>
@@ -659,7 +709,7 @@ urn_report="report:CSP_SESSION_REPORT"
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="4">
-        <p style="line-height:1.6;">Relativamente agli <b>obblighi in materia di salute e sicurezza nei luoghi di lavoro</b>:</p>
+        <p style="line-height:1.6;"><b>OBBLIGHI IN MATERIA DI SALUTE E SICUREZZA NEI LUOGHI DI LAVORO</b></p>
       </td>
     </tr>
     <tr>
@@ -745,7 +795,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input id="Conoscenza_sospensione_scia" name="Conoscenza_sospensione_scia" type="checkbox" value="1" />
+        <input id="Conoscenza_sospensione_scia" name="Conoscenza_sospensione_scia" type="checkbox" dynamic_check="true" value="1" />
       </td>
       <td colspan="3">
         <p style="line-height:1.6;"><b>dichiara inoltre</b> di essere a conoscenza che l’efficacia della presente SCIA è sospesa qualora sia assente il piano di sicurezza e coordinamento di cui all’art. 100 d.lgs. n. 81/2008 o il fascicolo di cui all’art. 91, comma 1, lettera b), quando previsti, oppure in assenza di notifica di cui all’art. 99, quando prevista, oppure in assenza di documento unico di regolarità contributiva</p>
@@ -793,6 +843,11 @@ urn_report="report:CSP_SESSION_REPORT"
 
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.6;"><b>QUALIFICAZIONE DELL'INTERVENTO</b></p>
+        </td>
+      </tr>
       <tr class="Rigaintestazione">
         <td colspan="2">
           <p style="line-height:1.6;">L'inizio dell'attività edilizia:</p>
@@ -883,7 +938,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input dynamic_check="true" enabled="true" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista incaricato</b> <input enabled="true" dynamic_value="'firmato con firma elettronica'" id="Tipo_firma_anag_prog" name="Tipo_firma_anag_prog" style="width:45.5%;"/></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista incaricato</b>, firmato con <b>firma digitale</b></p>
       </td>
     </tr>
     <tr>
@@ -900,7 +955,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Firmatario_dich_cong" id="Firmatario_dich_cong1" name="Firmatario_dich_cong" type="radio" value="1" dynamic_check="#Tipo_richiedente1.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height:1.6;">firmate dal progettista incaricato con <b>firma elettronica</b></p>
+        <p style="line-height:1.6;">firmate dal progettista incaricato con <b>firma digitale</b></p>
       </td>
     </tr>
     <tr>
@@ -909,9 +964,9 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">firmate:
-          <br>- dal progettista incaricato con <b>firma elettronica</b>
+          <br>- dal progettista incaricato con <b>firma digitale</b>
           <br>- dal titolare con
-          <select class="inputNormal" id="Tipo_Firma_dich_cong" name="Tipo_Firma_dich_cong" style="width:83.5%;" label="Tipo firma dichiarazioni congiunte" mandatory_enabled="#Firmatario_dich_cong2.checked()">
+          <select class="inputNormal" id="Tipo_Firma_dich_cong" name="Tipo_Firma_dich_cong" style="width:30%;" label="Tipo firma dichiarazioni congiunte" mandatory_enabled="#Firmatario_dich_cong2.checked()">
             <option value=""></option>
             <option value="Firma autografa">Firma autografa</option>
             <option value="Firma elettronica">Firma elettronica</option>
@@ -924,7 +979,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="Dichiar_prog" name="Dichiar_prog" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni del progettista</b> <input enabled="#Tipo_richiedente1.checked()" dynamic_value="'fimato con firma elettronica'" id="Tipo_firma_dich_prog" name="Tipo_firma_dich_prog" style="width:53%;" readonly/></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni del progettista</b>, firmato con <b>firma digitale</b></p>
       </td>
     </tr>
     <tr>
@@ -932,7 +987,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b> <input  enabled="#GEN_DIR_LAV.checked()" dynamic_value="'fimato con firma elettronica'" id="Tipo_Firma_dir_lav" name="Tipo_Firma_dir_lav" style="width:48%;" readonly/></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b>, firmato con <b>firma digitale</b></p>
       </td>
     </tr>
     <tr>
@@ -1007,7 +1062,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: top; width:4%">
         <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Parametri_Titolo3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p><b>Documentazione comprovante il diritto contrattuale</b></p>
       </td>
     </tr>
@@ -1055,7 +1110,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il titolare</p>
+        <p class="Labelcella" style="text-align: center">Il titolare <span style="font-size:95%"><i>(<input id="firma_documento_princ" name="firma_documento_princ" dynamic_value="#Tipo_richiedente1.checked() ? 'accesso eseguito mediante SPID o CPS/CNS' : (#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'firma autografa' : 'firma digitale')"/>)</i></span></p>
       </td>
     </tr>
   </tbody>

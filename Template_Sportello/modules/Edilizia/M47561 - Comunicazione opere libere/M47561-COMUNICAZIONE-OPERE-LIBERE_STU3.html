@@ -414,7 +414,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="progetto_richiesto" id="progetto_richiesto1" name="progetto_richiesto" type="radio" value="1"/>
       </td>
       <td>
-        <p style="line-height:1.4;"><b>NON</b> è necessaria la redazione di un progetto a firma di un tecnico abilitato in quanto non comportano la costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari esistenti o degli impianti esistenti</p>
+        <p style="line-height:1.4;"><b>NON</b> è necessaria la redazione di elaborati progettuali a firma di un tecnico abilitato in quanto non comportano la costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari esistenti o degli impianti esistenti</p>
       </td>
     </tr>
     <tr>
@@ -422,7 +422,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="progetto_richiesto" id="progetto_richiesto2" name="progetto_richiesto" type="radio" value="2"/>
       </td>
       <td>
-        <p style="line-height:1.4;">è necessaria la redazione di un progetto da parte di un <b>progettista incaricato</b></p>
+        <p style="line-height:1.4;">è necessaria la redazione di elaborati progettuali da parte di un <b>progettista incaricato</b></p>
       </td>
     </tr>
   </tbody>
@@ -482,8 +482,13 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.4;"><b>I lavori vengono eseguiti</b></p>
+      <td colspan="4">
+        <p style="line-height:1.6;"><b>IMPRESA ESECUTRICE</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="line-height:1.6;">I lavori vengono eseguiti</p>
       </td>
     </tr>
     <tr>
@@ -491,19 +496,54 @@ urn_report="report:CSP_SESSION_REPORT"
         <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
         <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
       </td>
-      <td>
-        <p style="line-height:1.4;">in economia</p>
-        <span style="font-size:80%;"><i>(in quanto opere di modesta entità che non interessano le specifiche normative di settore)</i></span>
+      <td colspan="3">
+        <p style="line-height:1.6;">in economia</p>
+        <span style="font-size:80%;"><i>(trattasi di lavori eseguiti direttamente dal titolare del provvedimento senza intervento di imprese esecutrici dei lavori o di lavoratori autonomi)</i></span>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; width: 4%;" rowspan="23">
         <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2" />
       </td>
-      <td>
-        <p style="line-height:1.4;">dall'impresa/e incaricata/e</p>
+      <td colspan="3">
+        <p style="line-height:1.6;">con le imprese / lavoratori autonomi come di seguito indicato:</p>
       </td>
     </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="11">
+        <div id="Tipo_Esecuzione_lavori" name="Tipo_Esecuzione_lavori" label="Lavori svolti mediante:" mandatory_enabled="#Modalita_lavori2.checked()"> </div>
+        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori1" name="Esecuzione_lavori1" type="checkbox" value="1"/>
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;">Numero imprese coinvolte: <input class="" format="number" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2"/>, si indicano di seguito i dati della prima</p>
+      </td>
+    </tr>
+    
+    {% macro Ragione_sociale_imprese_coinvolte(prefix) %}
+    {% set prefix = prefix|string %}
+       
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Ragione sociale</p>
+      </td>
+      <td>
+        <p class="Labelcella">P.IVA/Codice Fiscale</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Ragione_sociale{{ prefix }}" name="Ragione_sociale{{ prefix }}" style="width: 100%;" label="Ragione sociale imprese" enabled="#Esecuzione_lavori1.checked()" mandatory="#PIVA{{ prefix }}.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="PIVA{{ prefix }}" name="PIVA{{ prefix }}" style="width: 100%;" label="Partita IVA / Codice fiscale" enabled="#Esecuzione_lavori1.checked()" mandatory="#Ragione_sociale{{ prefix }}.value() != ''">
+      </td>
+    </tr>
+    {%- endmacro %}
+        
+    {% for i in range(1, 2) %}
+      {{ Ragione_sociale_imprese_coinvolte(i) }}
+    {% endfor %}
+
   </tbody>
 </table>
 
@@ -1369,7 +1409,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il titolare</p>
+        <p class="Labelcella" style="text-align: center">Il titolare <span style="font-size:95%"><i>(<input id="firma_documento_princ" name="firma_documento_princ" dynamic_value="#Tipo_richiedente1.checked() ? 'accesso eseguito mediante SPID o CPS/CNS' : (#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'firma autografa' : 'firma digitale')"/>)</i></span></p>
       </td>
     </tr>
   </tbody>
