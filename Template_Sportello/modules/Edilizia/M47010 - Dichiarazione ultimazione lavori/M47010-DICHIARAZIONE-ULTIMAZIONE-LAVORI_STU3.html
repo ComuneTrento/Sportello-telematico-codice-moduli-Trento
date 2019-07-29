@@ -147,6 +147,17 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<meta codice_allegato="GEN-DOC-DIRITTO-CONTRATTUALE"
+urn_allegato="document:c_l378:allegato.doc.diritto.contrattuale"
+descrizione_estesa="Documentazione comprovante il diritto contrattuale"
+filename="Doc_diritto_contrattuale.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-DOC-DIRITTO-CONTRATTUALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
 descrizione_estesa="Informativa trattamento dati EDILIZIA"
@@ -374,46 +385,61 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+<table class="Modulo" style="border:1px solid grey;">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.4;">
-          <b>Abilitato alla presentazione dell'istanza in quanto:</b>
-        </p>
+      <td colspan="3">
+        <p><b>Abilitato alla presentazione dell'istanza in quanto</b></p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
         <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
-        <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
+        <input group="Parametri_Titolo" id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
       </td>
-      <td>
-        <p style="line-height:1.4;">Proprietario</p>
+      <td colspan="2">
+        <p>Proprietario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="4">
+        <input group="Parametri_Titolo" id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p>Titolare di altro diritto reale:</p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
+        <div id="Altro_titolo_reale" name="Altro_titolo_reale" label="Altro titolo reale sottoscrivente" mandatory_enabled="true"></div>
+        <input group="Altro_titolo_reale" id="Altro_titolo_reale1" name="Altro_titolo_reale" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.4;">Comproprietario</p>
+        <p>Comproprietario</p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input id="Parametri_Titolo4" name="Parametri_Titolo" type="radio" value="4" />
+        <input group="Altro_titolo_reale" id="Altro_titolo_reale2" name="Altro_titolo_reale" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height:1.4;">Titolare di diritto contrattuale (locatario, titolare di leasing, etc.)</p>
+        <p>Usufruttuario</p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+        <input group="Altro_titolo_reale" id="Altro_titolo_reale3" name="Altro_titolo_reale" type="radio" value="3" />
       </td>
       <td>
-        <p style="line-height:1.4;">Altro: <input class="" id="Tipo_Parametri_Titolo3" name="Tipo_Parametri_Titolo3" label="Altro titolo" mandatory_enabled="#Parametri_Titolo3.checked()" style="width:94%;"/></p>
+        <p>Altro: <input class="" id="Spec_Altro_titolo_reale" name="Spec_Altro_titolo_reale" label="Altro titolo reale" mandatory_enabled="#Altro_titolo_reale3.checked()" style="width:94%;"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Parametri_Titolo" id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
+      </td>
+      <td colspan="2">
+        <p>Titolare di diritto contrattuale (locatario, titolare di leasing, etc.)</p>
       </td>
     </tr>
   </tbody>
@@ -454,7 +480,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <div class="simpatico-block simpatico-query-and-answer">
   <input id="Progettista_checkobbligatorio" name="Progettista_checkobbligatorio" dynamic_check="true" type="hidden" />
   <input id="Progettista_checkabilitato" name="Progettista_checkabilitato" dynamic_check="true" type="hidden" />
-  {{anagrafica_trento_uniformata.professionista_direttore_lavori("Progettista","<b>DATI DEL PROGETTISTA</b>:","Progettista") }}
+  {{anagrafica_trento_uniformata.professionista_direttore_lavori("Progettista","<b>DATI DEL PROGETTISTA / TECNICO ABILITATO</b>:","Progettista") }}
 
   <table class="Modulo" style="border:1px solid grey;">
     <tbody>
@@ -507,7 +533,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <tbody>
             <tr class="Rigaintestazione">
                 <td>
-                    <p style="line-height:1.4;">che in data <input class="" id="data_ult_lavori" name="data_ult_lavori" mandatory_enabled="true" size="7" format="date"/> si sono conclusi i lavori previsti dagli atti sopracitati</p>
+                    <p style="line-height:1.6;">che in data <input class="" id="data_ult_lavori" name="data_ult_lavori" mandatory_enabled="true" size="7" format="date"/> si sono conclusi i lavori previsti dagli atti sopracitati, presentando congiuntamente Segnalazione Certificata di Agibilità SCAGI nei casi in cui risulti necessaria</p>
                 </td>
             </tr>
         </tbody>
@@ -524,8 +550,8 @@ urn_report="report:CSP_SESSION_REPORT"
         <tbody>
             <tr class="Rigaintestazione">
                 <td>
-                    <p style="line-height:1.4;">in relazione a quanto previsto dall'art. 88 comma 3 del regolamento l.p. 15/2015 in materia di cambio di coltura, 
-                    <br>di aver depositato in data <input class="" id="data_comun_forest" name="data_comun_forest" mandatory_enabled="true" size="7" format="date"/> la comunicazione di fine lavori all'autorità Forestale</p>
+                    <p style="line-height:1.6;">in relazione a quanto previsto dall'art. 88 comma 3 del regolamento l.p. 15/2015 in materia di cambio di coltura, 
+                    <br>di aver depositato in data <input class="" id="data_comun_forest" name="data_comun_forest" enabled="true" size="7" format="date"/> la comunicazione di fine lavori all'autorità Forestale</p>
                 </td>
             </tr>
         </tbody>
@@ -547,8 +573,8 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Domanda firmata dal titolare</b> nella seguente modalità: 
-          <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:50%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
+        <p style="line-height:1.6;"><b>Domanda firmata dal titolare</b> (se compilata dal tecnico) nella seguente modalità: 
+          <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:27%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
             <option value=""></option>
             <option value="Firma autografa">Firma autografa</option>
             <option value="Firma elettronica">Firma elettronica</option>
@@ -569,7 +595,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input dynamic_check="true" enabled="true" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista incaricato</b> <input enabled="true" dynamic_value="'firmato con firma elettronica'" id="Tipo_firma_anag_prog" name="Tipo_firma_anag_prog" style="width:45.5%;"/></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista incaricato firmato con firma digitale</b></p>
       </td>
     </tr>
     <tr>
@@ -577,7 +603,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="Dichiar_prog" name="Dichiar_prog" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni del progettista</b> <input enabled="#Tipo_richiedente1.checked()" dynamic_value="'firmato con firma elettronica'" id="Tipo_firma_dich_prog" name="Tipo_firma_dich_prog" style="width:53%;" readonly/></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni del progettista firmato con firma digitale</b></p>
       </td>
     </tr>
     <tr>
@@ -585,7 +611,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore lavori</b> <input  enabled="#GEN_DIR_LAV.checked()" dynamic_value="'firmato con firma elettronica'" id="Tipo_Firma_dir_lav" name="Tipo_Firma_dir_lav" style="width:51.5%;" readonly/></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore lavori</b> (se diverso dal progettista) <b>firmato con firma digitale</b></p>
       </td>
     </tr>
     <tr>
@@ -593,7 +619,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="assver_dirlav" name="assver_dirlav" type="checkbox" dynamic_check="#GEN_DIR_LAV.checked()" enabled="#GEN_DIR_LAV.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Asseverazione del direttore lavori</b><br><span style="font-size:85%;">ai sensi dell'art. 8, comma 2, del D. Lgs. n. 192/2005, in merito alla <i>Conformità delle opere realizzate rispetto al progetto ed alle sue eventuali varianti ed alla relazione tecnica di cui al comma 1 del medesimo articolo”</i></span></p>
+        <p style="line-height:1.6;"><b>Asseverazione del direttore lavori</b> (se diverso dal progettista)<br><span style="font-size:85%;">ai sensi dell'art. 8, comma 2, del D. Lgs. n. 192/2005, in merito alla <i>Conformità delle opere realizzate rispetto al progetto ed alle sue eventuali varianti ed alla relazione tecnica di cui al comma 1 del medesimo articolo”</i></span></p>
       </td>
     </tr>
     <tr>
@@ -601,11 +627,11 @@ urn_report="report:CSP_SESSION_REPORT"
         <input dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori particelle</b> oggetto del procedimento
-          <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:40.5%;" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
+        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori particelle</b> oggetto del procedimento <b>firmato dal titolare</b> 
+          <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:23%;" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
             <option value=""></option>
-            <option value="Firmato con firma autografa">firmato dal titolare con firma autografa</option>
-            <option value="Firmato con firma elettronica">firmato dal titolare con firma elettronica</option>
+            <option value="Firmato con firma autografa">con firma autografa</option>
+            <option value="Firmato con firma elettronica">con firma elettronica</option>
           </select>
         </p>
       </td>
@@ -615,11 +641,11 @@ urn_report="report:CSP_SESSION_REPORT"
         <input dynamic_check="(parseInt(#NumeroAltriTitoli.value()) / 20) &gt; 0" enabled="(parseInt(#NumeroAltriTitoli.value()) / 20) &gt; 0" id="GEN_ULTTIT" name="GEN_ULTTIT" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori titli abitativi</b>
-          <select class="inputNormal" id="Tipo_Firma_ult_titoli" name="Tipo_Firma_ult_titoli" style="width:61%;" label="Tipo firma modulo ulteriori titoli" mandatory_enabled="#Tipo_richiedente2.checked() and #NumeroAltriTitoli.value() != '0'">
+        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori titoli abitativi firmato dal titolare</b> 
+          <select class="inputNormal" id="Tipo_Firma_ult_titoli" name="Tipo_Firma_ult_titoli" style="width:42%;" label="Tipo firma modulo ulteriori titoli" mandatory_enabled="#Tipo_richiedente2.checked() and #NumeroAltriTitoli.value() != '0'">
             <option value=""></option>
-            <option value="Firmato con firma autografa">firmato dal titolare con firma autografa</option>
-            <option value="Firmato con firma elettronica">firmato dal titolare con firma elettronica</option>
+            <option value="Firmato con firma autografa">con firma autografa</option>
+            <option value="Firmato con firma elettronica">con firma elettronica</option>
           </select>
         </p>
       </td>
@@ -629,10 +655,18 @@ urn_report="report:CSP_SESSION_REPORT"
         <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="GEN_INTAGG" name="GEN_INTAGG" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori soggetti coinvolti</b> nel procedimento edilizio (diversi dal titolare e/o dal progettista), dei quali:
+        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori soggetti coinvolti</b> nel procedimento edilizio (altri titolari), dei quali:
           <br>- n° <input class="" format="number" id="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG.checked()" name="NschedeAllegateEl" size="1"/> firmano con <b>firma elettronica</b>
           <br>- n° <input class="" format="number" id="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG.checked()" name="NschedeAllegateAu" size="1"/> firmano con <b>firma autografa</b>, allegando inoltre copia del documento di identità
         </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width:4%">
+        <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Parametri_Titolo3.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p><b>Documentazione comprovante il diritto contrattuale</b></p>
       </td>
     </tr>
   </tbody>
@@ -668,7 +702,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? '' : ' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -679,7 +713,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il titolare</p>
+        <p class="Labelcella" style="text-align: center">Il titolare <span style="font-size:95%"><i>(<input id="firma_documento_princ" name="firma_documento_princ" dynamic_value="#Tipo_richiedente1.checked() ? 'accesso eseguito mediante SPID o CPS/CNS' : (#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'firma autografa' : 'firma digitale')"/>)</i></span></p>
       </td>
     </tr>
   </tbody>
@@ -724,6 +758,8 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_modulofiglio_cGEN-INTAGG-AU" name="GLOBO_modulofiglio_cGEN-INTAGG-AU" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cM47010-A01-ASS-DIRETT-LAV" name="GLOBO_allegato_cM47010-A01-ASS-DIRETT-LAV" obbligatorio="#assver_dirlav.checked()' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cGEN-DOC-DIRITTO-CONTRATTUALE" name="GLOBO_allegato_cGEN-DOC-DIRITTO-CONTRATTUALE" obbligatorio="#Contr_locaz.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 {% endblock content %}
