@@ -11,19 +11,27 @@
                  M47011-TRASM-DOC-INTEG
                  M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA
                  M47561-COMUNICAZIONE-OPERE-LIBERE
-                 M47675-DICHIARAZIONE-CONFORMITA-IMPIANTI
                  M47750-AUTORIZZAZIONE-CPC -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 {% macro titolare( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", ruoli=["Persona fisica", "Titolare", "Legale rappresentante", "Amministratore di condominio", "Responsabile unico del procedimento", "Procuratore legale"], visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; {{ visibility_intestazione }}">
   <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p><b>DATI DEL TITOLARE:</b></p>
+      </td>
+    </tr>
     <tr class="Rigaintestazione">
       <td style="width: 40%; border-left:0px; border-right:0px">
         <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}</p>
@@ -74,11 +82,6 @@
 <div type="Anagrafica_persona_fisica">
   <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
     <tbody>
-      <tr class="Rigaintestazione">
-        <td colspan="4">
-          <p><b>DATI DEL TITOLARE:</b></p>
-        </td>
-      </tr>
       <tr class="Rigaintestazioneridotta">
         <td colspan="3">
           <p class="Labelcella">Cognome</p>
@@ -176,7 +179,7 @@
             <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" />
           </td>
           <td>
-            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" />
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" enabled="true" label="Barra di residenza" maxlength="3" />
           </td>
           <td>
             <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" />
@@ -203,16 +206,16 @@
         </tr>
         <tr>
           <td>
-            <input class="inputNormal" id="{{ prefix }}_Fisso" label="Telefono fisso" name="{{ prefix }}_Fisso" style="width:100%" format="number" maxlength="13"/>
+            <input class="inputNormal" id="{{ prefix }}_Fisso" name="{{ prefix }}_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
           </td>
           <td>
-            <input class="inputNormal" id="{{ prefix }}_Telefono" mandatory_enabled="true" label="Telefono cellulare" name="{{ prefix }}_Telefono" style="width:100%" format="number" maxlength="13"/>
+            <input class="inputNormal" id="{{ prefix }}_Telefono" name="{{ prefix }}_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
           </td>
           <td>
-            <input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria" enabled="true" name="{{ prefix }}_EMail" style="width:100%;" maxlength="60"/>
+            <input class="inputNormal" id="{{ prefix }}_EMail" name="{{ prefix }}_EMail" label="E-mail ordinaria" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
           </td>
           <td>
-            <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC" name="{{ prefix }}_EMailPEC" style="width:100%;" maxlength="60"/>
+            <input class="inputNormal" id="{{ prefix }}_EMailPEC" name="{{ prefix }}_EMailPEC" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
           </td>
         </tr>
       </tbody>
@@ -331,18 +334,18 @@
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td>
-          <p class="Labelcella">Telefono</p>
+          <p class="Labelcella">Telefono fisso</p>
         </td>
         <td>
-          <p class="Labelcella">Fax</p>
+          <p class="Labelcella">Cellulare</p>
         </td>
       </tr>
       <tr>
         <td>
-          <input class="" id="{{ prefix }}_TelefonoSede" name="{{ prefix }}_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
+          <input class="" id="{{ prefix }}_Tel_FissoSede" name="{{ prefix }}_Tel_FissoSede" label="Tel_Fisso della sede legale" style="width:100%;" mandatory="false"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_FaxSede" name="{{ prefix }}_FaxSede" label="Fax della sede legale" style="width:100%;" mandatory="false"/>
+          <input class="" id="{{ prefix }}_TelefonoSede" name="{{ prefix }}_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
         </td>
       </tr>
     </tbody>
@@ -401,14 +404,19 @@
                  M1866-ACCETTAZIONE-NIDO
                  M1876-ISCRIZIONE-NIDO
                  M1451-RICHIESTA-RIDUZIONE-TARI-ISEE
-                 M0801-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA
-                 M5101-RILASCIO-ELENCO-TITOLI-EDILIZI 
-                -->
+                 M5101-RILASCIO-ELENCO-TITOLI-EDILIZI
+                 M2301-AUTORIZZAZIONE-SCARICO-INSED-CIV
+                 M2305-NULLAOSTA-SCARICO-INSED-CIV 
+                 -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 {% macro richiedente( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
@@ -563,7 +571,7 @@
           <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" />
         </td>
   	  	<td>
-          <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" />
+          <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" enabled="true" />
         </td>
         <td>
           <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" />
@@ -589,17 +597,17 @@
  				</td>
  			</tr>
  			<tr>
- 				<td>
- 					<input class="inputNormal" id="{{ prefix }}_Fisso" label="Telefono fisso" name="{{ prefix }}_Fisso" style="width:100%" format="number" maxlength="13"/>
- 				</td>
- 				<td>
- 					<input class="inputNormal" id="{{ prefix }}_Telefono" mandatory_enabled="true" label="Telefono cellulare" name="{{ prefix }}_Telefono" style="width:100%" format="number" maxlength="13"/>
- 				</td>
- 				<td>
-          <input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria" mandatory_enabled="#mail_obbligatoria.checked()" name="{{ prefix }}_EMail" style="width:100%;" maxlength="60"/>
+        <td>
+          <input class="inputNormal" id="{{ prefix }}_Fisso" name="{{ prefix }}_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%;" mandatory="#pec_obbligatoria.checked()" maxlength="60"/>
+          <input class="inputNormal" id="{{ prefix }}_Telefono" name="{{ prefix }}_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
+        </td>
+        <td>
+          <input class="inputNormal" id="{{ prefix }}_EMail" name="{{ prefix }}_EMail" label="E-mail ordinaria" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
+        </td>
+        <td>
+          <input class="inputNormal" id="{{ prefix }}_EMailPEC" name="{{ prefix }}_EMailPEC" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
         </td>
  			</tr>
  		</tbody>
@@ -618,12 +626,17 @@
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-<!-- compare in: M1462-IMIS -->
+<!-- compare in: M1462-IMIS
+                 M0801-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 {% macro richiedente_nomail( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
 
   <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
@@ -782,7 +795,7 @@
             <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" />
           </td>
   				<td>
-            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" />
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" enabled="true" />
           </td>
           <td>
             <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" />
@@ -806,12 +819,12 @@
   				</td>
   			</tr>
   			<tr>
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Fisso" label="Telefono fisso" name="{{ prefix }}_Fisso" style="width:100%" format="number" maxlength="13"/>
-  				</td>
-  				<td>
-  					<input class="inputNormal" id="{{ prefix }}_Telefono" enabled="true" label="Telefono cellulare" name="{{ prefix }}_Telefono" style="width:100%" format="number" maxlength="13"/>
-  				</td>
+          <td>
+            <input class="inputNormal" id="{{ prefix }}_Fisso" name="{{ prefix }}_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
+          </td>
+          <td>
+            <input class="inputNormal" id="{{ prefix }}_Telefono" name="{{ prefix }}_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
+          </td>
   			</tr>
   		</tbody>
     </table>
@@ -831,6 +844,10 @@
 
 {% macro richiedente_cambio_res( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
@@ -970,16 +987,16 @@
     </tr>
     <tr>
       <td>
-        <input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono" name="{{ prefix }}_Telefono" style="width:100%" enabled="true"/>
+        <input class="inputNormal" id="{{ prefix }}_Fisso" name="{{ prefix }}_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
       </td>
       <td>
-        <input class="inputNormal" id="{{ prefix }}_Cellulare" label="Cellulare" name="{{ prefix }}_Cellulare" style="width:100%" maxlength="13" enabled="true"/>
+        <input class="inputNormal" id="{{ prefix }}_Telefono" name="{{ prefix }}_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
       </td>
       <td>
-        <input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria" name="{{ prefix }}_EMail" style="width:100%;" maxlength="60" enabled="true"/>
+        <input class="inputNormal" id="{{ prefix }}_EMail" name="{{ prefix }}_EMail" label="E-mail ordinaria" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
       </td>
       <td>
-        <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC" name="{{ prefix }}_EMailPEC" style="width:100%;" maxlength="60" enabled="true"/>
+        <input class="inputNormal" id="{{ prefix }}_EMailPEC" name="{{ prefix }}_EMailPEC" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
       </td>
     </tr>
   </tbody>
@@ -1183,11 +1200,15 @@
 
 {% macro professionista( prefix='Referente1', intestazione="Il sottoscritto professionista abilitato", Solo1="Professionista", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", carica_campi="", visibility_intestazione="visibility:visibility", albo="provinciale", dati_studio_obbligatori="si") -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
 <div type="Anagrafica_professionista">
 
-  <input id="{{ prefix }}_Titolo" name="{{ prefix }}_Titolo" type="hidden" value="{{ Solo1 }}"/>
-  <input id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" type="hidden" value="{{ Solo1 }}"/>
+  <input id="{{ prefix }}_Titolo" name="{{ prefix }}_Titolo" type="hidden" value="professionista"/>
+  <input id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" type="hidden" value="professionista"/>
 
 	<table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
     <tbody>
@@ -1223,7 +1244,7 @@
       </tr>
       <tr>
         <td>
-          <select class="inputNormal" id="{{ prefix }}_TitoloPersona" name="{{ prefix }}_TitoloPersona" style="width:100%;" label="Titolo del {{ Solo1 }}">
+          <select class="inputNormal" id="{{ prefix }}_TitoloPersona" name="{{ prefix }}_TitoloPersona" style="width:100%;" label="Titolo del professionista">
             <option value=""></option>
             <option value="Sig.">Sig.</option>
             <option value="Sig.ra">Sig.ra</option>
@@ -1239,13 +1260,13 @@
           </select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del professionista"/>
         </td>
       </tr>
 	  </tbody>
@@ -1269,10 +1290,10 @@
       </tr>
       <tr>
         <td>
-          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data nascita del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data nascita del professionista"/>
         </td>
         <td>
-          <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso del {{ Solo1 }}">
+          <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso del professionista">
             <option value=""></option>
             <option value="M">M</option>
             <option value="F">F</option>
@@ -1282,7 +1303,7 @@
           {{ utils.nazionalita( prefix + '_Cittadinanza', 'Cittadinanza' )}}
         </td>
         <td>
-          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Lugo di nascita del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Lugo di nascita del professionista"/>
         </td>
       </tr>
 		</tbody>
@@ -1307,7 +1328,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input style="width: 100%" id="{{ prefix }}_PartitaIVA" class="inputNormal" name="{{ prefix }}_PartitaIVA" format="cfpiva" label="Partita IVA del {{ Solo1 }}" mandatory="false"/>
+					<input style="width: 100%" id="{{ prefix }}_PartitaIVA" class="inputNormal" name="{{ prefix }}_PartitaIVA" format="cfpiva" label="Partita IVA del professionista" mandatory="false"/>
 				</td>
 				<td mandatory="#{{ prefix }}_DatiProfessionistaObbligatori.checked()">
 					{{ utils.albi( prefix + '_Attributi_Albo' )}}
@@ -1342,7 +1363,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input style="width: 100%" id="{{ prefix }}_PartitaIVA" class="inputNormal" name="{{ prefix }}_PartitaIVA" format="cfpiva" label="Partita IVA del {{ Solo1 }}" mandatory="false"/>
+					<input style="width: 100%" id="{{ prefix }}_PartitaIVA" class="inputNormal" name="{{ prefix }}_PartitaIVA" format="cfpiva" label="Partita IVA del professionista" mandatory="false"/>
 				</td>
 				<td mandatory="#{{ prefix }}_DatiProfessionistaObbligatori.checked()">
 					{{ utils.albi( prefix + '_Attributi_Albo' )}}
@@ -1388,16 +1409,16 @@
 		    	{{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
         </td>
         <td>
-					<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio del {{ Solo1 }}" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"></select>
+					<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"></select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" style="width:100%;" label="Indirizzo dello studio del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" style="width:100%;" label="Indirizzo dello studio del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" label="Civico dello studio del {{ Solo1 }}" maxlength="10"/>
+          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del {{ Solo1 }}" enabled="#{{ prefix }}_DatiProfessionistaObbligatori.checked()" mandatory="#{{ prefix }}_DatiProfessionistaObbligatori.checked() and #{{ prefix }}_ProvinciaStudio.value() != 'EE'"/>
+          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="#{{ prefix }}_DatiProfessionistaObbligatori.checked()" mandatory="#{{ prefix }}_DatiProfessionistaObbligatori.checked() and #{{ prefix }}_ProvinciaStudio.value() != 'EE'"/>
         </td>
       </tr>
     </tbody>
@@ -1434,16 +1455,16 @@
   				{{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
         </td>
         <td>
-					<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio del {{ Solo1 }}" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"></select>
+					<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"></select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" style="width:100%;" label="Indirizzo dello studio del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" style="width:100%;" label="Indirizzo dello studio del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" label="Civico dello studio del {{ Solo1 }}" maxlength="10"/>
+          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del {{ Solo1 }}" enabled="#{{ prefix }}_DatiProfessionistaObbligatori.checked()"/>
+          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="#{{ prefix }}_DatiProfessionistaObbligatori.checked()"/>
         </td>
       </tr>
     </tbody>
@@ -1453,25 +1474,31 @@
   <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#{{ prefix }}_DatiProfessionistaObbligatori.checked()">
     <tbody>
       <tr class="Rigaintestazioneridotta">
-        <td style="width:24%;">
-          <p class="Labelcella">Telefono</p>
+        <td style="width:20%;">
+          <p class="Labelcella">Telefono fisso</p>
         </td>
-        <td style="width:26%;">
-          <p class="Labelcella">Fax</p>
+        <td style="width:20%;">
+          <p class="Labelcella">Cellulare</p>
         </td>
-        <td style="width:50%;">
-          <p class="Labelcella">E-mail PEC<i>(domicilio digitale)</i></p>
+        <td style="width:28%;">
+          <p class="Labelcella">E-mail<i> (posta elettronica ordinaria)</i></p>
+        </td>
+        <td style="width:32%;">
+          <p class="Labelcella">E-mail PEC<i> (domicilio digitale)</i></p>
         </td>
       </tr>
       <tr>
         <td>
-          <input class="" id="{{ prefix }}_TelefonoStudio" name="{{ prefix }}_TelefonoStudio" style="width:100%" label="Telefono del {{ Solo1 }}"/>
+          <input class="inputNormal" id="{{ prefix }}_Tel_FissoStudio" name="{{ prefix }}_Tel_FissoStudio" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_FaxStudio" name="{{ prefix }}_FaxStudio" style="width:100%" mandatory="false" label="Fax del {{ Solo1 }}"/>
+          <input class="inputNormal" id="{{ prefix }}_TelefonoStudio" name="{{ prefix }}_TelefonoStudio" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_EMailPEC" name="{{ prefix }}_EMailPEC" style="width:100%;" format="pec" label="E-mail PEC del {{ Solo1 }}"/>
+          <input class="inputNormal" id="{{ prefix }}_EMailStudio" name="{{ prefix }}_EMailStudio" label="E-mail del professionista" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
+        </td>
+        <td>
+          <input class="inputNormal" id="{{ prefix }}_EMailPECStudio" name="{{ prefix }}_EMailPECStudio" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
         </td>
       </tr>
     </tbody>
@@ -1503,20 +1530,27 @@
                  M47011-TRASM-DOC-INTEG
                  M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA
                  M47561-COMUNICAZIONE-OPERE-LIBERE
-                 M47675-DICHIARAZIONE-CONFORMITA-IMPIANTI
+                 M47675-DICHIARAZIONE-CONFORMITA-IMPIANTI (x2)
                  M47750-AUTORIZZAZIONE-CPC
                  M1130-INTEGRAZIONE-CONTATTI-SCRUTATORI
-                 M1131-INTEGRAZIONE-CONTATTI-PRESIDENTE -->
+                 M1131-INTEGRAZIONE-CONTATTI-PRESIDENTE
+                 M2301-AUTORIZZAZIONE-SCARICO-INSED-CIV
+                 M2305-NULLAOSTA-SCARICO-INSED-CIV
+                 -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 {% macro professionista_direttore_lavori( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; {{ visibility_intestazione }}">
+<table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
   <tbody>
     <tr class="Rigaintestazione">
       <td style="width: 40%; border-left:0px; border-right:0px">
@@ -1609,12 +1643,16 @@
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!-- compare in: GEN-PROGETTISTA
                  GEN-PROGETTISTA-DIRLAV
-                 M47622-CERTIFICATO-CONFORMITA-EDIFICI-ESISTENTI -->
+                 -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 {% macro professionista_dirlav( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
@@ -1831,7 +1869,7 @@
           <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" format="number" label="Civico dello Studio" maxlength="10" mandatory_enabled="true" />
         </td>
     		<td>
-          <input class="" id="{{ prefix }}_BarraStudio" name="{{ prefix }}_BarraStudio" style="width:100%;" label="Barra dello Studio" maxlength="3" />
+          <input class="" id="{{ prefix }}_BarraStudio" name="{{ prefix }}_BarraStudio" style="width:100%;" label="Barra dello Studio" maxlength="3" enabled="true" />
         </td>
         <td>
           <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello Studio" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaStudio.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'" />
@@ -1852,11 +1890,240 @@
  			</tr>
  			<tr>
  				<td>
-  				<input class="inputNormal" id="{{ prefix }}_Recapito_telefonico" label="Recapito telefonico" name="{{ prefix }}_Recapito_telefonico" style="width:100%" maxlength="13"/>
+  				<input class="inputNormal" id="{{ prefix }}_Recapito_telefonico" name="{{ prefix }}_Recapito_telefonico" label="Recapito telefonico" style="width:100%" maxlength="13" enabled="true" mandatory="#recapito_obbligatorio.checked()"/>
   			</td>
   			<td>
-          <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="PEC del progettista" name="{{ prefix }}_EMailPEC" style="width:100%;" maxlength="60"/>
+          <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" name="{{ prefix }}_EMailPEC" label="PEC del progettista" style="width:100%;" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
+        </td>
+  		</tr>
+  	</tbody>
+  </table>
+</div>
+{%- endmacro %}
+
+
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- compare in: M47622-CERTIFICATO-CONFORMITA-EDIFICI-ESISTENTI -->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+{% macro titolare_conf_edifici( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
+
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; {{ visibility_intestazione }}">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="width: 40%; border-left:0px; border-right:0px">
+        <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}</p>
+      </td>
+      <td style="width:3%; border-left:0px; border-right:0px">
+        <p class="Labeltabella">{{ carica_campi|safe }}</p>
+      </td>
+      <td style="width: 3%; {{ pointer_carica_dati }}; border-left:0px; border-right:0px">
+        <span style="pd4ml-visibility: hidden; pd4ml-display: none;">{{ utils.recupero_dati( prefix, visibility_carica_dati ) }}</span>
+      </td>
+      <td style="width:27%; border-left:0px; border-right:0px">
+        <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true"/>
+      </td>
+      <td style="width:25%; border-left:0px; border-right:0px">
+        <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
+      </td>
+    </tr>
+  </tbody>
+
+  <input type="hidden" name="codicefiscalerecuperodati" id="codicefiscalerecuperodati" dynamic_value="#{{ prefix }}_CodiceFiscale.value()"/>
+
+  {{ service.getPersonaREST( 'codicefiscalerecuperodati','TipoContesto', 'TipoLista',  {
+    prefix + '_DataNascita':  'datanascita',
+    prefix + '_Nome':  'nome',
+    prefix + '_Cognome':  'cognome',
+    prefix + '_Sesso':  'sesso',
+    prefix + '_Nazionalita':  'stato',
+    prefix + '_Cittadinanza':  'nazionalita',
+    prefix + '_CodiceFamiglia':  'codiceFamiglia',
+    prefix + '_CodiceVia':  'codiceVia',
+    prefix + '_ProvinciaResidenza' : 'provincia',
+    prefix + '_ComuneResidenza' : 'citta',
+    prefix + '_ViaResidenza' : 'indirizzo',
+    prefix + '_CivicoResidenza' : 'numeroCivico',
+    prefix + '_BarraResidenza' : 'barra',
+    prefix + '_CAPResidenza' : 'cap',
+    prefix + '_Nazione' : 'nazione',
+    prefix + '_LuogoNascita' : 'comuneNascita',
+    prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
+    prefix + '_MatricolaAnagrafe' : 'matricola',
+    },
+    '#RecuperaDatiAnagr:click','false') }}
+</table>
+
+<br>
+
+<div class="Modulo simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p><b>Dati anagrafici:</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:13%">
+          <p class="Labelcella">Titolo</p>
+        </td>
+        <td style="width:31%">
+          <p class="Labelcella">Cognome</p>
+        </td>
+        <td>
+          <p class="Labelcella">Nome</p>
+        </td>
+        <td style="width:25%">
+          <p class="Labelcella">Codice Fiscale</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <select class="inputNormal" id="{{ prefix }}_TitoloPersona" name="{{ prefix }}_TitoloPersona" style="width:100%;" label="Titolo del progettista">
+            <option value=""></option>
+            <option value="Dott.">Dott.</option>
+            <option value="Dott.ssa">Dott.ssa</option>
+            <option value="Arch.">Arch.</option>
+            <option value="Ing.">Ing.</option>
+            <option value="Comm.">Perito</option>
+            <option value="Geom.">Geom.</option>
+          </select>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del progettista"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del progettista"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del progettista"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:24%">
+          <p class="Labelcella">Partita IVA</p>
+        </td>
+        <td style="width:42%">
+          <p class="Labelcella">Albo o Ordine</p>
+        </td>
+        <td style="width:9%">
+          <p class="Labelcella">Provincia</p>
+        </td>
+        <td style="width:15%">
+          <p class="Labelcella">Numero iscrizione</p>
+        </td>
+        <td style="width:10%">
+          <p class="Labelcella">Sezione</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input style="width: 100%" id="{{ prefix }}_PartitaIVA" class="inputNormal" name="{{ prefix }}_PartitaIVA" format="cfpiva" label="Partita IVA" enabled="true"/>
+        </td>
+        <td mandatory="true">
+          {{ utils.albi( prefix + '_Attributi_Albo' )}}
+        </td>
+        <td mandatory_enabled="#{{ prefix }}_Attributi_Albo.value() != '' and #{{ prefix }}_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
+          {{ utils.provincie( prefix + '_Attributi_DellaProvincia', label="Provincia iscrizione Albo") }}
+        </td>
+        <td mandatory_enabled="#{{ prefix }}_Attributi_Albo.value() != '' and #{{ prefix }}_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
+          <input style="width: 100%" id="{{ prefix }}_Attributi_AlNumero" class="inputNormal" name="{{ prefix }}_Attributi_AlNumero" label="Numero iscrizione Albo"/>
+        </td>
+        <td mandatory_enabled="#{{ prefix }}_Attributi_Albo.value() != '' and #{{ prefix }}_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
+          <input style="width: 100%" id="{{ prefix }}_Attributi_Sezione" class="inputNormal" name="{{ prefix }}_Attributi_Sezione" label="Sezione iscrizione Albo"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="6">
+          <p><b>Con studio in:</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:9%;">
+          <p class="Labelcella">Provincia</p>
+        </td>
+        <td style="width:33%;">
+          <p class="Labelcella">Comune</p>
+        </td>
+        <td style="width:33%;">
+          <p class="Labelcella">Indirizzo</p>
+        </td>
+        <td style="width:9%;">
+          <p class="Labelcella">Civico</p>
+        </td>
+				<td style="width:9%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width:16%;">
+          <p class="Labelcella">CAP</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello Studio" mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'" />
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" maxlength="40" style="width:100%;" label="Via dello Studio" mandatory_enabled="true" />
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" format="number" label="Civico dello Studio" maxlength="10" mandatory_enabled="true" />
+        </td>
+    		<td>
+          <input class="" id="{{ prefix }}_BarraStudio" name="{{ prefix }}_BarraStudio" style="width:100%;" label="Barra dello Studio" maxlength="3" enabled="true" />
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello Studio" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaStudio.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+    <tbody>
+  	  <tr class="Rigaintestazioneridotta">
+  			<td style="width:30%;">
+  				<p class="Labelcella">Recapito telefonico</p>
+ 				</td>
+				<td style="width:70%;">
+  				<p class="Labelcella">E-mail PEC</p>
   			</td>
+ 			</tr>
+ 			<tr>
+ 				<td>
+  				<input class="inputNormal" id="{{ prefix }}_Recapito_telefonico" name="{{ prefix }}_Recapito_telefonico" label="Recapito telefonico" style="width:100%" maxlength="13" enabled="true" mandatory="#recapito_obbligatorio.checked()"/>
+  			</td>
+  			<td>
+          <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" name="{{ prefix }}_EMailPEC" label="PEC del progettista" style="width:100%;" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
+        </td>
   		</tr>
   	</tbody>
   </table>
@@ -1880,6 +2147,10 @@
 
 {% macro solo_nominativo( prefix='Referente1', intestazione="L'interessato") -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 <!-- visibility:visibility or display:none, cursor:pointer or default, albo: provinciale or regionale -->
 <div type="nominativo_interessato">
 
@@ -2057,15 +2328,27 @@
 
 {% macro delega_comunicazioni(id_cognome_professionista="",id_nome_professionista="",id_pec_professionista="") -%}
 
-<table class="Modulo" style="border:1px solid grey;">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
-    <tr class="Rigaintestazione">
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Delega_progett" name="Delega_progett" label="Delega progettista" mandatory_enabled="true"> </div>
+        <input group="Delega_progett" id="Delega_progett1" name="Delega_progett" type="radio" value="1" />
+      </td>
       <td>
-        <p style="line-height: 1.6;"><input id="Tassonomia_DomDigi2" name="Tassonomia_DomDigi2" type="checkbox" value="1"/>
-        <b>DELEGA</b> il progettista, <input enabled="#Tassonomia_DomDigi2.checked()" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Cognome.value() + ' ' + #Progettista_Nome.value()" id="Nominativo_progettista" name="Nominativo_progettista" style="width:76%;"/>
-          <br>a ricevere per proprio nome e conto le comunicazioni relative al presente procedimento anche per il tramite del proprio indirizzo PEC (posta elettronica certificata).
-          <br><span style="font-size:85%"><i>NB.: la delega riguarda tutte le comunicazioni relative alla fase istruttoria del progetto ai sensi dell'art. 86 della l.p. 15/2015</i></span>
+        <p style="line-height:1.6;"><b>DELEGA</b> il progettista, <input enabled="#Tassonomia_DomDigi2.checked()" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Cognome.value() + ' ' + #Progettista_Nome.value()" id="Nominativo_progettista" name="Nominativo_progettista" style="width:76%;"/>
+          <br><b>a ricevere</b> per proprio nome e conto le comunicazioni relative al presente procedimento anche per il tramite del proprio indirizzo PEC (posta elettronica certificata).
+          <br><span style="font-size:85%"><i>NB.: la delega riguarda tutte le comunicazioni relative alla fase istruttoria del progetto ai sensi dell'art. 86 della l.p. 15/2015
+            <br>L'accettazione del progettista è presente nel modulo secondario "Anagrafica del progettista"</i></span>
         </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Delega_progett" id="Delega_progett2" name="Delega_progett" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>CHIEDE di ricevere</b> le comunicazioni relative al presente procedimento al proprio indirizzo PEC (Posta Elettronica Certificata), indicato nei dati personali e qui riportato <input class="inputNormal" id="pec_per_comunicazioni" name="pec_per_comunicazioni"  style="width: 42%;" label="PEC del titolare per comunicazioni" format="pec" dynamic_value="#AventeTitolo_APEC.value()" readonly></p>
       </td>
     </tr>
   </tbody>
@@ -2084,6 +2367,10 @@
 
 {% macro anagrafica_bambino( prefix='AventeTitolo', intestazione="Il sottoscritto", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", visibility_residenza="visibility:visibility", visibility_mail="no_mail", carica_campi="", cf_obbligatorio="true", format_telefono_numerico="false", pec_obbligatoria ="false"  ) -%}
 {% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
 <div type="Anagrafica_bambino">
 
@@ -2252,7 +2539,7 @@
           <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza"  mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()" format="number" style="width:100%;" label="Civico di residenza" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3"/>
+          <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" enabled="true"/>
         </td>
         <td>
           <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza"  mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()" style="width:100%;" format="cap" label="CAP di residenza" />
@@ -2311,7 +2598,7 @@
   <div class="simpatico-block simpatico-query-and-answer">
 
   {% do all_prefix.append( prefix ) %}
-  <input id="{{ prefix }}_Titolo" name="{{ prefix }}_Titolo" type="hidden" value="{{ Solo1 }}"/>
+  <input id="{{ prefix }}_Titolo" name="{{ prefix }}_Titolo" type="hidden" value="professionista"/>
   <table class="Modulo" style="border:1px solid grey; margin-bottom:-6px">
     <tbody>
       <tr class="Rigaintestazione">
@@ -2366,13 +2653,13 @@
       </tr>
       <tr>
         <td colspan="2">
-          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del professionista"/>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta" style="border-top:0px">
@@ -2391,10 +2678,10 @@
       </tr>
       <tr>
         <td>
-          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita del professionista"/>
         </td>
         <td>
-          <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso del {{ Solo1 }}">
+          <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso del professionista">
             <option value=""></option>
             <option value="M">M</option>
             <option value="F">F</option>
@@ -2404,14 +2691,14 @@
           {{ utils.stato( prefix + '_Cittadinanza', 'Cittadinanza' )}}
         </td>
         <td>
-          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita del professionista"/>
         </td>
       </tr>
     </tbody>
   </table>
 
   {% if visibility_residenza == 'visibility:visibility' %}
-  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory="true">
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" >
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td colspan="6">
@@ -2440,17 +2727,17 @@
           {{ utils.provincie( prefix + '_ProvinciaResidenza', label='Provincia di residenza' )}}
         </td>
         <td>
-          <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza del {{ Solo1 }}" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')">
+          <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'">
           </select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" style="width:100%;" label="Via di residenza del {{ Solo1 }}"/>
+          <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" style="width:100%;" label="Via di residenza del professionista" mandatory="true"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" label="Civico di residenza del {{ Solo1 }}" maxlength="10"/>
+          <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" label="Civico di residenza del professionista" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del {{ Solo1 }}" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'"/>
+          <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" label="CAP di residenza del professionista" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'"/>
         </td>
       </tr>
     </tbody>
@@ -2462,10 +2749,10 @@
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td style="width:16.5%;">
-          <p class="Labelcella">Telefono</p>
+          <p class="Labelcella">Cellulare</p>
         </td>
         <td style="width:16.5%;">
-          <p class="Labelcella">Fax</p>
+          <p class="Labelcella">Telefono fisso</p>
         </td>
         <td style="width:33%;">
           <p class="Labelcella">E-mail<i> (posta elettronica ordinaria)</i></p>
@@ -2476,16 +2763,16 @@
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono del {{ Solo1 }}" name="{{ prefix }}_Telefono" style="width:100%"/>
+          <input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono del professionista" name="{{ prefix }}_Telefono" style="width:100%"/>
         </td>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_Fax" label="Fax del {{ Solo1 }}" mandatory="false" name="{{ prefix }}_Fax" style="width:100%"/>
+          <input class="inputNormal" id="{{ prefix }}_Tel_Fisso" label="Tel_Fisso del professionista" mandatory="false" name="{{ prefix }}_Tel_Fisso" style="width:100%"/>
         </td>
         <td>
-          <input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria del {{ Solo1 }}" mandatory="false" name="{{ prefix }}_EMail" style="width:100%;"/>
+          <input class="inputNormal" format="email" id="{{ prefix }}_EMail" label="E-mail ordinaria del professionista" mandatory="false" name="{{ prefix }}_EMail" style="width:100%;"/>
         </td>
         <td>
-          <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" mandatory="false" name="{{ prefix }}_EMailPEC" style="width:100%;" />
+          <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del professionista" mandatory="false" name="{{ prefix }}_EMailPEC" style="width:100%;" />
         </td>
       </tr>
     </tbody>
@@ -2497,10 +2784,10 @@
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td style="width:21%;">
-          <p class="Labelcella">Telefono</p>
+          <p class="Labelcella">Cellulare</p>
         </td>
         <td style="width:21%;">
-          <p class="Labelcella">Fax</p>
+          <p class="Labelcella">Telefono fisso</p>
         </td>
         <td>
           <p class="Labelcella">E-mail PEC <i>(domicilio digitale)</i></p>
@@ -2508,14 +2795,14 @@
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono del {{ Solo1 }}" name="{{ prefix }}_Telefono" style="width:100%"/>
+          <input class="inputNormal" id="{{ prefix }}_Telefono" label="Telefono del professionista" name="{{ prefix }}_Telefono" style="width:100%"/>
         </td>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_Fax" label="Fax del {{ Solo1 }}" mandatory="false" name="{{ prefix }}_Fax" style="width:100%"/>
+          <input class="inputNormal" id="{{ prefix }}_Tel_Fisso" label="Tel_Fisso del professionista" mandatory="false" name="{{ prefix }}_Tel_Fisso" style="width:100%"/>
         </td>
         <td>
           {% if pec_obbligatoria == 'false'%}
-          <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del {{ Solo1 }}" name="{{ prefix }}_EMailPEC" style="width:100%"/>
+          <input class="inputNormal" format="pec" id="{{ prefix }}_EMailPEC" label="E-mail PEC del professionista" name="{{ prefix }}_EMailPEC" style="width:100%"/>
           {% endif %}
         </td>
       </tr>
@@ -2538,7 +2825,7 @@
       </tr>
       <tr>
         <td colspan="5">
-          <select class="inputNormal" id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" style="width:100%;" mandatory_enabled="true" label="Ruolo del {{ Solo1 }}">
+          <select class="inputNormal" id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" style="width:100%;" mandatory_enabled="true" label="Ruolo del professionista">
             <option value=""></option>
             {% for ruolo in ruoli %}
             <option value="{{ ruolo }}">{{ ruolo }}</option>
@@ -2638,10 +2925,10 @@
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td>
-          <p class="Labelcella">Telefono</p>
+          <p class="Labelcella">Cellulare</p>
         </td>
         <td>
-          <p class="Labelcella">Fax</p>
+          <p class="Labelcella">Telefono fisso</p>
         </td>
       </tr>
       <tr>
@@ -2649,7 +2936,7 @@
           <input class="" id="{{ prefix }}_TelefonoSede" name="{{ prefix }}_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_FaxSede" name="{{ prefix }}_FaxSede" label="Fax della sede legale" style="width:100%;" mandatory="false"/>
+          <input class="" id="{{ prefix }}_Tel_FissoSede" name="{{ prefix }}_Tel_FissoSede" label="Tel_Fisso della sede legale" style="width:100%;" mandatory="false"/>
         </td>
       </tr>
     </tbody>

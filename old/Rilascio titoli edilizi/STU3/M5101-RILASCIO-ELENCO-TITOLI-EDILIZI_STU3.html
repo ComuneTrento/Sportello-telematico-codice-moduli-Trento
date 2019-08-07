@@ -1,0 +1,365 @@
+{% set CodiceModulo = "M5101-RILASCIO-ELENCO-TITOLI-EDILIZI" %}
+{% set Urn =  "document:c_l378:titoli.edilizi;richiesta.rilascio.elenco.titoli;m5101.richiesta.rilascio.elenco.titoli.edilizi" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M5101-RILASCIO-ELENCO-TITOLI-EDILIZI_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Richiesta di rilascio elenco titoli edilizi"
+descrizione="Richiesta di rilascio elenco titoli edilizi"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M5101-RILASCIO-ELENCO-TITOLI-EDILIZI"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_allegato="M5101-A01-RIC-DIR-SEG"
+urn_allegato="document:c_l378:titoli.edilizi;richiesta.rilascio.elenco.titoli;a01.m5101.dir.seg.istr"
+descrizione_estesa="Ricevuta del pagamento di 26,00 euro per diritti di istruttoria"
+filename="Ricevuta diritti segreteria.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M5101-A01-RIC-DIR-SEG"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-AFFIDAMENTO-INCARICO"
+urn_allegato="document:c_l378:allegato.affidamento.incarico"
+descrizione_estesa="Altri allegati"
+filename="Nomina perito.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-AFFIDAMENTO-INCARICO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-ALTRI-ALLEGATI"
+urn_allegato="document:c_l378:allegato.altri.allegati"
+descrizione_estesa="Altri allegati"
+filename="Altri allegati.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-ALTRI-ALLEGATI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="8" %}
+  {% set simpaticoEserviceName="RILASCIO TITOLI EDILIZI" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/RILASCIO-TITOLI-EDILIZI" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=["AventeTitolo_CodiceFiscale",
+                          "AventeTitolo_DataNascita",
+                          "AventeTitolo_Sesso",
+                          "AventeTitolo_Nazionalita",
+                          "AventeTitolo_LuogoNascita",
+                          "AventeTitolo_ComuneResidenza",
+                          "AventeTitolo_ViaResidenza",
+                          "AventeTitolo_CivicoResidenza",
+                          "AventeTitolo_CAPResidenza",
+                          "AventeTitolo_Cognome",
+                          "AventeTitolo_Nome",
+                          "AventeTitolo_Telefono",
+                          "AventeTitolo_Tel_Fisso",
+                          "AventeTitolo_EMail",
+                          "AventeTitolo_EMailPEC"] %}
+                          
+  {% set ERROR_LABELS=[   ('block1' , 'Selezionare una delle opzioni'),
+                          ('block2' , 'Inserire il codice fiscale'),
+                          ('block3' , 'Particella edilizia non valida'),
+                          ('block4' , 'Indirizzo non inserito'),
+                          ('block5' , 'Indirizzo non verificato'),
+                          ('block12' , 'Selezionare una delle opzioni')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+{% block title %}RILASCIO-ELENCO-TITOLI-EDILIZI{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Richiesta rilascio elenchi di titoli edilizi'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+  Richiesta rilascio elenchi di titoli edilizi
+</h1>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>La compilazione del modulo seguente viene eseguita in qualità di:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Notaio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Consulente Tecnico d'Ufficio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente3" name="Tipo_richiedente" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Privato</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente4" name="Tipo_richiedente" type="radio" value="4" />
+      </td>
+      <td>
+        <p>Agenzia Immobiliare</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente5" name="Tipo_richiedente" type="radio" value="5" />
+      </td>
+      <td>
+        <p>Professionista</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="#Tipo_richiedente1.checked() || #Tipo_richiedente2.checked() || #Tipo_richiedente4.checked() || #Tipo_richiedente5.checked()" type="hidden"/>
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="#Tipo_richiedente3.checked()" type="hidden"/>
+
+<br>
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
+{{anagrafica_trento_uniformata.richiedente("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+<br>
+
+<h3 class="Modulo">Chiede l'elenco dei titoli edilizi rilasciati / riferiti alle seguenti realtà immobiliari</h3>
+
+<br>
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+
+{{ immobili_trento.immobile_no_ult_part("Immobile", "Particella #1", disattivato="true") }}
+
+<br>
+<br>
+
+{{ immobili_trento.immobile_no_ult_part("Immobile2", "Particella #2", disattivato="true") }}
+
+<br>
+<br>
+
+{{ immobili_trento.immobile_no_ult_part("Immobile3", "Particella #3", disattivato="true") }}
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p><b>Per le finalità di :</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Finalita_richiesta" name="Finalita_richiesta" label="Finalita richiesta" mandatory_enabled="true"> </div>
+        <input group="Finalita_richiesta" id="Finalita_richiesta1" name="Finalita_richiesta" type="radio" value="1" />
+      </td>
+      <td>
+        <p>Redazione atto notarile</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Finalita_richiesta" id="Finalita_richiesta2" name="Finalita_richiesta" type="radio" value="2" />
+      </td>
+      <td>
+        <p>Consulenza d'ufficio per tribunale</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Finalita_richiesta" id="Finalita_richiesta3" name="Finalita_richiesta" type="radio" value="3" />
+      </td>
+      <td>
+        <p>Altro <input class="" label="Altra motivazione per cui si richiedono gli atti" id="Altra_finalita" mandatory_enabled="#Finalita_richiesta3.checked()" name="Altra_finalita" style="width:95%;"/> </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center;">
+          <b>Elenco degli allegati</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="#Tipo_richiedente1.checked() || #Tipo_richiedente3.checked() || #Tipo_richiedente4.checked() || #Tipo_richiedente5.checked()" type="checkbox" value="OBBLIGATORIO" enabled="#Tipo_richiedente1.checked() || #Tipo_richiedente3.checked() || #Tipo_richiedente4.checked() || #Tipo_richiedente5.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          Ricevuta pagamento dei diritti di istruttoria
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="NOMINA_PERITO" name="NOMINA_PERITO" enabled="#Tipo_richiedente2.checked()" dynamic_check="#Tipo_richiedente2.checked()" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>
+          Nomina del perito
+        </p>
+      </td>
+    </tr>
+    <tr>
+			<td>
+			 <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+			  <p>
+			  Altri allegati <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:88%;"/>
+			 </p>
+			</td>
+	  </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+
+<input id="GLOBO_allegato_cM5101-A01-RIC-DIR-SEG" name="GLOBO_allegato_cM5101-A01-RIC-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cAFFIDAMENTO-INCARICO" name="GLOBO_allegato_cAFFIDAMENTO-INCARICO" obbligatorio="#NOMINA_PERITO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" name="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+
+{% endblock content %}

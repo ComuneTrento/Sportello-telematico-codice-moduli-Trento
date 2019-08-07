@@ -1,0 +1,753 @@
+{% set CodiceModulo = "M0608SC4-ORGANIZZAZIONE-EVENTI-E-MANIFESTAZIONI-TEMPORANEE-SUOLO-PUBBLICO" %}
+<!-- {% set modulo_workflow_model =  "M0608SC4-ORGANIZZAZIONE-EVENTI-E-MANIFESTAZIONI-TEMPORANEE-SUOLO-PUBBLICO_v1.0" %} -->
+{% extends "base_trento.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+descrizione="Organizzazione di eventi e manifestazioni temporanee su suolo pubblico"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="Titolare"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016" />
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+/>
+
+<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** 
+<script type="text/javascript">
+    var simpaticoEservice="4"
+    var simpaticoForm="main"
+    var simpaticoCategory="Edilizia"
+    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
+                           "AventeTitolo_Fax",
+                           "AventeTitolo_EMail"]
+    var ERROR_LABELS= {   
+                        'block1' : 'Selezionare una delle opzioni',
+                        'block2' : 'Inserire il codice fiscale',
+                        'block3' : 'Selezionare il ruolo',
+                        'block6' : 'Particella edilizia non valida',
+                        'block7' : 'Indirizzo non inserito',
+                        'block8' : 'Indirizzo non verificato',
+                        'block11' : 'Inserire il codice fiscale',
+                        'block13' : 'Confermare presa visione informativa sulla privacy'
+      }
+  
+    </script>
+   *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+{% endblock meta %}
+
+
+{% block title %}ORGANIZZAZIONE EVENTI E MANIFESTAZIONI TEMPORANEE SU SUOLO PUBBLICO{% endblock title %}
+
+{% block content %}
+<globo_fondo_pagina areaheight="150" scope="4">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' - Organizzazione di eventi e manifestazioni temporanee su suolo pubblico'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_conbollo() }}
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo">
+    ORGANIZZAZIONE DI EVENTI E MANIFESTAZIONI TEMPORANEE SU SUOLO PUBBLICO<br><br>
+    <span style="font-size:85%">Solo per manifestazioni che si svolgono su aree verdi o parchi</span>
+</h1>
+
+<!-- ELENCO POSSIBILI MODULI SECONDARI E ALLEGATI -->
+<p>ELENCO MODULI SECONDARI E ALLEGATI DA PREVEDERE
+    - SCIA ALIMENTI E BEVANDE
+    - SCIA VENDITA AL DETTAGLIO TEMPORANEA
+    - COMUNICAZIONE VENDITA A SCOPO BENEFICO
+    - COMUNICAZIONE ALL'APSS
+    - PLANIMETRIA OCCUPAZIONE
+    - RICHIESTA EMISSIONE ORDINANZA TRAFFICO
+    - RICHIESTA A DOLOMITI AMBIENTE PER RIFIUTI
+    - RICHIESTA USO TORRETTE ELETTRICHE
+    - RICHIESTA SPEGNIMENTO ILLUMINAZIONE
+    - DOCUMENTO IDENTITA
+    - DOCUMENTAZIONE ONLUS PER APPARTENENZA ALLA CATEGORIA
+    - STATUTO ASSOCIAZIONI
+</p>
+
+
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+                <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+            </td>
+            <td>
+                <p>Richiedente</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+            </td>
+            <td>
+                <p>Referente incaricato</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<br> 
+
+{{anagrafica_trento.societa("Titolare","Il richiedente",["Persona fisica","Legale rappresentante","Altro"], "Titolare", "visibility:visibility", "cursor:pointer", "mail_ordinaria","false")}}
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td>
+                <p><b>Per effettuare la seguente manifestazione temporanea:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea class="inputNormal" id="Descrizione_evento" name="Descrizione_evento" label="Descrizione dell'evento" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    --> Durata: dal <input class="" format="date" id="data_inizio" name="data_inizio" label="Data inizio evento" mandatory_enabled="true" size="7"/> al <input class="" format="date" id="data_fine" name="data_fine" label="Data fine evento" mandatory_enabled="true" size="7"/>
+                    --- dalle ore <input class="" id="ora_inizio" name="ora_inizio" label="Ora inizio evento" mandatory_enabled="true" size="7"/> alle ore <input class="" id="ora_fine" name="ora_fine" label="Ora fine evento" mandatory_enabled="true" size="7"/>
+                </p>
+                <p>
+                    --> Affluenza prevista: <input class="" format="number" id="affluenza" name="affluenza" label="Affluenza prevista" mandatory_enabled="true" size="10"/> persone
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p><b>Manifestazione con:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Tipo_manifestazione" name="Tipo_manifestazione" label="Manifestazione con:" mandatory_enabled="true"></div>
+                <input id="Tipo_manifestazione1" name="Tipo_manifestazione" group="Tipo_manifestazione" type="radio" value="1" />
+            </td>
+            <td>
+                <p>Il riconoscimento di rilevante pubblico interesse da parte del Comune di Trento:</p>
+                <p>con atto del <input class="" id="Dettagli_atto" name="Dettagli_atto" label="Dettagli atto del Comune" mandatory_enabled="#Tipo_manifestazione1.checked()" size="30"/> di data <input class="" format="date" id="data_atto" name="data_atto" label="Data atto" mandatory_enabled="#Tipo_manifestazione1.checked()" size="7"/> n.<input class="" id="num_atto" name="num_atto" label="Numero atto" mandatory_enabled="#Tipo_manifestazione1.checked()" size="10"/></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tipo_manifestazione2" name="Tipo_manifestazione" group="Tipo_manifestazione" type="radio" value="2" />
+            </td>
+            <td>
+                <p>Il <b>PATROCINIO</b> del Comune di Trento</p>
+                <p>richiesto in data <input class="" format="date" id="data_richiesta_patrocinio" name="data_richiesta_patrocinio" label="Data richiesta patrocinio" mandatory_enabled="#Tipo_manifestazione2.checked()" size="7"/> presso <input class="" id="Richiesta_presso" name="Richiesta_presso" label="Richiesta di patrocinio effettuata presso:" mandatory_enabled="#Tipo_manifestazione2.checked()" size="30"/></p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p><b>Segnalazioni di:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Tipo_somministrazione" name="Tipo_somministrazione" label="Somministrazione di:" enabled="true"></div>
+                <input id="Tipo_somministrazione1" name="Tipo_somministrazione" group="Tipo_somministrazione" type="checkbox" value="1" />
+            </td>
+            <td>
+                <p>somministrazione temporanea di alimenti e bevande di altri soggetti previste n.: <input class="" format="number" id="numero_somm_cibo" name="numero_somm_cibo" label="Somministrazione cibo e bevande" mandatory_enabled="#Tipo_somministrazione1.checked()" size="20"/></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tipo_somministrazione2" name="Tipo_somministrazione" group="Tipo_somministrazione" type="checkbox" value="2" />
+            </td>
+            <td>
+                <p>vendita al dettaglio temporanea di altri soggetti previste n.: <input class="" format="number" id="numero_vendita" name="numero_vendita" label="Vendita al dettaglio" mandatory_enabled="#Tipo_somministrazione2.checked()" size="20"/></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+    {{anagrafica_trento.richiedente("Referente","Viene indicato quale referente", "visibility:visibility", "cursor:pointer", "false")}}
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+    
+    <h1 class="Modulo">DICHIARA</h1>
+    <p class="Modulo" style="font-size:85%;"><i>Ai sensi degli artt. 46 e 47 del D.P.R. 445 del 28.12.2000, consapevole delle sanzioni penali, ai sensi dell'art. 76 del D.P.R. 445 del 28.12.2000, nel caso di attestazioni non veritiere e falsità negli atti</i></p>
+    
+<br>
+
+<table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p><b>per le Associazioni, di rientrare nella seguente tipologia:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Tipo_associazione" name="Tipo_associazione" label="Tipologia di associazione" mandatory_enabled="true"></div>
+                <input id="Tipo_associazione1" name="Tipo_associazione" group="Tipo_associazione" type="radio" value="1" />
+            </td>
+            <td>
+                <p>Associazione senza fini di lucro</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tipo_associazione2" name="Tipo_associazione" group="Tipo_associazione" type="radio" value="2" />
+            </td>
+            <td>
+                <p>Associazione di Promozione Sociale iscritta nel registro provinciale <span style="font-size:85%"><i>(di cui all'art. 7 c. 4 della legge 7.12.200 n. 383)</i></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tipo_associazione3" name="Tipo_associazione" group="Tipo_associazione" type="radio" value="3" />
+            </td>
+            <td>
+                <p>ONLUS <i>(organizzazione non lucrativa di utilità sociale)</i> iscritta all'anagrafe unica delle ONLUS</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="3">
+                <p><b>che nell'ambito di tale manifestazione svolgerà:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Attivita_svolte" name="Attivita_svolte" label="Attività svolte durante la manifestazione" mandatory_enabled="true"></div>
+                <input id="Attivita_svolte1" name="Attivita_svolte" group="Attivita_svolte" type="checkbox" value="1" />
+            </td>
+            <td colspan="2">
+                <p>attività di somministrazione temporanea di alimenti e bevande</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Attivita_svolte2" name="Attivita_svolte" group="Attivita_svolte" type="checkbox" value="2" />
+            </td>
+            <td colspan="2">
+                <p>attività di vendita al dettaglio temporanea</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Attivita_svolte3" name="Attivita_svolte" group="Attivita_svolte" type="checkbox" value="3" />
+            </td>
+            <td colspan="2">
+                <p>attività di vendita temporanea e occasionale promossa ad esclusivo scopo benefico o di autofinanziamento da istituti scolastici, parrocchie, centri di aggregazione giovanile, centri per anziani, enti e associazioni che operano per finalità sociali</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;" rowspan="4">
+                <input id="Attivita_svolte4" name="Attivita_svolte" group="Attivita_svolte" type="checkbox" value="4" />
+            </td>
+            <td colspan="2">
+                <p>attività ricreative quali feste campestri, popolari e rionali, di beneficenza, di partito, sindacali, raduni e sagre, che si svolgono nei giorni dal <input class="" format="date" id="data_inizio_musica" name="data_inizio_musica" label="Data inizio intrattenimento musicale" mandatory_enabled="#Attivita_svolte4.checked()" size="7"/> al <input class="" format="date" id="data_fine_musica" name="data_fine_musica" label="Data fine intrattenimento musicale" mandatory_enabled="#Attivita_svolte4.checked()" size="7"/>, in orario compreso tra le 9.00-12.00 e 15.00-23.00 con intrattenimenti musicali</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Tipo_musica" name="Tipo_musica" label="Tipologia di intrattenimento musicale" mandatory_enabled="#Attivita_svolte4.checked()"></div>
+                <input id="Tipo_musica1" name="Tipo_musica" group="Tipo_musica" type="radio" value="1" />
+            </td>
+            <td>
+                <p>musica di sottofondo</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tipo_musica2" name="Tipo_musica" group="Tipo_musica" type="radio" value="2" />
+            </td>
+            <td>
+                <p>musica "dal vivo"</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tipo_musica3" name="Tipo_musica" group="Tipo_musica" type="radio" value="3" />
+            </td>
+            <td>
+                <p>con amplificazione</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+    
+    <h1 class="Modulo">CHIEDE i seguenti atti ai fini di tale manifestazione</h1>
+
+<table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td style="vertical-align: top; width: 4%;" rowspan="5">
+                <input id="Tipo_associazione1" name="Tipo_associazione" type="checkbox" checked="true" value="1" />
+            </td>
+            <td colspan="2">
+                <p><b>Rilascio della concessione per l'occupazione temporanea di suolo pubblico</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Tipo_suolo_occupato" name="Tipo_suolo_occupato" label="Tipologia di suolo occupato" mandatory_enabled="true"></div>
+                <input id="Tipo_suolo_occupato1" name="Tipo_suolo_occupato" group="Tipo_suolo_occupato" type="radio" value="1" />
+            </td>
+            <td>
+                <p>Area verde/parco</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Tipo_suolo_occupato2" name="Tipo_suolo_occupato" group="Tipo_suolo_occupato" type="radio" value="2" />
+            </td>
+            <td>
+                <p>Altro spazio pubblico (strade, piazze, ecc.)</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>Luogo: <input class="" id="luogo_evento" name="luogo_evento" label="Luogo dell'evento" mandatory_enabled="true" size="40"/></p>
+                <p>MQ: <input class="" id="mq_luogo_evento" name="mq_luogo_evento" label="Metri quadrati luogo dell'evento" mandatory_enabled="true" size="10"/> di cui MQ <input class="" id="mq_ristorazione" name="mq_ristorazione" label="Metri quadrati dedicati a cibo e bevande" mandatory_enabled="true" size="10"/> riservati alla somministrazione di alimenti e bevande</p>
+                <p>Durata (compreso montaggio e smontaggio): dal <input class="" format="date" id="data_inizio_occupazione_suolo" name="data_inizio_occupazione_suolo" label="Data inizio occupazione suolo" mandatory_enabled="true" size="7"/> al <input class="" format="date" id="data_fine_occupazione_suolo" name="data_fine_occupazione_suolo" label="Data fine occupazione suolo" mandatory_enabled="true" size="7"/> --- dalle ore <input class="" id="ora_inizio_occupazione_suolo" name="ora_inizio_occupazione_suolo" label="Ora inizio occupazione suolo" mandatory_enabled="true" size="1"/> alle ore <input class="" id="ora_fine_occupazione_suolo" name="ora_fine_occupazione_suolo" label="Ora fine occupazione suolo" mandatory_enabled="true" size="1"/></p> 
+                <p>Con le seguenti attrezzature/mezzi:</p>
+                <p><textarea class="inputNormal" id="Attrezzature_utilizzate" name="Attrezzature_utilizzate" label="Attrezzature/mezzi utilizzati" style="width:99%;height:3cm" mandatory_enabled="true" ></textarea></p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazione">
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Impegno_rispetto_disposizioni" name="Impegno_rispetto_disposizioni" type="checkbox" value="1" />
+            </td>
+            <td>
+                <p>Il sottoscritto si impegna a rispettare le disposizioni contenute nel “Regolamento di applicazione del Canone per l’occupazione di spazi e aree pubbliche” del Comune di Trento e nel provvedimento di concessione dell'occupazione di suolo pubblico rilasciato dall'organo competente.</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td style="vertical-align: top; width: 4%;" rowspan="12">
+                <input id="Autorizz_musica" name="Autorizz_musica" type="checkbox" enabled="true" value="1" />
+            </td>
+            <td colspan="2">
+                <p><b>Autorizzazione per l'esecuzione di intrattenimenti musicali</b></p>
+                <p>
+                    <ul>
+                        <li>
+                            per manifestazioni quali concerti, spettacoli musicali, musica dal vivo con DJ, karaoke, cori, bande
+                        </li>
+                        <li>
+                            per manifestazioni ed attività ricreative quali feste campestri, popolari  e rionali, di beneficenza, di partito, sindacali, raduni e sagre, che si svolgono <b>in un orario diverso da quello compreso tra le 9.00-12.00 e 15.00-23.00</b>
+                        </li>
+                    </ul>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Intratt_musicale_proposto" name="Intratt_musicale_proposto" label="Tipologia di intrattenimento musicale proposto" mandatory_enabled="#Autorizz_musica.checked()"></div>
+                <input id="Intratt_musicale_proposto1" name="Intratt_musicale_proposto" group="Intratt_musicale_proposto" type="radio" value="1" />
+            </td>
+            <td>
+                <p>musica di sottofondo con orario: <input class="" id="orario_musica_sottofondo" name="orario_musica_sottofondo" label="Orario musica sottofondo" mandatory_enabled="#Intratt_musicale_proposto1.checked()" size="20"/></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Intratt_musicale_proposto2" name="Intratt_musicale_proposto" group="Intratt_musicale_proposto" type="radio" value="2" />
+            </td>
+            <td>
+                <p>con amplificazione</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Intratt_musicale_proposto3" name="Intratt_musicale_proposto" group="Intratt_musicale_proposto" type="radio" value="3" />
+            </td>
+            <td>
+                <p>musica "dal vivo"</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Intratt_musicale_proposto4" name="Intratt_musicale_proposto" group="Intratt_musicale_proposto" type="radio" value="4" />
+            </td>
+            <td>
+                <p>selezione brani con DJ</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Intratt_musicale_proposto5" name="Intratt_musicale_proposto" group="Intratt_musicale_proposto" type="radio" value="5" />
+            </td>
+            <td>
+                <p>karaoke</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Intratt_musicale_proposto6" name="Intratt_musicale_proposto" group="Intratt_musicale_proposto" type="radio" value="6" />
+            </td>
+            <td>
+                <p>esibizione corale</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Intratt_musicale_proposto7" name="Intratt_musicale_proposto" group="Intratt_musicale_proposto" type="radio" value="7" />
+            </td>
+            <td>
+                <p>esibizione bandistica</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Intratt_musicale_proposto8" name="Intratt_musicale_proposto" group="Intratt_musicale_proposto" type="radio" value="8" />
+            </td>
+            <td>
+                <p>altro</p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>
+                    Nei giorni dal <input class="" format="date" id="data1" name="data1" label="Durata evento (inizio)" mandatory_enabled="#Autorizz_musica.checked()" size="7"/> al <input class="" format="date" id="data2" name="data2" label="Durata evento (fine)" mandatory_enabled="#Autorizz_musica.checked()" size="7"/> --- dalle ore <input class="" id="ora1" name="ora1" label="Fascia oraria musica (inizio)" mandatory_enabled="#Autorizz_musica.checked()" size="1"/> alle ore <input class="" id="ora2" name="ora2" label="Fascia oraria musica (fine)" mandatory_enabled="#Autorizz_musica.checked()" size="1"/>
+                </p>
+                <p>
+                    e dal <input class="" format="date" id="data3" name="data3" label="Durata evento (inizio)" enabled="true" size="7"/> al <input class="" format="date" id="data4" name="data4" label="Durata evento (fine)" enabled="true" size="7"/> --- dalle ore <input class="" id="ora3" name="ora3" label="Fascia oraria musica (inizio)" enabled="true" size="1"/> alle ore <input class="" id="ora4" name="ora4" label="Fascia oraria musica (fine)" enabled="true" size="1"/>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Ord_traffico" name="Ord_traffico" type="checkbox" enabled="true" value="1" />
+            </td>
+            <td>
+                <p><b>Richiesta emissione di ordinanza per provvedimenti sul traffico</b></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td style="vertical-align: top; width: 4%;" rowspan="2">
+                <input id="Permesso_ZTL" name="Permesso_ZTL" type="checkbox" enabled="true" value="1" />
+            </td>
+            <td>
+                <p><b>Richiesta permesso di transito per la ZTL (zona a traffico limitato) o per l'accesso alle aree verdi per i seguenti veicoli:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>--> modello: <input class="" id="modello_veicolo1" name="modello_veicolo1" label="Modello veicolo 1" mandatory_enabled="#Permesso_ZTL.checked()" size="20"/>, targa: <input class="" id="targa_veicolo1" name="targa_veicolo1" label="Targa veicolo 1" mandatory_enabled="#Permesso_ZTL.checked()" size="20"/></p>
+                <p>--> modello: <input class="" id="modello_veicolo2" name="modello_veicolo2" label="Modello veicolo 2" mandatory="#targa_veicolo2.value() != ''" enabled="#Permesso_ZTL.checked()" size="20"/>, targa: <input class="" id="targa_veicolo2" name="targa_veicolo2" label="Targa veicolo 2" mandatory="#modello_veicolo2.value() != ''" enabled="#Permesso_ZTL.checked()" size="20"/></p>
+                <p>--> modello: <input class="" id="modello_veicolo3" name="modello_veicolo3" label="Modello veicolo 3" mandatory="#targa_veicolo3.value() != ''" enabled="#Permesso_ZTL.checked()" size="20"/>, targa: <input class="" id="targa_veicolo3" name="targa_veicolo3" label="Targa veicolo 3" mandatory="#modello_veicolo3.value() != ''" enabled="#Permesso_ZTL.checked()" size="20"/></p>
+                <p>--> modello: <input class="" id="modello_veicolo4" name="modello_veicolo4" label="Modello veicolo 4" mandatory="#targa_veicolo4.value() != ''" enabled="#Permesso_ZTL.checked()" size="20"/>, targa: <input class="" id="targa_veicolo4" name="targa_veicolo4" label="Targa veicolo 4" mandatory="#modello_veicolo4.value() != ''" enabled="#Permesso_ZTL.checked()" size="20"/></p>  
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Rifiuti" name="Rifiuti" type="checkbox" enabled="true" value="1" />
+            </td>
+            <td>
+                <p><b>Richiesta a Dolomiti Ambiente Srl dei contenitori per l'asporto di rifiuti in occasione della manifestazione</b></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Torrette_elettriche" name="Torrette_elettriche" type="checkbox" enabled="true" value="1" />
+            </td>
+            <td>
+                <p><b>Richiesta utilizzo torrette elettriche comunali per la manifestazione, SOLO PER INIZIATIVE DI NATURA NON COMMERCIALE</b></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Spegn_illum" name="Spegn_illum" type="checkbox" enabled="true" value="1" />
+            </td>
+            <td>
+                <p><b>Richiesta spegnimento impianti di illuminazione pubblica</b></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p><b>Il sottoscritto autorizza l'Amministrazione Comunale a trasmettere l'atto tramite uno dei seguenti metodi:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Metodo_trasmissione_atto" name="Metodo_trasmissione_atto" label="Metodo per la trasmissione dell'atto da parte del Comune" mandatory_enabled="true"></div>
+                <input id="Metodo_trasmissione_atto1" name="Metodo_trasmissione_atto" group="Metodo_trasmissione_atto" type="radio" value="1" />
+            </td>
+            <td>
+                <p>
+                    Email del richiedente: <input class="" id="mail_trasm" name="mail_trasm" label="Indirizzo mail per trasmissione atto" dynamic_value="#Titolare_EMail.value()" enabled="#Metodo_trasmissione_atto1.checked()" size="50" readonly/>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_trasmissione_atto2" name="Metodo_trasmissione_atto" group="Metodo_trasmissione_atto" type="radio" value="2" />
+            </td>
+            <td>
+                <p>
+                    PEC del richiedente: <input class="" id="PEC_trasm" name="PEC_trasm" label="Indirizzo PEC per trasmissione atto" dynamic_value="#Titolare_EMailPEC.value()" enabled="#Metodo_trasmissione_atto2.checked()" size="50" readonly/>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_trasmissione_atto3" name="Metodo_trasmissione_atto" group="Metodo_trasmissione_atto" type="radio" value="3" />
+            </td>
+            <td>
+                <p>
+                    Email del referente incaricato: <input class="" id="mail_ref_trasm" name="mail_ref_trasm" label="Indirizzo mail del referente per trasmissione atto" dynamic_value="#Referente_EMail.value()" enabled="#Metodo_trasmissione_atto3.checked()" size="50" readonly/>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_trasmissione_atto4" name="Metodo_trasmissione_atto" group="Metodo_trasmissione_atto" type="radio" value="4" />
+            </td>
+            <td>
+                <p>
+                    PEC del referente incaricato: <input class="" id="PEC_ref_trasm" name="PEC_ref_trasm" label="Indirizzo PEC del referente per trasmissione atto" dynamic_value="#Referente_EMailPEC.value()" enabled="#Metodo_trasmissione_atto4.checked()" size="50" readonly/>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p><b>Il sottoscritto intende effettuare il pagamento con:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <div id="Metodo_pagamento" name="Metodo_pagamento" label="Metodo pagamento" mandatory_enabled="true"></div>
+                <input id="Metodo_pagamento1" name="Metodo_pagamento" group="Metodo_pagamento" type="radio" value="1" />
+            </td>
+            <td>
+                <p>Bancomat/carta di credito</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_pagamento2" name="Metodo_pagamento" group="Metodo_pagamento" type="radio" value="2" />
+            </td>
+            <td>
+                <p>Bonifico bancario</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_pagamento3" name="Metodo_pagamento" group="Metodo_pagamento" type="radio" value="3" />
+            </td>
+            <td>
+                <p>Bollettino di C.C.P.</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 4%;">
+                <input id="Metodo_pagamento4" name="Metodo_pagamento" group="Metodo_pagamento" type="radio" value="4" />
+            </td>
+            <td>
+                <p>Versamento in Tesoreria comunale c/o UNICREDIT BANCA s.p.a.</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="2">
+                <p style="text-align: center;"><b>INFORMATIVA SULLA PRIVACY</b></p>
+                <p style="text-align: center; font-size:85%"><i>Art. 13 del D. Lgs. n. 196/2003, Regolamento UE 2016/679 in vigore dal 24.05.2016 e pienamente dal 25.05.2018</i></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br>
+                <p>Ai sensi dell'art. 13 del decreto legislativo 30 giugno 2003 n. 196, "Codice in materia di protezione dei dati personali", si informa che:</p>
+                <ul>
+                    <li>i dati vengono raccolti e trattati ai fini del rilascio della concessione e di tutte le attività ad essa connesse</li>
+                    <li>il trattamento può riguardare anche dati sensibili e/o giudiziari (art. 4, comma 1, lett. D ed E, del D.LGS. n. 196/2003)</li>
+                    <li>i dati vengono comunicati e trattati con sistemi informatici e/o manuali, attraverso procedure adeguate a garantire la sicurezza e la riservatezza</li>
+                    <li>il conferimento dei dati ha natura obbligatoria ai fini del rilascio della concessione. Non fornire i dati comporta l'impossibilità di dare riscontro alle richieste medesime</li>
+                    <li>i dati possono essere comunicati a Uffici, Enti ed Organi della Pubblica Amministrazione, Aziende o Istituzioni che, secondo le norme, sono tenuti a conoscerli o possono conoscerli, nonché ai soggetti che sono titolari del diritto di accesso</li>
+                    <li>i dati possono essere conosciuti dal Responsabile e dagli incaricati dei Servizi destinatari dell’atto e del Servizio Polizia Locale</li>
+                    <li>ai sensi dell'art. 7 del d.lgs. 196/2003, l'interessato ha diritto di:
+                        <ul>
+                            <li>richiedere la conferma dell'esistenza o meno dei dati che lo riguardano</li>
+                            <li>ottenere la loro comunicazione in forma intelligibile</li>
+                            <li>richiedere di conoscere l’origine dei dati personali, le finalità e modalità del trattamento, la logica applicata se il trattamento è effettuato con l’ausilio di strumenti elettronici</li>
+                            <li>ottenere la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge</li>
+                            <li>aggiornare, correggere o integrare i dati che lo riguardano</li>
+                            <li>opporsi, per motivi legittimi, al trattamento dei dati</li>
+                        </ul>
+                    </li>
+                    <li>Titolare del trattamento dei dati è il Comune di Trento</li>
+                    <li>Responsabile del trattamento è il Dirigente del Servizio a cui è indirizzata la richiesta</li>
+                    <li>Responsabile designato per l'esercizio dei diritti dell'interessato è il Segretario generale</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 4%; vertical-align: top;">
+                <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"></div> 
+                <input id="Presa_visione_check" name="Presa_visione" type="radio" value="1"/>
+            </td>
+            <td colspan="2" style="background-color: #eeeeee;">
+                <p>Dichiaro di aver preso visione dell'informativa sul trattamento dei dati personali e acconsento al trattamento dei suddetti dati con le modalità e per le finalità indicate nell'informativa stessa</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+
+  <div class="simpatico-block">
+    {{ utils.firma_hidden() }}
+</div>
+<br>
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+
+
+{% endblock content %}

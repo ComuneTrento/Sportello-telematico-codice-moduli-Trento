@@ -1,0 +1,451 @@
+{% set CodiceModulo = "M0802-TRASM-DOC-INTEG" %}
+{% set Urn =  "document:c_l378:m0802.trasmissione.documentazione.integrativa" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M0802-TRASM-DOC-INTEG_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Trasmissione documentazione integrativa"
+descrizione="Trasmissione di documentazione integrativa"
+destinatario_amministrazione=""
+destinatario_ufficio="94SMCB"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M0802-TRASM-DOC-INTEG"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016"
+generabile_da="M0801-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" />
+
+<meta codice_allegato="GEN-AFFIDAMENTO-INCARICO"
+urn_allegato="document:c_l378:allegato.affidamento.incarico"
+descrizione_estesa="Documentazione comprovante l'incarico"
+filename="Affidamento incarico.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-AFFIDAMENTO-INCARICO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-CDI"
+urn_allegato="document:c_l378:allegato.copia.documento.identita"
+descrizione_estesa="Copia del documento di identità del richiedente"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-ALTRI-ALLEGATI"
+urn_allegato="document:c_l378:allegato.altri.allegati"
+descrizione_estesa="Altri allegati"
+filename="Altri allegati.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-ALTRI-ALLEGATI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-ARCHIVIO"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.archivio"
+descrizione_estesa="Informativa trattamento dati ARCHIVIO"
+filename="INFORM-TRATT-DATI-ARCHIVIO.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-ARCHIVIO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="6" %}
+  {% set simpaticoEserviceName="Trasmissione documentazione integrativa" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47011-TRASM-DOC-INTEG" %}  
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome",
+                          "AventeTitolo_Nome",
+                          "AventeTitolo_CodiceFiscale",
+                          "AventeTitolo_DataNascita",
+                          "AventeTitolo_Sesso",
+                          "AventeTitolo_Cittadinanza",
+                          "AventeTitolo_LuogoNascita",
+                          "AventeTitolo_ProvinciaResidenza",
+                          "AventeTitolo_ComuneResidenza",
+                          "AventeTitolo_ViaResidenza",
+                          "AventeTitolo_CivicoResidenza",
+                          "AventeTitolo_CAPResidenza",
+                          "AventeTitolo_Telefono",
+                          "AventeTitolo_Tel_Fisso",
+                          "AventeTitolo_EMail",
+                          "AventeTitolo_EMailPEC",
+                          "Progettista_Cognome",
+                          "Progettista_Nome",
+                          "Progettista_CodiceFiscale",
+                          "Progettista_DataNascita",
+                          "Progettista_Sesso",
+                          "Progettista_Cittadinanza",
+                          "Progettista_LuogoNascita",
+                          "Progettista_PartitaIVA",
+                          "Progettista_Attributi_Albo",
+                          "Progettista_Attributi_DellaProvincia",
+                          "Progettista_Attributi_AlNumero",
+                          "Progettista_ProvinciaStudio",
+                          "Progettista_ComuneStudio",
+                          "Progettista_ViaStudio",
+                          "Progettista_CivicoStudio",
+                          "Progettista_CAPStudio",
+                          "Progettista_TelefonoStudio",
+                          "Progettista_Tel_FissoStudio",
+                          "Progettista_EMailPEC"] %}
+
+  {% set ERROR_LABELS=[ ('block1' , 'Selezionare una delle opzioni'),
+                        ('block2' , 'Inserire il nominativo del proprietario o soggetto avente titolo idoneo'),
+                        ('block3' , 'Selezionare il ruolo'),
+                        ('block5' , 'Inserire il nominativo del progettista'),
+                        ('block6' , 'Inserire i riferimenti alla pratica per cui si sta trasmettendo una integrazione'),
+                        ('block7' , 'Particella edilizia non valida'),
+                        ('block8' , 'Indirizzo non inserito'),
+                        ('block9' , 'Indirizzo non verificato'),
+                        ('block10' , 'Selezionare una delle opzioni'),
+                        ('block11' , 'Selezionare una delle opzioni'),
+                        ('block13' , 'Selezionare una delle opzioni')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+
+{% block title %}M0802-TRASMISSIONE-DOCUMENTAZIONE-INTEGRATIVA{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Integrazione per: ' + #part_rich.value()" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<br>
+
+<h1 class="Modulo">
+  Trasmissione documentazione integrativa
+</h1>
+
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.richiedente_nomail("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="12">
+        <p><b>in qualità di:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+      </td>
+      <td colspan="11">
+        <p>Proprietario dell'immobile oggetto della richiesta presentata</p>
+      </td>
+    </tr>  
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente6" name="Tipo_richiedente" type="radio" value="6" />
+      </td>
+      <td colspan="11">
+        <p>Amministratore del condominio oggetto della richiesta presentata</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+      </td>
+      <td colspan="11">
+        <p>Professionista/Agente immobiliare incaricato</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente3" name="Tipo_richiedente" type="radio" value="3" />
+      </td>
+      <td colspan="11">
+        <p>Notaio rogante</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente4" name="Tipo_richiedente" type="radio" value="4" />
+      </td>
+      <td colspan="11">
+        <p>Confinante</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="Tipo_richiedente" id="Tipo_richiedente5" name="Tipo_richiedente" type="radio" value="5" />
+      </td>
+      <td colspan="11">
+        <p>Altro titolo: <input class="" id="altro_tipo_richiedente" name="altro_tipo_richiedente" size="80" mandatory_enabled="#Tipo_richiedente5.checked()" label="Specificare titolo per effettuare la richiesta"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;">
+          <b>In riferimento all'istanza</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <p style="line-height:1.6;">Intestata a: <input class="" label="Intestatario" id="Intestatario_istanza" name="Intestatario_istanza" dynamic_value="'  ' + #AventeTitolo_Cognome.value().toUpperCase() + ',' + #AventeTitolo_Nome.value().toUpperCase()" style="width:89%;"/> </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td class="Labelcella" style="width:60%">
+        <p style="font-size:75%;">Tipologia istanza</p>
+      </td>
+      <td class="Labelcella" style="width:20%">
+        <p style="font-size:75%;">Num. Protocollo</p>
+      </td>
+      <td class="Labelcella" style="width:20%">
+        <p style="font-size:75%;">Data</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="Tipo_istanza" name="Tipo_istanza" style="width:100%" label="Tipo istanza" dynamic_value="'Richiesta di accesso/consultazione atti in materia edilizia'" readonly />
+      </td>
+      <td>
+        <input class="" label="Numero protocollo" id="Numero_protocollo" name="Numero_protocollo" mandatory_enabled="true" style="width:100%"/>
+      </td>
+      <td>
+        <input class="" label="Data protocollazione" id="Data_protocollazione" name="Data_protocollazione" format="date" mandatory_enabled="true" style="width:100%"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="11">
+        <p style="line-height:1.6;">
+          <b>Con la quale si richiedeva:</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="17">
+        <div id="Servizio_richiesto" name="Servizio_richiesto" label="Servizio richiesto" mandatory_enabled="true"> </div>
+        <input group="Servizio_richiesto" id="Servizio_richiesto1" name="Servizio_richiesto1" type="checkbox" value="1" /> 
+      </td>
+      <td colspan="10">
+        <p>La <b>CONSULTAZIONE</b> di atti risalenti a più di 40 anni fa <i>(Archivio Storico)</i></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="10">
+        <p style="line-height:1.6; font-size:90%;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
+      </td>
+    </tr>
+    
+    <input id="consultazione_DatiCatastaliObbligatori" name="consultazione_DatiCatastaliObbligatori" dynamic_check="#Servizio_richiesto1.checked()" type="hidden"/>
+    <input id="consultazione_DatiCatastaliAbilitati" name="consultazione_DatiCatastaliAbilitati" dynamic_check="#Servizio_richiesto1.checked()" type="hidden"/>
+    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
+
+    {% macro altre_part_consultazione(prefix) %}
+      {% set prefix = prefix|string %}
+      <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
+      <input id="consultazione_DatiCatastaliAbilitati{{ prefix }}" name="consultazione_DatiCatastaliAbilitati{{ prefix }}" dynamic_check="#Servizio_richiesto1.checked()" type="hidden"/>
+      {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix + '_consultazione', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
+    {%- endmacro %}
+
+    {% for i in range(2, 5) %}
+      {{ altre_part_consultazione(i) }}
+    {% endfor %}
+
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="17">
+        <input group="Servizio_richiesto" id="Servizio_richiesto2" name="Servizio_richiesto2" type="checkbox" value="2" /> 
+      </td>
+      <td colspan="10">
+        <p>L'<b>ACCESSO</b> agli atti e ai documenti <span style="font-size:85%;"><i>&nbsp;&nbsp;&nbsp;(Ai sensi dell'articolo 22 e seguenti della Legge 07/08/1990, n. 241)</i></span></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="10">
+        <p style="line-height:1.6; font-size:90%;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
+      </td>
+    </tr>
+
+    <input id="accesso_DatiCatastaliObbligatori" name="accesso_DatiCatastaliObbligatori" dynamic_check="#Servizio_richiesto2.checked()" type="hidden"/>
+    <input id="accesso_DatiCatastaliAbilitati" name="accesso_DatiCatastaliAbilitati" dynamic_check="#Servizio_richiesto2.checked()" type="hidden"/>
+    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='accesso', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
+
+    {% macro altre_part_accesso(prefix) %}
+      {% set prefix = prefix|string %}
+      <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
+      <input id="accesso_DatiCatastaliAbilitati{{ prefix }}" name="accesso_DatiCatastaliAbilitati{{ prefix }}" dynamic_check="#Servizio_richiesto2.checked()" type="hidden"/>
+      {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix + '_accesso', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
+    {%- endmacro %}
+
+    {% for i in range(2, 5) %}
+      {{ altre_part_accesso(i) }}
+    {% endfor %}
+
+  </tbody>
+</table>
+
+<input class="" type="hidden" id="part_cons" name="part_cons" dynamic_value="#Servizio_richiesto1.checked() ? 'consultazione p.ed: ' + #consultazione_CatNumero.value() + ' - comune: ' + #consultazione_ComuneCatastale_esteso.value() : ''"/>
+<input class="" type="hidden" id="part_acc" name="part_acc" dynamic_value="#Servizio_richiesto2.checked() ? 'accesso p.ed: ' + #accesso_CatNumero.value() + ' - comune: ' + #accesso_ComuneCatastale_esteso.value() : ''"/>
+<input class="" type="hidden" id="part_rich" name="part_rich" dynamic_value="#part_cons.value() != '' ? (#part_acc.value() == '' ? #part_cons.value() : #part_cons.value() + ' / ' + #part_acc.value()) : #part_acc.value()"/>
+
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+<h1 class="Modulo">TRASMETTE LA SEGUENTE DOCUMENTAZIONE INTEGRATIVA</h1>
+
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width:4%">
+        <input id="AFFIDAMENTO_INCARICO" name="AFFIDAMENTO_INCARICO" type="checkbox" dynamic_check="#GEN_CDI.checked()" enabled="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>Delega comprovante l'affidamento dell'incarico</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width:3%">
+        <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#AFFIDAMENTO_INCARICO.checked()" enabled="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>Copia del documento d'identità del delegante</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%">
+        <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>Altri allegati <i>(specificare)</i>: 
+          <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:77%;"/>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-archivio" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="GLOBO_allegato_cGEN-AFFIDAMENTO-INCARICO" name="GLOBO_allegato_cGEN-AFFIDAMENTO-INCARICO" obbligatorio="#AFFIDAMENTO_INCARICO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" name="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-ARCHIVIO" name="GLOBO_allegato_cINFORM-TRATT-DATI-ARCHIVIO" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
