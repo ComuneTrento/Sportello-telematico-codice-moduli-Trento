@@ -3674,7 +3674,7 @@ function get_ufficio_dest() {
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista</b> firmato con <b>firma digitale</b></p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;">1</p>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
@@ -3691,7 +3691,7 @@ function get_ufficio_dest() {
         </p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part" name="numero_ult_part" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" style="width: 90%; text-align: center;" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part" name="numero_ult_part" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? parseInt(#Immobile_NumeroAltriImmobili.value()) /10 : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
@@ -3794,9 +3794,6 @@ function get_ufficio_dest() {
         <p style="line-height: 1.6; text-align: center;"><input class="" format="number" id="Nanag_imprese_allegateEl" name="Nanag_imprese_allegateEl" label="Numero anagrafiche imprese firmate elettronicamente" mandatory_enabled="#check_imprese_el.checked()" style="width: 90%; text-align: center;"/></p>
       </td>
     </tr>
-
-
-
     <tr>
       <td style="vertical-align: top; text-align: center;" rowspan="3">
         <input id="Anagrafica_lavoratori_autonomi" name="Anagrafica_lavoratori_autonomi" dynamic_check="#Esecuzione_lavori2.checked()" enabled="#Esecuzione_lavori2.checked()" type="checkbox" value="OBBLIGATORIO"/>   
@@ -3836,7 +3833,7 @@ function get_ufficio_dest() {
         <p style="line-height:1.6;"><b>Documentazione necessaria per la notifica</b>, il cui contenuto sarà riprodotto su apposita tabella esposta in cantiere per tutta la durata dei lavori, in luogo visibile dall'esterno</p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input class="" format="number" id="num_doc_notif" name="num_doc_notif" label="Numero documenti notifica" mandatory_enabled="#Doc_notifica.checked()" style="width: 90%; text-align: center;"/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="num_Doc_notifica" name="num_Doc_notifica" dynamic_value="#Doc_notifica.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
@@ -3847,7 +3844,7 @@ function get_ufficio_dest() {
         <p style="line-height:1.6;">Nel caso di permesso di costruire formatosi per silenzio assenso del Comune, <b>ricevuta del pagamento del contributo di costruzione</b>, salvo successivo conguaglio o riduzione sulla base delle determinazioni del Comune</p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;">1</p>
+        <p style="line-height: 1.6; text-align: center;"><input id="num_ric_sil_ass" name="num_ric_sil_ass" dynamic_value="#ric_sil_ass.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
@@ -3965,38 +3962,24 @@ function get_ufficio_dest() {
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="M47005-COMUNICAZIONE-INIZIO-LAVORI" />
 
-
-<!-- Calcolo numero di moduli da richiedere per ulteriori particelle -->
 <input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
-
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-IMPRESE-EL" name="GLOBO_modulofiglio_cGEN-IMPRESE-EL" numero="#Nanag_imprese_allegateEl.value()" obbligatorio="#Nanag_imprese_allegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-IMPRESE-AU" name="GLOBO_modulofiglio_cGEN-IMPRESE-AU" numero="#Nanag_imprese_allegateAu.value()" obbligatorio="#Nanag_imprese_allegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-DIR-LAV-EL" name="GLOBO_modulofiglio_cGEN-DIR-LAV-EL" obbligatorio="#GEN_DIR_LAV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-CERT-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERT-ENERG-EL" obbligatorio="#Tipo_Firma_cert_energ.value() == 'firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cM47005-MSEC02-INTAGG-INIZIO-LAVORI-EL" name="GLOBO_modulofiglio_cM47005-MSEC02-INTAGG-INIZIO-LAVORI-EL" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cM47005-MSEC01-INTAGG-INIZIO-LAVORI-AU" name="GLOBO_modulofiglio_cM47005-MSEC01-INTAGG-INIZIO-LAVORI-AU" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cM47005-MSEC03-DOC-EDI-EL" name="GLOBO_modulofiglio_cM47005-MSEC03-DOC-EDI-EL" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cM47005-MSEC05-LAV-AUTON-EL" name="GLOBO_modulofiglio_cM47005-MSEC05-LAV-AUTON-EL" numero="#Nanag_lav_allegateEl.value()" obbligatorio="#Nanag_lav_allegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cM47005-MSEC04-LAV-AUTON-AU" name="GLOBO_modulofiglio_cM47005-MSEC04-LAV-AUTON-AU" numero="#Nanag_lav_allegateAu.value()" obbligatorio="#Nanag_lav_allegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-Modulo_compilato_firma_elettronica" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
-
 <input id="GLOBO_allegato_cGEN-DOC_NOTIFICA" name="GLOBO_allegato_cGEN-DOC_NOTIFICA" obbligatorio="#Doc_notifica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO" name="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO" obbligatorio="#ric_sil_ass.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" name="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" numero="#NumAltriAllegati.value()" type="hidden" value=""/>
