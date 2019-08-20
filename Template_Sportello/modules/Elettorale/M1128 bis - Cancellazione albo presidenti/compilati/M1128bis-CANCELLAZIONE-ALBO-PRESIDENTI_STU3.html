@@ -395,9 +395,11 @@ function get_ufficio_dest() {
 <br>
 
 <!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
-<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
-<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<!--<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />-->
+<!--<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />-->
 <!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
+
+<!--
 
 
 
@@ -709,8 +711,84 @@ function get_ufficio_dest() {
 <input type="hidden" id="AventeTitolo_CodiceFamiglia" name="AventeTitolo_CodiceFamiglia"/>
 <input type="hidden" id="AventeTitolo_CodiceVia" name="AventeTitolo_CodiceVia"/>
 <input type="hidden" id="AventeTitolo_MatricolaAnagrafe" name="AventeTitolo_MatricolaAnagrafe"/>
-<input type="hidden" id="AventeTitolo_CodiceComuneNascita" name="AventeTitolo_CodiceComuneNascita"/> 
+<input type="hidden" id="AventeTitolo_CodiceComuneNascita" name="AventeTitolo_CodiceComuneNascita"/> -->
   
+<input id="AventeTitolo_checkobbligatorio" name="AventeTitolo_checkobbligatorio" dynamic_check="true" type="hidden" />
+<input id="AventeTitolo_checkabilitato" name="AventeTitolo_checkabilitato" dynamic_check="true" type="hidden" />
+
+
+
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<table class="Modulo" style="border:1px solid grey; visibility:visibility">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="width: 40%; border-left:0px; border-right:0px">
+        <p class="Labeltabella"  style="vertical-align:middle">Il/La sottoscritto/a</p>
+      </td>
+      <td style="width:3%; border-left:0px; border-right:0px">
+        <p class="Labeltabella"></p>
+      </td>
+      <td style="width: 3%; cursor:pointer; border-left:0px; border-right:0px">
+        <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+
+<button type="button" class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility" title="Carica dati da profilo utente" onclick="recuperaAnagrafica( 'AventeTitolo' )">Carica dati personali</button>
+
+</span>
+      </td>
+      <td style="width:27%; border-left:0px; border-right:0px">
+        <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true"/>
+      </td>
+      <td style="width:25%; border-left:0px; border-right:0px">
+        <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
+      </td>
+    </tr>
+  </tbody>
+
+  <input type="hidden" name="codicefiscalerecuperodati" id="codicefiscalerecuperodati" dynamic_value="#AventeTitolo_CodiceFiscale.value()"/>
+
+  
+<div
+  ws-name="getPersonaREST"
+  ws-param-in=
+  "contesto=TipoContesto;listaAut=TipoLista;codiceFiscale=codicefiscalerecuperodati"
+  ws-param-out=
+  "AventeTitolo_ProvinciaResidenza=provincia;AventeTitolo_ViaResidenza=indirizzo;AventeTitolo_CodiceComuneNascita=codiceComuneNascita;AventeTitolo_Cognome=cognome;AventeTitolo_CodiceFamiglia=codiceFamiglia;AventeTitolo_CodiceVia=codiceVia;AventeTitolo_CivicoResidenza=numeroCivico;AventeTitolo_MatricolaAnagrafe=matricola;AventeTitolo_Nazionalita=stato;AventeTitolo_Nazione=nazione;AventeTitolo_Cittadinanza=nazionalita;AventeTitolo_Sesso=sesso;AventeTitolo_ComuneResidenza=citta;AventeTitolo_CAPResidenza=cap;AventeTitolo_BarraResidenza=barra;AventeTitolo_LuogoNascita=comuneNascita;AventeTitolo_Nome=nome;AventeTitolo_DataNascita=datanascita"
+  ws-on="#RecuperaDatiAnagr:click"
+  
+    ws-allow-edit="false"
+   >
+</div>
+</table>
+
+
+
+<div type="Anagrafica">
+
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="#AventeTitolo_checkobbligatorio.checked()" enabled="#AventeTitolo_checkabilitato.checked()">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:50%">
+          <p class="Labelcella">Cognome</p>
+        </td>
+        <td style="width:50%">
+          <p class="Labelcella">Nome</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome del AventeTitolo"/>
+        </td>
+        <td>
+          <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome del AventeTitolo"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> 
+
 <input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
 
 <br>
@@ -792,6 +870,152 @@ function get_ufficio_dest() {
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="M1128bis-CANCELLAZIONE-ALBO-PRESIDENTI" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" name="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" obbligatorio="''" type="hidden" value=""/>
+
+
+
+	  <input id="GLOBO_MyJobIsDone" name="GLOBO_MyJobIsDone" type="hidden" value=""/>
+
+	  <input id="GLOBO_IsReadyToSend" name="GLOBO_IsReadyToSend" type="hidden" value=""/>
+
+      
+
+        <input type='hidden' id='Parametri_UfficioDestinatario' name='Parametri_UfficioDestinatario' value=''/>
+
+      
+
+	  </form>
+
+    <div id="background"  class="error-box-view"></div>
+<div id="errors" class="error-box-view">
+  <div id="error-text"></div>
+  <button id="close" class="btn-error" onclick="close_error()">Chiudi</button>
+</div>
+
+    
+
+</body>
+
+    <!--script src="./validator/js/jquery-1.9.1.js" type="text/javascript"></script-->
+
+    <script src="./validator/js/placeholders.jquery.min.js" type="text/javascript"></script>
+
+    <script src="./validator/js/jquery.json-2.3.min.js" type="text/javascript"></script>
+
+    <script src="./validator/js/validator.js" type="text/javascript"></script>
+
+    <script src="./validator/js/moduli-driver.js" type="text/javascript"></script>
+
+    <!-- Dinamic include -->
+
+	
+
+
+
+    
+
+
+
+    
+
+
+
+    <script id="loader" type="text/javascript">
+
+         $(document).ready(function(){
+
+             validator.tree_builder();
+
+			 $('#UfficioDestinatario').val(get_ufficio_dest());
+
+                loadForm( ["AventeTitolo", "AventeTitolo"] ); //autoload prefix.
+
+
+
+            
+
+         });
+
+    </script>
+
+</html>
+anca per accredito compenso"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Agenzia o filiale: <input id="nome_agenzia" name="nome_agenzia" style="width:85%;" mandatory="#nome_banca.value() != '' || #codice_IBAN.value() != ''" enabled="true" label="Nome agenzia per accredito compenso"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Codice IBAN: <input class="" id="codice_IBAN" name="codice_IBAN" style="width:87.5%;" mandatory="#nome_banca.value() != '' || #nome_agenzia.value() != ''" enabled="true" maxlength="27" label="IBAN per accredito compenso"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-elettorale" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 33%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      </td>
+      <td style="width: 33%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:50%;" type="text"/>
+      </td>
+      <td style="width: 34%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_cM1144-DISPONIBILITA-SCRUTATORE" name="GLOBO_modulo_cM1144-DISPONIBILITA-SCRUTATORE" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="M1144-DISPONIBILITA-SCRUTATORE" />
 
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
