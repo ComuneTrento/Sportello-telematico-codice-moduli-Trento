@@ -907,50 +907,73 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="3">
-        <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+      <td colspan="4">
+        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width:4%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+      </td>
+      <td style="width:15%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width:4%">
+      <td style="vertical-align: top; text-align: center;">
         <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Domanda firmata dal titolare</b> nella seguente modalità: 
-          <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:50%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
-            <option value=""></option>
-            <option value="Firma autografa">Firma autografa</option>
-            <option value="Firma elettronica">Firma elettronica</option>
-          </select>
+            <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:40%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
+              <option value=""></option>
+              <option value="Firma autografa">Firma autografa</option>
+              <option value="Firma elettronica">Firma elettronica</option>
+            </select>
         </p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="#Tipo_richiedente1.checked() ? 'Non richiesto' : '1'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width:4%">
+      <td style="vertical-align: top; text-align: center;">
         <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'Firma autografa'" enabled="#Tipo_richiedente2.checked() and #Tipo_Firma_modulo_compilato.value() == 'Firma autografa'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Copia del documento d'identità del titolare</b></p>
+        <p style="line-height:1.6;">Copia del <b>documento d'identità</b> del titolare del procedimento edilizio</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_docident" name="numero_copia_docident" dynamic_value="#Tipo_richiedente1.checked() ? 'Non richiesto' : (#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? '1' : 'Non richiesto')" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
-      <td style="width:4%; vertical-align: top;">
-        <input dynamic_check="true" enabled="true" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
+      <td style="vertical-align: top; text-align: center;">
+        <input dynamic_check="#Tipo_richiedente2.checked() || (#Tipo_richiedente1.checked() and #AventeTitolo_CodiceFiscale.value() != #Progettista_CodiceFiscale.value() and #Progettista_CodiceFiscale.value() != '')" enabled="#Tipo_richiedente2.checked() || (#Tipo_richiedente1.checked() and #AventeTitolo_CodiceFiscale.value() != #Progettista_CodiceFiscale.value() and #Progettista_CodiceFiscale.value() != '')" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista incaricato</b>, firmato con <b>firma digitale</b></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista</b> firmato con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width:4%" rowspan="3">
+      <td style="vertical-align: top; text-align: center;" rowspan="3">
         <input id="Dichiar_titol_prog" name="Dichiar_titol_prog" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni congiunte del titolare e del progettista</b></p>
       </td>
+      <td style="background-color: #eeeeee;" rowspan="3">
+        <p style="line-height: 1.6; text-align: center;">1</p>
+      </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width:4%">
+      <td style="vertical-align: top; text-align: center;">
         <div id="Firmatario_dich_cong" name="Firmatario_dich_cong" label="Firmatario dichiarazioni congiunte" mandatory_enabled="true"> </div>
         <input group="Firmatario_dich_cong" id="Firmatario_dich_cong1" name="Firmatario_dich_cong" type="radio" value="1" dynamic_check="#Tipo_richiedente1.checked()"/>
       </td>
@@ -975,95 +998,159 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width:4%">
+      <td style="vertical-align: top; text-align: center;">
         <input id="Dichiar_prog" name="Dichiar_prog" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni del progettista</b>, firmato con <b>firma digitale</b></p>
       </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;">1</p>
+      </td>
     </tr>
     <tr>
-      <td style="width:4%; vertical-align: top;">
+      <td style="vertical-align: top; text-align: center;">
         <input dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b>, firmato con <b>firma digitale</b></p>
       </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_dirlav" name="numero_anag_dirlav" dynamic_value="#GEN_DIR_LAV.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
     </tr>
     <tr>
-      <td style="width:4%; vertical-align: top;">
+      <td style="vertical-align: top; text-align: center;">
         <input dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori particelle</b> oggetto del procedimento
-          <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:40.5%;" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
+        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori particelle o subalterni</b> oggetto del procedimento edilizio</p>
+        <p style="line-height:1.6;"><select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:50%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
             <option value=""></option>
-            <option value="Firmato con firma autografa">firmato dal titolare con firma autografa</option>
-            <option value="Firmato con firma elettronica">firmato dal titolare con firma elettronica</option>
-          </select>
+						<option value="Firmato con firma autografa">Firmato con firma autografa del richiedente</option>
+						<option value="Firmato con firma elettronica">Firmato con firma elettronica del richiedente</option>
+           </select>
         </p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part" name="numero_ult_part" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? parseInt(#Immobile_NumeroAltriImmobili.value()) /10 : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
-      <td style="width:4%; vertical-align: top;">
-        <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="GEN_INTAGG" name="GEN_INTAGG" type="checkbox" value="OBBLIGATORIO"/>
+      <td style="vertical-align: top; text-align: center;" rowspan="3">
+        <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="altri_sogg_coinv" name="altri_sogg_coinv" type="checkbox" value="1"/>   
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori soggetti coinvolti</b> nel procedimento edilizio (diversi dal titolare e/o dal progettista), dei quali:
-          <br>- n° <input class="" format="number" id="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG.checked()" name="NschedeAllegateEl" size="1"/> firmano con <b>firma elettronica</b>
-          <br>- n° <input class="" format="number" id="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG.checked()" name="NschedeAllegateAu" size="1"/> firmano con <b>firma autografa</b>, allegando inoltre copia del documento di identità
-        </p>
+          <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori soggetti</b> coinvolti nel procedimento edilizio</p>
+      </td>
+      <td style="background-color: #eeeeee;"></td>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <div id="check_altri_sogg_coinv" name="check_altri_sogg_coinv" label="Indicare presenza altri soggetti coinvolti nel procedimento edilizio" mandatory_enabled="#altri_sogg_coinv.checked()"></div>
+        <input group="check_altri_sogg_coinv" id="GEN_INTAGG_AU" name="GEN_INTAGG_AU" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">Indicare il numero degli ulteriori soggetti coinvolti che firmano con <b>firma autografa</b><br><span style="font-size: 90%;">(allegando inoltre copia del documento di identità)</span></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" format="number" id="NschedeAllegateAu" name="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG_AU.checked()" style="width: 90%; text-align: center;"/></p>
       </td>
     </tr>
     <tr>
-      <td style="width:4%; vertical-align: top;">
-        <input dynamic_check="#Modalita_lavori2.checked()" enabled="#Modalita_lavori2.checked()" id="Anagrafica_imprese" name="Anagrafica_imprese" type="checkbox" value="OBBLIGATORIO"/>
+      <td style="vertical-align: top; text-align: center;">
+        <input group="check_altri_sogg_coinv" id="GEN_INTAGG_EL" name="GEN_INTAGG_EL" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">Indicare il numero degli ulteriori soggetti coinvolti che firmano con <b>firma elettronica</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" format="number" id="NschedeAllegateEl" name="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG_EL.checked()" style="width: 90%; text-align: center;"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;" rowspan="3">
+        <input id="Anagrafica_imprese" name="Anagrafica_imprese" dynamic_check="#Esecuzione_lavori1.checked()" enabled="#Esecuzione_lavori1.checked()" type="checkbox" value="OBBLIGATORIO"/>   
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica delle <input class="" format="number" id="Nanag_imprese_allegate" label="Numero anagrafiche imprese allegate" enabled="#Anagrafica_imprese.checked()" name="Nanag_imprese_allegate" size="1" dynamic_value="#numero_imprese.value()" readonly/> imprese coinvolte</b>, delle quali:
-            <br>- n°<input class="" format="number" id="Nanag_imprese_allegateEl" label="Numero anagrafiche imprese firmate elettronicamente" mandatory_enabled="#Anagrafica_imprese.checked()" name="Nanag_imprese_allegateEl" size="1"/> firmano con <b>firma elettronica</b>
-            <br>- n°<input class="" format="number" id="Nanag_imprese_allegateAu" label="Numero anagrafiche imprese firmate manualmente" mandatory_enabled="#Anagrafica_imprese.checked()" name="Nanag_imprese_allegateAu" size="1"/> firmano con <b>firma autografa</b>
-        </p>
+          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica delle <input id="N_imprese" name="N_imprese" dynamic_value="#numero_imprese.value()" label="Numero imprese coinvolte" style="width: 8%; text-align: center;" enabled="#Esecuzione_lavori1.checked()" readonly/> imprese</b> coinvolte nel procedimento edilizio</p>
+      </td>
+      <td style="background-color: #eeeeee;"></td>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <div id="check_imprese" name="check_imprese" label="Indicare numero delle imprese nel procedimento edilizio" mandatory_enabled="#Anagrafica_imprese.checked()"></div>
+        <input group="check_imprese" id="check_imprese_au" name="check_imprese_au" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">Indicare il numero delle imprese il cui rappresentante firma con <b>firma autografa</b><br><span style="font-size: 90%;">(allegando inoltre copia del documento di identità)</span></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" format="number" id="Nanag_imprese_allegateAu" name="Nanag_imprese_allegateAu" label="Numero anagrafiche imprese firmate manualmente" mandatory_enabled="#check_imprese_au.checked()" style="width: 90%; text-align: center;"/></p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width:4%">
+      <td style="vertical-align: top; text-align: center;">
+        <input group="check_imprese" id="check_imprese_el" name="check_imprese_el" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">Indicare il numero delle imprese il cui rappresentante firma con <b>firma elettronica</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" format="number" id="Nanag_imprese_allegateEl" name="Nanag_imprese_allegateEl" label="Numero anagrafiche imprese firmate elettronicamente" mandatory_enabled="#check_imprese_el.checked()" style="width: 90%; text-align: center;"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
         <input id="procura_affidamento" name="procura_affidamento" type="checkbox" dynamic_check="#AventeTitolo_Ruolo.value() == 'Procuratore' || #AventeTitolo_Ruolo.value() == 'Amministratore di sostegno'" enabled="#AventeTitolo_Ruolo.value() == 'Procuratore' || #AventeTitolo_Ruolo.value() == 'Amministratore di sostegno'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Procura / Affidamento incarico</b></p>
       </td>
-    </tr>     
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_procura_affidamento" name="num_procura_affidamento" dynamic_value="#procura_affidamento.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
+    </tr>   
     <tr>
-      <td style="width:4%; vertical-align: top;">
+      <td style="vertical-align: top; text-align: center;">
         <input id="Doc_notifica" name="Doc_notifica" type="checkbox" dynamic_check="#Scelta_alleg_o_estr_not1.checked()" enabled="#Scelta_alleg_o_estr_not1.checked()" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Documentazione necessaria per la notifica</b>, il cui contenuto sarà riprodotto su apposita tabella esposta in cantiere per tutta la durata dei lavori, in luogo visibile dall'esterno</p>
       </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_Doc_notifica" name="num_Doc_notifica" dynamic_value="#Doc_notifica.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
     </tr>  
     <tr>
-      <td style="width:4%; vertical-align: top;">
+      <td style="vertical-align: top; text-align: center;">
         <input id="Doc_ass_cond" name="Doc_ass_cond" type="checkbox" dynamic_check="#Assenso_richiesto_si.checked()" enabled="#Assenso_richiesto_si.checked()" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Atto di assenso del condominio</b></p>
       </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_Doc_ass_cond" name="num_Doc_ass_cond" dynamic_value="#Doc_ass_cond.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
     </tr>
     <tr>
-      <td style="width:4%; vertical-align: top;">
+      <td style="vertical-align: top; text-align: center;">
         <input id="Doc_ass_comp" name="Doc_ass_comp" type="checkbox" dynamic_check="#Assenso_compropr_si.checked()" enabled="#Assenso_compropr_si.checked()" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Atto di assenso dei comproprietari</b></p>
       </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_Doc_ass_comp" name="num_Doc_ass_comp" dynamic_value="#Doc_ass_comp.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width:4%">
+      <td style="vertical-align: top; text-align: center;">
         <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Parametri_Titolo3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p><b>Documentazione comprovante il diritto contrattuale</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_Contr_locaz" name="num_Contr_locaz" dynamic_value="#Contr_locaz.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
   </tbody>
@@ -1133,39 +1220,25 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-Modulo_compilato_firma_elettronica" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cM47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG" name="GLOBO_modulofiglio_cM47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG" obbligatorio="#Firmatario_dich_cong1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cM47500-MSEC03-DICH-CONG-TIT-PROG-FIRMA-ENTR-AU" name="GLOBO_modulofiglio_cM47500-MSEC03-DICH-CONG-TIT-PROG-FIRMA-ENTR-AU" obbligatorio="#Firmatario_dich_cong2.checked() and #Tipo_Firma_dich_cong.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cM47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL" name="GLOBO_modulofiglio_cM47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL" obbligatorio="#Firmatario_dich_cong2.checked() and #Tipo_Firma_dich_cong.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cM47500-MSEC01-DICH-PROG" name="GLOBO_modulofiglio_cM47500-MSEC01-DICH-PROG" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-DIR-LAV-EL" name="GLOBO_modulofiglio_cGEN-DIR-LAV-EL" obbligatorio="#Tipo_Firma_dir_lav.value() == 'fimato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_modulofiglio_cGEN-INTAGG-EL" name="GLOBO_modulofiglio_cGEN-INTAGG-EL" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-INTAGG-AU" name="GLOBO_modulofiglio_cGEN-INTAGG-AU" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-  
 <input id="GLOBO_modulofiglio_cGEN-IMPRESE-EL" name="GLOBO_modulofiglio_cGEN-IMPRESE-EL" numero="#Nanag_imprese_allegateEl.value()" obbligatorio="#Nanag_imprese_allegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_modulofiglio_cGEN-IMPRESE-AU" name="GLOBO_modulofiglio_cGEN-IMPRESE-AU" numero="#Nanag_imprese_allegateAu.value()" obbligatorio="#Nanag_imprese_allegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-  
 <input id="GLOBO_allegato_cGEN-AFFIDAMENTO-INCARICO" name="GLOBO_allegato_cGEN-AFFIDAMENTO-INCARICO" obbligatorio="#procura_affidamento.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_allegato_cGEN-DOC_NOTIFICA" name="GLOBO_allegato_cGEN-DOC_NOTIFICA" obbligatorio="#Doc_notifica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_allegato_cGEN-VERB-ASS-COND" name="GLOBO_allegato_cGEN-VERB-ASS-COND" obbligatorio="#Doc_ass_cond.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_allegato_cGEN-VERB-ASS-COMP" name="GLOBO_allegato_cGEN-VERB-ASS-COMP" obbligatorio="#Doc_ass_comp.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <input id="GLOBO_allegato_cGEN-DOC-DIRITTO-CONTRATTUALE" name="GLOBO_allegato_cGEN-DOC-DIRITTO-CONTRATTUALE" obbligatorio="#Contr_locaz.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
