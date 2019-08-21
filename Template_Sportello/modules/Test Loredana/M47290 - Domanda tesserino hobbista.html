@@ -1,0 +1,308 @@
+{% set CodiceModulo = "M47290-DOMANDA-TESSERINO-HOBBISTA" %}
+{% set Urn = "document:c_l378:test.loredana;servizio.loredana;modulo.loredana" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Domanda per il rilascio del tesserino da hobbista"
+destinatario_amministrazione=""
+destinatario_ufficio="AFM9MQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|01/01/2019"/>
+
+<meta codice_allegato="M47290-A01-RIC-PAG-HOB"
+urn_allegato="document:c_l378:test.loredana;servizio.loredana;a01.modulo.loredana"
+descrizione_estesa="Ricevuta pagamento diritti istruttoria e diritti segreteria"
+filename="RicevutaPagamentoHobbista.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M47290-A01-RIC-PAG-HOB"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="OBBLIGATORIO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+{% block title %}
+DOMANDA PER IL RILASCIO DEL TESSERINO DI HOBBISTA
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' - Descrizione modulo'"/>
+
+{{ intestazioni.intestazione_moduloprincipale_conbollo() }}
+
+<h1 class="Modulo" style="line-height:1.6;">
+    DOMANDA PER IL RILASCIO DEL TESSERINO DI HOBBISTA
+  </h1>
+  <h2 class="Modulo" style="line-height:1.6;">
+    (art. 20 ter della legge provinciale 30 luglio 2010, n. 17)
+  </H2>
+
+<br>
+<br>
+
+{{anagrafica_trento_uniformata.richiedente("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+
+<h1 class="Modulo">
+  CHIEDE
+</h1>
+
+
+<p class="Modulo" style="line-height:1.6;">
+  il rilascio del tesserino di hobbista di cui all'articolo 20 <em>ter</em> della legge provinciale n. 17 del 30 luglio 2010 per partecipare ai mercatini riservati agli hobbisti.
+</p>
+  <p class="Modulo" style="line-height:1.6;"><strong> A tal fine, consapevole delle sanzioni penali, nel caso di dichiarazioni non veritiere, di formazione o uso di atti falsi, richiamate all'articolo 76 del D.P.R. 28 dicembre 2000,
+  n. 445, nonché della decadenza dai beneficiconseguenti al provvedimento eventualmente emanato sulal base della dichiarazione non veritiera, qualora dal controllo 
+  effettuato emerga la non verificità del contenuto di taluna delle dichiarazioni rese (art. 75 D.P.R. 28 dicembre 2000, n. 445).</strong>
+</p>
+
+<br>
+
+<h1 class="Modulo">
+  DICHIARA
+</h1>
+  
+<p class="Modulo" style="line-height:1.6;text-align:center">
+  <strong>ai sensi degli artt. 46 e 47 del D.P.R. 28 dicembre 2000 n. 445</strong>
+</p>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="RequisitiMorali" name="RequisitiMorali" label="Possesso dei requisiti morali" mandatory_enabled="true"> </div>
+        <input group="RequisitiMorali" id="RequisitiMorali1" name="RequisitiMorali1" type="checkbox" mandatory_enabled="true" value="1"/>
+      </td>
+      <td>
+        <p>di essere in possesso dei requisiti morali previsti dall'articolo 5 della legge provinciale 30 luglio 2010, n. 17 (art. 71, commi 1, 3 e 4 
+          del D.L.gs. n. 59 del 26 marzo 2010 - vedi nota esplicativa)
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="TessereNucleo" name="TessereNucleo" label="Possesso di altre tessere nello stesso nucleo" mandatory_enabled="true"> </div>
+        <input group="TessereNucleo" id="TessereNucleo1" name="TessereNucleo1" type="checkbox" mandatory_enabled="true" value="1"/>
+      </td>
+      <td>
+        <p>che, relativamente al proprio nucleo familiare, non sono stati rilasciati ulteriori tesserini attualmente in corso di validità (vedi nota esplicativa)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="AltreTessere" name="AltreTessere" label="Possesso di altre tessere"> </div>
+        <input group="AltreTessere" id="AltreTessere1" name="AltreTessere1" type="checkbox" value="1"/>
+      </td>
+      <td>
+        <p>che non possiede altri tesserini identificativi attualmente in corso di validità rilasciati da un comune della provincia di Trento (da barrare in caso di trasferimento della residenza)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;" rowspan="3">
+        <div id="esenz_bollo" name="esenz_bollo" label="Esenzione bollo" mandatory_enabled="true"> </div>
+        <input group="esenz_bollo" id="esenz_bollo1" name="esenz_bollo" type="radio" value="1" /> 
+      </td>
+      <td>
+        <p style="line-height:1.6;">che la seguente <b>marca da bollo</b> è stata annullata per la presentazione della documentazione sopra indicata: <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory_enabled="#esenz_bollo1.checked()" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><b>Il richiedente si impegna a conservare l'originale della marca da bollo annullata</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input group="esenz_bollo" id="esenz_bollo2" name="esenz_bollo" type="radio" value="2" /> 
+      </td>
+      <td colspan="9">
+        <p style="line-height:1.6;">che non è necessario annullare marca da bollo in quanto soggetto esente</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h1 class="Modulo">
+  COMUNICA
+</h1>
+
+
+<p class="Modulo" style="line-height:1.6;">
+  di acconsentire all'utilizzo dei dati riportati nella presente, con le modalità illustrate nella nota di seguito riportata, in 
+  conformità a quanto previsto dal Regolamento UE n. 2016/679.
+</p>
+
+<br>
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <tbody >
+        <tr class="Rigaintestazione">
+            <td colspan="3">
+              <p style="text-align: center;">
+                <b>Elenco degli allegati</b>
+                <br>
+                <span style="font-size:70%">
+                  <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+                </span>
+              </p>
+            </td>
+          </tr>  
+      <tr>
+          <td style="vertical-align: top; width: 4%;">
+            <input id="RIC_BONIFICO" name="RIC_BONIFICO" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+          </td>
+          <td style="background-color: #eeeeee;"  style="width:100%">
+            <p>
+              <b>ricevuta bonifico pari ad Euro 26,52 (Euro 26,00 per diritti di istruttoria, ed Euro 0,52 per diritti di segreteria)</b>                                                                         
+            </p>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-imis" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> 
+
+<br>
+<br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="text-align: center;"><b>NOTA ESPLICATIVA</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <ol>
+            <li><p style="font-size:85%">Per i residenti nella provincia di Trento, la domanda è presentata al Comune di residenza.</p>
+              <p style="font-size:85%">Per i residenti in un'altra regione o nella provincia autonoma di Bolzano, la domanda è presentata al Comune di Trento.</p></li>
+            <li><p style="font-size:85%">Art. 71 del D.Lgs. 26 marzo 2010, n. 59:</p>
+              <ol>
+                <li><p style="font-size:85%">Non possono esercitare l'attività commerciale di vendita e di somministrazione:</p>
+                  <ol type="a">
+                      <li><p style="font-size:85%">coloro che sono stati dichiarati delinquenti abituali, professionali o per tendenza, salvo che 
+                    abbiano ottenuto la riabilitazione;</p></li>
+                    <li><p style="font-size:85%">coloro che hanno riportato una condanna, con sentenza passata in giudicato, per delitto non colposo, per il quale 
+                      è prevista una pena detentiva non inferiore nel minimo a 3 anni, sempre che sia stata applicata, in concreto, una pena superiore al 
+                      minimo edittale;</p></li>
+                      <li><p style="font-size:85%">coloro che hanno riportato, con sentenza passata in giudicato, una condanna a pena 
+                          detentiva per uno dei delitti di cui al libro II, Titolo VIII, capo II del codice penale, ovvero per ricettazione, riciclaggio, 
+                          insolvenza fraudolenta, bancarotta fraudolenta, usura, rapina, delitti contro la persona commessi con violenza, estorsione;</p></li>
+                      <li><p style="font-size:85%">coloro che hanno riportato, con sentenza passata in giudicato, una condanna per reati contro l'igiene e 
+                        la sanità pubblica, compresi i delitti di cui al libro II, Titolo VI, capo II del codice penale;</p></li>
+                        <li><p style="font-size:85%">coloro che hanno riportato, con sentenza passata in giudicato, due o più condanne, nel quinquennio 
+                          precedente all'inizio dell'esercizio dell'attività, per delitti di frode nella preprazione e nel commercio degli alimenti previsti da
+                          leggi speciali;</p></li>
+                          <li><p style="font-size:85%">coloro che sono sottoposti a una delle misure di prevenzione di cui alla legge 27 dicembre 1956, 
+                            n. 1423, o nei cui confronti sia stata applicata una delle misure previste dalla legge 31 maggio 1965, n. 575, ovvero a misure di sicurezza;</p></li>      
+                  </ol> 
+                </li>
+                <li><p style="font-size:85%">Non possono esercitare l'attività commerciale di somministrazione di alimenti e bevande coloro che si trovano 
+                nelle condizioni di cui al comma 1, o hanno riportato, con sentenza passata in giudicato, una condanna per reati contro la moralità pubblica e il buon costume, 
+              per delitti commessi in stato di ubriachezza o in stato di intossicazione da stupefacenti; per reati concernenti la prenvenzione dell'alcolismo, le sostante 
+            stupefacenti o psicotrope, il gioco d'azzardo, le scommesse clandestine, nonchè per reati relativi ad infrazioni alle norme sui giochi.</p></li>
+            <li><p style="font-size:85%">Il divieto di esercizio dell'attività, ai sensi del comma 1, lettere b), c), d), e) ed f), e ai sensi del comma 2, permane per la 
+            durata di 5 anni a decorrere dal giorno in cui la pena è stata scontata. Qualora la pena si sia estinta in altro modo, il termine di 5 anni decorre dal giorno del 
+          passaggio in giudicato della sentenza, salvo riabilitazione.</p></li>
+          <li><p style="font-size:85%">Il divieto di esercizio dell'attività non si applica qualora, con sentenza passata in giudicato, sia stata concessa la 
+          sospensione condizionale della pena sempre che non intervengano circostanze idonee a incidere sulla revoca della sospensione.</p></li>  
+          </ol>
+            </li>
+            <li><p style="font-size:85%">Per nucleo familiare si considera quello definito all'articolo 4 del D.P.R. 30 maggio 1989, n. 223 che stabilisce "1. Agli effetti anagrafici per famiglia 
+              si intende un insieme di persone legate da vincoli di matrimonio, parentela, affinità, adozione, tutela o da vincoli affettivi, coabitanti ed aventi dimora 
+              abituale nello stesso Comune."</p>
+            </li>
+          </ol>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+
+<br>
+<br/>
+  {{ utils.firma_hidden() }}
+<br/>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<input id="data_domanda_hobbista" name="data_domanda_hobbista" dynamic_value="#Data.value()" format="date" type="hidden">
+
+<input id="GLOBO_allegato_cM47290-A01-RIC-PAG-HOB" name="GLOBO_allegato_cM47290-A01-RIC-PAG-HOB" obbligatorio="#RIC_BONIFICO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+{% endblock content %}
