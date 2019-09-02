@@ -507,7 +507,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       <tr class="Rigaintestazione" >
           <td colspan="4">
             <b>I pagamenti relativi ai diritti sugli atti in materia urbanistico-edilizia <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" readonly/> euro,
-              all'eventuale marca da bollo sull' emissione del certificato <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '16.00':'0'" readonly/> euro
+              all'eventuale marca da bollo sull' emissione del certificato <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> euro
               e all'eventuale certificato storico richiesto <input id="Totale_ConformazioneStorica" name="Totale_ConformazioneStorica"  label="Importo conformazione storica" style="width:8%;" value="0" dynamic_value="#Parametri_Storici_Post.checked() ? '51.64':'0'" readonly/> euro.
               <br>Per un totale di: 
               <input id="Totale_spesa" name="Totale_spesa" dynamic_value="#Parametri_Storici_Post.checked() ? (parseFloat(#Totale_importo.value()) + (parseFloat(#EsenzioniPagamenti.value()) + 51.64)) : (parseFloat(#Totale_importo.value()) + (parseFloat(#EsenzioniPagamenti.value())))" label="Totale" style="width:10%;"  value="" readonly/> euro.
@@ -522,7 +522,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
             <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi1" name="Tassonomia_DocEdi" type="radio" value="2" />
         </td>
         <td colspan="2">
-          <input class="" format="number" id="EsenzioniPagamenti" name="EsenzioniPagamenti" label="Esenzioni pagamenti" dynamic_value="(#Parametri_Assoggettabilita2.checked() ? '0.00':'16.00')" type="hidden" >
+          <input class="" id="EsenzioniPagamenti" name="EsenzioniPagamenti" label="Esenzioni pagamenti" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0.00':'16.00'" type="hidden" >
           <p>con bonifico bancario o postale da effettuare su conto corrente intestato al Comune di Trento – Servizio di tesoreria
               (la ricevuta va allegata alla richiesta del certificato)<br>
               - IBAN IT 74 I 02008 01820 000001202801<br>
@@ -604,7 +604,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
           <td>
-            <input dynamic_check="#Tassonomia_DocEdi1.checked()" enabled="true" id="GEN_BONIFICO" name="GEN_BONIFICO" type="checkbox" value="OBBLIGATORIO"/>
+            <input dynamic_check="#Tassonomia_DocEdi1.checked()" enabled="#Tassonomia_DocEdi1.checked()" id="GEN_BONIFICO" name="GEN_BONIFICO" type="checkbox" value="OBBLIGATORIO"/>
           </td>
           <td style="background-color: #eeeeee;"  style="width:100%">
             <p>
@@ -614,7 +614,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td>
-          <input dynamic_check="#Tassonomia_DocEdi2.checked()" enabled="true" id="GEN_BANCOMAT" name="GEN_BANCOMAT" type="checkbox" value="OBBLIGATORIO"/>
+          <input dynamic_check="#Tassonomia_DocEdi2.checked()" enabled="#Tassonomia_DocEdi2.checked()" id="GEN_BANCOMAT" name="GEN_BANCOMAT" type="checkbox" value="OBBLIGATORIO"/>
         </td>
         <td style="background-color: #eeeeee;"  style="width:100%">
           <p>
@@ -704,7 +704,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
 </p>
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
 
-<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+<input id="Metadati_AventeTitolo_Cognome_Dato" name="Metadati_AventeTitolo_Cognome_Dato" dynamic_value="#AventeTitolo_Cognome.value()" hidden="true" />
+<input id="Metadati_AventeTitolo_Nome_Dato" name="Metadati_AventeTitolo_Nome_Dato" dynamic_value="#AventeTitolo_Nome.value()" hidden="true"/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
@@ -720,7 +721,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="GLOBO_allegato_cM5301-A01-RIC-DIR-SEG" name="GLOBO_allegato_cM5301-A01-RIC-DIR-SEG" numero="1" obbligatorio="#Tassonomia_DocEdi1.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
 
 <!-- richiedi inserimento modulo secondario per i diritti di segreteria / bancomat-->
-<input id="GLOBO_allegato_cM5301-MSEC02-RIC-DIR-SEG-BNC" name="GLOBO_allegato_cM5301-MSEC02-RIC-DIR-SEG-BNC" numero="1" obbligatorio="#Tassonomia_DocEdi2.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
+<input id="GLOBO_modulofiglio_cM5301-MSEC02-RIC-DIR-SEG-BNC" name="GLOBO_modulofiglio_cM5301-MSEC02-RIC-DIR-SEG-BNC" numero="1" obbligatorio="#Tassonomia_DocEdi2.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
 
 <!-- richiedi inserimento situazione storica iniziale -->
 <input id="GLOBO_allegato_cM5301-A02-SIT-STORICA-INIZIALE" name="GLOBO_allegato_cM5301-A02-SIT-STORICA-INIZIALE" numero="1" obbligatorio="#Parametri_Storici_Post.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" />
@@ -780,7 +781,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
     }
 
     function setSegreteriaNo(){
-      document.getElementById("Totale_importo").value = 0;
+      document.getElementById("Totale_spesa").value = (0 + parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
+      document.getElementById("Totale_spesa_causale").value = (0 + document.getElementById("Totale_MarcaBollo").value + document.getElementById("Totale_ConformazioneStorica").value);
     }
 
     function setSegreteriaSi(){
