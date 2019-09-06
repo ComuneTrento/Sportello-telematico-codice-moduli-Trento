@@ -333,7 +333,7 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;">
+        <td style="vertical-align: center; text-align: center; width: 4%;">
           <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
           <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
         </td>
@@ -342,11 +342,35 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;">
+        <td style="vertical-align: center; text-align: center; width: 4%;">
           <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
         </td>
         <td>
           <p style="line-height:1.6;">Progettista incaricato</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Tipo_richiedente" id="Tipo_richiedente3" name="Tipo_richiedente" type="radio" value="3" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Legale rappresentante dell'impresa incaricata, avente codice fiscale: <input class="" format="cf" id="cf_legale_rappres" name="cf_legale_rappres" label="codice fiscale del legale rappresentante" mandatory_enabled="#Tipo_richiedente3.checked()" size="33"/></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Tipo_richiedente" id="Tipo_richiedente4" name="Tipo_richiedente" type="radio" value="4" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Procuratore</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Tipo_richiedente" id="Tipo_richiedente5" name="Tipo_richiedente" type="radio" value="5" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Amministratore di sostegno</p>
         </td>
       </tr>
     </tbody>
@@ -354,10 +378,11 @@ urn_report="report:CSP_SESSION_REPORT"
 </div>
 
 <br>
+<br>
 
-<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
-<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
-<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="#AventeTitolo_Telefono.value() == ''" type="hidden" />
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="#AventeTitolo_Fisso.value() == ''" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="#Tipo_richiedente1.checked()" type="hidden" />
 <!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
 
 {{anagrafica_trento_uniformata.titolare("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
@@ -368,39 +393,38 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="4">
+      <td colspan="6">
         <p style="line-height:1.6;"><b>IMPRESA ESECUTRICE</b></p>
       </td>
     </tr>
     <tr class="Rigaintestazione">
-      <td colspan="4">
+      <td colspan="6">
         <p style="line-height:1.6;">I lavori vengono eseguiti</p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
         <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
       </td>
-      <td colspan="3">
-        <p style="line-height:1.6;">in economia</p>
-        <span style="font-size:80%;"><i>(trattasi di lavori eseguiti direttamente dal titolare del provvedimento senza intervento di imprese esecutrici dei lavori o di lavoratori autonomi)</i></span>
+      <td colspan="5">
+        <p style="line-height:1.6;">il titolare dichiara che, in quanto opere di modesta entità che non interessano le specifiche normative di settore, i lavori saranno eseguiti in economia, senza alcun affidamento a ditte esterne</p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="23">
-        <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2" />
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="7">
+        <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2" dynamic_check="#Tipo_richiedente3.checked()"/>
       </td>
-      <td colspan="3">
+      <td colspan="5">
         <p style="line-height:1.6;">con le imprese / lavoratori autonomi come di seguito indicato:</p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="11">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
         <div id="Tipo_Esecuzione_lavori" name="Tipo_Esecuzione_lavori" label="Lavori svolti mediante:" mandatory_enabled="#Modalita_lavori2.checked()"> </div>
         <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori1" name="Esecuzione_lavori1" type="checkbox" value="1"/>
       </td>
-      <td colspan="2">
+      <td colspan="4">
         <p style="line-height:1.6;">Numero imprese coinvolte: <input class="" format="number" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2"/>, si indicano di seguito i dati della prima</p>
       </td>
     </tr>
@@ -409,7 +433,7 @@ urn_report="report:CSP_SESSION_REPORT"
     {% set prefix = prefix|string %}
        
     <tr class="Rigaintestazioneridotta">
-      <td>
+      <td colspan="2">
         <p class="Labelcella">Ragione sociale</p>
       </td>
       <td>
@@ -417,7 +441,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td>
+      <td colspan="2">
         <input class="inputNormal" id="Ragione_sociale{{ prefix }}" name="Ragione_sociale{{ prefix }}" style="width: 100%;" label="Ragione sociale imprese" enabled="#Esecuzione_lavori1.checked()" mandatory="#PIVA{{ prefix }}.value() != ''">
       </td>
       <td>
@@ -429,7 +453,45 @@ urn_report="report:CSP_SESSION_REPORT"
     {% for i in range(1, 2) %}
       {{ Ragione_sociale_imprese_coinvolte(i) }}
     {% endfor %}
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
+        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori2" name="Esecuzione_lavori2" type="checkbox" value="2"/>
+      </td>
+      <td colspan="4">
+        <p style="line-height:1.6;">Numero lavoratori autonomi coinvolti: <input class="" format="number" id="numero_lavoratori_autonomi" name="numero_lavoratori_autonomi" label="numero lavoratori autonomi coinvolti" mandatory_enabled="#Esecuzione_lavori2.checked()" size="2"/>, si indicano di seguito i dati della prima</p>
+      </td>
+    </tr>
 
+    {% macro Lavoratori_autonomi_coinvolti(prefix) %}
+    {% set prefix = prefix|string %}
+       
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td>
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td>
+        <p class="Labelcella">P.IVA/Codice Fiscale</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Cognome_lav_aut{{ prefix }}" name="Cognome_lav_aut{{ prefix }}" style="width: 100%;" label="Cognome lavoratore autonomo" enabled="#Esecuzione_lavori2.checked()" mandatory="#Nome_lav_aut{{ prefix }}.value() != '' || #CF_lav_aut{{ prefix }}.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Nome_lav_aut{{ prefix }}" name="Nome_lav_aut{{ prefix }}" style="width: 100%;" label="Nome lavoratore autonomo" enabled="#Esecuzione_lavori2.checked()" mandatory="#Cognome_lav_aut{{ prefix }}.value() != '' || #CF_lav_aut{{ prefix }}.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="CF_lav_aut{{ prefix }}" name="CF_lav_aut{{ prefix }}" style="width: 100%;" label="Codice fiscale lavoratore autonomo" enabled="#Esecuzione_lavori2.checked()" mandatory="#Nome_lav_aut{{ prefix }}.value() != '' || #Cognome_lav_aut{{ prefix }}.value() != ''">
+      </td>
+    </tr>
+    {%- endmacro %}
+        
+    {% for i in range(1, 2) %}
+      {{ Lavoratori_autonomi_coinvolti(i) }}
+    {% endfor %}
   </tbody>
 </table>
 
@@ -438,7 +500,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
   
-{{ immobili_trento.immobile_trento("Immobile", "I lavori interessano le seguenti realtà immobiliari", disattivato="true") }}
+{{ immobili_trento.immobile_solotrento("Immobile", "I lavori interessano le seguenti realtà immobiliari", disattivato="true") }}
 
 <br>
 
@@ -468,29 +530,35 @@ urn_report="report:CSP_SESSION_REPORT"
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
-          <p style="line-height:1.6;"><b>che in data <input class="" format="date" id="data_lavori" name="data_lavori" label="data inizio lavori" mandatory_enabled="true" size="7"/>:</b></p>       
+          <p style="line-height:1.6;"><b>che in data <input class="" format="date" id="data_lavori" name="data_lavori" label="data inizio lavori" mandatory_enabled="true" size="10" style="text-align: center;"/>:</b></p>     
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;">
+        <td style="vertical-align: center; text-align: center; width: 4%;">
           <div id="inizio_lavori" name="inizio_lavori" label="Inizio lavori" mandatory_enabled="true"> </div>
           <input group="inizio_lavori" id="inizio_lavori1" name="inizio_lavori" type="radio" value="1" />
         </td>
         <td>
           <p style="line-height:1.6;">avranno inizio i lavori sopradescritti</p>
+          <p style="line-height:1.6;"><input id="correttezza_date" name="correttezza_date" dynamic_value="DaysBetweenDate(#Data_PDF.value(), #data_lavori.value()) >= 1 ? 'OK' : 'ATTENZIONE: la data di inizio lavori indicata è antecedente alla data di oggi'" style="width: 100%;"/></p>
         </td>
       </tr>
+      <input id="check_correttezza_date" name="check_correttezza_date" dynamic_value="#correttezza_date.value() == 'OK' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: errore nella data di inizio lavori indicata" />
       <tr>
-        <td style="vertical-align: top; width: 4%;">
+        <td style="vertical-align: top; text-align: center; width: 4%;">
           <input group="inizio_lavori" id="inizio_lavori2" name="inizio_lavori" type="radio" value="2" />
         </td>
         <td>
           <p style="line-height:1.6;">sono stati eseguiti i lavori sopradescritti in assenza della necessaria comunicazione preventiva, con gli effetti sanzionatori previsti dall’art. 78, comma 4, della L.P. n. 15/2015</p>
+          <p style="line-height:1.6;"><input id="correttezza_date1" name="correttezza_date1" dynamic_value="DaysBetweenDate(#Data_PDF.value(), #data_lavori.value()) <= 0 ? 'OK' : 'ATTENZIONE: la data di esecuzione lavori indicata è successiva alla data di oggi'" style="width: 100%;"/></p>
         </td>
       </tr>
+      <input id="check_correttezza_date1" name="check_correttezza_date1" dynamic_value="#correttezza_date.value() == 'OK' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: errore nella data di esecuzione lavori indicata" />
     </tbody>
   </table>
 </div>
+
+
 
 <br>
 <br>
@@ -503,7 +571,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere1" name="Tipo_opere1" type="checkbox" value="1" />
       </td>
       <td>
@@ -512,7 +580,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere2" name="Tipo_opere2" type="checkbox" value="2" />
       </td>
       <td>
@@ -521,7 +589,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere3" name="Tipo_opere3" type="checkbox" value="3" />
       </td>
       <td>
@@ -530,7 +598,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere4" name="Tipo_opere4" type="checkbox" value="4" />
       </td>
       <td>
@@ -539,7 +607,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere5" name="Tipo_opere5" type="checkbox" value="5" />
       </td>
       <td>
@@ -548,7 +616,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere6" name="Tipo_opere6" type="checkbox" value="6" />
       </td>
       <td>
@@ -557,7 +625,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere7" name="Tipo_opere7" type="checkbox" value="7" />
       </td>
       <td>
@@ -566,7 +634,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere8" name="Tipo_opere8" type="checkbox" value="8" />
       </td>
       <td>
@@ -575,7 +643,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere9" name="Tipo_opere9" type="checkbox" value="9" />
       </td>
       <td>
@@ -584,7 +652,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere10" name="Tipo_opere10" type="checkbox" value="10" />
       </td>
       <td>
@@ -593,7 +661,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere11" name="Tipo_opere11" type="checkbox" value="11" />
       </td>
       <td>
@@ -602,16 +670,18 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere12" name="Tipo_opere12" type="checkbox" value="12" />
       </td>
       <td>
         <p style="line-height:1.6;"><b>opere precarie</b> facilmente rimovibili e destinate a soddisfare esigenze improrogabili e temporanee</p>
-        <span style="font-size:75%">(articolo 78, comma 3, lettera k) della legge provinciale del 4 agosto 2015, n. 15. Si ricorda che la comunicazione deve essere presentata al comune <b>almeno 10 giorni prima dell’inizio lavori</b> ai sensi dell’art. 32, comma 5, del regolamento urbanistico-edilizio provinciale)</span>
+        <span style="font-size:75%;line-height:1.6;">(articolo 78, comma 3, lettera k) della legge provinciale del 4 agosto 2015, n. 15. Si ricorda che la comunicazione deve essere presentata al comune <b>almeno 10 giorni prima dell’inizio lavori</b> ai sensi dell’art. 32, comma 5, del regolamento urbanistico-edilizio provinciale)</span>
+        <p style="line-height:1.6;"><input id="controllo_10gg" name="controllo_10gg" dynamic_value="#inizio_lavori2.checked() ? 'ATTENZIONE: comunicazione successiva ai lavori --- sanzione' :  (#inizio_lavori2.checked() and DaysBetweenDate(#Data_PDF.value(), #data_lavori.value()) >= 10 ? 'OK' : 'ATTENZIONE: comunicazione tardiva --- sanzione')" style="width: 100%;"/></p>
       </td>
     </tr>
+     <input id="check_controllo_10gg" name="check_controllo_10gg" dynamic_value="#controllo_10gg.value() == 'OK' ? 'OK' : ''" mandatory="true" />
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere13" name="Tipo_opere13" type="checkbox" value="13" />
       </td>
       <td>
@@ -620,7 +690,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere14" name="Tipo_opere14" type="checkbox" value="14" />
       </td>
       <td>
@@ -629,7 +699,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere15" name="Tipo_opere15" type="checkbox" value="15" />
       </td>
       <td>
@@ -638,7 +708,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="Tipo_opere16" name="Tipo_opere16" type="checkbox" value="16" />
       </td>
       <td>
@@ -673,87 +743,41 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;">
+        <td style="vertical-align: center; text-align: center; width: 4%;">
           <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri titolo sottoscrivente" mandatory_enabled="true"></div>
           <input group="Parametri_Titolo" id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" />
         </td>
         <td colspan="2">
-          <p style="line-height:1.6;">di avere titolarità esclusiva all’esecuzione dell’intervento in quanto proprietario</p>
+          <p style="line-height:1.6;">di avere titolarità all’esecuzione dell’intervento in quanto proprietario esclusivo</p>
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;" rowspan="4">
+        <td style="vertical-align: center; text-align: center; width: 4%;">
           <input group="Parametri_Titolo" id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
         </td>
         <td colspan="2">
-          <p style="line-height:1.6;">di avere titolo alla presentazione di questa comunicazione in quanto:</p>
+          <p style="line-height:1.6;">di essere titolare di altro diritto reale (comproprietario, usufruttuario, etc.)</p>
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <div id="Altro_titolo_reale" name="Altro_titolo_reale" label="Altro titolo reale sottoscrivente" mandatory_enabled="true"></div>
-          <input group="Altro_titolo_reale" id="Altro_titolo_reale1" name="Altro_titolo_reale" type="radio" value="1" />
-        </td>
-        <td>
-          <p style="line-height:1.6;">Comproprietario</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <input group="Altro_titolo_reale" id="Altro_titolo_reale2" name="Altro_titolo_reale" type="radio" value="2" />
-        </td>
-        <td>
-          <p style="line-height:1.6;">Usufruttuario</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
-          <input group="Altro_titolo_reale" id="Altro_titolo_reale3" name="Altro_titolo_reale" type="radio" value="3" />
-        </td>
-        <td>
-          <p style="line-height:1.6;">Altro: <input class="" id="Spec_Altro_titolo_reale" name="Spec_Altro_titolo_reale" label="Altro titolo reale" mandatory_enabled="#Altro_titolo_reale3.checked()" style="width:94%;"/></p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: top; width: 4%;">
+        <td style="vertical-align: center; text-align: center; width: 4%;">
           <input group="Parametri_Titolo" id="Parametri_Titolo3" name="Parametri_Titolo" type="radio" value="3" />
         </td>
+        <td>
+          <p style="line-height:1.6;">di essere titolare di diritto contrattuale (locatario, titolare di leasing, etc.)</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; text-align: center; width: 4%;">
+          <input group="Parametri_Titolo" id="Parametri_Titolo4" name="Parametri_Titolo" type="radio" value="4" />
+        </td>
         <td colspan="2">
-          <p style="line-height:1.6;">di <b>non</b> avere titolarità esclusiva all’esecuzione dell’intervento, ma di disporre comunque della dichiarazione di assenso dei terzi titolari di altri diritti reali o obbligatori (allegare copia del titolo se locatario, titolare di leasing, etc.)</p>
+          <p style="line-height:1.6;">di <b>non</b> avere titolarità esclusiva all’esecuzione dell’intervento, ma di disporre comunque della dichiarazione di assenso dei terzi titolari di altri diritti reali o obbligatori (allegare copia del titolo)</p>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
- 
-<br>
-
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>Esclusivita' del titolo</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <div id="Tassonomia_Titolo" name="Tassonomia_Titolo" label="Titolo sottoscrivente" mandatory_enabled="true"></div>
-        <input id="Tassonomia_Titolo1" name="Tassonomia_Titolo" type="radio" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">intestatario unico</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Tassonomia_Titolo2" name="Tassonomia_Titolo" type="radio" value="2" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">primo intestatario di altri soggetti</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
   
 <br>
 <br>
@@ -766,7 +790,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="Tipologia_opere" name="Tipologia_opere" label="Tipologia opere" mandatory_enabled="true"> </div>
         <input group="Tipologia_opere" id="Tipologia_opere1" name="Tipologia_opere" type="radio" value="1" />
       </td>
@@ -775,7 +799,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="3">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
         <input group="Tipologia_opere" id="Tipologia_opere2" name="Tipologia_opere" type="radio" value="2" />
       </td>
       <td colspan="2">
@@ -783,7 +807,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="Assenso_richiesto" name="Assenso_richiesto" label="Richiesto atto assenso del condominio" mandatory_enabled="#Tipologia_opere2.checked()"> </div>
         <input group="Assenso_richiesto" id="Assenso_richiesto_no" name="Assenso_richiesto" type="radio" value="1" />
       </td>
@@ -792,7 +816,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Assenso_richiesto" id="Assenso_richiesto_si" name="Assenso_richiesto" type="radio" value="2" />
       </td>
       <td colspan="2">
@@ -800,7 +824,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="3">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
         <input group="Tipologia_opere" id="Tipologia_opere3" name="Tipologia_opere" type="radio" value="3" />
       </td>
       <td colspan="2">
@@ -808,20 +832,20 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="Assenso_compropr" name="Assenso_compropr" label="Richiesto atto assenso dei comproprietari" mandatory_enabled="#Tipologia_opere3.checked()"> </div>
         <input group="Assenso_compropr" id="Assenso_compropr_no" name="Assenso_compropr" type="radio" value="1" />
       </td>
       <td colspan="2">
-        <p style="line-height:1.6;"><b>non</b> necessita di atto di assenso dei comproprietari, che si allega</p>
+        <p style="line-height:1.6;"><b>non</b> necessita di atto di assenso dei comproprietari</p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Assenso_compropr" id="Assenso_compropr_si" name="Assenso_compropr" type="radio" value="2" />
       </td>
       <td colspan="2">
-        <p style="line-height:1.6;">necessita di atto di assenso dei comproprietari</p>
+        <p style="line-height:1.6;">necessita di atto di assenso dei comproprietari, che si allega</p>
       </td>
     </tr>
   </tbody>
@@ -834,11 +858,11 @@ urn_report="report:CSP_SESSION_REPORT"
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="3">
-        <p style="line-height:1.6;"><b>che la comunicazione</b>, relativamente all'ammissibilità prevista dall’art. 78, comma 3, lettera k) della legge provinciale 4 agosto 2015, n. 15</p>
+        <p style="line-height:1.6;"><b>che la comunicazione</b></p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="posa_opere" name="posa_opere" label="Prevista posa di opere o manufatti precari" mandatory_enabled="true"></div>
         <input id="posa_opere_no" name="posa_opere" type="radio" value="1" />
       </td>
@@ -847,11 +871,11 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input id="posa_opere_si" name="posa_opere" type="radio" value="2" />
       </td>
       <td colspan="2">
-        <p style="line-height:1.6;"><b>riguarda</b> la posa di opere o manufatti precari (si allega relazione tecnica descrittiva delle opere)</p>
+        <p style="line-height:1.6;"><b>riguarda</b> la posa di opere o manufatti precari, ammessi dall’art. 78, comma 3, lettera k) della legge provinciale 4 agosto 2015, n. 15, pertanto, secondo le prescrizioni contenute nell'art. 32 del regolamento urbanistico-edilizio provinciale, si allega relazione tecnica descrittiva delle opere, della loro funzione temporanea e improrogabile, dei tempi previsti di utilizzazione e delle modalità di rimozione e rimessa in pristino dei luoghi ed elaborati cartografici relativi al manufatto o alle opere</p>
       </td>
     </tr>
   </tbody>
@@ -859,8 +883,6 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <br>
 <br>
-
-<h1 class="Modulo">DICHIARA INOLTRE</h1>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -917,7 +939,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="6">
+      <td style="vertical-align: top; width: 4%;" rowspan="7">
         <input id="richiesta_atto2" name="richiesta_atto" type="radio" value="2" />
       </td>
       <td colspan="4">
@@ -992,6 +1014,20 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td>
         <input class="inputNormal" id="Parametri_OrgComp4" name="Parametri_OrgComp4" style="width: 100%;" label="Organo Competente4" enabled="#Parametri_OrgComp3.value() != ''">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TipProc5" name="Parametri_TipProc5" style="width: 100%;" label="Tipo Atto5" enabled="#Parametri_TipProc4.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Numero5" name="Parametri_Numero5" style="width: 100%;" label="Numero Atto5" enabled="#Parametri_Numero4.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_Data5" name="Parametri_Data5" style="width: 100%;" label="Data Atto5" format="date" enabled="#Parametri_Data4.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_OrgComp5" name="Parametri_OrgComp5" style="width: 100%;" label="Organo Competente5" enabled="#Parametri_OrgComp4.value() != ''">
       </td>
     </tr>
   </tbody>
@@ -1220,7 +1256,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top;">
-        <input id="Documentazione_fotografica" name="Documentazione_fotografica" type="checkbox" enabled="true" value="OBBLIGATORIO" />
+        <input id="Documentazione_fotografica" name="Documentazione_fotografica" type="checkbox" enabled="true" mandatory="#progetto_richiesto2.checked()" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Documentazione fotografica</b></p>
@@ -1228,7 +1264,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input id="Elaborati_progettuali" name="Elaborati_progettuali" type="checkbox" value="OBBLIGATORIO"/>
+        <input id="Elaborati_progettuali" name="Elaborati_progettuali" type="checkbox" value="OBBLIGATORIO" mandatory="#progetto_richiesto2.checked()"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Elaborati progettuali a firma di un tecnico abilitato</b>, che rappresentino lo stato di raffronto nel caso di interventi di manutenzione straordinaria che comportano la modifica dell'impianto distributivo interno e relativa attestazione in merito alla corrispondenza dei contenuti del progetto rispetto alle disposizioni vigenti</b>, ai sensi dell'art. 15, comma 2, della L.P. n. 15/2015 e la corrispondenza dei relativi contenuti rispetto a studi o perizie allegate, quali parti integranti al progetto</p>
@@ -1236,7 +1272,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input id="Irrilevanza_strutturale" name="Irrilevanza_strutturale" type="checkbox" value="OBBLIGATORIO"/>
+        <input id="Irrilevanza_strutturale" name="Irrilevanza_strutturale" type="checkbox" value="OBBLIGATORIO" mandatory="#progetto_richiesto2.checked()"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Attestazione di un tecnico abilitato che dimostri l’irrilevanza strutturale</b></p>
@@ -1342,7 +1378,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il titolare <span style="font-size:95%"><i>(<input id="firma_documento_princ" name="firma_documento_princ" dynamic_value="#Tipo_richiedente1.checked() ? 'accesso eseguito mediante SPID o CPS/CNS' : (#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'firma autografa' : 'firma digitale')"/>)</i></span></p>
+        <p class="Labelcella" style="text-align: center">Il titolare <span style="font-size:95%"><i>(<input id="firma_documento_princ" name="firma_documento_princ" dynamic_value="#Tipo_richiedente1.checked() ? 'accesso eseguito mediante SPID o CPS/CNS' : (#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'firma autografa' : 'firma digitale')" style="width: 80%;"/>)</i></span></p>
       </td>
     </tr>
   </tbody>
