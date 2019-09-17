@@ -1,0 +1,1992 @@
+{% set CodiceModulo = "M1115-ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO" %}
+{% set Urn =  "document:c_l378:elettorale.presidenti;iscriversi.albo.presidenti;iscrizione;m1115.iscrizione.presidente" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1115-ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO_vSTU3" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Iscrizione all'albo dei presidenti di seggio"
+descrizione="Iscrizione all'albo dei presidenti di seggio"
+destinatario_amministrazione=""
+destinatario_ufficio="B6PZ17" 
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M1115-ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_allegato="INFORM-TRATT-DATI-ELETTORALE"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.elettorale"
+descrizione_estesa="Informativa trattamento dati ELETTORALE"
+filename="INFORM-TRATT-DATI-ELETTORALE.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-ELETTORALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!--<meta codice_allegato="GEN-CDI"
+urn="document:c_l378:copia.documento.identita"
+descrizione_estesa="Documento di identità"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>-->
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="16" %}
+  {% set simpaticoEserviceName="M1115 ISCRIZIONE ALBO PRESIDENTE SEGGIO" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1115-ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Elettorale" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale"] %}
+  {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
+                          ('block2', 'Il richiedente deve essere cittadino Italiano'),
+                          ('block3', 'Il richiedente deve risiedere a Trento'),
+                          ('block5', 'Indicare tutte le dichiarazioni obbligatorie'),
+                          ('block6', 'Indicare i 3 seggi di preferenza'),
+                          ('block9', 'Confermare presa visione informativa')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
+
+{% block title %}ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#nominativo_oggetto.value() + ' - Iscrizione albo presidente di seggio elettorale'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo" style="line-height:1.6;">
+    Domanda per l’iscrizione all’albo delle persone idonee<br>all’ufficio di Presidente di seggio elettorale
+</h1>
+
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
+{{anagrafica_trento_uniformata.richiedente_elettorale("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <p style="text-align:center; line-height: 1.6;">ai sensi dell’art. 1 della legge 21 marzo 1990, n. 53</p>
+        <h3 style="text-align:center; line-height: 1.6;"><b>CHIEDE</b></h3>
+        <h3 style="text-align:center; line-height: 1.6;"><b>di essere inserito/a nell’albo delle persone idonee all’ufficio di presidente di seggio elettorale</b></h3><br>
+        <p style="text-align:center; line-height: 1.6;">A tal fine, sotto la propria personale responsabilità ai sensi degli artt. 46 e 47 del D.P.R. 28 dicembre 2000, n. 445</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h3 class="Modulo">DICHIARA</h3>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="background-color: #eeeeee; width:4%; vertical-align: center; text-align: center;">
+        <input id="iscr_liste" name="iscr_liste" type="checkbox" value="1" mandatory_enabled="true"/>
+      </td>
+      <td colspan="2">
+        <p>di essere iscritto/a nelle liste elettorali di questo Comune</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee; width:4%; vertical-align: center; text-align: center;">
+        <input id="titolo_studio" name="titolo_studio" type="checkbox" value="2" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.8;">di essere in possesso del seguente titolo di studio:
+          <select class="inputNormal" id="{{ prefix }}_titolo_studio" name="{{ prefix }}_titolo_studio" style="width:55%" label="Titolo di studio" mandatory_enabled="true">
+            <option value=""></option>
+            <option value="No_Elementare">Nessun titolo/Lic. Elementare</option>
+            <option value="Media">Lic. Media</option>
+            <option value="Diploma">Diploma</option>
+            <option value="Laurea_triennale">Laurea triennale</option>
+            <option value="Laurea">Laurea</option>
+            <option value="Dottorato">Dottorato</option>
+          </select>
+        <br>conseguito presso l'Istituto: <input class="inputNormal" id="istituto_studi" name="istituto_studi" style="width:75%" mandatory_enabled="true"/> 
+        <br>con sede nel Comune di: <input class="inputNormal" id="comune_istituto" name="comune_istituto" style="width:77%" mandatory_enabled="true"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee; width:4%; vertical-align: center; text-align: center;">
+        <input id="impiego" name="impiego" type="checkbox" value="3" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.8;">di esercitare la professione / essere nella condizione di: <input class="inputNormal" id="tipo_lavoro" name="tipo_lavoro" style="width:50.5%" mandatory_enabled="true"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee; width:4%; vertical-align: center; text-align: center;">
+        <input id="dich_necessarie" name="dich_necessarie" type="checkbox" value="4" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.8;">di non trovarsi in nessuna delle condizioni previste dagli artt. 38 del T.U. 361/1957 e 23 del T.U. 570/1960, e cioè:</p>
+        <ul>
+          <li style="line-height:1.6;">di non aver superato il settantesimo anno di età</li>
+          <li style="line-height:1.6;">di non essere dipendente dei Ministeri dell’Interno, delle Poste e Telecomunicazioni e dei Trasporti</li>
+          <li style="line-height:1.6;">di non essere in servizio nelle Forze armate</li>
+          <li style="line-height:1.6;">di non essere medico provinciale, ufficiale sanitario, medico condotto</li>
+          <li style="line-height:1.6;">di non essere segretario comunale né dipendente comunale addetto o comandato a prestare servizio presso l’Ufficio elettorale comunale</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee; width:4%; vertical-align: center; text-align: center;">
+        <input id="non_present" name="non_present" type="checkbox" value="5" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">di non trovarsi nella condizione di non essersi presentato/a, senza giustificato motivo, dopo essere stato/a chiamato/a a svolgere le funzioni di presidente</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee; width:4%; vertical-align: center; text-align: center;">
+        <input id="no_cond" name="no_cond" type="checkbox" value="6" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">di non essere stato/a condannato/a, anche con sentenza non definitiva, per i reati previsti dall’art. 96 del D.P.R. 570/1960 e dall’art. 104, comma 2, del D.P.R. 361/1957</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="7">
+        <p style="line-height:1.6;"><b>SEGGI ELETTORALI DI PREFERENZA</b></p>
+        <p style="font-size:90%; line-height:1.6;"><i>(indicare 3 seggi elettorali di preferenza ove esercitare eventualmente le funzioni di presidente di seggio)</i></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 13%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;"><b>Circoscrizione</b></p>
+      </td>
+      <td colspan="2" style="width: 37%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;"><b>Denominazione stabile</b></p>
+      </td>
+      <td style="width: 27%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;"><b>Indirizzo</b></p>
+      </td>
+      <td colspan="3">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;"><b>Seggi</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">1</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="circoscrizione_sezione" name="circoscrizione_sezione" label="Circoscrizione del seggio"> </div>
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione1" name="circoscrizione_sezione" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Gardolo</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Piazzale L. Groff, 2</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc1_sez1" name="nr_seggio1_crc1_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 1 - Centro civico Gardolo" onchange="calcolaseggi11()">
+            <option value=""></option>
+            <option value="84">84</option>
+            <option value="85">85</option>
+            <option value="86">86</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio2_crc1_sez1" name="nr_seggio2_crc1_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 1 - Centro civico Gardolo" onchange="calcolaseggi11()">
+            <option value=""></option>
+            <option value="84">84</option>
+            <option value="85">85</option>
+            <option value="86">86</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio3_crc1_sez1" name="nr_seggio3_crc1_sez1" style="width:90%;" label="Scelta terzo seggio circoscrizione 1 - Centro civico Gardolo" onchange="calcolaseggi11()">
+            <option value=""></option>
+            <option value="84">84</option>
+            <option value="85">85</option>
+            <option value="86">86</option>
+          </select> 
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione2" name="circoscrizione_sezione" type="checkbox" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Edificio pluriuso (ex centro civico)</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via Soprasasso, 1</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc1_sez2" name="nr_seggio1_crc1_sez2" style="width:90%;" label="Scelta primo seggio circoscrizione 1 - Edificio pluriuso" onchange="calcolaseggi12()">
+            <option value=""></option>
+            <option value="87">87</option>
+            <option value="88">88</option>
+            <option value="89">89</option>
+            <option value="90">90</option>
+            <option value="91">91</option>
+            <option value="92">92</option>
+            <option value="93">93</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio2_crc1_sez2" name="nr_seggio2_crc1_sez2" style="width:90%;" label="Scelta secondo seggio circoscrizione 1 - Edificio pluriuso" onchange="calcolaseggi12()">
+            <option value=""></option>
+            <option value="87">87</option>
+            <option value="88">88</option>
+            <option value="89">89</option>
+            <option value="90">90</option>
+            <option value="91">91</option>
+            <option value="92">92</option>
+            <option value="93">93</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio3_crc1_sez2" name="nr_seggio3_crc1_sez2" style="width:90%;" label="Scelta terzo seggio circoscrizione 1 - Edificio pluriuso" onchange="calcolaseggi12()">
+            <option value=""></option>
+            <option value="87">87</option>
+            <option value="88">88</option>
+            <option value="89">89</option>
+            <option value="90">90</option>
+            <option value="91">91</option>
+            <option value="92">92</option>
+            <option value="93">93</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">2</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione3" name="circocircoscrizione_sezionescrizione" type="checkbox" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Vigo Meano</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Piazza A. Stainer, 1</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc2_sez1" name="nr_seggio1_crc2_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 2 - Centro civico Vigo Meano" onchange="calcolaseggi21()">
+            <option value=""></option>
+            <option value="83">83</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+      </td>
+      <td style="text-align: center;">
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione4" name="circocircoscrizione_sezionescrizione" type="checkbox" value="4" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Meano</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via delle Sugarine, 26</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc2_sez2" name="nr_seggio1_crc2_sez2" style="width:90%;" label="Scelta primo seggio circoscrizione 2 - Centro civico Meano" onchange="calcolaseggi22()">
+            <option value=""></option>
+            <option value="81">81</option>
+            <option value="82">82</option>
+            <option value="96">96</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio2_crc2_sez2" name="nr_seggio2_crc2_sez2" style="width:90%;" label="Scelta secondo seggio circoscrizione 2 - Centro civico Meano" onchange="calcolaseggi22()">
+            <option value=""></option>
+            <option value="81">81</option>
+            <option value="82">82</option>
+            <option value="96">96</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio3_crc2_sez2" name="nr_seggio3_crc2_sez2" style="width:90%;" label="Scelta terzo seggio circoscrizione 2 - Centro civico Meano" onchange="calcolaseggi22()">
+            <option value=""></option>
+            <option value="81">81</option>
+            <option value="82">82</option>
+            <option value="96">96</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">3</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione5" name="circoscrizione_sezione" type="checkbox" value="5" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Ufficio comunale Cadine</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Via dell'Androna, 1</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc3_sez1" name="nr_seggio1_crc3_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 3 - Ufficio comunale Cadine" onchange="calcolaseggi31()">
+            <option value=""></option>
+            <option value="79">79</option>
+            <option value="80">80</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio2_crc3_sez1" name="nr_seggio2_crc3_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 3 - Ufficio comunale Cadine" onchange="calcolaseggi31()">
+            <option value=""></option>
+            <option value="79">79</option>
+            <option value="80">80</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+      </td>
+    </tr>   
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione6" name="circoscrizione_sezione" type="checkbox" value="6" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Sopramonte</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via di Revolta, 4</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc3_sez2" name="nr_seggio1_crc3_sez2" style="width:90%;" label="Scelta primo seggio circoscrizione 3 - Centro civico Sopramonte" onchange="calcolaseggi32()">
+            <option value=""></option>
+            <option value="77">77</option>
+            <option value="78">78</option>
+            <option value="98">98</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio2_crc3_sez2" name="nr_seggio2_crc3_sez2" style="width:90%;" label="Scelta secondo seggio circoscrizione 3 - Centro civico Sopramonte" onchange="calcolaseggi32()">
+            <option value=""></option>
+            <option value="77">77</option>
+            <option value="78">78</option>
+            <option value="98">98</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio3_crc3_sez2" name="nr_seggio3_crc3_sez2" style="width:90%;" label="Scelta terzo seggio circoscrizione 3 - Centro civico Sopramonte" onchange="calcolaseggi32()">
+            <option value=""></option>
+            <option value="77">77</option>
+            <option value="78">78</option>
+            <option value="98">98</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">4</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione7" name="circoscrizione_sezione" type="checkbox" value="7" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Sardagna</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via G.Bucelleni, 1</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc4_sez1" name="nr_seggio1_crc4_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 4 - Centro civico Sardagna" onchange="calcolaseggi41()">
+            <option value=""></option>
+            <option value="76">76</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+      </td>
+      <td style="text-align: center;">
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">5</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione8" name="circoscrizione_sezione" type="checkbox" value="8" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Ufficio comunale Romagnano</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via sette fontane, 1</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc5_sez1" name="nr_seggio1_crc5_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 5 - Ufficio comunale Romagnano" onchange="calcolaseggi51()">
+            <option value=""></option>
+            <option value="75">75</option>
+            <option value="95">95</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc5_sez1" name="nr_seggio2_crc5_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 5 - Ufficio comunale Romagnano" onchange="calcolaseggi51()">
+            <option value=""></option>
+            <option value="75">75</option>
+            <option value="95">95</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione9" name="circoscrizione_sezione" type="checkbox" value="9" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Ravina</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via val Gola, 2</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc5_sez2" name="nr_seggio1_crc5_sez2" style="width:90%;" label="Scelta primo seggio circoscrizione 5 - Centro civico Ravina" onchange="calcolaseggi52()">
+            <option value=""></option>
+            <option value="72">72</option>
+            <option value="73">73</option>
+            <option value="74">74</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc5_sez2" name="nr_seggio2_crc5_sez2" style="width:90%;" label="Scelta secondo seggio circoscrizione 5 - Centro civico Ravina" onchange="calcolaseggi52()">
+            <option value=""></option>
+            <option value="72">72</option>
+            <option value="73">73</option>
+            <option value="74">74</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc5_sez2" name="nr_seggio3_crc5_sez2" style="width:90%;" label="Scelta terzo seggio circoscrizione 5 - Centro civico Ravina" onchange="calcolaseggi52()">
+            <option value=""></option>
+            <option value="72">72</option>
+            <option value="73">73</option>
+            <option value="74">74</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">6</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione10" name="circoscrizione_sezione" type="checkbox" value="10" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare Martignano</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via alla Formigheta, 4</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc6_sez1" name="nr_seggio1_crc6_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 6 - Scuola elementare Martignano" onchange="calcolaseggi61()">
+            <option value=""></option>
+            <option value="68">68</option>
+            <option value="69">69</option>
+            <option value="70">70</option>
+            <option value="71">71</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc6_sez1" name="nr_seggio2_crc6_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 6 - Scuola elementare Martignano" onchange="calcolaseggi61()">
+            <option value=""></option>
+            <option value="68">68</option>
+            <option value="69">69</option>
+            <option value="70">70</option>
+            <option value="71">71</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc6_sez1" name="nr_seggio3_crc6_sez1" style="width:90%;" label="Scelta terzo seggio circoscrizione 6 - Scuola elementare Martignano" onchange="calcolaseggi61()">
+            <option value=""></option>
+            <option value="68">68</option>
+            <option value="69">69</option>
+            <option value="70">70</option>
+            <option value="71">71</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione11" name="circoscrizione_sezione" type="checkbox" value="11" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Cognola</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via Carlo e Valeria Julg, 9</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc6_sez2" name="nr_seggio1_crc6_sez2" style="width:90%;" label="Scelta primo seggio circoscrizione 6 - Centro civico Cognola" onchange="calcolaseggi62()">
+            <option value=""></option>
+            <option value="63">63</option>
+            <option value="64">64</option>
+            <option value="65">65</option>
+            <option value="66">66</option>
+            <option value="67">67</option>
+            <option value="97">97</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc6_sez2" name="nr_seggio2_crc6_sez2" style="width:90%;" label="Scelta secondo seggio circoscrizione 6 - Centro civico Cognola" onchange="calcolaseggi62()">
+            <option value=""></option>
+            <option value="63">63</option>
+            <option value="64">64</option>
+            <option value="65">65</option>
+            <option value="66">66</option>
+            <option value="67">67</option>
+            <option value="97">97</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc6_sez2" name="nr_seggio3_crc6_sez2" style="width:90%;" label="Scelta terzo seggio circoscrizione 6 - Centro civico Cognola" onchange="calcolaseggi62()">
+            <option value=""></option>
+            <option value="63">63</option>
+            <option value="64">64</option>
+            <option value="65">65</option>
+            <option value="66">66</option>
+            <option value="67">67</option>
+            <option value="97">97</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">7</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione12" name="circoscrizione_sezione" type="checkbox" value="12" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Povo</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via Don Tommaso Dallafior, 3</p>
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio1_crc7_sez1" name="nr_seggio1_crc7_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 7 - Centro civico Povo" onchange="calcolaseggi71()">
+          <option value=""></option>
+          <option value="59">59</option>
+          <option value="60">60</option>
+          <option value="61">61</option>
+          <option value="62">62</option>
+        </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc7_sez1" name="nr_seggio2_crc7_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 7 - Centro civico Povo" onchange="calcolaseggi71()">
+          <option value=""></option>
+          <option value="59">59</option>
+          <option value="60">60</option>
+          <option value="61">61</option>
+          <option value="62">62</option>
+        </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc7_sez1" name="nr_seggio3_crc7_sez1" style="width:90%;" label="Scelta terzo seggio circoscrizione 7 - Centro civico Povo" onchange="calcolaseggi71()">
+          <option value=""></option>
+          <option value="59">59</option>
+          <option value="60">60</option>
+          <option value="61">61</option>
+          <option value="62">62</option>
+        </select> 
+      </td>  
+    </tr> 
+    <tr>
+      <td style="width: 10%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">8</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione13" name="circoscrizione_sezione" type="checkbox" value="13" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Ex caserma Carabinieri - Mattarello</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via G. Poli, 11</p>
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio1_crc8_sez1" name="nr_seggio1_crc8_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 8 - Ex caserma Carabinieri - Mattarello" onchange="calcolaseggi81()">
+          <option value=""></option>
+          <option value="54">54</option>
+          <option value="55">55</option>
+          <option value="56">56</option>
+          <option value="57">57</option>
+          <option value="58">58</option>
+        </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc8_sez1" name="nr_seggio2_crc8_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 8 - Ex caserma Carabinieri - Mattarello" onchange="calcolaseggi81()">
+          <option value=""></option>
+          <option value="54">54</option>
+          <option value="55">55</option>
+          <option value="56">56</option>
+          <option value="57">57</option>
+          <option value="58">58</option>
+        </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc8_sez1" name="nr_seggio3_crc8_sez1" style="width:90%;" label="Scelta terzo seggio circoscrizione 8 - Ex caserma Carabinieri - Mattarello" onchange="calcolaseggi81()">
+          <option value=""></option>
+          <option value="54">54</option>
+          <option value="55">55</option>
+          <option value="56">56</option>
+          <option value="57">57</option>
+          <option value="58">58</option>
+        </select> 
+      </td>  
+    </tr> 
+    <tr>
+      <td style="width: 10%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">9</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione14" name="circoscrizione_sezione" type="checkbox" value="14" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare "G.A. Tomasi"</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Piazza Mons. G.P. Nicolini, 7</p>
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio1_crc9_sez1" name="nr_seggio1_crc9_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 9 - Scuola elementare G.A. Tomasi" onchange="calcolaseggi91()">
+          <option value=""></option>
+          <option value="50">50</option>
+          <option value="51">51</option>
+          <option value="52">52</option>
+          <option value="53">53</option>
+        </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc9_sez1" name="nr_seggio2_crc9_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 9 - Scuola elementare G.A. Tomasi" onchange="calcolaseggi91()">
+          <option value=""></option>
+          <option value="50">50</option>
+          <option value="51">51</option>
+          <option value="52">52</option>
+          <option value="53">53</option>
+        </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc9_sez1" name="nr_seggio3_crc9_sez1" style="width:90%;" label="Scelta terzo seggio circoscrizione 9 - Scuola elementare G.A. Tomasi" onchange="calcolaseggi91()">
+          <option value=""></option>
+          <option value="50">50</option>
+          <option value="51">51</option>
+          <option value="52">52</option>
+          <option value="53">53</option>
+        </select> 
+      </td>  
+    </tr> 
+    <tr>
+      <td style="width: 10%;" rowspan="4">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">10</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione15" name="circoscrizione_sezione" type="checkbox" value="15" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro Ospedaliero S. Chiara</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Largo Medaglie d'oro, 9</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc10_sez1" name="nr_seggio1_crc10_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 10 - Centro Ospedaliero S. Chiara" onchange="calcolaseggi101()">
+            <option value=""></option>
+            <option value="48">48</option>
+            <option value="49">49</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc10_sez1" name="nr_seggio2_crc10_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 10 - Centro Ospedaliero S. Chiara" onchange="calcolaseggi101()">
+            <option value=""></option>
+            <option value="48">48</option>
+            <option value="49">49</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+      </td>  
+    </tr>  
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione16" name="circoscrizione_sezione" type="checkbox" value="16" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare Nicolodi</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via A. Fogazzaro, 2</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc10_sez2" name="nr_seggio1_crc10_sez2" style="width:90%;" label="Scelta primo seggio circoscrizione 10 - Scuola elementare Nicolodi" onchange="calcolaseggi102()">
+            <option value=""></option>
+            <option value="32">32</option>
+            <option value="33">33</option>
+            <option value="34">34</option>
+            <option value="35">35</option>
+            <option value="36">36</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc10_sez2" name="nr_seggio2_crc10_sez2" style="width:90%;" label="Scelta secondo seggio circoscrizione 10 - Scuola elementare Nicolodi" onchange="calcolaseggi102()">
+            <option value=""></option>
+            <option value="32">32</option>
+            <option value="33">33</option>
+            <option value="34">34</option>
+            <option value="35">35</option>
+            <option value="36">36</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc10_sez2" name="nr_seggio3_crc10_sez2" style="width:90%;" label="Scelta terzo seggio circoscrizione 10 - Scuola elementare Nicolodi" onchange="calcolaseggi102()">
+            <option value=""></option>
+            <option value="32">32</option>
+            <option value="33">33</option>
+            <option value="34">34</option>
+            <option value="35">35</option>
+            <option value="36">36</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione17" name="circoscrizione_sezione" type="checkbox" value="17" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare "Clarina"</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via L. Einaudi, 13</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc10_sez3" name="nr_seggio1_crc10_sez3" style="width:90%;" label="Scelta primo seggio circoscrizione 10 - Scuola elementare Clarina" onchange="calcolaseggi103()">
+            <option value=""></option>
+            <option value="37">37</option>
+            <option value="38">38</option>
+            <option value="39">39</option>
+            <option value="40">40</option>
+            <option value="41">41</option>
+            <option value="42">42</option>
+            <option value="43">43</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc10_sez3" name="nr_seggio2_crc10_sez3" style="width:90%;" label="Scelta secondo seggio circoscrizione 10 - Scuola elementare Clarina" onchange="calcolaseggi103()">
+            <option value=""></option>
+            <option value="37">37</option>
+            <option value="38">38</option>
+            <option value="39">39</option>
+            <option value="40">40</option>
+            <option value="41">41</option>
+            <option value="42">42</option>
+            <option value="43">43</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc10_sez3" name="nr_seggio3_crc10_sez3" style="width:90%;" label="Scelta terzo seggio circoscrizione 10 - Scuola elementare Clarina" onchange="calcolaseggi103()">
+            <option value=""></option>
+            <option value="37">37</option>
+            <option value="38">38</option>
+            <option value="39">39</option>
+            <option value="40">40</option>
+            <option value="41">41</option>
+            <option value="42">42</option>
+            <option value="43">43</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione18" name="circoscrizione_sezione" type="checkbox" value="18" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare M. Bianca</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via Menguzzato Veglia, 89</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc10_sez4" name="nr_seggio1_crc10_sez4" style="width:90%;" label="Scelta primo seggio circoscrizione 10 - Scuola elementare M. Bianca" onchange="calcolaseggi104()">
+            <option value=""></option>
+            <option value="44">44</option>
+            <option value="45">45</option>
+            <option value="46">46</option>
+            <option value="47">47</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc10_sez4" name="nr_seggio2_crc10_sez4" style="width:90%;" label="Scelta secondo seggio circoscrizione 10 - Scuola elementare M. Bianca" onchange="calcolaseggi104()">
+            <option value=""></option>
+            <option value="44">44</option>
+            <option value="45">45</option>
+            <option value="46">46</option>
+            <option value="47">47</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc10_sez4" name="nr_seggio3_crc10_sez4" style="width:90%;" label="Scelta terzo seggio circoscrizione 10 - Scuola elementare M. Bianca" onchange="calcolaseggi104()">
+            <option value=""></option>
+            <option value="44">44</option>
+            <option value="45">45</option>
+            <option value="46">46</option>
+            <option value="47">47</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">11</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione19" name="circoscrizione_sezione" type="checkbox" value="19" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare D. Savio</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via S. Pio X, 103</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc11_sez1" name="nr_seggio1_crc11_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 11 - Scuola elementare D. Savio" onchange="calcolaseggi111()">
+            <option value=""></option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc11_sez1" name="nr_seggio2_crc11_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 11 - Scuola elementare D. Savio" onchange="calcolaseggi111()">
+            <option value=""></option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc11_sez1" name="nr_seggio3_crc11_sez1" style="width:90%;" label="Scelta terzo seggio circoscrizione 11 - Scuola elementare D. Savio" onchange="calcolaseggi111()">
+            <option value=""></option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select> 
+      </td>  
+    </tr>  
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione20" name="circoscrizione_sezione" type="checkbox" value="20" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare "F. Crispi"</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via S. Giovanni Bosco, 8</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc11_sez2" name="nr_seggio1_crc11_sez2" style="width:90%;" label="Scelta primo seggio circoscrizione 11 - Scuola elementare F. Crispi" onchange="calcolaseggi112()">
+            <option value=""></option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc11_sez2" name="nr_seggio2_crc11_sez2" style="width:90%;" label="Scelta secondo seggio circoscrizione 11 - Scuola elementare F. Crispi" onchange="calcolaseggi112()">
+            <option value=""></option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc11_sez2" name="nr_seggio3_crc11_sez2" style="width:90%;" label="Scelta terzo seggio circoscrizione 11 - Scuola elementare F. Crispi" onchange="calcolaseggi112()">
+            <option value=""></option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="3">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">12</p>
+      </td>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione21" name="circoscrizione_sezione" type="checkbox" value="21" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare "R. Sanzio"</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Piazza R. Sanzio, 13</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc12_sez1" name="nr_seggio1_crc12_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 12 - Scuola elementare R. Sanzio" onchange="calcolaseggi121()">
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc12_sez1" name="nr_seggio2_crc12_sez1" style="width:90%;" label="Scelta secondo seggio circoscrizione 12 - Scuola elementare R. Sanzio" onchange="calcolaseggi121()">
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc12_sez1" name="nr_seggio3_crc12_sez1" style="width:90%;" label="Scelta terzo seggio circoscrizione 12 - Scuola elementare R. Sanzio" onchange="calcolaseggi121()">
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select> 
+      </td>  
+    </tr>     
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione22" name="circoscrizione_sezione" type="checkbox" value="22" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare Bellesini</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via A. Stoppani, 3</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc12_sez2" name="nr_seggio1_crc12_sez2" style="width:90%;" label="Scelta primo seggio circoscrizione 12 - Scuola elementare Bellesini" onchange="calcolaseggi122()">
+            <option value=""></option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="94">94</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc12_sez2" name="nr_seggio2_crc12_sez2" style="width:90%;" label="Scelta secondo seggio circoscrizione 12 - Scuola elementare Bellesini" onchange="calcolaseggi122()">
+            <option value=""></option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="94">94</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc12_sez2" name="nr_seggio3_crc12_sez2" style="width:90%;" label="Scelta terzo seggio circoscrizione 12 - Scuola elementare Bellesini" onchange="calcolaseggi122()">
+            <option value=""></option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="94">94</option>
+          </select> 
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="circoscrizione_sezione" id="circoscrizione_sezione23" name="circoscrizione_sezione" type="checkbox" value="23" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro sociale (ex elementari) Solteri</p>
+      </td>  
+      <td>
+        <p style="line-height:1.6;">Via dei Solteri, 66</p>
+      </td>
+      <td style="text-align: center;">
+         <select class="inputNormal" id="nr_seggio1_crc12_sez3" name="nr_seggio1_crc12_sez3" style="width:90%;" label="Scelta primo seggio circoscrizione 12 - Centro sociale (ex elementari) Solteri" onchange="calcolaseggi123()">
+            <option value=""></option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio2_crc12_sez3" name="nr_seggio2_crc12_sez3" style="width:90%;" label="Scelta secondo seggio circoscrizione 12 - Centro sociale (ex elementari) Solteri" onchange="calcolaseggi123()">
+            <option value=""></option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+          </select> 
+      </td>
+      <td style="text-align: center;">
+        <select class="inputNormal" id="nr_seggio3_crc12_sez3" name="nr_seggio3_crc12_sez3" style="width:90%;" label="Scelta terzo seggio circoscrizione 12 - Centro sociale (ex elementari) Solteri" onchange="calcolaseggi123()">
+            <option value=""></option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+          </select> 
+      </td>  
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>CONTA SEGGI</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height:1.6; text-align: center; font-size: 90%;"><b>Circoscrizione</b></p>
+      </td>
+      <td>
+        <p style="line-height:1.6; text-align: center; font-size: 90%;"><b>Denominazione stabile</b></p>
+      </td>
+      <td>
+        <p style="line-height:1.6; text-align: center; font-size: 90%;"><b>Seggi</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">1</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Gardolo</p>
+      </td>
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi11() {
+          var seggio111 = document.getElementById("nr_seggio1_crc1_sez1").value;
+          var seggio211 = document.getElementById("nr_seggio2_crc1_sez1").value;
+          var seggio311 = document.getElementById("nr_seggio3_crc1_sez1").value;
+          var totaleseggi11 = 0;
+          
+          if(seggio111 != '' && seggio211 != '' && seggio311 != ''){
+          totaleseggi11 = 3;
+          } else if(seggio111 != '' && seggio211 != '' && seggio311 == ''){
+          totaleseggi11 = 2;
+          } else if(seggio111 != '' && seggio211 == '' && seggio311 == ''){
+          totaleseggi11 = 1;
+          } else if(seggio111 == '' && seggio211 == '' && seggio311 == ''){
+          totaleseggi11 = 0;
+          } 
+          
+          document.getElementById("seggi_crc1_sez1").value = totaleseggi11;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc1_sez1" name="seggi_crc1_sez1" />   
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Edificio pluriuso (ex centro civico)</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi12() {
+          var seggio112 = document.getElementById("nr_seggio1_crc1_sez2").value;
+          var seggio212 = document.getElementById("nr_seggio2_crc1_sez2").value;
+          var seggio312 = document.getElementById("nr_seggio3_crc1_sez2").value;
+          var totaleseggi12 = 0;
+          
+          if(seggio112 != '' && seggio212 != '' && seggio312 != ''){
+          totaleseggi12 = 3;
+          } else if(seggio112 != '' && seggio212!= '' && seggio312 == ''){
+          totaleseggi12 = 2;
+          } else if(seggio112 != '' && seggio212 == '' && seggio312 == ''){
+          totaleseggi12 = 1;
+          } else if(seggio112 == '' && seggio212 == '' && seggio312 == ''){
+          totaleseggi12 = 0;
+          } 
+          
+          document.getElementById("seggi_crc1_sez2").value = totaleseggi12;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc1_sez2" name="seggi_crc1_sez2" />   
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">2</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Vigo Meano</p>
+      </td>
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi21() {
+          var seggio121 = document.getElementById("nr_seggio1_crc2_sez1").value;
+          var totaleseggi21 = 0;
+          
+          if(seggio121 != ''){
+          totaleseggi21 = 1;
+          } else if(seggio121 == ''){
+          totaleseggi21 = 0;
+          } 
+          
+          document.getElementById("seggi_crc2_sez1").value = totaleseggi21;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc2_sez1" name="seggi_crc2_sez1" />   
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Centro civico Meano</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi22() {
+          var seggio122 = document.getElementById("nr_seggio1_crc2_sez2").value;
+          var seggio222 = document.getElementById("nr_seggio2_crc2_sez2").value;
+          var seggio322 = document.getElementById("nr_seggio3_crc2_sez2").value;
+          var totaleseggi22 = 0;
+          
+          if(seggio122 != '' && seggio222 != '' && seggio322 != ''){
+          totaleseggi22 = 3;
+          } else if(seggio122 != '' && seggio222 != '' && seggio322 == ''){
+          totaleseggi22 = 2;
+          } else if(seggio122 != '' && seggio222 == '' && seggio322 == ''){
+          totaleseggi22 = 1;
+          } else if(seggio122 == '' && seggio222 == '' && seggio322 == ''){
+          totaleseggi22 = 0;
+          } 
+          
+          document.getElementById("seggi_crc2_sez2").value = totaleseggi22;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc2_sez2" name="seggi_crc2_sez2" />   
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">3</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Ufficio comunale Cadine</p>
+      </td>
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi31() {
+          var seggio131 = document.getElementById("nr_seggio1_crc3_sez1").value;
+          var seggio231 = document.getElementById("nr_seggio2_crc3_sez1").value;
+          var totaleseggi31 = 0;
+          
+          if(seggio131 != '' && seggio231 != ''){
+          totaleseggi31 = 2;
+          } else if(seggio131 != '' && seggio231 == ''){
+          totaleseggi31 = 1;
+          } else if(seggio131 == '' && seggio231 == ''){
+          totaleseggi31 = 0;
+          } 
+          
+          document.getElementById("seggi_crc3_sez1").value = totaleseggi31;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc3_sez1" name="seggi_crc3_sez1" />   
+      </td>
+    </tr>  
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Centro civico Sopramonte</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi32() {
+          var seggio132 = document.getElementById("nr_seggio1_crc3_sez2").value;
+          var seggio232 = document.getElementById("nr_seggio2_crc3_sez2").value;
+          var seggio332 = document.getElementById("nr_seggio3_crc3_sez2").value;
+          var totaleseggi32 = 0;
+          
+          if(seggio132 != '' && seggio232 != '' && seggio332 != ''){
+          totaleseggi32 = 3;
+          } else if(seggio132 != '' && seggio232 != '' && seggio332 == ''){
+          totaleseggi32 = 2;
+          } else if(seggio132 != '' && seggio232 == '' && seggio332 == ''){
+          totaleseggi32 = 1;
+          } else if(seggio132 == '' && seggio232 == '' && seggio332 == ''){
+          totaleseggi32 = 0;
+          } 
+          
+          document.getElementById("seggi_crc3_sez2").value = totaleseggi32;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc3_sez2" name="seggi_crc3_sez2" />   
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">4</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Sardagna</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi41() {
+          var seggio141 = document.getElementById("nr_seggio1_crc4_sez1").value;
+          var totaleseggi41 = 0;
+          
+          if(seggio141 != ''){
+          totaleseggi41 = 1;
+          } else if(seggio141 == ''){
+          totaleseggi41 = 0;
+          } 
+          
+          document.getElementById("seggi_crc4_sez1").value = totaleseggi41;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc4_sez1" name="seggi_crc4_sez1" />   
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">5</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Ufficio comunale Romagnano</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi51() {
+          var seggio151 = document.getElementById("nr_seggio1_crc5_sez1").value;
+          var seggio251 = document.getElementById("nr_seggio2_crc5_sez1").value;
+          var totaleseggi51 = 0;
+          
+          if(seggio151 != '' && seggio251 != ''){
+          totaleseggi51 = 2;
+          } else if(seggio151 != '' && seggio251 == ''){
+          totaleseggi51 = 1;
+          } else if(seggio151 == '' && seggio251 == ''){
+          totaleseggi51 = 0;
+          } 
+          
+          document.getElementById("seggi_crc5_sez1").value = totaleseggi51;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc5_sez1" name="seggi_crc5_sez1" />   
+      </td>  
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Centro civico Ravina</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi52() {
+          var seggio152 = document.getElementById("nr_seggio1_crc5_sez2").value;
+          var seggio252 = document.getElementById("nr_seggio2_crc5_sez2").value;
+          var seggio352 = document.getElementById("nr_seggio3_crc5_sez2").value;
+          var totaleseggi52 = 0;
+          
+          if(seggio152 != '' && seggio252 != '' && seggio352 != ''){
+          totaleseggi52 = 3;
+          } else if(seggio152 != '' && seggio252 != '' && seggio352 == ''){
+          totaleseggi52 = 2;
+          } else if(seggio152 != '' && seggio252 == '' && seggio352 == ''){
+          totaleseggi52 = 1;
+          } else if(seggio152 == '' && seggio252 == '' && seggio352 == ''){
+          totaleseggi52 = 0;
+          } 
+          
+          document.getElementById("seggi_crc5_sez2").value = totaleseggi52;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc5_sez2" name="seggi_crc5_sez2" />   
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">6</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare Martignano</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi61() {
+          var seggio161 = document.getElementById("nr_seggio1_crc6_sez1").value;
+          var seggio261 = document.getElementById("nr_seggio2_crc6_sez1").value;
+          var seggio361 = document.getElementById("nr_seggio3_crc6_sez1").value;
+          var totaleseggi61 = 0;
+          
+          if(seggio161 != '' && seggio261 != '' && seggio361 != ''){
+          totaleseggi61 = 3;
+          } else if(seggio161 != '' && seggio261 != '' && seggio361 == ''){
+          totaleseggi61 = 2;
+          } else if(seggio161 != '' && seggio261 == '' && seggio361 == ''){
+          totaleseggi61 = 1;
+          } else if(seggio161 == '' && seggio261 == '' && seggio361 == ''){
+          totaleseggi61 = 0;
+          } 
+          
+          document.getElementById("seggi_crc6_sez1").value = totaleseggi61;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc6_sez1" name="seggi_crc6_sez1" />   
+      </td>  
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Centro civico Cognola</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi62() {
+          var seggio162 = document.getElementById("nr_seggio1_crc6_sez2").value;
+          var seggio262 = document.getElementById("nr_seggio2_crc6_sez2").value;
+          var seggio362 = document.getElementById("nr_seggio3_crc6_sez2").value;
+          var totaleseggi62 = 0;
+          
+          if(seggio162 != '' && seggio262 != '' && seggio362 != ''){
+          totaleseggi62 = 3;
+          } else if(seggio162 != '' && seggio262 != '' && seggio362 == ''){
+          totaleseggi62 = 2;
+          } else if(seggio162 != '' && seggio262 == '' && seggio362 == ''){
+          totaleseggi62 = 1;
+          } else if(seggio162 == '' && seggio262 == '' && seggio362 == ''){
+          totaleseggi62 = 0;
+          } 
+          
+          document.getElementById("seggi_crc6_sez2").value = totaleseggi62;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc6_sez2" name="seggi_crc6_sez2" />   
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">7</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro civico Povo</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi71() {
+          var seggio171 = document.getElementById("nr_seggio1_crc7_sez1").value;
+          var seggio271 = document.getElementById("nr_seggio2_crc7_sez1").value;
+          var seggio371 = document.getElementById("nr_seggio3_crc7_sez1").value;
+          var totaleseggi71 = 0;
+          
+          if(seggio171 != '' && seggio271 != '' && seggio371 != ''){
+          totaleseggi71 = 3;
+          } else if(seggio171 != '' && seggio271 != '' && seggio371 == ''){
+          totaleseggi71 = 2;
+          } else if(seggio171 != '' && seggio271 == '' && seggio371 == ''){
+          totaleseggi71 = 1;
+          } else if(seggio171 == '' && seggio271 == '' && seggio371 == ''){
+          totaleseggi71 = 0;
+          } 
+          
+          document.getElementById("seggi_crc7_sez1").value = totaleseggi71;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc7_sez1" name="seggi_crc7_sez1" />   
+      </td>  
+    </tr> 
+    <tr>
+      <td style="width: 10%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">8</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Ex caserma Carabinieri - Mattarello</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi81() {
+          var seggio181 = document.getElementById("nr_seggio1_crc8_sez1").value;
+          var seggio281 = document.getElementById("nr_seggio2_crc8_sez1").value;
+          var seggio381 = document.getElementById("nr_seggio3_crc8_sez1").value;
+          var totaleseggi81 = 0;
+          
+          if(seggio181 != '' && seggio281 != '' && seggio381 != ''){
+          totaleseggi81 = 3;
+          } else if(seggio181 != '' && seggio281 != '' && seggio381 == ''){
+          totaleseggi81 = 2;
+          } else if(seggio181 != '' && seggio281 == '' && seggio381 == ''){
+          totaleseggi81 = 1;
+          } else if(seggio181 == '' && seggio281 == '' && seggio381 == ''){
+          totaleseggi81 = 0;
+          } 
+          
+          document.getElementById("seggi_crc8_sez1").value = totaleseggi81;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc8_sez1" name="seggi_crc8_sez1" />   
+      </td>  
+    </tr> 
+    <tr>
+      <td style="width: 10%;">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">9</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare "G.A. Tomasi"</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi91() {
+          var seggio191 = document.getElementById("nr_seggio1_crc9_sez1").value;
+          var seggio291 = document.getElementById("nr_seggio2_crc9_sez1").value;
+          var seggio391 = document.getElementById("nr_seggio3_crc9_sez1").value;
+          var totaleseggi91 = 0;
+          
+          if(seggio191 != '' && seggio291 != '' && seggio391 != ''){
+          totaleseggi91 = 3;
+          } else if(seggio191 != '' && seggio291 != '' && seggio391 == ''){
+          totaleseggi91 = 2;
+          } else if(seggio191 != '' && seggio291 == '' && seggio391 == ''){
+          totaleseggi91 = 1;
+          } else if(seggio191 == '' && seggio291 == '' && seggio391 == ''){
+          totaleseggi91 = 0;
+          } 
+          
+          document.getElementById("seggi_crc9_sez1").value = totaleseggi91;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc9_sez1" name="seggi_crc9_sez1" />   
+      </td>  
+    </tr> 
+    <tr>
+      <td style="width: 10%;" rowspan="4">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">10</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Centro Ospedaliero S. Chiara</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi101() {
+          var seggio1101 = document.getElementById("nr_seggio1_crc10_sez1").value;
+          var seggio2101 = document.getElementById("nr_seggio2_crc10_sez1").value;
+          var totaleseggi101 = 0;
+          
+          if(seggio1101 != '' && seggio2101 != ''){
+          totaleseggi101 = 2;
+          } else if(seggio1101 != '' && seggio2101 == ''){
+          totaleseggi101 = 1;
+          } else if(seggio1101 == '' && seggio2101 == ''){
+          totaleseggi101 = 0;
+          } 
+          
+          document.getElementById("seggi_crc10_sez1").value = totaleseggi101;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc10_sez1" name="seggi_crc10_sez1" />   
+      </td>  
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare Nicolodi</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi102() {
+          var seggio1102 = document.getElementById("nr_seggio1_crc10_sez2").value;
+          var seggio2102 = document.getElementById("nr_seggio2_crc10_sez2").value;
+          var seggio3102 = document.getElementById("nr_seggio3_crc10_sez2").value;
+          var totaleseggi102 = 0;
+          
+          if(seggio1102 != '' && seggio2102 != '' && seggio3102 != ''){
+          totaleseggi102 = 3;
+          } else if(seggio1102 != '' && seggio2102 != '' && seggio3102 == ''){
+          totaleseggi102 = 2;
+          } else if(seggio1102 != '' && seggio2102 == '' && seggio3102 == ''){
+          totaleseggi102 = 1;
+          } else if(seggio1102 == '' && seggio2102 == '' && seggio3102 == ''){
+          totaleseggi102 = 0;
+          } 
+          
+          document.getElementById("seggi_crc10_sez2").value = totaleseggi102;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc10_sez2" name="seggi_crc10_sez2" />   
+      </td>  
+    </tr> 
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare "Clarina"</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi103() {
+          var seggio1103 = document.getElementById("nr_seggio1_crc10_sez3").value;
+          var seggio2103 = document.getElementById("nr_seggio2_crc10_sez3").value;
+          var seggio3103 = document.getElementById("nr_seggio3_crc10_sez3").value;
+          var totaleseggi103 = 0;
+          
+          if(seggio1103 != '' && seggio2103 != '' && seggio3103 != ''){
+          totaleseggi103 = 3;
+          } else if(seggio1103 != '' && seggio2103 != '' && seggio3103 == ''){
+          totaleseggi103 = 2;
+          } else if(seggio1103 != '' && seggio2103 == '' && seggio3103 == ''){
+          totaleseggi103 = 1;
+          } else if(seggio1103 == '' && seggio2103 == '' && seggio3103 == ''){
+          totaleseggi103 = 0;
+          } 
+          
+          document.getElementById("seggi_crc10_sez3").value = totaleseggi103;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc10_sez3" name="seggi_crc10_sez3" />   
+      </td>  
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare M. Bianca</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi104() {
+          var seggio1104 = document.getElementById("nr_seggio1_crc10_sez4").value;
+          var seggio2104 = document.getElementById("nr_seggio2_crc10_sez4").value;
+          var seggio3104 = document.getElementById("nr_seggio3_crc10_sez4").value;
+          var totaleseggi104 = 0;
+          
+          if(seggio1104 != '' && seggio2104 != '' && seggio3104 != ''){
+          totaleseggi104 = 3;
+          } else if(seggio1104 != '' && seggio2104 != '' && seggio3104 == ''){
+          totaleseggi104 = 2;
+          } else if(seggio1104 != '' && seggio2104 == '' && seggio3104 == ''){
+          totaleseggi104 = 1;
+          } else if(seggio1104 == '' && seggio2104 == '' && seggio3104 == ''){
+          totaleseggi104 = 0;
+          } 
+          
+          document.getElementById("seggi_crc10_sez4").value = totaleseggi104;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc10_sez4" name="seggi_crc10_sez4" />   
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="2">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">11</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare D. Savio</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi111() {
+          var seggio1111 = document.getElementById("nr_seggio1_crc11_sez1").value;
+          var seggio2111 = document.getElementById("nr_seggio2_crc11_sez1").value;
+          var seggio3111 = document.getElementById("nr_seggio3_crc11_sez1").value;
+          var totaleseggi111 = 0;
+          
+          if(seggio1111 != '' && seggio2111 != '' && seggio3111 != ''){
+          totaleseggi111 = 3;
+          } else if(seggio1111 != '' && seggio2111 != '' && seggio3111 == ''){
+          totaleseggi111 = 2;
+          } else if(seggio1111 != '' && seggio2111 == '' && seggio3111 == ''){
+          totaleseggi111 = 1;
+          } else if(seggio1111 == '' && seggio2111 == '' && seggio3111 == ''){
+          totaleseggi111 = 0;
+          } 
+          
+          document.getElementById("seggi_crc11_sez1").value = totaleseggi111;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc11_sez1" name="seggi_crc11_sez1" />   
+      </td>  
+    </tr> 
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare "F. Crispi"</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi112() {
+          var seggio1112 = document.getElementById("nr_seggio1_crc11_sez2").value;
+          var seggio2112 = document.getElementById("nr_seggio2_crc11_sez2").value;
+          var seggio3112 = document.getElementById("nr_seggio3_crc11_sez2").value;
+          var totaleseggi112 = 0;
+          
+          if(seggio1112 != '' && seggio2112 != '' && seggio3112 != ''){
+          totaleseggi112 = 3;
+          } else if(seggio1112 != '' && seggio2112 != '' && seggio3112 == ''){
+          totaleseggi112 = 2;
+          } else if(seggio1112 != '' && seggio2112 == '' && seggio3112 == ''){
+          totaleseggi112 = 1;
+          } else if(seggio1112 == '' && seggio2112 == '' && seggio3112 == ''){
+          totaleseggi112 = 0;
+          } 
+          
+          document.getElementById("seggi_crc11_sez2").value = totaleseggi112;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc11_sez2" name="seggi_crc11_sez2" />   
+      </td>  
+    </tr>
+    <tr>
+      <td style="width: 10%;" rowspan="3">
+        <p style="line-height:1.6; text-align: center; font-size: 90%;">12</p>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare "R. Sanzio"</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi121() {
+          var seggio1121 = document.getElementById("nr_seggio1_crc12_sez1").value;
+          var seggio2121 = document.getElementById("nr_seggio2_crc12_sez1").value;
+          var seggio3121 = document.getElementById("nr_seggio3_crc12_sez1").value;
+          var totaleseggi121 = 0;
+          
+          if(seggio1121 != '' && seggio2121 != '' && seggio3121 != ''){
+          totaleseggi121 = 3;
+          } else if(seggio1121 != '' && seggio2121 != '' && seggio3121 == ''){
+          totaleseggi121 = 2;
+          } else if(seggio1121 != '' && seggio2121 == '' && seggio3121 == ''){
+          totaleseggi121 = 1;
+          } else if(seggio1121 == '' && seggio2121 == '' && seggio3121 == ''){
+          totaleseggi121 = 0;
+          } 
+          
+          document.getElementById("seggi_crc12_sez1").value = totaleseggi121;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc12_sez1" name="seggi_crc12_sez1" />   
+      </td>  
+    </tr>   
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Scuola elementare Bellesini</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi122() {
+          var seggio1122 = document.getElementById("nr_seggio1_crc12_sez2").value;
+          var seggio2122 = document.getElementById("nr_seggio2_crc12_sez2").value;
+          var seggio3122 = document.getElementById("nr_seggio3_crc12_sez2").value;
+          var totaleseggi122 = 0;
+          
+          if(seggio1122 != '' && seggio2122 != '' && seggio3122 != ''){
+          totaleseggi122 = 3;
+          } else if(seggio1122 != '' && seggio2122 != '' && seggio3122 == ''){
+          totaleseggi122 = 2;
+          } else if(seggio1122 != '' && seggio2122 == '' && seggio3122 == ''){
+          totaleseggi122 = 1;
+          } else if(seggio1122 == '' && seggio2122 == '' && seggio3122 == ''){
+          totaleseggi122 = 0;
+          } 
+          
+          document.getElementById("seggi_crc12_sez2").value = totaleseggi122;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc12_sez2" name="seggi_crc12_sez2" />   
+      </td>  
+    </tr> 
+    <tr>
+      <td>
+        <p style="line-height:1.6;">Centro sociale (ex elementari) Solteri</p>
+      </td>  
+      <td style="text-align: center;">
+        <script>
+          function calcolaseggi123() {
+          var seggio1123 = document.getElementById("nr_seggio1_crc12_sez3").value;
+          var seggio2123 = document.getElementById("nr_seggio2_crc12_sez3").value;
+          var seggio3123 = document.getElementById("nr_seggio3_crc12_sez3").value;
+          var totaleseggi123 = 0;
+          
+          if(seggio1123 != '' && seggio2123 != '' && seggio3123 != ''){
+          totaleseggi123 = 3;
+          } else if(seggio1123 != '' && seggio2123 != '' && seggio3123 == ''){
+          totaleseggi123 = 2;
+          } else if(seggio1123 != '' && seggio2123 == '' && seggio3123 == ''){
+          totaleseggi123 = 1;
+          } else if(seggio1123 == '' && seggio2123 == '' && seggio3123 == ''){
+          totaleseggi123 = 0;
+          } 
+          
+          document.getElementById("seggi_crc12_sez3").value = totaleseggi123;
+          }
+          
+          </script>
+        <input class="inputNormal" id="seggi_crc12_sez3" name="seggi_crc12_sez3" />   
+      </td>  
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.8;"><b>FACOLTATIVO --- dichiara inoltre di aver già svolto, anche presso un Comune diverso da Trento, il ruolo di:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="esp_pregr" name="esp_pregr" label="Dichiarazione esperienza pregressa" mandatory_enabled="true"> </div>
+        <input group="esp_pregr" id="esp_pregr_1" name="esp_pregr_1" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.8;">scrutatore di seggio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="esp_pregr" id="esp_pregr_2" name="esp_pregr_2" type="checkbox" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.8;">presidente di seggio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="esp_pregr" id="esp_pregr_3" name="esp_pregr_3" type="checkbox" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.8;">segretario di seggio</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h3 class="Modulo">NOTE</h3>
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">L'Amministrazione è tenuta a procedere ad idonei controlli, anche a campione, sulla veridicità delle dichiarazioni sostitutive (art. 71, D.P.R. 28 dicembre 2000, n. 445).<br><br>Fermo restando quanto previsto dall'art. 76 del D.P.R. 28 dicembre 2000, n. 445, qualora dal controllo emerga la non veridicità del contenuto della dichiarazione, il dichiarante decade dai benefici eventualmente conseguenti al provvedimento emanato sulla base della dichiarazione non veritiera (art. 75, D.P.R. 28 dicembre 2000, n. 445).</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-elettorale" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 20%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 65%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="data_iscr_albo_pres" name="data_iscr_albo_pres" dynamic_value="#Data.value()" format="date" type="hidden">
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" name="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
