@@ -1,6 +1,6 @@
 {% set CodiceModulo =  "TSCW2019" %}
 {% set Urn =  "document:c_l378:tscw;trento.smart.city.week;tscw2019" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/TSCW2019_vSTU3" %}-->
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/TSCW2019_vSTU3" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -15,7 +15,7 @@ uo_globo_list=""
 contesto_procedurale="Trento Smart City Week 2019"
 descrizione="Trento Smart City Week 2019"
 destinatario_amministrazione=""
-destinatario_ufficio="XXXXXXXXXXXXX"
+destinatario_ufficio="94SMCB"
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
@@ -51,9 +51,9 @@ urn_report="report:CSP_SESSION_REPORT"
 
 {% endblock meta %}
 
-<!--{% block simpaticoconfig %}
-  {% set simpaticoEservice="2" %}
-  {% set simpaticoEserviceName="M1876 ISCRIZIONE NIDO" %}
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="25" %}
+  {% set simpaticoEserviceName="TSCW2019" %}
   {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/TSCW2019" %}
   {% set simpaticoForm="main" %}
   {% set simpaticoCategory="Infanzia" %}
@@ -70,44 +70,15 @@ urn_report="report:CSP_SESSION_REPORT"
                            "AventeTitolo_CAPResidenza",
                            "AventeTitolo_Telefono",
                            "AventeTitolo_Tel_Fisso",
-                           "AventeTitolo_Nazionalita",
+                           "AventeTitolo_Cittadinanza",
                            "AventeTitolo_EMail",
-                           "AventeTitolo_EnteProvv",
-                           "AventeTitolo_NumProt",
-                           "AventeTitolo_LuogoNascita",
-                           "AventeTitolo_Data",
-                           "Parametri_TipoLavoroPadre",
-                           "Parametri_AziendaLavoroPadre",
-                           "Parametri_IndirizzoAziendaLavoroPadre",
-                           "Parametri_CivicoAziendaLavoroPadre",
-                           "Parametri_CapAziendaLavoroPadre",
-                           "Parametri_TelAziendaLavoroPadre",
-                           "Parametri_EmailAziendaLavoroPadre",
-                           "Parametri_AgenziaEntratePadre",
-                           "Parametri_PIVAPadre",
-                           "Parametri_ScuolaPadre",
-                           "Parametri_TipoLavoroMadre",
-                           "Parametri_AziendaLavoroMadre",
-                           "Parametri_IndirizzoAziendaLavoroMadre",
-                           "Parametri_CivicoAziendaLavoroMadre",
-                           "Parametri_CapAziendaLavoroMadre",
-                           "Parametri_TelAziendaLavoroMadre",
-                           "Parametri_EmailAziendaLavoroMadre",
-                           "Parametri_AgenziaEntrateMadre",
-                           "Parametri_PIVAMadre",
-                           "Parametri_ScuolaMadre"] %}
+                           "AventeTitolo_LuogoNascita"] %}
   
   {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
-                          ('block2', 'Ruolo non specificato'),
-                          ('block3', 'Seleziona una delle opzioni'),
-                          ('block5', 'IMPOSSIBILE CONTINUARE LA COMPILAZIONE'),
-                          ('block9', 'Seleziona se avvalersi dell\'attestazione ICEF o meno'),
-                          ('block11', 'Seleziona Part-time / Full-time'),
-                          ('block26', 'Seleziona una delle opzioni'),
-                          ('block32', 'Seleziona una delle opzioni'),
-                          ('block37', 'Confermare presa visione dell’informativa')] %}
+                          ('block7', 'Seleziona almeno una opzione'),
+                          ('block8', 'Confermare presa visione dell’informativa')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}-->
+{% endblock simpaticoconfig %}
 
 {% block title %}
 TSCW2019
@@ -126,6 +97,8 @@ TSCW2019
   Partecipazione a Trento Smart City Week 2019
 </h1>
 
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
 <br>
 
@@ -142,13 +115,13 @@ TSCW2019
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
-        <p style="line-height:1.6;"><b>Partecipo alla Trento Smart City Week 2019 in quanto:</b></p>
+        <p style="line-height:1.6;"><b>Partecipo a Trento Smart City Week 2019 in quanto:</b></p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="#AventeTitolo_Cognome.value() != ''"> </div>
-        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" dynamic_check="#AventeTitolo_ComuneResidenza.value() == 'TRENTO'" />
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory="true"> </div>
+        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" dynamic_check="#AventeTitolo_ComuneResidenza.value() == 'TRENTO'" enabled="#AventeTitolo_ComuneResidenza.value() == 'TRENTO' and #AventeTitolo_Cognome.value() != ''"/>
       </td>
       <td>
         <p style="line-height:1.6;">Residente a Trento</p>
@@ -156,7 +129,7 @@ TSCW2019
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" dynamic_check="#AventeTitolo_ComuneResidenza.value() != 'TRENTO'"/>
+        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" dynamic_check="#AventeTitolo_ComuneResidenza.value() != 'TRENTO'" enabled="#AventeTitolo_ComuneResidenza.value() != 'TRENTO' and #AventeTitolo_Cognome.value() != ''"/>
       </td>
       <td>
         <p style="line-height:1.6;">Visitatore da altro Comune / Turista</p>
@@ -168,15 +141,149 @@ TSCW2019
 <br>
 <br>
 
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 0px">
+  <tbody>
+    <th colspan="6">
+      <button type="button" class="real-button" id="RecuperaListaFam">Recupera dati famiglia</button>
+    </th>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="5">
+        <p style="line-height: 1.6;"><b>Composizione del nucleo familiare</b></p>
+     </td>
+    </tr>
+
+    <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Familiari del bambino/a"> </div>
+    {{ service.getListaFamigliaREST('AventeTitolo_CodiceFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
+
+    {% macro Tassonomia_Familiare(prefix) %}
+    {% set prefix = prefix|string %}
+
+      {{ service.getPersonaREST('Parametri_CFFam' + prefix, 'TipoContesto', 'TipoLista',{
+          'Parametri_CognomeFam' + prefix: 'cognome',
+          'Parametri_NomeFam' + prefix: 'nome',
+          'Parametri_DataNas' + prefix: 'datanascita',
+          'Parametri_SessoFam' + prefix: 'sesso',
+          'Parametri_MatricolaAnagrafeFam' + prefix: 'matricola',
+          'Parametri_CodiceFamigliaFam' + prefix: 'codiceFamiglia',
+          'Parametri_CodiceComuneNascitaFam' + prefix: 'codiceComuneNascita',
+          'Parametri_CodiceViaResidenzaFam' + prefix: 'codiceVia',
+          'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
+          'Parametri_BarraResidenzaFam' + prefix: 'barra',
+          'Parametri_NazioneFam' + prefix: 'nazione',
+        }, '#Parametri_CFFam' + prefix + ':change' )}}
+
+      <tr class="Rigaintestazioneridotta">
+        <td style="width: 18%;">
+          <p class="Labelcella">Cognome</p>
+        </td>
+        <td style="width: 18%;">
+          <p class="Labelcella">Nome</p>
+        </td>
+        <td style="width: 20%;">
+          <p class="Labelcella">Codice fiscale</p>
+        </td>
+        <td style="width: 7%;">
+          <p class="Labelcella">Sesso</p>
+        </td>
+        <td style="width: 13%;">
+          <p class="Labelcella">Data nascita</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="inputNormal" id="Parametri_CognomeFam{{ prefix }}" name="Parametri_CognomeFam{{ prefix }}" style="width: 100%;" label="Cognome del familiare" readonly>
+        </td>
+        <td>
+          <input class="inputNormal" id="Parametri_NomeFam{{ prefix }}" name="Parametri_NomeFam{{ prefix }}" style="width: 100%;" label="Nome del familiare" readonly>
+        </td>
+        <td>
+          <input class="inputNormal" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" style="width: 100%;" label="Codice fiscale del familiare" readonly>
+        </td>
+        <td>
+          <select class="inputNormal" id="Parametri_SessoFam{{ prefix }}" name="Parametri_SessoFam{{ prefix }}" style="width:100%;" label="Sesso" readonly>
+            <option value=""></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </td>
+        <td>
+          <input class="inputNormal" id="Parametri_DataNas{{ prefix }}" name="Parametri_DataNas{{ prefix }}" format="date" style="width: 100%;" label="Data di nascita del familiare" readonly>
+        </td>
+      </tr>
+    {%- endmacro %}
+
+    {% for i in range(1, 6) %}
+      {{ Tassonomia_Familiare(i) }}
+      <input type="hidden" id="Parametri_MatricolaAnagrafeFam{{ i }}" name="Parametri_MatricolaAnagrafeFam{{ i }}">
+      <input type="hidden" id="Parametri_CodiceFamigliaFam{{ i }}" name="Parametri_CodiceFamigliaFam{{ i }}">
+      <input type="hidden" id="Parametri_CodiceComuneNascitaFam{{ i }}" name="Parametri_CodiceComuneNascitaFam{{ i }}">
+      <input type="hidden" id="Parametri_CodiceViaResidenzaFam{{ i }}" name="Parametri_CodiceViaResidenzaFam{{ i }}">
+      <input type="hidden" id="Parametri_NumeroCivicoResidenzaFam{{ i }}" name="Parametri_NumeroCivicoResidenzaFam{{ i }}" format="number">
+      <input type="hidden" id="Parametri_BarraResidenzaFam{{ i }}" name="Parametri_BarraResidenzaFam{{ i }}" maxlength="3">
+      <input type="hidden" id="Parametri_NazioneFam{{ i }}" name="Parametri_NazioneFam{{ i }}"/>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo">
+    CHIEDO
+</h1>
+
+<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="richieste" name="richieste" label="Richieste utente" mandatory_enabled="true"> </div>
+        <input group="richieste" id="richieste1" name="richieste1" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">di ricevere il gadget per aver utilizzato il servizio online</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="richieste" id="richieste2" name="richieste2" type="checkbox" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">di iscrivermi alla newsletter di Trento Smart City</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="richieste" id="richieste3" name="richieste3" type="checkbox" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">di poter partecipare ad altre sperimentazioni di nuovi servizi smart (con nuovi gadget)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 4%; vertical-align: top;">
+      <td style="width: 4%; vertical-align: center; text-align: center;">
         <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
         <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
       <td colspan="2" style="background-color: #eeeeee;">
-        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/INFORM-TRATT-DATI-TSCW" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        <p style="line-height:1.4;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/INFORM-TRATT-DATI-TSCW" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
       </td>
     </tr>
   </tbody>
@@ -188,14 +295,14 @@ TSCW2019
 <table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 30%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
-      </td>
       <td style="width: 20%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 65%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -206,7 +313,7 @@ TSCW2019
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il/La sottoscritto/a <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
       </td>
     </tr>
   </tbody>
