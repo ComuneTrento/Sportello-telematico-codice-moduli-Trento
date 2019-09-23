@@ -1,0 +1,156 @@
+{% set CodiceModulo = "M1115-ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO" %}
+{% set Urn =  "document:c_l378:elettorale.presidenti;iscriversi.albo.presidenti;iscrizione;m1115.iscrizione.presidente" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1115-ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Iscrizione all'albo dei presidenti di seggio"
+descrizione="Iscrizione all'albo dei presidenti di seggio"
+destinatario_amministrazione=""
+destinatario_ufficio="B6PZ17" 
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M1115-ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_allegato="INFORM-TRATT-DATI-ELETTORALE"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.elettorale"
+descrizione_estesa="Informativa trattamento dati ELETTORALE"
+filename="INFORM-TRATT-DATI-ELETTORALE.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-ELETTORALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!--<meta codice_allegato="GEN-CDI"
+urn="document:c_l378:copia.documento.identita"
+descrizione_estesa="Documento di identità"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>-->
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="16" %}
+  {% set simpaticoEserviceName="M1115 ISCRIZIONE ALBO PRESIDENTE SEGGIO" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1115-ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Elettorale" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale"] %}
+  {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
+                          ('block2', 'Il richiedente deve essere cittadino Italiano'),
+                          ('block3', 'Il richiedente deve risiedere a Trento'),
+                          ('block5', 'Indicare tutte le dichiarazioni obbligatorie'),
+                          ('block6', 'Indicare i 3 seggi di preferenza'),
+                          ('block9', 'Confermare presa visione informativa')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+{% block title %}ISCRIZIONE-ALBO-PRESIDENTE-SEGGIO{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo" style="line-height:1.6;">
+    Domanda per l’iscrizione all’albo delle persone idonee<br>all’ufficio di Presidente di seggio elettorale
+</h1>
+
+<select class="inputNormal" id="nr_seggio1_crc1_sez1" name="nr_seggio1_crc1_sez1" style="width:90%;" label="Scelta primo seggio circoscrizione 1 - Centro civico Gardolo" onchange="seggisceltitotmeno111()">
+    <option value=""></option>
+    <option value="84">84</option>
+    <option value="85">85</option>
+    <option value="86">86</option>
+</select> 
+
+<input class="inputNormal" id="tot_seggi_scelta1_no11" name="tot_seggi_scelta1_no11"/>
+<input class="inputNormal" id="prova_lettura" name="prova_lettura" mandatory="#tot_seggi_scelta1_no11.value() < '3'"/>
+
+
+
+
+<script>
+
+    function seggisceltitotmeno111() {
+      
+      if (document.getElementById("tot_seggi_scelta1_no11") != null){
+
+            var seggio112 = 3;
+            var seggio121 = 1;
+
+            var totalescelta1 = 0;
+            totalescelta1 = seggio112 + seggio121;
+
+
+            var totmeno111 = 0; 
+            totmeno111 = totalescelta1;
+
+            document.getElementById("tot_seggi_scelta1_no11").value = totmeno111; 
+
+        }
+      
+    }
+
+   
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" name="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
