@@ -1,5 +1,5 @@
-{% set CodiceModulo =  "GEN-PROGETTISTA" %}
-{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.progettista" %}
+{% set CodiceModulo =  "GEN-PROGETTISTA-DIRLAV-PROVA" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.progettista.direttore.lavori.prova" %}
 <!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-DIR-LAV-EL_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
@@ -8,7 +8,7 @@
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Modulo secondario - Anagrafica del progettista (firma elettronica)"
+descrizione="Modulo secondario TEST- Anagrafica del progettista e direttore lavori (firma elettronica)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
@@ -23,7 +23,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-PROGETTISTA"
+urlhelp="/modulistica/moduli/GEN-PROGETTISTA-DIRLAV-PROVA"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
@@ -59,18 +59,20 @@ tipo_mime="application/pdf"/>
 -->
 
 {% block title %}
-   Anagrafica del progettista
+   Anagrafica del progettista e direttore lavori
 {% endblock title %}
 
 {% block content %}
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
-<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_Progettista_Cognome.value().toUpperCase() + ' - anagrafica progettista'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_Progettista_Cognome.value().toUpperCase() + ' - anagrafica progettista e direttore lavori'"/>
 
-<h1 class="Modulo">Anagrafica del progettista</h1>
+ <h1 class="Modulo">
+  Anagrafica del progettista e direttore dei lavori
+ </h1>
 
-<input id="recapito_obbligatorio" name="recapito_obbligatorio" dynamic_check="true" type="hidden" />
-<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />
+ <input id="recapito_obbligatorio" name="recapito_obbligatorio" dynamic_check="true" type="hidden" />
+ <input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />
 {{anagrafica_trento_uniformata.professionista_dirlav("Progettista","Il progettista, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <br>
@@ -78,12 +80,21 @@ tipo_mime="application/pdf"/>
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Dichiarazione_direttore_lavori" name="Dichiarazione_direttore_lavori" label="Dichiarazione direttore lavori" mandatory_enabled="true"> </div>
+        <input group="Dichiarazione_direttore_lavori" id="Dichiarazione_direttore_lavori_check" name="Dichiarazione_direttore_lavori_check" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Il sottoscritto progettista, in quanto anche direttore dei lavori dichiara di aver preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto, nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="Dichiarazione_delega" name="Dichiarazione_delega" label="Dichiarazione direttore lavori"> </div>
         <input group="Dichiarazione_delega" id="Dichiarazione_delega_check" name="Dichiarazione_delega_check" type="checkbox" value="1" dynamic_check="#Metadati_check_delega.value() == 'DELEGA'"/>
       </td>
       <td>
-        <p><input id="conferma_delega" name="conferma_delega" style="width:100%;" dynamic_value="#Dichiarazione_delega_check.checked() ? 'Dichiaro di essere consapevole di avere delega del titolare per la ricezione di tutte le comunicazioni relative al procedimento.' : ''"/></p>
+        <p><input id="conferma_delega" name="conferma_delega" style="width:100%;" dynamic_value="#Dichiarazione_delega_check.checked() ? 'Dichiaro inoltre di essere consapevole di avere delega del titolare per la ricezione di tutte le comunicazioni relative al procedimento.' : ''"/></p>
       </td>
     </tr>
   </tbody>
@@ -95,7 +106,7 @@ tipo_mime="application/pdf"/>
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 4%; vertical-align: top;">
+      <td style="width: 4%; vertical-align: center; text-align: center;">
         <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
         <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
@@ -130,7 +141,7 @@ tipo_mime="application/pdf"/>
        <p class="Labelcella" style="text-align: center">Data</p>
      </td>
      <td>
-       <p class="Labelcella" style="text-align: center">Il progettista <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+       <p class="Labelcella" style="text-align: center">Il progettista/direttore dei lavori <span style="font-size:95%"><i>(firma digitale)</i></span></p>
      </td>
    </tr>
  </tbody>
@@ -157,7 +168,5 @@ tipo_mime="application/pdf"/>
  <input id="Metadati_Progettista_CodiceFiscale" name="Metadati_Progettista_CodiceFiscale"/>
 
  <input id="Metadati_check_delega" name="Metadati_check_delega"/>
- 
 
-{% endblock content %}
-
+ {% endblock content %}

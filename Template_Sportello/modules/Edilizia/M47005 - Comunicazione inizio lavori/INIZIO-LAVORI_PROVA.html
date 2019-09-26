@@ -1,0 +1,214 @@
+{% set CodiceModulo = "M47005-COMUNICAZIONE-INIZIO-LAVORI-PROVA" %}
+{% set Urn =  "document:c_l378:inizio.lavori.prova;comunicazione.inizio.lavori.prova;m47005.comunicazioni.inizio.lavori.prova" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI_v3.0_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Comunicazione di inizio lavori"
+descrizione="Comunicazione di inizio lavori TEST"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO" 
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI-PROVA"
+verifica_pagamento="NO"
+versione="1.0|09/02/2018" />
+
+<meta codice_modulo_figlio="GEN-PROGETTISTA-PROVA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista.prova"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="5" %}
+  {% set simpaticoEserviceName="M47005 COMUNICAZIONE INIZIO LAVORI" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome",
+                          "AventeTitolo_Nome",
+                          "AventeTitolo_CodiceFiscale",
+                          "AventeTitolo_DataNascita",
+                          "AventeTitolo_Sesso",
+                          "AventeTitolo_Cittadinanza",
+                          "AventeTitolo_LuogoNascita",
+                          "AventeTitolo_ProvinciaResidenza",
+                          "AventeTitolo_ComuneResidenza",
+                          "AventeTitolo_ViaResidenza",
+                          "AventeTitolo_CivicoResidenza",
+                          "AventeTitolo_CAPResidenza",
+                          "AventeTitolo_Telefono",
+                          "AventeTitolo_Tel_Fisso",
+                          "AventeTitolo_EMail",
+                          "AventeTitolo_EMailPEC"] %}
+
+  {% set ERROR_LABELS=[ ('block1' , 'Selezionare una delle opzioni')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+
+{% block title %}M47005-COMUNICAZIONE-INIZIO-LAVORI{% endblock title %}
+
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Comunicazione inizio lavori'" id="Oggetto" name="Oggetto" type="hidden" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" />
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo" style="text-align: center;">COMUNICAZIONE INIZIO LAVORI</h1>
+
+  <br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.6;"><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+          <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Titolare del permesso di costruire</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Professionista incaricato</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<h2 class="Modulo">Ai sensi della Legge urbanistica provinciale 04/08/2015, n. 15</h2>
+
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
+{{anagrafica_trento_uniformata.titolare("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <input id="Progettista_checkobbligatorio" name="Progettista_checkobbligatorio" dynamic_check="true" type="hidden" />
+  <input id="Progettista_checkabilitato" name="Progettista_checkabilitato" dynamic_check="true" type="hidden" />
+  {{anagrafica_trento_uniformata.professionista_direttore_lavori("Progettista","<b>DATI DEL PROGETTISTA</b>:","Progettista") }}
+
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr>
+        <td>
+          <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente2.checked() and #AventeTitolo_CodiceFiscale.value() == #Progettista_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
+
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input id="Progettista_direttorelavori" name="Progettista_direttorelavori" type="checkbox" enabled="true"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;"><b>Il progettista è anche il direttore dei lavori</b></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <input id="Metadati_Progettista_TitoloPersona" name="Metadati_Progettista_TitoloPersona" dynamic_value="#Progettista_TitoloPersona.value()" />
+  <input id="Metadati_Progettista_Cognome" name="Metadati_Progettista_Cognome" dynamic_value="#Progettista_Cognome.value()" />
+  <input id="Metadati_Progettista_Nome" name="Metadati_Progettista_Nome" dynamic_value="#Progettista_Nome.value()" />
+  <input id="Metadati_Progettista_CodiceFiscale" name="Metadati_Progettista_CodiceFiscale" dynamic_value="#Progettista_CodiceFiscale.value()" />
+
+</div>
+
+
+
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+  
+  <br>
+
+  <p class="Modulo"><input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" /></p>
+</div>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" />
+
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
