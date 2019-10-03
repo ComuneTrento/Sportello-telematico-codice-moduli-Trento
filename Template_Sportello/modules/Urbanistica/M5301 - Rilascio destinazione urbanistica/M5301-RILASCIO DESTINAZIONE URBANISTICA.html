@@ -278,17 +278,17 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
-  <h4>Numero di particelle relative alla richiesta:</h4>
+
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
         <tr class="Rigaintestazione" >
           <td>
-            <b>Numero di particelle totali:</b>
+            <b>Numero di particelle totali (comprese le eventuali consortalità):</b>
           </td>
         </tr>
         <tr>
           <td>
-              <input id="Totale_particelle" name="Totale_particelle" mandatory_enabled="true" label="Indicare numero totale particelle" format="number" style="width:8%;"  value=""/>
+              <input id="Totale_particelle" name="Totale_particelle" mandatory_enabled="true" label="Indicare numero totale particelle" type="number" style="width:8%;"  value=""/>
           </td>
         </tr> 
  
@@ -338,6 +338,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
   </table>
 </div>
 
+<br>
 <h4>Dei beni immobili individuati con le seguenti indicazioni catastali:</h4>
 
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
@@ -354,16 +355,15 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
   <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px">
     <tbody>
-      <tr class="Rigaintestazioneridotta">
+      <tr class="Rigaintestazione">
         <td colspan="9">
-          <p class="Labelcella">Ulteriori particelle o subalterni
-            <i>(allegare il modulo "ulteriori particelle o subalterni oggetto del procedimento")</i>
+          <p class="Rigaintestazione">Eventuali ulteriori particelle
           </p>
         </td>
       </tr>
       <tr>
         <td colspan="9">
-          <p style="line-height:1.6;">il procedimento riguarda <input id="NumeroAltriImmobili" name="NumeroAltriImmobili" style="width:5%;" value="0" dynamic_value="(#Totale_particelle.value()-5) > 0 ? #Totale_particelle.value()-5:'0'" label="Numero altre particelle o subalterni" readonly/> ulteriori particelle o subalterni</p>
+          <p style="line-height:1.6;">i dati relativi alle ulteriori <input id="NumeroAltriImmobili" name="NumeroAltriImmobili" style="width:5%;" value="0" dynamic_value="(#Totale_particelle.value()-5) > 0 ? #Totale_particelle.value()-5:'0'" label="Numero altre particelle o subalterni" readonly/> particelle verranno inseriti in un apposito modulo secondario</p>
         </td>
       </tr>
     </tbody>
@@ -529,12 +529,16 @@ urn_report="report:CSP_SESSION_REPORT"/>
   <tbody>
       <tr class="Rigaintestazione" >
           <td colspan="4">
-              <b>I pagamenti relativi ai diritti sugli atti in materia urbanistico-edilizia <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" readonly/> euro,
-              all'eventuale marca da bollo sull' emissione del certificato <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> euro
-              e all'eventuale certificato storico richiesto <input id="Totale_ConformazioneStorica" name="Totale_ConformazioneStorica"  label="Importo conformazione storica" style="width:8%;" value="0" dynamic_value="#Parametri_Storici_Post.checked() ? '51.64':'0'" readonly/> euro.
-              <br>Per un totale di: 
-              <input id="Totale_spesa" name="Totale_spesa" dynamic_value="parseFloat(#Totale_importo.value()) + parseFloat(#Totale_MarcaBollo.value()) + parseFloat(#Totale_ConformazioneStorica.value())" label="Totale" style="width:10%;"  value="" readonly/> euro.
-              <br>Saranno effettuati con le seguenti modalità:</b>
+              <b>È previsto il pagamento di: </b><br>
+              <ul>
+                <li>euro <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" readonly/> per diritti sugli atti in materia urbanistico-edilizia</li>
+                <li>euro <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> per l'eventuale marca da bollo sull' emissione del certificato</li>
+                <li>euro <input id="Totale_ConformazioneStorica" name="Totale_ConformazioneStorica"  label="Importo conformazione storica" style="width:8%;" value="0" dynamic_value="#Parametri_Storici_Post.checked() ? '51.64':'0'" readonly/> per l'eventuale certificato storico richiesto</li>
+              </ul>
+              <br>
+              <b>Per un totale di: 
+              euro <input id="Totale_spesa" name="Totale_spesa" dynamic_value="parseFloat(#Totale_importo.value()) + parseFloat(#Totale_MarcaBollo.value()) + parseFloat(#Totale_ConformazioneStorica.value())" label="Totale" style="width:10%;"  value="" readonly/></b>
+              <br>Che sarà effettuato con la seguente modalità:
           </td>
       </tr>
 
@@ -655,6 +659,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
+<!--
 <table class="Modulo" name="Informativa_dati" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
@@ -673,7 +678,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
     </tbody>
 </table>
-
+-->
 <table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
       <tr>
@@ -682,7 +687,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
         </td>
         <td colspan="2" style="background-color: #eeeeee;">
-          <p><b>Dichiaro di aver ricevuto e preso visione dell'informativa sul trattamento dei dati personali</b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+          <p><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-urbanistica" target="_blank">dell'informativa relativa al trattamento dei dati personali</a> informativa sul trattamento dei dati personali</b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
         </td>
       </tr>
     </tbody>
