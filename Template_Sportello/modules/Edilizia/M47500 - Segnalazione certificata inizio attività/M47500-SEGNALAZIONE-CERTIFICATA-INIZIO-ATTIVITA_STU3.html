@@ -1,6 +1,5 @@
 {% set CodiceModulo = "M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA" %}
 {% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;m47500.scia" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -221,59 +220,8 @@ name="GLOBO_report"
 urn_report="report:CSP_SESSION_REPORT"
 />
 
-<!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
-<!--<script type="text/javascript">
-    var simpaticoEservice="7"
-    var simpaticoForm="main"
-    var simpaticoCategory="Edilizia"
-    var simpaticoMapping=[ "AventeTitolo_EMailPEC",
-                           "AventeTitolo_Tel_Fisso",
-                           "AventeTitolo_EMail"]
-    var ERROR_LABELS= {   
-                        'block1' : 'Selezionare una delle opzioni',
-                        'block2' : 'Inserire il codice fiscale',
-                        'block3' : 'Selezionare il ruolo',
-                        'block5' : 'Inserire i dati richiesti',
-                        'block6' : 'Data inizio lavori non inserita oppure particella edilizia non valida',
-                        'block7' : 'Indirizzo non inserito',
-                        'block8' : 'Indirizzo non verificato',
-                        'block10' : 'Inserire il codice fiscale e indicare presa conoscenza',
-                        'block11' : 'Selezionare una delle opzioni',
-                        'block12' : 'Inserire il codice fiscale',
-                        'block13' : 'Selezionare una delle opzioni',
-                        'block14' : 'Selezionare una delle opzioni',
-                        'block15' : 'Selezionare una delle opzioni',
-                        'block16' : 'Indicare se richiesto invio della notifica',
-                        'block18' : 'Confermare presa visione informativa sulla privacy'
-      }
-  
-    </script>-->
-  <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 
 {% endblock meta %}
-
-<!--{% block simpaticoconfig %}
-{% set simpaticoEservice="1" %}
-{% set simpaticoEserviceName="M47750 AUTORIZZAZIIONE CPC" %}
-{% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC" %}
-{% set simpaticoForm="main" %}
-{% set simpaticoCategory="Edilizia" %}
-{% set simpaticoMapping=[ "AventeTitolo_EMailPEC","AventeTitolo_Tel_Fisso","AventeTitolo_EMail"] %}
-{% set ERROR_LABELS=[   ('block1' , 'Selezionare una delle opzioni'),
-                        ('block2' , 'Inserire il codice fiscale'),
-                        ('block3' , 'Selezionare il ruolo'),
-                        ('block5' , 'Selezionare la tipologia di autorizzazione/parere richiesta'),
-                        ('block7' , 'Specificare la tipologia di intervento'),
-                        ('block8' , 'Particella edilizia non valida'),
-                        ('block9' , 'Indirizzo non inserito'),
-                        ('block10' , 'Indirizzo non verificato'),
-                        ('block12' , 'Selezionare una delle opzioni'),
-                        ('block13' , 'Definire il ruolo'),
-                        ('block14' , 'Inserire il codice fiscale'),
-                        ('block15' , 'Selezionare una delle opzioni'),
-                        ('block17' , 'Confermare presa visione informativa sulla privacy')] %}
-{{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}-->
 
 
 {% block title %}M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA{% endblock title %}
@@ -284,6 +232,9 @@ urn_report="report:CSP_SESSION_REPORT"
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
 <input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Segnalazione certificata di inizio attività'" id="Oggetto" name="Oggetto" type="hidden" />
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -315,7 +266,7 @@ urn_report="report:CSP_SESSION_REPORT"
           <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
         </td>
         <td>
-          <p style="line-height:1.6;">Progettista incaricato</p>
+          <p style="line-height:1.6;">Progettista incaricato o legale rappresentante</p>
         </td>
       </tr>
     </tbody>
@@ -927,7 +878,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Domanda firmata dal titolare</b> nella seguente modalità: 
+        <p style="line-height:1.6;"><b>Domanda firmata dal titolare</b> nella seguente modalità: <br>
             <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:40%" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
               <option value=""></option>
               <option value="Firma autografa">Firma autografa</option>
@@ -1076,19 +1027,19 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;"></td>
     <tr>
-      <td style="vertical-align: top; text-align: center;">
+      <td style="vertical-align: center; text-align: center;">
         <div id="check_imprese" name="check_imprese" label="Indicare numero delle imprese nel procedimento edilizio" mandatory_enabled="#Anagrafica_imprese.checked()"></div>
         <input group="check_imprese" id="check_imprese_au" name="check_imprese_au" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height:1.6;">Indicare il numero delle imprese il cui rappresentante firma con <b>firma autografa</b><br><span style="font-size: 90%;">(allegando inoltre copia del documento di identità)</span></p>
+        <p style="line-height:1.6;">Indicare il numero delle imprese il cui rappresentante firma con <b>firma autografa</b><br><span style="font-size: 95%;">(allegando inoltre copia del documento di identità)</span></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input class="" format="number" id="Nanag_imprese_allegateAu" name="Nanag_imprese_allegateAu" label="Numero anagrafiche imprese firmate manualmente" mandatory_enabled="#check_imprese_au.checked()" style="width: 90%; text-align: center;"/></p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center;">
+      <td style="vertical-align: center; text-align: center;">
         <input group="check_imprese" id="check_imprese_el" name="check_imprese_el" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
