@@ -29,31 +29,27 @@ versione="1.0|01/01/2015"/>
 
 {% endblock meta %}
 
-<!--{% block simpaticoconfig %}
-  {% set simpaticoEservice="1_3" %}
-  {% set simpaticoEserviceName="GEN IMMAGG" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG" %}
-  {% set simpaticoForm="modulo_secondario" %}
-  {% set simpaticoCategory="Edilizia" %}
-  {% set simpaticoMapping=[ "AventeTitolo_EMailPEC",
-                           "AventeTitolo_Tel_Fisso",
-                           "AventeTitolo_EMail"] %}
+<!--
+<script type="text/javascript">
+  var simpaticoEservice = "1_3"; //  the id corresponding to the e-service
+  var simpaticoEserviceName = "M5301-MSEC01-FRAZIONAMENTO-PARTICELLE-5"; //  the name corresponding to the e-service
+  var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/M5301-MSEC01-FRAZIONAMENTO-PARTICELLE-5" ; //  the url corresponding to the e-service
+  var simpaticoForm = "modulo_secondario";
+  var simpaticoCategory = "Urbanistica"; // the general category of the e-service
+  var simpaticoMapping= ["Nominativo_titolare",
+                          "Immobile5_CheckVerificaCatastale",
+                          "Frazionamento51_FrazionamentoNumero",
+                          "Frazionamento51_FrazionmanetoBarra",
+                          ];
+  var ERROR_LABELS = { 
+		'block1' : 'Se non presente, inserire nome e cognome di chi sta facendo la domanda.',
+    'block2' : 'Verificare che la particella inserita esista. Il verifica esito particella ha dato esito positivo?',
+    'block3' : 'Inserire numero e anno frazionamento.',
+  }
+</script>
 
-  {% set ERROR_LABELS=[ ('block1' ,'Inserire il codice fiscale'),
-                        ('block2' , 'Selezionare il ruolo'),
-                        ('block4' , 'Particella inesistente'),
-                        ('block5' , 'Particella inesistente'),
-                        ('block6' , 'Particella inesistente'),
-                        ('block7' , 'Particella inesistente'),
-                        ('block8' , 'Particella inesistente'),
-                        ('block9' , 'Particella inesistente'),
-                        ('block10' , 'Particella inesistente'),
-                        ('block11' , 'Particella inesistente'),
-                        ('block12' , 'Particella inesistente'),
-                        ('block13' , 'Particella inesistente')] %}
-  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}-->
-
+<form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/M5301-MSEC01-FRAZIONAMENTO-PARTICELLE-5" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
+-->
 
 {% block title %}
    Ulteriori frazionamenti oggetto del procedimento
@@ -63,7 +59,7 @@ versione="1.0|01/01/2015"/>
 
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_AventeTitolo_Cognome_Dato.value().toUpperCase() + ' - ulteriori frazionamenti oggetto del procedimento'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_AventeTitolo_Cognome_Dato.value().toUpperCase() + ' - ulteriori frazionamenti oggetto del procedimento Particella 5'"/>
 
  <h1 class="Modulo">
   Ulteriori frazionamenti oggetto del procedimento
@@ -71,61 +67,71 @@ versione="1.0|01/01/2015"/>
 
 <div class="simpatico-block simpatico-query-and-answer">
 
-<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td>
-        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#Metadati_AventeTitolo_Cognome_Dato.value() + ' ' + #Metadati_AventeTitolo_Nome_Dato.value()" size="87"/>
-        <br>valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#Metadati_AventeTitolo_Cognome_Dato.value() + ' ' + #Metadati_AventeTitolo_Nome_Dato.value()" size="87"/>
+          <br>valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
 
 <br>
 
 <h1 class="Modulo">DICHIARA</h1>
 
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td>
-        <p style="line-height:1.6;"><b>che il procedimento riguarda il frazionamento della particella 5:</b>
-      </td>
-    </tr>
-  </tbody>
-</table>
-{{immobili_trento.immobile_semplice("Immobile5")}}
+<div class="simpatico-block simpatico-query-and-answer">
 
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td>
-        <p style="line-height:1.6;"><b>di cui i seguenti frazionamenti:</b>
-      </td>
-    </tr>
-  </tbody>
-</table>
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
-{{immobili_trento.immobile_frazionamento()}}
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height:1.6;"><b>che il procedimento riguarda il frazionamento della particella 5:</b>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  {{immobili_trento.immobile_semplice("Immobile5")}}
+
+</div>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height:1.6;"><b>di cui i seguenti frazionamenti:</b>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  {{immobili_trento.immobile_frazionamento("Frazionamento51", disattivato="true")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento52", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 2")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento53", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 3")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento54", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 4")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento55", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 5")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento56", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 6")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento57", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 7")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento58", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 8")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento59", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 9")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento510", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 10")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento511", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 11")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento512", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 12")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento513", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 13")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento514", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 14")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento515", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 15")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento516", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 16")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento517", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 17")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento518", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 18")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento519", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 19")}}
+  {{immobili_trento.immobile_frazionamento("Frazionamento520", disattivato="#Metadati_Immobile5_NumeroAltriFrazionamentiDato.value() >= 20")}}
+
 
 
 </div>
@@ -177,6 +183,7 @@ versione="1.0|01/01/2015"/>
  {{ utils.passaggio_metadati() }}
  <input id="Metadati_AventeTitolo_Cognome_Dato" name="Metadati_AventeTitolo_Cognome_Dato" hidden="true"/>
  <input id="Metadati_AventeTitolo_Nome_Dato" name="Metadati_AventeTitolo_Nome_Dato" hidden="true"/>
+ <input id="Metadati_Immobile4_NumeroAltriFrazionamentiDato" name="Metadati_Immobile4_NumeroAltriFrazionamentiDato" hidden="true"/>
 
 
 {% endblock content %}
