@@ -92,6 +92,18 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<meta codice_modulo_figlio="GEN-IMMAGG-CDU-EL-OVER15"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.urbanistica.firma.elettronica.over15"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-CDU-AU-OVER15"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.urbanistica.firma.autografa.over15"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <meta codice_modulo_figlio="M5301-MSEC02-RIC-DIR-SEG-BNC"
 urn_modulo_figlio="document:c_l378:chiedere.rilascio.certificato.urbanistico;rilascio.certificato.urbanistico;a01.m5301.dir.seg.istr.bnc"
 name="GLOBO_modulofiglio"
@@ -178,9 +190,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
       'block3' : 'Verificare inserimento dati',
       'block4' : 'Per conto di da selezionare', 
       'block5' : 'Selezionare tipo di modulistica richiesta', 
-      'block6' : 'Inserisci indirizzo email alla quale verr&#224; inviato il certificato attestante la certificazione urbanistica', 
-      'block7' : 'Inserisci il numero di particelle totali (compreso le consortalit&#224;)', 
-      'block8' : 'Verifica di aver considerato anche le consortalit&#224;.', 
+      'block6' : 'Inserisci indirizzo email alla quale verra\' inviato il certificato attestante la certificazione urbanistica', 
+      'block7' : 'Inserisci il numero di particelle totali (compreso le consortalita\'). Minimo valore ammesso 1 e massimo 30.', 
+      'block8' : 'Verifica di aver considerato anche le consortalita\'.', 
       'block9' : 'Particella non esistente', 
       'block10' : 'Particella non esistente', 
       'block11' : 'Particella non esistente', 
@@ -218,6 +230,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
 </h4> -->
 
 <br>
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
 {{anagrafica_trento_uniformata.richiedente_nomail("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
@@ -412,7 +427,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </tr>
         <tr>
           <td>
-              <input id="Totale_particelle" name="Totale_particelle" mandatory_enabled="true" label="Indicare numero totale particelle" type="number" style="width:8%;"  value=""/>
+              <input id="Totale_particelle" name="Totale_particelle" mandatory_enabled="true" label="Indicare numero totale particelle" type="number" style="width:8%;" min="1" max="30" value=""/>
           </td>
         </tr> 
  
@@ -900,15 +915,13 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="GLOBO_modulofiglio_cM5301-MSEC01-FRAZIONAMENTO-PARTICELLE-5" name="GLOBO_modulofiglio_cM5301-MSEC01-FRAZIONAMENTO-PARTICELLE-5" numero="Math.ceil(#numeroallegatiFrazionamenti5.value())" obbligatorio="#numeroallegatiFrazionamenti5.value() > 0 ? 'OBBLIGATORIO' : ''" type="hidden" value="" />
 
 <input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#NumeroAltriImmobili.value()) /10" type="hidden" />
-<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#GEN_IMMAGG.checked()" type="hidden" value=""/>
-<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? Math.ceil(#numeroallegati.value()) &lt; 2 ? 'OBBLIGATORIO' : '' : ''" type="" value=""/>
-<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-AU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? Math.ceil(#numeroallegati.value()) &lt; 2 ? 'OBBLIGATORIO' : '' : ''" type="" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU" numero="1" obbligatorio="#GEN_IMMAGG.checked()" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-EL" numero="1" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? Math.ceil(#numeroallegati.value()) &gt; 0 ? 'OBBLIGATORIO' : '' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-AU" numero="1" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? Math.ceil(#numeroallegati.value()) &gt; 0 ? 'OBBLIGATORIO' : '' : ''" type="hidden" value=""/>
 
-<!--
-<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-OVER15" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-OVER15" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#GEN_IMMAGG.checked()" type="hidden" value=""/>
-<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-EL-OVER15" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-EL-OVER15" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? Math.ceil(#numeroallegati.value()) &gt; 1 ? 'OBBLIGATORIO' : '' : ''" type="hidden" value=""/>
-<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-AU-OVER15" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-AU-OVER15" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? Math.ceil(#numeroallegati.value()) &gt; 1 ? 'OBBLIGATORIO' : '' : ''" type="hidden" value=""/>
--->
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-EL-OVER15" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-EL-OVER15" numero="1" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? Math.ceil(#numeroallegati.value()) &gt; 1 ? 'OBBLIGATORIO' : '' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-AU-OVER15" name="GLOBO_modulofiglio_cGEN-IMMAGG-CDU-AU-OVER15" numero="1" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? Math.ceil(#numeroallegati.value()) &gt; 1 ? 'OBBLIGATORIO' : '' : ''" type="hidden" value=""/>
+
 
 <script>
   function calcolaTotale() {
