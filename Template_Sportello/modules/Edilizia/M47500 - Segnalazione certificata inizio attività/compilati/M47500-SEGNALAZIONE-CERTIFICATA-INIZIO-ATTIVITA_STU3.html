@@ -65,7 +65,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-Modulo_compilato_firma_autografa"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
+urn_allegato="document:c_l378:allegato.copia.modulo.compilato.firma.autografa"
 descrizione_estesa="Modulo compilato e firmato manualmente"
 filename="Modulo_compilato_firma_autografa.pdf"
 firmato="NO"
@@ -76,7 +76,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-Modulo_compilato_firma_elettronica"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.elettronica"
+urn_allegato="document:c_l378:allegato.copia.modulo.compilato.firma.elettronica"
 descrizione_estesa="Modulo compilato e firmato elettronicamente"
 filename="Modulo_compilato_firma_elettronica.pdf"
 firmato="SI"
@@ -223,6 +223,30 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
+
+<meta codice_modulo_figlio="M47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec02.m47500.dich.cong.tit.prog.firma.prog"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M47500-MSEC03-DICH-CONG-TIT-PROG-FIRMA-ENTR-AU"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec03.m47500.dich.cong.tit.prog.firma.entr.au"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec04.m47500.dich.cong.tit.prog.firma.entr.el"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M47500-MSEC01-DICH-PROG"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec01.m47500.dichiarazioni.progettista"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
 
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
@@ -3213,6 +3237,8 @@ function get_ufficio_dest() {
   </table>
 </div>
 
+<input id="Metadati_altri_soggetti" name="Metadati_altri_soggetti" dynamic_value="#Parametri_Altro_titolo_reale1.checked() ? 'ALTRI SOGGETTI' : ''"/>
+
 <br>
 <br>
 
@@ -3306,7 +3332,7 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;" rowspan="3">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
         <input group="Tipologia_opere" id="Tipologia_opere3" name="Tipologia_opere" type="radio" value="3" />
       </td>
       <td colspan="2">
@@ -3791,6 +3817,57 @@ function get_ufficio_dest() {
         <input id="GLOBO_allegato_cGEN-DOC-NOTIFICA" name="GLOBO_allegato_cGEN-DOC-NOTIFICA" numero="#num_Doc_notifica.value()" obbligatorio="#Doc_notifica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>  
+    <tr>
+      <td style="vertical-align: top; text-align: center;" rowspan="3">
+        <input id="Dichiar_titol_prog" name="Dichiar_titol_prog" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni congiunte del titolare e del progettista</b></p>
+      </td>
+      <td style="background-color: #eeeeee;" rowspan="3">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_dich_cong" name="num_dich_cong" dynamic_value="'1'" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG" name="GLOBO_modulofiglio_cM47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG" obbligatorio="#Firmatario_dich_cong1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center;">
+        <div id="Firmatario_dich_cong" name="Firmatario_dich_cong" label="Firmatario dichiarazioni congiunte" mandatory_enabled="true"> </div>
+        <input group="Firmatario_dich_cong" id="Firmatario_dich_cong1" name="Firmatario_dich_cong" type="radio" value="1" dynamic_check="#Tipo_richiedente1.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">firmate dal progettista incaricato con <b>firma digitale</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width:4%">
+        <input group="Firmatario_dich_cong" id="Firmatario_dich_cong2" name="Firmatario_dich_cong" type="radio" value="2" dynamic_check="#Tipo_richiedente2.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">firmate:
+          <br>- dal progettista incaricato con <b>firma digitale</b>
+          <br>- dal titolare con
+          <select class="inputNormal" id="Tipo_Firma_dich_cong" name="Tipo_Firma_dich_cong" style="width:30%;" label="Tipo firma dichiarazioni congiunte" mandatory_enabled="#Firmatario_dich_cong2.checked()">
+            <option value=""></option>
+            <option value="Firma autografa">Firma autografa</option>
+            <option value="Firma elettronica">Firma elettronica</option>
+          </select>
+        </p>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC03-DICH-CONG-TIT-PROG-FIRMA-ENTR-AU" name="GLOBO_modulofiglio_cM47500-MSEC03-DICH-CONG-TIT-PROG-FIRMA-ENTR-AU" obbligatorio="#Firmatario_dich_cong2.checked() and #Tipo_Firma_dich_cong.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL" name="GLOBO_modulofiglio_cM47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL" obbligatorio="#Firmatario_dich_cong2.checked() and #Tipo_Firma_dich_cong.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center;">
+        <input id="Dichiar_prog" name="Dichiar_prog" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni del progettista</b>, firmato con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_dich_prog" name="num_dich_prog" dynamic_value="'1'" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC01-DICH-PROG" name="GLOBO_modulofiglio_cM47500-MSEC01-DICH-PROG" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -3815,7 +3892,8 @@ function get_ufficio_dest() {
 <br>
 <br>
 
-<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+<div class="simpatico-block">
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="width: 25%; text-align: center;">
@@ -3845,7 +3923,7 @@ function get_ufficio_dest() {
 
 
 
-<div class="simpatico-block">
+
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
 </p>
