@@ -43,7 +43,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-Modulo_compilato_firma_autografa"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
+urn_allegato="document:c_l378:allegato.copia.modulo.compilato.firma.autografa"
 descrizione_estesa="Modulo compilato e firmato manualmente"
 filename="Modulo_compilato_firma_autografa.pdf"
 firmato="NO"
@@ -54,7 +54,7 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-Modulo_compilato_firma_elettronica"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.elettronica"
+urn_allegato="document:c_l378:allegato.copia.modulo.compilato.firma.elettronica"
 descrizione_estesa="Modulo compilato e firmato elettronicamente"
 filename="Modulo_compilato_firma_elettronica.pdf"
 firmato="SI"
@@ -1351,7 +1351,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Parametri_Titolo3.checked()" value="OBBLIGATORIO"/>
+        <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Parametri_Titolo3.checked()" enabled="#Parametri_Titolo3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Documentazione comprovante il diritto contrattuale</b></p>
@@ -1419,7 +1419,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" obbligatorio="#GEN_PROG_INC.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" obbligatorio="#GEN_PROG_INC.checked() and !#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
         <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV-PROVA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV-PROVA" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
       </td>
     </tr>
@@ -1443,7 +1443,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height:1.6;"><b>Procura / Affidamento incarico</b></p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="num_procura_affidamento" name="num_procura_affidamento" dynamic_value="#procura_affidamento.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" enabled="#procura_affidamento.checked()" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="num_procura_affidamento" name="num_procura_affidamento" dynamic_value="(#AventeTitolo_Ruolo.value() == 'Procuratore' || #AventeTitolo_Ruolo.value() == 'Amministratore di sostegno') ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" enabled="#AventeTitolo_Ruolo.value() == 'Procuratore' || #AventeTitolo_Ruolo.value() == 'Amministratore di sostegno'" readonly/></p>
         <input id="GLOBO_allegato_cGEN-PROCURA" name="GLOBO_allegato_cGEN-PROCURA" obbligatorio="#procura_affidamento.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
@@ -1542,7 +1542,8 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+<div class="simpatico-block">
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="width: 25%; text-align: center;">
@@ -1572,7 +1573,6 @@ urn_report="report:CSP_SESSION_REPORT"
 
 
 
-<div class="simpatico-block">
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
 </p>
