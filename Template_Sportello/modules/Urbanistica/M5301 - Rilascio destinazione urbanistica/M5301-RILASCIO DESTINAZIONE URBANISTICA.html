@@ -670,7 +670,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <td colspan="4">
               <b>È previsto il pagamento di: </b>
               <ul>
-                <li>euro <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" readonly/> per diritti sugli atti in materia urbanistico-edilizia</li>
+                <li>euro <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Diritti_Segreteria1.checked() ? #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64 : 0" readonly/> per diritti sugli atti in materia urbanistico-edilizia</li>
                 <li>euro <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> per l'eventuale marca da bollo sull' emissione del certificato</li>
                 <li>euro <input id="Totale_ConformazioneStorica" name="Totale_ConformazioneStorica"  label="Importo conformazione storica" style="width:8%;" value="0" dynamic_value="#Parametri_Storici_Post.checked() ? '51.64':'0'" readonly/> per l'eventuale certificato storico richiesto</li>
               </ul>
@@ -685,7 +685,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
   
         <td style="vertical-align: center; width: 4%;">
             <div id="Tassonomia_DocEdi" name="Tassonomia_DocEdi" label="Parametri tipo di pagamento" mandatory_enabled="true"></div>
-            <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi1" name="Tassonomia_DocEdi" type="radio" value="2" />
+            <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi1" name="Tassonomia_DocEdi" type="radio" value="2" onclick="copyValue() " />
         </td>
         <td colspan="2">
           <input class="" id="EsenzioniPagamenti" name="EsenzioniPagamenti" label="Esenzioni pagamenti" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0.00':'16.00'" type="hidden" >
@@ -959,9 +959,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
     document.getElementById("Totale_importo").value = 0;
     document.getElementById("Totale_spesa").value = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
     var tot_causale = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
-    if( document.getElementById("Tassonomia_DocEdi1").checked){
+    //if( document.getElementById("Tassonomia_DocEdi1").checked){
       document.getElementById("Totale_spesa_causale").value = parseFloat(tot_causale);
-    }
+    //}
   }
 
   function setSegreteriaSi(){
@@ -969,10 +969,15 @@ urn_report="report:CSP_SESSION_REPORT"/>
     //riapplico i diritti di segreteria sul totale 
     document.getElementById("Totale_spesa").value = parseFloat(parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_importo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
     var tot_causale = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_importo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
-    if( document.getElementById("Tassonomia_DocEdi1").checked){
+    //if( document.getElementById("Tassonomia_DocEdi1").checked){
       document.getElementById("Totale_spesa_causale").value = parseFloat(tot_causale);
-    }
+    //}
   }
+
+function copyValue(){
+  //allineo i due valori
+  document.getElementById("Totale_spesa_causale").value = document.getElementById("Totale_spesa").value; 
+}
 
   function MyControlloData(dataDaControllare){
     if(dataDaControllare.length >= 10){
