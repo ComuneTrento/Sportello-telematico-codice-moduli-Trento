@@ -10584,13 +10584,9 @@
 {%- endmacro %}
 
 {% macro immobile_destinazione_urbanistica_particelle( prefix='Immobile', intestazione="immobile", annotazioniSolo1="Immobile principale oggetto dell'istanza", visibilty_carica_dati="visibility:hidden", pointer_carica_dati="cursor:default", visibility_intestazione="display:visibility", civico_obbligatorio="false", carica_campi="", tipo_obbligatorio="false", disattivato="true" ) -%}
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
-
   
   <div class="simpatico-block simpatico-query-and-answer">
-<!--   <h1 class="Modulo">COMUNICA</h1> -->
-<!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
     <input id="{{ prefix }}_DatiToponomasticiObbligatori"       name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
     <input id="{{ prefix }}_Tipo"       name="{{ prefix }}_Tipo"       type="hidden" dynamic_value="#{{ prefix }}_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #{{ prefix }}_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #{{ prefix }}_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
     <input id="{{ prefix }}_NumeroUlterioriImmobili" name="{{ prefix }}_NumeroUlterioriImmobili" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltriImmobili.value() / 16) ">
@@ -10624,25 +10620,13 @@
           <td style="width: 8%;">
             <p class="Labelcella">Barra</p>
           </td>
-          <!--<td style="width: 8%;">
-            <p class="Labelcella">Porzione Materiale</p>
-          </td>
-          <td style="width: 8%;">
-            <p  class="Labelcella">Subalterno</p>
-          </td>
-          <td style="width: 8%;">
-            <p class="Labelcella">Controllo particella</p>
-          </td>
-				  <td style="width: 8%;">
-            <p class="Labelcella">Mappa</p>
-          </td>-->
         </tr>
         <tr>
           <td colspan="2">
             <select class="inputNormal" id="{{ prefix }}_TipoImmobile" name="{{ prefix }}_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="{{ disattivato }}">
               <option value=""></option>
               <!--<option value="S">porzione di edificio</option> -->
-	            <option value="E">particella edificale</option>
+	            <option value="E">particella edificiale</option>
               <option value="F">particella fondiaria</option>
             </select>
           </td>
@@ -10666,9 +10650,6 @@
               <option value="432">Vigolo Baselga</option>
               <option value="437">Villamontagna</option>
               <option value="439">Villazzano</option>
-              <!--<option value="4">Aldeno</option>
-              <option value="101">Cimone</option>
-              <option value="162">Garniga</option>-->
             </select>
           </td>
           <td colspan="2">
@@ -10680,79 +10661,9 @@
           <td>
             <input name="{{ prefix }}_CatBarra" id="{{ prefix }}_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="{{ disattivato }}"/>
           </td>
-          <!--<td>
-            <input name="{{ prefix }}_CatPM" id="{{ prefix }}_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="{{ disattivato }}" />
-          </td>
-          <td>
-            <input name="{{ prefix }}_CatSubalterno" id="{{ prefix }}_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#{{ prefix }}_TipoImmobile.check_value(['S'])"/>
-          </td>
-          <td>
-            <button class="real-button" type="button" style="width:34px; height:28px" id="{{ prefix }}_ControlloDatiCatastaliButton" name="{{ prefix }}_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-              {{ service.verifica_particella(
-    						prefix + '_CatComune',
-          			prefix + '_CatNumero',
-          			prefix + '_CatBarra',
-          			prefix + '_TipoImmobile',
-                prefix + '_CatSubalterno',
-          			{
-          			prefix + '_RisultatoVerificaCatastale': 'esiste',
-          			prefix + '_Particella': particella
-          			},
-          			'#' + prefix + '_ControlloDatiCatastaliButton:click') }}
-
-					  <input id="{{ prefix }}_RisultatoVerificaCatastale" name="{{ prefix }}_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-              {{ service.lista_vie(
-                prefix + '_CatComune',
-                prefix + '_CatNumero',
-                prefix + '_CatBarra',
-                prefix + '_TipoImmobile',
-                'lista_vie1',
-                '#' + prefix + '_RisultatoVerificaCatastale:change'
-                )}}
-          </td>
-          <td>
-
-            <button class="real-button" type="button" enabled="#{{ prefix }}_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('{{ prefix }}_CatComune').value; num = document.getElementById('{{ prefix }}_CatNumero').value; barra = document.getElementById('{{ prefix }}_CatBarra').value; tipo = document.getElementById('{{ prefix }}_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>-->
 			  </tr>
       </tbody>
 	  </table>
-
-    <!--
-		<table class="Modulo" style="border: 1px solid grey">
-			<tbody>
-        <tr class="Rigaintestazione">
-          <td>
-            <b>Verifica esito particella</b>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			     <input
-			        id="{{ prefix }}_CheckVerificaCatastale"
-			        name="{{ prefix }}_CheckVerificaCatastale"
-			        dynamic_check="#{{ prefix }}_RisultatoVerificaCatastale.value()=='SI'"
-			        enabled="#{{ prefix }}_RisultatoVerificaCatastale.value()=='SI'"
-              type="checkbox"
-              value="OK"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella esistente</p>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			      <input
-			         id="{{ prefix }}_CheckVerificaCatastale1"
-			         name="{{ prefix }}_CheckVerificaCatastale1"
-			         dynamic_check="#{{ prefix }}_RisultatoVerificaCatastale.value()=='NO'"
-			         enabled="#{{ prefix }}_RisultatoVerificaCatastale.value()=='NO'"
-               type="checkbox"
-               value="KO"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella NON esistente  </p>
-			    </td>
-			  </tr>
-			</tbody>
-    </table>
-    -->
     <!--Aggiungo controllo frazionamento-->
     <table class="Modulo" style="border:1px solid grey;">
       <tbody>
@@ -10780,18 +10691,18 @@
             <p>SI</p>
             <td>
                 <div id="{{ prefix }}_Parametri_Titolo_Sec" name="{{ prefix }}_Parametri_Titolo_Sec" label="{{ prefix }} particella soggetta a frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"></div>
-                <p style="line-height:1.6;"> <input id="{{ prefix }}_Parametri_Titolo3" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/> Richiedo conformazione ante-frazionamento </p>
+                <p style="line-height:1.6;"> <input id="{{ prefix }}_Parametri_Titolo3" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>con situazione catastale ante-frazionamento </p>
             </td> 
           </td>
         </tr>
         <tr>
           <td>
-            <p style="line-height:1.6;"> <input id="{{ prefix }}_Parametri_Titolo4" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>Richiedo conformazione come da frazionamento: N° <input id="{{ prefix }}_NumeroFrazionamento" name="{{ prefix }}_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="{{ prefix }}_Numero frazionamento" enabled="{{disattivato}}"/>
-              Anno <input id="{{ prefix }}_AnnoFrazionamento" name="{{ prefix }}_AnnoFrazionamento" style="width:10%;" type="number" label="{{ prefix }}_Anno frazionamento" enabled="{{disattivato}}"/>
-              - approvato dal catasto con atto numero <input id="{{ prefix }}_NumeroAttoFrazionamenti" name="{{ prefix }}_NumeroAttoFrazionamenti" style="width:10%;" type="number" label="Numero catasto frazionamenti" enabled="{{disattivato}}"/> 
-              di data <input id="{{ prefix }}_DataAttoFrazionamenti" name="{{ prefix }}_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" enabled="{{disattivato}}"/>
+            <p style="line-height:1.6;"> <input id="{{ prefix }}_Parametri_Titolo4" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>con situazione catastale come da tipo di frazionamento <b>approvato dal catasto in data </b> 
+              <input id="{{ prefix }}_DataAttoFrazionamenti" name="{{ prefix }}_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()" enabled="{{disattivato}}"/> 
+              - protocollo N° <input id="{{ prefix }}_NumeroFrazionamento" name="{{ prefix }}_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="{{ prefix }}_Numero frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()" enabled="{{disattivato}}"/>
+              Anno <input id="{{ prefix }}_AnnoFrazionamento" name="{{ prefix }}_AnnoFrazionamento" style="width:10%;" type="number" label="{{ prefix }}_Anno frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()" enabled="{{disattivato}}"/> 
               <br> 
-              <b>N.B: non è sufficente il numero progressivo della semplice richiesta presentata al catasto </b>
+              <b>N.B: non inserire il numero progressivo della semplice ricevuta del catasto</b> </p>
             </p>
           </td>
         </tr>
