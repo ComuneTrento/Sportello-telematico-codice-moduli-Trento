@@ -248,7 +248,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </script>
     
     <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
-         
+    
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
@@ -512,10 +512,10 @@ function get_ufficio_dest() {
         </tr>
         <tr>
           <td colspan="3">
-            <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome" mandatory="true" />
+            <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome" mandatory="true"/>
           </td>
           <td>
-            <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome" mandatory="true" />
+            <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome" mandatory="true"/>
           </td>
         </tr>
         <tr class="Rigaintestazioneridotta">
@@ -736,10 +736,10 @@ function get_ufficio_dest() {
   			</tr>
   			<tr>
           <td>
-            <input class="inputNormal" id="AventeTitolo_Fisso" name="AventeTitolo_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
+            <input class="inputNormal" id="AventeTitolo_Fisso" name="AventeTitolo_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory_enabled="#AventeTitolo_Telefono.value() == ''"/>
           </td>
           <td>
-            <input class="inputNormal" id="AventeTitolo_Telefono" name="AventeTitolo_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
+            <input class="inputNormal" id="AventeTitolo_Telefono" name="AventeTitolo_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory_enabled="#AventeTitolo_Fisso.value() == ''"/>
           </td>
   			</tr>
   		</tbody>
@@ -793,7 +793,7 @@ function get_ufficio_dest() {
             <input id="Parametri_Domanda_Delega3" name="Parametri_Domanda_Delega" type="radio" value="3" /> 
         </td>
         <td colspan="2">
-          di terzi - in qualità di collaboratore di studio notarile/tecnico
+          di terzi - in qualità di collaboratore di studio/società
         </td>
       </tr>
       <tr class="Rigaintestazione">
@@ -802,7 +802,7 @@ function get_ufficio_dest() {
           <input id="Descrizione_Pec" name="Descrizione_Pec" enabled="true" label="Inserire una descrizione della società" style="width:100%;"/>
         </td>
         <td>
-          P.IVA/Codice fiscale
+          P.IVA
           <input class="" id="pIvaNotarile" name="pIvaNotarile" style="width:100%" label="La p.IVA del notaio/tecnico" mandatory_enabled="#Parametri_Domanda_Delega3.checked()"/>
         </td> 
       </tr>
@@ -810,55 +810,135 @@ function get_ufficio_dest() {
   </table>
 </div>
 
-<!--
-<div class="simpatico-block simpatico-query-and-answer">  
- 
-    
-  <table class="Modulo" style="border:1px solid grey;">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td colspan="3">
-          <p>
-            <b>Compila la seguente domanda per conto:</b>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; width: 4%;">
-          <div id="Parametri_Domanda_Delega" name="Parametri_Domanda_Delega" label="Per conto di" mandatory_enabled="true"></div>
-          <input id="Parametri_Domanda_Delega1" name="Parametri_Domanda_Delega" type="radio" value="1" />
-        </td>
-        <td colspan="2">
-          <p>del sottoscritto 
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; width: 4%;" rowspan="2">
-          <input id="Parametri_Domanda_Delega2" name="Parametri_Domanda_Delega" type="radio" value="2" /> 
-        </td>
-        <td rowspan="2">
-          di terzi 
-        </td>
-        <td>
-          persona fisica: (inserire codice fiscale) <input class="" id="CodiceFiscaleFisica" name="CodiceFiscaleFisica" style="width:100%" label="Il codice fiscale del delegante" mandatory_enabled="#Parametri_Domanda_Delega2.checked()"/>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          di terzi - in qualità di collaboratore di studio notarile/tecnico: (inserire P.IVA più descrizione) <input class="" id="pIvaNotarile" name="pIvaNotarile" style="width:100%" label="La p.IVA del notaio/tecnico" mandatory_enabled="#Parametri_Domanda_Delega3.checked()"/>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->
-  
-
 <h1 class="Modulo">
   CHIEDE
 </h1>
 
+<div class="simpatico-block simpatico-query-and-answer">  
+  <p class="Modulo" style="line-height:1.6;">Il rilascio del certificato urbanistico (CDU) attestante la destinazione urbanistica:</p>
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <!--
+      <tr class="Rigaintestazione">
+        <td colspan="5">
+          <p>
+            <b>Solo per l'eventualità di un certificato storico:</b>
+          </p>
+        </td>
+      </tr>
+-->
+      <tr>
+        <td>
+          <div id="Parametri_Titolo_Storici" name="Parametri_Titolo_Storici" label="Richiesta certificato storico"></div>
+          <p style="line-height:1.6;"> <input id="Parametri_Storici_Attuali" name="Parametri_Titolo_Storici" type="radio" value="1" style="vertical-align: center; width: 240%;" /> </p>
+        </td>
+          <td colspan="5">
+              <b>Secondo il Piano Regolatore Generale vigente</b>
+        </td>
+      </tr>
+
+      <tr>
+          <td>
+            <p style="line-height:1.6;"> <input id="Parametri_Storici_Post" name="Parametri_Titolo_Storici" type="radio" value="2" style="vertical-align: center; width: 240%;"/> </p>
+            </td>
+            <td colspan="5">
+                Storica (necessaria solo in casi particolari, prevede un pagamento di 51,64 euro)
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+
+      <tr class="Rigaintestazione">
+        <td colspan="5">
+          <p>
+            <b>Nell'eventualità di un certificato storico:</b>
+          </p>
+        </td>
+      </tr>
+
+      <tr >
+
+        <td colspan="2" >  
+            si richiede la destinazione urbanistica <b>Storica</b> <i>(non anteriore al 11/11/1968)</i>:      
+        </td>
+
+      </tr>
+
+      <tr>
+    
+        <td >
+            <div id="Parametri_Titolo_Storici_Post" name="Parametri_Titolo_Storici_Post" label="Richiesta certificato storico data " mandatory_enabled="#Parametri_Storici_Post.checked()"></div>   
+            <p style="line-height:1.6;"> <input id="Parametri_Storici_Post_Alla1" name="Parametri_Titolo_Storici_Post" type="radio" value="1" style="vertical-align: center; width: 120%;"/> </p>
+        </td>
+        <td>       
+          <p style="line-height:1.6;">   Alla data
+          <input class="" format="date" id="Data_storico" name="Data_storico" label="Data conformazione storica" mandatory_enabled="#Parametri_Storici_Post_Alla1.checked()" size="8"></p>
+        </td>
+
+      </tr>
+      <tr>
+    
+        <td >
+          <p style="line-height:1.6;"> <input id="Parametri_Storici_Post_Alla2" name="Parametri_Titolo_Storici_Post" type="radio" value="2" style="vertical-align: center; width: 120%;"/> </p>
+        </td>
+        <td>      
+          <p style="line-height:1.6;"> Dal 
+            <input class="" format="date" id="Data_storico_dall" name="Data_storico_dall" label="Data conformazione storica dal" mandatory_enabled="#Parametri_Storici_Post_Alla2.checked()" size="8"> al
+            <input class="" format="date" id="Data_storico_al" name="Data_storico_al" label="Data conformazione storica al" mandatory_enabled="#Parametri_Storici_Post_Alla2.checked()" size="8"></p>
+        </td>
+
+      </tr>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <input class="" value="11/11/1968" format="date" id="DataMinimaAmmessa" name="DataMinimaAmmessa" label="Data minima ammessa" type="hidden" >
+          Esito verifica validità data: 
+          <input id="Controllo_dataCb" name="Controllo_dataCb" type="checkbox" value="1" enabled="(MyControlloData(#Data_storico_dall.value()) && MyControlloData(#Data_storico_al.value())) || (MyControlloData(#Data_storico.value()) && #Parametri_Storici_Post_Alla1.checked())" dynamic_check="(MyControlloData(#Data_storico_dall.value()) && MyControlloData(#Data_storico_al.value())) || (MyControlloData(#Data_storico.value()) && #Parametri_Storici_Post_Alla1.checked())" style="visibility: hidden;"/>
+          <input class="" id="ControlloData" name="ControlloData" enabled="#Controllo_dataCb.checked()" label="Esito verifica Data" readonly style="vertical-align: center; width: 100%;">
+          <input id="Controllo_dataCorretta" name="Controllo_dataCorretta" label="la data storica fornita non è valida" dynamic_value="#ControlloData.value() == 'Attenzione! Data/e fornita/e non valid/e' ? '':'true'" type="hidden" mandatory_enabled="true"/>    
+        </td>
+      </tr>
+
+      <tr class="Rigaintestazione">
+        <td colspan="3">
+          <p style="line-height:1.6;"> <b>Con conformazione catastale:</b></p>
+        </td> 
+      </tr>
+
+      <tr>
+        <td> 
+          <div id="Conformita" name="Conformita" label="Richiesta tipo conformità " mandatory_enabled="#Parametri_Storici_Post.checked()"></div>  
+          <p style="line-height:1.6;"> <input id="ConformitaAttuale" name="Conformita" type="radio" value="1" style="vertical-align: center; width: 120%;" onchange="setSegreteriaNo()"/> </p>
+        </td>
+        <td colspan="2">  
+          Attuale
+        </td>
+
+      </tr>
+
+      <tr>
+        <td> 
+            <p style="line-height:1.6;"> <input id="ConformitaStorica" name="Conformita" type="radio" value="2" style="vertical-align: center; width: 120%;" onchange="setSegreteriaSi()"/> </p>
+        </td>
+        <td colspan="2">    
+          Storica (come da estratto mappa da allegare) 
+        </td> 
+      </tr>
+
+
+    </tbody>
+  </table>
+
+</div>
+  
+<br>
+
 <div class="simpatico-block simpatico-query-and-answer">
-  <p class="Modulo" style="line-height:1.6;">certificato attestante la destinazione urbanistica, da inviare in formato digitale al seguente indirizzo e-mail:<br></p>
+  <p class="Modulo" style="line-height:1.6;">Da inviare in formato digitale al seguente indirizzo e-mail:<br></p>
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
         <tr class="Rigaintestazione" >
@@ -881,109 +961,15 @@ function get_ufficio_dest() {
     </tbody>
   </table>
 </div>
-
-<br>
-
-<div class="simpatico-block simpatico-query-and-answer">  
-
-  <table class="Modulo" style="border:1px solid grey;">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td colspan="5">
-          <p>
-            <b>Tipo certificato</b>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div id="Parametri_Titolo_Storici" name="Parametri_Titolo_Storici" label="Richiesta certificato storico"></div>
-          <p style="line-height:1.6;"> <input id="Parametri_Storici_Attuali" name="Parametri_Titolo_Storici" type="radio" value="1" style="vertical-align: center; width: 120%;" /> </p>
-        </td>
-          <td colspan="5">
-            Attuale
-        </td>
-      </tr>
-
-      <tr rowspan="7">
-        <td >
-          <p style="line-height:1.6;"> <input id="Parametri_Storici_Post" name="Parametri_Titolo_Storici" type="radio" value="2" style="vertical-align: top; width: 120%;"/> </p>
-        </td>
-        <td colspan="2">  
-          Storico     
-        </td>
-
-      </tr>
-
-      <tr class="Rigaintestazione">
-        <td colspan="3">
-          <p style="line-height:1.6;"> <b>Con Conformità:</b></p>
-        </td> 
-      </tr>
-
-      <tr>
-        <td> 
-          <div id="Conformita" name="Conformita" label="Richiesta tipo conformità " mandatory_enabled="#Parametri_Storici_Post.checked()"></div>  
-          <p style="line-height:1.6;"> <input id="ConformitaAttuale" name="Conformita" type="radio" value="1" style="vertical-align: center; width: 120%;" onchange="setSegreteriaNo()"/> </p>
-        </td>
-        <td colspan="2">  
-          Attuale
-        </td>
-
-      </tr>
-
-      <tr>
-        <td rowspan="4"> 
-            <p style="line-height:1.6;"> <input id="ConformitaStorica" name="Conformita" type="radio" value="2" style="vertical-align: center; width: 120%;" onchange="setSegreteriaSi()"/> </p>
-        </td>
-        <td colspan="2">    
-          Storica <span style="font-size:85%;"><i>(Non si accettano date precedenti al 11/11/1968</i>)</span>
-        </td> 
-      </tr>
-
-      <tr>
-    
-        <td >
-            <div id="Parametri_Titolo_Storici_Post" name="Parametri_Titolo_Storici_Post" label="Richiesta certificato storico data " mandatory_enabled="#Parametri_Storici_Post.checked()"></div>   
-            <p style="line-height:1.6;"> <input id="Parametri_Storici_Post_Alla1" name="Parametri_Titolo_Storici_Post" type="radio" value="1" style="vertical-align: center; width: 120%;"/> </p>
-        </td>
-        <td>       
-          <p style="line-height:1.6;">   alla data
-          <input class="" format="date" id="Data_storico" name="Data_storico" label="Data conformazione storica" mandatory_enabled="#Parametri_Storici_Post_Alla1.checked()" size="8"></p>
-        </td>
-
-      </tr>
-
-      <tr>
-    
-        <td >
-          <p style="line-height:1.6;"> <input id="Parametri_Storici_Post_Alla2" name="Parametri_Titolo_Storici_Post" type="radio" value="2" style="vertical-align: center; width: 120%;"/> </p>
-        </td>
-        <td>      
-          <p style="line-height:1.6;"> dal 
-            <input class="" format="date" id="Data_storico_dall" name="Data_storico_dall" label="Data conformazione storica dal" mandatory_enabled="#Parametri_Storici_Post_Alla2.checked()" size="8"> al
-            <input class="" format="date" id="Data_storico_al" name="Data_storico_al" label="Data conformazione storica al" mandatory_enabled="#Parametri_Storici_Post_Alla2.checked()" size="8"></p>
-        </td>
-
-      </tr>
-      <tr class="Rigaintestazione">
-        <td colspan="2">
-          <input class="" value="11/11/1968" format="date" id="DataMinimaAmmessa" name="DataMinimaAmmessa" label="Data minima ammessa" type="hidden" >
-          Esito verifica validità data: 
-          <input id="Controllo_dataCb" name="Controllo_dataCb" type="checkbox" value="1" enabled="(MyControlloData(#Data_storico_dall.value()) && MyControlloData(#Data_storico_al.value())) || (MyControlloData(#Data_storico.value()) && #Parametri_Storici_Post_Alla1.checked())" dynamic_check="(MyControlloData(#Data_storico_dall.value()) && MyControlloData(#Data_storico_al.value())) || (MyControlloData(#Data_storico.value()) && #Parametri_Storici_Post_Alla1.checked())" style="visibility: hidden;"/>
-          <input class="" id="ControlloData" name="ControlloData" enabled="#Controllo_dataCb.checked()" label="Esito verifica Data" readonly style="vertical-align: center; width: 100%;">
-          <input id="Controllo_dataCorretta" name="Controllo_dataCorretta" label="la data storica fornita non è valida" dynamic_value="#ControlloData.value() == 'Attenzione! Data/e fornita/e non valid/e' ? '':'true'" type="hidden" mandatory_enabled="true"/>    
-        </td>
-      </tr>
-      
-    </tbody>
-  </table>
-
-</div>
-
+  
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
+
+  <h1 class="Modulo">
+      PRECISA
+  </h1>
+  <p class="Modulo" style="line-height:1.6;">Che il certificato richiesto riguarda le particelle:<br></p>  
 
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
@@ -1000,7 +986,7 @@ function get_ufficio_dest() {
         <tr class="Rigaintestazione">
             <td colspan="2">
               <p>
-                <b>La mancata precisazione in merito alle consortalità comporta un'eventuale nuova richiesta di certificato</b>
+                <b>La mancata precisazione in merito alle consortalità comporta un'eventuale nuova richiesta di certificato</b> <br>N.B: il numero di particelle inserito verrà utilizzato per il calcolo automatico dei costi e degli allegati necessari
               </p>
             </td>
           </tr>
@@ -1008,59 +994,15 @@ function get_ufficio_dest() {
   </table>
 </div>
 
-
-<!--
-<div class="simpatico-block simpatico-query-and-answer">  
-  
-  <table class="Modulo" style="border:1px solid grey;">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td colspan="2">
-          <p>
-            <b>Dichiaro di aver verificato e di aver compreso le eventuali <a href="https://sportello.comune.trento.it/faq%3As_italia%3Aconsortalita" target="_blank">consortalità</a> tra le particelle: (verifica cos'è una consortalità e come individuarla col seguente link -> TODO link da creare con la comunicazione)</b>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; width: 4%;">
-          <div id="Parametri_Titolo" name="Parametri_Titolo" label="Parametri presenza consortalità" mandatory_enabled="true"></div>
-          <input id="Parametri_Titolo1" name="Parametri_Titolo" type="radio" value="1" label="Parametri presenza consortalità obbligatorio verificare" mandatory_enabled="true"/>
-        </td>
-        <td>
-          <p>SI 
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; width: 4%;">
-          <input id="Parametri_Titolo2" name="Parametri_Titolo" type="radio" value="2" />
-        </td>
-        <td>
-          <p>NO</p>
-        </td>
-      </tr>
-      <tr class="Rigaintestazione">
-        <td colspan="2">
-          <p>
-            <b>La mancata precisazione in merito alle consortalità comporta un'eventuale nuova richiesta di certificato</b>
-          </p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
--->
+<br>
 
 <h4>Dei beni immobili individuati con le seguenti indicazioni catastali:</h4>
 
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
 
-    <!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
-
+    <div type="Immobile">
   
   <div class="simpatico-block simpatico-query-and-answer">
-<!--   <h1 class="Modulo">COMUNICA</h1> -->
-<!-- creare l'hidden type="checkbox" id="Immobile1_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
     <input id="Immobile1_DatiToponomasticiObbligatori"       name="Immobile1_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
     <input id="Immobile1_Tipo"       name="Immobile1_Tipo"       type="hidden" dynamic_value="#Immobile1_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile1_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile1_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
     <input id="Immobile1_NumeroUlterioriImmobili" name="Immobile1_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile1_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile1_NumeroAltriImmobili.value() / 16) ">
@@ -1094,25 +1036,13 @@ function get_ufficio_dest() {
           <td style="width: 8%;">
             <p class="Labelcella">Barra</p>
           </td>
-          <!--<td style="width: 8%;">
-            <p class="Labelcella">Porzione Materiale</p>
-          </td>
-          <td style="width: 8%;">
-            <p  class="Labelcella">Subalterno</p>
-          </td>
-          <td style="width: 8%;">
-            <p class="Labelcella">Controllo particella</p>
-          </td>
-				  <td style="width: 8%;">
-            <p class="Labelcella">Mappa</p>
-          </td>-->
         </tr>
         <tr>
           <td colspan="2">
             <select class="inputNormal" id="Immobile1_TipoImmobile" name="Immobile1_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="true">
               <option value=""></option>
               <!--<option value="S">porzione di edificio</option> -->
-	            <option value="E">particella edificale</option>
+	            <option value="E">particella edificiale</option>
               <option value="F">particella fondiaria</option>
             </select>
           </td>
@@ -1136,9 +1066,6 @@ function get_ufficio_dest() {
               <option value="432">Vigolo Baselga</option>
               <option value="437">Villamontagna</option>
               <option value="439">Villazzano</option>
-              <!--<option value="4">Aldeno</option>
-              <option value="101">Cimone</option>
-              <option value="162">Garniga</option>-->
             </select>
           </td>
           <td colspan="2">
@@ -1150,78 +1077,9 @@ function get_ufficio_dest() {
           <td>
             <input name="Immobile1_CatBarra" id="Immobile1_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="true"/>
           </td>
-          <!--<td>
-            <input name="Immobile1_CatPM" id="Immobile1_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="true" />
-          </td>
-          <td>
-            <input name="Immobile1_CatSubalterno" id="Immobile1_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile1_TipoImmobile.check_value(['S'])"/>
-          </td>
-          <td>
-            <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile1_ControlloDatiCatastaliButton" name="Immobile1_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-              
-<div
-  ws-name="verifica_particella"
-  ws-param-in=
-  "barra=Immobile1_CatBarra;num=Immobile1_CatNumero;com=Immobile1_CatComune;sub=Immobile1_CatSubalterno;tipo=Immobile1_TipoImmobile"
-  ws-param-out=
-  "Immobile1_RisultatoVerificaCatastale=esiste;Immobile1_Particella="
-  ws-on="#Immobile1_ControlloDatiCatastaliButton:click">
-</div>
-
-					  <input id="Immobile1_RisultatoVerificaCatastale" name="Immobile1_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-              
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=Immobile1_CatBarra;num=Immobile1_CatNumero;com=Immobile1_CatComune;tipo=Immobile1_TipoImmobile"
-  ws-param-out=
-  "lista_vie1=lista_vie_particella"
-  ws-on="#Immobile1_RisultatoVerificaCatastale:change">
-</div>
-          </td>
-          <td>
-
-            <button class="real-button" type="button" enabled="#Immobile1_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile1_CatComune').value; num = document.getElementById('Immobile1_CatNumero').value; barra = document.getElementById('Immobile1_CatBarra').value; tipo = document.getElementById('Immobile1_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>-->
 			  </tr>
       </tbody>
 	  </table>
-
-    <!--
-		<table class="Modulo" style="border: 1px solid grey">
-			<tbody>
-        <tr class="Rigaintestazione">
-          <td>
-            <b>Verifica esito particella</b>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			     <input
-			        id="Immobile1_CheckVerificaCatastale"
-			        name="Immobile1_CheckVerificaCatastale"
-			        dynamic_check="#Immobile1_RisultatoVerificaCatastale.value()=='SI'"
-			        enabled="#Immobile1_RisultatoVerificaCatastale.value()=='SI'"
-              type="checkbox"
-              value="OK"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella esistente</p>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			      <input
-			         id="Immobile1_CheckVerificaCatastale1"
-			         name="Immobile1_CheckVerificaCatastale1"
-			         dynamic_check="#Immobile1_RisultatoVerificaCatastale.value()=='NO'"
-			         enabled="#Immobile1_RisultatoVerificaCatastale.value()=='NO'"
-               type="checkbox"
-               value="KO"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella NON esistente  </p>
-			    </td>
-			  </tr>
-			</tbody>
-    </table>
-    -->
     <!--Aggiungo controllo frazionamento-->
     <table class="Modulo" style="border:1px solid grey;">
       <tbody>
@@ -1249,18 +1107,18 @@ function get_ufficio_dest() {
             <p>SI</p>
             <td>
                 <div id="Immobile1_Parametri_Titolo_Sec" name="Immobile1_Parametri_Titolo_Sec" label="Immobile1 particella soggetta a frazionamento" mandatory_enabled="#Immobile1_Parametri_Titolo1.checked()"></div>
-                <p style="line-height:1.6;"> <input id="Immobile1_Parametri_Titolo3" name="Immobile1_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile1_Parametri_Titolo1.checked()"/> Richiedo conformazione ante-frazionamento </p>
+                <p style="line-height:1.6;"> <input id="Immobile1_Parametri_Titolo3" name="Immobile1_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile1_Parametri_Titolo1.checked()"/>con situazione catastale ante-frazionamento </p>
             </td> 
           </td>
         </tr>
         <tr>
           <td>
-            <p style="line-height:1.6;"> <input id="Immobile1_Parametri_Titolo4" name="Immobile1_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile1_Parametri_Titolo1.checked()"/>Richiedo conformazione come da frazionamento: N° <input id="Immobile1_NumeroFrazionamento" name="Immobile1_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile1_Numero frazionamento" enabled="true"/>
-              Anno <input id="Immobile1_AnnoFrazionamento" name="Immobile1_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile1_Anno frazionamento" enabled="true"/>
-              - approvato dal catasto con atto numero <input id="Immobile1_NumeroAttoFrazionamenti" name="Immobile1_NumeroAttoFrazionamenti" style="width:10%;" type="number" label="Numero catasto frazionamenti" enabled="true"/> 
-              di data <input id="Immobile1_DataAttoFrazionamenti" name="Immobile1_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" enabled="true"/>
+            <p style="line-height:1.6;"> <input id="Immobile1_Parametri_Titolo4" name="Immobile1_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile1_Parametri_Titolo1.checked()"/>con situazione catastale come da tipo di frazionamento <b>approvato dal catasto in data </b> 
+              <input id="Immobile1_DataAttoFrazionamenti" name="Immobile1_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" mandatory_enabled="#Immobile1_Parametri_Titolo1.checked()" enabled="true"/> 
+              - protocollo N° <input id="Immobile1_NumeroFrazionamento" name="Immobile1_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile1_Numero frazionamento" mandatory_enabled="#Immobile1_Parametri_Titolo1.checked()" enabled="true"/>
+              Anno <input id="Immobile1_AnnoFrazionamento" name="Immobile1_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile1_Anno frazionamento" mandatory_enabled="#Immobile1_Parametri_Titolo1.checked()" enabled="true"/> 
               <br> 
-              <b>N.B: non è sufficente il numero progressivo della semplice richiesta presentata al catasto </b>
+              <b>N.B: non inserire il numero progressivo della semplice ricevuta del catasto</b> </p>
             </p>
           </td>
         </tr>
@@ -1275,13 +1133,9 @@ function get_ufficio_dest() {
   
 </div>  
 
-    <!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
-
+    <div type="Immobile">
   
   <div class="simpatico-block simpatico-query-and-answer">
-<!--   <h1 class="Modulo">COMUNICA</h1> -->
-<!-- creare l'hidden type="checkbox" id="Immobile2_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
     <input id="Immobile2_DatiToponomasticiObbligatori"       name="Immobile2_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
     <input id="Immobile2_Tipo"       name="Immobile2_Tipo"       type="hidden" dynamic_value="#Immobile2_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile2_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile2_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
     <input id="Immobile2_NumeroUlterioriImmobili" name="Immobile2_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile2_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile2_NumeroAltriImmobili.value() / 16) ">
@@ -1315,25 +1169,13 @@ function get_ufficio_dest() {
           <td style="width: 8%;">
             <p class="Labelcella">Barra</p>
           </td>
-          <!--<td style="width: 8%;">
-            <p class="Labelcella">Porzione Materiale</p>
-          </td>
-          <td style="width: 8%;">
-            <p  class="Labelcella">Subalterno</p>
-          </td>
-          <td style="width: 8%;">
-            <p class="Labelcella">Controllo particella</p>
-          </td>
-				  <td style="width: 8%;">
-            <p class="Labelcella">Mappa</p>
-          </td>-->
         </tr>
         <tr>
           <td colspan="2">
             <select class="inputNormal" id="Immobile2_TipoImmobile" name="Immobile2_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="#Totale_particelle.value() &gt;= 2">
               <option value=""></option>
               <!--<option value="S">porzione di edificio</option> -->
-	            <option value="E">particella edificale</option>
+	            <option value="E">particella edificiale</option>
               <option value="F">particella fondiaria</option>
             </select>
           </td>
@@ -1357,9 +1199,6 @@ function get_ufficio_dest() {
               <option value="432">Vigolo Baselga</option>
               <option value="437">Villamontagna</option>
               <option value="439">Villazzano</option>
-              <!--<option value="4">Aldeno</option>
-              <option value="101">Cimone</option>
-              <option value="162">Garniga</option>-->
             </select>
           </td>
           <td colspan="2">
@@ -1371,78 +1210,9 @@ function get_ufficio_dest() {
           <td>
             <input name="Immobile2_CatBarra" id="Immobile2_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="#Totale_particelle.value() &gt;= 2"/>
           </td>
-          <!--<td>
-            <input name="Immobile2_CatPM" id="Immobile2_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="#Totale_particelle.value() &gt;= 2" />
-          </td>
-          <td>
-            <input name="Immobile2_CatSubalterno" id="Immobile2_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile2_TipoImmobile.check_value(['S'])"/>
-          </td>
-          <td>
-            <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile2_ControlloDatiCatastaliButton" name="Immobile2_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-              
-<div
-  ws-name="verifica_particella"
-  ws-param-in=
-  "barra=Immobile2_CatBarra;num=Immobile2_CatNumero;com=Immobile2_CatComune;sub=Immobile2_CatSubalterno;tipo=Immobile2_TipoImmobile"
-  ws-param-out=
-  "Immobile2_Particella=;Immobile2_RisultatoVerificaCatastale=esiste"
-  ws-on="#Immobile2_ControlloDatiCatastaliButton:click">
-</div>
-
-					  <input id="Immobile2_RisultatoVerificaCatastale" name="Immobile2_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-              
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=Immobile2_CatBarra;num=Immobile2_CatNumero;com=Immobile2_CatComune;tipo=Immobile2_TipoImmobile"
-  ws-param-out=
-  "lista_vie1=lista_vie_particella"
-  ws-on="#Immobile2_RisultatoVerificaCatastale:change">
-</div>
-          </td>
-          <td>
-
-            <button class="real-button" type="button" enabled="#Immobile2_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile2_CatComune').value; num = document.getElementById('Immobile2_CatNumero').value; barra = document.getElementById('Immobile2_CatBarra').value; tipo = document.getElementById('Immobile2_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>-->
 			  </tr>
       </tbody>
 	  </table>
-
-    <!--
-		<table class="Modulo" style="border: 1px solid grey">
-			<tbody>
-        <tr class="Rigaintestazione">
-          <td>
-            <b>Verifica esito particella</b>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			     <input
-			        id="Immobile2_CheckVerificaCatastale"
-			        name="Immobile2_CheckVerificaCatastale"
-			        dynamic_check="#Immobile2_RisultatoVerificaCatastale.value()=='SI'"
-			        enabled="#Immobile2_RisultatoVerificaCatastale.value()=='SI'"
-              type="checkbox"
-              value="OK"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella esistente</p>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			      <input
-			         id="Immobile2_CheckVerificaCatastale1"
-			         name="Immobile2_CheckVerificaCatastale1"
-			         dynamic_check="#Immobile2_RisultatoVerificaCatastale.value()=='NO'"
-			         enabled="#Immobile2_RisultatoVerificaCatastale.value()=='NO'"
-               type="checkbox"
-               value="KO"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella NON esistente  </p>
-			    </td>
-			  </tr>
-			</tbody>
-    </table>
-    -->
     <!--Aggiungo controllo frazionamento-->
     <table class="Modulo" style="border:1px solid grey;">
       <tbody>
@@ -1470,18 +1240,18 @@ function get_ufficio_dest() {
             <p>SI</p>
             <td>
                 <div id="Immobile2_Parametri_Titolo_Sec" name="Immobile2_Parametri_Titolo_Sec" label="Immobile2 particella soggetta a frazionamento" mandatory_enabled="#Immobile2_Parametri_Titolo1.checked()"></div>
-                <p style="line-height:1.6;"> <input id="Immobile2_Parametri_Titolo3" name="Immobile2_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile2_Parametri_Titolo1.checked()"/> Richiedo conformazione ante-frazionamento </p>
+                <p style="line-height:1.6;"> <input id="Immobile2_Parametri_Titolo3" name="Immobile2_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile2_Parametri_Titolo1.checked()"/>con situazione catastale ante-frazionamento </p>
             </td> 
           </td>
         </tr>
         <tr>
           <td>
-            <p style="line-height:1.6;"> <input id="Immobile2_Parametri_Titolo4" name="Immobile2_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile2_Parametri_Titolo1.checked()"/>Richiedo conformazione come da frazionamento: N° <input id="Immobile2_NumeroFrazionamento" name="Immobile2_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile2_Numero frazionamento" enabled="#Totale_particelle.value() &gt;= 2"/>
-              Anno <input id="Immobile2_AnnoFrazionamento" name="Immobile2_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile2_Anno frazionamento" enabled="#Totale_particelle.value() &gt;= 2"/>
-              - approvato dal catasto con atto numero <input id="Immobile2_NumeroAttoFrazionamenti" name="Immobile2_NumeroAttoFrazionamenti" style="width:10%;" type="number" label="Numero catasto frazionamenti" enabled="#Totale_particelle.value() &gt;= 2"/> 
-              di data <input id="Immobile2_DataAttoFrazionamenti" name="Immobile2_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" enabled="#Totale_particelle.value() &gt;= 2"/>
+            <p style="line-height:1.6;"> <input id="Immobile2_Parametri_Titolo4" name="Immobile2_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile2_Parametri_Titolo1.checked()"/>con situazione catastale come da tipo di frazionamento <b>approvato dal catasto in data </b> 
+              <input id="Immobile2_DataAttoFrazionamenti" name="Immobile2_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" mandatory_enabled="#Immobile2_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 2"/> 
+              - protocollo N° <input id="Immobile2_NumeroFrazionamento" name="Immobile2_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile2_Numero frazionamento" mandatory_enabled="#Immobile2_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 2"/>
+              Anno <input id="Immobile2_AnnoFrazionamento" name="Immobile2_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile2_Anno frazionamento" mandatory_enabled="#Immobile2_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 2"/> 
               <br> 
-              <b>N.B: non è sufficente il numero progressivo della semplice richiesta presentata al catasto </b>
+              <b>N.B: non inserire il numero progressivo della semplice ricevuta del catasto</b> </p>
             </p>
           </td>
         </tr>
@@ -1496,13 +1266,9 @@ function get_ufficio_dest() {
   
 </div>
 
-    <!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
-
+    <div type="Immobile">
   
   <div class="simpatico-block simpatico-query-and-answer">
-<!--   <h1 class="Modulo">COMUNICA</h1> -->
-<!-- creare l'hidden type="checkbox" id="Immobile3_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
     <input id="Immobile3_DatiToponomasticiObbligatori"       name="Immobile3_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
     <input id="Immobile3_Tipo"       name="Immobile3_Tipo"       type="hidden" dynamic_value="#Immobile3_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile3_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile3_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
     <input id="Immobile3_NumeroUlterioriImmobili" name="Immobile3_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile3_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile3_NumeroAltriImmobili.value() / 16) ">
@@ -1536,25 +1302,13 @@ function get_ufficio_dest() {
           <td style="width: 8%;">
             <p class="Labelcella">Barra</p>
           </td>
-          <!--<td style="width: 8%;">
-            <p class="Labelcella">Porzione Materiale</p>
-          </td>
-          <td style="width: 8%;">
-            <p  class="Labelcella">Subalterno</p>
-          </td>
-          <td style="width: 8%;">
-            <p class="Labelcella">Controllo particella</p>
-          </td>
-				  <td style="width: 8%;">
-            <p class="Labelcella">Mappa</p>
-          </td>-->
         </tr>
         <tr>
           <td colspan="2">
             <select class="inputNormal" id="Immobile3_TipoImmobile" name="Immobile3_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="#Totale_particelle.value() &gt;= 3">
               <option value=""></option>
               <!--<option value="S">porzione di edificio</option> -->
-	            <option value="E">particella edificale</option>
+	            <option value="E">particella edificiale</option>
               <option value="F">particella fondiaria</option>
             </select>
           </td>
@@ -1578,9 +1332,6 @@ function get_ufficio_dest() {
               <option value="432">Vigolo Baselga</option>
               <option value="437">Villamontagna</option>
               <option value="439">Villazzano</option>
-              <!--<option value="4">Aldeno</option>
-              <option value="101">Cimone</option>
-              <option value="162">Garniga</option>-->
             </select>
           </td>
           <td colspan="2">
@@ -1592,78 +1343,9 @@ function get_ufficio_dest() {
           <td>
             <input name="Immobile3_CatBarra" id="Immobile3_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="#Totale_particelle.value() &gt;= 3"/>
           </td>
-          <!--<td>
-            <input name="Immobile3_CatPM" id="Immobile3_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="#Totale_particelle.value() &gt;= 3" />
-          </td>
-          <td>
-            <input name="Immobile3_CatSubalterno" id="Immobile3_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile3_TipoImmobile.check_value(['S'])"/>
-          </td>
-          <td>
-            <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile3_ControlloDatiCatastaliButton" name="Immobile3_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-              
-<div
-  ws-name="verifica_particella"
-  ws-param-in=
-  "barra=Immobile3_CatBarra;num=Immobile3_CatNumero;com=Immobile3_CatComune;sub=Immobile3_CatSubalterno;tipo=Immobile3_TipoImmobile"
-  ws-param-out=
-  "Immobile3_RisultatoVerificaCatastale=esiste;Immobile3_Particella="
-  ws-on="#Immobile3_ControlloDatiCatastaliButton:click">
-</div>
-
-					  <input id="Immobile3_RisultatoVerificaCatastale" name="Immobile3_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-              
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=Immobile3_CatBarra;num=Immobile3_CatNumero;com=Immobile3_CatComune;tipo=Immobile3_TipoImmobile"
-  ws-param-out=
-  "lista_vie1=lista_vie_particella"
-  ws-on="#Immobile3_RisultatoVerificaCatastale:change">
-</div>
-          </td>
-          <td>
-
-            <button class="real-button" type="button" enabled="#Immobile3_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile3_CatComune').value; num = document.getElementById('Immobile3_CatNumero').value; barra = document.getElementById('Immobile3_CatBarra').value; tipo = document.getElementById('Immobile3_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>-->
 			  </tr>
       </tbody>
 	  </table>
-
-    <!--
-		<table class="Modulo" style="border: 1px solid grey">
-			<tbody>
-        <tr class="Rigaintestazione">
-          <td>
-            <b>Verifica esito particella</b>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			     <input
-			        id="Immobile3_CheckVerificaCatastale"
-			        name="Immobile3_CheckVerificaCatastale"
-			        dynamic_check="#Immobile3_RisultatoVerificaCatastale.value()=='SI'"
-			        enabled="#Immobile3_RisultatoVerificaCatastale.value()=='SI'"
-              type="checkbox"
-              value="OK"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella esistente</p>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			      <input
-			         id="Immobile3_CheckVerificaCatastale1"
-			         name="Immobile3_CheckVerificaCatastale1"
-			         dynamic_check="#Immobile3_RisultatoVerificaCatastale.value()=='NO'"
-			         enabled="#Immobile3_RisultatoVerificaCatastale.value()=='NO'"
-               type="checkbox"
-               value="KO"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella NON esistente  </p>
-			    </td>
-			  </tr>
-			</tbody>
-    </table>
-    -->
     <!--Aggiungo controllo frazionamento-->
     <table class="Modulo" style="border:1px solid grey;">
       <tbody>
@@ -1691,18 +1373,18 @@ function get_ufficio_dest() {
             <p>SI</p>
             <td>
                 <div id="Immobile3_Parametri_Titolo_Sec" name="Immobile3_Parametri_Titolo_Sec" label="Immobile3 particella soggetta a frazionamento" mandatory_enabled="#Immobile3_Parametri_Titolo1.checked()"></div>
-                <p style="line-height:1.6;"> <input id="Immobile3_Parametri_Titolo3" name="Immobile3_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile3_Parametri_Titolo1.checked()"/> Richiedo conformazione ante-frazionamento </p>
+                <p style="line-height:1.6;"> <input id="Immobile3_Parametri_Titolo3" name="Immobile3_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile3_Parametri_Titolo1.checked()"/>con situazione catastale ante-frazionamento </p>
             </td> 
           </td>
         </tr>
         <tr>
           <td>
-            <p style="line-height:1.6;"> <input id="Immobile3_Parametri_Titolo4" name="Immobile3_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile3_Parametri_Titolo1.checked()"/>Richiedo conformazione come da frazionamento: N° <input id="Immobile3_NumeroFrazionamento" name="Immobile3_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile3_Numero frazionamento" enabled="#Totale_particelle.value() &gt;= 3"/>
-              Anno <input id="Immobile3_AnnoFrazionamento" name="Immobile3_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile3_Anno frazionamento" enabled="#Totale_particelle.value() &gt;= 3"/>
-              - approvato dal catasto con atto numero <input id="Immobile3_NumeroAttoFrazionamenti" name="Immobile3_NumeroAttoFrazionamenti" style="width:10%;" type="number" label="Numero catasto frazionamenti" enabled="#Totale_particelle.value() &gt;= 3"/> 
-              di data <input id="Immobile3_DataAttoFrazionamenti" name="Immobile3_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" enabled="#Totale_particelle.value() &gt;= 3"/>
+            <p style="line-height:1.6;"> <input id="Immobile3_Parametri_Titolo4" name="Immobile3_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile3_Parametri_Titolo1.checked()"/>con situazione catastale come da tipo di frazionamento <b>approvato dal catasto in data </b> 
+              <input id="Immobile3_DataAttoFrazionamenti" name="Immobile3_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" mandatory_enabled="#Immobile3_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 3"/> 
+              - protocollo N° <input id="Immobile3_NumeroFrazionamento" name="Immobile3_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile3_Numero frazionamento" mandatory_enabled="#Immobile3_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 3"/>
+              Anno <input id="Immobile3_AnnoFrazionamento" name="Immobile3_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile3_Anno frazionamento" mandatory_enabled="#Immobile3_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 3"/> 
               <br> 
-              <b>N.B: non è sufficente il numero progressivo della semplice richiesta presentata al catasto </b>
+              <b>N.B: non inserire il numero progressivo della semplice ricevuta del catasto</b> </p>
             </p>
           </td>
         </tr>
@@ -1717,13 +1399,9 @@ function get_ufficio_dest() {
   
 </div>
 
-    <!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
-
+    <div type="Immobile">
   
   <div class="simpatico-block simpatico-query-and-answer">
-<!--   <h1 class="Modulo">COMUNICA</h1> -->
-<!-- creare l'hidden type="checkbox" id="Immobile4_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
     <input id="Immobile4_DatiToponomasticiObbligatori"       name="Immobile4_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
     <input id="Immobile4_Tipo"       name="Immobile4_Tipo"       type="hidden" dynamic_value="#Immobile4_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile4_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile4_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
     <input id="Immobile4_NumeroUlterioriImmobili" name="Immobile4_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile4_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile4_NumeroAltriImmobili.value() / 16) ">
@@ -1757,25 +1435,13 @@ function get_ufficio_dest() {
           <td style="width: 8%;">
             <p class="Labelcella">Barra</p>
           </td>
-          <!--<td style="width: 8%;">
-            <p class="Labelcella">Porzione Materiale</p>
-          </td>
-          <td style="width: 8%;">
-            <p  class="Labelcella">Subalterno</p>
-          </td>
-          <td style="width: 8%;">
-            <p class="Labelcella">Controllo particella</p>
-          </td>
-				  <td style="width: 8%;">
-            <p class="Labelcella">Mappa</p>
-          </td>-->
         </tr>
         <tr>
           <td colspan="2">
             <select class="inputNormal" id="Immobile4_TipoImmobile" name="Immobile4_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="#Totale_particelle.value() &gt;= 4">
               <option value=""></option>
               <!--<option value="S">porzione di edificio</option> -->
-	            <option value="E">particella edificale</option>
+	            <option value="E">particella edificiale</option>
               <option value="F">particella fondiaria</option>
             </select>
           </td>
@@ -1799,9 +1465,6 @@ function get_ufficio_dest() {
               <option value="432">Vigolo Baselga</option>
               <option value="437">Villamontagna</option>
               <option value="439">Villazzano</option>
-              <!--<option value="4">Aldeno</option>
-              <option value="101">Cimone</option>
-              <option value="162">Garniga</option>-->
             </select>
           </td>
           <td colspan="2">
@@ -1813,78 +1476,9 @@ function get_ufficio_dest() {
           <td>
             <input name="Immobile4_CatBarra" id="Immobile4_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="#Totale_particelle.value() &gt;= 4"/>
           </td>
-          <!--<td>
-            <input name="Immobile4_CatPM" id="Immobile4_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="#Totale_particelle.value() &gt;= 4" />
-          </td>
-          <td>
-            <input name="Immobile4_CatSubalterno" id="Immobile4_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile4_TipoImmobile.check_value(['S'])"/>
-          </td>
-          <td>
-            <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile4_ControlloDatiCatastaliButton" name="Immobile4_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-              
-<div
-  ws-name="verifica_particella"
-  ws-param-in=
-  "barra=Immobile4_CatBarra;num=Immobile4_CatNumero;com=Immobile4_CatComune;sub=Immobile4_CatSubalterno;tipo=Immobile4_TipoImmobile"
-  ws-param-out=
-  "Immobile4_RisultatoVerificaCatastale=esiste;Immobile4_Particella="
-  ws-on="#Immobile4_ControlloDatiCatastaliButton:click">
-</div>
-
-					  <input id="Immobile4_RisultatoVerificaCatastale" name="Immobile4_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-              
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=Immobile4_CatBarra;num=Immobile4_CatNumero;com=Immobile4_CatComune;tipo=Immobile4_TipoImmobile"
-  ws-param-out=
-  "lista_vie1=lista_vie_particella"
-  ws-on="#Immobile4_RisultatoVerificaCatastale:change">
-</div>
-          </td>
-          <td>
-
-            <button class="real-button" type="button" enabled="#Immobile4_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile4_CatComune').value; num = document.getElementById('Immobile4_CatNumero').value; barra = document.getElementById('Immobile4_CatBarra').value; tipo = document.getElementById('Immobile4_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>-->
 			  </tr>
       </tbody>
 	  </table>
-
-    <!--
-		<table class="Modulo" style="border: 1px solid grey">
-			<tbody>
-        <tr class="Rigaintestazione">
-          <td>
-            <b>Verifica esito particella</b>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			     <input
-			        id="Immobile4_CheckVerificaCatastale"
-			        name="Immobile4_CheckVerificaCatastale"
-			        dynamic_check="#Immobile4_RisultatoVerificaCatastale.value()=='SI'"
-			        enabled="#Immobile4_RisultatoVerificaCatastale.value()=='SI'"
-              type="checkbox"
-              value="OK"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella esistente</p>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			      <input
-			         id="Immobile4_CheckVerificaCatastale1"
-			         name="Immobile4_CheckVerificaCatastale1"
-			         dynamic_check="#Immobile4_RisultatoVerificaCatastale.value()=='NO'"
-			         enabled="#Immobile4_RisultatoVerificaCatastale.value()=='NO'"
-               type="checkbox"
-               value="KO"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella NON esistente  </p>
-			    </td>
-			  </tr>
-			</tbody>
-    </table>
-    -->
     <!--Aggiungo controllo frazionamento-->
     <table class="Modulo" style="border:1px solid grey;">
       <tbody>
@@ -1912,18 +1506,18 @@ function get_ufficio_dest() {
             <p>SI</p>
             <td>
                 <div id="Immobile4_Parametri_Titolo_Sec" name="Immobile4_Parametri_Titolo_Sec" label="Immobile4 particella soggetta a frazionamento" mandatory_enabled="#Immobile4_Parametri_Titolo1.checked()"></div>
-                <p style="line-height:1.6;"> <input id="Immobile4_Parametri_Titolo3" name="Immobile4_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile4_Parametri_Titolo1.checked()"/> Richiedo conformazione ante-frazionamento </p>
+                <p style="line-height:1.6;"> <input id="Immobile4_Parametri_Titolo3" name="Immobile4_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile4_Parametri_Titolo1.checked()"/>con situazione catastale ante-frazionamento </p>
             </td> 
           </td>
         </tr>
         <tr>
           <td>
-            <p style="line-height:1.6;"> <input id="Immobile4_Parametri_Titolo4" name="Immobile4_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile4_Parametri_Titolo1.checked()"/>Richiedo conformazione come da frazionamento: N° <input id="Immobile4_NumeroFrazionamento" name="Immobile4_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile4_Numero frazionamento" enabled="#Totale_particelle.value() &gt;= 4"/>
-              Anno <input id="Immobile4_AnnoFrazionamento" name="Immobile4_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile4_Anno frazionamento" enabled="#Totale_particelle.value() &gt;= 4"/>
-              - approvato dal catasto con atto numero <input id="Immobile4_NumeroAttoFrazionamenti" name="Immobile4_NumeroAttoFrazionamenti" style="width:10%;" type="number" label="Numero catasto frazionamenti" enabled="#Totale_particelle.value() &gt;= 4"/> 
-              di data <input id="Immobile4_DataAttoFrazionamenti" name="Immobile4_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" enabled="#Totale_particelle.value() &gt;= 4"/>
+            <p style="line-height:1.6;"> <input id="Immobile4_Parametri_Titolo4" name="Immobile4_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile4_Parametri_Titolo1.checked()"/>con situazione catastale come da tipo di frazionamento <b>approvato dal catasto in data </b> 
+              <input id="Immobile4_DataAttoFrazionamenti" name="Immobile4_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" mandatory_enabled="#Immobile4_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 4"/> 
+              - protocollo N° <input id="Immobile4_NumeroFrazionamento" name="Immobile4_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile4_Numero frazionamento" mandatory_enabled="#Immobile4_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 4"/>
+              Anno <input id="Immobile4_AnnoFrazionamento" name="Immobile4_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile4_Anno frazionamento" mandatory_enabled="#Immobile4_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 4"/> 
               <br> 
-              <b>N.B: non è sufficente il numero progressivo della semplice richiesta presentata al catasto </b>
+              <b>N.B: non inserire il numero progressivo della semplice ricevuta del catasto</b> </p>
             </p>
           </td>
         </tr>
@@ -1938,13 +1532,9 @@ function get_ufficio_dest() {
   
 </div>
 
-    <!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
-
+    <div type="Immobile">
   
   <div class="simpatico-block simpatico-query-and-answer">
-<!--   <h1 class="Modulo">COMUNICA</h1> -->
-<!-- creare l'hidden type="checkbox" id="Immobile5_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
     <input id="Immobile5_DatiToponomasticiObbligatori"       name="Immobile5_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
     <input id="Immobile5_Tipo"       name="Immobile5_Tipo"       type="hidden" dynamic_value="#Immobile5_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile5_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile5_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
     <input id="Immobile5_NumeroUlterioriImmobili" name="Immobile5_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile5_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile5_NumeroAltriImmobili.value() / 16) ">
@@ -1978,25 +1568,13 @@ function get_ufficio_dest() {
           <td style="width: 8%;">
             <p class="Labelcella">Barra</p>
           </td>
-          <!--<td style="width: 8%;">
-            <p class="Labelcella">Porzione Materiale</p>
-          </td>
-          <td style="width: 8%;">
-            <p  class="Labelcella">Subalterno</p>
-          </td>
-          <td style="width: 8%;">
-            <p class="Labelcella">Controllo particella</p>
-          </td>
-				  <td style="width: 8%;">
-            <p class="Labelcella">Mappa</p>
-          </td>-->
         </tr>
         <tr>
           <td colspan="2">
             <select class="inputNormal" id="Immobile5_TipoImmobile" name="Immobile5_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="#Totale_particelle.value() &gt;= 5">
               <option value=""></option>
               <!--<option value="S">porzione di edificio</option> -->
-	            <option value="E">particella edificale</option>
+	            <option value="E">particella edificiale</option>
               <option value="F">particella fondiaria</option>
             </select>
           </td>
@@ -2020,9 +1598,6 @@ function get_ufficio_dest() {
               <option value="432">Vigolo Baselga</option>
               <option value="437">Villamontagna</option>
               <option value="439">Villazzano</option>
-              <!--<option value="4">Aldeno</option>
-              <option value="101">Cimone</option>
-              <option value="162">Garniga</option>-->
             </select>
           </td>
           <td colspan="2">
@@ -2034,78 +1609,9 @@ function get_ufficio_dest() {
           <td>
             <input name="Immobile5_CatBarra" id="Immobile5_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="#Totale_particelle.value() &gt;= 5"/>
           </td>
-          <!--<td>
-            <input name="Immobile5_CatPM" id="Immobile5_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="#Totale_particelle.value() &gt;= 5" />
-          </td>
-          <td>
-            <input name="Immobile5_CatSubalterno" id="Immobile5_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile5_TipoImmobile.check_value(['S'])"/>
-          </td>
-          <td>
-            <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile5_ControlloDatiCatastaliButton" name="Immobile5_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-              
-<div
-  ws-name="verifica_particella"
-  ws-param-in=
-  "barra=Immobile5_CatBarra;num=Immobile5_CatNumero;com=Immobile5_CatComune;sub=Immobile5_CatSubalterno;tipo=Immobile5_TipoImmobile"
-  ws-param-out=
-  "Immobile5_Particella=;Immobile5_RisultatoVerificaCatastale=esiste"
-  ws-on="#Immobile5_ControlloDatiCatastaliButton:click">
-</div>
-
-					  <input id="Immobile5_RisultatoVerificaCatastale" name="Immobile5_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-              
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=Immobile5_CatBarra;num=Immobile5_CatNumero;com=Immobile5_CatComune;tipo=Immobile5_TipoImmobile"
-  ws-param-out=
-  "lista_vie1=lista_vie_particella"
-  ws-on="#Immobile5_RisultatoVerificaCatastale:change">
-</div>
-          </td>
-          <td>
-
-            <button class="real-button" type="button" enabled="#Immobile5_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile5_CatComune').value; num = document.getElementById('Immobile5_CatNumero').value; barra = document.getElementById('Immobile5_CatBarra').value; tipo = document.getElementById('Immobile5_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>-->
 			  </tr>
       </tbody>
 	  </table>
-
-    <!--
-		<table class="Modulo" style="border: 1px solid grey">
-			<tbody>
-        <tr class="Rigaintestazione">
-          <td>
-            <b>Verifica esito particella</b>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			     <input
-			        id="Immobile5_CheckVerificaCatastale"
-			        name="Immobile5_CheckVerificaCatastale"
-			        dynamic_check="#Immobile5_RisultatoVerificaCatastale.value()=='SI'"
-			        enabled="#Immobile5_RisultatoVerificaCatastale.value()=='SI'"
-              type="checkbox"
-              value="OK"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella esistente</p>
-			    </td>
-			    <td style="orizontal-align: top; width: 4%;">
-			      <input
-			         id="Immobile5_CheckVerificaCatastale1"
-			         name="Immobile5_CheckVerificaCatastale1"
-			         dynamic_check="#Immobile5_RisultatoVerificaCatastale.value()=='NO'"
-			         enabled="#Immobile5_RisultatoVerificaCatastale.value()=='NO'"
-               type="checkbox"
-               value="KO"/>
-			    </td>
-			    <td>
-			      <p style="line-height:1.6;">Particella NON esistente  </p>
-			    </td>
-			  </tr>
-			</tbody>
-    </table>
-    -->
     <!--Aggiungo controllo frazionamento-->
     <table class="Modulo" style="border:1px solid grey;">
       <tbody>
@@ -2133,18 +1639,18 @@ function get_ufficio_dest() {
             <p>SI</p>
             <td>
                 <div id="Immobile5_Parametri_Titolo_Sec" name="Immobile5_Parametri_Titolo_Sec" label="Immobile5 particella soggetta a frazionamento" mandatory_enabled="#Immobile5_Parametri_Titolo1.checked()"></div>
-                <p style="line-height:1.6;"> <input id="Immobile5_Parametri_Titolo3" name="Immobile5_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile5_Parametri_Titolo1.checked()"/> Richiedo conformazione ante-frazionamento </p>
+                <p style="line-height:1.6;"> <input id="Immobile5_Parametri_Titolo3" name="Immobile5_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile5_Parametri_Titolo1.checked()"/>con situazione catastale ante-frazionamento </p>
             </td> 
           </td>
         </tr>
         <tr>
           <td>
-            <p style="line-height:1.6;"> <input id="Immobile5_Parametri_Titolo4" name="Immobile5_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile5_Parametri_Titolo1.checked()"/>Richiedo conformazione come da frazionamento: N° <input id="Immobile5_NumeroFrazionamento" name="Immobile5_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile5_Numero frazionamento" enabled="#Totale_particelle.value() &gt;= 5"/>
-              Anno <input id="Immobile5_AnnoFrazionamento" name="Immobile5_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile5_Anno frazionamento" enabled="#Totale_particelle.value() &gt;= 5"/>
-              - approvato dal catasto con atto numero <input id="Immobile5_NumeroAttoFrazionamenti" name="Immobile5_NumeroAttoFrazionamenti" style="width:10%;" type="number" label="Numero catasto frazionamenti" enabled="#Totale_particelle.value() &gt;= 5"/> 
-              di data <input id="Immobile5_DataAttoFrazionamenti" name="Immobile5_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" enabled="#Totale_particelle.value() &gt;= 5"/>
+            <p style="line-height:1.6;"> <input id="Immobile5_Parametri_Titolo4" name="Immobile5_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 4%;" mandatory_enabled="#Immobile5_Parametri_Titolo1.checked()"/>con situazione catastale come da tipo di frazionamento <b>approvato dal catasto in data </b> 
+              <input id="Immobile5_DataAttoFrazionamenti" name="Immobile5_DataAttoFrazionamenti" style="width:15%;" format="date" label="Data catasto frazionamenti" mandatory_enabled="#Immobile5_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 5"/> 
+              - protocollo N° <input id="Immobile5_NumeroFrazionamento" name="Immobile5_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="Immobile5_Numero frazionamento" mandatory_enabled="#Immobile5_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 5"/>
+              Anno <input id="Immobile5_AnnoFrazionamento" name="Immobile5_AnnoFrazionamento" style="width:10%;" type="number" label="Immobile5_Anno frazionamento" mandatory_enabled="#Immobile5_Parametri_Titolo1.checked()" enabled="#Totale_particelle.value() &gt;= 5"/> 
               <br> 
-              <b>N.B: non è sufficente il numero progressivo della semplice richiesta presentata al catasto </b>
+              <b>N.B: non inserire il numero progressivo della semplice ricevuta del catasto</b> </p>
             </p>
           </td>
         </tr>
@@ -2176,6 +1682,15 @@ function get_ufficio_dest() {
   </table>
 -->
 
+<input id="Immobile_Verifica_Particelle_Guida1" name="Immobile_Verifica_Particelle_Guida1" value="0" dynamic_value="#Immobile1_Parametri_Titolo2.checked() ? 1 : #Immobile1_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
+<input id="Immobile_Verifica_Particelle_Guida2" name="Immobile_Verifica_Particelle_Guida2" value="0" dynamic_value="#Immobile2_Parametri_Titolo2.checked() ? 1 : #Immobile2_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
+<input id="Immobile_Verifica_Particelle_Guida3" name="Immobile_Verifica_Particelle_Guida3" value="0" dynamic_value="#Immobile3_Parametri_Titolo2.checked() ? 1 : #Immobile3_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
+<input id="Immobile_Verifica_Particelle_Guida4" name="Immobile_Verifica_Particelle_Guida4" value="0" dynamic_value="#Immobile4_Parametri_Titolo2.checked() ? 1 : #Immobile4_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
+<input id="Immobile_Verifica_Particelle_Guida5" name="Immobile_Verifica_Particelle_Guida5" value="0" dynamic_value="#Immobile5_Parametri_Titolo2.checked() ? 1 : #Immobile5_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
+<input id="Immobile_Verifica_Particelle_Guida_Conta" name="Immobile_Verifica_Particelle_Guida" dynamic_value="parseInt(#Immobile_Verifica_Particelle_Guida1.value()) + parseInt(#Immobile_Verifica_Particelle_Guida2.value()) + parseInt(#Immobile_Verifica_Particelle_Guida3.value()) + parseInt(#Immobile_Verifica_Particelle_Guida4.value()) + parseInt(#Immobile_Verifica_Particelle_Guida5.value())" type="hidden"/>
+
+<input id="Immobile_Verifica_Particelle_Guida_Tot" type="checkbox" name="Immobile_Verifica_Particelle_Guida_Tot" dynamic_check="(#Totale_particelle.value() - #Immobile_Verifica_Particelle_Guida_Conta.value()) == 0" style="visibility: hidden"/>
+
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px">
   <tbody>
     <tr class="Rigaintestazione">
@@ -2204,16 +1719,6 @@ function get_ufficio_dest() {
   </tbody>
 </table>
 
-<input id="Immobile_Verifica_Particelle_Guida1" name="Immobile_Verifica_Particelle_Guida1" value="0" dynamic_value="#Immobile1_Parametri_Titolo2.checked() ? 1 : #Immobile1_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
-<input id="Immobile_Verifica_Particelle_Guida2" name="Immobile_Verifica_Particelle_Guida2" value="0" dynamic_value="#Immobile2_Parametri_Titolo2.checked() ? 1 : #Immobile2_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
-<input id="Immobile_Verifica_Particelle_Guida3" name="Immobile_Verifica_Particelle_Guida3" value="0" dynamic_value="#Immobile3_Parametri_Titolo2.checked() ? 1 : #Immobile3_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
-<input id="Immobile_Verifica_Particelle_Guida4" name="Immobile_Verifica_Particelle_Guida4" value="0" dynamic_value="#Immobile4_Parametri_Titolo2.checked() ? 1 : #Immobile4_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
-<input id="Immobile_Verifica_Particelle_Guida5" name="Immobile_Verifica_Particelle_Guida5" value="0" dynamic_value="#Immobile5_Parametri_Titolo2.checked() ? 1 : #Immobile5_Parametri_Titolo1.checked() ? 1 : 0" type="hidden"/>
-<input id="Immobile_Verifica_Particelle_Guida_Conta" name="Immobile_Verifica_Particelle_Guida" dynamic_value="parseInt(#Immobile_Verifica_Particelle_Guida1.value()) + parseInt(#Immobile_Verifica_Particelle_Guida2.value()) + parseInt(#Immobile_Verifica_Particelle_Guida3.value()) + parseInt(#Immobile_Verifica_Particelle_Guida4.value()) + parseInt(#Immobile_Verifica_Particelle_Guida5.value())" type="hidden"/>
-
-<input id="Immobile_Verifica_Particelle_Guida_Tot" type="checkbox" name="Immobile_Verifica_Particelle_Guida_Tot" dynamic_check="(#Totale_particelle.value() - #Immobile_Verifica_Particelle_Guida_Conta.value()) == 0" style="visibility: hidden"/>
-
-
 <br>
 <!--
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
@@ -2236,10 +1741,11 @@ function get_ufficio_dest() {
 -->
 
 <p class="simpatico-block simpatico-query-and-answer">Valendosi della facoltà prevista dall'articolo 4 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 484 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti,</p>
-    <br> 
-    <h1 class="Modulo">DICHIARA</h1>
+<br> 
 
 <div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo">DICHIARA</h1>
+
   <table class="Modulo" style="border: 1px solid grey;">
     <tbody>
         <tr class="Rigaintestazione" >
@@ -2307,53 +1813,19 @@ function get_ufficio_dest() {
 </div>
 <br>
 
-<!--
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
-  <tbody>
-      <tr class="Rigaintestazione" >
-          <td colspan="4">
-            <b>In merito ai pagamenti relativi ai <a href="https://sportello.comune.trento.it/faq%3As_italia%3Adiritti.segreteria.materia.urbanistica" target="_blank">diritti di segreteria</a> sugli atti in materia urbanistico-edilizia</b>
-          </td>
-      </tr>
-
-        <tr>
-    
-          <td style="vertical-align: center; width: 4%;">
-              <div id="Diritti_Segreteria" name="Diritti_Segreteria" label="Parametri diritti di segreteria" mandatory_enabled="true"></div>
-              <input group="Diritti_Segreteria" id="Diritti_Segreteria1" name="Diritti_Segreteria" type="radio" value="1" onchange="setSegreteriaSi()"/>
-          </td>
-          <td colspan="2">
-            <p>di essere soggetto al pagamento dei diritti di segreteria.
-            </p>
-          </td>
-        </tr>
-    
-    <tr>
-      <td style="vertical-align: center; width: 4%;">
-          <input group="Diritti_Segreteria" id="Diritti_Segreteria2" name="Diritti_Segreteria" type="radio" value="2" onchange="setSegreteriaNo()" />
-      </td>
-      <td colspan="2">
-        <p>di non essere soggetto al pagamento dei diritti di segreteria</p>
-      </td>
-    </tr>
-  </tbody>
-</table> 
-
-<br>
--->
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
       <tr class="Rigaintestazione" >
           <td colspan="4">
               <b>Per il rilascio del certificato è necessario il pagamento di: </b>
               <ul>
-                <li>euro <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#ConformitaStorica.checked() ? 0 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" readonly/> per diritti sugli atti in materia urbanistico-edilizia</li>
+                <li>euro <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" readonly/> per diritti sugli atti in materia urbanistico-edilizia</li>
                 <li>euro <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> per l'eventuale marca da bollo sull' emissione del certificato</li>
-                <li>euro <input id="Totale_ConformazioneStorica" name="Totale_ConformazioneStorica"  label="Importo conformazione storica" style="width:8%;" value="0" dynamic_value="#Parametri_Storici_Post.checked() ? '51.64':'0'" readonly/> per l'eventuale certificato storico richiesto</li>
+                <!--<li>euro <input id="Totale_ConformazioneStorica" name="Totale_ConformazioneStorica"  label="Importo conformazione storica" style="width:8%;" value="0" dynamic_value="#Parametri_Storici_Post.checked() ? '51.64':'0'" readonly/> per l'eventuale certificato storico richiesto</li>-->
               </ul>
         
               <b>Per un totale di: 
-              euro <input id="Totale_spesa" name="Totale_spesa" dynamic_value="parseFloat(#Totale_importo.value()) + parseFloat(#Totale_MarcaBollo.value()) + parseFloat(#Totale_ConformazioneStorica.value())" label="Totale" style="width:10%;"  value="" readonly/></b>
+              euro <input id="Totale_spesa" name="Totale_spesa" dynamic_value="parseFloat(#Totale_importo.value()) + parseFloat(#Totale_MarcaBollo.value())" label="Totale" style="width:10%;"  value="" readonly/></b>
               <br>Che sarà effettuato con la seguente modalità:
           </td>
       </tr>
@@ -2366,11 +1838,11 @@ function get_ufficio_dest() {
         </td>
         <td colspan="2">
           <input class="" id="EsenzioniPagamenti" name="EsenzioniPagamenti" label="Esenzioni pagamenti" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0.00':'16.00'" type="hidden" >
-          <p>con bonifico bancario o postale da effettuare su conto corrente intestato al Comune di Trento – Servizio di tesoreria
+          <p>con bonifico bancario da effettuare su conto corrente intestato al Comune di Trento – Servizio di tesoreria
               (la ricevuta va allegata alla richiesta del certificato)<br>
-              - IBAN IT 74 I 02008 01820 000001202801<br>
+              - IBAN IT 73 I 02008 01820 000001202801<br>
               oppure<br>
-              - SWIFT/BIC IT 74 I 02008 01820 000001202801 UNCRITM10HV<br>
+              - SWIFT/BIC IT 73 I 02008 01820 000001202801 UNCRITM10HV<br>
               con causale : <!--€ <input id="Totale_spesa_causale" name="Totale_spesa_causale" enabled="#Tassonomia_DocEdi1.checked()" dynamic_value="parseFloat(#Totale_importo.value()) + parseFloat(#Totale_MarcaBollo.value()) + parseFloat(#Totale_ConformazioneStorica.value())" label="Indicare numero totale causale" style="width:10%;"  value="" readonly/>-->
               rilascio certificato di destinazione urbanistica<br>
           </p>
@@ -2382,7 +1854,7 @@ function get_ufficio_dest() {
           <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi2" name="Tassonomia_DocEdi" type="radio" value="1" />
       </td>
       <td colspan="2">
-        <p>con bancomat o carta di credito presso la cassa dei servizi comunali del Top Center</p>
+        <p>con bancomat o carta di credito presso il servizio Urbanistica e Ambiente del Top Center</p>
       </td>
     </tr>
   </tbody>
@@ -2411,7 +1883,7 @@ function get_ufficio_dest() {
         </td>
         <td style="background-color: #eeeeee;"  style="width:100%">
           <p>
-            <b>ulteriori particelle</b> oggetto della richiesta                                                                        
+            <b>ulteriori particelle</b> eccedenti le n. 5 già indicate nella richiesta, salvare il modulo e proseguire con gli allegati generati                                                                        
           </p>
           <p>
             <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:100%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#GEN_IMMAGG.checked()">
@@ -2566,7 +2038,7 @@ function get_ufficio_dest() {
 <input id="GLOBO_modulofiglio_cM5301-MSEC02-RIC-DIR-SEG-BNC" name="GLOBO_modulofiglio_cM5301-MSEC02-RIC-DIR-SEG-BNC" numero="1" obbligatorio="#Tassonomia_DocEdi2.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
 
 <!-- richiedi inserimento situazione storica iniziale -->
-<input id="GLOBO_allegato_cM5301-A02-SIT-STORICA-INIZIALE" name="GLOBO_allegato_cM5301-A02-SIT-STORICA-INIZIALE" numero="1" obbligatorio="#Parametri_Storici_Post.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" />
+<input id="GLOBO_allegato_cM5301-A02-SIT-STORICA-INIZIALE" name="GLOBO_allegato_cM5301-A02-SIT-STORICA-INIZIALE" numero="1" obbligatorio="#ConformitaStorica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" />
 
 <!-- METADATI PER LA GESTIONE DELLE PARTICELLE / FRAZIONAMENTI -->
 <input id="Metadati_Totale_particelle" name="Metadati_Totale_particelle" dynamic_value="#Totale_particelle.value()" type="hidden"/>
@@ -2634,19 +2106,23 @@ modulo per l'inserimento delle particelle
   }
 
   function setSegreteriaNo(){ 
-    document.getElementById("Totale_importo").value = 0;
-    document.getElementById("Totale_spesa").value = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
-    var tot_causale = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
+    calcolaTotale();
+    document.getElementById("Totale_spesa").value = parseFloat(parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_importo").value)); 
+    //document.getElementById("Totale_importo").value = 0;
+    //document.getElementById("Totale_spesa").value = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value)); 
+    //var tot_causale = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value)); 
     //if( document.getElementById("Tassonomia_DocEdi1").checked){
     //  document.getElementById("Totale_spesa_causale").value = parseFloat(tot_causale);
     //}
   }
 
   function setSegreteriaSi(){
-    calcolaTotale();
+    document.getElementById("Totale_importo").value = parseFloat("51.64"); 
+    document.getElementById("Totale_spesa").value = parseFloat(parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat("51.64")); 
+    //calcolaTotale();
     //riapplico i diritti di segreteria sul totale 
-    document.getElementById("Totale_spesa").value = parseFloat(parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_importo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
-    var tot_causale = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_importo").value) + parseFloat(document.getElementById("Totale_ConformazioneStorica").value)); 
+    //document.getElementById("Totale_spesa").value = parseFloat(parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_importo").value)); 
+    //var tot_causale = parseFloat(0 + parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat(document.getElementById("Totale_importo").value)); 
     //if( document.getElementById("Tassonomia_DocEdi1").checked){
     //  document.getElementById("Totale_spesa_causale").value = parseFloat(tot_causale);
     //}
@@ -2662,18 +2138,30 @@ modulo per l'inserimento delle particelle
       dataDaControllare = dataDaControllare.replace('/','-');
       var dataControllo = new Date('11-11-1968');
       var data2 = new Date(dataDaControllare);
-
+      //a questo punto so che la data è maggiore di quella desiderata 
       document.getElementById("ControlloData").value = "Data/e fornite corrette";
-      
-      if(data2 < dataControllo)
+
+      // verifico che sia minore o uguale a quella di oggi
+      var today = GetTodayDate();
+      var todayDate = new Date(today);
+
+      if(data2 < dataControllo || data2 > todayDate)
       {
         document.getElementById("ControlloData").value = "Attenzione! Data/e fornita/e non valid/e";
       }
       return true;
-      //return data2 > dataControllo;
     } else {
       return false;
     }
+  }
+
+  function GetTodayDate(){
+    var today = new Date();
+    var dateString = ("0" + (today.getUTCMonth()+1)).slice(-2) + "-" + ("0" + today.getUTCDate()).slice(-2)  + "-" + today.getUTCFullYear();
+
+    console.log("DATA DI OGGI" , dateString);
+
+    return dateString;
   }
 
 </script>
