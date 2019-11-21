@@ -227,12 +227,7 @@
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="5">
-        <p><b>in qualità di</b></p>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td colspan="5">
-        <p class="Labelcella">Ruolo</p>
+        <p><b>Ruolo del titolare</b></p>
       </td>
     </tr>
     <tr>
@@ -1635,24 +1630,13 @@
   <input id="{{ prefix }}_Titolo" name="{{ prefix }}_Titolo" type="hidden" value="professionista"/>
   <input id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" type="hidden" value="professionista"/>
 
-	<table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td style="border-right:0px">
-          <p class="Labeltabella">{{ intestazione|safe }}</p>
-        </td>
-        <td style="width:39%; border-left:0px; border-right:0px">
-          <p class="Labeltabella">{{ carica_campi|safe }}</p>
-        </td>
-        <td style="width:25%; {{ pointer_carica_dati }}; border-left:0px">
-          <span style="pd4ml-visibility: hidden; pd4ml-display: none;">{{ utils.recupero_dati( prefix, visibility_carica_dati ) }}</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
   <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
     <tbody>
+      <tr class="Rigaintestazione">
+        <td style="border-right:0px" colspan="4">
+          <p style="line-height:1.6;"><b>{{ intestazione|safe }}</b></p>
+        </td>
+      </tr>
       <tr class="Rigaintestazioneridotta">
         <td style="width:13%">
           <p class="Labelcella">Titolo</p>
@@ -2190,7 +2174,7 @@
         </select>
       </td>
       <td>
-        <input class="" id="{{ prefix }}_Cittadinanza" name="{{ prefix }}_Cittadinanza" style="width:100%;" label="Nazionalità"/>
+        {{ utils.nazionalita( prefix + '_Cittadinanza', 'Cittadinanza' )}}
       </td>
       <td>
         <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita"/>
@@ -2856,25 +2840,55 @@
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>IL TITOLARE</b></p>
+      </td>
+    </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <div id="Delega_progett" name="Delega_progett" label="Delega progettista" mandatory_enabled="true"> </div>
-        <input group="Delega_progett" id="Delega_progett1" name="Delega_progett" type="radio" value="1" />
+        <div id="Richiesta_delega" name="Richiesta_delega" label="Delega progettista" mandatory_enabled="true"> </div>
+        <input group="Richiesta_delega" id="Richiesta_delega1" name="Richiesta_delega" type="radio" value="1" />
       </td>
-      <td>
-        <p style="line-height:1.6;">Il titolare <b>DELEGA</b> il progettista, <input enabled="#Delega_progett1.checked()" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Cognome.value() + ' ' + #Progettista_Nome.value()" id="Nominativo_progettista" name="Nominativo_progettista" style="width:68%;"/>
-          <br><b>a ricevere</b> per proprio nome e conto le comunicazioni relative al presente procedimento anche per il tramite del proprio indirizzo PEC (posta elettronica certificata).
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>DELEGA</b> il progettista, <input enabled="#Richiesta_delega1.checked()" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Cognome.value() + ' ' + #Progettista_Nome.value()" id="Nominativo_progettista" name="Nominativo_progettista" style="width:68%;"/>
+          <br><b>a ricevere</b> per proprio nome e conto le comunicazioni relative al presente procedimento per il tramite del proprio indirizzo PEC (posta elettronica certificata):  <input mandatory_enabled="#Richiesta_delega1.checked()" id="Progettista_EMailPEC" name="Progettista_EMailPEC" format="pec" style="width:50%;"/>
           <br><span style="font-size:85%"><i>NB.: la delega riguarda tutte le comunicazioni relative alla fase istruttoria del progetto ai sensi dell'art. 86 della l.p. 15/2015
             <br>L'accettazione del progettista è presente nel modulo secondario "Anagrafica del progettista"</i></span>
         </p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
-        <input group="Delega_progett" id="Delega_progett2" name="Delega_progett" type="radio" value="2" />
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
+        <input group="Richiesta_delega" id="Richiesta_delega2" name="Richiesta_delega" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>CHIEDE di ricevere</b> le comunicazioni relative al presente procedimento <b>al proprio indirizzo PEC</b> (Posta Elettronica Certificata), indicato nei dati personali e qui riportato </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Richiesta_delega_con_pec" name="Richiesta_delega_con_pec" label="pec personale per delega" mandatory_enabled="#Richiesta_delega2.checked()"></div>
+        <input group="Richiesta_delega_con_pec" id="Richiesta_delega_con_pec1" name="Richiesta_delega_con_pec" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;">Il titolare <b>CHIEDE di ricevere</b> le comunicazioni relative al presente procedimento al proprio indirizzo PEC (Posta Elettronica Certificata), indicato nei dati personali e qui riportato <input class="inputNormal" id="pec_per_comunicazioni" name="pec_per_comunicazioni"  style="width: 42%;" label="PEC del titolare per comunicazioni" format="pec" dynamic_value="#AventeTitolo_APEC.value()" readonly></p>
+        <p style="line-height:1.6;"><b>Indirizzo PEC personale: </b> <input class="inputNormal" id="pec_personale_per_comunicazioni" name="pec_personale_per_comunicazioni"  style="width: 42%;" label="PEC personale del titolare per comunicazioni" format="pec" dynamic_value="#AventeTitolo_EMailPEC.value()" enabled="#Richiesta_delega_con_pec1.checked()" readonly></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Richiesta_delega_con_pec" id="Richiesta_delega_con_pec2" name="Richiesta_delega_con_pec" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>Indirizzo PEC della propria ragione sociale: </b> <input class="inputNormal" id="pec_ragionesociale_per_comunicazioni" name="pec_ragionesociale_per_comunicazioni"  style="width: 42%;" label="PEC ragione sociale del titolare per comunicazioni" format="pec" dynamic_value="#AventeTitolo_APEC.value()" enabled="#Richiesta_delega_con_pec2.checked()" readonly></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Richiesta_delega" id="Richiesta_delega3" name="Richiesta_delega" type="radio" value="3" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>CHIEDE di ricevere</b> le comunicazioni relative al presente procedimento al proprio indirizzo fisico <input class="inputNormal" id="indirizzo_per_comunicazioni" name="indirizzo_per_comunicazioni"  style="width: 50%;" label="indirizzo del titolare per comunicazioni" dynamic_value="#AventeTitolo_ViaResidenza.value() + ' ' + #AventeTitolo_CivicoResidenza.value() + ', ' + #AventeTitolo_CAPResidenza.value() + ' ' + #AventeTitolo_ComuneResidenza.value() + ' (' + #AventeTitolo_ProvinciaResidenza.value() + ')'" enabled="#Richiesta_delega3.checked()" readonly> <b>a mezzo raccomandata A/R</b>, consapevole dei costi che questo implica</p>
       </td>
     </tr>
   </tbody>
