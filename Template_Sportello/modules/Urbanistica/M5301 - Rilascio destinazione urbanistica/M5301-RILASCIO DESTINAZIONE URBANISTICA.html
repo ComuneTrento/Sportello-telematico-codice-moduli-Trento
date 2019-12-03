@@ -88,7 +88,7 @@ istruzioni="/modulistica/moduli/M5301-A02-SIT-STORICA-INIZIALE"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
+tipo_mime="application/pdf"/>  
 
 <meta codice_allegato="M5301-A01-RIC-DIR-SEG"
 urn_allegato="document:c_l378:chiedere.rilascio.certificato.urbanistico;rilascio.certificato.urbanistico;a01.m5301.dir.seg.istr"
@@ -96,6 +96,17 @@ descrizione_estesa="Ricevuta bonifico pagamenti"
 filename="Ricevuta bonifico.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/M5301-A01-RIC-DIR-SEG"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="M5301-A02-RIC-INCARICO"
+urn_allegato="document:c_l378:chiedere.rilascio.certificato.urbanistico;rilascio.certificato.urbanistico;a02.m5301.ric.incarico"
+descrizione_estesa="Richiesta incarico consulete d'ufficio"
+filename="Incarico consulete d'ufficio.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M5301-A02-RIC-INCARICO"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -166,27 +177,37 @@ urn_report="report:CSP_SESSION_REPORT"/>
                           "Tassonomia_DocEdi2",
                           "Presa_visione_check",
                           "Immobile_Verifica_Particelle_Guida_Tot",
-                          "Controlla_value"
+                          "Controlla_value",
+                          "Particelle_Standard",
+                          "Param_Consortalita_SI",
+                          "Param_Consortalita_NO",
+                          "Param_Consortalita_Rilascio_SI",
+                          "Param_Consortalita_Rilascio_NO",
+                          "Particelle_Consortalita"
                           ];
   var ERROR_LABELS = { 
     'block1' : 'Figura incaricata della compilazione da selezionare', 
-    'block2' : 'Inserire il codice fiscale',
-    'block3' : 'Verificare inserimento dati',
-    'block4' : 'Verificare inserimento dati',
+    'block2' : 'Premi l\'icona nera per caricare il tuo codice fiscale',
+    'block3' : 'Inserire i dati mancanti',
+    'block4' : 'Inserire i dati mancanti',
     'block5' : 'Seleziona il tipo di certificato richiesto', 
-    'block6' : 'Inserisci indirizzo email alla quale verra\' inviato il certificato attestante la certificazione urbanistica', 
-    'block7' : 'Inserisci il numero di particelle totali (compreso le consortalita\'). Minimo valore ammesso 1.', 
-    'block8' : 'Selezionare il tipo di frazionamento', 
-    'block9' : 'Selezionare il tipo di frazionamento', 
-    'block10' : 'Selezionare il tipo di frazionamento',  
-    'block11' : 'Selezionare il tipo di frazionamento', 
+    'block6' : 'Rispondere se si sta richiedendo un certificato storico', 
+    'block7' : 'Inserisci indirizzo email alla quale verra\' inviato il certificato attestante la certificazione urbanistica', 
+    'block8' : 'Inserisci il numero di particelle totali (compreso le consortalita\'). Minimo valore ammesso 1.', 
+    'block9' : 'Segnalare se sono presenti delle consortalita\'', 
+    'block10' : 'In caso di consortalita\' indicare se si vuole che siano comprese nel certificato di dichiarazione urbanistica', 
+    'block11' : 'Verificare che il numero di particelle sia corretto', 
     'block12' : 'Selezionare il tipo di frazionamento', 
-    'block13' : 'Dati recuperati in automatico in base alle selezioni precedenti', 
-    'block14' : 'Presa visione decreto ministeriale', 
-    'block15' : 'Seleziona se sei o meno soggetto al pagamento della marca da bollo', 
-    'block16' : 'Seleziona il metodo di pagamento che vuoi utilizzare', 
-    'block17' : 'Allegati da aggiungere', 
-    'block18' : 'Informativa dati personali', 
+    'block13' : 'Selezionare il tipo di frazionamento', 
+    'block14' : 'Selezionare il tipo di frazionamento',  
+    'block15' : 'Selezionare il tipo di frazionamento', 
+    'block16' : 'Selezionare il tipo di frazionamento', 
+    'block17' : 'Dati recuperati in automatico in base alle selezioni precedenti', 
+    'block18' : 'Presa visione decreto ministeriale', 
+    'block19' : 'Seleziona se sei o meno soggetto al pagamento della marca da bollo', 
+    'block20' : 'Seleziona il metodo di pagamento che vuoi utilizzare', 
+    'block21' : 'Allegati da aggiungere', 
+    'block22' : 'Informativa dati personali',
   }
 
 </script>
@@ -504,7 +525,21 @@ urn_report="report:CSP_SESSION_REPORT"/>
       PRECISA
   </h1>
   <p class="Modulo" style="line-height:1.6;">Che il certificato richiesto riguarda le particelle:<br></p>  
-
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione" >
+        <td>
+          <b>Numero di particelle</b>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <input id="Particelle_Standard" name="Particelle_Standard" mandatory_enabled="true" label="Indicare numero particelle senza le consortalità" type="number" style="width:8%;" min="1" value="1"/>
+        </td>
+      </tr> 
+    </tbody>
+  </table>
+<!--
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
         <tr class="Rigaintestazione" >
@@ -553,7 +588,96 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </tr>
     </tbody>
   </table>
+
+  -->
 </div>
+
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione" >
+        <td colspan="2">
+          <b>Sono presenti delle <a href="https://sportello.comune.trento.it/faq%3As_italia%3Aconsortalita" target="_blank">consortalità</a></b> 
+          <br>
+          <i>N.B: La mancata precisazione in merito alle consortalità comporta una nuova richiesta di certificato qualora necessaria</i> 
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <div id="Param_Presenza_Consortalita" name="Param_Presenza_Consortalita" label="Inserire presenza delle consortalità" mandatory="true"></div>
+            <p style="line-height:1.6;"> <input id="Param_Consortalita_NO" name="Param_Presenza_Consortalita" type="radio" value="1" style="vertical-align: center; width: 100%;"> </p>
+        </td>
+        <td>
+          NO      
+        </td>
+      </tr> 
+      <tr>
+        <td>
+            <p style="line-height:1.6;"> <input id="Param_Consortalita_SI" name="Param_Presenza_Consortalita" type="radio" value="2" style="vertical-align: center; width: 100%;"> </p>
+        </td>
+        <td  style="vertical-align: center; width: 98%;">
+          SI          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="simpatico-block simpatico-query-and-answer" mandatory_enabled="#Param_Consortalita_SI.checked()">
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione" >
+        <td colspan="2">
+          <b>Nel caso di presenza di consortalità</b> il certificato deve essere rilasciato anche per le stesse 
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <div id="Param_Rilascio_Consortalita" name="Param_Rilascio_Consortalita" label="Inserire presenza delle consortalità" mandatory="true"></div>
+            <p style="line-height:1.6;"> <input id="Param_Consortalita_Rilascio_NO" name="Param_Rilascio_Consortalita" type="radio" value="1" style="vertical-align: center; width: 100%;"> </p>
+        </td>
+        <td style="vertical-align: center; width: 96%;">
+          NO      
+        </td>
+      </tr> 
+      <tr>
+        <td rowspan="2">
+            <p style="line-height:1.6;"> <input id="Param_Consortalita_Rilascio_SI" name="Param_Rilascio_Consortalita" type="radio" value="2" style="vertical-align: center; width: 100%;"> </p>
+        </td>
+        <td>
+          SI          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Numero di particelle relative alle consortalità:
+          <input id="Particelle_Consortalita" name="Particelle_Consortalita" mandatory_enabled="#Param_Consortalita_Rilascio_SI.checked()" label="Indicare numero consortalità" type="number" style="width:8%;" min="0" value="0"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione" >
+          <td colspan="2">
+            <b>Numero di particelle totali per le quali è richiesto il certificato di destinazione urbanistica</b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+              <input id="Totale_particelle" name="Totale_particelle" mandatory_enabled="true" label="Indicare numero totale particelle" type="number" style="width:8%;" min="1" value="" dynamic_value="#Param_Consortalita_Rilascio_SI.checked() ? parseInt(#Particelle_Standard.value()) + parseInt(#Particelle_Consortalita.value()) : parseInt(#Particelle_Standard.value())" readonly/>
+          </td>
+        </tr> 
+    </tbody>
+  </table>
+</div>  
 
 <!-- *********** FINE MODULO NUM PARTICELLE *********** -->
 
@@ -659,7 +783,6 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <p>
           che la seguente marca da bollo è stata annullata per la presentazione della documentazione sopra indicata
           <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span>
-          <br> di impegnarsi a conservare l'originale della marca da bollo annullata 
         </p>
         </td>
       </tr>
@@ -672,7 +795,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td>
-          <input class="" id="Parametri_NumeroBollo" name="Parametri_NumeroBollo" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory="#Parametri_Assoggettabilita1.checked()" enabled="#Parametri_Assoggettabilita1.checked()" placeholder="" disabled="">
+          <input class="" id="Parametri_NumeroBollo" name="Parametri_NumeroBollo" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory="#Parametri_BolloDichiara1.checked()" enabled="#Parametri_BolloDichiara1.checked()" placeholder="" disabled="">
+          <br> di impegnarsi a conservare l'originale della marca da bollo annullata 
         </td>
       </tr>
       <tr>
@@ -681,7 +805,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </td>
         <td>
           <p>
-              che è l'onere di pagamento è stato assolto tramite l'acquisto di marca da bollo virtuale con autorizzazione numero  
+              che l'onere di pagamento è stato assolto tramite l'acquisto di marca da bollo virtuale con numero autorizzazione   
               <input class="" id="Parametri_NumeroBolloElettronico" name="Parametri_NumeroBolloElettronico" label="Numero marca da bollo virtuale" style="width:100%;" type="number" mandatory="#Parametri_BolloDichiara2.checked()" enabled="#Parametri_BolloDichiara2.checked()" >
           </p>
         </td>
@@ -799,7 +923,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
               <b>ricevuta bonifico</b>                                                                         
             </p>
           </td>
-      </tr>
+      </tr> 
       <tr>
         <td>
           <input dynamic_check="#Tassonomia_DocEdi2.checked()" enabled="#Tassonomia_DocEdi2.checked()" id="GEN_BANCOMAT" name="GEN_BANCOMAT" type="checkbox" value="OBBLIGATORIO"/>
@@ -809,7 +933,17 @@ urn_report="report:CSP_SESSION_REPORT"/>
             <b>ricevuta transazione bancomat</b>                                                                         
           </p>
         </td>
-    </tr>
+      </tr>
+      <tr>
+        <td>
+          <input dynamic_check="#Parametri_Domanda_DelegaConsulente.checked()" enabled="#Parametri_Domanda_DelegaConsulente.checked()" id="GEN_INCARICO" name="GEN_INCARICO" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;"  style="width:100%">
+          <p>
+            <b>copia incarico di ufficio</b>                                                                         
+          </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -893,8 +1027,11 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
-<!-- richiedi inserimento allegato per i diritti di segreteria / bonifico-->
+<!-- richiedi inserimento allegato per i diritti di segreteria / bonifico--> 
 <input id="GLOBO_allegato_cM5301-A01-RIC-DIR-SEG" name="GLOBO_allegato_cM5301-A01-RIC-DIR-SEG" numero="1" obbligatorio="#Tassonomia_DocEdi1.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
+
+<!-- richiedi inserimento allegato per consulente d'ufficio--> 
+<input id="GLOBO_allegato_cM5301-A02-RIC-INCARICO" name="GLOBO_allegato_cM5301-A02-RIC-INCARICO" numero="1" obbligatorio="#Parametri_Domanda_DelegaConsulente.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
 
 <!-- richiedi inserimento modulo secondario per i diritti di segreteria / bancomat-->
 <input id="GLOBO_modulofiglio_cM5301-MSEC02-RIC-DIR-SEG-BNC" name="GLOBO_modulofiglio_cM5301-MSEC02-RIC-DIR-SEG-BNC" numero="1" obbligatorio="#Tassonomia_DocEdi2.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
