@@ -259,7 +259,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td style="vertical-align: center; width: 4%;">
-          <input id="Parametri_Domanda_DelegaConsulente" name="Parametri_Domanda_Delega" type="radio" value="2" />
+          <input id="Parametri_Domanda_DelegaConsulente" name="Parametri_Domanda_Delega" type="radio" value="2" onchange="GetEsenzioneBollo()"/>
         </td>
         <td colspan="2">
           <p>Consulente Tecnico d'Ufficio
@@ -807,7 +807,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <td>
           <p>
             di provvedere al pagamento con assolvimento virtuale dell'imposta di bollo mediante autorizzazione rilasciata dall'Agenzia delle Entrate Codice identificativo n./anno: </p>  
-            <input class="" id="Parametri_NumeroBolloElettronico" name="Parametri_NumeroBolloElettronico" label="Numero marca da bollo virtuale" style="width:100%;" type="number" mandatory="#Parametri_BolloDichiara2.checked()" enabled="#Parametri_BolloDichiara2.checked()" >       
+            <input class="" id="Parametri_NumeroBolloElettronico" name="Parametri_NumeroBolloElettronico" label="Numero marca da bollo virtuale" style="width:100%;" mandatory="#Parametri_BolloDichiara2.checked()" enabled="#Parametri_BolloDichiara2.checked()" >       
         </td>
       </tr>
       <tr>
@@ -817,7 +817,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <td colspan="2">
           <p>
           di non essere soggetto al pagamento della marca da bollo sul rilascio della richiesta, <a href="https://sportello.comune.trento.it/faq%3As_italia%3Acdu.casistiche.esenzione.bollo" target="_blank">ricadendo nel caso di:</a> 
-          <input class="" id="EsenzioneBollo" name="EsenzioneBollo" label="Motivo esenzione bollo" mandatory_enabled="#Parametri_Assoggettabilita2.checked()" style="width:100%;" type="text" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? 'Consulente Tecnico d\'Ufficio':''">
+          <input class="" id="EsenzioneBollo" name="EsenzioneBollo" label="Motivo esenzione bollo" enabled="#Parametri_Assoggettabilita2.checked()" mandatory_enabled="#Parametri_Assoggettabilita2.checked()" style="width:100%;" type="text">
           </p>
         </td>
       </tr>
@@ -1125,6 +1125,12 @@ urn_report="report:CSP_SESSION_REPORT"/>
     console.log("DATA DI OGGI" , dateString);
 
     return dateString;
+  }
+
+  function GetEsenzioneBollo(){
+    if( document.getElementById("Parametri_Domanda_DelegaConsulente").checked == true){
+      document.getElementById("EsenzioneBollo").value = "Consulente Tecnico d\'Ufficio";
+    }
   }
 
 </script>
