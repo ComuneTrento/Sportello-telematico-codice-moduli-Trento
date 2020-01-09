@@ -51,7 +51,7 @@ versione="1.1|14/02/2018"/>
 
 <meta codice_allegato="GEN-CDI"
 urn_allegato="document:c_l378:allegato.copia.documento.identita"
-descrizione_estesa="Documento di identità"
+descrizione_estesa="Documento di identità del legale rappresentante"
 filename="Documento identita.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-CDI"
@@ -326,10 +326,10 @@ function get_ufficio_dest() {
   <tbody>
     <tr class="Rigaintestazione">
       <td style="width:75%;">
-        <p><b>Denominazione/Ragione sociale</b></p>
+        <p style="line-height:1.6;"><b>Denominazione/Ragione sociale</b></p>
       </td>
       <td style="width:25%;">
-        <p><b>Tipologia</b></p>
+        <p style="line-height:1.6;"><b>Tipologia</b></p>
       </td>
     </tr>
     <tr>
@@ -557,12 +557,17 @@ function get_ufficio_dest() {
 <br>
 <br>
 
+<input id="Legale_ImpreseCoinvolte_checkobbligatorio" name="Legale_ImpreseCoinvolte_checkobbligatorio" dynamic_check="true" type="hidden" />
+<input id="Legale_ImpreseCoinvolte_checkabilitato" name="Legale_ImpreseCoinvolte_checkabilitato" dynamic_check="true" type="hidden" />
+ 
 <div class="simpatico-block simpatico-query-and-answer">
   
+
+
 <!-- visibility:visibility or display:none, cursor:pointer or default, albo: provinciale or regionale -->
 <div type="nominativo_interessato">
 
-  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" enabled="true">
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="#Legale_ImpreseCoinvolte_checkobbligatorio.checked()" enabled="#Legale_ImpreseCoinvolte_checkabilitato.checked()">
     <tbody>
       <tr class="Rigaintestazione">
         <td style="border-right:0px" colspan="4">
@@ -618,36 +623,49 @@ function get_ufficio_dest() {
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
- <tbody>
-  <tr class="Rigaintestazione">
-   <td colspan="2">
-    <p style="text-align: center;"><b>Elenco degli allegati</b></p>
+  <tbody>
+   <tr class="Rigaintestazione">
+     <td colspan="4">
+       <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+     </td>
+   </tr>
+   <tr class="Rigaintestazione">
+     <td style="width:4%;">
+       <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+     </td>
+     <td colspan="2">
+       <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+     </td>
+     <td style="width:15%;">
+       <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
+     </td>
+   </tr>
+   <tr>
+     <td style="width:4%; vertical-align: center; text-align: center;">
+      <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
+     </td>
+     <td style="background-color: #eeeeee;" colspan="2">
+      <p style="line-height:1.6;">Copia del documento d'identità</p>
+      <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+     </td>
+     <td style="background-color: #eeeeee;">
+       <p style="line-height: 1.6; text-align: center;"><input id="numero_docid" name="numero_docid" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
+     </td>
+    </tr>
+   <tr>
+    <td style="width:4%; vertical-align: center; text-align: center;">
+     <input id="Anag_lav_aut" name="Anag_lav_aut" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
+    </td>
+    <td style="background-color: #eeeeee;" colspan="2">
+     <p style="line-height:1.6;">Scansione della stampa di questo modulo firmata</p>
+     <input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+    </td>
+    <td style="background-color: #eeeeee;">
+     <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
    </td>
-  </tr>
-  <tr>
-   <td style="vertical-align: top; width:4%">
-    <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
-   </td>
-   <td style="background-color: #eeeeee;">
-    <p>
-     copia del documento d'identità
-     <br/>
-   </p>
-   </td>
-  </tr>
-  <tr>
-   <td style="vertical-align: top; width:4%">
-    <input id="Anagrafica_impresa" name="Anagrafica_impresa" type="checkbox" dynamic_check="true" checked="checked" value="OBBLIGATORIO"/>
-   </td>
-   <td style="background-color: #eeeeee;">
-    <p>
-     Scansione della stampa di questo modulo firmata
-     <br/>
-   </p>
-   </td>
-  </tr>
- </tbody>
-</table>
+   </tr>
+  </tbody>
+ </table>
 
 <br>
 <br>
@@ -655,7 +673,7 @@ function get_ufficio_dest() {
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 4%; vertical-align: top;">
+      <td style="width:4%; vertical-align: center; text-align: center;">
         <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
         <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
@@ -669,14 +687,15 @@ function get_ufficio_dest() {
 <br>
 <br>
 
-<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+<div class="simpatico-block">
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
       </td>
@@ -700,9 +719,10 @@ function get_ufficio_dest() {
  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
 </p>
 
+</div>
+
 <input id="GLOBO_modulo_cGEN-IMPRESE-AU" name="GLOBO_modulo_cGEN-IMPRESE-AU" type="hidden" value=""/>
 
-<input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="#Anagrafica_impresa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
 
@@ -710,8 +730,6 @@ function get_ufficio_dest() {
 
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="GEN-IMPRESE-AU"/>
 
-<input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
- 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
 

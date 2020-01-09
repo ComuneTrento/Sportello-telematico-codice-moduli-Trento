@@ -3,7 +3,7 @@
     "creationDate": 1564560064641,
     "lastUpdate": 1564560064641,
     "uri": "https://sportello.comune.trento.it/modulistica/moduli/M1876-ISCRIZIONE-NIDO_v3.0_vSTU3",
-    "eserviceId": "2",
+    "eserviceId": null,
     "profileTypes": [],
     "model": {
         "context": {},
@@ -38,7 +38,8 @@
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
                 "tags": [],
                 "fields": [
-                    "AventeTitolo_CodiceFiscale"
+                    "AventeTitolo_CodiceFiscale",
+                    "AventeTitolo_Sesso"
                 ],
                 "blocks": [],
                 "dependencies": [
@@ -81,15 +82,13 @@
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[4]",
                 "tags": [],
-                "fields": [
-                    "AventeTitolo_RuoloRichiedente"
-                ],
+                "fields": [],
                 "blocks": [],
                 "dependencies": [
                     "block3"
                 ],
                 "condition": null,
-                "completed": "context['AventeTitolo_RuoloRichiedente'] != null",
+                "completed": null,
                 "annotations": [],
                 "description": {
                     "it": "Indicare il ruolo ricoperto nei confronti del bambino/a che si intende iscrivere al nido d’infanzia."
@@ -106,15 +105,17 @@
                 "tags": [],
                 "fields": [
                     "Tassonomia_CF1",
+                    "Tassonomia_ListaFam1",
                     "Tassonomia_CF2",
+                    "Parametri_CFBambino",
                     "Tassonomia_CF3"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block4"
                 ],
-                "condition": "context['AventeTitolo_RuoloRichiedente']=='affidatario' || context['AventeTitolo_RuoloRichiedente']=='preadottivo'|| context['AventeTitolo_RuoloRichiedente']=='padre'|| context['AventeTitolo_RuoloRichiedente']=='madre'|| context['AventeTitolo_RuoloRichiedente']=='tutore'",
-                "completed": "context['Tassonomia_CF1'] != null || context['Tassonomia_CF2'] != null || context['Tassonomia_CF3'] != null",
+                "condition": null,
+                "completed": "(context['Tassonomia_CF1'] != null && context['Tassonomia_ListaFam1'] != null) || (context['Tassonomia_CF2'] != null && context['Parametri_CFBambino'] != null)|| context['Tassonomia_CF3'] != null",
                 "annotations": [],
                 "description": {
                     "it": "Indicare il bambino/a da iscrivere.<ul><li>Se risulta residente con chi presenta la domanda scegliere l’opzione <i>“appartiene al mio nucleo familiare”</i>, quindi aprire il menu a tendina e indicare il bambino/a da iscrivere;</li><li>se <b>NON</b> appartiene al nucleo familiare di chi presenta la domanda scegliere una delle altre opzioni.</li></ul><b>NB: è obbligatoria la scelta di una delle opzioni</b>"
@@ -131,14 +132,16 @@
                 "tags": [],
                 "fields": [
                     "Tassonomia_CF1",
+                    "Tassonomia_ListaFam1",
                     "Tassonomia_CF2",
+                    "Parametri_CFBambino",
                     "Tassonomia_CF3"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block5"
                 ],
-                "condition": "context['Tassonomia_CF1'] != null || context['Tassonomia_CF2'] != null || context['Tassonomia_CF3'] != null",
+                "condition": "(context['Tassonomia_CF1'] != null && context['Tassonomia_ListaFam1'] != null) || (context['Tassonomia_CF2'] != null && context['Parametri_CFBambino'] != null)|| context['Tassonomia_CF3'] != null",
                 "completed": null,
                 "annotations": [],
                 "description": {
@@ -155,15 +158,13 @@
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[7]",
                 "tags": [],
                 "fields": [
-                    "Modulo_Compilabile1",
-                    "Modulo_Compilabile2",
-                    "Controllo_iterFP"
+                    "Modulo_Compilabile1"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block6"
                 ],
-                "condition": "context['Tassonomia_CF1'] != null || context['Tassonomia_CF2'] != null || context['Tassonomia_CF3'] != null",
+                "condition": null,
                 "completed": "context['Modulo_Compilabile1'] != null",
                 "annotations": [],
                 "description": {
@@ -293,6 +294,8 @@
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[13]",
                 "tags": [],
                 "fields": [
+                    "Tassonomia_ICEF1",
+                    "Tassonomia_ICEF2",
                     "Tassonomia_FullTime",
                     "Tassonomia_PartTime"
                 ],
@@ -300,7 +303,7 @@
                 "dependencies": [
                     "block11"
                 ],
-                "condition": null,
+                "condition": "context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2'",
                 "completed": "context['Tassonomia_FullTime']=='FT' || context['Tassonomia_PartTime']=='PT'",
                 "annotations": [],
                 "description": {
@@ -318,14 +321,13 @@
                 "tags": [],
                 "fields": [
                     "Tassonomia_TipoFrequenza1",
-                    "Tassonomia_ICEF1",
-                    "Tassonomia_ICEF2"
+                    "Tassonomia_FullTime"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block13"
                 ],
-                "condition": "context['Tassonomia_FullTime']=='FT' && (context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2')",
+                "condition": "context['Tassonomia_FullTime']=='FT'",
                 "completed": null,
                 "annotations": [],
                 "description": {
@@ -342,13 +344,14 @@
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[15]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_TipoFrequenza2"
+                    "Tassonomia_TipoFrequenza2",
+                    "Tassonomia_PartTime"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block13"
                 ],
-                "condition": "context['Tassonomia_PartTime']=='PT' && (context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2')",
+                "condition": "context['Tassonomia_PartTime']=='PT'",
                 "completed": null,
                 "annotations": [],
                 "description": {
@@ -364,11 +367,16 @@
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[16]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_TipoFrequenza1",
+                    "Tassonomia_TipoFrequenza2",
+                    "Tassonomia_ContattoAnnoPrec1",
+                    "Tassonomia_ContattoAnnoPrec2"
+                ],
                 "blocks": [],
                 "dependencies": [],
                 "condition": "context['Tassonomia_TipoFrequenza1']=='FT' || context['Tassonomia_TipoFrequenza2']=='PT'",
-                "completed": null,
+                "completed": "context['Tassonomia_ContattoAnnoPrec1']=='1' || context['Tassonomia_ContattoAnnoPrec2']=='2'",
                 "annotations": [],
                 "description": {
                     "it": "La presente domanda verrà inserita nella graduatoria annuale per le ammissioni al nido dei bambini a partire dal prossimo anno educativo. Se si intende essere contattati già nell'anno educativo in corso, indicare il mese a partire dal quale si dà la disponibilità per un eventuale inserimento del bambino al nido."
@@ -383,13 +391,20 @@
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[17]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_ContattoAnnoPrec1",
+                    "Tassonomia_ContattoAnnoPrec2",
+                    "Tassonomia_ContattoAnno1",
+                    "Tassonomia_ContattoAnno2",
+                    "Tassonomia_ContattoAnnoPT1",
+                    "Tassonomia_ContattoAnnoPT2"
+                ],
                 "blocks": [],
                 "dependencies": [
                     "block16"
                 ],
-                "condition": null,
-                "completed": null,
+                "condition": "context['Tassonomia_ContattoAnnoPrec1']=='1' || context['Tassonomia_ContattoAnnoPrec2']=='2'",
+                "completed": "(context['Tassonomia_ContattoAnno1']=='1' || context['Tassonomia_ContattoAnno2']=='2') || (context['Tassonomia_ContattoAnnoPT1']=='1' || context['Tassonomia_ContattoAnnoPT2']=='2')",
                 "annotations": [],
                 "description": {
                     "it": "Dopo la pubblicazione della graduatoria annuale se il bambino non è stato assegnato per nessuna delle scelte indicate in sede di domanda, dando la disponibilità si verrà contattati per l’accettazione di posti eventualmente rimasti liberi in qualsiasi nido del territorio comunale."
@@ -404,13 +419,20 @@
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[18]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_ContattoAnno1",
+                    "Tassonomia_ContattoAnno2",
+                    "Tassonomia_ContattoAnnoPT1",
+                    "Tassonomia_ContattoAnnoPT2",
+                    "Tassonomia_AutorizzaSMS1",
+                    "Tassonomia_AutorizzaSMS2"
+                ],
                 "blocks": [],
                 "dependencies": [
                     "block17"
                 ],
-                "condition": null,
-                "completed": null,
+                "condition": "(context['Tassonomia_ContattoAnno1']=='1' || context['Tassonomia_ContattoAnno2']=='2') || (context['Tassonomia_ContattoAnnoPT1']=='1' || context['Tassonomia_ContattoAnnoPT2']=='2')",
+                "completed": "context['Tassonomia_AutorizzaSMS1']=='1' || context['Tassonomia_AutorizzaSMS2']=='2'",
                 "annotations": [],
                 "description": {
                     "it": "Indicare una tra le possibili opzioni.<br>In caso si scelga di dare autorizzazione alle comunicazioni via SMS, <b>il campo relativo al numero di cellulare NON è compilabile</b>, in quanto viene caricato in automatico dalla sezione anagrafica a inizio modulo.<br>Pertanto, in caso di errore, modificare il numero inserito nella sezione anagrafica a inizio modulo."
@@ -425,13 +447,18 @@
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[19]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_AutorizzaSMS1",
+                    "Tassonomia_AutorizzaSMS2",
+                    "Tassonomia_TipoContatto1",
+                    "Tassonomia_TipoContatto2"
+                ],
                 "blocks": [],
                 "dependencies": [
                     "block18"
                 ],
-                "condition": null,
-                "completed": null,
+                "condition": "context['Tassonomia_AutorizzaSMS1']=='1' || context['Tassonomia_AutorizzaSMS2']=='2'",
+                "completed": "context['Tassonomia_TipoContatto1']=='1' || context['Tassonomia_TipoContatto2']=='2'",
                 "annotations": [],
                 "description": {
                     "it": "Indicare una tra le possibili opzioni, <b>dando preferenza, se possibile, alle comunicazioni via mail.</b><br><br><b>NB: QUESTI CAMPI NON SONO COMPILABILI</b>, al momento della scelta vengono caricati in automatico i dati inseriti nella sezione anagrafica a inizio modulo.<br>Pertanto, in caso di errori, o per inserire ulteriori contatti, modificare i dati inseriti nella sezione anagrafica a inizio modulo."
@@ -446,12 +473,15 @@
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[20]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_TipoContatto1",
+                    "Tassonomia_TipoContatto2"
+                ],
                 "blocks": [],
                 "dependencies": [
                     "block19"
                 ],
-                "condition": null,
+                "condition": "context['Tassonomia_TipoContatto1']=='1' || context['Tassonomia_TipoContatto2']=='2'",
                 "completed": null,
                 "annotations": [],
                 "description": {
@@ -463,38 +493,20 @@
                 "id": "block21",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Situazione del bambino/a e del nucleo familiare"
+                    "it": "Condizione di priorità del bambino/a"
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[21]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_Disabilita1",
+                    "Tassonomia_Disabilita2"
+                ],
                 "blocks": [],
                 "dependencies": [
                     "block20"
                 ],
                 "condition": null,
-                "completed": null,
-                "annotations": [],
-                "description": {
-                    "it": "Inizio della parte di modulo inerente la situazione del bambino/a e/o del nucleo familiare."
-                },
-                "concepts": null
-            },
-            {
-                "id": "block22",
-                "type": "BLOCK",
-                "name": {
-                    "it": "Condizioni di priorità del bambino/a"
-                },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[22]",
-                "tags": [],
-                "fields": [],
-                "blocks": [],
-                "dependencies": [
-                    "block21"
-                ],
-                "condition": null,
-                "completed": null,
+                "completed": "context['Tassonomia_Disabilita1']=='1' || context['Tassonomia_Disabilita2']=='2'",
                 "annotations": [],
                 "description": {
                     "it": "Indicare se il bambino/a presenta/non presenta una situazione di disabilità certificata e in caso affermativo compilare i campi richiesti."
@@ -502,20 +514,25 @@
                 "concepts": null
             },
             {
-                "id": "block23",
+                "id": "block22",
                 "type": "BLOCK",
                 "name": {
                     "it": "Eventuale presenza dei servizi sociali"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[23]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[22]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_Disabilita1",
+                    "Tassonomia_Disabilita2",
+                    "Tassonomia_ServiziSociali1",
+                    "Tassonomia_ServiziSociali2"
+                ],
                 "blocks": [],
                 "dependencies": [
-                    "block22"
+                    "block21"
                 ],
-                "condition": null,
-                "completed": null,
+                "condition": "context['Tassonomia_Disabilita1']=='1' || context['Tassonomia_Disabilita2']=='2'",
+                "completed": "context['Tassonomia_ServiziSociali1']=='1' || context['Tassonomia_ServiziSociali2']=='2'",
                 "annotations": [],
                 "description": {
                     "it": "Indicare se il nucleo è/non è seguito dai servizi sociali e in caso affermativo compilare i campi richiesti."
@@ -523,20 +540,25 @@
                 "concepts": null
             },
             {
-                "id": "block24",
+                "id": "block23",
                 "type": "BLOCK",
                 "name": {
                     "it": "Situazioni di disabilità nel nucleo familiare"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[24]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[23]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_ServiziSociali1",
+                    "Tassonomia_ServiziSociali2",
+                    "Tassonomia_DisabilitaFam1",
+                    "Tassonomia_DisabilitaFam2"
+                ],
                 "blocks": [],
                 "dependencies": [
-                    "block23"
+                    "block22"
                 ],
-                "condition": null,
-                "completed": null,
+                "condition": "context['Tassonomia_ServiziSociali1']=='1' || context['Tassonomia_ServiziSociali2']=='2'",
+                "completed": "context['Tassonomia_DisabilitaFam1']=='1' || context['Tassonomia_DisabilitaFam2']=='2'",
                 "annotations": [],
                 "description": {
                     "it": "Indicare se nel nucleo sono/non sono presenti uno o più componenti in situazione di disabilità certificata e in caso affermativo compilare i campi richiesti.<br><br>NOTA: I valori percentuali di disabilità certificata accettati vanno da 0 a 99, pertanto <b>nei casi di disabilità pari o superiori al 99%, inserire il valore 99.</b>"
@@ -544,27 +566,58 @@
                 "concepts": null
             },
             {
-                "id": "block25",
+                "id": "block24",
                 "type": "BLOCK",
                 "name": {
                     "it": "Tipologia del nucleo familiare"
                 },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[24]",
+                "tags": [],
+                "fields": [
+                    "Tassonomia_DisabilitaFam1",
+                    "Tassonomia_DisabilitaFam2",
+                    "Tassonomia_TipoNucleo1",
+                    "Tassonomia_TipoNucleo2",
+                    "Tassonomia_NoPadre",
+                    "Tassonomia_NoMadre"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block23"
+                ],
+                "condition": "context['Tassonomia_DisabilitaFam1']=='1' || context['Tassonomia_DisabilitaFam2']=='2'",
+                "completed": "context['Tassonomia_TipoNucleo1']=='1' || context['Tassonomia_TipoNucleo2']=='2'",
+                "annotations": [],
+                "description": {
+                    "it": "Indicare se il nucleo familiare è/non è monoparentale.<br>Si definisce nucleo “monoparentale” quando il genitore vive effettivamente solo con il bambino/a a seguito della sussistenza di una delle condizioni elencate.<br>Il nucleo dove sono presenti entrambi i genitori, seppure con residenze diverse, non è considerato monoparentale."
+                },
+                "concepts": null
+            },
+            {
+                "id": "block25",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Condizione lavorativa del padre"
+                },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[25]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_NoPadre",
-                    "Tassonomia_NoMadre",
-                    "Tassonomia_TipoNucleo2"
+                    "Tassonomia_TipoNucleo1",
+                    "Tassonomia_TipoNucleo2",
+                    "Tassonomia_TipoLavoroPadre3",
+                    "Tassonomia_TipoLavoroPadre2",
+                    "Tassonomia_TipoLavoroPadre1",
+                    "Tassonomia_TipoLavoroPadre4"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block24"
                 ],
-                "condition": null,
-                "completed": null,
+                "condition": "context['Tassonomia_TipoNucleo1']=='1' || context['Tassonomia_TipoNucleo2']=='2'",
+                "completed": "context['Tassonomia_TipoLavoroPadre3']=='3' || context['Tassonomia_TipoLavoroPadre2']=='2' || context['Tassonomia_TipoLavoroPadre1']=='1' || context['Tassonomia_TipoLavoroPadre4']=='4'",
                 "annotations": [],
                 "description": {
-                    "it": "Indicare se il nucleo familiare è/non è monoparentale. <br>Si definisce nucleo “monoparentale” quando il genitore vive effettivamente solo con il bambino/a a seguito della sussistenza di una delle condizioni elencate.<br>Il nucleo dove sono presenti entrambi i genitori, seppure con residenze diverse, non è considerato monoparentale."
+                    "it": "Inizio della parte di modulo inerente la situazione lavorativa del padre/convivente.<br>Indicare la situazione lavorativa del padre/compagno convivente.<br><br><b>NB: è obbligatoria la scelta di una delle opzioni.<br>Qualora non si conosca la situazione lavorativa selezionare l’opzione <i>“non occupato”</i>.<br><br>Qualora sia stato dichiarato un nucleo monoparentale viene automaticamente selezionata l’opzione <i>“nessuna informazione nessuna informazione relativa alla condizione lavorativa del padre”</i>."
                 },
                 "concepts": null
             },
@@ -572,88 +625,26 @@
                 "id": "block26",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Inizio sezione condizione lavorativa del padre"
+                    "it": "Articolazione oraria lavoro del padre"
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[26]",
                 "tags": [],
-                "fields": [],
+                "fields": [
+                    "Tassonomia_TipoLavoroPadre3",
+                    "Tassonomia_LavoroPadre1",
+                    "Tassonomia_LavoroPadre2",
+                    "Tassonomia_TempoDiLavoroPadre1",
+                    "Tassonomia_TempoDiLavoroPadre2",
+                    "Tassonomia_TempoDiLavoroPadre3",
+                    "Tassonomia_TempoDiLavoroPadre4",
+                    "Tassonomia_TempoDiLavoroPadre5"
+                ],
                 "blocks": [],
                 "dependencies": [
                     "block25"
                 ],
-                "condition": null,
-                "completed": null,
-                "annotations": [],
-                "description": {
-                    "it": "Inizio della parte di modulo inerente la situazione lavorativa del padre/convivente."
-                },
-                "concepts": null
-            },
-            {
-                "id": "block27",
-                "type": "BLOCK",
-                "name": {
-                    "it": "Padre non presente nel nucleo familiare"
-                },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[27]",
-                "tags": [],
-                "fields": [
-                    "Tassonomia_NoPadre"
-                ],
-                "blocks": [],
-                "dependencies": [
-                    "block26"
-                ],
-                "condition": "(context['AventeTitolo_RuoloRichiedente']=='madre' && context['Tassonomia_TipoNucleo2'])",
-                "completed": null,
-                "annotations": [],
-                "description": {
-                    "it": "Opzione selezionata in automatico avendo precedentemente dichiarato un nucleo familiare monoparentale."
-                },
-                "concepts": null
-            },
-            {
-                "id": "block28",
-                "type": "BLOCK",
-                "name": {
-                    "it": "Situazione lavorativa del padre"
-                },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[28]",
-                "tags": [],
-                "fields": [
-                    "Tassonomia_TipoLavoroPadre3",
-                    "Tassonomia_TipoLavoroPadre2",
-                    "Tassonomia_TipoLavoroPadre1"
-                ],
-                "blocks": [],
-                "dependencies": [
-                    "block26"
-                ],
-                "condition": "context['AventeTitolo_RuoloRichiedente']=='padre' || (context['AventeTitolo_RuoloRichiedente']=='madre' && context['Tassonomia_TipoNucleo2']==null)",
-                "completed": "context['Tassonomia_TipoLavoroPadre3']=='3' || context['Tassonomia_TipoLavoroPadre2']=='2' || context['Tassonomia_TipoLavoroPadre1']=='1'",
-                "annotations": [],
-                "description": {
-                    "it": "Indicare la situazione lavorativa del padre/compagno convivente.<br><br><b>NB: è obbligatoria la scelta di una delle opzioni.<br>Qualora non si conosca la situazione lavorativa selezionare l’opzione <i>“non occupato”</i>."
-                },
-                "concepts": null
-            },
-            {
-                "id": "block29",
-                "type": "BLOCK",
-                "name": {
-                    "it": "Articolazione oraria lavoro del padre"
-                },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[29]",
-                "tags": [],
-                "fields": [
-                    "Tassonomia_TipoLavoroPadre3"
-                ],
-                "blocks": [],
-                "dependencies": [
-                    "block28"
-                ],
                 "condition": "context['Tassonomia_TipoLavoroPadre3']=='3'",
-                "completed": null,
+                "completed": "(context['Tassonomia_LavoroPadre1']=='1' || context['Tassonomia_LavoroPadre2']=='2') && (context['Tassonomia_TempoDiLavoroPadre1']=='1' || context['Tassonomia_TempoDiLavoroPadre2']=='2' || context['Tassonomia_TempoDiLavoroPadre3']=='3' || context['Tassonomia_TempoDiLavoroPadre4']=='4' || context['Tassonomia_TempoDiLavoroPadre5']=='5')",
                 "annotations": [],
                 "description": {
                     "it": "Specificare se il padre/convivente è lavoratore dipendente o autonomo e <b>OBBLIGATORIAMENTE</b> l’articolazione oraria (ovvero il numero di ore lavorate settimanali); quindi indicare se sussistono eventuali disagi di lavoro.<br><br><b>NB: nel caso di lavoratore dipendente si richiede di inserire il recapito telefonico o la mail dell’azienda (NON i recapiti del lavoratore)."
@@ -661,22 +652,23 @@
                 "concepts": null
             },
             {
-                "id": "block30",
+                "id": "block27",
                 "type": "BLOCK",
                 "name": {
                     "it": "Situazione di studio del padre"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[30]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[27]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_TipoLavoroPadre2"
+                    "Tassonomia_TipoLavoroPadre2",
+                    "Parametri_ScuolaPadre"
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block28"
+                    "block25"
                 ],
                 "condition": "context['Tassonomia_TipoLavoroPadre2']=='2'",
-                "completed": null,
+                "completed": "(context['Parametri_ScuolaPadre'] != null) && (context['Parametri_ScuolaPadre'] != '')",
                 "annotations": [],
                 "description": {
                     "it": "Specificare la scuola/università o l’istituto formativo presso cui risulta iscritto il padre/convivente; quindi indicare se sussistono eventuali disagi per motivi di studio."
@@ -684,22 +676,24 @@
                 "concepts": null
             },
             {
-                "id": "block31",
+                "id": "block28",
                 "type": "BLOCK",
                 "name": {
                     "it": "Iscrizione al centro per l'impiego del padre"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[31]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[28]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_TipoLavoroPadre1"
+                    "Tassonomia_TipoLavoroPadre1",
+                    "Tassonomia_CentroImpiegoPadre1",
+                    "Tassonomia_CentroImpiegoPadre2"
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block28"
+                    "block25"
                 ],
                 "condition": "context['Tassonomia_TipoLavoroPadre1']=='1'",
-                "completed": null,
+                "completed": "context['Tassonomia_CentroImpiegoPadre1']=='1' || context['Tassonomia_CentroImpiegoPadre2']=='2'",
                 "annotations": [],
                 "description": {
                     "it": "Specificare se il padre/convivente è iscritto o meno al centro per l'impiego e indicarne sede e recapito telefonico.<br>Qualora non si conosca la situazione lavorativa del padre/convivente selezionare l’opzione <i>“non iscritto ad un centro per l’impiego”</i>."
@@ -707,96 +701,71 @@
                 "concepts": null
             },
             {
-                "id": "block32",
+                "id": "block29",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Inizio sezione condizione lavorativa della madre"
+                    "it": "Condizione lavorativa della madre"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[32]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[29]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_NoPadre",
+                    "Tassonomia_TipoNucleo1",
+                    "Tassonomia_TipoNucleo2",
                     "Tassonomia_TipoLavoroPadre3",
+                    "Tassonomia_LavoroPadre1",
+                    "Tassonomia_LavoroPadre2",
+                    "Tassonomia_TempoDiLavoroPadre1",
+                    "Tassonomia_TempoDiLavoroPadre2",
+                    "Tassonomia_TempoDiLavoroPadre3",
+                    "Tassonomia_TempoDiLavoroPadre4",
+                    "Tassonomia_TempoDiLavoroPadre5",
                     "Tassonomia_TipoLavoroPadre2",
-                    "Tassonomia_TipoLavoroPadre1"
+                    "Parametri_ScuolaPadre",
+                    "Tassonomia_TipoLavoroPadre1",
+                    "Tassonomia_CentroImpiegoPadre1",
+                    "Tassonomia_CentroImpiegoPadre2",
+                    "Tassonomia_TipoLavoroPadre4",
+                    "Tassonomia_TipoLavoroMadre3",
+                    "Tassonomia_TipoLavoroMadre2",
+                    "Tassonomia_TipoLavoroMadre1",
+                    "Tassonomia_TipoLavoroMadre4"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block25"
                 ],
-                "condition": "context['Tassonomia_TipoLavoroPadre3']=='3' || context['Tassonomia_TipoLavoroPadre2']=='2' || context['Tassonomia_TipoLavoroPadre1']=='1' || context['Tassonomia_NoPadre'] == '1'",
-                "completed": null,
+                "condition": "(context['Tassonomia_TipoNucleo1']=='1' || context['Tassonomia_TipoNucleo2']=='2') && (context['Tassonomia_TipoLavoroPadre4'] == '4' || (context['Tassonomia_TipoLavoroPadre3']=='3' && ((context['Tassonomia_LavoroPadre1']=='1' || context['Tassonomia_LavoroPadre2']=='2') && (context['Tassonomia_TempoDiLavoroPadre1']=='1' || context['Tassonomia_TempoDiLavoroPadre2']=='2' || context['Tassonomia_TempoDiLavoroPadre3']=='3' || context['Tassonomia_TempoDiLavoroPadre4']=='4' || context['Tassonomia_TempoDiLavoroPadre5']=='5'))) || (context['Tassonomia_TipoLavoroPadre2']=='2' && ((context['Parametri_ScuolaPadre'] != null) && (context['Parametri_ScuolaPadre'] != ''))) || (context['Tassonomia_TipoLavoroPadre1']=='1' && (context['Tassonomia_CentroImpiegoPadre1']=='1' || context['Tassonomia_CentroImpiegoPadre2']=='2')))",
+                "completed": "context['Tassonomia_TipoLavoroMadre3'] =='3' || context['Tassonomia_TipoLavoroMadre2'] =='2' || context['Tassonomia_TipoLavoroMadre1'] =='1' || context['Tassonomia_TipoLavoroMadre4'] =='4'",
                 "annotations": [],
                 "description": {
-                    "it": "Inizio della parte di modulo inerente la situazione lavorativa della madre/convivente."
+                    "it": "Inizio della parte di modulo inerente la situazione lavorativa della madre/convivente.<br>Indicare la situazione lavorativa della madre/compagna convivente.<br><br><b>NB: è obbligatoria la scelta di una delle opzioni.<br>Qualora non si conosca la situazione lavorativa selezionare l’opzione <i>“non occupata”</i>.<br><br>Qualora sia stato dichiarato un nucleo monoparentale viene automaticamente selezionata l’opzione <i>“nessuna informazione nessuna informazione relativa alla condizione lavorativa della madre”</i>."
                 },
                 "concepts": null
             },
             {
-                "id": "block33",
-                "type": "BLOCK",
-                "name": {
-                    "it": "Madre non presente nel nucleo familiare"
-                },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[33]",
-                "tags": [],
-                "fields": [
-                    "Tassonomia_NoMadre"
-                ],
-                "blocks": [],
-                "dependencies": [
-                    "block32"
-                ],
-                "condition": "(context['AventeTitolo_RuoloRichiedente']=='padre' && context['Tassonomia_TipoNucleo2'])",
-                "completed": null,
-                "annotations": [],
-                "description": {
-                    "it": "Opzione selezionata in automatico avendo precedentemente dichiarato un nucleo familiare monoparentale."
-                },
-                "concepts": null
-            },
-            {
-                "id": "block34",
-                "type": "BLOCK",
-                "name": {
-                    "it": "Situazione lavorativa della madre"
-                },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[34]",
-                "tags": [],
-                "fields": [
-                    "Tassonomia_TipoLavoroMadre3",
-                    "Tassonomia_TipoLavoroMadre2",
-                    "Tassonomia_TipoLavoroMadre1"
-                ],
-                "blocks": [],
-                "dependencies": [
-                    "block32"
-                ],
-                "condition": "context['AventeTitolo_RuoloRichiedente']=='madre' || (context['AventeTitolo_RuoloRichiedente']=='padre' && context['Tassonomia_TipoNucleo2']==null)",
-                "completed": "context['Tassonomia_TipoLavoroMadre3'] =='3' || context['Tassonomia_TipoLavoroMadre2'] =='2' || context['Tassonomia_TipoLavoroMadre1'] =='1'",
-                "annotations": [],
-                "description": {
-                    "it": "Indicare la situazione lavorativa della madre/compagna convivente.<br><b>NB: è obbligatoria la scelta di una delle opzioni.<br>Qualora non si conosca la situazione lavorativa selezionare l’opzione <i>“non occupata”</i>."
-                },
-                "concepts": null
-            },
-            {
-                "id": "block35",
+                "id": "block30",
                 "type": "BLOCK",
                 "name": {
                     "it": "Articolazione oraria lavoro della madre"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[35]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[30]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_TipoLavoroMadre3"
+                    "Tassonomia_TipoLavoroMadre3",
+                    "Tassonomia_LavoroMadre1",
+                    "Tassonomia_LavoroMadre2",
+                    "Tassonomia_TempoDiLavoroMadre1",
+                    "Tassonomia_TempoDiLavoroMadre2",
+                    "Tassonomia_TempoDiLavoroMadre3",
+                    "Tassonomia_TempoDiLavoroMadre4",
+                    "Tassonomia_TempoDiLavoroMadre5"
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block32"
+                    "block29"
                 ],
                 "condition": "context['Tassonomia_TipoLavoroMadre3']=='3'",
-                "completed": null,
+                "completed": "(context['Tassonomia_LavoroMadre1']=='1' || context['Tassonomia_LavoroMadre2']=='2') && (context['Tassonomia_TempoDiLavoroMadre1']=='1' || context['Tassonomia_TempoDiLavoroMadre2']=='2' || context['Tassonomia_TempoDiLavoroMadre3']=='3' || context['Tassonomia_TempoDiLavoroMadre4']=='4' || context['Tassonomia_TempoDiLavoroMadre5']=='5')",
                 "annotations": [],
                 "description": {
                     "it": "Specificare se la madre/convivente è lavoratrice dipendente o autonoma e <b>OBBLIGATORIAMENTE</b> l’articolazione oraria (ovvero il numero di ore lavorate settimanali); quindi indicare se sussistono eventuali disagi di lavoro.<br><br><b>NB: nel caso di lavoratrice dipendente si richiede di inserire il recapito telefonico o la mail dell’azienda (NON i recapiti della lavoratrice)."
@@ -804,22 +773,23 @@
                 "concepts": null
             },
             {
-                "id": "block36",
+                "id": "block31",
                 "type": "BLOCK",
                 "name": {
                     "it": "Situazione di studio della madre"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[36]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[31]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_TipoLavoroMadre2"
+                    "Tassonomia_TipoLavoroMadre2",
+                    "Parametri_ScuolaMadre"
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block32"
+                    "block29"
                 ],
                 "condition": "context['Tassonomia_TipoLavoroMadre2']=='2'",
-                "completed": null,
+                "completed": "(context['Parametri_ScuolaMadre'] != null) && (context['Parametri_ScuolaMadre'] != '')",
                 "annotations": [],
                 "description": {
                     "it": "Specificare la scuola/università o l’istituto formativo presso cui risulta iscritta la madre/convivente; quindi indicare se sussistono eventuali disagi per motivi di studio."
@@ -827,48 +797,61 @@
                 "concepts": null
             },
             {
-                "id": "block37",
+                "id": "block32",
                 "type": "BLOCK",
                 "name": {
                     "it": "Iscrizione al centro per l'impiego della madre"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[37]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[32]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_TipoLavoroMadre1"
+                    "Tassonomia_TipoLavoroMadre1",
+                    "Tassonomia_CentroImpiegoMadre1",
+                    "Tassonomia_CentroImpiegoMadre2"
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block32"
+                    "block29"
                 ],
                 "condition": "context['Tassonomia_TipoLavoroMadre1']=='1'",
-                "completed": null,
+                "completed": "context['Tassonomia_CentroImpiegoMadre1']=='1' || context['Tassonomia_CentroImpiegoMadre2']=='2'",
                 "annotations": [],
                 "description": {
-                    "it": "Specificare se la madre/convivente è iscritta o meno al centro per l'impiego e indicarne sede e recapito telefonico.<br>Qualora non si conosca la situazione lavorativa della madre/convivente selezionare l’opzione <i>“non iscritta ad un centro per l’impiego”</i>."
+                    "it": "Specificare se la madre/convivente è iscritta o meno al centro per l’impiego e indicarne sede e recapito telefonico.<br>Qualora non si conosca la situazione lavorativa della madre/convivente selezionare l’opzione <i>“non iscritta ad un centro per l’impiego”</i>."
                 },
                 "concepts": null
             },
             {
-                "id": "block38",
+                "id": "block33",
                 "type": "BLOCK",
                 "name": {
                     "it": "Dichiarazioni ulteriori"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[38]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[33]",
                 "tags": [],
                 "fields": [
-                    "Tassonomia_NoPadre",
-                    "Tassonomia_NoMadre",
+                    "Tassonomia_TipoNucleo1",
+                    "Tassonomia_TipoNucleo2",
                     "Tassonomia_TipoLavoroMadre3",
+                    "Tassonomia_LavoroMadre1",
+                    "Tassonomia_LavoroMadre2",
+                    "Tassonomia_TempoDiLavoroMadre1",
+                    "Tassonomia_TempoDiLavoroMadre2",
+                    "Tassonomia_TempoDiLavoroMadre3",
+                    "Tassonomia_TempoDiLavoroMadre4",
+                    "Tassonomia_TempoDiLavoroMadre5",
                     "Tassonomia_TipoLavoroMadre2",
-                    "Tassonomia_TipoLavoroMadre1"
+                    "Parametri_ScuolaMadre",
+                    "Tassonomia_TipoLavoroMadre1",
+                    "Tassonomia_CentroImpiegoMadre1",
+                    "Tassonomia_CentroImpiegoMadre2",
+                    "Tassonomia_TipoLavoroMadre4"
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block25"
+                    "block29"
                 ],
-                "condition": "context['Tassonomia_TipoLavoroMadre3'] =='3' || context['Tassonomia_TipoLavoroMadre2'] =='2' || context['Tassonomia_TipoLavoroMadre1'] =='1' || context['Tassonomia_NoMadre'] == '1' || context['Tassonomia_NoPadre'] == '1'",
+                "condition": "(context['Tassonomia_TipoNucleo1']=='1' || context['Tassonomia_TipoNucleo2']=='2') && (context['Tassonomia_TipoLavoroMadre4'] == '4' || (context['Tassonomia_TipoLavoroMadre3']=='3' && ((context['Tassonomia_LavoroMadre1']=='1' || context['Tassonomia_LavoroMadre2']=='2') && (context['Tassonomia_TempoDiLavoroMadre1']=='1' || context['Tassonomia_TempoDiLavoroMadre2']=='2' || context['Tassonomia_TempoDiLavoroMadre3']=='3' || context['Tassonomia_TempoDiLavoroMadre4']=='4' || context['Tassonomia_TempoDiLavoroMadre5']=='5'))) || (context['Tassonomia_TipoLavoroMadre2']=='2' && ((context['Parametri_ScuolaMadre'] != null) && (context['Parametri_ScuolaMadre'] != ''))) || (context['Tassonomia_TipoLavoroMadre1']=='1' && (context['Tassonomia_CentroImpiegoMadre1']=='1' || context['Tassonomia_CentroImpiegoMadre2']=='2')))",
                 "completed": null,
                 "annotations": [],
                 "description": {
@@ -877,19 +860,19 @@
                 "concepts": null
             },
             {
-                "id": "block39",
+                "id": "block34",
                 "type": "BLOCK",
                 "name": {
                     "it": "Informativa trattamento dati personali"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[39]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[34]",
                 "tags": [],
                 "fields": [
                     "Presa_visione_check"
                 ],
                 "blocks": [],
                 "dependencies": [
-                    "block38"
+                    "block33"
                 ],
                 "condition": null,
                 "completed": "context['Presa_visione_check'] =='1'",
@@ -900,17 +883,17 @@
                 "concepts": null
             },
             {
-                "id": "block40",
+                "id": "block35",
                 "type": "BLOCK",
                 "name": {
                     "it": "Conclusione della domanda"
                 },
-                "xpath": "(//*[contains(@class, 'simpatico-block')])[40]",
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[35]",
                 "tags": [],
                 "fields": [],
                 "blocks": [],
                 "dependencies": [
-                    "block39"
+                    "block34"
                 ],
                 "condition": "context['Presa_visione_check'] =='1'",
                 "completed": null,
@@ -931,98 +914,10 @@
                 }
             },
             {
-                "id": "AventeTitolo_RuoloRichiedente",
-                "xpath": "//*[@id=\"AventeTitolo_RuoloRichiedente\"]",
+                "id": "AventeTitolo_Sesso",
+                "xpath": "//*[@id=\"AventeTitolo_Sesso\"]",
                 "mapping": {
-                    "key": "AventeTitolo_RuoloRichiedente",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_FullTime",
-                "xpath": "//*[@id=\"Tassonomia_FullTime\"]",
-                "mapping": {
-                    "key": "Tassonomia_FullTime",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_PartTime",
-                "xpath": "//*[@id=\"Tassonomia_PartTime\"]",
-                "mapping": {
-                    "key": "Tassonomia_PartTime",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Modulo_Compilabile1",
-                "xpath": "//*[@id=\"Modulo_Compilabile1\"]",
-                "mapping": {
-                    "key": "Modulo_Compilabile1",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Controllo_iterFP",
-                "xpath": "//*[@id=\"Controllo_iterFP\"]",
-                "mapping": {
-                    "key": "Controllo_iterFP",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_TipoFrequenza1",
-                "xpath": "//*[@id=\"Tassonomia_TipoFrequenza1\"]",
-                "mapping": {
-                    "key": "Tassonomia_TipoFrequenza1",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_TipoFrequenza2",
-                "xpath": "//*[@id=\"Tassonomia_TipoFrequenza2\"]",
-                "mapping": {
-                    "key": "Tassonomia_TipoFrequenza2",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_ICEF1",
-                "xpath": "//*[@id=\"Tassonomia_ICEF1\"]",
-                "mapping": {
-                    "key": "Tassonomia_ICEF1",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_ICEF2",
-                "xpath": "//*[@id=\"Tassonomia_ICEF2\"]",
-                "mapping": {
-                    "key": "Tassonomia_ICEF2",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_TipoNucleo2",
-                "xpath": "//*[@id=\"Tassonomia_TipoNucleo2\"]",
-                "mapping": {
-                    "key": "Tassonomia_TipoNucleo2",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_NoPadre",
-                "xpath": "//*[@id=\"Tassonomia_NoPadre\"]",
-                "mapping": {
-                    "key": "Tassonomia_NoPadre",
-                    "binding": "OUT"
-                }
-            },
-            {
-                "id": "Tassonomia_NoMadre",
-                "xpath": "//*[@id=\"Tassonomia_NoMadre\"]",
-                "mapping": {
-                    "key": "Tassonomia_NoMadre",
+                    "key": "AventeTitolo_Sesso",
                     "binding": "OUT"
                 }
             },
@@ -1051,18 +946,218 @@
                 }
             },
             {
-                "id": "Tassonomia_TipoLavoroPadre3",
-                "xpath": "//*[@id=\"Tassonomia_TipoLavoroPadre3\"]",
+                "id": "Tassonomia_ListaFam1",
+                "xpath": "//*[@id=\"Tassonomia_ListaFam1\"]",
                 "mapping": {
-                    "key": "Tassonomia_TipoLavoroPadre3",
+                    "key": "Tassonomia_ListaFam1",
                     "binding": "OUT"
                 }
             },
             {
-                "id": "Tassonomia_TipoLavoroPadre2",
-                "xpath": "//*[@id=\"Tassonomia_TipoLavoroPadre2\"]",
+                "id": "Parametri_CFBambino",
+                "xpath": "//*[@id=\"Parametri_CFBambino\"]",
                 "mapping": {
-                    "key": "Tassonomia_TipoLavoroPadre2",
+                    "key": "Parametri_CFBambino",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Modulo_Compilabile1",
+                "xpath": "//*[@id=\"Modulo_Compilabile1\"]",
+                "mapping": {
+                    "key": "Modulo_Compilabile1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ICEF1",
+                "xpath": "//*[@id=\"Tassonomia_ICEF1\"]",
+                "mapping": {
+                    "key": "Tassonomia_ICEF1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ICEF2",
+                "xpath": "//*[@id=\"Tassonomia_ICEF2\"]",
+                "mapping": {
+                    "key": "Tassonomia_ICEF2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_FullTime",
+                "xpath": "//*[@id=\"Tassonomia_FullTime\"]",
+                "mapping": {
+                    "key": "Tassonomia_FullTime",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_PartTime",
+                "xpath": "//*[@id=\"Tassonomia_PartTime\"]",
+                "mapping": {
+                    "key": "Tassonomia_PartTime",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoFrequenza1",
+                "xpath": "//*[@id=\"Tassonomia_TipoFrequenza1\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoFrequenza1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoFrequenza2",
+                "xpath": "//*[@id=\"Tassonomia_TipoFrequenza2\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoFrequenza2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ContattoAnnoPrec1",
+                "xpath": "//*[@id=\"Tassonomia_ContattoAnnoPrec1\"]",
+                "mapping": {
+                    "key": "Tassonomia_ContattoAnnoPrec1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ContattoAnnoPrec2",
+                "xpath": "//*[@id=\"Tassonomia_ContattoAnnoPrec2\"]",
+                "mapping": {
+                    "key": "Tassonomia_ContattoAnnoPrec2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ContattoAnno1",
+                "xpath": "//*[@id=\"Tassonomia_ContattoAnno1\"]",
+                "mapping": {
+                    "key": "Tassonomia_ContattoAnno1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ContattoAnno2",
+                "xpath": "//*[@id=\"Tassonomia_ContattoAnno2\"]",
+                "mapping": {
+                    "key": "Tassonomia_ContattoAnno2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ContattoAnnoPT1",
+                "xpath": "//*[@id=\"Tassonomia_ContattoAnnoPT1\"]",
+                "mapping": {
+                    "key": "Tassonomia_ContattoAnnoPT1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ContattoAnnoPT2",
+                "xpath": "//*[@id=\"Tassonomia_ContattoAnnoPT2\"]",
+                "mapping": {
+                    "key": "Tassonomia_ContattoAnnoPT2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_AutorizzaSMS1",
+                "xpath": "//*[@id=\"Tassonomia_AutorizzaSMS1\"]",
+                "mapping": {
+                    "key": "Tassonomia_AutorizzaSMS1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_AutorizzaSMS2",
+                "xpath": "//*[@id=\"Tassonomia_AutorizzaSMS2\"]",
+                "mapping": {
+                    "key": "Tassonomia_AutorizzaSMS2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoContatto1",
+                "xpath": "//*[@id=\"Tassonomia_TipoContatto1\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoContatto1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoContatto2",
+                "xpath": "//*[@id=\"Tassonomia_TipoContatto2\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoContatto2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_Disabilita1",
+                "xpath": "//*[@id=\"Tassonomia_Disabilita1\"]",
+                "mapping": {
+                    "key": "Tassonomia_Disabilita1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_Disabilita2",
+                "xpath": "//*[@id=\"Tassonomia_Disabilita2\"]",
+                "mapping": {
+                    "key": "Tassonomia_Disabilita2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ServiziSociali1",
+                "xpath": "//*[@id=\"Tassonomia_ServiziSociali1\"]",
+                "mapping": {
+                    "key": "Tassonomia_ServiziSociali1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_ServiziSociali2",
+                "xpath": "//*[@id=\"Tassonomia_ServiziSociali2\"]",
+                "mapping": {
+                    "key": "Tassonomia_ServiziSociali2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_DisabilitaFam1",
+                "xpath": "//*[@id=\"Tassonomia_DisabilitaFam1\"]",
+                "mapping": {
+                    "key": "Tassonomia_DisabilitaFam1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_DisabilitaFam2",
+                "xpath": "//*[@id=\"Tassonomia_DisabilitaFam2\"]",
+                "mapping": {
+                    "key": "Tassonomia_DisabilitaFam2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoNucleo1",
+                "xpath": "//*[@id=\"Tassonomia_TipoNucleo1\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoNucleo1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoNucleo2",
+                "xpath": "//*[@id=\"Tassonomia_TipoNucleo2\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoNucleo2",
                     "binding": "OUT"
                 }
             },
@@ -1075,10 +1170,114 @@
                 }
             },
             {
-                "id": "Tassonomia_TipoLavoroMadre3",
-                "xpath": "//*[@id=\"Tassonomia_TipoLavoroMadre3\"]",
+                "id": "Tassonomia_TipoLavoroPadre2",
+                "xpath": "//*[@id=\"Tassonomia_TipoLavoroPadre2\"]",
                 "mapping": {
-                    "key": "Tassonomia_TipoLavoroMadre3",
+                    "key": "Tassonomia_TipoLavoroPadre2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoLavoroPadre3",
+                "xpath": "//*[@id=\"Tassonomia_TipoLavoroPadre3\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoLavoroPadre3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoLavoroPadre4",
+                "xpath": "//*[@id=\"Tassonomia_TipoLavoroPadre4\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoLavoroPadre4",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_LavoroPadre1",
+                "xpath": "//*[@id=\"Tassonomia_LavoroPadre1\"]",
+                "mapping": {
+                    "key": "Tassonomia_LavoroPadre1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_LavoroPadre2",
+                "xpath": "//*[@id=\"Tassonomia_LavoroPadre2\"]",
+                "mapping": {
+                    "key": "Tassonomia_LavoroPadre2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroPadre1",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroPadre1\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroPadre1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroPadre2",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroPadre2\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroPadre2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroPadre3",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroPadre3\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroPadre3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroPadre4",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroPadre4\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroPadre4",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroPadre5",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroPadre5\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroPadre5",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Parametri_ScuolaPadre",
+                "xpath": "//*[@id=\"Parametri_ScuolaPadre\"]",
+                "mapping": {
+                    "key": "Parametri_ScuolaPadre",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_CentroImpiegoPadre1",
+                "xpath": "//*[@id=\"Tassonomia_CentroImpiegoPadre1\"]",
+                "mapping": {
+                    "key": "Tassonomia_CentroImpiegoPadre1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_CentroImpiegoPadre2",
+                "xpath": "//*[@id=\"Tassonomia_CentroImpiegoPadre2\"]",
+                "mapping": {
+                    "key": "Tassonomia_CentroImpiegoPadre2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoLavoroMadre1",
+                "xpath": "//*[@id=\"Tassonomia_TipoLavoroMadre1\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoLavoroMadre1",
                     "binding": "OUT"
                 }
             },
@@ -1091,10 +1290,122 @@
                 }
             },
             {
+                "id": "Tassonomia_TipoLavoroMadre3",
+                "xpath": "//*[@id=\"Tassonomia_TipoLavoroMadre3\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoLavoroMadre3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoLavoroMadre4",
+                "xpath": "//*[@id=\"Tassonomia_TipoLavoroMadre4\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoLavoroMadre4",
+                    "binding": "OUT"
+                }
+            },
+            {
                 "id": "Tassonomia_TipoLavoroMadre1",
                 "xpath": "//*[@id=\"Tassonomia_TipoLavoroMadre1\"]",
                 "mapping": {
                     "key": "Tassonomia_TipoLavoroMadre1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoLavoroMadre2",
+                "xpath": "//*[@id=\"Tassonomia_TipoLavoroMadre2\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoLavoroMadre2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TipoLavoroMadre3",
+                "xpath": "//*[@id=\"Tassonomia_TipoLavoroMadre3\"]",
+                "mapping": {
+                    "key": "Tassonomia_TipoLavoroMadre3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_LavoroMadre1",
+                "xpath": "//*[@id=\"Tassonomia_LavoroMadre1\"]",
+                "mapping": {
+                    "key": "Tassonomia_LavoroMadre1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_LavoroMadre2",
+                "xpath": "//*[@id=\"Tassonomia_LavoroMadre2\"]",
+                "mapping": {
+                    "key": "Tassonomia_LavoroMadre2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroMadre1",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroMadre1\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroMadre1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroMadre2",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroMadre2\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroMadre2",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroMadre3",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroMadre3\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroMadre3",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroMadre4",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroMadre4\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroMadre4",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_TempoDiLavoroMadre5",
+                "xpath": "//*[@id=\"Tassonomia_TempoDiLavoroMadre5\"]",
+                "mapping": {
+                    "key": "Tassonomia_TempoDiLavoroMadre5",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Parametri_ScuolaMadre",
+                "xpath": "//*[@id=\"Parametri_ScuolaMadre\"]",
+                "mapping": {
+                    "key": "Parametri_ScuolaMadre",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_CentroImpiegoMadre1",
+                "xpath": "//*[@id=\"Tassonomia_CentroImpiegoMadre1\"]",
+                "mapping": {
+                    "key": "Tassonomia_CentroImpiegoMadre1",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Tassonomia_CentroImpiegoMadre2",
+                "xpath": "//*[@id=\"Tassonomia_CentroImpiegoMadre2\"]",
+                "mapping": {
+                    "key": "Tassonomia_CentroImpiegoMadre2",
                     "binding": "OUT"
                 }
             },

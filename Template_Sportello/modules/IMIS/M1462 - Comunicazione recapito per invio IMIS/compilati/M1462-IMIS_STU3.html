@@ -1,6 +1,14 @@
 
 
-<!---->
+
+
+
+
+
+
+
+
+
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -60,7 +68,15 @@ tipo_mime="application/pdf"/>
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
-urn_report="report:CSP_SESSION_REPORT"/>
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+
+
+
+
+
+
 
 
     <title>M1462-IMIS</title>
@@ -69,6 +85,15 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <body>
 
+    
+
+    
+  
+  
+  
+  
+  
+  
   
   <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
   <script type="text/javascript">
@@ -91,27 +116,24 @@ urn_report="report:CSP_SESSION_REPORT"/>
                             "AventeTitolo_CAPResidenza",
                             "AventeTitolo_Fisso",
                             "AventeTitolo_Telefono",
-                            "AventeTitolo_EMail",
-                            "AventeTitolo_EMailPEC",
                             ];
     var ERROR_LABELS = { 
         'block1' : 'Inserire il codice fiscale',
         'block4' : 'Inserire la mail',
-        'block5' : 'Dichiarare di essere informato',
         'block6' : 'Confermare presa visione informativa', 
     }
   </script>
 <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 
 
-    <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/M1462-IMIS_vSTU3" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
+    <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/M1462-IMIS_v3.0_vSTU3" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
 
         
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
-<!--
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Liberatoria per l'invio di prospetto IMIS e comunicazioni tributarie tramite posta elettronica'" id="Oggetto" name="Oggetto" type="hidden" />
--->
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' - Liberatoria per invio di prospetto IMIS e comunicazioni tributarie tramite posta elettronica'" id="Oggetto" name="Oggetto" type="hidden" />
+
 <div type="intestazione_moduloprincipale_senzabollo">
 	<script>
 function get_ufficio_dest() {
@@ -173,22 +195,22 @@ function get_ufficio_dest() {
 		return 'Ufficio Ambiente';
 	}
 
-	//<!-- Provincia di Foggia -->
+	<!-- Provincia di Foggia -->
 	if (ufficio == 'UOPAESAGGISTICA') {
 		return 'Ufficio Autorizzazioni paesaggistiche';
 	}
 
-	//<!-- Provincia di Foggia -->
+	<!-- Provincia di Foggia -->
 	if (ufficio == 'UOSISMICA') {
 		return 'Ufficio Edilizia sismica';
 	}
 
-	//<!-- Provincia di Foggia. attingimenti -->
+	<!-- Provincia di Foggia. attingimenti -->
 	if (ufficio == 'UORISORSEIDRICHEST04') {
 		return 'Ufficio Risorse idriche';
 	}
 
-	//<!-- Provincia di Foggia, pozzi -->
+	<!-- Provincia di Foggia, pozzi -->
 	if (ufficio == 'UORISORSEIDRICHEST05') {
 		return 'Ufficio Risorse idriche';
 	}
@@ -257,12 +279,12 @@ function get_ufficio_dest() {
 		return 'Ufficio Sport e tempo libero';
 	}
 
-	//<!-- Città Metropolitana di Roma Capitale -->
+	<!-- Città Metropolitana di Roma Capitale -->
 	if (ufficio == 'UOAMBIENTEDIFESASUOLO') {
 		return 'Ufficio Ambiente e Difesa del suolo';
 	}
 
-	//<!-- Città Metropolitana di Roma Capitale -->
+	<!-- Città Metropolitana di Roma Capitale -->
 	if (ufficio == 'UOTERRITORIOTUTELAAMBIENTALE') {
 		return 'Ufficio Territorio e Tutela ambienale';
 	}
@@ -297,8 +319,10 @@ function get_ufficio_dest() {
   Liberatoria per l'invio di prospetto IMIS <br>e comunicazioni tributarie tramite posta elettronica
 </h1>
 
-<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
-<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="#AventeTitolo_Telefono.value() == ''" type="hidden" />
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="#AventeTitolo_Fisso.value() == ''" type="hidden" />
+
+
 
 
 
@@ -326,7 +350,7 @@ function get_ufficio_dest() {
   					</span>
           </td>
           <td style="width:27%; border-left:0px; border-right:0px">
-            <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true"/>
+            <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory="true" readonly/>
           </td>
   				<td style="width:25%; border-left:0px; border-right:0px">
             <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
@@ -351,8 +375,8 @@ function get_ufficio_dest() {
     <br>
 
     <div type="Anagrafica_persona_fisica">
-    <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
-      <tbody>   
+    <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" >
+      <tbody>
         <tr class="Rigaintestazione">
           <td colspan="4">
             <p><b>Dati anagrafici:</b></p>
@@ -368,10 +392,10 @@ function get_ufficio_dest() {
         </tr>
         <tr>
           <td colspan="3">
-            <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome" />
+            <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome" mandatory="true" readonly/>
           </td>
           <td>
-            <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome" />
+            <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome" mandatory="true" readonly/>
           </td>
         </tr>
         <tr class="Rigaintestazioneridotta">
@@ -390,20 +414,20 @@ function get_ufficio_dest() {
         </tr>
         <tr>
           <td>
-            <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita" readonly/>
+            <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita" mandatory="true" readonly/>
           </td>
           <td>
-            <select class="inputNormal" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso" readonly>
+            <select class="inputNormal" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso" mandatory="true" readonly>
               <option value=""></option>
               <option value="M">M</option>
               <option value="F">F</option>
             </select>
           </td>
           <td>
-            <input class="" id="AventeTitolo_Cittadinanza" name="AventeTitolo_Cittadinanza" style="width:100%;" label="Nazionalità"/>
+            <input class="" id="AventeTitolo_Cittadinanza" name="AventeTitolo_Cittadinanza" style="width:100%;" label="Nazionalità" mandatory="false"/>
           </td>
           <td>
-            <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita" readonly/>
+            <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita" mandatory="true" readonly/>
           </td>
         </tr>
       </tbody>
@@ -610,7 +634,6 @@ function get_ufficio_dest() {
   COMUNICA
 </h2>
 
-<!-- il mio primo pezzo di codice sullo sportello ^_^ -->
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
       <tr class="Rigaintestazione" >
@@ -625,14 +648,8 @@ function get_ufficio_dest() {
       </tr>  
   </tbody>
 </table>
-<!-- fine del mio primo pezzo di codice sullo sportello ^_^ -->
-
-<!--<p class="Modulo" style="line-height:1.8;">il seguente indirizzo di posta elettronica (e-mail o PEC) a cui inviare le indicazioni e i prospetti di calcolo riguardanti l'Imposta Immobiliare Semplice (IMIS) e gli altri tributi comunali:</p>
-<p class="Modulo" style="line-height:1.8;"><input id="Mail_invio_indicazioni_IMIS" name="Mail_invio_indicazioni_IMIS" mandatory_enabled="true" label="Indicare una mail valida" format="email" style="width:100%;border: 1px solid grey;"/></p>
--->
-
-
 </div>
+
 <br>
 <br>
 
@@ -646,10 +663,10 @@ function get_ufficio_dest() {
       <tr>
         <td style="vertical-align: top; width: 4%;">
           <div id="Tassonomia_Dichiarazioni" name="Tassonomia_Dichiarazioni" label="Dichiarazione obbligatoria" mandatory="true"> </div>
-          <input group="Tassonomia_Dichiarazioni" id="Tassonomia_Dichiarazioni1" name="Tassonomia_Dichiarazioni1" type="checkbox" value="1" />
+          <input group="Tassonomia_Dichiarazioni" id="Tassonomia_Dichiarazioni1" name="Tassonomia_Dichiarazioni1" type="checkbox" value="1" dynamic_check="true"/>
         </td>
         <td>
-          <p>di essere informato che sarà possibile chiedere la cancellazione dell'indirizzo di posta elettronica (e-mail o PEC) qualora riterrà di non avvalersi dell'invio telematico dei prospetti di calcolo dell'imposta</p>
+          <p style="line-height:1.6;">di essere informato che sarà possibile chiedere la cancellazione dell'indirizzo di posta elettronica (e-mail o PEC) qualora riterrà di non avvalersi dell'invio telematico dei prospetti di calcolo dell'imposta</p>
         </td>
       </tr>
     </tbody>
@@ -679,14 +696,14 @@ function get_ufficio_dest() {
 <table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 33%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      <td style="width: 20%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 33%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:50%;" type="text"/>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 34%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()"/>
+      <td style="width: 65%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -697,7 +714,7 @@ function get_ufficio_dest() {
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il sottoscritto <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
       </td>
     </tr>
   </tbody>

@@ -1,0 +1,446 @@
+{% set CodiceModulo = "M47005-COMUNICAZIONE-INIZIO-LAVORI-PROVA" %}
+{% set Urn =  "document:c_l378:inizio.lavori.prova;comunicazione.inizio.lavori.prova;m47005.comunicazioni.inizio.lavori.prova" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI_v3.0_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Comunicazione di inizio lavori"
+descrizione="Comunicazione di inizio lavori TEST"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO" 
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI-PROVA"
+verifica_pagamento="NO"
+versione="1.0|09/02/2018" />
+
+<meta codice_modulo_figlio="GEN-PROGETTISTA-PROVA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista.prova"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-PROGETTISTA-DIRLAV-PROVA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista.direttore.lavori.prova"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-DIR-LAV-EL-PROVA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.direttore.lavori.firma.elettronica.prova"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-CERT-ENERG-EL-PROVA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.certificatore.energetico.firma.elettronica.prova"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-PROVA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.prova"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-AU-PROVA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa.prova"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-EL-PROVA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica.prova"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="5" %}
+  {% set simpaticoEserviceName="M47005 COMUNICAZIONE INIZIO LAVORI" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome",
+                          "AventeTitolo_Nome",
+                          "AventeTitolo_CodiceFiscale",
+                          "AventeTitolo_DataNascita",
+                          "AventeTitolo_Sesso",
+                          "AventeTitolo_Cittadinanza",
+                          "AventeTitolo_LuogoNascita",
+                          "AventeTitolo_ProvinciaResidenza",
+                          "AventeTitolo_ComuneResidenza",
+                          "AventeTitolo_ViaResidenza",
+                          "AventeTitolo_CivicoResidenza",
+                          "AventeTitolo_CAPResidenza",
+                          "AventeTitolo_Telefono",
+                          "AventeTitolo_Tel_Fisso",
+                          "AventeTitolo_EMail",
+                          "AventeTitolo_EMailPEC"] %}
+
+  {% set ERROR_LABELS=[ ('block1' , 'Selezionare una delle opzioni')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+
+{% block title %}M47005-COMUNICAZIONE-INIZIO-LAVORI{% endblock title %}
+
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Comunicazione inizio lavori'" id="Oggetto" name="Oggetto" type="hidden" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" />
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo" style="text-align: center;">COMUNICAZIONE INIZIO LAVORI</h1>
+
+  <br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.6;"><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+          <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Titolare del permesso di costruire</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Professionista incaricato</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<h2 class="Modulo">Ai sensi della Legge urbanistica provinciale 04/08/2015, n. 15</h2>
+
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
+{{anagrafica_trento_uniformata.titolare("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" />
+<input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" dynamic_value="#AventeTitolo_Nome.value()" />
+<input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" dynamic_value="#AventeTitolo_CodiceFiscale.value()" />
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b> Nella sua qualifica di titolare del Permesso di costruire: </b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Permesso_costr" name="Permesso_costr" label="Dettagli permesso di costruire" mandatory_enabled="true"> </div>
+        <input group="Permesso_costr" id="Permesso_costr1" name="Permesso_costr" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">prot.nr.: <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/> di data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Permesso_costr" id="Permesso_costr2" name="Permesso_costr" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">formatosi per silenzio assenso prot.nr.: <input class="" id="Prot_concessione_sil_ass" name="Prot_concessione_sil_ass" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr2.checked()"/> di data <input class="" id="Data_concessione_sil_ass" name="Data_concessione_sil_ass" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Permesso_costr2.checked()"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input id="Metadati_Prot_concessione" name="Metadati_Prot_concessione" dynamic_value="#Prot_concessione.value()" />
+<input id="Metadati_Data_concessione" name="Metadati_Data_concessione" dynamic_value="#Data_concessione.value()" />
+<input id="Metadati_Prot_concessione_sil_ass" name="Metadati_Prot_concessione_sil_ass" dynamic_value="#Prot_concessione_sil_ass.value()" />
+<input id="Metadati_Data_concessione_sil_ass" name="Metadati_Data_concessione_sil_ass" dynamic_value="#Data_concessione_sil_ass.value()" />
+
+<br>
+<br>
+
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <input id="Progettista_checkobbligatorio" name="Progettista_checkobbligatorio" dynamic_check="true" type="hidden" />
+  <input id="Progettista_checkabilitato" name="Progettista_checkabilitato" dynamic_check="true" type="hidden" />
+  {{anagrafica_trento_uniformata.professionista_direttore_lavori("Progettista","<b>DATI DEL PROGETTISTA</b>:","Progettista") }}
+
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr>
+        <td>
+          <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente2.checked() and #AventeTitolo_CodiceFiscale.value() == #Progettista_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
+
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input id="Progettista_direttorelavori" name="Progettista_direttorelavori" type="checkbox" enabled="true"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;"><b>Il progettista è anche il direttore dei lavori</b></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <input id="Metadati_Progettista_TitoloPersona" name="Metadati_Progettista_TitoloPersona" dynamic_value="#Progettista_TitoloPersona.value()" />
+  <input id="Metadati_Progettista_Cognome" name="Metadati_Progettista_Cognome" dynamic_value="#Progettista_Cognome.value()" />
+  <input id="Metadati_Progettista_Nome" name="Metadati_Progettista_Nome" dynamic_value="#Progettista_Nome.value()" />
+  <input id="Metadati_Progettista_CodiceFiscale" name="Metadati_Progettista_CodiceFiscale" dynamic_value="#Progettista_CodiceFiscale.value()" />
+
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+    
+  <input id="DirettoreLavori_checkobbligatorio" name="DirettoreLavori_checkobbligatorio" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
+  <input id="DirettoreLavori_checkabilitato" name="DirettoreLavori_checkabilitato" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
+  {{anagrafica_trento_uniformata.solo_nominativo("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b>:") }}
+
+  <input id="Metadati_DirettoreLavori_TitoloPersona" name="Metadati_DirettoreLavori_TitoloPersona" dynamic_value="#DirettoreLavori_TitoloPersona.value()" />
+  <input id="Metadati_DirettoreLavori_Cognome" name="Metadati_DirettoreLavori_Cognome" dynamic_value="#DirettoreLavori_Cognome.value()" />
+  <input id="Metadati_DirettoreLavori_Nome" name="Metadati_DirettoreLavori_Nome" dynamic_value="#DirettoreLavori_Nome.value()" />
+  <input id="Metadati_DirettoreLavori_CodiceFiscale" name="Metadati_DirettoreLavori_CodiceFiscale" dynamic_value="#DirettoreLavori_CodiceFiscale.value()" />
+  
+</div>
+
+<br>
+<br>
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+
+{{ immobili_trento.immobile_trento_inizio_lavori("Immobile", "avranno inizio i lavori previsti dal permesso di costruire sopra citato, <b>da eseguire presso la realtà immobiliare</b> seguente:", disattivato="true") }}
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;">Ai sensi dell'art. 84 della l.p. 1/2008 e del D.P.P. n. 11-13/Leg. del 13 luglio 2009:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Incarico_soggetto_certificatore" name="Incarico_soggetto_certificatore" label="Incarico di un soggetto certificatore" mandatory_enabled="true"> </div>
+        <input group="Incarico_soggetto_certificatore" id="Incarico_soggetto_certificatore1" name="Incarico_soggetto_certificatore" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">non è necessario incaricare un soggetto certificatore</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Incarico_soggetto_certificatore" id="Incarico_soggetto_certificatore2" name="Incarico_soggetto_certificatore" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">viene incaricato un <b>soggetto abilitato alla certificazione energetica</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+    
+  <input id="CertificatoreEnergetico_checkobbligatorio" name="CertificatoreEnergetico_checkobbligatorio" dynamic_check="#Incarico_soggetto_certificatore2.checked()" type="hidden" />
+  <input id="CertificatoreEnergetico_checkabilitato" name="CertificatoreEnergetico_checkabilitato" dynamic_check="#Incarico_soggetto_certificatore2.checked()" type="hidden" />
+  {{anagrafica_trento_uniformata.solo_nominativo("CertificatoreEnergetico","<b>SOGGETTO ABILITATO ALLA CERTIFICAZIONE ENERGETICA</b> (se presente):") }}
+
+  <input id="Metadati_CertificatoreEnergetico_TitoloPersona" name="Metadati_CertificatoreEnergetico_TitoloPersona" dynamic_value="#CertificatoreEnergetico_TitoloPersona.value()"/>
+  <input id="Metadati_CertificatoreEnergetico_Cognome" name="Metadati_CertificatoreEnergetico_Cognome" dynamic_value="#CertificatoreEnergetico_Cognome.value()" />
+  <input id="Metadati_CertificatoreEnergetico_Nome" name="Metadati_CertificatoreEnergetico_Nome" dynamic_value="#CertificatoreEnergetico_Nome.value()"/>
+  <input id="Metadati_CertificatoreEnergetico_CodiceFiscale" name="Metadati_CertificatoreEnergetico_CodiceFiscale" dynamic_value="#CertificatoreEnergetico_CodiceFiscale.value()"/>
+  
+</div>
+
+<br>
+<br>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo">ALLEGA</h1>
+
+  <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazione">
+        <td style="width:4%;">
+          <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+        </td>
+        <td colspan="2">
+          <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+        </td>
+        <td style="width:15%;">
+          <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="vertical-align: center; text-align: center;">
+          <input dynamic_check="#Tipo_richiedente2.checked() || (#Tipo_richiedente1.checked() and #AventeTitolo_CodiceFiscale.value() != #Progettista_CodiceFiscale.value() and #Progettista_CodiceFiscale.value() != '')" enabled="#Tipo_richiedente2.checked() || (#Tipo_richiedente1.checked() and #AventeTitolo_CodiceFiscale.value() != #Progettista_CodiceFiscale.value() and #Progettista_CodiceFiscale.value() != '')" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;" colspan="2">
+          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista</b> firmato con <b>firma digitale</b></p>
+        </td>
+        <td style="background-color: #eeeeee;">
+          <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:4%; vertical-align: center; text-align: center;">
+          <input id="GEN_DIR_LAV" name="GEN_DIR_LAV" dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;" colspan="2">
+          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore lavori</b>, firmato con <b>firma digitale</b></p>
+        </td>
+        <td style="background-color: #eeeeee;">
+          <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_dirlav" name="numero_anag_dirlav" dynamic_value="#GEN_DIR_LAV.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:4%; vertical-align: center; text-align: center;">
+          <input dynamic_check="#Incarico_soggetto_certificatore2.checked()" enabled="#Incarico_soggetto_certificatore2.checked()" id="GEN_CERT_ENERG" name="GEN_CERT_ENERG" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;" colspan="2">
+          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del soggetto abilitato alla certificazione energetica</b>, firmato con <b>firma digitale</b></p>
+        </td>
+        <td style="background-color: #eeeeee;">
+          <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_energ" name="numero_anag_energ" dynamic_value="#GEN_CERT_ENERG.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center;">
+          <input dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;" colspan="2">
+          <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori particelle o subalterni</b> oggetto del procedimento edilizio</p>
+          <p style="line-height:1.6;">
+            <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:55%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
+              <option value=""></option>
+						  <option value="Firmato con firma autografa">Firmato con firma autografa del richiedente</option>
+						  <option value="Firmato con firma elettronica">Firmato con firma elettronica del richiedente</option>
+            </select>
+          </p>
+        </td>
+        <td style="background-color: #eeeeee;">
+          <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part" name="numero_ult_part" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+  
+  <br>
+
+  <p class="Modulo"><input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" /></p>
+</div>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''"  />
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV-PROVA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV-PROVA" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" />
+<input id="GLOBO_modulofiglio_cGEN-DIR-LAV-EL-PROVA" name="GLOBO_modulofiglio_cGEN-DIR-LAV-EL-PROVA" obbligatorio="#GEN_DIR_LAV.checked() ? 'OBBLIGATORIO' : ''" >
+<input id="GLOBO_modulofiglio_cGEN-CERT-ENERG-EL-PROVA" name="GLOBO_modulofiglio_cGEN-CERT-ENERG-EL-PROVA" obbligatorio="#GEN_CERT_ENERG.checked() ? 'OBBLIGATORIO' : ''" />
+<br>
+<input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-PROVA" name="GLOBO_modulofiglio_cGEN-IMMAGG-PROVA" numero="#numero_ult_part.value()" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" />
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL-PROVA" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL-PROVA" numero="#numero_ult_part.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU-PROVA" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU-PROVA" numero="#numero_ult_part.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" />
+
+
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}

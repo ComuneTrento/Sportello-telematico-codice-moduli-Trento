@@ -1,0 +1,336 @@
+{% set CodiceModulo =  "GEN-LAV-AUTON-EL" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.lavoratori.autonomi.firma.elettronica" %}
+<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-EL_vSTU3" %}-->
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="LavoratoreAutonomo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Modulo secondario - Anagrafica dei lavoratori autonomi (firma elettronica)"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_ELETTRONICA"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/GEN-LAV-AUTON-EL"
+verifica_pagamento="NO"
+versione="1.1|14/02/2018"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+<!--{% block simpaticoconfig %}
+  {% set simpaticoEservice="5_4" %}
+  {% set simpaticoEserviceName="GEN LAV-AUTON EL" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/GEN-LAV-AUTON-EL" %}
+  {% set simpaticoForm="modulo_secondario" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=[ "LavoratoreAutonomo_Cognome",
+                           "LavoratoreAutonomo_Nome",
+                           "LavoratoreAutonomo_CodiceFiscale",
+                           "LavoratoreAutonomo_APEC",
+                           "LavoratoreAutonomo_CFPI"] %}
+
+  {% set ERROR_LABELS=[ ('block1' , 'Inserire i dati anagrafici richiesti'),
+                        ('block2' , 'Confermare presa visione informativa sulla privacy')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}-->
+
+
+{% block title %}
+   Anagrafica lavoratore autonomo
+{% endblock title %}
+
+{% block content %}
+
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+<input dynamic_value="#LavoratoreAutonomo_Cognome.value().toUpperCase() + ' - anagrafica lavoratori autonomi firma elettronica'" id="Oggetto" name="Oggetto" type="hidden"/>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo">Anagrafica lavoratore autonomo</h1>
+
+  <table class="Modulo" style="border:1px solid grey" mandatory="true">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p style="line-height:1.6;"><b>Il sottoscritto</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:13%">
+          <p class="Labelcella">Titolo</p>
+        </td>
+        <td style="width:33%">
+          <p class="Labelcella">Cognome</p>
+        </td>
+        <td style="width:32%">
+          <p class="Labelcella">Nome</p>
+        </td>
+        <td style="width:22%">
+          <p class="Labelcella">Codice Fiscale</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <select class="inputNormal" id="LavoratoreAutonomo_TitoloPersona" name="LavoratoreAutonomo_TitoloPersona" style="width:100%;" label="Titolo del firmatario">
+            <option value=""></option>
+            <option value="Sig.">Sig.</option>
+            <option value="Sig.ra">Sig.ra</option>
+            <option value="Avv.">Avv.</option>
+            <option value="Dott.">Dott.</option>
+            <option value="Dott.ssa">Dott.ssa</option>
+            <option value="Arch.">Arch.</option>
+            <option value="Ing.">Ing.</option>
+            <option value="Comm.">Perito</option>
+            <option value="Geom.">Geom.</option>
+          </select>
+        </td>
+        <td>
+          <input class="" id="LavoratoreAutonomo_Cognome" name="LavoratoreAutonomo_Cognome" style="width:100%" label="Cognome del firmatario"/>
+        </td>
+        <td>
+          <input class="" id="LavoratoreAutonomo_Nome" name="LavoratoreAutonomo_Nome" style="width:100%" label="Nome del firmatario"/>
+        </td>
+        <td>
+          <input class="" id="LavoratoreAutonomo_CodiceFiscale" name="LavoratoreAutonomo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del firmatario"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="Modulo" style="border:1px solid grey" mandatory="true">
+    <tbody>
+      <tr class="Rigaintestazioneridotta" style="border-top:0px">
+        <td style="width:20%;">
+          <p class="Labelcella">Data di nascita</p>
+        </td>
+        <td style="width:10%;">
+          <p class="Labelcella">Sesso</p>
+        </td>
+        <td style="width:30%;">
+          <p class="Labelcella">Nazionalità</p>
+        </td>
+        <td style="width:40%;">
+          <p class="Labelcella">Luogo di nascita</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:20%;">
+          <input class="" id="LavoratoreAutonomo_DataNascita" name="LavoratoreAutonomo_DataNascita" style="width:100%;" format="date" label="Data di nascita del firmatario"/>
+        </td>
+        <td style="width:10%;">
+          <select class="inputNormal" id="LavoratoreAutonomo_Sesso" name="LavoratoreAutonomo_Sesso" style="width:100%;" label="Sesso del firmatario">
+            <option value=""></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </td>
+        <td style="width:30%;">
+          {{ utils.nazionalita("LavoratoreAutonomo_Nazionalita", "Nazionalità")}}
+        </td>
+        <td style="width:40%;">
+          <input class="" id="LavoratoreAutonomo_LuogoNascita" name="LavoratoreAutonomo_LuogoNascita" style="width:100%;" label="Luogo di nascita del firmatario"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="Modulo" style="border:1px solid grey" mandatory="true">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="5">
+          <p class="Labelcella"><b>Residenza</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:10%;">
+          <p class="Labelcella">Provincia</p>
+        </td>
+        <td style="width:33%;">
+          <p class="Labelcella">Comune</p>
+        </td>
+        <td style="width:33%;">
+          <p class="Labelcella">Indirizzo</p>
+        </td>
+        <td style="width:12%;">
+          <p class="Labelcella">Civico</p>
+        </td>
+        <td style="width:12%;">
+          <p class="Labelcella">CAP</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:10%;">
+          {{ utils.provincie("LavoratoreAutonomo_ProvinciaResidenza", "Provincia di residenza")}}
+        </td>
+        <td style="width:33%;">
+          <select class="inputNormal" id="LavoratoreAutonomo_ComuneResidenza" name="LavoratoreAutonomo_ComuneResidenza" style="width:100%" label="Comune di residenza del firmatario" dynamic_value="getComuniFromProvincia( #LavoratoreAutonomo_ProvinciaResidenza.value(), 'LavoratoreAutonomo_ComuneResidenza')"></select>
+        </td>
+        <td style="width:33%;">
+          <input class="" id="LavoratoreAutonomo_ViaResidenza" name="LavoratoreAutonomo_ViaResidenza" style="width:100%;" label="Via di residenza del firmatario"/>
+        </td>
+        <td style="width:12%;">
+          <input class="" id="LavoratoreAutonomo_CivicoResidenza" name="LavoratoreAutonomo_CivicoResidenza" style="width:100%;" label="Civico di residenza del firmatario" maxlength="10"/>
+        </td>
+        <td style="width:12%;">
+          <input class="" id="LavoratoreAutonomo_CAPResidenza" name="LavoratoreAutonomo_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del firmatario" mandatory="#LavoratoreAutonomo_ProvinciaResidenza.value() != 'EE'"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="Modulo" style="border:1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Partita IVA </p>
+        </td>
+        <td>
+          <p class="Labelcella">E-mail PEC (domicilio digitale)</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input class="" id="LavoratoreAutonomo_CFPI" name="LavoratoreAutonomo_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva" mandatory_enabled="true"/>
+        </td>
+        <td>
+          <input class="" id="LavoratoreAutonomo_APEC" name="LavoratoreAutonomo_APEC" label="PEC Azienda" style="width:100%;" format="pec" mandatory_enabled="true"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Telefono fisso</p>
+        </td>
+        <td>
+          <p class="Labelcella">Cellulare</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input class="" id="LavoratoreAutonomo_Tel_FissoSede" name="LavoratoreAutonomo_Tel_FissoSede" label="Tel_Fisso della sede legale" style="width:100%;"/>
+        </td>
+        <td>
+          <input class="" id="LavoratoreAutonomo_TelefonoSede" name="LavoratoreAutonomo_TelefonoSede" label="Telefono della sede legale" style="width:100%;" mandatory_enabled="true"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:50%">
+          <p class="Labelcella">Iscrizione al Registro Imprese della Camera di Commercio</p>
+        </td>
+        <td style="width:9%">
+          <p class="Labelcella">Provincia</p>
+        </td>
+        <td style="width:41%">
+          <p class="Labelcella">Numero iscrizione</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <select class="inputNormal" id="LavoratoreAutonomo_Attributi_IscrittoCCIAA" name="LavoratoreAutonomo_Attributi_IscrittoCCIAA" label="Iscrizione al Registro Imprese della Camera di Commercio" style="width:100%">
+            <option value=""></option>
+            <option value="iscritto">iscritto</option>
+            <option value="in attesa di iscrizione">in attesa di iscrizione</option>
+            <option value="non tenuto all'iscrizione">non tenuto all'iscrizione</option>
+          </select>
+        </td>
+        <td mandatory_enabled="#LavoratoreAutonomo_Attributi_IscrittoCCIAA.check_value([ 'iscritto','in attesa di iscrizione' ])">
+          {{utils.provincie( 'LavoratoreAutonomo_Attributi_CCIAAProv', label="Provincia iscrizione al Registro Imprese della Camera di Commercio")}}
+        </td>
+        <td mandatory_enabled="#LavoratoreAutonomo_Attributi_IscrittoCCIAA.check_value([ 'iscritto' ])">
+          <input class="" id="LavoratoreAutonomo_Attributi_CCIAANumero" name="LavoratoreAutonomo_Attributi_CCIAANumero" label="Numero iscrizione al Registro Imprese della Camera di Commercio" style="width:100%"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block">
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #LavoratoreAutonomo_TitoloPersona.value() + ' ' + #LavoratoreAutonomo_Nome.value().toUpperCase() + ' ' + #LavoratoreAutonomo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il sottoscritto <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+<p class="Modulo">
+ <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+</div>
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+
+
+{% endblock content %}
