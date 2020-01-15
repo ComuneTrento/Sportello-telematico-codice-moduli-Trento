@@ -1920,21 +1920,48 @@
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
 
+<!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
+  <input id="{{ prefix }}_DatiToponomasticiObbligatori"       name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
+  <input id="{{ prefix }}_Tipo"       name="{{ prefix }}_Tipo"       type="hidden" dynamic_value="#{{ prefix }}_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #{{ prefix }}_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #{{ prefix }}_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
+  <input id="{{ prefix }}_NumeroUlterioriImmobili" name="{{ prefix }}_NumeroUlterioriImmobili" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltriImmobili.value() / 16) ">
+  <input id="{{ prefix }}_Note"       name="{{ prefix }}_Note"       type="hidden" value="{{ annotazioniSolo1 }}"/>
+  <input id="{{ prefix }}_CatNote"    name="{{ prefix }}_CatNote"    type="hidden" value="{{ annotazioniSolo1 }}"/>
+
+  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.6;"><b>LOCALIZZAZIONE DELL'INTERVENTO</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="altre_particelle" name="altre_particelle" label="particelle coinvolte" mandatory_enabled="true"> </div>
+          <input group="altre_particelle" id="altre_particelle1" name="altre_particelle" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Il procedimento riguarda <b>una sola particella</b>, indicata nella tabella seguente</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; text-align: center; width: 4%;">
+          <input group="altre_particelle" id="altre_particelle2" name="altre_particelle" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Il procedimento <b>riguarda più particelle</b>. Si indica la prima di esse nella tabella seguente e le restanti n. <input id="{{ prefix }}_NumeroAltriImmobili" name="{{ prefix }}_NumeroAltriImmobili" style="width:5%; text-align:center;" label="Numero altre particelle" mandatory_enabled="#altre_particelle2.checked()"/> particelle nell'apposito modulo secondario <i>Ulteriori particelle o subalterni oggetto del procedimento</i></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <input id="Metadati_altre_part" name="Metadati_altre_part" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value()" type="hidden"/>
+  
+  <br>
+
   <div class="simpatico-block simpatico-query-and-answer">
 
-<!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="{{ prefix }}_DatiToponomasticiObbligatori"       name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="{{ prefix }}_Tipo"       name="{{ prefix }}_Tipo"       type="hidden" dynamic_value="#{{ prefix }}_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #{{ prefix }}_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #{{ prefix }}_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="{{ prefix }}_NumeroUlterioriImmobili" name="{{ prefix }}_NumeroUlterioriImmobili" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltriImmobili.value() / 16) ">
-    <input id="{{ prefix }}_Note"       name="{{ prefix }}_Note"       type="hidden" value="{{ annotazioniSolo1 }}"/>
-    <input id="{{ prefix }}_CatNote"    name="{{ prefix }}_CatNote"    type="hidden" value="{{ annotazioniSolo1 }}"/>
     <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
       <tbody>
-        <tr class="Rigaintestazione">
-          <td colspan="3">
-            <p style="line-height:1.6;"><b>LOCALIZZAZIONE DELL'INTERVENTO</b></p>
-          </td>
-        </tr>
         <tr class="Rigaintestazioneridotta">
           <td style="border-right:0px">
             <p class="Labeltabella">{{ intestazione|safe }}</p>
@@ -1950,6 +1977,7 @@
         </tr>
       </tbody>
     </table>
+
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
       <tbody>
@@ -1986,8 +2014,8 @@
           <td colspan="2">
             <select class="inputNormal" id="{{ prefix }}_TipoImmobile" name="{{ prefix }}_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory_enabled="true">
               <option value=""></option>
-              <option value="S">porzione di edificio</option>
-	            <option value="E">intero edificio</option>
+              <option value="S">particella edificiale - porzione edificio</option>
+	            <option value="E">particella edificiale - intero edificio</option>
               <option value="F">particella fondiaria</option>
             </select>
           </td>
@@ -2026,7 +2054,7 @@
             <input name="{{ prefix }}_CatBarra" id="{{ prefix }}_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="{{ disattivato }}"/>
           </td>
           <td>
-            <input name="{{ prefix }}_CatPM" id="{{ prefix }}_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="{{ disattivato }}" />
+            <input name="{{ prefix }}_CatPM" id="{{ prefix }}_CatPM" style="width:100%;" label="Porzione Materiale"  mandatory_enabled="true" />
           </td>
           <td>
             <input name="{{ prefix }}_CatSubalterno" id="{{ prefix }}_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#{{ prefix }}_TipoImmobile.check_value(['S'])"/>
@@ -3359,29 +3387,6 @@
     </table>
 
   </div>
-
-  <br>
-
-  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px">
-    <tbody>
-      <tr class="Rigaintestazioneridotta">
-        <td colspan="9">
-          <p class="Labelcella">Ulteriori particelle o subalterni
-            <i>(allegare il modulo "ulteriori particelle o subalterni oggetto del procedimento")</i>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="9">
-          <p style="line-height:1.6;">il procedimento riguarda <input id="{{ prefix }}_NumeroAltriImmobili" name="{{ prefix }}_NumeroAltriImmobili" style="width:5%; text-align:center;" value="0" label="Numero altre particelle o subalterni" enabled="{{disattivato}}"/> ulteriori particelle o subalterni</p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <input id="Metadati_altre_part" name="Metadati_altre_part" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value()" type="hidden"/>
-
-  <br>
 
 </div>
 <br>
@@ -10544,7 +10549,7 @@
       <tbody>
         <tr class="Rigaintestazione">
           <td colspan="4">
-            <p>
+            <p style="line-height:1.6;">
               <b>La particella selezionata è soggetta a frazionamento?</b>
             </p>
           </td>
@@ -10555,7 +10560,7 @@
               <input id="{{ prefix }}_Parametri_Titolo2" name="{{ prefix }}_Parametri_Titolo" type="radio" value="1" />
             </td>
             <td colspan="4">
-              <p>NO</p>
+              <p style="line-height:1.6;">NO</p>
             </td>
         </tr>
         <tr>
@@ -10563,7 +10568,7 @@
             <input id="{{ prefix }}_Parametri_Titolo1" name="{{ prefix }}_Parametri_Titolo" type="radio" value="2"/>
           </td>
           <td rowspan="2">
-            <p>SI</p>
+            <p style="line-height:1.6;">SI</p>
             <td>
                 <div id="{{ prefix }}_Parametri_Titolo_Sec" name="{{ prefix }}_Parametri_Titolo_Sec" label="{{ prefix }} Particella soggetta a frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"></div>
                 <p style="line-height:1.6;"> <input id="{{ prefix }}_Parametri_Titolo3" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>Richiesta conformazione pre-frazionamento </p>
@@ -10696,7 +10701,7 @@
       <tbody>
         <tr class="Rigaintestazione">
           <td colspan="4">
-            <p>
+            <p style="line-height:1.6;">
               <b>La particella selezionata è soggetta a frazionamento?</b>
             </p>
           </td>
@@ -10707,7 +10712,7 @@
               <input id="{{ prefix }}_Parametri_Titolo2" name="{{ prefix }}_Parametri_Titolo" type="radio" value="1" />
             </td>
             <td colspan="4">
-              <p>NO</p> 
+              <p style="line-height:1.6;">NO</p> 
             </td>
         </tr>
         <tr>
@@ -10715,7 +10720,7 @@
             <input id="{{ prefix }}_Parametri_Titolo1" name="{{ prefix }}_Parametri_Titolo" type="radio" value="2"/>
           </td>
           <td rowspan="2">
-            <p>SI</p>
+            <p style="line-height:1.6;">SI</p>
             <td>
                 <div id="{{ prefix }}_Parametri_Titolo_Sec" name="{{ prefix }}_Parametri_Titolo_Sec" label="{{ prefix }} particella soggetta a frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"></div>
                 <p style="line-height:1.6;"> <input id="{{ prefix }}_Parametri_Titolo3" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>con situazione catastale ante-frazionamento </p>

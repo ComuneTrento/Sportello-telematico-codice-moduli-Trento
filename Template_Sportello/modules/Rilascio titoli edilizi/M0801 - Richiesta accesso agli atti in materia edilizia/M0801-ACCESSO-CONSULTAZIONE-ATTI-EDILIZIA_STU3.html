@@ -114,9 +114,6 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <br>
 
-<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
-<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
-
 <h1 class="Modulo">
   Domanda di accesso/consultazione agli atti in materia edilizia
 </h1>
@@ -134,10 +131,14 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="#AventeTitolo_Telefono.value() == ''" type="hidden" />-->
-<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-{{anagrafica_trento_uniformata.richiedente_nomail("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
+{{anagrafica_trento_uniformata.richiedente_elettorale("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <br>
 
@@ -255,37 +256,8 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="17">
-        <div id="Servizio_richiesto" name="Servizio_richiesto" label="Servizio richiesto" mandatory_enabled="true"> </div>
-        <input group="Servizio_richiesto" id="Servizio_richiesto1" name="Servizio_richiesto1" type="checkbox" value="1" /> 
-      </td>
-      <td colspan="10">
-        <p style="line-height:1.6;">La <b>CONSULTAZIONE</b> di atti risalenti a più di 40 anni fa <i>(Archivio Storico)</i></p>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td colspan="10">
-        <p style="line-height:1.6; font-size:90%;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
-      </td>
-    </tr>
-    
-    <input id="consultazione_DatiCatastaliObbligatori" name="consultazione_DatiCatastaliObbligatori" dynamic_check="#Servizio_richiesto1.checked()" type="hidden" />
-    
-    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
-   
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione2', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
-
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione3', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
-
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione4', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
-
-    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
-
-    <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="26">
+        <div id="Servizio_richiesto" name="Servizio_richiesto" label="Servizio richiesto" mandatory_enabled="true"> </div>
         <input group="Servizio_richiesto" id="Servizio_richiesto2" name="Servizio_richiesto2" type="checkbox" value="2" /> 
       </td>
       <td colspan="10">
@@ -364,6 +336,34 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height:1.6;">per la quale non è necessario annullare marca da bollo in quanto soggetto esente</p>
       </td>
     </tr>
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="17">
+        <input group="Servizio_richiesto" id="Servizio_richiesto1" name="Servizio_richiesto1" type="checkbox" value="1" /> 
+      </td>
+      <td colspan="10">
+        <p style="line-height:1.6;"><b>COPIA</b> deglii atti conservati presso l'Archivio Storico</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="10">
+        <p style="line-height:1.6; font-size:90%;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
+      </td>
+    </tr>
+    
+    <input id="consultazione_DatiCatastaliObbligatori" name="consultazione_DatiCatastaliObbligatori" dynamic_check="#Servizio_richiesto1.checked()" type="hidden" />
+    
+    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
+   
+    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
+    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione2', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
+
+    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
+    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione3', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
+
+    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
+    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione4', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
+
   </tbody>
 </table>
 </div>
@@ -502,7 +502,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Metodo_ricezione" id="Metodo_ricezione2" name="Metodo_ricezione" type="radio" value="2" /> 
       </td>
-      <td><p style="line-height:1.6;"><b>[Metodo consigliato]</b> di riceverli al seguente indirizzo PEC: <input class="" id="AventeTitolo_EMailPEC" name="AventeTitolo_EMailPEC" mandatory_enabled="#Metodo_ricezione2.checked()" size="37"/>
+      <td><p style="line-height:1.6;"><b>[Metodo consigliato]</b> di riceverli al seguente indirizzo PEC: <input class="" id="Mail_per_invio" name="Mail_per_invio" dynamic_value="#AventeTitolo_EMail.value()" enabled="#Metodo_ricezione2.checked()" size="37" readonly/>
         <br>o tramite servizio di trasferimento dati informatici (es. Pydio, WeTransfer, ecc.)</p>  
       </td>
     </tr>
@@ -510,7 +510,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Metodo_ricezione" id="Metodo_ricezione3" name="Metodo_ricezione" type="radio" value="3" /> 
       </td>
-      <td><p style="line-height:1.6;">di riceverli al seguente indirizzo mail: <input class="" id="AventeTitolo_EMail" name="AventeTitolo_EMail" mandatory_enabled="#Metodo_ricezione3.checked()" size="57"/>
+      <td><p style="line-height:1.6;">di riceverli al seguente indirizzo mail: <input class="" id="PEC_per_invio" name="PEC_per_invio" dynamic_value="#AventeTitolo_EMailPEC.value()" enabled="#Metodo_ricezione3.checked()" size="57" readonly/>
         <br>o tramite servizio di trasferimento dati informatici (es. Pydio, WeTransfer, ecc.)</p> 
       </td>
     </tr>
