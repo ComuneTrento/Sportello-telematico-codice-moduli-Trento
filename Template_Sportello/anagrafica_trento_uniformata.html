@@ -2304,8 +2304,124 @@
 {%- endmacro %}
 
 
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- compare in: M47010-MSEC14-CONF-ACUST -->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
+{% macro professionista_nomail( prefix='Referente1') -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
+
+<div type="Anagrafica_professionista">
+
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" >
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td style="border-right:0px" colspan="4">
+          <p style="line-height:1.6;"><b>Il/La sottoscritto/a</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:13%">
+          <p class="Labelcella">Titolo</p>
+        </td>
+        <td style="width:31%">
+          <p class="Labelcella">Cognome</p>
+        </td>
+        <td>
+          <p class="Labelcella">Nome</p>
+        </td>
+        <td style="width:25%">
+          <p class="Labelcella">Codice Fiscale</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <select class="inputNormal" id="{{ prefix }}_TitoloPersona" name="{{ prefix }}_TitoloPersona" style="width:100%;" label="Titolo del professionista" mandatory_enabled="true">
+            <option value=""></option>
+            <option value="Sig.">Sig.</option>
+            <option value="Sig.ra">Sig.ra</option>
+            <option value="Dott.">Dott.</option>
+            <option value="Dott.ssa">Dott.ssa</option>
+            <option value="Prof.">Prof.</option>
+            <option value="Prof.ssa">Prof.ssa</option>
+            <option value="Arch.">Arch.</option>
+            <option value="Ing.">Ing.</option>
+            <option value="Comm.">Comm.</option>
+            <option value="Avv.">Avv.</option>
+            <option value="Geom.">Geom.</option>
+          </select>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del professionista" mandatory_enabled="true"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del professionista" mandatory_enabled="true"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del professionista" mandatory_enabled="true"/>
+        </td>
+      </tr>
+	  </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:25%;">
+          <p class="Labelcella">Data di nascita</p>
+        </td>
+        <td style="width: 75%;">
+          <p class="Labelcella">Luogo di nascita</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data nascita del professionista" mandatory_enabled="true"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Lugo di nascita del professionista" mandatory_enabled="true"/>
+        </td>
+      </tr>
+		</tbody>
+  </table>
+  
+	<table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+    <tbody>
+	    <tr class="Rigaintestazioneridotta">
+				<td style="width:42%">
+					<p class="Labelcella">Albo o Ordine</p>
+				</td>
+				<td style="width:9%">
+					<p class="Labelcella">Provincia</p>
+				</td>
+				<td style="width:25%">
+					<p class="Labelcella">Numero iscrizione</p>
+				</td>
+			</tr>
+			<tr>
+				<td mandatory_enabled="true">
+					{{ utils.albi( prefix + '_Attributi_Albo' )}}
+				</td>
+				<td mandatory_enabled="true"> 
+					{{ utils.provincie( prefix + '_Attributi_DellaProvincia', label="Provincia iscrizione Albo") }}
+				</td>
+				<td mandatory_enabled="#{{ prefix }}_Attributi_Albo.value() != '' and #{{ prefix }}_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
+					<input style="width: 100%" id="{{ prefix }}_Attributi_AlNumero" class="inputNormal" name="{{ prefix }}_Attributi_AlNumero" label="Numero iscrizione Albo"/>
+				</td>
+			</tr>
+		</tbody>
+  </table>
+   
+</div>
+
+{%- endmacro %}
 
 
 

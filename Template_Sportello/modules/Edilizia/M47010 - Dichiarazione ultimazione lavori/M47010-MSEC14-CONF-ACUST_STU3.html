@@ -3,7 +3,7 @@
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Progettista_CodiceFiscale"
+<meta campi_firma="Altro_Progettista_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -37,21 +37,15 @@ Dichiarazione del tecnico in merito alla conformità acustica
 {% block content %}
 
 {{ intestazioni.intestazione_modulosecondario_senzabollo() }}
-<input id="Oggetto" name="Oggetto" dynamic_value="#Progettista_Cognome.value().toUpperCase() + ' - Dichiarazione del tecnico in merito alla conformità acustica'" type="hidden"/>
+<input id="Oggetto" name="Oggetto" dynamic_value="#Altro_Progettista_Cognome.value().toUpperCase() + ' - Dichiarazione del tecnico in merito alla conformità acustica'" type="hidden"/>
 
 
 <h1 class="Modulo" style="line-height:1.6;">DICHIARAZIONE DEL TECNICO IN MERITO ALLA CONFORMITA' ACUSTICA<br><span style="font-size:75%">(art. 15, comma 2 del D.P.G.P. 4 agosto 1992, n. 12-65/Leg.)</span></h1>
 
-<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td>
-        <p style="line-height:1.8;"><b>Il sottoscritto</b>, <input id="Nominativo_tecnico" name="Nominativo_tecnico" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Cognome.value() + ' ' + #Progettista_Nome.value() + ' ' + '(' + #Progettista_CodiceFiscale.value() + ')'" size="81" readonly/>
-            <br>nato a &nbsp; <input id="Luogo_nascita_progettista" name="Luogo_nascita_progettista" dynamic_value="#Progettista_LuogoNascita.value()" size="30" readonly/> &nbsp; e iscritto all'Ordine degli &nbsp; <input id="Albo_progettista" name="Albo_progettista" dynamic_value="#Progettista_Attributi_Albo.value()" size="30" readonly/> &nbsp;<br>della Provincia di &nbsp; <input id="Provincia_albo_progettista" name="Provincia_albo_progettista" dynamic_value="#Progettista_Attributi_DellaProvincia.value()" size="10" readonly/> &nbsp; al n. &nbsp; <input id="Num_albo_progettista" name="Num_albo_progettista" dynamic_value="#Progettista_Attributi_AlNumero.value()" size="30" readonly/></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+
+
+  {{anagrafica_trento_uniformata.professionista_nomail("Altro_Progettista") }}
+
 
 <br>
 
@@ -160,6 +154,23 @@ Dichiarazione del tecnico in merito alla conformità acustica
 <br>
 <br>
 
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione7" name="Presa_visione7" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione7" id="Presa_visione_check7" name="Presa_visione_check7" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
 <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
@@ -170,7 +181,7 @@ Dichiarazione del tecnico in merito alla conformità acustica
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_tecnico" name="nominativo_tecnico" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        <input class="" id="nominativo_firmat_acust" name="nominativo_firmat_acust" dynamic_value="#Altro_Progettista_TitoloPersona.value() + ' ' + #Altro_Progettista_Nome.value().toUpperCase() + ' ' + #Altro_Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;" readonly/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -198,18 +209,6 @@ Dichiarazione del tecnico in merito alla conformità acustica
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
- 
 
-<!-- Passaggio dati dal principale senza usare metadati -->
-
-<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden"  readonly/>
-<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden"  readonly/>
-<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden"  readonly/>
-<input id="Progettista_Nome" name="Progettista_Nome" type="hidden"  readonly/>
-<input id="Progettista_LuogoNascita" name="Progettista_LuogoNascita" type="hidden"  readonly/>
-<input id="Progettista_Attributi_Albo" name="Progettista_Attributi_Albo" type="hidden"  readonly/>
-<input id="Progettista_Attributi_AlNumero" name="Progettista_Attributi_AlNumero" type="hidden"  readonly/>
-<input id="Progettista_Attributi_DellaProvincia" name="Progettista_Attributi_DellaProvincia" type="hidden"  readonly/>
-<input id="Progettista_Indirizzocompleto" name="Progettista_Indirizzocompleto" type="hidden"  readonly/>
 
 {% endblock content %}
