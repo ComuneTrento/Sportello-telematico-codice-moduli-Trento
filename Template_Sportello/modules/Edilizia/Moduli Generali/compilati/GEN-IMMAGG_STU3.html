@@ -288,7 +288,7 @@ function get_ufficio_dest() {
 		</tbody>
 	</table>
 </div>
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Nominativo_titolare.value().toUpperCase() + ' - ulteriori particelle o subalterni'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' - ulteriori particelle o subalterni'"/>
 
  <h1 class="Modulo">
   Ulteriori particelle o subalterni oggetto del procedimento
@@ -300,7 +300,7 @@ function get_ufficio_dest() {
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" mandatory_enabled="true" size="87"/>
+        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="87"/>
         <br>valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti</p>
       </td>
     </tr>
@@ -323,11 +323,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile1_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile1_DatiToponomasticiObbligatori"       name="Immobile1_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile1_Tipo"       name="Immobile1_Tipo"       type="hidden" dynamic_value="#Immobile1_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile1_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile1_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile1_NumeroUlterioriImmobili" name="Immobile1_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile1_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile1_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile1_Note"       name="Immobile1_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile1_CatNote"    name="Immobile1_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -363,7 +358,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile1_TipoImmobile" name="Immobile1_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile1_TipoImmobile" name="Immobile1_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -371,8 +366,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile1_NomeComuneCatastale" name="Immobile1_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile1_CatComune" name="Immobile1_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile1_NomeComuneCatastale" name="Immobile1_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile1_CatComune" name="Immobile1_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -390,25 +385,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile1_ComuneCatastale_esteso" id="Immobile1_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile1_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile1_ComuneCatastale_esteso" id="Immobile1_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile1_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile1_CatNumero" id="Immobile1_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile1_CatBarra" id="Immobile1_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile1_CatBarra" id="Immobile1_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile1_CatPM" id="Immobile1_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile1_CatPM" id="Immobile1_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile1_CatSubalterno" id="Immobile1_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile1_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile1_CatSubalterno" id="Immobile1_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile1_ControlloDatiCatastaliButton" name="Immobile1_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -442,7 +434,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile1_CheckVerificaCatastale"
       name="Immobile1_CheckVerificaCatastale"
@@ -456,7 +448,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile1_CheckVerificaCatastale1"
       name="Immobile1_CheckVerificaCatastale1"
@@ -480,11 +472,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile2_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile2_DatiToponomasticiObbligatori"       name="Immobile2_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile2_Tipo"       name="Immobile2_Tipo"       type="hidden" dynamic_value="#Immobile2_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile2_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile2_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile2_NumeroUlterioriImmobili" name="Immobile2_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile2_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile2_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile2_Note"       name="Immobile2_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile2_CatNote"    name="Immobile2_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -520,7 +507,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile2_TipoImmobile" name="Immobile2_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile2_TipoImmobile" name="Immobile2_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -528,8 +515,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile2_NomeComuneCatastale" name="Immobile2_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile2_CatComune" name="Immobile2_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile2_NomeComuneCatastale" name="Immobile2_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile2_CatComune" name="Immobile2_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -547,25 +534,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile2_ComuneCatastale_esteso" id="Immobile2_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile2_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile2_ComuneCatastale_esteso" id="Immobile2_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile2_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile2_CatNumero" id="Immobile2_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile2_CatBarra" id="Immobile2_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile2_CatBarra" id="Immobile2_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile2_CatPM" id="Immobile2_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile2_CatPM" id="Immobile2_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile2_CatSubalterno" id="Immobile2_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile2_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile2_CatSubalterno" id="Immobile2_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile2_ControlloDatiCatastaliButton" name="Immobile2_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -599,7 +583,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile2_CheckVerificaCatastale"
       name="Immobile2_CheckVerificaCatastale"
@@ -613,7 +597,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile2_CheckVerificaCatastale1"
       name="Immobile2_CheckVerificaCatastale1"
@@ -637,11 +621,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile3_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile3_DatiToponomasticiObbligatori"       name="Immobile3_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile3_Tipo"       name="Immobile3_Tipo"       type="hidden" dynamic_value="#Immobile3_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile3_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile3_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile3_NumeroUlterioriImmobili" name="Immobile3_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile3_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile3_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile3_Note"       name="Immobile3_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile3_CatNote"    name="Immobile3_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -677,7 +656,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile3_TipoImmobile" name="Immobile3_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile3_TipoImmobile" name="Immobile3_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -685,8 +664,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile3_NomeComuneCatastale" name="Immobile3_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile3_CatComune" name="Immobile3_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile3_NomeComuneCatastale" name="Immobile3_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile3_CatComune" name="Immobile3_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -704,25 +683,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile3_ComuneCatastale_esteso" id="Immobile3_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile3_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile3_ComuneCatastale_esteso" id="Immobile3_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile3_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile3_CatNumero" id="Immobile3_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile3_CatBarra" id="Immobile3_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile3_CatBarra" id="Immobile3_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile3_CatPM" id="Immobile3_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile3_CatPM" id="Immobile3_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile3_CatSubalterno" id="Immobile3_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile3_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile3_CatSubalterno" id="Immobile3_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile3_ControlloDatiCatastaliButton" name="Immobile3_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -756,7 +732,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile3_CheckVerificaCatastale"
       name="Immobile3_CheckVerificaCatastale"
@@ -770,7 +746,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile3_CheckVerificaCatastale1"
       name="Immobile3_CheckVerificaCatastale1"
@@ -794,11 +770,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile4_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile4_DatiToponomasticiObbligatori"       name="Immobile4_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile4_Tipo"       name="Immobile4_Tipo"       type="hidden" dynamic_value="#Immobile4_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile4_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile4_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile4_NumeroUlterioriImmobili" name="Immobile4_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile4_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile4_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile4_Note"       name="Immobile4_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile4_CatNote"    name="Immobile4_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -834,7 +805,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile4_TipoImmobile" name="Immobile4_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile4_TipoImmobile" name="Immobile4_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -842,8 +813,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile4_NomeComuneCatastale" name="Immobile4_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile4_CatComune" name="Immobile4_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile4_NomeComuneCatastale" name="Immobile4_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile4_CatComune" name="Immobile4_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -861,25 +832,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile4_ComuneCatastale_esteso" id="Immobile4_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile4_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile4_ComuneCatastale_esteso" id="Immobile4_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile4_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile4_CatNumero" id="Immobile4_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile4_CatBarra" id="Immobile4_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile4_CatBarra" id="Immobile4_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile4_CatPM" id="Immobile4_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile4_CatPM" id="Immobile4_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile4_CatSubalterno" id="Immobile4_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile4_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile4_CatSubalterno" id="Immobile4_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile4_ControlloDatiCatastaliButton" name="Immobile4_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -913,7 +881,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile4_CheckVerificaCatastale"
       name="Immobile4_CheckVerificaCatastale"
@@ -927,7 +895,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile4_CheckVerificaCatastale1"
       name="Immobile4_CheckVerificaCatastale1"
@@ -951,11 +919,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile5_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile5_DatiToponomasticiObbligatori"       name="Immobile5_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile5_Tipo"       name="Immobile5_Tipo"       type="hidden" dynamic_value="#Immobile5_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile5_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile5_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile5_NumeroUlterioriImmobili" name="Immobile5_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile5_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile5_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile5_Note"       name="Immobile5_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile5_CatNote"    name="Immobile5_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -991,7 +954,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile5_TipoImmobile" name="Immobile5_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile5_TipoImmobile" name="Immobile5_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -999,8 +962,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile5_NomeComuneCatastale" name="Immobile5_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile5_CatComune" name="Immobile5_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile5_NomeComuneCatastale" name="Immobile5_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile5_CatComune" name="Immobile5_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -1018,25 +981,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile5_ComuneCatastale_esteso" id="Immobile5_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile5_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile5_ComuneCatastale_esteso" id="Immobile5_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile5_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile5_CatNumero" id="Immobile5_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile5_CatBarra" id="Immobile5_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile5_CatBarra" id="Immobile5_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile5_CatPM" id="Immobile5_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile5_CatPM" id="Immobile5_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile5_CatSubalterno" id="Immobile5_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile5_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile5_CatSubalterno" id="Immobile5_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile5_ControlloDatiCatastaliButton" name="Immobile5_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -1070,7 +1030,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile5_CheckVerificaCatastale"
       name="Immobile5_CheckVerificaCatastale"
@@ -1084,7 +1044,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile5_CheckVerificaCatastale1"
       name="Immobile5_CheckVerificaCatastale1"
@@ -1108,11 +1068,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile6_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile6_DatiToponomasticiObbligatori"       name="Immobile6_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile6_Tipo"       name="Immobile6_Tipo"       type="hidden" dynamic_value="#Immobile6_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile6_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile6_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile6_NumeroUlterioriImmobili" name="Immobile6_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile6_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile6_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile6_Note"       name="Immobile6_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile6_CatNote"    name="Immobile6_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -1148,7 +1103,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile6_TipoImmobile" name="Immobile6_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile6_TipoImmobile" name="Immobile6_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -1156,8 +1111,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile6_NomeComuneCatastale" name="Immobile6_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile6_CatComune" name="Immobile6_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile6_NomeComuneCatastale" name="Immobile6_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile6_CatComune" name="Immobile6_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -1175,25 +1130,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile6_ComuneCatastale_esteso" id="Immobile6_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile6_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile6_ComuneCatastale_esteso" id="Immobile6_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile6_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile6_CatNumero" id="Immobile6_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile6_CatBarra" id="Immobile6_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile6_CatBarra" id="Immobile6_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile6_CatPM" id="Immobile6_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile6_CatPM" id="Immobile6_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile6_CatSubalterno" id="Immobile6_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile6_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile6_CatSubalterno" id="Immobile6_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile6_ControlloDatiCatastaliButton" name="Immobile6_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -1227,7 +1179,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile6_CheckVerificaCatastale"
       name="Immobile6_CheckVerificaCatastale"
@@ -1241,7 +1193,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile6_CheckVerificaCatastale1"
       name="Immobile6_CheckVerificaCatastale1"
@@ -1265,11 +1217,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile7_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile7_DatiToponomasticiObbligatori"       name="Immobile7_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile7_Tipo"       name="Immobile7_Tipo"       type="hidden" dynamic_value="#Immobile7_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile7_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile7_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile7_NumeroUlterioriImmobili" name="Immobile7_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile7_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile7_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile7_Note"       name="Immobile7_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile7_CatNote"    name="Immobile7_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -1305,7 +1252,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile7_TipoImmobile" name="Immobile7_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile7_TipoImmobile" name="Immobile7_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -1313,8 +1260,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile7_NomeComuneCatastale" name="Immobile7_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile7_CatComune" name="Immobile7_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile7_NomeComuneCatastale" name="Immobile7_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile7_CatComune" name="Immobile7_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -1332,25 +1279,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile7_ComuneCatastale_esteso" id="Immobile7_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile7_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile7_ComuneCatastale_esteso" id="Immobile7_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile7_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile7_CatNumero" id="Immobile7_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile7_CatBarra" id="Immobile7_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile7_CatBarra" id="Immobile7_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile7_CatPM" id="Immobile7_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile7_CatPM" id="Immobile7_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile7_CatSubalterno" id="Immobile7_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile7_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile7_CatSubalterno" id="Immobile7_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile7_ControlloDatiCatastaliButton" name="Immobile7_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -1384,7 +1328,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile7_CheckVerificaCatastale"
       name="Immobile7_CheckVerificaCatastale"
@@ -1398,7 +1342,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile7_CheckVerificaCatastale1"
       name="Immobile7_CheckVerificaCatastale1"
@@ -1422,11 +1366,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile8_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile8_DatiToponomasticiObbligatori"       name="Immobile8_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile8_Tipo"       name="Immobile8_Tipo"       type="hidden" dynamic_value="#Immobile8_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile8_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile8_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile8_NumeroUlterioriImmobili" name="Immobile8_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile8_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile8_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile8_Note"       name="Immobile8_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile8_CatNote"    name="Immobile8_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -1462,7 +1401,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile8_TipoImmobile" name="Immobile8_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile8_TipoImmobile" name="Immobile8_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -1470,8 +1409,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile8_NomeComuneCatastale" name="Immobile8_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile8_CatComune" name="Immobile8_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile8_NomeComuneCatastale" name="Immobile8_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile8_CatComune" name="Immobile8_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -1489,25 +1428,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile8_ComuneCatastale_esteso" id="Immobile8_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile8_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile8_ComuneCatastale_esteso" id="Immobile8_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile8_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile8_CatNumero" id="Immobile8_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile8_CatBarra" id="Immobile8_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile8_CatBarra" id="Immobile8_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile8_CatPM" id="Immobile8_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile8_CatPM" id="Immobile8_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile8_CatSubalterno" id="Immobile8_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile8_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile8_CatSubalterno" id="Immobile8_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile8_ControlloDatiCatastaliButton" name="Immobile8_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -1541,7 +1477,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile8_CheckVerificaCatastale"
       name="Immobile8_CheckVerificaCatastale"
@@ -1555,7 +1491,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile8_CheckVerificaCatastale1"
       name="Immobile8_CheckVerificaCatastale1"
@@ -1579,11 +1515,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile9_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile9_DatiToponomasticiObbligatori"       name="Immobile9_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile9_Tipo"       name="Immobile9_Tipo"       type="hidden" dynamic_value="#Immobile9_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile9_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile9_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile9_NumeroUlterioriImmobili" name="Immobile9_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile9_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile9_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile9_Note"       name="Immobile9_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile9_CatNote"    name="Immobile9_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -1619,7 +1550,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile9_TipoImmobile" name="Immobile9_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile9_TipoImmobile" name="Immobile9_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -1627,8 +1558,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile9_NomeComuneCatastale" name="Immobile9_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile9_CatComune" name="Immobile9_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile9_NomeComuneCatastale" name="Immobile9_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile9_CatComune" name="Immobile9_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -1646,25 +1577,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile9_ComuneCatastale_esteso" id="Immobile9_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile9_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile9_ComuneCatastale_esteso" id="Immobile9_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile9_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile9_CatNumero" id="Immobile9_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile9_CatBarra" id="Immobile9_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile9_CatBarra" id="Immobile9_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile9_CatPM" id="Immobile9_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile9_CatPM" id="Immobile9_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile9_CatSubalterno" id="Immobile9_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile9_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile9_CatSubalterno" id="Immobile9_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile9_ControlloDatiCatastaliButton" name="Immobile9_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -1698,7 +1626,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile9_CheckVerificaCatastale"
       name="Immobile9_CheckVerificaCatastale"
@@ -1712,7 +1640,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile9_CheckVerificaCatastale1"
       name="Immobile9_CheckVerificaCatastale1"
@@ -1736,11 +1664,6 @@ function get_ufficio_dest() {
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
  <!-- creare l'hidden type="checkbox" id="Immobile10_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile10_DatiToponomasticiObbligatori"       name="Immobile10_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile10_Tipo"       name="Immobile10_Tipo"       type="hidden" dynamic_value="#Immobile10_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile10_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile10_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile10_NumeroUlterioriImmobili" name="Immobile10_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile10_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile10_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile10_Note"       name="Immobile10_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile10_CatNote"    name="Immobile10_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
         <tbody>
@@ -1776,7 +1699,7 @@ function get_ufficio_dest() {
             <tr>
 
                 <td colspan="2">
-                    <select class="inputNormal" id="Immobile10_TipoImmobile" name="Immobile10_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
+                    <select class="inputNormal" id="Immobile10_TipoImmobile" name="Immobile10_TipoImmobile" style="width:100%" label="Tipo immobile" enabled="true">
                         <option value=""></option>
                         <option value="S">porzione di edificio</option>
 						            <option value="E">intero edificio</option>
@@ -1784,8 +1707,8 @@ function get_ufficio_dest() {
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="Immobile10_NomeComuneCatastale" name="Immobile10_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile10_CatComune" name="Immobile10_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="Immobile10_NomeComuneCatastale" name="Immobile10_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="Immobile10_CatComune" name="Immobile10_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -1803,25 +1726,22 @@ function get_ufficio_dest() {
                         <option value="432">Vigolo Baselga</option>
                         <option value="437">Villamontagna</option>
                         <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
                     </select>
                 </td>
                 <td colspan="2">
-                    <input name="Immobile10_ComuneCatastale_esteso" id="Immobile10_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile10_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+                    <input name="Immobile10_ComuneCatastale_esteso" id="Immobile10_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile10_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
                 </td>
                 <td>
                     <input name="Immobile10_CatNumero" id="Immobile10_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile10_CatBarra" id="Immobile10_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
+                    <input name="Immobile10_CatBarra" id="Immobile10_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile10_CatPM" id="Immobile10_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
+                    <input name="Immobile10_CatPM" id="Immobile10_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])"/>
                 </td>
                 <td>
-                    <input name="Immobile10_CatSubalterno" id="Immobile10_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile10_TipoImmobile.check_value(['S'])"/>
+                    <input name="Immobile10_CatSubalterno" id="Immobile10_CatSubalterno" style="width:100%;" label="Subalterno" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['S'])"/>
                 </td>
                 <td>
                     <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile10_ControlloDatiCatastaliButton" name="Immobile10_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -1855,7 +1775,7 @@ function get_ufficio_dest() {
     <td>
       <b>Verifica esito particella</b>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile10_CheckVerificaCatastale"
       name="Immobile10_CheckVerificaCatastale"
@@ -1869,7 +1789,7 @@ function get_ufficio_dest() {
     <td>
     <p style="line-height:1.6;">Particella esistente</p>
     </td>
-    <td style="orizontal-align: top; width: 4%;">
+    <td style="text-align: center; width: 4%;">
     <input
       id="Immobile10_CheckVerificaCatastale1"
       name="Immobile10_CheckVerificaCatastale1"
@@ -1896,13 +1816,13 @@ function get_ufficio_dest() {
   <tbody>
     <tr>
       <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Nominativo_titolare.value().toUpperCase()" style="width:90%;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -1929,13 +1849,9 @@ function get_ufficio_dest() {
  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="GEN-IMMAGG"/>
 
-<br>
-
- 
-  
-
- <input id="Metadati_altre_part" name="Metadati_altre_part" type="hidden"/>
- <input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" type="hidden"/>
+ <input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden"/>
+ <input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden"/>
+ <input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden"/>
 
 
 
@@ -1993,9 +1909,7 @@ function get_ufficio_dest() {
 
 			 $('#UfficioDestinatario').val(get_ufficio_dest());
 
-					
-
-                loadForm( ["Metadati"] ); //autoload prefix.
+                loadForm( [] ); //autoload prefix.
 
 
 

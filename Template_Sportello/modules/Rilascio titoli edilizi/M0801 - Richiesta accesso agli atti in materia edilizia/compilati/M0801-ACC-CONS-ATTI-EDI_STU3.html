@@ -731,7 +731,7 @@ function get_ufficio_dest() {
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Tipo_professionista" id="Tipo_professionista3" name="Tipo_professionista" type="radio" value="3" />
       </td>
-      <td colspan="10">da altro soggetto: <input class="" id="altro_tipo_incarico" name="altro_tipo_incarico" size="66" mandatory_enabled="#Tipo_professionista3.checked()" label="Specificare da chi si è incaricati"/></td>
+      <td colspan="10">da altro soggetto: <input class="" id="altro_tipo_incarico" name="altro_tipo_incarico" size="74" mandatory_enabled="#Tipo_professionista3.checked()" label="Specificare da chi si è incaricati"/></td>
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
@@ -742,15 +742,21 @@ function get_ufficio_dest() {
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="4">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="5">
         <input group="Tipo_richiedente" id="Tipo_richiedente4" name="Tipo_richiedente" type="radio" value="4" />
       </td>
       <td colspan="11">
         <p style="line-height:1.6;"><b>Confinante</b></p>
       </td>
     </tr>
-    <input id="confinante_DatiCatastaliObbligatori" name="confinante_DatiCatastaliObbligatori" dynamic_check="#Tipo_richiedente4.checked()" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
+    <input id="confinante_DatiCatastaliObbligatori" name="confinante_DatiCatastaliObbligatori" dynamic_value="#Tipo_richiedente4.checked() ? 'vero' : 'falso'" type="hidden"/>
+    <input id="confinante_DatiCatastaliAbilitati" name="confinante_DatiCatastaliAbilitati" dynamic_value="#Tipo_richiedente4.checked() ? 'vero' : 'falso'" type="hidden"/>
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>e proprietario del seguente immobile:</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
   <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
@@ -781,7 +787,7 @@ function get_ufficio_dest() {
 </tr>
 <tr>
   <td colspan="2">
-    <select class="inputNormal" id="confinante_TipoImmobile" name="confinante_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="#confinante_DatiCatastaliObbligatori.checked()">
+    <select class="inputNormal" id="confinante_TipoImmobile" name="confinante_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#confinante_DatiCatastaliObbligatori.value() == 'vero'" enabled="#confinante_DatiCatastaliAbilitati.value() == 'vero'">
       <option value=""></option>
       <option value="E">particella edificiale</option>
       <option value="F">particella fondiaria</option>
@@ -806,25 +812,22 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
   <td colspan="2">
-    <input name="confinante_ComuneCatastale_esteso" id="confinante_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#confinante_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+    <input name="confinante_ComuneCatastale_esteso" id="confinante_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#confinante_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="confinante_CatNumero" id="confinante_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#confinante_TipoImmobile.check_value(['E','F'])"/>
+    <input name="confinante_CatNumero" id="confinante_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#confinante_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="confinante_CatBarra" id="confinante_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="true"/>
+    <input name="confinante_CatBarra" id="confinante_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#confinante_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="confinante_CatPM" id="confinante_CatPM" style="width:100%;" label="Porzione Materiale" enabled="true" />
+    <input name="confinante_CatPM" id="confinante_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#confinante_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="confinante_CatSubalterno" id="confinante_CatSubalterno" style="width:100%;" label="Subalterno" enabled="true"/>
+    <input name="confinante_CatSubalterno" id="confinante_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#confinante_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="confinante_ControlloDatiCatastaliButton" name="confinante_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -876,7 +879,7 @@ function get_ufficio_dest() {
         <input group="Tipo_richiedente" id="Tipo_richiedente5" name="Tipo_richiedente" type="radio" value="5" />
       </td>
       <td colspan="11">
-        <p style="line-height:1.6;"><b>Altro titolo:</b> <input class="" id="altro_tipo_richiedente" name="altro_tipo_richiedente" size="80" mandatory_enabled="#Tipo_richiedente5.checked()" label="Specificare titolo per effettuare la richiesta"/></p>
+        <p style="line-height:1.6;"><b>Altro titolo:</b> <input class="" id="altro_tipo_richiedente" name="altro_tipo_richiedente" size="90" mandatory_enabled="#Tipo_richiedente5.checked()" label="Specificare titolo per effettuare la richiesta"/></p>
       </td>
     </tr>
   </tbody>
@@ -890,48 +893,53 @@ function get_ufficio_dest() {
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="26">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="30">
         <div id="Servizio_richiesto" name="Servizio_richiesto" label="Servizio richiesto" mandatory_enabled="true"> </div>
         <input group="Servizio_richiesto" id="Servizio_richiesto2" name="Servizio_richiesto2" type="checkbox" value="2" /> 
       </td>
-      <td colspan="10">
+      <td colspan="12">
         <p style="line-height:1.6;">L'<b>ACCESSO</b> agli atti e ai documenti <span style="font-size:85%;"><i>&nbsp;&nbsp;&nbsp;(Ai sensi dell'articolo 22 e seguenti della Legge 07/08/1990, n. 241)</i></span></p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td colspan="10">
-        <p style="line-height:1.6; font-size:90%;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
+      <td colspan="12">
+        <p style="line-height:1.6; "><b>riguardanti le seguenti realtà immobiliari:</b></p>
       </td>
     </tr>
 
-    <input id="accesso1_DatiCatastaliObbligatori" name="accesso1_DatiCatastaliObbligatori" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <input id="accesso1_DatiCatastaliAbilitati" name="accesso1_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
-  <td colspan="2" style="width: 20%;">
+    <input id="accesso1_DatiCatastaliObbligatori" name="accesso1_DatiCatastaliObbligatori" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'"  type="hidden"/>
+    <input id="accesso1_DatiCatastaliAbilitati" name="accesso1_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>Particella #1</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
+  <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
-  <td style="width: 17%;">
+  <td>
     <p class="Labelcella">Comune catastale (codice)</p>
   </td>
-  <td style="width: 24%;">
+  <td colspan="2">
     <p class="Labelcella">Comune catastale (nome esteso)</p>
   </td>
   <td style="width: 8%;">
     <p class="Labelcella">Numero</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Barra</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Porzione Materiale</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p  class="Labelcella">Subalterno</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Controllo particella</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Mappa</p>
   </td>
 </tr>
@@ -944,7 +952,7 @@ function get_ufficio_dest() {
     </select>
   </td>
   <td>
-    <select class="inputNormal" id="accesso1_CatComune" name="accesso1_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#accesso1_TipoImmobile.value() != ''">
+    <select class="inputNormal" id="accesso1_CatComune" name="accesso1_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#accesso1_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -962,28 +970,26 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
-  <td>
-    <input name="accesso1_ComuneCatastale_esteso" id="accesso1_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#accesso1_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+  <td colspan="2">
+    <input name="accesso1_ComuneCatastale_esteso" id="accesso1_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#accesso1_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="accesso1_CatNumero" id="accesso1_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#accesso1_TipoImmobile.value() != ''"/>
+    <input name="accesso1_CatNumero" id="accesso1_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#accesso1_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso1_CatBarra" id="accesso1_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#accesso1_TipoImmobile.value() != ''"/>
+    <input name="accesso1_CatBarra" id="accesso1_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#accesso1_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso1_CatPM" id="accesso1_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#accesso1_TipoImmobile.value() != ''"/>
+    <input name="accesso1_CatPM" id="accesso1_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#accesso1_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso1_CatSubalterno" id="accesso1_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#accesso1_TipoImmobile.value() != ''"/>
+    <input name="accesso1_CatSubalterno" id="accesso1_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#accesso1_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="accesso1_ControlloDatiCatastaliButton" name="accesso1_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+
       
 <div
   ws-name="verifica_particella"
@@ -995,33 +1001,25 @@ function get_ufficio_dest() {
 </div>
 
     <input id="accesso1_RisultatoVerificaCatastale" name="accesso1_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-      
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=accesso1_CatBarra;num=accesso1_CatNumero;com=accesso1_CatComune;tipo=accesso1_TipoImmobile"
-  ws-param-out=
-  "accesso1_lista_vie1=lista_vie_particella"
-  ws-on="#accesso1_RisultatoVerificaCatastale:change">
-</div>
   </td>
   <td>
     <button class="real-button" type="button" enabled="#accesso1_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('accesso1_CatComune').value; num = document.getElementById('accesso1_CatNumero').value; barra = document.getElementById('accesso1_CatBarra').value; tipo = document.getElementById('accesso1_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
   </td>
 </tr>
-<tr class="Rigaintestazione">
+<tr class="Rigaintestazione" >
   <td colspan="3">
     Verifica esito particella
   </td>
-  <td colspan="3">
+  <td colspan="4">
     <input
       id="accesso1_CheckVerificaCatastale"
       name="accesso1_CheckVerificaCatastale"
       dynamic_check="#accesso1_RisultatoVerificaCatastale.value()=='SI'"
       enabled="#accesso1_RisultatoVerificaCatastale.value()=='SI'"
       type="checkbox"
-      value="OK"/>
-      Particella esistente</p>
+      value="OK"
+      label="Modulo"/>
+      Particella esistente  
   </td>
   <td colspan="4">
     <input
@@ -1035,34 +1033,39 @@ function get_ufficio_dest() {
   </td>
 </tr>
 
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    <input class="" id="accesso2_DatiCatastaliAbilitati" name="accesso2_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
-  <td colspan="2" style="width: 20%;">
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="accesso2_DatiCatastaliAbilitati" name="accesso2_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>Particella #2</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
+  <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
-  <td style="width: 17%;">
+  <td>
     <p class="Labelcella">Comune catastale (codice)</p>
   </td>
-  <td style="width: 24%;">
+  <td colspan="2">
     <p class="Labelcella">Comune catastale (nome esteso)</p>
   </td>
   <td style="width: 8%;">
     <p class="Labelcella">Numero</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Barra</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Porzione Materiale</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p  class="Labelcella">Subalterno</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Controllo particella</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Mappa</p>
   </td>
 </tr>
@@ -1075,7 +1078,7 @@ function get_ufficio_dest() {
     </select>
   </td>
   <td>
-    <select class="inputNormal" id="accesso2_CatComune" name="accesso2_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#accesso2_TipoImmobile.value() != ''">
+    <select class="inputNormal" id="accesso2_CatComune" name="accesso2_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#accesso2_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -1093,28 +1096,26 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
-  <td>
-    <input name="accesso2_ComuneCatastale_esteso" id="accesso2_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#accesso2_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+  <td colspan="2">
+    <input name="accesso2_ComuneCatastale_esteso" id="accesso2_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#accesso2_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="accesso2_CatNumero" id="accesso2_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#accesso2_TipoImmobile.value() != ''"/>
+    <input name="accesso2_CatNumero" id="accesso2_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#accesso2_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso2_CatBarra" id="accesso2_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#accesso2_TipoImmobile.value() != ''"/>
+    <input name="accesso2_CatBarra" id="accesso2_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#accesso2_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso2_CatPM" id="accesso2_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#accesso2_TipoImmobile.value() != ''"/>
+    <input name="accesso2_CatPM" id="accesso2_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#accesso2_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso2_CatSubalterno" id="accesso2_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#accesso2_TipoImmobile.value() != ''"/>
+    <input name="accesso2_CatSubalterno" id="accesso2_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#accesso2_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="accesso2_ControlloDatiCatastaliButton" name="accesso2_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+
       
 <div
   ws-name="verifica_particella"
@@ -1126,33 +1127,25 @@ function get_ufficio_dest() {
 </div>
 
     <input id="accesso2_RisultatoVerificaCatastale" name="accesso2_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-      
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=accesso2_CatBarra;num=accesso2_CatNumero;com=accesso2_CatComune;tipo=accesso2_TipoImmobile"
-  ws-param-out=
-  "accesso2_lista_vie1=lista_vie_particella"
-  ws-on="#accesso2_RisultatoVerificaCatastale:change">
-</div>
   </td>
   <td>
     <button class="real-button" type="button" enabled="#accesso2_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('accesso2_CatComune').value; num = document.getElementById('accesso2_CatNumero').value; barra = document.getElementById('accesso2_CatBarra').value; tipo = document.getElementById('accesso2_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
   </td>
 </tr>
-<tr class="Rigaintestazione">
+<tr class="Rigaintestazione" >
   <td colspan="3">
     Verifica esito particella
   </td>
-  <td colspan="3">
+  <td colspan="4">
     <input
       id="accesso2_CheckVerificaCatastale"
       name="accesso2_CheckVerificaCatastale"
       dynamic_check="#accesso2_RisultatoVerificaCatastale.value()=='SI'"
       enabled="#accesso2_RisultatoVerificaCatastale.value()=='SI'"
       type="checkbox"
-      value="OK"/>
-      Particella esistente</p>
+      value="OK"
+      label="Modulo"/>
+      Particella esistente  
   </td>
   <td colspan="4">
     <input
@@ -1166,34 +1159,39 @@ function get_ufficio_dest() {
   </td>
 </tr>
 
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    <input class="" id="accesso3_DatiCatastaliAbilitati" name="accesso3_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
-  <td colspan="2" style="width: 20%;">
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="accesso3_DatiCatastaliAbilitati" name="accesso3_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>Particella #3</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
+  <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
-  <td style="width: 17%;">
+  <td>
     <p class="Labelcella">Comune catastale (codice)</p>
   </td>
-  <td style="width: 24%;">
+  <td colspan="2">
     <p class="Labelcella">Comune catastale (nome esteso)</p>
   </td>
   <td style="width: 8%;">
     <p class="Labelcella">Numero</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Barra</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Porzione Materiale</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p  class="Labelcella">Subalterno</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Controllo particella</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Mappa</p>
   </td>
 </tr>
@@ -1206,7 +1204,7 @@ function get_ufficio_dest() {
     </select>
   </td>
   <td>
-    <select class="inputNormal" id="accesso3_CatComune" name="accesso3_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#accesso3_TipoImmobile.value() != ''">
+    <select class="inputNormal" id="accesso3_CatComune" name="accesso3_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#accesso3_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -1224,28 +1222,26 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
-  <td>
-    <input name="accesso3_ComuneCatastale_esteso" id="accesso3_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#accesso3_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+  <td colspan="2">
+    <input name="accesso3_ComuneCatastale_esteso" id="accesso3_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#accesso3_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="accesso3_CatNumero" id="accesso3_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#accesso3_TipoImmobile.value() != ''"/>
+    <input name="accesso3_CatNumero" id="accesso3_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#accesso3_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso3_CatBarra" id="accesso3_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#accesso3_TipoImmobile.value() != ''"/>
+    <input name="accesso3_CatBarra" id="accesso3_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#accesso3_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso3_CatPM" id="accesso3_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#accesso3_TipoImmobile.value() != ''"/>
+    <input name="accesso3_CatPM" id="accesso3_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#accesso3_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso3_CatSubalterno" id="accesso3_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#accesso3_TipoImmobile.value() != ''"/>
+    <input name="accesso3_CatSubalterno" id="accesso3_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#accesso3_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="accesso3_ControlloDatiCatastaliButton" name="accesso3_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+
       
 <div
   ws-name="verifica_particella"
@@ -1257,33 +1253,25 @@ function get_ufficio_dest() {
 </div>
 
     <input id="accesso3_RisultatoVerificaCatastale" name="accesso3_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-      
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=accesso3_CatBarra;num=accesso3_CatNumero;com=accesso3_CatComune;tipo=accesso3_TipoImmobile"
-  ws-param-out=
-  "accesso3_lista_vie1=lista_vie_particella"
-  ws-on="#accesso3_RisultatoVerificaCatastale:change">
-</div>
   </td>
   <td>
     <button class="real-button" type="button" enabled="#accesso3_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('accesso3_CatComune').value; num = document.getElementById('accesso3_CatNumero').value; barra = document.getElementById('accesso3_CatBarra').value; tipo = document.getElementById('accesso3_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
   </td>
 </tr>
-<tr class="Rigaintestazione">
+<tr class="Rigaintestazione" >
   <td colspan="3">
     Verifica esito particella
   </td>
-  <td colspan="3">
+  <td colspan="4">
     <input
       id="accesso3_CheckVerificaCatastale"
       name="accesso3_CheckVerificaCatastale"
       dynamic_check="#accesso3_RisultatoVerificaCatastale.value()=='SI'"
       enabled="#accesso3_RisultatoVerificaCatastale.value()=='SI'"
       type="checkbox"
-      value="OK"/>
-      Particella esistente</p>
+      value="OK"
+      label="Modulo"/>
+      Particella esistente  
   </td>
   <td colspan="4">
     <input
@@ -1297,34 +1285,39 @@ function get_ufficio_dest() {
   </td>
 </tr>
 
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    <input class="" id="accesso4_DatiCatastaliAbilitati" name="accesso4_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
-  <td colspan="2" style="width: 20%;">
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="accesso4_DatiCatastaliAbilitati" name="accesso4_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>Particella #4</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
+  <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
-  <td style="width: 17%;">
+  <td>
     <p class="Labelcella">Comune catastale (codice)</p>
   </td>
-  <td style="width: 24%;">
+  <td colspan="2">
     <p class="Labelcella">Comune catastale (nome esteso)</p>
   </td>
   <td style="width: 8%;">
     <p class="Labelcella">Numero</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Barra</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Porzione Materiale</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p  class="Labelcella">Subalterno</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Controllo particella</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Mappa</p>
   </td>
 </tr>
@@ -1337,7 +1330,7 @@ function get_ufficio_dest() {
     </select>
   </td>
   <td>
-    <select class="inputNormal" id="accesso4_CatComune" name="accesso4_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#accesso4_TipoImmobile.value() != ''">
+    <select class="inputNormal" id="accesso4_CatComune" name="accesso4_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#accesso4_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -1355,28 +1348,26 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
-  <td>
-    <input name="accesso4_ComuneCatastale_esteso" id="accesso4_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#accesso4_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+  <td colspan="2">
+    <input name="accesso4_ComuneCatastale_esteso" id="accesso4_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#accesso4_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="accesso4_CatNumero" id="accesso4_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#accesso4_TipoImmobile.value() != ''"/>
+    <input name="accesso4_CatNumero" id="accesso4_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#accesso4_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso4_CatBarra" id="accesso4_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#accesso4_TipoImmobile.value() != ''"/>
+    <input name="accesso4_CatBarra" id="accesso4_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#accesso4_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso4_CatPM" id="accesso4_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#accesso4_TipoImmobile.value() != ''"/>
+    <input name="accesso4_CatPM" id="accesso4_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#accesso4_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="accesso4_CatSubalterno" id="accesso4_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#accesso4_TipoImmobile.value() != ''"/>
+    <input name="accesso4_CatSubalterno" id="accesso4_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#accesso4_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="accesso4_ControlloDatiCatastaliButton" name="accesso4_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+
       
 <div
   ws-name="verifica_particella"
@@ -1388,33 +1379,25 @@ function get_ufficio_dest() {
 </div>
 
     <input id="accesso4_RisultatoVerificaCatastale" name="accesso4_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-      
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=accesso4_CatBarra;num=accesso4_CatNumero;com=accesso4_CatComune;tipo=accesso4_TipoImmobile"
-  ws-param-out=
-  "accesso4_lista_vie1=lista_vie_particella"
-  ws-on="#accesso4_RisultatoVerificaCatastale:change">
-</div>
   </td>
   <td>
     <button class="real-button" type="button" enabled="#accesso4_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('accesso4_CatComune').value; num = document.getElementById('accesso4_CatNumero').value; barra = document.getElementById('accesso4_CatBarra').value; tipo = document.getElementById('accesso4_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
   </td>
 </tr>
-<tr class="Rigaintestazione">
+<tr class="Rigaintestazione" >
   <td colspan="3">
     Verifica esito particella
   </td>
-  <td colspan="3">
+  <td colspan="4">
     <input
       id="accesso4_CheckVerificaCatastale"
       name="accesso4_CheckVerificaCatastale"
       dynamic_check="#accesso4_RisultatoVerificaCatastale.value()=='SI'"
       enabled="#accesso4_RisultatoVerificaCatastale.value()=='SI'"
       type="checkbox"
-      value="OK"/>
-      Particella esistente</p>
+      value="OK"
+      label="Modulo"/>
+      Particella esistente  
   </td>
   <td colspan="4">
     <input
@@ -1428,10 +1411,10 @@ function get_ufficio_dest() {
   </td>
 </tr>
 
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
     <tr class="Rigaintestazioneridotta">
-      <td colspan="10">
-        <p style="line-height:1.6; font-size:90%;"><b>CHIEDENDO, per tali documenti:</b></p>
+      <td colspan="11">
+        <p style="line-height:1.6;"><b>CHIEDENDO, per tali documenti:</b></p>
       </td>
     </tr>  
     <tr>
@@ -1439,19 +1422,19 @@ function get_ufficio_dest() {
         <div id="Tipo_accesso" name="Tipo_accesso" label="Servizio Tipo_accesso" mandatory_enabled="#Servizio_richiesto2.checked()"> </div>
         <input group="Tipo_accesso" id="Tipo_accesso1" name="Tipo_accesso1" type="checkbox" value="1" /> 
       </td>
-      <td colspan="9">Presa visione</td>
+      <td colspan="10">Presa visione</td>
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Tipo_accesso" id="Tipo_accesso3" name="Tipo_accesso3" type="checkbox" value="3" /> 
       </td>
-      <td colspan="9">Estrazione copia in carta semplice</td>
+      <td colspan="10">Estrazione copia in carta semplice</td>
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="5">
         <input group="Tipo_accesso" id="Tipo_accesso4" name="Tipo_accesso4" type="checkbox" value="4" /> 
       </td>
-      <td colspan="9">
+      <td colspan="10">
         <p style="line-height:1.6;">Estrazione copia conforme all'originale
       </td>
     </tr>
@@ -1482,49 +1465,54 @@ function get_ufficio_dest() {
         <p style="line-height:1.6;">per la quale non è necessario annullare marca da bollo in quanto soggetto esente</p>
       </td>
     </tr>
-    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <tr class="Rigaintestazioneridotta"><td colspan="12"></td></tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="17">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="21">
         <input group="Servizio_richiesto" id="Servizio_richiesto1" name="Servizio_richiesto1" type="checkbox" value="1" /> 
       </td>
-      <td colspan="10">
+      <td colspan="11">
         <p style="line-height:1.6;"><b>COPIA</b> deglii atti conservati presso l'Archivio Storico</p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td colspan="10">
-        <p style="line-height:1.6; font-size:90%;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
+      <td colspan="11">
+        <p style="line-height:1.6;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
       </td>
     </tr>
     
     <input class="" id="consultazione1_DatiCatastaliObbligatori" name="consultazione1_DatiCatastaliObbligatori" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden"/>
     <input class="" id="consultazione1_DatiCatastaliAbilitati" name="consultazione1_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
-  <td colspan="2" style="width: 20%;">
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>Particella #1</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
+  <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
-  <td style="width: 17%;">
+  <td>
     <p class="Labelcella">Comune catastale (codice)</p>
   </td>
-  <td style="width: 24%;">
+  <td colspan="2">
     <p class="Labelcella">Comune catastale (nome esteso)</p>
   </td>
   <td style="width: 8%;">
     <p class="Labelcella">Numero</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Barra</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Porzione Materiale</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p  class="Labelcella">Subalterno</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Controllo particella</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Mappa</p>
   </td>
 </tr>
@@ -1537,7 +1525,7 @@ function get_ufficio_dest() {
     </select>
   </td>
   <td>
-    <select class="inputNormal" id="consultazione1_CatComune" name="consultazione1_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#consultazione1_TipoImmobile.value() != ''">
+    <select class="inputNormal" id="consultazione1_CatComune" name="consultazione1_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#consultazione1_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -1555,28 +1543,26 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
-  <td>
-    <input name="consultazione1_ComuneCatastale_esteso" id="consultazione1_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#consultazione1_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+  <td colspan="2">
+    <input name="consultazione1_ComuneCatastale_esteso" id="consultazione1_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#consultazione1_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="consultazione1_CatNumero" id="consultazione1_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#consultazione1_TipoImmobile.value() != ''"/>
+    <input name="consultazione1_CatNumero" id="consultazione1_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#consultazione1_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione1_CatBarra" id="consultazione1_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#consultazione1_TipoImmobile.value() != ''"/>
+    <input name="consultazione1_CatBarra" id="consultazione1_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#consultazione1_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione1_CatPM" id="consultazione1_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#consultazione1_TipoImmobile.value() != ''"/>
+    <input name="consultazione1_CatPM" id="consultazione1_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#consultazione1_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione1_CatSubalterno" id="consultazione1_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#consultazione1_TipoImmobile.value() != ''"/>
+    <input name="consultazione1_CatSubalterno" id="consultazione1_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#consultazione1_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="consultazione1_ControlloDatiCatastaliButton" name="consultazione1_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+
       
 <div
   ws-name="verifica_particella"
@@ -1588,33 +1574,25 @@ function get_ufficio_dest() {
 </div>
 
     <input id="consultazione1_RisultatoVerificaCatastale" name="consultazione1_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-      
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=consultazione1_CatBarra;num=consultazione1_CatNumero;com=consultazione1_CatComune;tipo=consultazione1_TipoImmobile"
-  ws-param-out=
-  "consultazione1_lista_vie1=lista_vie_particella"
-  ws-on="#consultazione1_RisultatoVerificaCatastale:change">
-</div>
   </td>
   <td>
     <button class="real-button" type="button" enabled="#consultazione1_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('consultazione1_CatComune').value; num = document.getElementById('consultazione1_CatNumero').value; barra = document.getElementById('consultazione1_CatBarra').value; tipo = document.getElementById('consultazione1_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
   </td>
 </tr>
-<tr class="Rigaintestazione">
+<tr class="Rigaintestazione" >
   <td colspan="3">
     Verifica esito particella
   </td>
-  <td colspan="3">
+  <td colspan="4">
     <input
       id="consultazione1_CheckVerificaCatastale"
       name="consultazione1_CheckVerificaCatastale"
       dynamic_check="#consultazione1_RisultatoVerificaCatastale.value()=='SI'"
       enabled="#consultazione1_RisultatoVerificaCatastale.value()=='SI'"
       type="checkbox"
-      value="OK"/>
-      Particella esistente</p>
+      value="OK"
+      label="Modulo"/>
+      Particella esistente  
   </td>
   <td colspan="4">
     <input
@@ -1627,34 +1605,39 @@ function get_ufficio_dest() {
       Particella NON esistente
   </td>
 </tr>
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    <input class="" id="consultazione2_DatiCatastaliAbilitati" name="consultazione2_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
-  <td colspan="2" style="width: 20%;">
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="consultazione2_DatiCatastaliAbilitati" name="consultazione2_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden" />
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>Particella #2</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
+  <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
-  <td style="width: 17%;">
+  <td>
     <p class="Labelcella">Comune catastale (codice)</p>
   </td>
-  <td style="width: 24%;">
+  <td colspan="2">
     <p class="Labelcella">Comune catastale (nome esteso)</p>
   </td>
   <td style="width: 8%;">
     <p class="Labelcella">Numero</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Barra</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Porzione Materiale</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p  class="Labelcella">Subalterno</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Controllo particella</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Mappa</p>
   </td>
 </tr>
@@ -1667,7 +1650,7 @@ function get_ufficio_dest() {
     </select>
   </td>
   <td>
-    <select class="inputNormal" id="consultazione2_CatComune" name="consultazione2_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#consultazione2_TipoImmobile.value() != ''">
+    <select class="inputNormal" id="consultazione2_CatComune" name="consultazione2_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#consultazione2_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -1685,28 +1668,26 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
-  <td>
-    <input name="consultazione2_ComuneCatastale_esteso" id="consultazione2_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#consultazione2_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+  <td colspan="2">
+    <input name="consultazione2_ComuneCatastale_esteso" id="consultazione2_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#consultazione2_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="consultazione2_CatNumero" id="consultazione2_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#consultazione2_TipoImmobile.value() != ''"/>
+    <input name="consultazione2_CatNumero" id="consultazione2_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#consultazione2_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione2_CatBarra" id="consultazione2_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#consultazione2_TipoImmobile.value() != ''"/>
+    <input name="consultazione2_CatBarra" id="consultazione2_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#consultazione2_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione2_CatPM" id="consultazione2_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#consultazione2_TipoImmobile.value() != ''"/>
+    <input name="consultazione2_CatPM" id="consultazione2_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#consultazione2_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione2_CatSubalterno" id="consultazione2_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#consultazione2_TipoImmobile.value() != ''"/>
+    <input name="consultazione2_CatSubalterno" id="consultazione2_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#consultazione2_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="consultazione2_ControlloDatiCatastaliButton" name="consultazione2_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+
       
 <div
   ws-name="verifica_particella"
@@ -1718,33 +1699,25 @@ function get_ufficio_dest() {
 </div>
 
     <input id="consultazione2_RisultatoVerificaCatastale" name="consultazione2_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-      
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=consultazione2_CatBarra;num=consultazione2_CatNumero;com=consultazione2_CatComune;tipo=consultazione2_TipoImmobile"
-  ws-param-out=
-  "consultazione2_lista_vie1=lista_vie_particella"
-  ws-on="#consultazione2_RisultatoVerificaCatastale:change">
-</div>
   </td>
   <td>
     <button class="real-button" type="button" enabled="#consultazione2_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('consultazione2_CatComune').value; num = document.getElementById('consultazione2_CatNumero').value; barra = document.getElementById('consultazione2_CatBarra').value; tipo = document.getElementById('consultazione2_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
   </td>
 </tr>
-<tr class="Rigaintestazione">
+<tr class="Rigaintestazione" >
   <td colspan="3">
     Verifica esito particella
   </td>
-  <td colspan="3">
+  <td colspan="4">
     <input
       id="consultazione2_CheckVerificaCatastale"
       name="consultazione2_CheckVerificaCatastale"
       dynamic_check="#consultazione2_RisultatoVerificaCatastale.value()=='SI'"
       enabled="#consultazione2_RisultatoVerificaCatastale.value()=='SI'"
       type="checkbox"
-      value="OK"/>
-      Particella esistente</p>
+      value="OK"
+      label="Modulo"/>
+      Particella esistente  
   </td>
   <td colspan="4">
     <input
@@ -1758,34 +1731,39 @@ function get_ufficio_dest() {
   </td>
 </tr>
 
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    <input class="" id="consultazione3_DatiCatastaliAbilitati" name="consultazione3_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
-  <td colspan="2" style="width: 20%;">
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="consultazione3_DatiCatastaliAbilitati" name="consultazione3_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden" />
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>Particella #3</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
+  <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
-  <td style="width: 17%;">
+  <td>
     <p class="Labelcella">Comune catastale (codice)</p>
   </td>
-  <td style="width: 24%;">
+  <td colspan="2">
     <p class="Labelcella">Comune catastale (nome esteso)</p>
   </td>
   <td style="width: 8%;">
     <p class="Labelcella">Numero</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Barra</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Porzione Materiale</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p  class="Labelcella">Subalterno</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Controllo particella</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Mappa</p>
   </td>
 </tr>
@@ -1798,7 +1776,7 @@ function get_ufficio_dest() {
     </select>
   </td>
   <td>
-    <select class="inputNormal" id="consultazione3_CatComune" name="consultazione3_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#consultazione3_TipoImmobile.value() != ''">
+    <select class="inputNormal" id="consultazione3_CatComune" name="consultazione3_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#consultazione3_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -1816,28 +1794,26 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
-  <td>
-    <input name="consultazione3_ComuneCatastale_esteso" id="consultazione3_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#consultazione3_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+  <td colspan="2">
+    <input name="consultazione3_ComuneCatastale_esteso" id="consultazione3_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#consultazione3_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="consultazione3_CatNumero" id="consultazione3_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#consultazione3_TipoImmobile.value() != ''"/>
+    <input name="consultazione3_CatNumero" id="consultazione3_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#consultazione3_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione3_CatBarra" id="consultazione3_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#consultazione3_TipoImmobile.value() != ''"/>
+    <input name="consultazione3_CatBarra" id="consultazione3_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#consultazione3_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione3_CatPM" id="consultazione3_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#consultazione3_TipoImmobile.value() != ''"/>
+    <input name="consultazione3_CatPM" id="consultazione3_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#consultazione3_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione3_CatSubalterno" id="consultazione3_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#consultazione3_TipoImmobile.value() != ''"/>
+    <input name="consultazione3_CatSubalterno" id="consultazione3_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#consultazione3_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="consultazione3_ControlloDatiCatastaliButton" name="consultazione3_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+
       
 <div
   ws-name="verifica_particella"
@@ -1849,33 +1825,25 @@ function get_ufficio_dest() {
 </div>
 
     <input id="consultazione3_RisultatoVerificaCatastale" name="consultazione3_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-      
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=consultazione3_CatBarra;num=consultazione3_CatNumero;com=consultazione3_CatComune;tipo=consultazione3_TipoImmobile"
-  ws-param-out=
-  "consultazione3_lista_vie1=lista_vie_particella"
-  ws-on="#consultazione3_RisultatoVerificaCatastale:change">
-</div>
   </td>
   <td>
     <button class="real-button" type="button" enabled="#consultazione3_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('consultazione3_CatComune').value; num = document.getElementById('consultazione3_CatNumero').value; barra = document.getElementById('consultazione3_CatBarra').value; tipo = document.getElementById('consultazione3_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
   </td>
 </tr>
-<tr class="Rigaintestazione">
+<tr class="Rigaintestazione" >
   <td colspan="3">
     Verifica esito particella
   </td>
-  <td colspan="3">
+  <td colspan="4">
     <input
       id="consultazione3_CheckVerificaCatastale"
       name="consultazione3_CheckVerificaCatastale"
       dynamic_check="#consultazione3_RisultatoVerificaCatastale.value()=='SI'"
       enabled="#consultazione3_RisultatoVerificaCatastale.value()=='SI'"
       type="checkbox"
-      value="OK"/>
-      Particella esistente</p>
+      value="OK"
+      label="Modulo"/>
+      Particella esistente  
   </td>
   <td colspan="4">
     <input
@@ -1889,34 +1857,39 @@ function get_ufficio_dest() {
   </td>
 </tr>
 
-    <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-    <input class="" id="consultazione4_DatiCatastaliAbilitati" name="consultazione4_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <tr class="Rigaintestazioneridotta">
-  <td colspan="2" style="width: 20%;">
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="consultazione4_DatiCatastaliAbilitati" name="consultazione4_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden" />
+    <tr class="Rigaintestazione">
+    <td colspan="11">
+      <p style="line-height:1.6;"><b>Particella #4</b></p>
+    </td>
+  </tr>
+<tr class="Rigaintestazioneridotta">
+  <td colspan="2">
     <p class="Labelcella">Tipo</p>
   </td>
-  <td style="width: 17%;">
+  <td>
     <p class="Labelcella">Comune catastale (codice)</p>
   </td>
-  <td style="width: 24%;">
+  <td colspan="2">
     <p class="Labelcella">Comune catastale (nome esteso)</p>
   </td>
   <td style="width: 8%;">
     <p class="Labelcella">Numero</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Barra</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Porzione Materiale</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p  class="Labelcella">Subalterno</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Controllo particella</p>
   </td>
-  <td style="width: 6%;">
+  <td style="width: 8%;">
     <p class="Labelcella">Mappa</p>
   </td>
 </tr>
@@ -1929,7 +1902,7 @@ function get_ufficio_dest() {
     </select>
   </td>
   <td>
-    <select class="inputNormal" id="consultazione4_CatComune" name="consultazione4_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#consultazione4_TipoImmobile.value() != ''">
+    <select class="inputNormal" id="consultazione4_CatComune" name="consultazione4_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#consultazione4_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -1947,28 +1920,26 @@ function get_ufficio_dest() {
       <option value="432">Vigolo Baselga</option>
       <option value="437">Villamontagna</option>
       <option value="439">Villazzano</option>
-      <option value="4">Aldeno</option>
-      <option value="101">Cimone</option>
-      <option value="162">Garniga</option>
     </select>
   </td>
-  <td>
-    <input name="consultazione4_ComuneCatastale_esteso" id="consultazione4_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#consultazione4_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+  <td colspan="2">
+    <input name="consultazione4_ComuneCatastale_esteso" id="consultazione4_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#consultazione4_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
   </td>
   <td>
-    <input name="consultazione4_CatNumero" id="consultazione4_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#consultazione4_TipoImmobile.value() != ''"/>
+    <input name="consultazione4_CatNumero" id="consultazione4_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#consultazione4_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione4_CatBarra" id="consultazione4_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#consultazione4_TipoImmobile.value() != ''"/>
+    <input name="consultazione4_CatBarra" id="consultazione4_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale" enabled="#consultazione4_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione4_CatPM" id="consultazione4_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#consultazione4_TipoImmobile.value() != ''"/>
+    <input name="consultazione4_CatPM" id="consultazione4_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale" enabled="#consultazione4_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
-    <input name="consultazione4_CatSubalterno" id="consultazione4_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#consultazione4_TipoImmobile.value() != ''"/>
+    <input name="consultazione4_CatSubalterno" id="consultazione4_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" enabled="#consultazione4_TipoImmobile.check_value(['E','F'])"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="consultazione4_ControlloDatiCatastaliButton" name="consultazione4_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+
       
 <div
   ws-name="verifica_particella"
@@ -1980,33 +1951,25 @@ function get_ufficio_dest() {
 </div>
 
     <input id="consultazione4_RisultatoVerificaCatastale" name="consultazione4_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-      
-<div
-  ws-name="lista_vie"
-  ws-param-in=
-  "barra=consultazione4_CatBarra;num=consultazione4_CatNumero;com=consultazione4_CatComune;tipo=consultazione4_TipoImmobile"
-  ws-param-out=
-  "consultazione4_lista_vie1=lista_vie_particella"
-  ws-on="#consultazione4_RisultatoVerificaCatastale:change">
-</div>
   </td>
   <td>
     <button class="real-button" type="button" enabled="#consultazione4_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('consultazione4_CatComune').value; num = document.getElementById('consultazione4_CatNumero').value; barra = document.getElementById('consultazione4_CatBarra').value; tipo = document.getElementById('consultazione4_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
   </td>
 </tr>
-<tr class="Rigaintestazione">
+<tr class="Rigaintestazione" >
   <td colspan="3">
     Verifica esito particella
   </td>
-  <td colspan="3">
+  <td colspan="4">
     <input
       id="consultazione4_CheckVerificaCatastale"
       name="consultazione4_CheckVerificaCatastale"
       dynamic_check="#consultazione4_RisultatoVerificaCatastale.value()=='SI'"
       enabled="#consultazione4_RisultatoVerificaCatastale.value()=='SI'"
       type="checkbox"
-      value="OK"/>
-      Particella esistente</p>
+      value="OK"
+      label="Modulo"/>
+      Particella esistente  
   </td>
   <td colspan="4">
     <input
@@ -2202,8 +2165,8 @@ function get_ufficio_dest() {
         <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#Tipo_richiedente2.checked() || #Tipo_richiedente5.checked()" enabled="#Tipo_richiedente2.checked() || #Tipo_richiedente5.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Modulo di affidamento dell'incarico firmato dal delegante</b> nella seguente modalità: <br>
-          <select class="inputNormal" id="Tipo_Firma_delega" name="Tipo_Firma_delega" style="width:70%;" label="Tipo firma delega" mandatory_enabled="#Modulo_delega.checked()">
+        <p style="line-height:1.6;">Modulo secondario - <b>Modulo di affidamento dell'incarico firmato dal delegante</b> nella seguente modalità: 
+          <select class="inputNormal" id="Tipo_Firma_delega" name="Tipo_Firma_delega" style="width:77%;" label="Tipo firma delega" mandatory_enabled="#Modulo_delega.checked()">
             <option value=""></option>
             <option value="Firma autografa">Firma autografa, allegando copia del documento di identità</option>
             <option value="Firma elettronica">Firma elettronica</option>
