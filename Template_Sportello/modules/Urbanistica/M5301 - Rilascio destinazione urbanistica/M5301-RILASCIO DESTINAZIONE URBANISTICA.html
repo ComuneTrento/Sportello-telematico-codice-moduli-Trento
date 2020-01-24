@@ -259,7 +259,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td style="vertical-align: center; width: 4%;">
-          <input id="Parametri_Domanda_DelegaConsulente" name="Parametri_Domanda_Delega" type="radio" value="2" />
+          <input id="Parametri_Domanda_DelegaConsulente" name="Parametri_Domanda_Delega" type="radio" value="2" onchange="GetEsenzioneBollo()"/>
         </td>
         <td colspan="2">
           <p>Consulente Tecnico d'Ufficio
@@ -360,7 +360,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <!-- *********** INIZIO MODULO DESTINAZIONE URBANISTICA *********** -->
 <div class="simpatico-block simpatico-query-and-answer">  
-  <p class="Modulo" style="line-height:1.6;">Il rilascio del certificato urbanistico (CDU) attestante la destinazione urbanistica:</p>
+  <p class="Modulo" style="line-height:1.6;">Il rilascio del certificato attestante la destinazione urbanistica (CDU):</p>
   <table class="Modulo" style="border:1px solid grey;">
     <tbody>
       
@@ -725,7 +725,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <input id="Parametri_Particelle1" name="Parametri_Particelle" type="checkbox" enabled="(#Totale_particelle.value()-5) &gt; 0" dynamic_check="(#Totale_particelle.value()-5) &gt; 0"/>
       </td>
       <td>
-        <p style="line-height:1.6;">i dati relativi alle ulteriori <input id="NumeroAltriImmobili" name="NumeroAltriImmobili" style="width:5%;" value="0" dynamic_value="(#Totale_particelle.value()-5) > 0 ? #Totale_particelle.value()-5:'0'" label="Numero altre particelle o subalterni" readonly/> particelle verranno inseriti in un apposito modulo secondario</p>
+        <p style="line-height:1.6;">i dati relativi alle ulteriori<input id="NumeroAltriImmobili" name="NumeroAltriImmobili" style="width:5%;" value="0" dynamic_value="(#Totale_particelle.value()-5) > 0 ? #Totale_particelle.value()-5:'0'" label="Numero altre particelle o subalterni" readonly/>particelle verranno inseriti in un apposito modulo secondario</p>
       </td>
     </tr>
     <tr>
@@ -744,10 +744,11 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
-  <p>Valendosi della facoltà prevista dall'articolo 3 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali
+  <p class="Modulo">Valendosi della facoltà prevista dall'articolo 3 del Decreto Ministeriale 10/11/2011, consapevole delle sanzioni penali
     previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice
     Penale nel caso di dichiarazioni non veritiere e di falsità in atti</p>
   <br><br>
+  <globo_salto_pagina/>
   <h1 class="Modulo">DICHIARA</h1>
 </div>
 
@@ -761,7 +762,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     <tbody>
         <tr class="Rigaintestazione" >
             <td colspan="4">
-              <b>In merito ai pagamenti relativi alla marca da bollo per la presentazione della documentazione sopra indicata </b>
+              <b>In merito ai pagamenti relativi alla marca da bollo per la presentazione della richiesta del certificato </b>
             </td>
         </tr>
       <tr>
@@ -806,9 +807,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </td>
         <td>
           <p>
-            di provvedere al pagamento con assolvimento virtuale dell'imposta di bollo mediante autorizzazione rilasciata dall'Agenzia delle Entrate Codice identificativo n./anno:   
-              <input class="" id="Parametri_NumeroBolloElettronico" name="Parametri_NumeroBolloElettronico" label="Numero marca da bollo virtuale" style="width:100%;" type="number" mandatory="#Parametri_BolloDichiara2.checked()" enabled="#Parametri_BolloDichiara2.checked()" >
-          </p>
+            di provvedere al pagamento con assolvimento virtuale dell'imposta di bollo mediante autorizzazione rilasciata dall'Agenzia delle Entrate Codice identificativo n./anno: </p>  
+            <input class="" id="Parametri_NumeroBolloElettronico" name="Parametri_NumeroBolloElettronico" label="Numero marca da bollo virtuale" style="width:100%;" mandatory="#Parametri_BolloDichiara2.checked()" enabled="#Parametri_BolloDichiara2.checked()" >       
         </td>
       </tr>
       <tr>
@@ -816,10 +816,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <input id="Parametri_Assoggettabilita2" name="Parametri_Assoggettabilita" type="radio" value="2" placeholder="" class="" dynamic_check="#Parametri_Domanda_DelegaConsulente.checked()">
         </td>
         <td colspan="2">
-          <p>
-          di non essere soggetto al pagamento della marca da bollo sul rilascio della richiesta, <a href="https://sportello.comune.trento.it/faq%3As_italia%3Acdu.casistiche.esenzione.bollo" target="_blank">ricadendo nel caso di:</a> 
-          <input class="" id="EsenzioneBollo" name="EsenzioneBollo" label="Motivo esenzione bollo" mandatory_enabled="#Parametri_Assoggettabilita2.checked()" style="width:100%;" type="text" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? 'Consulente Tecnico d\'Ufficio':''">
-          </p>
+          
+          di non essere soggetto al pagamento della marca da bollo, <a href="https://sportello.comune.trento.it/faq%3As_italia%3Acdu.casistiche.esenzione.bollo" target="_blank">ricadendo nel caso di:</a> 
+          <input class="" id="EsenzioneBollo" name="EsenzioneBollo" label="Motivo esenzione bollo" enabled="#Parametri_Assoggettabilita2.checked()" mandatory_enabled="#Parametri_Assoggettabilita2.checked()" style="width:100%;" type="text">
+        
         </td>
       </tr>
     </tbody>
@@ -955,6 +955,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <br>
 
 <!-- *********** INIZIO MODULO PRESA VISIONE *********** -->
+<globo_salto_pagina/>
 
 <div class="simpatico-block simpatico-query-and-answer">
 
@@ -966,7 +967,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
         </td>
         <td colspan="2" style="background-color: #eeeeee;">
-          <p><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-urbanistica" target="_blank">dell'informativa relativa al trattamento dei dati personali</a> informativa sul trattamento dei dati personali</b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+          <p><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-urbanistica" target="_blank">informativa relativa al trattamento dei dati personali</a></b><span style="font-size:85%"><i> (artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
         </td>
       </tr>
     </tbody>
@@ -1126,6 +1127,14 @@ urn_report="report:CSP_SESSION_REPORT"/>
     console.log("DATA DI OGGI" , dateString);
 
     return dateString;
+  }
+
+  function GetEsenzioneBollo(){
+    if( document.getElementById("Parametri_Domanda_DelegaConsulente").checked == true){
+      document.getElementById("EsenzioneBollo").value = "Consulente Tecnico d\'Ufficio";
+    } else {
+      document.getElementById("EsenzioneBollo").value = "";
+    }
   }
 
 </script>
