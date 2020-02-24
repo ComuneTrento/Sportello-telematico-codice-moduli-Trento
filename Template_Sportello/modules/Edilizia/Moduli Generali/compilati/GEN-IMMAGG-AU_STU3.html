@@ -49,12 +49,12 @@ urlhelp="/modulistica/moduli/GEN-IMMAGG-AU"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
-<meta codice_allegato="GEN-Modulo_compilato_firma_autografa"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
 descrizione_estesa="Scansione del modulo ulteriori particelle compilato e firmato manualmente"
 filename="Modulo_ult_part_compilato_firma_autografa.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/GEN-Modulo_compilato_firma_autografa"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-AU"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -299,19 +299,17 @@ function get_ufficio_dest() {
 		</tbody>
 	</table>
 </div>
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Nominativo_titolare.value().toUpperCase() + ' - ulteriori particelle o subalterni'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' - ulteriori particelle o subalterni'"/>
 
  <h1 class="Modulo">
   Ulteriori particelle o subalterni oggetto del procedimento
  </h1>
 
-<div class="simpatico-block simpatico-query-and-answer">
-
-<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+ <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" mandatory_enabled="true" size="87"/>
+        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="87"/>
         <br>valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti</p>
       </td>
     </tr>
@@ -332,100 +330,103 @@ function get_ufficio_dest() {
   </tbody>
 </table>
 
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile1_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile1_DatiToponomasticiObbligatori"       name="Immobile1_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile1_Tipo"       name="Immobile1_Tipo"       type="hidden" dynamic_value="#Immobile1_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile1_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile1_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile1_NumeroUlterioriImmobili" name="Immobile1_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile1_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile1_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile1_Note"       name="Immobile1_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile1_CatNote"    name="Immobile1_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile1_TipoImmobile" name="Immobile1_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile1_NomeComuneCatastale" name="Immobile1_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile1_CatComune" name="Immobile1_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile1_ComuneCatastale_esteso" id="Immobile1_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile1_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile1_CatNumero" id="Immobile1_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile1_CatBarra" id="Immobile1_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile1_CatPM" id="Immobile1_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile1_CatSubalterno" id="Immobile1_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile1_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile1_ControlloDatiCatastaliButton" name="Immobile1_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+<input id="Immobile1_DatiCatastaliObbligatori" name="Immobile1_DatiCatastaliObbligatori" dynamic_value="'vero'" type="hidden"/>
+<input id="Immobile1_DatiCatastaliAbilitati" name="Immobile1_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #1</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile1_TipoImmobile" name="Immobile1_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile1_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile1_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile1_CatComune" name="Immobile1_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile1_ComuneCatastale_esteso" id="Immobile1_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile1_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile1_CatNumero" id="Immobile1_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile1_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile1_CatBarra" id="Immobile1_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile1_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile1_CatPM" id="Immobile1_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile1_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile1_CatSubalterno" id="Immobile1_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile1_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile1_ControlloDatiCatastaliButton" name="Immobile1_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -434,155 +435,159 @@ function get_ufficio_dest() {
   "Immobile1_RisultatoVerificaCatastale=esiste;Immobile1_Particella="
   ws-on="#Immobile1_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile1_RisultatoVerificaCatastale" name="Immobile1_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile1_MappaCatastale" name="Immobile1_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile1_MappaCatastale" name="Immobile1_MappaCatastale" onclick="mappaCatastale('Immobile1_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile1_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile1_CatComune').value; num = document.getElementById('Immobile1_CatNumero').value; barra = document.getElementById('Immobile1_CatBarra').value; tipo = document.getElementById('Immobile1_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile1_RisultatoVerificaCatastale" name="Immobile1_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile1_CatBarra;num=Immobile1_CatNumero;com=Immobile1_CatComune;tipo=Immobile1_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile1_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile1_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile1_CatComune').value; num = document.getElementById('Immobile1_CatNumero').value; barra = document.getElementById('Immobile1_CatBarra').value; tipo = document.getElementById('Immobile1_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile1_CheckVerificaCatastale"
-      name="Immobile1_CheckVerificaCatastale"
-      dynamic_check="#Immobile1_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile1_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile1_CheckVerificaCatastale1"
-      name="Immobile1_CheckVerificaCatastale1"
-      dynamic_check="#Immobile1_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile1_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile1_CheckVerificaCatastale"
+            name="Immobile1_CheckVerificaCatastale"
+            dynamic_check="#Immobile1_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile1_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile1_CheckVerificaCatastale1"
+            name="Immobile1_CheckVerificaCatastale1"
+            dynamic_check="#Immobile1_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile1_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile2_DatiCatastaliAbilitati" name="Immobile2_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile2_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile2_DatiToponomasticiObbligatori"       name="Immobile2_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile2_Tipo"       name="Immobile2_Tipo"       type="hidden" dynamic_value="#Immobile2_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile2_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile2_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile2_NumeroUlterioriImmobili" name="Immobile2_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile2_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile2_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile2_Note"       name="Immobile2_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile2_CatNote"    name="Immobile2_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile2_TipoImmobile" name="Immobile2_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile2_NomeComuneCatastale" name="Immobile2_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile2_CatComune" name="Immobile2_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile2_ComuneCatastale_esteso" id="Immobile2_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile2_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile2_CatNumero" id="Immobile2_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile2_CatBarra" id="Immobile2_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile2_CatPM" id="Immobile2_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile2_CatSubalterno" id="Immobile2_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile2_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile2_ControlloDatiCatastaliButton" name="Immobile2_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #2</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile2_TipoImmobile" name="Immobile2_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile2_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile2_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile2_CatComune" name="Immobile2_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile2_ComuneCatastale_esteso" id="Immobile2_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile2_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile2_CatNumero" id="Immobile2_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile2_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile2_CatBarra" id="Immobile2_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile2_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile2_CatPM" id="Immobile2_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile2_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile2_CatSubalterno" id="Immobile2_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile2_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile2_ControlloDatiCatastaliButton" name="Immobile2_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -591,155 +596,159 @@ function get_ufficio_dest() {
   "Immobile2_Particella=;Immobile2_RisultatoVerificaCatastale=esiste"
   ws-on="#Immobile2_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile2_RisultatoVerificaCatastale" name="Immobile2_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile2_MappaCatastale" name="Immobile2_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile2_MappaCatastale" name="Immobile2_MappaCatastale" onclick="mappaCatastale('Immobile2_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile2_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile2_CatComune').value; num = document.getElementById('Immobile2_CatNumero').value; barra = document.getElementById('Immobile2_CatBarra').value; tipo = document.getElementById('Immobile2_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile2_RisultatoVerificaCatastale" name="Immobile2_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile2_CatBarra;num=Immobile2_CatNumero;com=Immobile2_CatComune;tipo=Immobile2_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile2_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile2_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile2_CatComune').value; num = document.getElementById('Immobile2_CatNumero').value; barra = document.getElementById('Immobile2_CatBarra').value; tipo = document.getElementById('Immobile2_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile2_CheckVerificaCatastale"
-      name="Immobile2_CheckVerificaCatastale"
-      dynamic_check="#Immobile2_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile2_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile2_CheckVerificaCatastale1"
-      name="Immobile2_CheckVerificaCatastale1"
-      dynamic_check="#Immobile2_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile2_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile2_CheckVerificaCatastale"
+            name="Immobile2_CheckVerificaCatastale"
+            dynamic_check="#Immobile2_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile2_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile2_CheckVerificaCatastale1"
+            name="Immobile2_CheckVerificaCatastale1"
+            dynamic_check="#Immobile2_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile2_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile3_DatiCatastaliAbilitati" name="Immobile3_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile3_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile3_DatiToponomasticiObbligatori"       name="Immobile3_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile3_Tipo"       name="Immobile3_Tipo"       type="hidden" dynamic_value="#Immobile3_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile3_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile3_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile3_NumeroUlterioriImmobili" name="Immobile3_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile3_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile3_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile3_Note"       name="Immobile3_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile3_CatNote"    name="Immobile3_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile3_TipoImmobile" name="Immobile3_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile3_NomeComuneCatastale" name="Immobile3_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile3_CatComune" name="Immobile3_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile3_ComuneCatastale_esteso" id="Immobile3_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile3_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile3_CatNumero" id="Immobile3_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile3_CatBarra" id="Immobile3_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile3_CatPM" id="Immobile3_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile3_CatSubalterno" id="Immobile3_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile3_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile3_ControlloDatiCatastaliButton" name="Immobile3_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #3</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile3_TipoImmobile" name="Immobile3_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile3_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile3_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile3_CatComune" name="Immobile3_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile3_ComuneCatastale_esteso" id="Immobile3_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile3_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile3_CatNumero" id="Immobile3_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile3_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile3_CatBarra" id="Immobile3_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile3_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile3_CatPM" id="Immobile3_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile3_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile3_CatSubalterno" id="Immobile3_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile3_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile3_ControlloDatiCatastaliButton" name="Immobile3_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -748,155 +757,159 @@ function get_ufficio_dest() {
   "Immobile3_RisultatoVerificaCatastale=esiste;Immobile3_Particella="
   ws-on="#Immobile3_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile3_RisultatoVerificaCatastale" name="Immobile3_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile3_MappaCatastale" name="Immobile3_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile3_MappaCatastale" name="Immobile3_MappaCatastale" onclick="mappaCatastale('Immobile3_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile3_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile3_CatComune').value; num = document.getElementById('Immobile3_CatNumero').value; barra = document.getElementById('Immobile3_CatBarra').value; tipo = document.getElementById('Immobile3_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile3_RisultatoVerificaCatastale" name="Immobile3_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile3_CatBarra;num=Immobile3_CatNumero;com=Immobile3_CatComune;tipo=Immobile3_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile3_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile3_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile3_CatComune').value; num = document.getElementById('Immobile3_CatNumero').value; barra = document.getElementById('Immobile3_CatBarra').value; tipo = document.getElementById('Immobile3_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile3_CheckVerificaCatastale"
-      name="Immobile3_CheckVerificaCatastale"
-      dynamic_check="#Immobile3_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile3_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile3_CheckVerificaCatastale1"
-      name="Immobile3_CheckVerificaCatastale1"
-      dynamic_check="#Immobile3_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile3_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile3_CheckVerificaCatastale"
+            name="Immobile3_CheckVerificaCatastale"
+            dynamic_check="#Immobile3_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile3_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile3_CheckVerificaCatastale1"
+            name="Immobile3_CheckVerificaCatastale1"
+            dynamic_check="#Immobile3_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile3_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile4_DatiCatastaliAbilitati" name="Immobile4_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile4_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile4_DatiToponomasticiObbligatori"       name="Immobile4_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile4_Tipo"       name="Immobile4_Tipo"       type="hidden" dynamic_value="#Immobile4_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile4_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile4_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile4_NumeroUlterioriImmobili" name="Immobile4_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile4_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile4_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile4_Note"       name="Immobile4_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile4_CatNote"    name="Immobile4_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile4_TipoImmobile" name="Immobile4_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile4_NomeComuneCatastale" name="Immobile4_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile4_CatComune" name="Immobile4_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile4_ComuneCatastale_esteso" id="Immobile4_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile4_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile4_CatNumero" id="Immobile4_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile4_CatBarra" id="Immobile4_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile4_CatPM" id="Immobile4_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile4_CatSubalterno" id="Immobile4_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile4_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile4_ControlloDatiCatastaliButton" name="Immobile4_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #4</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile4_TipoImmobile" name="Immobile4_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile4_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile4_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile4_CatComune" name="Immobile4_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile4_ComuneCatastale_esteso" id="Immobile4_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile4_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile4_CatNumero" id="Immobile4_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile4_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile4_CatBarra" id="Immobile4_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile4_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile4_CatPM" id="Immobile4_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile4_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile4_CatSubalterno" id="Immobile4_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile4_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile4_ControlloDatiCatastaliButton" name="Immobile4_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -905,155 +918,159 @@ function get_ufficio_dest() {
   "Immobile4_RisultatoVerificaCatastale=esiste;Immobile4_Particella="
   ws-on="#Immobile4_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile4_RisultatoVerificaCatastale" name="Immobile4_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile4_MappaCatastale" name="Immobile4_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile4_MappaCatastale" name="Immobile4_MappaCatastale" onclick="mappaCatastale('Immobile4_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile4_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile4_CatComune').value; num = document.getElementById('Immobile4_CatNumero').value; barra = document.getElementById('Immobile4_CatBarra').value; tipo = document.getElementById('Immobile4_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile4_RisultatoVerificaCatastale" name="Immobile4_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile4_CatBarra;num=Immobile4_CatNumero;com=Immobile4_CatComune;tipo=Immobile4_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile4_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile4_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile4_CatComune').value; num = document.getElementById('Immobile4_CatNumero').value; barra = document.getElementById('Immobile4_CatBarra').value; tipo = document.getElementById('Immobile4_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile4_CheckVerificaCatastale"
-      name="Immobile4_CheckVerificaCatastale"
-      dynamic_check="#Immobile4_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile4_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile4_CheckVerificaCatastale1"
-      name="Immobile4_CheckVerificaCatastale1"
-      dynamic_check="#Immobile4_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile4_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile4_CheckVerificaCatastale"
+            name="Immobile4_CheckVerificaCatastale"
+            dynamic_check="#Immobile4_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile4_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile4_CheckVerificaCatastale1"
+            name="Immobile4_CheckVerificaCatastale1"
+            dynamic_check="#Immobile4_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile4_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile5_DatiCatastaliAbilitati" name="Immobile5_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile5_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile5_DatiToponomasticiObbligatori"       name="Immobile5_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile5_Tipo"       name="Immobile5_Tipo"       type="hidden" dynamic_value="#Immobile5_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile5_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile5_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile5_NumeroUlterioriImmobili" name="Immobile5_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile5_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile5_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile5_Note"       name="Immobile5_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile5_CatNote"    name="Immobile5_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile5_TipoImmobile" name="Immobile5_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile5_NomeComuneCatastale" name="Immobile5_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile5_CatComune" name="Immobile5_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile5_ComuneCatastale_esteso" id="Immobile5_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile5_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile5_CatNumero" id="Immobile5_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile5_CatBarra" id="Immobile5_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile5_CatPM" id="Immobile5_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile5_CatSubalterno" id="Immobile5_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile5_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile5_ControlloDatiCatastaliButton" name="Immobile5_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #5</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile5_TipoImmobile" name="Immobile5_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile5_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile5_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile5_CatComune" name="Immobile5_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile5_ComuneCatastale_esteso" id="Immobile5_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile5_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile5_CatNumero" id="Immobile5_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile5_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile5_CatBarra" id="Immobile5_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile5_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile5_CatPM" id="Immobile5_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile5_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile5_CatSubalterno" id="Immobile5_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile5_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile5_ControlloDatiCatastaliButton" name="Immobile5_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -1062,155 +1079,159 @@ function get_ufficio_dest() {
   "Immobile5_Particella=;Immobile5_RisultatoVerificaCatastale=esiste"
   ws-on="#Immobile5_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile5_RisultatoVerificaCatastale" name="Immobile5_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile5_MappaCatastale" name="Immobile5_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile5_MappaCatastale" name="Immobile5_MappaCatastale" onclick="mappaCatastale('Immobile5_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile5_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile5_CatComune').value; num = document.getElementById('Immobile5_CatNumero').value; barra = document.getElementById('Immobile5_CatBarra').value; tipo = document.getElementById('Immobile5_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile5_RisultatoVerificaCatastale" name="Immobile5_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile5_CatBarra;num=Immobile5_CatNumero;com=Immobile5_CatComune;tipo=Immobile5_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile5_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile5_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile5_CatComune').value; num = document.getElementById('Immobile5_CatNumero').value; barra = document.getElementById('Immobile5_CatBarra').value; tipo = document.getElementById('Immobile5_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile5_CheckVerificaCatastale"
-      name="Immobile5_CheckVerificaCatastale"
-      dynamic_check="#Immobile5_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile5_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile5_CheckVerificaCatastale1"
-      name="Immobile5_CheckVerificaCatastale1"
-      dynamic_check="#Immobile5_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile5_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile5_CheckVerificaCatastale"
+            name="Immobile5_CheckVerificaCatastale"
+            dynamic_check="#Immobile5_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile5_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile5_CheckVerificaCatastale1"
+            name="Immobile5_CheckVerificaCatastale1"
+            dynamic_check="#Immobile5_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile5_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile6_DatiCatastaliAbilitati" name="Immobile6_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile6_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile6_DatiToponomasticiObbligatori"       name="Immobile6_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile6_Tipo"       name="Immobile6_Tipo"       type="hidden" dynamic_value="#Immobile6_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile6_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile6_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile6_NumeroUlterioriImmobili" name="Immobile6_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile6_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile6_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile6_Note"       name="Immobile6_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile6_CatNote"    name="Immobile6_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile6_TipoImmobile" name="Immobile6_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile6_NomeComuneCatastale" name="Immobile6_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile6_CatComune" name="Immobile6_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile6_ComuneCatastale_esteso" id="Immobile6_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile6_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile6_CatNumero" id="Immobile6_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile6_CatBarra" id="Immobile6_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile6_CatPM" id="Immobile6_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile6_CatSubalterno" id="Immobile6_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile6_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile6_ControlloDatiCatastaliButton" name="Immobile6_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #6</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile6_TipoImmobile" name="Immobile6_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile6_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile6_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile6_CatComune" name="Immobile6_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile6_ComuneCatastale_esteso" id="Immobile6_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile6_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile6_CatNumero" id="Immobile6_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile6_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile6_CatBarra" id="Immobile6_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile6_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile6_CatPM" id="Immobile6_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile6_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile6_CatSubalterno" id="Immobile6_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile6_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile6_ControlloDatiCatastaliButton" name="Immobile6_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -1219,155 +1240,159 @@ function get_ufficio_dest() {
   "Immobile6_Particella=;Immobile6_RisultatoVerificaCatastale=esiste"
   ws-on="#Immobile6_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile6_RisultatoVerificaCatastale" name="Immobile6_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile6_MappaCatastale" name="Immobile6_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile6_MappaCatastale" name="Immobile6_MappaCatastale" onclick="mappaCatastale('Immobile6_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile6_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile6_CatComune').value; num = document.getElementById('Immobile6_CatNumero').value; barra = document.getElementById('Immobile6_CatBarra').value; tipo = document.getElementById('Immobile6_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile6_RisultatoVerificaCatastale" name="Immobile6_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile6_CatBarra;num=Immobile6_CatNumero;com=Immobile6_CatComune;tipo=Immobile6_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile6_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile6_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile6_CatComune').value; num = document.getElementById('Immobile6_CatNumero').value; barra = document.getElementById('Immobile6_CatBarra').value; tipo = document.getElementById('Immobile6_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile6_CheckVerificaCatastale"
-      name="Immobile6_CheckVerificaCatastale"
-      dynamic_check="#Immobile6_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile6_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile6_CheckVerificaCatastale1"
-      name="Immobile6_CheckVerificaCatastale1"
-      dynamic_check="#Immobile6_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile6_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile6_CheckVerificaCatastale"
+            name="Immobile6_CheckVerificaCatastale"
+            dynamic_check="#Immobile6_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile6_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile6_CheckVerificaCatastale1"
+            name="Immobile6_CheckVerificaCatastale1"
+            dynamic_check="#Immobile6_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile6_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile7_DatiCatastaliAbilitati" name="Immobile7_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile7_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile7_DatiToponomasticiObbligatori"       name="Immobile7_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile7_Tipo"       name="Immobile7_Tipo"       type="hidden" dynamic_value="#Immobile7_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile7_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile7_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile7_NumeroUlterioriImmobili" name="Immobile7_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile7_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile7_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile7_Note"       name="Immobile7_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile7_CatNote"    name="Immobile7_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile7_TipoImmobile" name="Immobile7_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile7_NomeComuneCatastale" name="Immobile7_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile7_CatComune" name="Immobile7_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile7_ComuneCatastale_esteso" id="Immobile7_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile7_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile7_CatNumero" id="Immobile7_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile7_CatBarra" id="Immobile7_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile7_CatPM" id="Immobile7_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile7_CatSubalterno" id="Immobile7_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile7_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile7_ControlloDatiCatastaliButton" name="Immobile7_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #7</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile7_TipoImmobile" name="Immobile7_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile7_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile7_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile7_CatComune" name="Immobile7_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile7_ComuneCatastale_esteso" id="Immobile7_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile7_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile7_CatNumero" id="Immobile7_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile7_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile7_CatBarra" id="Immobile7_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile7_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile7_CatPM" id="Immobile7_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile7_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile7_CatSubalterno" id="Immobile7_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile7_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile7_ControlloDatiCatastaliButton" name="Immobile7_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -1376,155 +1401,159 @@ function get_ufficio_dest() {
   "Immobile7_RisultatoVerificaCatastale=esiste;Immobile7_Particella="
   ws-on="#Immobile7_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile7_RisultatoVerificaCatastale" name="Immobile7_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile7_MappaCatastale" name="Immobile7_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile7_MappaCatastale" name="Immobile7_MappaCatastale" onclick="mappaCatastale('Immobile7_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile7_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile7_CatComune').value; num = document.getElementById('Immobile7_CatNumero').value; barra = document.getElementById('Immobile7_CatBarra').value; tipo = document.getElementById('Immobile7_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile7_RisultatoVerificaCatastale" name="Immobile7_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile7_CatBarra;num=Immobile7_CatNumero;com=Immobile7_CatComune;tipo=Immobile7_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile7_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile7_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile7_CatComune').value; num = document.getElementById('Immobile7_CatNumero').value; barra = document.getElementById('Immobile7_CatBarra').value; tipo = document.getElementById('Immobile7_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile7_CheckVerificaCatastale"
-      name="Immobile7_CheckVerificaCatastale"
-      dynamic_check="#Immobile7_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile7_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile7_CheckVerificaCatastale1"
-      name="Immobile7_CheckVerificaCatastale1"
-      dynamic_check="#Immobile7_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile7_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile7_CheckVerificaCatastale"
+            name="Immobile7_CheckVerificaCatastale"
+            dynamic_check="#Immobile7_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile7_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile7_CheckVerificaCatastale1"
+            name="Immobile7_CheckVerificaCatastale1"
+            dynamic_check="#Immobile7_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile7_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile8_DatiCatastaliAbilitati" name="Immobile8_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile8_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile8_DatiToponomasticiObbligatori"       name="Immobile8_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile8_Tipo"       name="Immobile8_Tipo"       type="hidden" dynamic_value="#Immobile8_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile8_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile8_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile8_NumeroUlterioriImmobili" name="Immobile8_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile8_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile8_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile8_Note"       name="Immobile8_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile8_CatNote"    name="Immobile8_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile8_TipoImmobile" name="Immobile8_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile8_NomeComuneCatastale" name="Immobile8_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile8_CatComune" name="Immobile8_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile8_ComuneCatastale_esteso" id="Immobile8_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile8_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile8_CatNumero" id="Immobile8_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile8_CatBarra" id="Immobile8_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile8_CatPM" id="Immobile8_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile8_CatSubalterno" id="Immobile8_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile8_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile8_ControlloDatiCatastaliButton" name="Immobile8_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #8</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile8_TipoImmobile" name="Immobile8_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile8_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile8_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile8_CatComune" name="Immobile8_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile8_ComuneCatastale_esteso" id="Immobile8_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile8_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile8_CatNumero" id="Immobile8_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile8_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile8_CatBarra" id="Immobile8_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile8_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile8_CatPM" id="Immobile8_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile8_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile8_CatSubalterno" id="Immobile8_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile8_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile8_ControlloDatiCatastaliButton" name="Immobile8_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -1533,155 +1562,159 @@ function get_ufficio_dest() {
   "Immobile8_Particella=;Immobile8_RisultatoVerificaCatastale=esiste"
   ws-on="#Immobile8_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile8_RisultatoVerificaCatastale" name="Immobile8_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile8_MappaCatastale" name="Immobile8_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile8_MappaCatastale" name="Immobile8_MappaCatastale" onclick="mappaCatastale('Immobile8_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile8_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile8_CatComune').value; num = document.getElementById('Immobile8_CatNumero').value; barra = document.getElementById('Immobile8_CatBarra').value; tipo = document.getElementById('Immobile8_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile8_RisultatoVerificaCatastale" name="Immobile8_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile8_CatBarra;num=Immobile8_CatNumero;com=Immobile8_CatComune;tipo=Immobile8_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile8_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile8_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile8_CatComune').value; num = document.getElementById('Immobile8_CatNumero').value; barra = document.getElementById('Immobile8_CatBarra').value; tipo = document.getElementById('Immobile8_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile8_CheckVerificaCatastale"
-      name="Immobile8_CheckVerificaCatastale"
-      dynamic_check="#Immobile8_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile8_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile8_CheckVerificaCatastale1"
-      name="Immobile8_CheckVerificaCatastale1"
-      dynamic_check="#Immobile8_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile8_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile8_CheckVerificaCatastale"
+            name="Immobile8_CheckVerificaCatastale"
+            dynamic_check="#Immobile8_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile8_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile8_CheckVerificaCatastale1"
+            name="Immobile8_CheckVerificaCatastale1"
+            dynamic_check="#Immobile8_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile8_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile9_DatiCatastaliAbilitati" name="Immobile9_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile9_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile9_DatiToponomasticiObbligatori"       name="Immobile9_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile9_Tipo"       name="Immobile9_Tipo"       type="hidden" dynamic_value="#Immobile9_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile9_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile9_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile9_NumeroUlterioriImmobili" name="Immobile9_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile9_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile9_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile9_Note"       name="Immobile9_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile9_CatNote"    name="Immobile9_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile9_TipoImmobile" name="Immobile9_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile9_NomeComuneCatastale" name="Immobile9_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile9_CatComune" name="Immobile9_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile9_ComuneCatastale_esteso" id="Immobile9_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile9_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile9_CatNumero" id="Immobile9_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile9_CatBarra" id="Immobile9_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile9_CatPM" id="Immobile9_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile9_CatSubalterno" id="Immobile9_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile9_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile9_ControlloDatiCatastaliButton" name="Immobile9_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #9</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile9_TipoImmobile" name="Immobile9_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile9_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile9_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile9_CatComune" name="Immobile9_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile9_ComuneCatastale_esteso" id="Immobile9_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile9_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile9_CatNumero" id="Immobile9_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile9_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile9_CatBarra" id="Immobile9_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile9_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile9_CatPM" id="Immobile9_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile9_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile9_CatSubalterno" id="Immobile9_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile9_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile9_ControlloDatiCatastaliButton" name="Immobile9_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -1690,155 +1723,159 @@ function get_ufficio_dest() {
   "Immobile9_RisultatoVerificaCatastale=esiste;Immobile9_Particella="
   ws-on="#Immobile9_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile9_RisultatoVerificaCatastale" name="Immobile9_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile9_MappaCatastale" name="Immobile9_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile9_MappaCatastale" name="Immobile9_MappaCatastale" onclick="mappaCatastale('Immobile9_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile9_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile9_CatComune').value; num = document.getElementById('Immobile9_CatNumero').value; barra = document.getElementById('Immobile9_CatBarra').value; tipo = document.getElementById('Immobile9_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile9_RisultatoVerificaCatastale" name="Immobile9_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile9_CatBarra;num=Immobile9_CatNumero;com=Immobile9_CatComune;tipo=Immobile9_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile9_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile9_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile9_CatComune').value; num = document.getElementById('Immobile9_CatNumero').value; barra = document.getElementById('Immobile9_CatBarra').value; tipo = document.getElementById('Immobile9_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile9_CheckVerificaCatastale"
-      name="Immobile9_CheckVerificaCatastale"
-      dynamic_check="#Immobile9_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile9_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile9_CheckVerificaCatastale1"
-      name="Immobile9_CheckVerificaCatastale1"
-      dynamic_check="#Immobile9_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile9_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile9_CheckVerificaCatastale"
+            name="Immobile9_CheckVerificaCatastale"
+            dynamic_check="#Immobile9_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile9_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile9_CheckVerificaCatastale1"
+            name="Immobile9_CheckVerificaCatastale1"
+            dynamic_check="#Immobile9_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile9_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
 
+<input id="Immobile10_DatiCatastaliAbilitati" name="Immobile10_DatiCatastaliAbilitati" dynamic_value="'vero'" type="hidden"/>
 <div class="simpatico-block simpatico-query-and-answer">
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
-<div type="Immobile">
- <!-- creare l'hidden type="checkbox" id="Immobile10_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="Immobile10_DatiToponomasticiObbligatori"       name="Immobile10_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="Immobile10_Tipo"       name="Immobile10_Tipo"       type="hidden" dynamic_value="#Immobile10_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #Immobile10_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #Immobile10_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="Immobile10_NumeroUlterioriImmobili" name="Immobile10_NumeroUlterioriImmobili" type="hidden" dynamic_value="#Immobile10_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#Immobile10_NumeroAltriImmobili.value() / 16) ">
-    <input id="Immobile10_Note"       name="Immobile10_Note"       type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-    <input id="Immobile10_CatNote"    name="Immobile10_CatNote"    type="hidden" value="Immobile principale oggetto dell&#39;istanza"/>
-
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-                <td colspan="2">
-                    <p class="Labelcella">Tipo</p>
-                </td>
-                <td>
-                    <p class="Labelcella">Comune catastale (codice)</p>
-                </td>
-                <td colspan="2">
-                    <p class="Labelcella">Comune catastale (nome esteso)</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Numero</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Barra</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Porzione Materiale</p>
-                </td>
-                <td style="width: 8%;">
-                    <p  class="Labelcella">Subalterno</p>
-                </td>
-                <td style="width: 8%;">
-                    <p class="Labelcella">Controllo particella</p>
-                </td>
-				        <td style="width: 8%;">
-                    <p class="Labelcella">Mappa</p>
-                </td>
-            </tr>
-            <tr>
-
-                <td colspan="2">
-                    <select class="inputNormal" id="Immobile10_TipoImmobile" name="Immobile10_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="">
-                        <option value=""></option>
-                        <option value="S">porzione di edificio</option>
-						            <option value="E">intero edificio</option>
-                        <option value="F">particella fondiaria</option>
-                    </select>
-                </td>
-                 <td>
-                    <!-- select class="inputNorma2" id="Immobile10_NomeComuneCatastale" name="Immobile10_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="Immobile10_CatComune" name="Immobile10_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])">
-                        <option value=""></option>
-                        <option value="17">Baselga del Bondone</option>
-                        <option value="50">Cadine</option>
-                        <option value="108">Cognola</option>
-                        <option value="161">Gardolo</option>
-                        <option value="222">Mattarello</option>
-                        <option value="224">Meano</option>
-                        <option value="244">Montevaccino</option>
-                        <option value="285">Povo</option>
-                        <option value="305">Ravina</option>
-                        <option value="308">Romagnano</option>
-                        <option value="337">Sardagna</option>
-                        <option value="355">Sopramonte</option>
-                        <option value="406">Trento</option>
-                        <option value="432">Vigolo Baselga</option>
-                        <option value="437">Villamontagna</option>
-                        <option value="439">Villazzano</option>
-                        <option value="4">Aldeno</option>
-                        <option value="101">Cimone</option>
-                        <option value="162">Garniga</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                    <input name="Immobile10_ComuneCatastale_esteso" id="Immobile10_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile10_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
-                </td>
-                <td>
-                    <input name="Immobile10_CatNumero" id="Immobile10_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])"/>
-                </td>
-                <td>
-                    <input name="Immobile10_CatBarra" id="Immobile10_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled=""/>
-                </td>
-                <td>
-                    <input name="Immobile10_CatPM" id="Immobile10_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="" />
-                </td>
-                <td>
-                    <input name="Immobile10_CatSubalterno" id="Immobile10_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#Immobile10_TipoImmobile.check_value(['S'])"/>
-                </td>
-                <td>
-                    <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile10_ControlloDatiCatastaliButton" name="Immobile10_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
-
-					
+  <table class="Modulo" style="border:1px solid grey; ">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="border-right:0px">
+          <p class="Labeltabella">Particella #10</p>
+        </td>
+        <td style="width:32%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width:3%; border-left:0px; cursor:default">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella">Tipo</p>
+        </td>
+        <td>
+          <p class="Labelcella">Comune catastale (codice)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella">Comune catastale (nome esteso)</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Barra</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Porzione Materiale</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Subalterno</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Controllo particella</p>
+        </td>
+        <td style="width: 8%;">
+          <p class="Labelcella">Mappa</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <select class="inputNormal" id="Immobile10_TipoImmobile" name="Immobile10_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#Immobile10_DatiCatastaliObbligatori.value() == 'vero'" enabled="#Immobile10_DatiCatastaliAbilitati.value() == 'vero'">
+            <option value=""></option>
+            <option value="S">porzione di edificio</option>
+            <option value="E">intero edificio</option>
+            <option value="F">particella fondiaria</option>
+          </select>
+        </td>
+        <td>
+          <select class="inputNormal" id="Immobile10_CatComune" name="Immobile10_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])">
+            <option value=""></option>
+            <option value="17">Baselga del Bondone</option>
+            <option value="50">Cadine</option>
+            <option value="108">Cognola</option>
+            <option value="161">Gardolo</option>
+            <option value="222">Mattarello</option>
+            <option value="224">Meano</option>
+            <option value="244">Montevaccino</option>
+            <option value="285">Povo</option>
+            <option value="305">Ravina</option>
+            <option value="308">Romagnano</option>
+            <option value="337">Sardagna</option>
+            <option value="355">Sopramonte</option>
+            <option value="406">Trento</option>
+            <option value="432">Vigolo Baselga</option>
+            <option value="437">Villamontagna</option>
+            <option value="439">Villazzano</option>
+          </select>
+        </td>
+        <td colspan="2">
+          <input name="Immobile10_ComuneCatastale_esteso" id="Immobile10_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#Immobile10_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break;}" readonly/>
+        </td>
+        <td>
+          <input name="Immobile10_CatNumero" id="Immobile10_CatNumero" style="width:100%; text-align: center;" label="Numero particella catastale" mandatory_enabled="#Immobile10_TipoImmobile.check_value(['S','E','F'])"/>
+        </td>
+        <td>
+          <input name="Immobile10_CatBarra" id="Immobile10_CatBarra" style="width:100%; text-align: center;" label="Barra particella catastale"  enabled="#Immobile10_TipoImmobile.value() != ''"/>
+        </td>
+        <td>
+          <input name="Immobile10_CatPM" id="Immobile10_CatPM" style="width:100%; text-align: center;" label="Porzione Materiale"  enabled="#Immobile10_TipoImmobile.value() != ''" />
+        </td>
+        <td>
+          <input name="Immobile10_CatSubalterno" id="Immobile10_CatSubalterno" style="width:100%; text-align: center;" label="Subalterno"  mandatory="#Immobile10_TipoImmobile.check_value(['S'])"/>
+        </td>
+        <td>
+          <button class="real-button" type="button" style="width:34px; height:28px" id="Immobile10_ControlloDatiCatastaliButton" name="Immobile10_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
+            
 <div
   ws-name="verifica_particella"
   ws-param-in=
@@ -1847,83 +1884,96 @@ function get_ufficio_dest() {
   "Immobile10_Particella=;Immobile10_RisultatoVerificaCatastale=esiste"
   ws-on="#Immobile10_ControlloDatiCatastaliButton:click">
 </div>
-
-					<input id="Immobile10_RisultatoVerificaCatastale" name="Immobile10_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
-          </td>
-          <td>
-		        <!-- button style="width:34px; height:28px" id="Immobile10_MappaCatastale" name="Immobile10_MappaCatastale"><img src="./appoggio/img/mappa.png"/></button -->
-
-              <!-- button style="width:34px; height:28px" id="Immobile10_MappaCatastale" name="Immobile10_MappaCatastale" onclick="mappaCatastale('Immobile10_'); return false;"><img src="./appoggio/img/mappa.png"/></button -->
-              <button class="real-button" type="button" enabled="#Immobile10_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile10_CatComune').value; num = document.getElementById('Immobile10_CatNumero').value; barra = document.getElementById('Immobile10_CatBarra').value; tipo = document.getElementById('Immobile10_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
-          </td>
-
-			</tr>
+  
+          <input id="Immobile10_RisultatoVerificaCatastale" name="Immobile10_RisultatoVerificaCatastale" type="hidden" enabled="true"/>
+            
+<div
+  ws-name="lista_vie"
+  ws-param-in=
+  "barra=Immobile10_CatBarra;num=Immobile10_CatNumero;com=Immobile10_CatComune;tipo=Immobile10_TipoImmobile"
+  ws-param-out=
+  "lista_vie1=lista_vie_particella"
+  ws-on="#Immobile10_RisultatoVerificaCatastale:change">
+</div>
+        </td>
+        <td>
+          <button class="real-button" type="button" enabled="#Immobile10_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile10_CatComune').value; num = document.getElementById('Immobile10_CatNumero').value; barra = document.getElementById('Immobile10_CatBarra').value; tipo = document.getElementById('Immobile10_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+        </td>
+      </tr>
     </tbody>
-	</table>
-
+  </table>
+  
   <table class="Modulo" style="border: 1px solid grey">
     <tbody>
-    <tr class="Rigaintestazione" >
-    <td>
-      <b>Verifica esito particella</b>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile10_CheckVerificaCatastale"
-      name="Immobile10_CheckVerificaCatastale"
-      dynamic_check="#Immobile10_RisultatoVerificaCatastale.value()=='SI'"
-      enabled="#Immobile10_RisultatoVerificaCatastale.value()=='SI'"
-      type="checkbox"
-      value="OK"
-      label="Modulo"
-      />
-    </td>
-    <td>
-    <p style="line-height:1.6;">Particella esistente</p>
-    </td>
-    <td style="orizontal-align: top; width: 4%;">
-    <input
-      id="Immobile10_CheckVerificaCatastale1"
-      name="Immobile10_CheckVerificaCatastale1"
-      dynamic_check="#Immobile10_RisultatoVerificaCatastale.value()=='NO'"
-      enabled="#Immobile10_RisultatoVerificaCatastale.value()=='NO'"
-      type="checkbox"
-      value="KO"
-      />
-    </td>
-    <td>
-      <p style="line-height:1.6;">Particella NON esistente  </p>
-    </td>
-    </tr>
+      <tr class="Rigaintestazione">
+        <td>
+          <b>Verifica esito particella</b>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile10_CheckVerificaCatastale"
+            name="Immobile10_CheckVerificaCatastale"
+            dynamic_check="#Immobile10_RisultatoVerificaCatastale.value()=='SI'"
+            enabled="#Immobile10_RisultatoVerificaCatastale.value()=='SI'"
+            type="checkbox"
+            value="OK"
+            label="Modulo"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella esistente</p>
+        </td>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input
+            id="Immobile10_CheckVerificaCatastale1"
+            name="Immobile10_CheckVerificaCatastale1"
+            dynamic_check="#Immobile10_RisultatoVerificaCatastale.value()=='NO'"
+            enabled="#Immobile10_RisultatoVerificaCatastale.value()=='NO'"
+            type="checkbox"
+            value="KO"/>
+        </td>
+        <td>
+          <p style="line-height:1.6;">Particella NON esistente  </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
+
 <br>
-</div>
+<br>
 
- <br/>
-
- <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
-   <tbody>
-     <tr class="Rigaintestazione">
-       <td colspan="3">
-         <p style="text-align: center;">
-           <b>Elenco degli allegati richiesti</b>
-         </p>
-       </td>
-     </tr>
-     <tr>
-      <td>
-       <input id="Modulo_ult_part_firma_autografa" name="Modulo_ult_part_firma_autografa" dynamic_check="#Metadati_firma_ult_part.value() == 'Firmato con firma autografa'" enabled="#Metadati_firma_ult_part.value() == 'Firmato con firma autografa'" type="checkbox" value="OBBLIGATORIO"/>
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width:4%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+      </td>
+      <td style="width:15%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input id="Modulo_ult_part_firma_autografa" name="Modulo_ult_part_firma_autografa" dynamic_check="true" enabled="true" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-       <p>
-        scansione della stampa di questo modulo firmata
-       </p>
+        <p style="line-height:1.6;">Scansione della stampa di questo modulo firmata</p>
+        <input id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
-     </tr>
-   </tbody>
- </table>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 
@@ -1931,12 +1981,13 @@ function get_ufficio_dest() {
   <tbody>
     <tr>
       <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -1958,20 +2009,17 @@ function get_ufficio_dest() {
  <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
  </p>
+ 
  <input id="GLOBO_modulo_cGEN-IMMAGG-AU" name="GLOBO_modulo_cGEN-IMMAGG-AU" type="hidden" value=""/>
  <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="GEN-IMMAGG-AU"/>
 
- <input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="#Modulo_ult_part_firma_autografa.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-
 <br>
 
- 
-  
-
- <input id="Metadati_altre_part" name="Metadati_altre_part" type="hidden"/>
- <input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" type="hidden"/>
+<input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden"/>
+<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden"/>
+<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden"/>
 
 
 
@@ -2029,9 +2077,7 @@ function get_ufficio_dest() {
 
 			 $('#UfficioDestinatario').val(get_ufficio_dest());
 
-					
-
-                loadForm( ["Metadati"] ); //autoload prefix.
+                loadForm( [] ); //autoload prefix.
 
 
 

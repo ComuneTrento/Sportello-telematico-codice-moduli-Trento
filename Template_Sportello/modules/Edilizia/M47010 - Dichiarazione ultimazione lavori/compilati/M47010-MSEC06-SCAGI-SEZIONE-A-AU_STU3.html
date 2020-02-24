@@ -70,18 +70,11 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="GEN-DICH-CONF-ACUSTICA"
-urn_allegato="document:c_l378:allegato.dich.conform.acustica"
-descrizione_estesa="Allegato - Dichiarazione in merito alla conformità acustica"
-filename="Dichiarazione conformità acustica.pdf"
-firmato="SI"
-firmatari="Progettista_CodiceFiscale"
-firmatari_label="Il tecnico abilitato incaricato"
-istruzioni="/modulistica/moduli/GEN-DICH-CONF-ACUSTICA"
-name="GLOBO_allegato"
+<meta codice_modulo_figlio="M47010-MSEC14-CONF-ACUST"
+urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec14.m47010.conform.acustica"
+name="GLOBO_modulofiglio"
 numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
+obbligatorio="DINAMICO"/>
 
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
@@ -314,13 +307,37 @@ function get_ufficio_dest() {
 
 <br>
   
-<table class="Modulo" style="border: 1px solid grey">
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="6">
-        <p style="line-height:1.6;"><b>Con riferimento alla dichiarazione di ultimazione lavori relativa all'immobile:</b></p>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Con riferimento alla dichiarazione di ultimazione lavori:</b></p>
       </td>
     </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="altre_particelle" name="altre_particelle" label="particelle coinvolte" mandatory_enabled="true"> </div>
+        <input group="altre_particelle" id="altre_particelle1" name="altre_particelle" type="radio" value="1" dynamic_check="#Immobile_check_numero_particelle.value() == '1'"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Il procedimento riguarda <b>una sola particella</b>, indicata nella tabella seguente</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="altre_particelle" id="altre_particelle2" name="altre_particelle" type="radio" value="2" dynamic_check="#Immobile_check_numero_particelle.value() == '2'"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Il procedimento <b>riguarda più particelle</b>.<br>La prima di esse è indicata nella tabella seguente, mentre le restanti n. <input id="NumeroAltriImmobili" name="NumeroAltriImmobili" style="width:5%; text-align:center;" label="Numero altre particelle" enabled="#altre_particelle2.checked()" dynamic_value="#Immobile_NumeroAltriImmobili.value()" readonly/> particelle sono state indicate nell'apposito modulo secondario <i>Ulteriori particelle o subalterni oggetto del procedimento</i></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+  
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
     <tr class="Rigaintestazione">
       <td colspan="6">
         <p style="line-height:1.6;"><b>Dati catastali</b></p>
@@ -692,7 +709,7 @@ function get_ufficio_dest() {
     <tr class="Rigaintestazione"><td colspan="3"></td></tr>
     <tr>
       <td style="width: 4%; vertical-align: center; text-align: center;">
-        <div id="Dich_salubr_amb" name="Dich_salubr_amb" label="Dichiarazione verifica salubrità ambienti" mandatory_enabled="true"> </div>
+        <div id="Dich_salubr_amb" name="Dich_salubr_amb" label="Dichiarazione verifica salubrità ambienti" dynamic_check="true"> </div>
         <input group="Dich_salubr_amb" id="Dich_salubr_amb_check" name="Dich_salubr_amb_check" type="checkbox" value="1" />
       </td>
       <td colspan="2">
@@ -829,11 +846,11 @@ function get_ufficio_dest() {
         <input id="dich_tecm_conf_acust" name="dich_tecm_conf_acust" type="checkbox" dynamic_check="#nuove_costr1.checked()" enabled="#nuove_costr1.checked()" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Dichiarazione del tecnico abilitato in merito alla conformità acustica ai sensi dell'art. 15, comma2, del D.P.G.P. 4 agosto 1992, n. 12-65 Leg.</p>
+        <p style="line-height:1.6;">Modulo secondario - Dichiarazione del tecnico abilitato in merito alla conformità acustica ai sensi dell'art. 15, comma2, del D.P.G.P. 4 agosto 1992, n. 12-65 Leg.</p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input class="" type="number" id="num_dich_tecm_conf_acust" name="num_dich_tecm_conf_acust" min="1" max="100" label="Numero documenti conformità acustica" mandatory_enabled="#dich_tecm_conf_acust.checked()" style="width: 90%; text-align: center;"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-DICH-CONF-ACUSTICA" name="GLOBO_allegato_cGEN-DICH-CONF-ACUSTICA" obbligatorio="#dich_tecm_conf_acust.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_dich_tecm_conf_acust.value()"/>
+        <p style="line-height: 1.6; text-align: center;"><input class="" id="num_dich_tecm_conf_acust" name="num_dich_tecm_conf_acust" label="Numero documenti conformità acustica" dynamic_value="#dich_tecm_conf_acust.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;"/></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_modulofiglio_cM47010-MSEC14-CONF-ACUST" name="GLOBO_modulofiglio_cM47010-MSEC14-CONF-ACUST" obbligatorio="#dich_tecm_conf_acust.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" />
       </td>
     </tr>
   </tbody>
@@ -904,10 +921,15 @@ function get_ufficio_dest() {
 <input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
 <input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden" readonly/>
 
-<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden" readonly/>
-<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden" readonly/>
-<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden" readonly/>
-<input id="Progettista_Nome" name="Progettista_Nome" type="hidden" readonly/>
+<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden"  readonly/>
+<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden"  readonly/>
+<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden"  readonly/>
+<input id="Progettista_Nome" name="Progettista_Nome" type="hidden"  readonly/>
+<input id="Progettista_LuogoNascita" name="Progettista_LuogoNascita" type="hidden"  readonly/>
+<input id="Progettista_Attributi_Albo" name="Progettista_Attributi_Albo" type="hidden"  readonly/>
+<input id="Progettista_Attributi_AlNumero" name="Progettista_Attributi_AlNumero" type="hidden"  readonly/>
+<input id="Progettista_Attributi_DellaProvincia" name="Progettista_Attributi_DellaProvincia" type="hidden"  readonly/>
+<input id="Progettista_Indirizzocompleto" name="Progettista_Indirizzocompleto" type="hidden"  readonly/>
 
 <input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" type="hidden" readonly/>
 <input id="Immobile_ComuneCatastale_esteso" name="Immobile_ComuneCatastale_esteso" type="hidden" readonly/>
@@ -920,6 +942,15 @@ function get_ufficio_dest() {
 <input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" type="hidden" readonly/>
 <input id="Immobile_numeroCivico" name="Immobile_numeroCivico" type="hidden" readonly/>
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" type="hidden" readonly/>
+
+<input id="Immobile_NumeroAltriImmobili" name="Immobile_NumeroAltriImmobili" type="hidden"/>
+
+<input id="Immobile_check_numero_particelle" name="Immobile_check_numero_particelle" type="hidden"/>
+
+<input id="cf_tecnico_firmatario_scagi" name="cf_tecnico_firmatario_scagi" type="hidden" readonly/>
+
+<input id="nominativo_tecnico_firmatario_scagi" name="nominativo_tecnico_firmatario_scagi" type="hidden" readonly/>
+<input id="cognome_tecnico_firmatario_scagi" name="cognome_tecnico_firmatario_scagi" type="hidden" readonly/>
 
 
 

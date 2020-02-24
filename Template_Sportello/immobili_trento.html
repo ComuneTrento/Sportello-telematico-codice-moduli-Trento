@@ -88,8 +88,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -1603,8 +1603,8 @@
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -1765,8 +1765,8 @@
                     </select>
                 </td>
                  <td>
-                    <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-                    <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+                    <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+                    <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
                         <option value=""></option>
                         <option value="17">Baselga del Bondone</option>
                         <option value="50">Cadine</option>
@@ -1920,21 +1920,48 @@
 <!-- visibility:visibility or hidden, cursor:pointer or default -->
 <div type="Immobile">
 
+<!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
+  <input id="{{ prefix }}_DatiToponomasticiObbligatori"       name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
+  <input id="{{ prefix }}_Tipo"       name="{{ prefix }}_Tipo"       type="hidden" dynamic_value="#{{ prefix }}_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #{{ prefix }}_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #{{ prefix }}_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
+  <input id="{{ prefix }}_NumeroUlterioriImmobili" name="{{ prefix }}_NumeroUlterioriImmobili" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltriImmobili.value() / 16) ">
+  <input id="{{ prefix }}_Note"       name="{{ prefix }}_Note"       type="hidden" value="{{ annotazioniSolo1 }}"/>
+  <input id="{{ prefix }}_CatNote"    name="{{ prefix }}_CatNote"    type="hidden" value="{{ annotazioniSolo1 }}"/>
+
+  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.6;"><b>LOCALIZZAZIONE DELL'INTERVENTO</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="altre_particelle" name="altre_particelle" label="particelle coinvolte" mandatory_enabled="true"> </div>
+          <input group="altre_particelle" id="altre_particelle1" name="altre_particelle" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Il procedimento riguarda <b>una sola particella</b>, indicata nella tabella seguente</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; text-align: center; width: 4%;">
+          <input group="altre_particelle" id="altre_particelle2" name="altre_particelle" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">Il procedimento <b>riguarda più particelle</b>. Si indica la prima di esse nella tabella seguente e le restanti n. <input id="{{ prefix }}_NumeroAltriImmobili" name="{{ prefix }}_NumeroAltriImmobili" style="width:5%; text-align:center;" label="Numero altre particelle" mandatory_enabled="#altre_particelle2.checked()"/> particelle nell'apposito modulo secondario <i>Ulteriori particelle o subalterni oggetto del procedimento</i></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <input id="Metadati_altre_part" name="Metadati_altre_part" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value()" type="hidden"/>
+  
+  <br>
+
   <div class="simpatico-block simpatico-query-and-answer">
 
-<!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="{{ prefix }}_DatiToponomasticiObbligatori"       name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="{{ prefix }}_Tipo"       name="{{ prefix }}_Tipo"       type="hidden" dynamic_value="#{{ prefix }}_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #{{ prefix }}_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #{{ prefix }}_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="{{ prefix }}_NumeroUlterioriImmobili" name="{{ prefix }}_NumeroUlterioriImmobili" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltriImmobili.value() / 16) ">
-    <input id="{{ prefix }}_Note"       name="{{ prefix }}_Note"       type="hidden" value="{{ annotazioniSolo1 }}"/>
-    <input id="{{ prefix }}_CatNote"    name="{{ prefix }}_CatNote"    type="hidden" value="{{ annotazioniSolo1 }}"/>
     <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
       <tbody>
-        <tr class="Rigaintestazione">
-          <td colspan="3">
-            <p style="line-height:1.6;"><b>LOCALIZZAZIONE DELL'INTERVENTO</b></p>
-          </td>
-        </tr>
         <tr class="Rigaintestazioneridotta">
           <td style="border-right:0px">
             <p class="Labeltabella">{{ intestazione|safe }}</p>
@@ -1950,6 +1977,7 @@
         </tr>
       </tbody>
     </table>
+
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
       <tbody>
@@ -1986,14 +2014,14 @@
           <td colspan="2">
             <select class="inputNormal" id="{{ prefix }}_TipoImmobile" name="{{ prefix }}_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory_enabled="true">
               <option value=""></option>
-              <option value="S">porzione di edificio</option>
-	            <option value="E">intero edificio</option>
+              <option value="S">particella edificiale - porzione edificio</option>
+	            <option value="E">particella edificiale - intero edificio</option>
               <option value="F">particella fondiaria</option>
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -2026,7 +2054,7 @@
             <input name="{{ prefix }}_CatBarra" id="{{ prefix }}_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="{{ disattivato }}"/>
           </td>
           <td>
-            <input name="{{ prefix }}_CatPM" id="{{ prefix }}_CatPM" style="width:100%;" label="Porzione Materiale"  enabled="{{ disattivato }}" />
+            <input name="{{ prefix }}_CatPM" id="{{ prefix }}_CatPM" style="width:100%;" label="Porzione Materiale"  mandatory_enabled="true" />
           </td>
           <td>
             <input name="{{ prefix }}_CatSubalterno" id="{{ prefix }}_CatSubalterno" style="width:100%;" label="Subalterno"  mandatory="#{{ prefix }}_TipoImmobile.check_value(['S'])"/>
@@ -3360,29 +3388,6 @@
 
   </div>
 
-  <br>
-
-  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px">
-    <tbody>
-      <tr class="Rigaintestazioneridotta">
-        <td colspan="9">
-          <p class="Labelcella">Ulteriori particelle o subalterni
-            <i>(allegare il modulo "ulteriori particelle o subalterni oggetto del procedimento")</i>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="9">
-          <p style="line-height:1.6;">il procedimento riguarda <input id="{{ prefix }}_NumeroAltriImmobili" name="{{ prefix }}_NumeroAltriImmobili" style="width:5%; text-align:center;" value="0" label="Numero altre particelle o subalterni" enabled="{{disattivato}}"/> ulteriori particelle o subalterni</p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <input id="Metadati_altre_part" name="Metadati_altre_part" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value()" type="hidden"/>
-
-  <br>
-
 </div>
 <br>
 {%- endmacro %}
@@ -3466,8 +3471,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -4955,8 +4960,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -6476,8 +6481,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -7921,7 +7926,7 @@
     </select>
   </td>
   <td>
-    <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])">
+    <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -8085,8 +8090,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -9518,7 +9523,7 @@
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-{% macro immobile_accesso_atti_no_ult_part(prefix='Immobile', intestazione="immobile", visibility_intestazione="display:visibility") -%}
+{% macro immobile_accesso_atti_no_ult_part(prefix='Immobile') -%}
 <tr class="Rigaintestazioneridotta">
   <td colspan="2" style="width: 20%;">
     <p class="Labelcella">Tipo</p>
@@ -9550,14 +9555,14 @@
 </tr>
 <tr>
   <td colspan="2">
-    <select class="inputNormal" id="{{ prefix }}_TipoImmobile" name="{{ prefix }}_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#{{ prefix }}_DatiCatastaliObbligatori.checked()" >
+    <select class="inputNormal" id="{{ prefix }}_TipoImmobile" name="{{ prefix }}_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="#{{ prefix }}_DatiCatastaliObbligatori.value() == 'vero'" enabled="#{{ prefix }}_DatiCatastaliAbilitati.value() == 'vero'">
       <option value=""></option>
       <option value="E">particella edificiale</option>
       <option value="F">particella fondiaria</option>
     </select>
   </td>
   <td>
-    <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])">
+    <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.value() != ''">
       <option value=""></option>
       <option value="17">Baselga del Bondone</option>
       <option value="50">Cadine</option>
@@ -9584,16 +9589,16 @@
     <input name="{{ prefix }}_ComuneCatastale_esteso" id="{{ prefix }}_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#{{ prefix }}_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
   </td>
   <td>
-    <input name="{{ prefix }}_CatNumero" id="{{ prefix }}_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])"/>
+    <input name="{{ prefix }}_CatNumero" id="{{ prefix }}_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.value() != ''"/>
   </td>
   <td>
-    <input name="{{ prefix }}_CatBarra" id="{{ prefix }}_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="true"/>
+    <input name="{{ prefix }}_CatBarra" id="{{ prefix }}_CatBarra" style="width:100%;" label="Barra particella catastale" enabled="#{{ prefix }}_TipoImmobile.value() != ''"/>
   </td>
   <td>
-    <input name="{{ prefix }}_CatPM" id="{{ prefix }}_CatPM" style="width:100%;" label="Porzione Materiale" enabled="true"/>
+    <input name="{{ prefix }}_CatPM" id="{{ prefix }}_CatPM" style="width:100%;" label="Porzione Materiale" enabled="#{{ prefix }}_TipoImmobile.value() != ''"/>
   </td>
   <td>
-    <input name="{{ prefix }}_CatSubalterno" id="{{ prefix }}_CatSubalterno" style="width:100%;" label="Subalterno" enabled="true"/>
+    <input name="{{ prefix }}_CatSubalterno" id="{{ prefix }}_CatSubalterno" style="width:100%;" label="Subalterno" enabled="#{{ prefix }}_TipoImmobile.value() != ''"/>
   </td>
   <td>
     <button class="real-button" type="button" style="width:34px; height:28px" id="{{ prefix }}_ControlloDatiCatastaliButton" name="{{ prefix }}_ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
@@ -9755,7 +9760,7 @@
                     {{ utils.provincie( prefix + '_Provincia', label="Provincia") }}
                 </td>
                 <td mandatory="true">
-                    <select class="inputNorma2" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
+                    <select class="inputNormal" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
                 </td>
                 <td>
                         <input id="{{ prefix }}_TipoVia" name="{{ prefix }}_TipoVia" style="width:100%;" mandatory="false" label="Tipo via"/>
@@ -9900,7 +9905,7 @@
                     {{ utils.provincie( prefix + '_Provincia', label="Provincia") }}
                 </td>
                 <td>
-                    <select class="inputNorma2" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')" mandatory_enabled="#{{ prefix }}_DatiImmobileRichiesti.checked()"></select>
+                    <select class="inputNormal" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')" mandatory_enabled="#{{ prefix }}_DatiImmobileRichiesti.checked()"></select>
                 </td>
 
                                     <td>
@@ -10025,7 +10030,7 @@
                     {{ utils.provincie( prefix + '_Provincia', label="Provincia") }}
                 </td>
                 <td mandatory="true">
-                    <select class="inputNorma2" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
+                    <select class="inputNormal" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
                 </td>
                 <td colspan="3">
                     <input id="{{ prefix }}_Via" name="{{ prefix }}_Via" style="width:100%;" label="Nome Via" mandatory="true"/>
@@ -10101,7 +10106,7 @@
                 {{ utils.provincie( prefix + '_Provincia', label="Provincia") }}
                 </td>
                 <td mandatory="true">
-                    <select class="inputNorma2" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
+                    <select class="inputNormal" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
                 </td>
                                 <td>
                     <input id="{{ prefix }}_TipoVia" name="{{ prefix }}_TipoVia" style="width:100%;" mandatory="false" label="Tipo Via"/>
@@ -10178,7 +10183,7 @@
                 {{ utils.provincie( prefix + '_Provincia', label="Provincia") }}
                 </td>
                 <td mandatory_enabled="#{{ prefix }}_DatiImmobileRichiesti.checked()">
-                    <select class="inputNorma2" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
+                    <select class="inputNormal" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
                 </td>
                 <td>
                     <input id="{{ prefix }}_TipoVia" name="{{ prefix }}_TipoVia" style="width:100%;" enabled="#{{ prefix }}_DatiImmobileRichiesti.checked()" label="Tipo via"/>
@@ -10257,8 +10262,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -10433,8 +10438,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -10544,7 +10549,7 @@
       <tbody>
         <tr class="Rigaintestazione">
           <td colspan="4">
-            <p>
+            <p style="line-height:1.6;">
               <b>La particella selezionata è soggetta a frazionamento?</b>
             </p>
           </td>
@@ -10555,7 +10560,7 @@
               <input id="{{ prefix }}_Parametri_Titolo2" name="{{ prefix }}_Parametri_Titolo" type="radio" value="1" />
             </td>
             <td colspan="4">
-              <p>NO</p>
+              <p style="line-height:1.6;">NO</p>
             </td>
         </tr>
         <tr>
@@ -10563,7 +10568,7 @@
             <input id="{{ prefix }}_Parametri_Titolo1" name="{{ prefix }}_Parametri_Titolo" type="radio" value="2"/>
           </td>
           <td rowspan="2">
-            <p>SI</p>
+            <p style="line-height:1.6;">SI</p>
             <td>
                 <div id="{{ prefix }}_Parametri_Titolo_Sec" name="{{ prefix }}_Parametri_Titolo_Sec" label="{{ prefix }} Particella soggetta a frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"></div>
                 <p style="line-height:1.6;"> <input id="{{ prefix }}_Parametri_Titolo3" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>Richiesta conformazione pre-frazionamento </p>
@@ -10661,8 +10666,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -10702,7 +10707,7 @@
       <tbody>
         <tr class="Rigaintestazione">
           <td colspan="4">
-            <p>
+            <p style="line-height:1.6;">
               <b>La particella selezionata è soggetta a frazionamento?</b>
             </p>
           </td>
@@ -10713,7 +10718,7 @@
               <input id="{{ prefix }}_Parametri_Titolo2" name="{{ prefix }}_Parametri_Titolo" type="radio" value="1" />
             </td>
             <td colspan="4">
-              <p>NO</p> 
+              <p style="line-height:1.6;">NO</p> 
             </td>
         </tr>
         <tr>
@@ -10721,7 +10726,7 @@
             <input id="{{ prefix }}_Parametri_Titolo1" name="{{ prefix }}_Parametri_Titolo" type="radio" value="2"/>
           </td>
           <td rowspan="2">
-            <p>SI</p>
+            <p style="line-height:1.6;">SI</p>
             <td>
                 <div id="{{ prefix }}_Parametri_Titolo_Sec" name="{{ prefix }}_Parametri_Titolo_Sec" label="{{ prefix }} particella soggetta a frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"></div>
                 <p style="line-height:1.6;"> <input id="{{ prefix }}_Parametri_Titolo3" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 4%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>con situazione catastale ante-frazionamento </p>
@@ -10806,8 +10811,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -10987,8 +10992,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -12506,8 +12511,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>
@@ -14029,8 +14034,8 @@
             </select>
           </td>
           <td>
-            <!-- select class="inputNorma2" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
-            <select class="inputNorma2" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
               <option value=""></option>
               <option value="17">Baselga del Bondone</option>
               <option value="50">Cadine</option>

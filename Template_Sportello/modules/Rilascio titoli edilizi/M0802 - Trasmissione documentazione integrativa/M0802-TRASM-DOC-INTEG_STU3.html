@@ -33,28 +33,6 @@ verifica_pagamento="NO"
 versione="1.0|06/04/2016"
 generabile_da="M0801-ACCESSO-CONSULTAZIONE-ATTI-EDILIZIA" />
 
-<meta codice_allegato="GEN-AFFIDAMENTO-INCARICO"
-urn_allegato="document:c_l378:allegato.affidamento.incarico"
-descrizione_estesa="Documentazione comprovante l'incarico"
-filename="Affidamento incarico.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/GEN-AFFIDAMENTO-INCARICO"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<meta codice_allegato="GEN-CDI"
-urn_allegato="document:c_l378:allegato.copia.documento.identita"
-descrizione_estesa="Copia del documento di identità del richiedente"
-filename="Documento identita.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/GEN-CDI"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
 <meta codice_allegato="GEN-ALTRI-ALLEGATI"
 urn_allegato="document:c_l378:allegato.altri.allegati"
 descrizione_estesa="Altri allegati"
@@ -148,7 +126,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Integrazione per: ' + #part_rich.value()" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Integrazione per richiesta accesso/consultazione atti in materia edilizia" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -220,7 +198,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Tipo_richiedente" id="Tipo_richiedente5" name="Tipo_richiedente" type="radio" value="5" />
       </td>
       <td colspan="11">
-        <p>Altro titolo: <input class="" id="altro_tipo_richiedente" name="altro_tipo_richiedente" size="80" mandatory_enabled="#Tipo_richiedente5.checked()" label="Specificare titolo per effettuare la richiesta"/></p>
+        <p>Altro titolo: <input class="" id="altro_tipo_richiedente" name="altro_tipo_richiedente" size="90" mandatory_enabled="#Tipo_richiedente5.checked()" label="Specificare titolo per effettuare la richiesta"/></p>
       </td>
     </tr>
   </tbody>
@@ -274,125 +252,146 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="11">
+      <td colspan="12">
         <p style="line-height:1.6;">
           <b>Con la quale si richiedeva:</b>
         </p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="17">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="26">
         <div id="Servizio_richiesto" name="Servizio_richiesto" label="Servizio richiesto" mandatory_enabled="true"> </div>
-        <input group="Servizio_richiesto" id="Servizio_richiesto1" name="Servizio_richiesto1" type="checkbox" value="1" /> 
+        <input group="Servizio_richiesto" id="Servizio_richiesto2" name="Servizio_richiesto2" type="checkbox" value="2" /> 
       </td>
-      <td colspan="10">
-        <p>La <b>CONSULTAZIONE</b> di atti risalenti a più di 40 anni fa <i>(Archivio Storico)</i></p>
+      <td colspan="12">
+        <p style="line-height:1.6;">L'<b>ACCESSO</b> agli atti e ai documenti <span style="font-size:85%;"><i>&nbsp;&nbsp;&nbsp;(Ai sensi dell'articolo 22 e seguenti della Legge 07/08/1990, n. 241)</i></span></p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
+      <td colspan="12">
+        <p style="line-height:1.6; "><b>riguardanti le seguenti realtà immobiliari:</b></p>
+      </td>
+    </tr>
+
+    <input id="accesso1_DatiCatastaliObbligatori" name="accesso1_DatiCatastaliObbligatori" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'"  type="hidden"/>
+    <input id="accesso1_DatiCatastaliAbilitati" name="accesso1_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='accesso1', intestazione="Particella #1") }}
+
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="accesso2_DatiCatastaliAbilitati" name="accesso2_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='accesso2', intestazione="Particella #2") }}
+
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="accesso3_DatiCatastaliAbilitati" name="accesso3_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='accesso3', intestazione="Particella #3") }}
+
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="accesso4_DatiCatastaliAbilitati" name="accesso4_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='accesso4', intestazione="Particella #4") }}
+
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="11">
+        <p style="line-height:1.6;"><b>CHIEDENDO, per tali documenti:</b></p>
+      </td>
+    </tr>  
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Tipo_accesso" name="Tipo_accesso" label="Servizio Tipo_accesso" mandatory_enabled="#Servizio_richiesto2.checked()"> </div>
+        <input group="Tipo_accesso" id="Tipo_accesso1" name="Tipo_accesso1" type="checkbox" value="1" /> 
+      </td>
+      <td colspan="10">Presa visione</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Tipo_accesso" id="Tipo_accesso3" name="Tipo_accesso3" type="checkbox" value="3" /> 
+      </td>
+      <td colspan="10">Estrazione copia in carta semplice</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Tipo_accesso" id="Tipo_accesso4" name="Tipo_accesso4" type="checkbox" value="4" /> 
+      </td>
       <td colspan="10">
-        <p style="line-height:1.6; font-size:90%;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
+        <p style="line-height:1.6;">Estrazione copia conforme all'originale
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta"><td colspan="12"></td></tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="21">
+        <input group="Servizio_richiesto" id="Servizio_richiesto1" name="Servizio_richiesto1" type="checkbox" value="1" /> 
+      </td>
+      <td colspan="11">
+        <p style="line-height:1.6;"><b>COPIA</b> deglii atti conservati presso l'Archivio Storico</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="11">
+        <p style="line-height:1.6;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
       </td>
     </tr>
     
-    <input id="consultazione_DatiCatastaliObbligatori" name="consultazione_DatiCatastaliObbligatori" dynamic_check="#Servizio_richiesto1.checked()" type="hidden"/>
-    <input id="consultazione_DatiCatastaliAbilitati" name="consultazione_DatiCatastaliAbilitati" dynamic_check="#Servizio_richiesto1.checked()" type="hidden"/>
-    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='consultazione', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
-
-    {% macro altre_part_consultazione(prefix) %}
-      {% set prefix = prefix|string %}
-      <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-      <input id="consultazione_DatiCatastaliAbilitati{{ prefix }}" name="consultazione_DatiCatastaliAbilitati{{ prefix }}" dynamic_check="#Servizio_richiesto1.checked()" type="hidden"/>
-      {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix + '_consultazione', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
-    {%- endmacro %}
-
-    {% for i in range(2, 5) %}
-      {{ altre_part_consultazione(i) }}
-    {% endfor %}
+    <input class="" id="consultazione1_DatiCatastaliObbligatori" name="consultazione1_DatiCatastaliObbligatori" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden"/>
+    <input class="" id="consultazione1_DatiCatastaliAbilitati" name="consultazione1_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden"/>
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='consultazione1', intestazione="Particella #1") }}
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="consultazione2_DatiCatastaliAbilitati" name="consultazione2_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='consultazione2', intestazione="Particella #2") }}
 
     <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="17">
-        <input group="Servizio_richiesto" id="Servizio_richiesto2" name="Servizio_richiesto2" type="checkbox" value="2" /> 
-      </td>
-      <td colspan="10">
-        <p>L'<b>ACCESSO</b> agli atti e ai documenti <span style="font-size:85%;"><i>&nbsp;&nbsp;&nbsp;(Ai sensi dell'articolo 22 e seguenti della Legge 07/08/1990, n. 241)</i></span></p>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td colspan="10">
-        <p style="line-height:1.6; font-size:90%;"><b>riguardanti le seguenti realtà immobiliari:</b></p>
-      </td>
-    </tr>
+    <input class="" id="consultazione3_DatiCatastaliAbilitati" name="consultazione3_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='consultazione3', intestazione="Particella #3") }}
 
-    <input id="accesso_DatiCatastaliObbligatori" name="accesso_DatiCatastaliObbligatori" dynamic_check="#Servizio_richiesto2.checked()" type="hidden"/>
-    <input id="accesso_DatiCatastaliAbilitati" name="accesso_DatiCatastaliAbilitati" dynamic_check="#Servizio_richiesto2.checked()" type="hidden"/>
-    {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix='accesso', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
-
-    {% macro altre_part_accesso(prefix) %}
-      {% set prefix = prefix|string %}
-      <tr class="Rigaintestazioneridotta"><td colspan="10"></td></tr>
-      <input id="accesso_DatiCatastaliAbilitati{{ prefix }}" name="accesso_DatiCatastaliAbilitati{{ prefix }}" dynamic_check="#Servizio_richiesto2.checked()" type="hidden"/>
-      {{ immobili_trento.immobile_accesso_atti_no_ult_part(prefix + '_accesso', intestazione="per la seguente particella:", visibility_intestazione="display:visibility") }}
-    {%- endmacro %}
-
-    {% for i in range(2, 5) %}
-      {{ altre_part_accesso(i) }}
-    {% endfor %}
-
+    <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
+    <input class="" id="consultazione4_DatiCatastaliAbilitati" name="consultazione4_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto1.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='consultazione4', intestazione="Particella #4") }}
+   
   </tbody>
 </table>
 
-<input class="" type="hidden" id="part_cons" name="part_cons" dynamic_value="#Servizio_richiesto1.checked() ? 'consultazione p.ed: ' + #consultazione_CatNumero.value() + ' - comune: ' + #consultazione_ComuneCatastale_esteso.value() : ''"/>
-<input class="" type="hidden" id="part_acc" name="part_acc" dynamic_value="#Servizio_richiesto2.checked() ? 'accesso p.ed: ' + #accesso_CatNumero.value() + ' - comune: ' + #accesso_ComuneCatastale_esteso.value() : ''"/>
-<input class="" type="hidden" id="part_rich" name="part_rich" dynamic_value="#part_cons.value() != '' ? (#part_acc.value() == '' ? #part_cons.value() : #part_cons.value() + ' / ' + #part_acc.value()) : #part_acc.value()"/>
-
-
+<br>
 <br>
 
 <div class="simpatico-block simpatico-query-and-answer">
 
 <h1 class="Modulo">TRASMETTE LA SEGUENTE DOCUMENTAZIONE INTEGRATIVA</h1>
 
-<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width:4%">
-        <input id="AFFIDAMENTO_INCARICO" name="AFFIDAMENTO_INCARICO" type="checkbox" dynamic_check="#GEN_CDI.checked()" enabled="true" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p>Delega comprovante l'affidamento dell'incarico</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width:3%">
-        <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#AFFIDAMENTO_INCARICO.checked()" enabled="true" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p>Copia del documento d'identità del delegante</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="width:4%">
-        <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p>Altri allegati <i>(specificare)</i>: 
-          <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:77%;"/>
-        </p>
+      <td style="vertical-align: top; width: 4%;">
+        <textarea class="inputNormal" id="Documentazione_integrativa" name="Documentazione_integrativa" label="Documentazione_integrativa" style="width:100%;height:5cm" mandatory_enabled="true" maxlength="270">
+        </textarea>
       </td>
     </tr>
   </tbody>
 </table>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+			<td style="width: 4%; vertical-align: top;">
+				<input id="Integrazione_documentazione" name="Integrazione_documentazione" dynamic_check="true" type="checkbox" checked="checked" value="OBBLIGATORIO" />
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+				<p style="line-height:1.6;">Inserire il numero di file che verranno allegati:  <input class="" type="number" id="Nintegr" label="Numero file integrativi" mandatory_enabled="true" name="Nintegr" size="1" min="0" max="100"/><br><b>Attenzione!</b> Limite max di 20 MB per allegato
+        </p>
+			</td>
+		</tr>
+  </tbody>
+</table>
+
+<input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" numero="#Nintegr.value()" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+
 </div>
 
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 4%; vertical-align: top;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
         <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
@@ -403,20 +402,21 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+
 <br>
 <br>
 
-<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+      <td style="width: 20%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%;"/>
+      <td style="width: 65%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -438,16 +438,17 @@ urn_report="report:CSP_SESSION_REPORT"
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
 </p>
+
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
-<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
-<input id="GLOBO_allegato_cGEN-AFFIDAMENTO-INCARICO" name="GLOBO_allegato_cGEN-AFFIDAMENTO-INCARICO" obbligatorio="#AFFIDAMENTO_INCARICO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" name="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-ARCHIVIO" name="GLOBO_allegato_cINFORM-TRATT-DATI-ARCHIVIO" obbligatorio="''" type="hidden" value=""/>
 

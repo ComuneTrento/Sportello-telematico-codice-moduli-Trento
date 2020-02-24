@@ -88,20 +88,20 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-IMMAGG-NUOVO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.nuovo"
+<meta codice_modulo_figlio="GEN-IMMAGG"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-IMMAGG-AU-NUOVO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa.nuovo"
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-IMMAGG-EL-NUOVO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica.nuovo"
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -492,10 +492,15 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
-  
-{{ immobili_trento.immobile_solotrento("Immobile", "I lavori interessano le seguenti realtà immobiliari", disattivato="true") }}
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_value="'vero'" type="hidden"/>
+{{ immobili_trento_uniformata.immobile_solo_trento("Immobile", "LOCALIZZAZIONE DELL'INTERVENTO" ,"I lavori interessano le seguenti realtà immobiliari") }}
 
+<input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" dynamic_value="#Immobile_TipoImmobile.value() == 'S' ? 'Porzione di edificio' : (#Immobile_TipoImmobile.value() == 'E' ? 'Intero edificio' : (#Immobile_TipoImmobile.value() == 'F' ? 'Particella fondiaria' : ''))" type="hidden"/>
+<input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? #Immobile_Localita_part_fondiaria.value() : #Immobile_Nomevia_esteso.value()" type="hidden"/>
+<input id="Immobile_numeroCivico" name="Immobile_numeroCivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Civico.value()" type="hidden"/>
+<input id="Immobile_Barracivico" name="Immobile_Barracivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
+
+<br>
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
@@ -1311,9 +1316,9 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part" name="numero_ult_part" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
         <input id="numeroallegati" name="numeroallegati" dynamic_value="Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10)" type="hidden" />
-        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-NUOVO" name="GLOBO_modulofiglio_cGEN-IMMAGG-NUOVO" numero="#numeroallegati.value()" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL-NUOVO" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL-NUOVO" numero="#numeroallegati.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU-NUOVO" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU-NUOVO" numero="#numeroallegati.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="#numeroallegati.value()" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="#numeroallegati.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="#numeroallegati.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>

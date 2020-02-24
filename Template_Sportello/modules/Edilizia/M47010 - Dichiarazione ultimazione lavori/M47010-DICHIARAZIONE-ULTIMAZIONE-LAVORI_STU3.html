@@ -31,20 +31,20 @@ urlhelp="/modulistica/moduli/M47010-DICHIARAZIONE-ULTIMAZIONE-LAVORI"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
-<meta codice_modulo_figlio="GEN-IMMAGG-NUOVO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.nuovo"
+<meta codice_modulo_figlio="GEN-IMMAGG"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-IMMAGG-AU-NUOVO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa.nuovo"
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-IMMAGG-EL-NUOVO"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica.nuovo"
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -80,6 +80,12 @@ obbligatorio="DINAMICO"/>
 
 <meta codice_modulo_figlio="M47010-MSEC01-DICH-TECN"
 urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec01.m47010.dichiarazioni.tecnico"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M47010-MSEC12-ASSEVER-DIRLAV"
+urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec12.m47010.asseverazione.direttore.lavori"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -332,9 +338,9 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
  
-<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_value="'vero'" type="hidden"/>
   
-{{immobili_trento.immobile_semplice_ultpart("Immobile","SULL'IMMOBILE INTERESSATO AI LAVORI")}}
+{{immobili_trento_uniformata.immobile_solo_trento_nocontrollovia("Immobile", "LOCALIZZAZIONE DELL'INTERVENTO" , "IMMOBILE INTERESSATO AI LAVORI")}}
 <input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" dynamic_value="#Immobile_TipoImmobile.value() == 'S' ? 'Porzione di edificio' : (#Immobile_TipoImmobile.value() == 'E' ? 'Intero edificio' : (#Immobile_TipoImmobile.value() == 'F' ? 'Particella fondiaria' : ''))" type="hidden"/>
 <input id="Metadati_Immobile_TipoImmobile" name="Metadati_Immobile_TipoImmobile" dynamic_value="#Immobile_TipoImmobile.value() == 'S' ? 'Porzione di edificio' : (#Immobile_TipoImmobile.value() == 'E' ? 'Intero edificio' : (#Immobile_TipoImmobile.value() == 'F' ? 'Particella fondiaria' : ''))" type="hidden"/>
 <input id="Metadati_Immobile_ComuneCatastale_esteso" name="Metadati_Immobile_ComuneCatastale_esteso" dynamic_value="#Immobile_ComuneCatastale_esteso.value()" type="hidden"/>
@@ -350,6 +356,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? #Immobile_Localita_part_fondiaria.value() : #Immobile_Nomevia_esteso.value()" type="hidden"/>
 <input id="Immobile_numeroCivico" name="Immobile_numeroCivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Civico.value()" type="hidden"/>
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
+<input id="Immobile_check_numero_particelle" name="Immobile_check_numero_particelle" dynamic_value="#altre_particelle1.checked() ? '1' : (#altre_particelle2.checked() ? '2' : '' )" type="hidden">
 
 <br>
 <br>
@@ -474,6 +481,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="Metadati_Progettista_TitoloPersona" name="Metadati_Progettista_TitoloPersona" dynamic_value="#Progettista_TitoloPersona.value()" type="hidden"/>
 <input id="Metadati_Progettista_Cognome" name="Metadati_Progettista_Cognome" dynamic_value="#Progettista_Cognome.value()" type="hidden"/>
 <input id="Metadati_Progettista_Nome" name="Metadati_Progettista_Nome" dynamic_value="#Progettista_Nome.value()" type="hidden"/>
+<input id="Progettista_Indirizzocompleto" name="Progettista_Indirizzocompleto" dynamic_value="#Progettista_ViaStudio.value() + ' ' + #Progettista_CivicoStudio.value() + (#Progettista_BarraStudio.value() != '' ? '/' + #Progettista_BarraStudio.value() : '') + ', ' + #Progettista_ComuneStudio.value() + ' (' + #Progettista_ProvinciaStudio.value() + ')'" type="hidden"/>
 
 <br>
 
@@ -602,7 +610,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Domanda firmata dal titolare</b> nella seguente modalità:
+        <p style="line-height:1.6;"><b>Dichiarazione firmata dal titolare</b> nella seguente modalità:
           <select class="inputNormal" id="Tipo_Firma_modulo_compilato" name="Tipo_Firma_modulo_compilato" style="width:35%;" label="Tipo firma modulo compilato" mandatory_enabled="#Modulo_compilato_firmato.checked()">
             <option value=""></option>
             <option value="Firma autografa">Firma autografa</option>
@@ -645,10 +653,11 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="assver_dirlav" name="assver_dirlav" type="checkbox" dynamic_check="#Progettista_direttorelavori2.checked()" enabled="#Progettista_direttorelavori2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Asseverazione del direttore lavori</b> (se diverso dal progettista)<br><span style="font-size:85%;">ai sensi dell'art. 8, comma 2, del D. Lgs. n. 192/2005, in merito alla <i>Conformità delle opere realizzate rispetto al progetto ed alle sue eventuali varianti ed alla relazione tecnica di cui al comma 1 del medesimo articolo”</i></span></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Asseverazione del direttore lavori</b> (se diverso dal progettista)<br><span style="font-size:85%;">ai sensi dell'art. 8, comma 2, del D. Lgs. n. 192/2005, in merito alla <i>Conformità delle opere realizzate rispetto al progetto ed alle sue eventuali varianti ed alla relazione tecnica di cui al comma 1 del medesimo articolo”</i></span></p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_assever" name="numero_assever" dynamic_value="#assver_dirlav.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cM47010-MSEC12-ASSEVER-DIRLAV" name="GLOBO_modulofiglio_cM47010-MSEC12-ASSEVER-DIRLAV" obbligatorio="#Progettista_direttorelavori2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -667,9 +676,9 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part" name="numero_ult_part" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
         <input id="numeroallegati" name="numeroallegati" dynamic_value="Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10)" type="hidden" />
-        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-NUOVO" name="GLOBO_modulofiglio_cGEN-IMMAGG-NUOVO" numero="#numeroallegati.value()" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL-NUOVO" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL-NUOVO" numero="#numeroallegati.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU-NUOVO" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU-NUOVO" numero="#numeroallegati.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="#numeroallegati.value()" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="#numeroallegati.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="#numeroallegati.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>

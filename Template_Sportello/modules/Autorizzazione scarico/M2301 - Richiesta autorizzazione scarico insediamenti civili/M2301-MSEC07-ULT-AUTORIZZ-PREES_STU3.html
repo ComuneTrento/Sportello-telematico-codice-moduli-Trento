@@ -1,0 +1,206 @@
+{% set CodiceModulo =  "M2301-MSEC07-ULT-AUTORIZZ-PREES" %}
+{% set Urn =  "document:c_l378:aut.scarico.insed.civ;richiedere.autorizzazione;domanda.autorizzazione.scarico.civ;msec07.m2301.ult.aut.prees" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Modulo secondario - Ulteriori autorizzazioni preesistenti"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M2301-MSEC07-ULT-AUTORIZZ-PREES"
+verifica_pagamento="NO"
+versione="1.0|01/01/2015"/>
+
+{% endblock meta %}
+
+
+{% block title %}
+   Ulteriori autorizzazioni preesistenti
+{% endblock title %}
+
+{% block content %}
+
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' - ulteriori autorizzazioni preesistenti'"/>
+
+ <h1 class="Modulo">
+  Ulteriori autorizzazioni preesistenti
+ </h1>
+
+  <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height:1.6;">Il proprietario, comproprietario o richiedente in possesso di titolo idoneo, <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="37"/></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<br>
+
+<h1 class="Modulo">DICHIARA</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;">che relativamente a questo procedimento di autorizzazione allo scarico <b>esistono</b> inoltre le seguenti <b>autorizzazioni pregresse:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #1</b></p>
+      </td>
+    </tr>
+
+    {% macro Altre_autorizzazioni_preesistenti(prefix) %}
+    {% set prefix = prefix|string %}
+    <tr>
+      <td>
+        <p style="line-height: 2;">Autorizzazione n.: <input class="" label="Numero autorizzazione {{ prefix }}" id="Num_autorizzazione{{ prefix }}" name="Num_autorizzazione{{ prefix }}" enabled="true" style="width:15%; text-align: center;" mandatory="#Data_autorizzazione{{ prefix }}.value() != '' || #Rilascio_autorizzazione{{ prefix }}.value() != '' || #Nome_rilascio{{ prefix }}.value() != '' || #Recapito_rilascio{{ prefix }}.value() != '' || #validita_autorizz_pregr{{ prefix }}.checked()"/>&nbsp; &nbsp; &nbsp; 
+                                   di data: <input class="" label="Data autorizzazione {{ prefix }}" id="Data_autorizzazione{{ prefix }}" name="Data_autorizzazione{{ prefix }}" enabled="true" style="width:12%; text-align: center;" format="date" mandatory="#Num_autorizzazione{{ prefix }}.value() != '' || #Rilascio_autorizzazione{{ prefix }}.value() != '' || #Nome_rilascio{{ prefix }}.value() != '' || #Recapito_rilascio{{ prefix }}.value() != '' || #validita_autorizz_pregr{{ prefix }}.checked()"/>&nbsp; &nbsp; &nbsp; 
+                                   rilasciata da: <input class="" label="Rilascio autorizzazione {{ prefix }}" id="Rilascio_autorizzazione{{ prefix }}" name="Rilascio_autorizzazione{{ prefix }}" enabled="true" style="width:28.5%; text-align: center;" mandatory="#Num_autorizzazione{{ prefix }}.value() != '' || #Data_autorizzazione{{ prefix }}.value() != '' || #Nome_rilascio{{ prefix }}.value() != '' || #Recapito_rilascio{{ prefix }}.value() != '' || #validita_autorizz_pregr{{ prefix }}.checked()"/><br>                                  
+                                   Rilasciata a nome: <input class="" label="Nome rilascio {{ prefix }}" id="Nome_rilascio{{ prefix }}" name="Nome_rilascio{{ prefix }}" enabled="true" style="width:82%;" mandatory="#Num_autorizzazione{{ prefix }}.value() != '' || #Data_autorizzazione{{ prefix }}.value() != '' || #Rilascio_autorizzazione{{ prefix }}.value() != '' || #Recapito_rilascio{{ prefix }}.value() != '' || #validita_autorizz_pregr{{ prefix }}.checked()"/> <br>
+                                   per il recapito in: <input class="" label="Recapito rilascio {{ prefix }}" id="Recapito_rilascio{{ prefix }}" name="Recapito_rilascio{{ prefix }}" enabled="true" style="width:84%;" mandatory="#Num_autorizzazione{{ prefix }}.value() != '' || #Data_autorizzazione{{ prefix }}.value() != '' || #Rilascio_autorizzazione{{ prefix }}.value() != '' || #Nome_rilascio{{ prefix }}.value() != '' || #validita_autorizz_pregr{{ prefix }}.checked()"/><br><br>
+                                   <div id="validita_autorizz_pregr{{ prefix }}" name="validita_autorizz_pregr{{ prefix }}" label="Validità autorizzazione pregressa {{ prefix }}" enabled="true" mandatory="#Num_autorizzazione{{ prefix }}.value() != '' || #Data_autorizzazione{{ prefix }}.value() != '' || #Rilascio_autorizzazione{{ prefix }}.value() != '' || #Nome_rilascio{{ prefix }}.value() != '' || #Recapito_rilascio{{ prefix }}.value() != ''"> </div>
+                                   Valida per: &nbsp; &nbsp; <input group="validita_autorizz_pregr{{ prefix }}" id="validita_autorizz_pregr1{{ prefix }}" name="validita_autorizz_pregr1{{ prefix }}" type="checkbox" value="1" /> <b>Acque bianche</b> &nbsp; &nbsp; &nbsp; &nbsp;<input group="validita_autorizz_pregr{{ prefix }}" id="validita_autorizz_pregr2{{ prefix }}" name="validita_autorizz_pregr2{{ prefix }}" type="checkbox" value="2"/> <b>Acque nere</b> &nbsp; &nbsp; &nbsp; &nbsp;<input group="validita_autorizz_pregr{{ prefix }}" id="validita_autorizz_pregr3{{ prefix }}" name="validita_autorizz_pregr3{{ prefix }}" type="checkbox" value="3"/> <b>Acque miste</b><br><br>
+        </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella"></p>
+      </td>
+    </tr>
+    {%- endmacro %}
+
+    {{ Altre_autorizzazioni_preesistenti(1) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #2</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(2) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #3</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(3) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #4</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(4) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #5</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(5) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #6</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(6) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #7</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(7) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #8</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(8) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #9</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(9) }}
+
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p style="line-height: 1.6;"><b>Autorizzazione #10</b></p>
+      </td>
+    </tr>
+    {{ Altre_autorizzazioni_preesistenti(10) }}
+
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br/>
+
+
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+ <input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden" readonly/>
+ <input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
+ <input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden" readonly/>
+
+{% endblock content %}

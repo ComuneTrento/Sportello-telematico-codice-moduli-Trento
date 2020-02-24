@@ -1,0 +1,491 @@
+{% set CodiceModulo =  "M0801-MSEC02-MOD-DELEGA-EL" %}
+{% set Urn =  "document:c_l378:accesso.atti.edilizia;richiesta.accesso;msec02.m0801.modello.delega.el" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="Delegante_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Modulo secondario - Modello di delega (firma elettronica)"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_ELETTRONICA"
+istruzioni_compilazione="ATTENZIONE: questo modulo deve essere compilato con i dati del sottoscrivente."
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M0801-MSEC02-MOD-DELEGA-EL"
+verifica_pagamento="NO"
+versione="1.1|03/06/2016"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-ARCHIVIO"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.archivio"
+descrizione_estesa="Informativa trattamento dati ARCHIVIO"
+filename="INFORM-TRATT-DATI-ARCHIVIO.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-ARCHIVIO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+{% block title %}
+Modello di delega (firma elettronica)
+{% endblock title %}
+
+{% block content %}
+
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+
+<br>
+<h1 class="Modulo">MODULO DI DELEGA (firma elettronica)</h1>
+<br>
+
+<input dynamic_value="#Delegante_Cognome.value().toUpperCase() + ' - Delega'" id="Oggetto" name="Oggetto" type="hidden"/>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+    <table class="Modulo" style="border:1px solid grey" mandatory="true">
+        <tbody>
+            <tr class="Rigaintestazione">
+                <td colspan="6">
+                    <p style="line-height:1.6;"><b>Il sottoscritto</b></p>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta">
+                <td colspan="2" style="width:33%;">
+                    <p class="Labelcella">Cognome</p>
+                </td>
+                <td colspan="2" style="width:33%;">
+                    <p class="Labelcella">Nome</p>
+                </td>
+                <td colspan="2" style="width:33%;">
+                    <p class="Labelcella">Codice Fiscale</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width:33%;">
+                    <input class="" id="Delegante_Cognome" name="Delegante_Cognome" style="width:100%" label="Cognome del delegante"/>
+                </td>
+                <td colspan="2" style="width:33%;">
+                    <input class="" id="Delegante_Nome" name="Delegante_Nome" style="width:100%" label="Nome del delegante"/>
+                </td>
+                <td colspan="2" style="width:33%;">
+                    <input class="" id="Delegante_CodiceFiscale" name="Delegante_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del delegante"/>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta" style="border-top:0px">
+                <td style="width:20%;">
+                    <p class="Labelcella">Data di nascita</p>
+                </td>
+                <td style="width:10;">
+                    <p class="Labelcella">Sesso (M/F)</p>
+                </td>
+                <td colspan="2">
+                    <p class="Labelcella">Nazionalità</p>
+                </td>
+                <td colspan="2">
+                    <p class="Labelcella">Luogo di nascita</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:20%;">
+                    <input class="" id="Delegante_DataNascita" name="Delegante_DataNascita" style="width:100%;" format="date" label="Data di nascita del delegante"/>
+                </td>
+                <td style="width:10%;">
+                    <select class="inputNormal" id="Delegante_Sesso" name="Delegante_Sesso" style="width:100%;" label="Sesso del delegante">
+                        <option value=""></option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                </td>
+                <td colspan="2">
+                    {{ utils.nazionalita("Delegante_Nazionalita", "Nazionalità")}}
+                </td>
+                <td colspan="2">
+                    <input class="" id="Delegante_LuogoNascita" name="Delegante_LuogoNascita" style="width:100%;" label="Luogo di nascita del delegante"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="Modulo" style="border:1px solid grey" mandatory="true">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td colspan="5">
+                    <p class="Labelcella"><b>Residenza</b></p>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width:10%;">
+                    <p class="Labelcella">Provincia</p>
+                </td>
+                <td style="width:33%;">
+                    <p class="Labelcella">Comune</p>
+                </td>
+                <td style="width:33%;">
+                    <p class="Labelcella">Indirizzo</p>
+                </td>
+                <td style="width:12%;">
+                    <p class="Labelcella">Civico</p>
+                </td>
+                <td style="width:12%;">
+                    <p class="Labelcella">CAP</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:10%;">
+                    {{ utils.provincie("Delegante_ProvinciaResidenza", "Provincia di residenza")}}
+                </td>
+                <td style="width:33%;">
+                    <select class="inputNormal" id="Delegante_ComuneResidenza" name="Delegante_ComuneResidenza" style="width:100%" label="Comune di residenza del delegante"
+                        dynamic_value="getComuniFromProvincia( #Delegante_ProvinciaResidenza.value(), 'Delegante_ComuneResidenza')">
+                    </select>
+                </td>
+                <td style="width:33%;">
+                    <input class="" id="Delegante_ViaResidenza" name="Delegante_ViaResidenza" style="width:100%;" label="Via di residenza del delegante"/>
+                </td>
+                <td style="width:12%;">
+                    <input class="" id="Delegante_CivicoResidenza" name="Delegante_CivicoResidenza" style="width:100%;" label="Civico di residenza del delegante" maxlength="10"/>
+                </td>
+                <td style="width:12%;">
+                    <input class="" id="Delegante_CAPResidenza" name="Delegante_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del delegante" mandatory="#Delegante_ProvinciaResidenza.value() != 'EE'"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="Modulo" style="border:1px solid grey" mandatory="true">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td colspan="4">
+                    <p class="Labelcella"><b>Recapito</b></p>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width:20%;">
+                    <p class="Labelcella">Telefono fisso</p>
+                </td>
+                <td style="width:20%;">
+                    <p class="Labelcella">Cellulare</p>
+                </td>
+                <td style="width:30%;">
+                    <p class="Labelcella">E-mail <i>(posta elettronica ordinaria)</i></p>
+                </td>
+                <td style="width:30%;">
+                    <p class="Labelcella">E-mail PEC <i>(domicilio digitale)</i></p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:20%;">
+                    <input class="inputNormal" id="Delegante_Tel_Fisso" label="Tel_Fisso del delegante" mandatory="false" name="Delegante_Tel_Fisso" style="width:100%"/>
+                </td>
+                <td style="width:20%;">
+                    <input class="inputNormal" id="Delegante_Telefono" label="Telefono del delegante" name="Delegante_Telefono" style="width:100%" mandatory="true"/>
+                </td>
+                <td style="width:30%;">
+                    <input class="inputNormal" format="email" id="Delegante_EMail" label="E-mail ordinaria del delegante" mandatory="true" name="Delegante_EMail" style="width:100%;"/>
+                </td>
+                <td style="width:30%;">
+                    <input class="inputNormal" format="pec" id="Delegante_EMailPEC" label="E-mail PEC del delegante" mandatory="false" name="Delegante_EMailPEC" style="width:100%;" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td>
+                <p style="line-height:1.6;"><b>in qualità di</b></p>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td>
+                <p class="Labelcella">Ruolo</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select class="inputNormal" id="Delegante_Ruolo" name="Delegante_Ruolo" style="width:100%;" mandatory_enabled="true" label="Ruolo del delegante">
+                    <option value=""></option>
+                    <option value="Proprietario">Proprietario</option>
+                    <option value="Comproprietario">Comproprietario</option>
+                    <option value="Titolare del diritto di accesso">Titolare del diritto di accesso</option>
+                    <option value="Rappresentante legale">Rappresentante legale</option>
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<h1 class="Modulo">DELEGA</h1>
+
+
+<div class="simpatico-block simpatico-query-and-answer">
+    
+    <table class="Modulo" style="border:1px solid grey" >
+        <tbody>
+            <tr class="Rigaintestazione">
+                <td colspan="6">
+                    <p style="line-height:1.6;"><b>Il sig. / la sig.ra</b></p>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta">
+                <td colspan="2" style="width:33%;">
+                    <p class="Labelcella">Cognome</p>
+                </td>
+                <td colspan="2" style="width:33%;">
+                    <p class="Labelcella">Nome</p>
+                </td>
+                <td colspan="2" style="width:33%;">
+                    <p class="Labelcella">Codice Fiscale</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width:33%;">
+                    <input class="" id="Delegato_Cognome" name="Delegato_Cognome" style="width:100%" label="Cognome del delegato" dynamic_value="#Metadati_AventeTitolo_Cognome.value()" readonly/>
+                </td>
+                <td colspan="2" style="width:33%;">
+                    <input class="" id="Delegato_Nome" name="Delegato_Nome" style="width:100%" label="Nome del delegato" dynamic_value="#Metadati_AventeTitolo_Nome.value()" readonly/>
+                </td>
+                <td colspan="2" style="width:33%;">
+                    <input class="" id="Delegato_CodiceFiscale" name="Delegato_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del delegato" dynamic_value="#Metadati_AventeTitolo_CodiceFiscale.value()" readonly/>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta" style="border-top:0px">
+                <td style="width:20%;">
+                    <p class="Labelcella">Data di nascita</p>
+                </td>
+                <td style="width:10;">
+                    <p class="Labelcella">Sesso (M/F)</p>
+                </td>
+                <td colspan="2">
+                    <p class="Labelcella">Cittadinanza</p>
+                </td>
+                <td colspan="2">
+                    <p class="Labelcella">Luogo di nascita</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:20%;">
+                    <input class="" id="Delegato_DataNascita" name="Delegato_DataNascita" style="width:100%;" format="date" label="Data di nascita del delegato" dynamic_value="#Metadati_AventeTitolo_DataNascita.value()" readonly/>
+                </td>
+                <td style="width:10%;">
+                    <input class="" id="Delegato_Sesso" name="Delegato_Sesso" style="width:100%;" label="Sesso del delegato" dynamic_value="#Metadati_AventeTitolo_Sesso.value()" readonly/>
+                </td>
+                <td colspan="2">
+                    <input class="" id="Delegato_Cittadinanza" name="Delegato_Cittadinanza" style="width:100%;" label="Cittadinanza del delegato" dynamic_value="#Metadati_AventeTitolo_Cittadinanza.value()" readonly/>
+                </td>
+                <td colspan="2">
+                    <input class="" id="Delegato_LuogoNascita" name="Delegato_LuogoNascita" style="width:100%;" label="Luogo di nascita del delegato" dynamic_value="#Metadati_AventeTitolo_LuogoNascita.value()" readonly/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table class="Modulo" style="border:1px solid grey">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td colspan="6">
+                    <p class="Labelcella"><b>Residenza</b></p>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width:9%;">
+                    <p class="Labelcella">Provincia</p>
+                </td>
+                <td style="width:33%;">
+                    <p class="Labelcella">Comune</p>
+                </td>
+                <td style="width:33%;">
+                    <p class="Labelcella">Indirizzo</p>
+                </td>
+                <td style="width:9%;">
+                    <p class="Labelcella">Civico</p>
+                </td>
+                <td style="width:9%;">
+                    <p class="Labelcella">Barra</p>
+                </td>
+                <td style="width:16%;">
+                    <p class="Labelcella">CAP</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:9%;">
+                    <input class="" id="Delegato_ProvinciaResidenza" name="Delegato_ProvinciaResidenza" style="width:100%;" label="Provincia di residenza del delegato" dynamic_value="#Metadati_AventeTitolo_ProvinciaResidenza.value()" readonly/>
+                </td>
+                <td style="width:33%;">
+                    <input class="" id="Delegato_ComuneResidenza" name="Delegato_ComuneResidenza" style="width:100%;" label="Comune di residenza del delegato" dynamic_value="#Metadati_AventeTitolo_ComuneResidenza.value()" readonly/>
+                </td>
+                <td style="width:33%;">
+                    <input class="" id="Delegato_ViaResidenza" name="Delegato_ViaResidenza" style="width:100%;" label="Via di residenza del delegato" dynamic_value="#Metadati_AventeTitolo_ViaResidenza.value()" readonly/>
+                </td>
+                <td style="width:9%;">
+                    <input class="" id="Delegato_CivicoResidenza" name="Delegato_CivicoResidenza" style="width:100%;" label="Civico di residenza del delegato" maxlength="10" dynamic_value="#Metadati_AventeTitolo_CivicoResidenza.value()" readonly/>
+                </td>
+                <td style="width:9%;">
+                    <input class="" id="Delegato_BarraResidenza" name="Delegato_BarraResidenza" style="width:100%;" label="Civico di residenza del delegato" maxlength="10" dynamic_value="#Metadati_AventeTitolo_BarraResidenza.value()" readonly/>
+                </td>
+                <td style="width:16%;">
+                    <input class="" id="Delegato_CAPResidenza" name="Delegato_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del delegato" mandatory="#Delegato_ProvinciaResidenza.value() != 'EE'" dynamic_value="#Metadati_AventeTitolo_CAPResidenza.value()" readonly/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table class="Modulo" style="border:1px solid grey">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td colspan="4">
+                    <p class="Labelcella"><b>Recapito</b></p>
+                </td>
+            </tr>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width:50%;">
+                    <p class="Labelcella">Telefono fisso</p>
+                </td>
+                <td style="width:50%;">
+                    <p class="Labelcella">Cellulare</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%;">
+                    <input class="inputNormal" id="Delegato_Tel_Fisso" label="Tel_Fisso del delegato" mandatory="false" name="Delegato_Tel_Fisso" style="width:100%" dynamic_value="#Metadati_AventeTitolo_Fisso.value()" readonly/>
+                </td>
+                <td style="width:50%;">
+                    <input class="inputNormal" id="Delegato_Telefono" label="Telefono del delegato" name="Delegato_Telefono" style="width:100%" mandatory="true" dynamic_value="#Metadati_AventeTitolo_Telefono.value()" readonly/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazione">
+            <td colspan="10">
+                <p style="line-height:1.6;"><b>A compiere per proprio conto la seguente operazione:</b></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: center; text-align: center; width: 4%;">
+                <div id="tipo_operazione" name="tipo_operazione" label="Tipo operazione" mandatory_enabled="true"> </div>
+                <input group="tipo_operazione" id="tipo_operazione1" name="tipo_operazione1" type="checkbox" value="1" /> 
+            </td>
+            <td colspan="10">
+                <p style="line-height:1.6;">Richiesta di accesso ai documenti sottoelencati</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: center; text-align: center; width: 4%;">
+                <input group="tipo_operazione" id="tipo_operazione2" name="tipo_operazione2" type="checkbox" value="2" /> 
+            </td>
+            <td colspan="10">
+                <p style="line-height:1.6;">Ritiro copia dei documenti indicati nel modulo principale</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+        <tr>
+            <td style="vertical-align: center; text-align: center; width: 4%;">
+                <div id="Presa_visione1" name="Presa_visione1" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+                <input group="Presa_visione1" id="Presa_visione_check1" name="Presa_visione_check1" type="checkbox" value="1" />
+            </td>
+            <td colspan="2" style="background-color: #eeeeee;">
+                <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-archivio" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+    <tbody>
+        <tr>
+            <td style="width: 25%; text-align: center;">
+                <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+            </td>
+            <td style="width: 25%; text-align: center;">
+                <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+            </td>
+            <td style="width: 50%; text-align: center; height: 1.5cm;">
+                <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Delegante_Nome.value().toUpperCase() + ' ' + #Delegante_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
+            </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+            <td>
+                <p class="Labelcella" style="text-align: center">Luogo</p>
+            </td>
+            <td>
+                <p class="Labelcella" style="text-align: center">Data</p>
+            </td>
+            <td>
+                <p class="Labelcella" style="text-align: center">Il delegante <span style="font-size:95%"><i>(firma elettronica)</i></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+ <br/>
+
+ <p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+ </p>
+ 
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ 
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ 
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ 
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+ <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+ 
+ <!-- passaggio dati tra moduli -->
+ {{ utils.passaggio_metadati() }}
+ <input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" type="hidden"/>
+ <input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" type="hidden"/>
+ <input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" type="hidden"/>
+ <input id="Metadati_AventeTitolo_DataNascita" name="Metadati_AventeTitolo_DataNascita" type="hidden"/>
+ <input id="Metadati_AventeTitolo_LuogoNascita" name="Metadati_AventeTitolo_LuogoNascita" type="hidden"/>
+ <input id="Metadati_AventeTitolo_Sesso" name="Metadati_AventeTitolo_Sesso" type="hidden"/>
+ <input id="Metadati_AventeTitolo_Cittadinanza" name="Metadati_AventeTitolo_Cittadinanza" type="hidden"/>
+ <input id="Metadati_AventeTitolo_ProvinciaResidenza" name="Metadati_AventeTitolo_ProvinciaResidenza" type="hidden"/>
+ <input id="Metadati_AventeTitolo_ComuneResidenza" name="Metadati_AventeTitolo_ComuneResidenza" type="hidden"/>
+ <input id="Metadati_AventeTitolo_ViaResidenza" name="Metadati_AventeTitolo_ViaResidenza" type="hidden"/>
+ <input id="Metadati_AventeTitolo_CivicoResidenza" name="Metadati_AventeTitolo_CivicoResidenza" type="hidden"/>
+ <input id="Metadati_AventeTitolo_BarraResidenza" name="Metadati_AventeTitolo_BarraResidenza" type="hidden"/>
+ <input id="Metadati_AventeTitolo_CAPResidenza" name="Metadati_AventeTitolo_CAPResidenza" type="hidden"/>
+ <input id="Metadati_AventeTitolo_Fisso" name="Metadati_AventeTitolo_Fisso" type="hidden"/>
+ <input id="Metadati_AventeTitolo_Telefono" name="Metadati_AventeTitolo_Telefono" type="hidden"/>
+ {% endblock content %}

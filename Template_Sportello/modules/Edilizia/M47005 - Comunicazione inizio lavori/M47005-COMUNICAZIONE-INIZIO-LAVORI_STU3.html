@@ -199,7 +199,7 @@ urn_report="report:CSP_SESSION_REPORT"
           <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
         </td>
         <td>
-          <p style="line-height:1.6;">Professionista incaricato</p>
+          <p style="line-height:1.6;">Progettista incaricato</p>
         </td>
       </tr>
     </tbody>
@@ -226,12 +226,14 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <div id="Permesso_costr" name="Permesso_costr" label="Dettagli permesso di costruire" mandatory_enabled="true"> </div>
         <input group="Permesso_costr" id="Permesso_costr1" name="Permesso_costr" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;">prot.nr.: <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/> di data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione2" name="Prot_concessione2" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione2" name="Data_concessione2" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione3" name="Prot_concessione3" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione3" name="Data_concessione3" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
       </td>
     </tr>
     <tr>
@@ -309,9 +311,28 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_check="true" type="hidden"/>
+<h1 class="Modulo">COMUNICA</h1>
+<!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="border-right:0px">
+        <p style="line-height:1.6;"><b>che in data <input class="" format="date" id="Data_inizio_lavori" name="Data_inizio_lavori" label="Data di inizio lavori" mandatory_enabled="true" size="8"/> avranno inizio i lavori previsti dal permesso di costruire sopra citato</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-{{ immobili_trento.immobile_trento_inizio_lavori("Immobile", "avranno inizio i lavori previsti dal permesso di costruire sopra citato, <b>da eseguire presso la realtà immobiliare</b> seguente:", disattivato="true") }}
+<br>
+<br>
+
+<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_value="'vero'" type="hidden"/>
+{{ immobili_trento_uniformata.immobile_solo_trento("Immobile", "LOCALIZZAZIONE DELL'INTERVENTO" ,"da eseguire presso la realtà immobiliare seguente:") }}
+
+<input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" dynamic_value="#Immobile_TipoImmobile.value() == 'S' ? 'Porzione di edificio' : (#Immobile_TipoImmobile.value() == 'E' ? 'Intero edificio' : (#Immobile_TipoImmobile.value() == 'F' ? 'Particella fondiaria' : ''))" type="hidden"/>
+<input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? #Immobile_Localita_part_fondiaria.value() : #Immobile_Nomevia_esteso.value()" type="hidden"/>
+<input id="Immobile_numeroCivico" name="Immobile_numeroCivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Civico.value()" type="hidden"/>
+<input id="Immobile_Barracivico" name="Immobile_Barracivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
 
 <br>
 <br>
