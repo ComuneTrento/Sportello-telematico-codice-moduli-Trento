@@ -64,20 +64,20 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_modulo_figlio="GEN-PROGETTISTA-PROVA"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista.prova"
+<meta codice_modulo_figlio="GEN-PROGETTISTA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-PROGETTISTA-DIRLAV-PROVA"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista.direttore.lavori.prova"
+<meta codice_modulo_figlio="GEN-PROGETTISTA-DIRETT-LAV"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.prog.dirett.lavori"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-DIR-LAV-EL-PROVA"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.direttore.lavori.firma.elettronica.prova"
+<meta codice_modulo_figlio="GEN-DIRETTORE-LAVORI"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.direttore.lavori.firma.digitale"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -415,7 +415,7 @@ urn_report="report:CSP_SESSION_REPORT"
     
   <input id="DirettoreLavori_checkobbligatorio" name="DirettoreLavori_checkobbligatorio" type="hidden" />
   <input id="DirettoreLavori_checkabilitato" name="DirettoreLavori_checkabilitato" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
-  {{anagrafica_trento_uniformata.solo_nominativo("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente):") }}
+  {{anagrafica_trento_uniformata.solo_nominativo("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
   
 </div>
 <input id="Metadati_DirettoreLavori_CodiceFiscale" name="Metadati_DirettoreLavori_CodiceFiscale" dynamic_value="#DirettoreLavori_CodiceFiscale.value()" type="hidden"/>
@@ -1031,13 +1031,13 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-PROVA" obbligatorio="#GEN_PROG_INC.checked() and !#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV-PROVA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV-PROVA" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() and !#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center;" rowspan="3">
-        <input id="Dichiar_titol_prog" name="Dichiar_titol_prog" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
+        <input id="Dichiar_titol_prog" name="Dichiar_titol_prog" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni congiunte del titolare e del progettista</b></p>
@@ -1049,8 +1049,8 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center;">
-        <div id="Firmatario_dich_cong" name="Firmatario_dich_cong" label="Firmatario dichiarazioni congiunte" mandatory_enabled="true"> </div>
-        <input group="Firmatario_dich_cong" id="Firmatario_dich_cong1" name="Firmatario_dich_cong" type="radio" value="1" dynamic_check="#Tipo_richiedente1.checked()"/>
+        <div id="Firmatario_dich_cong" name="Firmatario_dich_cong" label="Firmatario dichiarazioni congiunte" mandatory="true"> </div>
+        <input group="Firmatario_dich_cong" id="Firmatario_dich_cong1" name="Firmatario_dich_cong" type="radio" value="1" dynamic_check="#Tipo_richiedente1.checked()" enabled="#Tipo_richiedente1.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">firmate dal progettista incaricato con <b>firma digitale</b></p>
@@ -1058,7 +1058,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%">
-        <input group="Firmatario_dich_cong" id="Firmatario_dich_cong2" name="Firmatario_dich_cong" type="radio" value="2" dynamic_check="#Tipo_richiedente2.checked()"/>
+        <input group="Firmatario_dich_cong" id="Firmatario_dich_cong2" name="Firmatario_dich_cong" type="radio" value="2" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">firmate:
@@ -1095,7 +1095,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_altri_prog" name="numero_anag_altri_prog" dynamic_value="#GEN_ALTRI_PROG.checked() ? #numero_altri_progettisti.value() : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-ALTRO-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-ALTRO-PROGETTISTA" numero="#numero_altri_progettisti.value()" obbligatorio="#numero_altri_progettisti.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-ALTRO-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-ALTRO-PROGETTISTA" numero="#numero_altri_progettisti.value()" obbligatorio="#numero_altri_progettisti.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1107,7 +1107,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_dirlav" name="numero_anag_dirlav" dynamic_value="#GEN_DIR_LAV.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-DIR-LAV-EL-PROVA" name="GLOBO_modulofiglio_cGEN-DIR-LAV-EL-PROVA" obbligatorio="#GEN_DIR_LAV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-DIRETTORE-LAVORI" name="GLOBO_modulofiglio_cGEN-DIRETTORE-LAVORI" obbligatorio="#GEN_DIR_LAV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1128,7 +1128,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="Nanag_imprese_allegateAu" name="Nanag_imprese_allegateAu" label="Numero anagrafiche imprese firmate manualmente" mandatory_enabled="#check_imprese_au.checked()" style="width: 90%; text-align: center;"/></p>
-        <input id="GLOBO_modulofiglio_cGEN-IMPRESE-AU" name="GLOBO_modulofiglio_cGEN-IMPRESE-AU" numero="#Nanag_imprese_allegateAu.value()" obbligatorio="#Nanag_imprese_allegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMPRESE-AU" name="GLOBO_modulofiglio_cGEN-IMPRESE-AU" numero="#Nanag_imprese_allegateAu.value()" obbligatorio="#Nanag_imprese_allegateAu.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1140,7 +1140,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="Nanag_imprese_allegateEl" name="Nanag_imprese_allegateEl" label="Numero anagrafiche imprese firmate elettronicamente" mandatory_enabled="#check_imprese_el.checked()" style="width: 90%; text-align: center;"/></p>
-        <input id="GLOBO_modulofiglio_cGEN-IMPRESE-EL" name="GLOBO_modulofiglio_cGEN-IMPRESE-EL" numero="#Nanag_imprese_allegateEl.value()" obbligatorio="#Nanag_imprese_allegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMPRESE-EL" name="GLOBO_modulofiglio_cGEN-IMPRESE-EL" numero="#Nanag_imprese_allegateEl.value()" obbligatorio="#Nanag_imprese_allegateEl.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1162,7 +1162,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="Nanag_lav_allegateAu" name="Nanag_lav_allegateAu" label="Numero anagrafiche lavoratori autonomi firmate manualmente" mandatory_enabled="#check_lav_aut_au.checked()" style="width: 90%; text-align: center;"/></p>
-        <input id="GLOBO_modulofiglio_cGEN-LAV-AUTON-AU" name="GLOBO_modulofiglio_cGEN-LAV-AUTON-AU" numero="#Nanag_lav_allegateAu.value()" obbligatorio="#Nanag_lav_allegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-LAV-AUTON-AU" name="GLOBO_modulofiglio_cGEN-LAV-AUTON-AU" numero="#Nanag_lav_allegateAu.value()" obbligatorio="#Nanag_lav_allegateAu.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1174,7 +1174,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="Nanag_lav_allegateEl" name="Nanag_lav_allegateEl" label="Numero anagrafiche lavoratori autonomi firmate elettronicamente" mandatory_enabled="#check_lav_aut_el.checked()" style="width: 90%; text-align: center;"/></p>
-        <input id="GLOBO_modulofiglio_cGEN-LAV-AUTON-EL" name="GLOBO_modulofiglio_cGEN-LAV-AUTON-EL" numero="#Nanag_lav_allegateEl.value()" obbligatorio="#Nanag_lav_allegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-LAV-AUTON-EL" name="GLOBO_modulofiglio_cGEN-LAV-AUTON-EL" numero="#Nanag_lav_allegateEl.value()" obbligatorio="#Nanag_lav_allegateEl.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1183,7 +1183,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori particelle</b> oggetto del procedimento<br>
-          <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:73%;" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
+          <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:73%;" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() &gt; 0">
             <option value=""></option>
             <option value="Firmato con firma autografa">firmato dal titolare con firma autografa</option>
             <option value="Firmato con firma elettronica">firmato dal titolare con firma elettronica</option>
@@ -1216,7 +1216,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="NschedeAllegateAu" name="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG_AU.checked()" style="width: 90%; text-align: center;"/></p>
-        <input id="GLOBO_modulofiglio_cGEN-INTAGG-AU-NUOVO" name="GLOBO_modulofiglio_cGEN-INTAGG-AU-NUOVO" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-INTAGG-AU-NUOVO" name="GLOBO_modulofiglio_cGEN-INTAGG-AU-NUOVO" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1228,7 +1228,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="NschedeAllegateEl" name="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG_EL.checked()" style="width: 90%; text-align: center;"/></p>
-        <input id="GLOBO_modulofiglio_cGEN-INTAGG-EL-NUOVO" name="GLOBO_modulofiglio_cGEN-INTAGG-EL-NUOVO" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-INTAGG-EL-NUOVO" name="GLOBO_modulofiglio_cGEN-INTAGG-EL-NUOVO" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
