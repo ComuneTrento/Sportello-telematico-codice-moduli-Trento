@@ -3,11 +3,11 @@
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Metadati_Progettista_CodiceFiscale"
+<meta campi_firma="Progettista_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Modulo secondario - Elenco documentazione necessaria per il procedimento edilizio (firma elettronica)"
+descrizione="Modulo secondario - Elenco documentazione necessaria per il procedimento edilizio (firma digitale)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
@@ -609,7 +609,7 @@ Elenco documentazione necessaria per il procedimento edilizio
 
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
-<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_Progettista_Cognome.value().toUpperCase() + ' - Elenco documentazione necessaria per il procedimento edilizio'"/>
+<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Progettista_Cognome.value().toUpperCase() + ' - Elenco documentazione necessaria per il procedimento edilizio'"/>
 
 <br>
 
@@ -1788,46 +1788,50 @@ Elenco documentazione necessaria per il procedimento edilizio
 <br>
 <br>
 
-<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
-      </td>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
-      </td>
-      <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Progettista_Cognome.value().toUpperCase() + ' ' + #Progettista_Nome.value().toUpperCase()" style="width:90%;"/>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella" style="text-align: center">Luogo</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Data</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Il progettista <span style="font-size:95%"><i>(firma digitale)</i></span></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="simpatico-block">
+  <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 50%; text-align: center; height: 1.5cm;">
+          <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella" style="text-align: center">Luogo</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Data</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Il progettista <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
- <p class="Modulo">
-  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
- </p>
+  <br>
+
+  <p class="Modulo">
+    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+  </p>
+</div>
+
+
  <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
  <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
-{{ utils.passaggio_metadati() }}
-
-<input id="Metadati_Progettista_CodiceFiscale" name="Metadati_Progettista_CodiceFiscale" type="hidden"/>
-<input id="Metadati_Progettista_TitoloPersona" name="Metadati_Progettista_TitoloPersona" type="hidden"/>
-<input id="Metadati_Progettista_Cognome" name="Metadati_Progettista_Cognome" type="hidden"/>
-<input id="Metadati_Progettista_Nome" name="Metadati_Progettista_Nome" type="hidden"/>
+<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden"/>
+<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden"/>
+<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden"/>
+<input id="Progettista_Nome" name="Progettista_Nome" type="hidden"/>
 
 {% endblock content %}
