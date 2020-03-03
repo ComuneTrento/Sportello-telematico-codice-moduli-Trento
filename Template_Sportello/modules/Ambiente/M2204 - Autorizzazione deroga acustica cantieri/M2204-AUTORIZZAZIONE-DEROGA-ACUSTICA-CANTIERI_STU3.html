@@ -1,6 +1,5 @@
 {% set CodiceModulo =  "M2204-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" %}
 {% set Urn =  "document:c_l378:deroga.acustica;deroga.acustica.edilizia.temporanea;m2204.deroga.acustica" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M2204-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI_v3.0_STU3" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -90,51 +89,6 @@ urn_report="report:CSP_SESSION_REPORT"
 
 {% endblock meta %}
 
-{% block simpaticoconfig %}
-  {% set simpaticoEservice="3" %}
-  {% set simpaticoEserviceName="M2204 AUTORIZZAZIONE DEROGA ACUSTICA CANTIERI" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M2204-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI" %}
-  {% set simpaticoForm="main" %}
-  {% set simpaticoCategory="Ambiente" %}
-	{% set simpaticoMapping=[
-			"AventeTitolo_Cognome",
-			"AventeTitolo_Nome",
-			"AventeTitolo_CodiceFiscale",
-			"AventeTitolo_DataNascita",
-			"AventeTitolo_Sesso",
-			"AventeTitolo_ProvinciaResidenza",
-			"AventeTitolo_ComuneResidenza",
-			"AventeTitolo_ViaResidenza",
-			"AventeTitolo_CivicoResidenza",
-			"AventeTitolo_CAPResidenza",
-			"AventeTitolo_Telefono",
-			"AventeTitolo_Cittadinanza",
-			"AventeTitolo_LuogoNascita",
-			"AventeTitolo_Tel_Fisso",
-			"AventeTitolo_EMail",
-			"AventeTitolo_EMailPEC",
-			"AventeTitolo_Telefono",
-			"AventeTitolo_TipologiaImpresa",
-			"AventeTitolo_Denominazione",
-			"AventeTitolo_ComuneSede",
-			"AventeTitolo_ProvinciaSede",
-			"AventeTitolo_ViaSede",
-			"AventeTitolo_CivicoSede",
-			"AventeTitolo_CAPSede",
-			"AventeTitolo_CFPI",
-			"AventeTitolo_APEC",
-			"AventeTitolo_TelefonoSede",
-			"AventeTitolo_Tel_FissoSede",
-			"AventeTitolo_Attributi_IscrittoCCIAA",
-			"AventeTitolo_Attributi_CCIAAProv",
-			"AventeTitolo_Attributi_CCIAANumero"] %}
-
-	{% set ERROR_LABELS=[ 
-			('block1', 'Inserire il codice fiscale')] %}
-  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}
-
-
 {% block title %}
   M2204-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI
 {% endblock title %}
@@ -142,7 +96,7 @@ urn_report="report:CSP_SESSION_REPORT"
 {% block content %}
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden"/>
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase()+ ' - Domanda di autorizzazione di deroga acustica' " id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="#nominativo_richiedente_per_oggetto.value() + ' - Domanda di autorizzazione di deroga acustica' " id="Oggetto" name="Oggetto" type="hidden"/>
 
 {{ intestazioni.intestazione_moduloprincipale_conbollo() }}
 
@@ -160,7 +114,9 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
 <!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
 
-{{anagrafica_trento_uniformata.titolare("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+{{anagrafica_trento_uniformata.titolare("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Direttore dei lavori","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<input class="" id="nominativo_richiedente_per_oggetto" name="nominativo_richiedente_per_oggetto" dynamic_value="(#AventeTitolo_Ruolo.value() == 'Persona fisica' || #AventeTitolo_Ruolo.value() == 'Direttore dei lavori') ? #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() : ((#AventeTitolo_Ruolo.value() == 'Legale rappresentante' || #AventeTitolo_Ruolo.value() == 'Amministratore di condominio') ? #AventeTitolo_Denominazione.value().toUpperCase() + ' - ' + #AventeTitolo_TipologiaImpresa.value().toUpperCase() : '')" style="width:90%; text-align: center;" type="hidden"/>
 
 <br>
 <br>
@@ -444,10 +400,78 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<div class="simpatico-block simpatico-query-and-answer">
-{{anagrafica_trento_uniformata.domicilio_digitale(id_pec_personale="AventeTitolo_EMailPEC",id_cognome_professionista="Parametri_CognomeProfessionista",id_nome_professionista="Parametri_NomeProfessionista",id_pec_professionista="Parametri_MailPecProfessionista",id_pec_societa="AventeTitolo_APEC")}}
-<input id="Metadati_Dom_Digi" name="Metadati_Dom_Digi" dynamic_value="(#Tassonomia_DomDigi1.checked() ? #AventeTitolo_EMailPEC.value() : 0 || #Tassonomia_DomDigi2.checked() ? #Progettista_EMailPEC.value() : 0 || #Tassonomia_DomDigi3.checked() ? #AventeTitolo_APEC.value() : 0)" type="hidden"/>
-</div>
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="line-height:1.6;"><b>Il titolare</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="4">
+        <div id="Richiesta_delega" name="Richiesta_delega" label="Delega progettista" mandatory_enabled="true"> </div>
+        <input group="Richiesta_delega" id="Richiesta_delega1" name="Richiesta_delega" type="radio" value="1" />
+      </td>
+      <td colspan="3">
+				<p style="line-height:1.8;"><b>DELEGA</b> il seguente professionista:</p>
+			</td>
+		</tr>
+		<tr class="Rigaintestazioneridotta">
+			<td style="width: 15%;">
+				<p class="Labelcella">Titolo</p>
+			</td>
+			<td style="width: 45%;">
+				<p class="Labelcella">Cognome</p>
+			</td>
+			<td style="width: 40%;">
+				<p class="Labelcella">Nome</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<select class="inputNormal" id="Delega_TitoloPersona" name="Delega_TitoloPersona" style="width:100%;" mandatory_enabled="#Richiesta_delega1.checked()" label="Titolo del professionista delegato">
+            <option value=""></option>
+            <option value="Sig.">Sig.</option>
+            <option value="Sig.ra">Sig.ra</option>
+            <option value="Avv.">Avv.</option>
+            <option value="Dott.">Dott.</option>
+            <option value="Dott.ssa">Dott.ssa</option>
+            <option value="Arch.">Arch.</option>
+            <option value="Ing.">Ing.</option>
+            <option value="Comm.">Perito</option>
+            <option value="Geom.">Geom.</option>
+          </select>
+			</td>
+			<td>
+				<input class="inputNormal" id="Delega_CognomePersona" name="Delega_CognomePersona" style="width: 100%;" mandatory_enabled="#Richiesta_delega1.checked()" label="Cognome del professionista delegato">
+			</td>
+			<td>
+				<input class="inputNormal" id="Delega_NomePersona" name="Delega_NomePersona" style="width: 100%;" mandatory_enabled="#Richiesta_delega1.checked()" label="Nome del professionista delegato">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<p style="line-height:1.8;"><b>a ricevere</b> per proprio nome e conto le comunicazioni relative al presente procedimento per il tramite del proprio indirizzo PEC (posta elettronica certificata):  <input mandatory_enabled="#Richiesta_delega1.checked()" id="Delega_EMailPEC" name="Delega_EMailPEC" format="pec" style="width:60%;" label="PEC del professionista delegato"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Richiesta_delega" id="Richiesta_delega2" name="Richiesta_delega" type="radio" value="2" />
+      </td>
+      <td colspan="3">
+        <p style="line-height:1.8;"><b>CHIEDE di ricevere</b> le comunicazioni relative al presente procedimento <b>al proprio indirizzo PEC</b> (Posta Elettronica Certificata), indicato nei dati personali e qui riportato <input class="inputNormal" id="pec_personale_per_comunicazioni" name="pec_personale_per_comunicazioni"  style="width: 42%;" label="PEC personale del titolare per comunicazioni" format="pec" dynamic_value="#AventeTitolo_EMailPEC.value()" enabled="#Richiesta_delega2.checked()" readonly></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Richiesta_delega" id="Richiesta_delega3" name="Richiesta_delega" type="radio" value="3" />
+      </td>
+      <td colspan="3">
+					<p style="line-height:1.8;"><b>CHIEDE di ricevere</b> le comunicazioni relative al presente procedimento <b>al proprio indirizzo mail</b> (Posta Elettronica Ordinaria), indicato nei dati personali e qui riportato <input class="inputNormal" id="mail_personale_per_comunicazioni" name="mail_personale_per_comunicazioni"  style="width: 42%;" label="mail personale del titolare per comunicazioni" format="email" dynamic_value="#AventeTitolo_EMail.value()" enabled="#Richiesta_delega3.checked()" readonly></p>
+		  </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 <br>
@@ -551,7 +575,7 @@ urn_report="report:CSP_SESSION_REPORT"
 				<input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" />
 			</td>
 			<td style="background-color: #eeeeee;" colspan="2">
-				<p>Ricevuta versamento per diritti di segreteria/istruttoria</p>
+				<p>Ricevuta versamento di 16,52 € per bollo rilascio e diritti segreteria/istruttoria</p>
 			</td>
 			<td style="background-color: #eeeeee; vertical-align: center;">
 				<p style="line-height: 1.6; text-align: center;"><input id="numero_ric_dir_istr" name="numero_ric_dir_istr" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
