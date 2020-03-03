@@ -39,20 +39,174 @@
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[2]",
                 "tags": [],
                 "fields": [
-                    "Impresa_Denominazione"
+                    "Impresa_Denominazione",
+                    "Impresa_ViaSede",
+                    "Impresa_CivicoSede",
+                    "Impresa_ProvinciaSede",
+                    "Impresa_ComuneSede",
+                    "Impresa_CAPSede",
+                    "Impresa_CFPI",
+                    "Impresa_APEC",
+                    "Impresa_Mail"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block1"
                 ],
                 "condition": null,
-                "completed": "context['Impresa_Denominazione'] != null && context['Impresa_Denominazione'] != ''",
+                "completed": "context['Impresa_ProvinciaSede'] != null && context['Impresa_ProvinciaSede'] != '' && context['Impresa_APEC'] != null && context['Impresa_APEC'] != '' || context['Impresa_Mail'] != null && context['Impresa_Mail'] != ''",
                 "annotations": [],
                 "description": {
-                    "it": "Inserire la denominazione dell'impresa"
+                    "it": "Inserire i dati dell'impresa ed almeno un indirizzo mail (PEC o mail)"
                 },
                 "concepts": null
-            }
+            },
+            {
+                "id": "block3",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Dati dell'intestatario fattura se diverso da impresa"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[3]",
+                "tags": [],
+                "fields": [
+                    "Fattura_Cognome",
+                    "Fattura_Nome",
+                    "Fattura_Via",
+                    "Fattura_Civico",
+                    "Fattura_Comune",
+                    "Fattura_Provincia",
+                    "Fattura_CAP",
+                    "Fattura_Mail",
+                    "Fattura_CF"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block2"
+                ],
+                "condition": null,
+                "completed": null,
+                "annotations": [],
+                "description": {
+                    "it": "Inserire i dati dell'intestatario della fattura se diverso dall'impresa"
+                },
+                "concepts": null
+            },
+            {
+                "id": "block4",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Dati del defunto"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[4]",
+                "tags": [],
+                "fields": [
+                    "Defunto_Provincia"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block3"
+                ],
+                "condition": null,
+                "completed": "context['Defunto_Provincia'] != null && context['Defunto_Provincia'] != ''",
+                "annotations": [],
+                "description": {
+                    "it": "Inserire i dati del defunto"
+                },
+                "concepts": null
+            },
+            {
+                "id": "block5",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Dati del trasporto"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[5]",
+                "tags": [],
+                "fields": [
+                    "Defunto_AStato"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block4"
+                ],
+                "condition": null,
+                "completed": "context['Defunto_AStato'] != null && context['Defunto_AStato'] != ''",
+                "annotations": [],
+                "description": {
+                    "it": "Inserire i dati del trasporto"
+                },
+                "concepts": null
+            },
+            {
+                "id": "block6",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Dati della richiesta"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[6]",
+                "tags": [],
+                "fields": [
+                   
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block5"
+                ],
+                "condition": null,
+                "completed": null,
+                "annotations": [],
+                "description": {
+                    "it": "Inserire i dati della richiesta"
+                },
+                "concepts": null
+            },
+            {
+                "id": "block7",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Dati del bollo"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[7]",
+                "tags": [],
+                "fields": [
+                   "Parametri_NumeroBollo"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block6"
+                ],
+                "condition": null,
+                "completed": "context['Parametri_NumeroBollo'] != null && context['Parametri_NumeroBollo'] != ''",
+                "annotations": [],
+                "description": {
+                    "it": "Inserire il numero identificativo della marca da bollo"
+                },
+                "concepts": null
+            },
+            {
+				"id": "block8",
+				"type": "BLOCK",
+				"name": {
+					"it": "Informativa sul trattamento dei dati personali"
+				},
+				"xpath": "(//*[contains(@class, 'simpatico-block')])[8]",
+				"tags": [],
+				"fields": [ 
+					"Presa_visione_check"
+				],
+				"blocks": [],
+				"dependencies": [
+					"block7"
+				],
+				"condition": null,
+				"completed": "context['Presa_visione_check'] != null",
+				"annotations": [],
+				"description": {
+					"it": "Prendere visione dell'informativa sul trattamento dei dati personali e selezionare la relativa casella."
+				},
+				"concepts": null
+			}
         ],
         "fields": [
             {
@@ -78,7 +232,175 @@
                     "key": "Impresa_Denominazione",
                     "binding": "OUT"
                 }
-            }
+            },
+            {
+                "id": "Impresa_ViaSede",
+                "xpath": "//*[@id=\"Impresa_ViaSede\"]",
+                "mapping": {
+                    "key": "Impresa_ViaSede",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Impresa_CivicoSede",
+                "xpath": "//*[@id=\"Impresa_CivicoSede\"]",
+                "mapping": {
+                    "key": "Impresa_CivicoSede",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Impresa_ProvinciaSede",
+                "xpath": "//*[@id=\"Impresa_ProvinciaSede\"]",
+                "mapping": {
+                    "key": "Impresa_ProvinciaSede",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Impresa_ComuneSede",
+                "xpath": "//*[@id=\"Impresa_ComuneSede\"]",
+                "mapping": {
+                    "key": "Impresa_ComuneSede",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Impresa_CAPSede",
+                "xpath": "//*[@id=\"Impresa_CAPSede\"]",
+                "mapping": {
+                    "key": "Impresa_CAPSede",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Impresa_CFPI",
+                "xpath": "//*[@id=\"Impresa_CFPI\"]",
+                "mapping": {
+                    "key": "Impresa_CFPI",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Impresa_APEC",
+                "xpath": "//*[@id=\"Impresa_APEC\"]",
+                "mapping": {
+                    "key": "Impresa_APEC",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Impresa_Mail",
+                "xpath": "//*[@id=\"Impresa_Mail\"]",
+                "mapping": {
+                    "key": "Impresa_Mail",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_Cognome",
+                "xpath": "//*[@id=\"Fattura_Cognome\"]",
+                "mapping": {
+                    "key": "Fattura_Cognome",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_Nome",
+                "xpath": "//*[@id=\"Fattura_Nome\"]",
+                "mapping": {
+                    "key": "Fattura_Nome",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_Via",
+                "xpath": "//*[@id=\"Fattura_Via\"]",
+                "mapping": {
+                    "key": "Fattura_Via",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_Civico",
+                "xpath": "//*[@id=\"Fattura_Civico\"]",
+                "mapping": {
+                    "key": "Fattura_Civico",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_Comune",
+                "xpath": "//*[@id=\"Fattura_Comune\"]",
+                "mapping": {
+                    "key": "Fattura_Comune",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_Provincia",
+                "xpath": "//*[@id=\"Fattura_Provincia\"]",
+                "mapping": {
+                    "key": "Fattura_Provincia",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_CAP",
+                "xpath": "//*[@id=\"Fattura_CAP\"]",
+                "mapping": {
+                    "key": "Fattura_CAP",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_CF",
+                "xpath": "//*[@id=\"Fattura_CF\"]",
+                "mapping": {
+                    "key": "Fattura_CF",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Fattura_Mail",
+                "xpath": "//*[@id=\"Fattura_Mail\"]",
+                "mapping": {
+                    "key": "Fattura_Mail",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Defunto_Provincia",
+                "xpath": "//*[@id=\"Defunto_Provincia\"]",
+                "mapping": {
+                    "key": "Defunto_Provincia",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Defunto_AStato",
+                "xpath": "//*[@id=\"Defunto_AStato\"]",
+                "mapping": {
+                    "key": "Defunto_AStato",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Parametri_NumeroBollo",
+                "xpath": "//*[@id=\"Parametri_NumeroBollo\"]",
+                "mapping": {
+                    "key": "Parametri_NumeroBollo",
+                    "binding": "OUT"
+                }
+            },
+            {
+				"id": "Presa_visione_check",
+				"xpath": "//*[@id=\"Presa_visione_check\"]",
+				"mapping": {
+					"key": "Presa_visione_check",
+					"binding": "OUT"
+				}
+			}
         ],
         "services": [],
         "questions": [],
