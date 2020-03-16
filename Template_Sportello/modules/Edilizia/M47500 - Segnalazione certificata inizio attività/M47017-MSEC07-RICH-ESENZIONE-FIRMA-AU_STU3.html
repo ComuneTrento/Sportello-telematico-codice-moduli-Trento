@@ -28,8 +28,8 @@ versione="1.0|01/01/2015"/>
 
 <meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
 urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
-descrizione_estesa="Allegato - Scansione del modulo ulteriori particelle compilato e firmato manualmente"
-filename="Modulo_ult_part_compilato_firma_autografa.pdf"
+descrizione_estesa="Allegato - Scansione del modulo di richiesta esenzione compilato e firmato manualmente"
+filename="Modulo_rich_esenz_firma_autografa.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-AU"
 name="GLOBO_allegato"
@@ -91,7 +91,7 @@ tipo_mime="application/pdf"/>
 
 <div class="simpatico-block simpatico-query-and-answer">
 
-  <h1 class="Modulo" style="line-height:1.6;">RICHIESTA DI ESENZIONE <br>DAL PAGAMENTO DEL CONTRIBUTO DI COSTRUZIONE (firma autografa)</h1>
+  <h1 class="Modulo" style="line-height:1.6;">RICHIESTA DI ESENZIONE <br>DAL PAGAMENTO DEL CONTRIBUTO DI COSTRUZIONE<br>O DALLA MONETIZZAZIONE DEGLI SPAZI DI PARCHEGGIO PER PRIMA ABITAZIONE (firma autografa)</h1>
   <h3 class="Modulo" style="line-height:1.6; font-size: 95%;">(art. 90, comma 1, lettere b), c) e d) della L.P. 15/2015, artt. 16, comma 7 lett. c) <br>e 49, comma 1, del D.P.P. 19/05/2017 n. 8-61/leg.)</h3>
 
   <br>
@@ -182,9 +182,10 @@ tipo_mime="application/pdf"/>
         <p style="line-height:1.6;">ai sensi dell'art. 90, comma 1, lettera c) della L.P. 15/2015, l’esenzione totale dal pagamento del contributo di costruzione per interventi di <b>nuova costruzione</b> destinati a realizzare la prima abitazione del richiedente, limitatamente ai <b>primi 120 metri quadrati</b> di superficie utile netta e sempre che la residenza non sia qualificata di lusso ai sensi del decreto del Ministro dei lavori pubblici 2 agosto 1969</p>
       </td>
     </tr>
+    <tr class="Rigaintestazioneridotta"><td colspan="2"></td></tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <input group="Tipo_esenzione" id="Tipo_esenzione5" name="Tipo_esenzione" type="radio" value="5" />
+        <input id="esenz_monetizz_parch" name="esenz_monetizz_parch" type="checkbox" enabed="true" value="1" />
       </td>
       <td>
         <p style="line-height:1.6;">ai sensi dell'art. 16, comma 7 lett. c) del D.P.P. n. 8-61/Leg. dd. 19.05.2017, l'esenzione dalla <b>monetizzazione degli spazi di parcheggio</b></p>
@@ -199,7 +200,7 @@ tipo_mime="application/pdf"/>
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="6">
-        <p style="line-height:1.6;"><b>Con riferimento alla dichiarazione di ultimazione lavori relativa all'immobile:</b></p>
+        <p style="line-height:1.6;"><b>Con riferimento all'immobile:</b></p>
       </td>
     </tr>
     <tr class="Rigaintestazione">
@@ -348,31 +349,33 @@ tipo_mime="application/pdf"/>
         <input group="Stato_civile" id="Stato_civile1" name="Stato_civile" type="radio" value="1" />
       </td>
       <td colspan="2">
-        <p style="line-height: 1.6;">coniugato con: <input class="" id="cf_del_coniuge" name="cf_del_coniuge" style="width:30%;" format="cf" label="codice fiscale del coniuge" mandatory_enabled="#Stato_civile1.checked()" placeholder="codice fiscale del coniuge"/>&nbsp; &nbsp; &nbsp;<input class="inputNormal" id="nominativo_coniuge" name="nominativo_coniuge" style="width: 45%;" label="nominativo del coniuge" mandatory_enabled="#Stato_civile1.checked()" dynamic_value="#Nome_{{ prefix }}.value() + ' ' + #Cognome_{{ prefix }}.value()">
 
-          {% macro Tassonomia_coniuge(prefix) %}
-          {% set prefix = prefix|string %}
+        {% macro Tassonomia_coniuge(prefix) %}
+        {% set prefix = prefix|string %}
 
-          {{ service.getPersonaREST('cf_del_coniuge' + prefix, 'TipoContesto', 'TipoLista',{
-              'Cognome_' + prefix: 'cognome',
-              'Nome_' + prefix: 'nome',
-              'DataNas_' + prefix: 'datanascita',
-              'Sesso_' + prefix: 'sesso',
-              'MatricolaAnagrafe_' + prefix: 'matricola',
-              'CodiceFamiglia_' + prefix: 'codiceFamiglia',
-              'LuogoNascita_' + prefix: 'comuneNascita',
-              'CodiceViaResidenza_' + prefix: 'codiceVia',
-              'NumeroCivicoResidenza_' + prefix: 'numeroCivico',
-              'BarraResidenza_' + prefix: 'barra',
-              'Nazione_' + prefix: 'nazione',
-          }, '#cf_del_coniuge' + prefix + ':change' )}}
+        {{ service.getPersonaREST('cf_del_coniuge', 'TipoContesto', 'TipoLista',{
+            'Cognome_' + prefix: 'cognome',
+            'Nome_' + prefix: 'nome',
+            'DataNas_' + prefix: 'datanascita',
+            'Sesso_' + prefix: 'sesso',
+            'MatricolaAnagrafe_' + prefix: 'matricola',
+            'CodiceFamiglia_' + prefix: 'codiceFamiglia',
+            'LuogoNascita_' + prefix: 'comuneNascita',
+            'CodiceViaResidenza_' + prefix: 'codiceVia',
+            'NumeroCivicoResidenza_' + prefix: 'numeroCivico',
+            'BarraResidenza_' + prefix: 'barra',
+            'Nazione_' + prefix: 'nazione',
+        }, '#cf_del_coniuge:change','true' )}}
 
-          {%- endmacro %}
+        <p style="line-height: 1.6;">coniugato con: <input class="" id="cf_del_coniuge" name="cf_del_coniuge" style="width:22%;" format="cf" label="codice fiscale del coniuge" mandatory_enabled="#Stato_civile1.checked()" placeholder="codice fiscale del coniuge"/>&nbsp; &nbsp;<input class="inputNormal" id="Cognome_{{ prefix }}" name="Cognome_{{ prefix }}" style="width: 35%;" label="cognome del coniuge" mandatory_enabled="#Stato_civile1.checked()"/>&nbsp; &nbsp;<input class="inputNormal" id="Nome_{{ prefix }}" name="Nome_{{ prefix }}" style="width: 25%;" label="nome del coniuge" mandatory_enabled="#Stato_civile1.checked()"/>
 
-          {{ Tassonomia_coniuge(Coniuge) }}
+        <br>nato/a a: <input class="inputNormal" id="LuogoNascita_{{ prefix }}" name="LuogoNascita_{{ prefix }}" style="width: 45%;" label="luogo di nascita del coniuge" mandatory_enabled="#Stato_civile1.checked()">&nbsp; &nbsp; &nbsp; il: <input class="inputNormal" id="DataNas_{{ prefix }}" name="DataNas_{{ prefix }}" style="width: 15%;" label="data di nascita del coniuge" mandatory_enabled="#Stato_civile1.checked()"/></p>
+
+        {%- endmacro %}
+
+        {{ Tassonomia_coniuge("Coniuge") }}
 
           
-          <br>nato/a a: <input class="inputNormal" id="luogonascita_coniuge" name="luogonascita_coniuge" style="width: 45%;" label="luogo di nascita del coniuge" mandatory_enabled="#Stato_civile1.checked()" dynamic_value="#LuogoNascita_{{ prefix }}.value()">&nbsp; &nbsp; &nbsp; il: <input class="inputNormal" id="datanascita_coniuge" name="datanascita_coniuge" style="width: 15%;" label="data di nascita del coniuge" mandatory_enabled="#Stato_civile1.checked()" dynamic_value="#DataNas_{{ prefix }}.value()"></p>
       </td>
     </tr>
     <tr>
@@ -394,12 +397,11 @@ tipo_mime="application/pdf"/>
     <tr class="Rigaintestazione"><td colspan="2"></td></tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <div id="Dichiarazioni_titolarita" name="Dichiarazioni_titolarita" label="Dichiarazione di titolarità" mandatory_enabled="true"> </div>
-        <input group="Dichiarazioni_titolarita" id="Dichiarazioni_titolarita1" name="Dichiarazioni_titolarita" type="radio" value="1" />
+        <input id="titolarità_ped" name="titolarità_ped" type="checkbox" dynamic_check="true" value="1" />
       </td>
       <td colspan="2">
         <p style="line-height:1.8;">di essere proprietario/i della/e seguente/i unità abitativa/e oggetto dell’intervento e che lo stesso non risulta gravato da diritti reali di uso, usufrutto e abitazione
-          <br>p.ed. <input class="" id="ped1" name="ped1" style="width:8%; text-align: center;" label="particella edificiale 1" mandatory_enabled="#Dichiarazioni_titolarita1.checked()"/> &nbsp; &nbsp; &nbsp; p.m. <input class="" id="pm1" name="pm1" style="width:8%; text-align: center;" label="porzione materiale 1" mandatory_enabled="#Dichiarazioni_titolarita1.checked()"/> &nbsp; &nbsp; &nbsp; nel C.C. di <select class="" id="cc1" name="cc1" style="width:18%; text-align: center;" label="Comune catastale 1" mandatory_enabled="#Dichiarazioni_titolarita1.checked()">
+          <br>p.ed. <input class="" id="ped1" name="ped1" style="width:8%; text-align: center;" label="particella edificiale 1" mandatory_enabled="true"/> &nbsp; &nbsp; &nbsp; p.m. <input class="" id="pm1" name="pm1" style="width:8%; text-align: center;" label="porzione materiale 1" mandatory_enabled="true"/> &nbsp; &nbsp; &nbsp; nel C.C. di <select class="" id="cc1" name="cc1" style="width:18%; text-align: center;" label="Comune catastale 1" mandatory_enabled="true">
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value=""></option>
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value="Trento">Trento</option>
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value="Trento">Trento</option>
@@ -421,8 +423,8 @@ tipo_mime="application/pdf"/>
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value="Villamontagna">Villamontagna</option>
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value="Villazzano">Villazzano</option>
                                                                                                                                                                                                                                                                                                                                                                                                                         </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                        &nbsp; &nbsp; &nbsp; per la quota di proprietà del <input class="" id="qp1" name="qp1" style="width:8%; text-align: center;" label="quota proprietà 2" mandatory_enabled="#Dichiarazioni_titolarita1.checked()"/>
-          <br>p.ed. <input class="" id="ped2" name="ped2" style="width:8%; text-align: center;" label="particella edificiale 2" enabled="#Dichiarazioni_titolarita1.checked()"/> &nbsp; &nbsp; &nbsp; p.m. <input class="" id="pm2" name="pm2" style="width:8%; text-align: center;" label="porzione materiale 2" enabled="#Dichiarazioni_titolarita1.checked()"/> &nbsp; &nbsp; &nbsp; nel C.C. di <select class="" id="cc2" name="cc2" style="width:18%; text-align: center;" label="Comune catastale 2" enabled="#Dichiarazioni_titolarita1.checked()">
+                                                                                                                                                                                                                                                                                                                                                                                                                        &nbsp; &nbsp; &nbsp; per la quota di proprietà del <input class="" id="qp1" name="qp1" style="width:8%; text-align: center;" label="quota proprietà 2" mandatory_enabled="true"/>
+          <br>p.ed. <input class="" id="ped2" name="ped2" style="width:8%; text-align: center;" label="particella edificiale 2" enabled="true"/> &nbsp; &nbsp; &nbsp; p.m. <input class="" id="pm2" name="pm2" style="width:8%; text-align: center;" label="porzione materiale 2" enabled="true"/> &nbsp; &nbsp; &nbsp; nel C.C. di <select class="" id="cc2" name="cc2" style="width:18%; text-align: center;" label="Comune catastale 2" enabled="true">
                                                                                                                                                                                                                                                                                                                                                                                                       <option value=""></option>
                                                                                                                                                                                                                                                                                                                                                                                                       <option value="Trento">Trento</option>
                                                                                                                                                                                                                                                                                                                                                                                                       <option value="Aldeno">Aldeno</option>
@@ -443,8 +445,8 @@ tipo_mime="application/pdf"/>
                                                                                                                                                                                                                                                                                                                                                                                                       <option value="Villamontagna">Villamontagna</option>
                                                                                                                                                                                                                                                                                                                                                                                                       <option value="Villazzano">Villazzano</option>
                                                                                                                                                                                                                                                                                                                                                                                                     </select>
-                                                                                                                                                                                                                                                                                                                                                                                                    &nbsp; &nbsp; &nbsp; per la quota di proprietà del <input class="" id="qp2" name="qp2" style="width:8%; text-align: center;" label="quota proprietà 2" enabled="#Dichiarazioni_titolarita1.checked()"/>
-          <br>p.ed. <input class="" id="ped3" name="ped3" style="width:8%; text-align: center;" label="particella edificiale 3" enabled="#Dichiarazioni_titolarita1.checked()"/> &nbsp; &nbsp; &nbsp; p.m. <input class="" id="pm3" name="pm3" style="width:8%; text-align: center;" label="porzione materiale 3" enabled="#Dichiarazioni_titolarita1.checked()"/> &nbsp; &nbsp; &nbsp; nel C.C. di <select class="" id="cc3" name="cc3" style="width:18%; text-align: center;" label="Comune catastale 3" enabled="#Dichiarazioni_titolarita1.checked()">
+                                                                                                                                                                                                                                                                                                                                                                                                    &nbsp; &nbsp; &nbsp; per la quota di proprietà del <input class="" id="qp2" name="qp2" style="width:8%; text-align: center;" label="quota proprietà 2" enabled="true"/>
+          <br>p.ed. <input class="" id="ped3" name="ped3" style="width:8%; text-align: center;" label="particella edificiale 3" enabled="true"/> &nbsp; &nbsp; &nbsp; p.m. <input class="" id="pm3" name="pm3" style="width:8%; text-align: center;" label="porzione materiale 3" enabled="true"/> &nbsp; &nbsp; &nbsp; nel C.C. di <select class="" id="cc3" name="cc3" style="width:18%; text-align: center;" label="Comune catastale 3" enabled="true">
                                                                                                                                                                                                                                                                                                                                                                                                       <option value=""></option>
                                                                                                                                                                                                                                                                                                                                                                                                       <option value="Trento">Trento</option>
                                                                                                                                                                                                                                                                                                                                                                                                       <option value="Aldeno">Aldeno</option>
@@ -465,12 +467,13 @@ tipo_mime="application/pdf"/>
                                                                                                                                                                                                                                                                                                                                                                                                       <option value="Villamontagna">Villamontagna</option>
                                                                                                                                                                                                                                                                                                                                                                                                       <option value="Villazzano">Villazzano</option>
                                                                                                                                                                                                                                                                                                                                                                                                     </select>
-                                                                                                                                                                                                                                                                                                                                                                                                    &nbsp; &nbsp; &nbsp; per la quota di proprietà del <input class="" id="qp3" name="qp3" style="width:8%; text-align: center;" label="quota proprietà 3" enabled="#Dichiarazioni_titolarita1.checked()"/>
+                                                                                                                                                                                                                                                                                                                                                                                                    &nbsp; &nbsp; &nbsp; per la quota di proprietà del <input class="" id="qp3" name="qp3" style="width:8%; text-align: center;" label="quota proprietà 3" enabled="true"/>
         </p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
+        <div id="Dichiarazioni_titolarita" name="Dichiarazioni_titolarita" label="Dichiarazione di titolarità" mandatory_enabled="true"> </div>
         <input group="Dichiarazioni_titolarita" id="Dichiarazioni_titolarita2" name="Dichiarazioni_titolarita" type="radio" value="2" />
       </td>
       <td>
@@ -603,7 +606,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; text-align: center;">
-        <input id="planim_alloggio" name="planim_alloggio" type="checkbox" enabled="#Dichiarazioni_titolarita3.checked()" value="OBBLIGATORIO"/>
+        <input id="planim_alloggio" name="planim_alloggio" type="checkbox" dynamic_check="#Dichiarazioni_titolarita3.checked()" enabled="#Dichiarazioni_titolarita3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Planimetria quotata dell'alloggio stesso a firma di un tecnico abilitato con l'indicazione della superficie utile calpestabile ad uso abitativo (nel caso di quote di proprietà superiori a 1/4 su altro alloggio)</p>
