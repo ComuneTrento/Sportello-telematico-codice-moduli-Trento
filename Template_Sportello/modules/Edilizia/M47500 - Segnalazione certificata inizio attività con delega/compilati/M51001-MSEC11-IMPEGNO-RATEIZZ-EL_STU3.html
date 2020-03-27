@@ -1,20 +1,42 @@
-{% set CodiceModulo =  "M51001-MSEC09-IMPEGNO-RATEIZZ" %}
-{% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec09.m51001.impegno.rateizzazione" %}
-{% extends "base_trento_new.html" %}
 
-{% block meta %}
-<meta campi_firma="AventeTitolo_CodiceFiscale"
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+    
+
+        <link rel="stylesheet" type="text/css" href="./validator/css/moduli.css"/>
+
+    
+<meta campi_firma="Progettista_CodiceFiscale"
 classi_modulo="Generale"
-codice_modulo="{{ CodiceModulo }}"
-urn="{{ Urn }}"
-descrizione="Modulo secondario - Impegno alla corresponsione del contributo di costruzione in modalità rateale"
+codice_modulo="M51001-MSEC11-IMPEGNO-RATEIZZ-EL"
+urn="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec11.m51001.impegno.rateizzazione.firma.elettronica"
+descrizione="Modulo secondario - Impegno alla corresponsione del contributo di costruzione in modalità rateale (firma digitale delegato)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="NO"
+firmare="P7M_ELETTRONICA"
 istruzioni_compilazione=""
 istruzioni_invio=""
 metodo_invio=""
@@ -22,7 +44,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/M51001-MSEC09-IMPEGNO-RATEIZZ"
+urlhelp="/modulistica/moduli/M51001-MSEC11-IMPEGNO-RATEIZZ-EL"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
@@ -61,42 +83,233 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-{% endblock meta %}
 
 
-{% block title %}
-  Impegno alla corresponsione del contributo di costruzione in modalità rateale
-{% endblock title %}
 
-{% block content %}
 
-{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
 
-<input id="Oggetto" name="Oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Impegno alla corresponsione del contributo di costruzione in modalità rateale'" type="hidden"/>
 
-<br>
 
-<div class="simpatico-block simpatico-query-and-answer">
 
-  <h1 class="Modulo" style="line-height:1.6;">IMPEGNO ALLA CORRESPONSIONE DEL CONTRIBUTO DI COSTRUZIONE IN MODALITA' RATEALE</h1>
-  <h3 class="Modulo" style="line-height:1.6; font-size: 95%;">(ai sensi dell’art. 13 del Regolamento Edilizio Comunale)</h3>
+    <title>
+  Impegno alla corresponsione del contributo di costruzione in modalità rateale (firma digitale delegato)
+</title>
 
-  <br>
+</head>
 
-  <table class="Modulo" style="border: 1px solid grey">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td>
-          <p style="line-height:1.6;"><b>Il titolare</b>, <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="90"/></p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<body>
+
+    
+
+    
+    
+
+    <form data-simpatico-workflow="" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
+
+        
+
+<div type="intestazione_modulosecondario_senzabollo">
+	<script>
+function get_ufficio_dest() {
+
+	var metas = document.getElementsByTagName('meta');
+	var ufficio = '';
+	var ufficio_default = '';
+	var mod_princ = '';
+	for (i=0; i<metas.length; i++) {
+		if (metas[i].getAttribute("name") == "GLOBO_modulo") {
+			ufficio_default = metas[i].getAttribute("destinatario_ufficio");
+			mod_princ = metas[i].getAttribute("codice_modulo");
+		}
+	}
+
+	ufficio = $('#Parametri_UfficioDestinatario').val();
+
+	if (ufficio == undefined || ufficio == '') {
+		ufficio = ufficio_default;
+	}
+
+	if (ufficio == 'UOPATRIMONIO') {
+		return 'Ufficio Patrimonio';
+	}
+
+	if (ufficio == 'UOPROTOCOLLO') {
+		return 'Ufficio Protocollo';
+	}
+
+	if (ufficio == 'UOPUBBLICASICUREZZA') {
+		return 'Ufficio Pubblica Sicurezza';
+	}
+
+	if (ufficio == 'UOSUAP') {
+		return 'Ufficio SUAP';
+	}
+
+	if (ufficio == 'UOSUE') {
+		return 'Ufficio SUE';
+	}
+
+	if (ufficio == 'UOSUEPRODUTTIVO') {
+		return 'Ufficio SUAP/SUE';
+	}
+
+	if (ufficio == 'UOTRIBUTI') {
+		return 'Ufficio Tributi';
+	}
+
+	if (ufficio == 'UOURBANISTICA') {
+		return 'Ufficio Urbanistica';
+	}
+
+	if (ufficio == 'UOSERVIZIDEMOGRAFICI') {
+		return 'Ufficio Servizi demografici';
+	}
+
+	if (ufficio == 'UOAMBIENTE') {
+		return 'Ufficio Ambiente';
+	}
+
+	<!-- Provincia di Foggia -->
+	if (ufficio == 'UOPAESAGGISTICA') {
+		return 'Ufficio Autorizzazioni paesaggistiche';
+	}
+
+	<!-- Provincia di Foggia -->
+	if (ufficio == 'UOSISMICA') {
+		return 'Ufficio Edilizia sismica';
+	}
+
+	<!-- Provincia di Foggia. attingimenti -->
+	if (ufficio == 'UORISORSEIDRICHEST04') {
+		return 'Ufficio Risorse idriche';
+	}
+
+	<!-- Provincia di Foggia, pozzi -->
+	if (ufficio == 'UORISORSEIDRICHEST05') {
+		return 'Ufficio Risorse idriche';
+	}
+
+	if (ufficio == 'UOPOLIZIALOCALE') {
+		return 'Ufficio Polizia Locale';
+	}
+
+	if (ufficio == 'UOPUBBLICAISTRUZIONE') {
+		return 'Ufficio Servizi scolastici e per l\'infanzia';
+	}
+
+	if (ufficio == 'UOSERVIZISOCIALI') {
+		return 'Ufficio Servizi sociali';
+	}
+
+	if (ufficio == 'UOHOUSINGSOCIALE') {
+		return 'Ufficio ERP e housing sociale';
+	}
+
+	if (ufficio == 'UOTRASPORTI') {
+		return 'Ufficio Trasporti';
+	}
+
+	if (ufficio == 'UOECOLOGIA') {
+		return 'Ufficio Ecologia';
+	}
+
+	if (ufficio == 'UOVINCOLISTICA') {
+		return 'Ufficio Vincolistica (SUE)';
+	}
+
+	if (ufficio == 'UOVINCOLISTICAPRODUTTIVA') {
+		return 'Ufficio Vincolistica (SUAP/SUE)';
+	}
+
+	if (ufficio == 'UOTOPONOMASTICA') {
+		return 'Ufficio Toponomastica e numerazione civica';
+	}
+
+	if (ufficio == 'UORIM') {
+		return 'Ufficio RIM';
+	}
+
+	if (ufficio == 'UOSEGNALAZIONI') {
+		return 'Ufficio Segnalazioni';
+	}
+
+	if (ufficio == 'UOLAVORIPUBBLICI') {
+		return 'Ufficio Lavori pubblici';
+	}
+
+	if (ufficio == 'UOSEGRETERIAGENERALE') {
+		return 'Ufficio Segreteria, economato e provveditorato';
+	}
+
+	if (ufficio == 'UOSERVIZICIMITERIALI') {
+		return 'Ufficio Servizi cimiteriali';
+	}
+
+	if (ufficio == 'UOCULTURAMUSEIBIBLIOTECHE') {
+		return 'Ufficio Cultura, musei e biblioteche';
+	}
+
+	if (ufficio == 'UOSPORTETEMPOLIBERO') {
+		return 'Ufficio Sport e tempo libero';
+	}
+
+	<!-- Città Metropolitana di Roma Capitale -->
+	if (ufficio == 'UOAMBIENTEDIFESASUOLO') {
+		return 'Ufficio Ambiente e Difesa del suolo';
+	}
+
+	<!-- Città Metropolitana di Roma Capitale -->
+	if (ufficio == 'UOTERRITORIOTUTELAAMBIENTALE') {
+		return 'Ufficio Territorio e Tutela ambienale';
+	}
+
+	if (ufficio == 'UOCENTRALEUNICADICOMMITTENZA') {
+		return 'Ufficio Centrale Unica di Committenza (CUC)';
+	}
+
+	return ufficio;
+
+}
+</script>
+	<table class="Modulo" style="border: 1px solid grey">
+		<tbody>
+			<tr>
+				<td style="width: 20%; height:160px; text-align: center;">
+					<img alt="Ente" src="./appoggio/img/StemmaComune.png"/>
+				</td>
+				<td style="width: 48%; text-align: center;">
+					<p style="text-align:center">In allegato alla dichiarazione di<br/><br/>Codice fiscale<br/><input id="DichiarazioneCF" name="DichiarazioneCF" readonly="readonly" style="border: 0px; font-size: 12pt; width:100%; text-align:center"/></p>
+				</td>
+				<td style="width: 32%; text-align:center;">
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 
+<input id="Oggetto" name="Oggetto" dynamic_value="#Progettista_Cognome.value().toUpperCase() + ' - Impegno alla corresponsione del contributo di costruzione in modalità rateale (firma digitale delegato)'" type="hidden"/>
+
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<h1 class="Modulo" style="line-height:1.6;">IMPEGNO ALLA CORRESPONSIONE DEL CONTRIBUTO DI COSTRUZIONE IN MODALITA' RATEALE (firma digitale delegato)</h1>
+<h3 class="Modulo" style="line-height:1.6; font-size: 95%;">(ai sensi dell’art. 13 del Regolamento Edilizio Comunale)</h3>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;"><b>Il titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="90"/>,<br>
+          per mezzo del <b>progettista/tecnico incaricato delegato</b> <input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value() + ' ' + #Progettista_Cognome.value()" size="51"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="3">
@@ -296,7 +509,7 @@ tipo_mime="application/pdf"/>
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="width: 4%; vertical-align: top; text-align: center;">
@@ -310,12 +523,10 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
-
-
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="4">
@@ -363,7 +574,7 @@ tipo_mime="application/pdf"/>
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="width: 4%; vertical-align: center; text-align: center;">
@@ -380,68 +591,47 @@ tipo_mime="application/pdf"/>
 <br>
 <br>
 
-<div class="simpatico-block">
-  <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
-    <tbody>
-      <tr>
-        <td style="width: 25%; text-align: center;">
-          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
-        </td>
-        <td style="width: 25%; text-align: center;">
-          <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
-        </td>
-        <td style="width: 50%; text-align: center; height: 1.5cm;">
-          <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
-        </td>
-      </tr>
-      <tr class="Rigaintestazioneridotta">
-        <td>
-          <p class="Labelcella" style="text-align: center">Luogo</p>
-        </td>
-        <td>
-          <p class="Labelcella" style="text-align: center">Data</p>
-        </td>
-        <td>
-          <p class="Labelcella" style="text-align: center">Il titolare <i>(accesso eseguito mediante SPID o CPS/CNS)</i></p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center;">
+        <p style="line-height:1.8;">
+          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value() + ' ' + #Progettista_Cognome.value()" style="width:99%; text-align: center;"/>
+        </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il progettista/tecnico incaricato delegato <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <br>
+<br>
 
-  <p class="Modulo">
-    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
-  </p>
-</div>
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
 
-<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<input id="GLOBO_modulo_cM51001-MSEC11-IMPEGNO-RATEIZZ-EL" name="GLOBO_modulo_cM51001-MSEC11-IMPEGNO-RATEIZZ-EL" type="hidden" value=""/>
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
-<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="M51001-MSEC11-IMPEGNO-RATEIZZ-EL"/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
-
-
-
-
-{{ utils.passaggio_metadati() }}
-
-<input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" type="hidden"/>
-<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" type="hidden"/>
-<input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" type="hidden"/>
-
-<input id="Metadati_Immobile_TipoImmobile" name="Metadati_Immobile_TipoImmobile" type="hidden"/>
-<input id="Metadati_Immobile_ComuneCatastale_esteso" name="Metadati_Immobile_ComuneCatastale_esteso" type="hidden"/>
-<input id="Metadati_Immobile_CatNumero" name="Metadati_Immobile_CatNumero" type="hidden"/>
-<input id="Metadati_Immobile_CatBarra" name="Metadati_Immobile_CatBarra" type="hidden"/>
-<input id="Metadati_Immobile_CatPM" name="Metadati_Immobile_CatPM" type="hidden"/>
-<input id="Metadati_Immobile_CatSubalterno" name="Metadati_Immobile_CatSubalterno" type="hidden"/>
-<input id="Metadati_Immobile_Provincia" name="Metadati_Immobile_Provincia" type="hidden"/>
-<input id="Metadati_Immobile_Comune" name="Metadati_Immobile_Comune" type="hidden"/>
-<input id="Metadati_Immobile_Nomevia_esteso" name="Metadati_Immobile_Nomevia_esteso" type="hidden"/>
-<input id="Metadati_Immobile_Civico" name="Metadati_Immobile_Civico" type="hidden"/>
-<input id="Metadati_Immobile_Barrato" name="Metadati_Immobile_Barrato" type="hidden"/>
 
 <input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden" readonly/>
 <input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
@@ -464,4 +654,70 @@ tipo_mime="application/pdf"/>
 <input id="Immobile_numeroCivico" name="Immobile_numeroCivico" type="hidden" readonly/>
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" type="hidden" readonly/>
 
-{% endblock content %}
+
+
+	  <input id="GLOBO_MyJobIsDone" name="GLOBO_MyJobIsDone" type="hidden" value=""/>
+
+	  <input id="GLOBO_IsReadyToSend" name="GLOBO_IsReadyToSend" type="hidden" value=""/>
+
+      
+
+        <input type='hidden' id='Parametri_UfficioDestinatario' name='Parametri_UfficioDestinatario' value=''/>
+
+      
+
+	  </form>
+
+    <div id="background"  class="error-box-view"></div>
+<div id="errors" class="error-box-view">
+  <div id="error-text"></div>
+  <button id="close" class="btn-error" onclick="close_error()">Chiudi</button>
+</div>
+
+    
+
+</body>
+
+    <!--script src="./validator/js/jquery-1.9.1.js" type="text/javascript"></script-->
+
+    <script src="./validator/js/placeholders.jquery.min.js" type="text/javascript"></script>
+
+    <script src="./validator/js/jquery.json-2.3.min.js" type="text/javascript"></script>
+
+    <script src="./validator/js/validator.js" type="text/javascript"></script>
+
+    <script src="./validator/js/moduli-driver.js" type="text/javascript"></script>
+
+    <!-- Dinamic include -->
+
+	
+
+
+
+    
+
+
+
+    
+
+
+
+    <script id="loader" type="text/javascript">
+
+         $(document).ready(function(){
+
+             validator.tree_builder();
+
+			 $('#UfficioDestinatario').val(get_ufficio_dest());
+
+                loadForm( [] ); //autoload prefix.
+
+
+
+            
+
+         });
+
+    </script>
+
+</html>
