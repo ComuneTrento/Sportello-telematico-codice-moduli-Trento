@@ -32,12 +32,6 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="M51001-MSEC10-IMPEGNO-RATEIZZ-AU"
-urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec10.m51001.impegno.rateizzazione.firma.autografa"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
-
 <meta codice_modulo_figlio="M51001-MSEC11-IMPEGNO-RATEIZZ-EL"
 urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec11.m51001.impegno.rateizzazione.firma.elettronica"
 name="GLOBO_modulofiglio"
@@ -60,7 +54,7 @@ tipo_mime="application/pdf"/>
 
 
 {% block title %}
-    Schema di calcolo del contributo di costruzione
+  Schema di calcolo del contributo di costruzione
 {% endblock title %}
 
 {% block content %}
@@ -576,7 +570,7 @@ tipo_mime="application/pdf"/>
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="3">
@@ -606,10 +600,10 @@ tipo_mime="application/pdf"/>
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="3">
+      <td colspan="4">
         <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
       </td>
     </tr>
@@ -617,7 +611,7 @@ tipo_mime="application/pdf"/>
       <td style="width:4%;">
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
       </td>
-      <td>
+      <td colspan="2">
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
       </td>
       <td style="width:15%;">
@@ -625,23 +619,32 @@ tipo_mime="application/pdf"/>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center;">
-        <input dynamic_check="#Rich_rateizz1.checked()" enabled="#Rich_rateizz1.checked()" id="rateizz_richiesta" name="rateizz_richiesta" type="checkbox" value=""/>
+      <td style="vertical-align: top; text-align: center;" rowspan="3">
+        <input id="rateizz_richiesta" name="rateizz_richiesta" dynamic_check="#Rich_rateizz1.checked()" enabled="#Rich_rateizz1.checked()" type="checkbox" value=""/>
       </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height:1.6;">Modulo secondario - <b>Impegno alla corresponsione del contributo di costruzione in modalità rateale</b>
-          <select class="inputNormal" id="Tipo_Firma_rateizz" name="Tipo_Firma_rateizz" style="width:73%;" label="Tipo firma modulo rateizzazione" mandatory_enabled="#Compilante.value() == 'prof/altro' and #rateizz_richiesta.checked()">
-            <option value=""></option>
-            <option value="Firmato con firma autografa">firmato dal titolare con firma autografa</option>
-            <option value="Firmato con firma elettronica">firmato dal titolare con firma elettronica</option>
-          </select>
-          <br><input id="nota_per_firma2" name="nota_per_firma2" dynamic_value="#Compilante.value() == 'titolare' ? 'Questo modulo secondario non richiede firma in quanto compilazione eseguita dal titolare' : 'Indicare come firmerà il titolare questo modulo secondario'" enabled="#Rich_rateizz1.checked()" style="width: 100%;">
-        </p>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Impegno alla corresponsione del contributo di costruzione in modalità rateale</b></p>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" rowspan="3">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_rateizz_richiesta" name="numero_rateizz_richiesta" style="width: 90%; text-align: center;" dynamic_value="#rateizz_richiesta.checked() ? '1' : 'Non richiesto'" readonly/></p>
-        <input id="GLOBO_modulofiglio_cM51001-MSEC09-IMPEGNO-RATEIZZ" name="GLOBO_modulofiglio_cM51001-MSEC09-IMPEGNO-RATEIZZ" obbligatorio="#rateizz_richiesta.checked() and #Compilante.value() == 'titolare' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cM51001-MSEC10-IMPEGNO-RATEIZZ-AU" name="GLOBO_modulofiglio_cM51001-MSEC10-IMPEGNO-RATEIZZ-AU" obbligatorio="#Tipo_Firma_rateizz.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <div id="Firmatario_imp_rate" name="Firmatario_imp_rate" label="Firmatario richiesta rateizzazione" mandatory="#rateizz_richiesta.checked()"> </div>
+        <input group="Firmatario_imp_rate" id="Firmatario_imp_rate1" name="Firmatario_imp_rate" type="radio" value="1" dynamic_check="#Compilante.value() == 'titolare' and #rateizz_richiesta.checked()" enabled="#Compilante.value() == 'titolare' and #rateizz_richiesta.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">compilato dal titolare autenticato con sistema di autenticazione forte (SPID o CPS/CNS), non richiede pertanto firma</p>
+        <input id="GLOBO_modulofiglio_cM51001-MSEC09-IMPEGNO-RATEIZZ" name="GLOBO_modulofiglio_cM51001-MSEC09-IMPEGNO-RATEIZZ" obbligatorio="#Firmatario_imp_rate1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width:4%">
+        <input group="Firmatario_imp_rate" id="Firmatario_imp_rate2" name="Firmatario_imp_rate" type="radio" value="2" dynamic_check="#Compilante.value() == 'progettista' and #rateizz_richiesta.checked()" enabled="#Compilante.value() == 'progettista' and #rateizz_richiesta.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">firmato con <b>firma digitale</b> dal solo progettista/tecnico incaricato in quanto delegato dal titolare</p>
         <input id="GLOBO_modulofiglio_cM51001-MSEC11-IMPEGNO-RATEIZZ-EL" name="GLOBO_modulofiglio_cM51001-MSEC11-IMPEGNO-RATEIZZ-EL" obbligatorio="#Tipo_Firma_rateizz.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
@@ -649,7 +652,7 @@ tipo_mime="application/pdf"/>
       <td style="vertical-align: center; text-align: center;">
         <input id="ricevuta_pagamento" name="ricevuta_pagamento" type="checkbox" dynamic_check="#Rich_rateizz2.checked()" enabled="#Rich_rateizz2.checked()" value="OBBLIGATORIO" />
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Ricevuta di pagamento del contributo di costruzione</p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -663,40 +666,38 @@ tipo_mime="application/pdf"/>
 <br>
 <br>
 
-<div class="simpatico-block">
-  <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
-    <tbody>
-      <tr>
-        <td style="width: 25%; text-align: center;">
-          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
-        </td>
-        <td style="width: 25%; text-align: center;">
-          <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
-        </td>
-        <td style="width: 50%; text-align: center; height: 1.5cm;">
-          <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
-        </td>
-      </tr>
-      <tr class="Rigaintestazioneridotta">
-        <td>
-          <p class="Labelcella" style="text-align: center">Luogo</p>
-        </td>
-        <td>
-          <p class="Labelcella" style="text-align: center">Data</p>
-        </td>
-        <td>
-          <p class="Labelcella" style="text-align: center">Il progettista <span style="font-size:95%"><i>(firma digitale)</i></span></p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il progettista/tecnico incaricato <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <br>
+<br>
 
-  <p class="Modulo">
-    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
-  </p>
-</div>
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
 
 <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
@@ -725,6 +726,5 @@ tipo_mime="application/pdf"/>
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" type="hidden" readonly/>
 
 <input id="Compilante" name="Compilante" type="hidden" readonly/>
-
 
 {% endblock content %}

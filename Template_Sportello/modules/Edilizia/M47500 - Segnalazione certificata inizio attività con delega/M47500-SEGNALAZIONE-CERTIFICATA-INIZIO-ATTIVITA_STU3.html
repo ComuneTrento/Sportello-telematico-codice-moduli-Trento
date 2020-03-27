@@ -109,6 +109,24 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<meta codice_modulo_figlio="M47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec02.m47500.dich.cong.tit.prog.firma.prog"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec04.m47500.dich.cong.tit.prog.firma.entr.el"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M47500-MSEC01-DICH-PROG"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec01.m47500.dichiarazioni.progettista"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
 urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
 descrizione_estesa="Allegato - Copia del modulo firmata dal progettista/tecnico incaricato con firma digitale"
@@ -558,6 +576,8 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<input id="altri_soggetti" name="altri_soggetti" dynamic_value="#Parametri_Altro_titolo_reale1.checked() ? 'ALTRI SOGGETTI' : ''" type="hidden"/>
+
 <br>
 <br>
 
@@ -867,9 +887,6 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<br>
-<br>
-
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
@@ -932,6 +949,48 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
         <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() and !#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
         <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;" rowspan="3">
+        <input id="Dichiar_titol_prog" name="Dichiar_titol_prog" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni congiunte del titolare e del progettista</b></p>
+      </td>
+      <td style="background-color: #eeeeee;" rowspan="3">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_dich_cong" name="num_dich_cong" dynamic_value="'1'" style="width: 90%; text-align: center;"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <div id="Firmatario_dich_cong" name="Firmatario_dich_cong" label="Firmatario dichiarazioni congiunte" mandatory="true"> </div>
+        <input group="Firmatario_dich_cong" id="Firmatario_dich_cong1" name="Firmatario_dich_cong" type="radio" value="1" dynamic_check="#Tipo_richiedente1.checked()" enabled="#Tipo_richiedente1.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">compilato dal titolare autenticato con sistema di autenticazione forte (SPID o CPS/CNS), richiede pertanto solo <b>firma digitale</b> del progettista/tecnico incaricato</p>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG" name="GLOBO_modulofiglio_cM47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG" obbligatorio="#Firmatario_dich_cong1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width:4%">
+        <input group="Firmatario_dich_cong" id="Firmatario_dich_cong2" name="Firmatario_dich_cong" type="radio" value="2" dynamic_check="#Tipo_richiedente2.checked()" enabled="#Tipo_richiedente2.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">firmato con <b>firma digitale</b> dal solo progettista/tecnico incaricato in quanto delegato dal titolare</p>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL" name="GLOBO_modulofiglio_cM47500-MSEC04-DICH-CONG-TIT-PROG-FIRMA-ENTR-EL" obbligatorio="#Firmatario_dich_cong2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center;">
+        <input id="Dichiar_prog" name="Dichiar_prog" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni del progettista</b>, firmato con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_dich_prog" name="num_dich_prog" dynamic_value="'1'" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC01-DICH-PROG" name="GLOBO_modulofiglio_cM47500-MSEC01-DICH-PROG" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1014,20 +1073,8 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="background-color: #eeeeee; vertical-align: center;"></td>
     </tr>
     <tr>
-      <td style="vertical-align: center; text-align: center;">
-        <div id="Firmatario_ult_part" name="Firmatario_ult_part" label="Firmatario ulteriori particelle" mandatory="#GEN_IMMAGG.checked()"> </div>
-        <input group="Firmatario_ult_part" id="Firmatario_ult_part1" name="Firmatario_ult_part" type="radio" value="1" dynamic_check="#Tipo_richiedente2.checked() and #GEN_IMMAGG.checked()" enabled="#Tipo_richiedente2.checked() and #GEN_IMMAGG.checked()"/>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height:1.6;">firmato con <b>firma digitale</b> dal progettista/tecnico incaricato delegato dal titolare</p>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part_del" name="numero_ult_part_del" dynamic_value="#Firmatario_ult_part1.checked() ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-DELEGA" name="GLOBO_modulofiglio_cGEN-IMMAGG-DELEGA" numero="#numero_ult_part_del.value()" obbligatorio="#Firmatario_ult_part1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>
-    <tr>
       <td style="vertical-align: top; text-align: center;">
+        <div id="Firmatario_ult_part" name="Firmatario_ult_part" label="Firmatario ulteriori particelle" mandatory="#GEN_IMMAGG.checked()"> </div>
         <input group="Firmatario_ult_part" id="Firmatario_ult_part2" name="Firmatario_ult_part" type="radio" value="2" dynamic_check="#Tipo_richiedente1.checked() and #GEN_IMMAGG.checked()" enabled="#Tipo_richiedente1.checked() and #GEN_IMMAGG.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1036,6 +1083,18 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part_tit" name="numero_ult_part_tit" dynamic_value="#Firmatario_ult_part2.checked() ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
         <input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="#numero_ult_part_tit.value()" obbligatorio="#Firmatario_ult_part2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center;">
+        <input group="Firmatario_ult_part" id="Firmatario_ult_part1" name="Firmatario_ult_part" type="radio" value="1" dynamic_check="#Tipo_richiedente2.checked() and #GEN_IMMAGG.checked()" enabled="#Tipo_richiedente2.checked() and #GEN_IMMAGG.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">firmato con <b>firma digitale</b> dal progettista/tecnico incaricato delegato dal titolare</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part_del" name="numero_ult_part_del" dynamic_value="#Firmatario_ult_part1.checked() ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-DELEGA" name="GLOBO_modulofiglio_cGEN-IMMAGG-DELEGA" numero="#numero_ult_part_del.value()" obbligatorio="#Firmatario_ult_part1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1199,7 +1258,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center"><input id="ident_firmat" name="ident_firmat" dynamic_value="#Tipo_richiedente1.checked() ? 'Il titolare (accesso eseguito mediante SPID o CPS/CNS)' : (#Tipo_richiedente2.checked() ? 'Il progettista / tecnico incaricato delegato (firma digitale)' : '')" style="width: 80%;"/></p>
+        <p class="Labelcella" style="text-align: center"><input id="ident_firmat" name="ident_firmat" dynamic_value="#Tipo_richiedente1.checked() ? 'Il titolare (accesso eseguito mediante SPID o CPS/CNS)' : (#Tipo_richiedente2.checked() ? 'Il progettista / tecnico incaricato delegato (firma digitale)' : '')" style="width: 80%; text-align: center;"/></p>
       </td>
     </tr>
   </tbody>
