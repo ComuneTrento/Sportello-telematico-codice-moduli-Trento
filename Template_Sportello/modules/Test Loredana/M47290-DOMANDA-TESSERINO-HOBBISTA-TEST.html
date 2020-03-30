@@ -1,0 +1,403 @@
+{% set CodiceModulo = "M47290-TEST-DOMANDA-TESSERINO-HOBBISTA" %}
+{% set Urn = "document:c_l378:test.tesserino.hobbista;test.rilascio.tesserino.hobbista;m47290.test.domanda.tesserino.hobbista" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Sviluppo Economico, Studi e Statistica"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Domanda per il rilascio del tesserino da hobbista"
+destinatario_amministrazione=""
+destinatario_ufficio="AFM9MQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|01/01/2019"/>
+
+<meta codice_allegato="M47290-A01-RIC-PAG-HOB"
+urn_allegato="document:c_l378:tesserino.hobbista;rilascio.tesserino.hobbista;a01.ricevuta.pagamento"
+descrizione_estesa="Ricevuta pagamento diritti istruttoria e diritti segreteria"
+filename="RicevutaPagamentoHobbista.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M47290-A01-RIC-PAG-HOB"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="OBBLIGATORIO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"/>
+
+{% endblock meta %}
+
+<script type="text/javascript">
+  var simpaticoEservice = "29"; //  the id corresponding to the e-service
+  var simpaticoEserviceName = "M47290-TEST-DOMANDA-TESSERINO-HOBBISTA"; //  the name corresponding to the e-service
+  var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/M47290-TEST-DOMANDA-TESSERINO-HOBBISTA" ; //  the url corresponding to the e-service
+  var simpaticoForm = "main";
+  var simpaticoCategory = "Ambito di test"; // the general category of the e-service
+  var simpaticoMapping= ["AventeTitolo_CodiceFiscale",
+                          "AventeTitolo_Nome",
+                          "AventeTitolo_Cognome",
+                          "AventeTitolo_DataNascita",
+                          "AventeTitolo_Sesso",
+                          "AventeTitolo_LuogoNascita",
+                          "AventeTitolo_ProvinciaResidenza",
+                          "AventeTitolo_ComuneResidenza",
+                          "AventeTitolo_ViaResidenza",
+                          "AventeTitolo_CivicoResidenza",
+                          "AventeTitolo_CAPResidenza",
+                          "AventeTitolo_Fisso",
+                          "AventeTitolo_Telefono",
+                          "AventeTitolo_EMail",
+                          "AventeTitolo_EMailPEC",
+                          "RequisitiMorali1",
+                          "TessereNucleo1",
+                          "AltreTessere1",
+                          "esenz_bollo1",
+                          "Parametri_NumeroBollo",
+                          "RIC_BONIFICO",
+                          "Dichiarazione_pagamento_check",
+                          "Consegna_fototessera_check",
+                          "Presa_visione_check"
+                          ];
+  var ERROR_LABELS = { 
+    'block1' : 'Se non presente, inserire il codice fiscale di chi sta presentando la domanda.',
+    'block2' : 'Completare la sezione dati anagrafici con le informazioni obbligatorie.',
+    'block3' : 'Completare la sezione dati di residenza con le informazioni obbligatorie.',
+    'block4' : 'Leggere il testo.',
+    'block5' : 'Completare la sezione delle dichiarazioni.',
+    'block6' : 'Completare con il numero seriale della marca da bollo',
+    'block7' : 'Allegati da aggiungere alla domanda'
+  }
+</script>
+
+<form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/M47290-TEST-DOMANDA-TESSERINO-HOBBISTA" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
+
+{% block title %}
+DOMANDA PER IL RILASCIO DEL TESSERINO DI HOBBISTA
+{% endblock title %}
+
+{% block content %}
+
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')' + ' - Domanda per il rilascio del tesserino da hobbista'"/>
+
+{{ intestazioni.intestazione_moduloprincipale_conbollo() }}
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<h1 class="Modulo" style="line-height:1.6;">
+    DOMANDA PER IL RILASCIO DEL TESSERINO DI HOBBISTA 
+  </h1>
+  <h2 class="Modulo" style="line-height:1.6;">
+    (art. 20 ter della legge provinciale 30 luglio 2010, n. 17)
+  </H2>
+
+<br>
+<br>
+
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+
+{{anagrafica_trento_uniformata.richiedente("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+<br>
+
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione" >
+      <td colspan="2">
+        <b>Esito verifica residenza</b>
+      </td>
+    </tr>
+  <tr>
+  <td style="vertical-align: top; width: 4%;">
+    <input
+        id="Modulo_Compilabile1"
+        name="Modulo_Compilabile1"
+        dynamic_check="#AventeTitolo_ComuneResidenza.value().toUpperCase()=='TRENTO' || #AventeTitolo_ProvinciaResidenza.value().toUpperCase()!='TN'"
+        enabled="#AventeTitolo_ComuneResidenza.value().toUpperCase()=='TRENTO' || #AventeTitolo_ProvinciaResidenza.value().toUpperCase()!='TN'"
+        type="checkbox"
+        label="Modulo compilabile"
+        value="1"/>
+  </td>
+  <td>
+    <p>La domanda può essere presentata perchè il richiedente è residente nel Comune di Trento, oppure Provincia di Bolzano o altra Regione.</p>
+  </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top; width: 4%;">
+      <input
+          id="Modulo_Compilabile2"
+          name="Modulo_Compilabile2"
+          dynamic_check="#AventeTitolo_ComuneResidenza.value().toUpperCase()!='TRENTO' && #AventeTitolo_ProvinciaResidenza.value().toUpperCase()=='TN'"
+          enabled="#AventeTitolo_ComuneResidenza.value().toUpperCase()!='TRENTO' && #AventeTitolo_ProvinciaResidenza.value().toUpperCase()=='TN'"
+          type="checkbox"
+          value="2"/>
+      </td>
+      <td>
+        <p>La domanda NON può essere presentata perchè il richiedente è residente in provincia ma in comune diverso da Trento, la richiesta va fatta al comune di residenza.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input class="inputNormal" id="Salva_Modulo" type="hidden" name="Salva_Modulo" label="Impossibile salvare il modulo per residenza in Provincia ma in diverso Comune da Trento" mandatory="#Modulo_Compilabile2.checked()">
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo">
+    CHIEDE
+  </h1>
+
+
+  <p class="Modulo" style="line-height:1.6;">
+    il rilascio del tesserino di hobbista di cui all'articolo 20 <em>ter</em> della legge provinciale n. 17 del 30 luglio 2010 per partecipare ai mercatini riservati agli hobbisti.
+  </p>
+    <p class="Modulo" style="line-height:1.6;"><strong> A tal fine, consapevole delle sanzioni penali, nel caso di dichiarazioni non veritiere, di formazione o uso di atti falsi, richiamate all'articolo 76 del D.P.R. 28 dicembre 2000,
+    n. 445, nonché della decadenza dai benefici conseguenti al provvedimento eventualmente emanato sulla base della dichiarazione non veritiera, qualora dal controllo 
+    effettuato emerga la non veridicità del contenuto di taluna delle dichiarazioni rese (art. 75 D.P.R. 28 dicembre 2000, n. 445).</strong>
+  </p>
+</div>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo">
+  DICHIARA
+</h1>
+  
+<p class="Modulo" style="line-height:1.6;text-align:center">
+  <strong>ai sensi degli artt. 46 e 47 del D.P.R. 28 dicembre 2000 n. 445</strong>
+</p>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="RequisitiMorali" name="RequisitiMorali" label="Possesso dei requisiti morali" mandatory_enabled="true"> </div>
+        <input group="RequisitiMorali" id="RequisitiMorali1" name="RequisitiMorali1" type="checkbox" mandatory_enabled="true" value="1"/>
+      </td>
+      <td>
+        <p>di essere in possesso dei requisiti morali previsti dall'articolo 5 della legge provinciale 30 luglio 2010, n. 17 (art. 71, commi 1, 3 e 4 
+          del D.L.gs. n. 59 del 26 marzo 2010 - <a href="https://sportello.comune.trento.it/document/hobbista-note-esplicative" target="_blank">vedi nota esplicativa</a>)
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="TessereNucleo" name="TessereNucleo" label="Possesso di altre tessere nello stesso nucleo" mandatory_enabled="true"> </div>
+        <input group="TessereNucleo" id="TessereNucleo1" name="TessereNucleo1" type="checkbox" mandatory_enabled="true" value="1"/>
+      </td>
+      <td>
+        <p>che, relativamente al proprio nucleo familiare, non sono stati rilasciati ulteriori tesserini attualmente in corso di validità (<a href="https://sportello.comune.trento.it/document/hobbista-note-esplicative" target="_blank">vedi nota esplicativa</a>)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <div id="AltreTessere" name="AltreTessere" label="Possesso di altre tessere"> </div>
+        <input group="AltreTessere" id="AltreTessere1" name="AltreTessere1" type="checkbox" value="1"/>
+      </td>
+      <td>
+        <p>che non possiede altri tesserini identificativi attualmente in corso di validità rilasciati da un comune della provincia di Trento (da barrare in caso di trasferimento della residenza)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Dichiarazione_pagamento" name="Dichiarazione_pagamento" label="Dichiarazione di essere a conoscenza che è necessario il pagamento di euro 42.52" mandatory_enabled="true"> </div>
+          <input group="Dichiarazione_pagamento" id="Dichiarazione_pagamento_check" name="Dichiarazione_pagamento_check" type="checkbox" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.6;"><b>di essere a conoscenza che per il rilascio del tesserino di hobbista è necessario il pagamento di:</b><br><span style="font-size:85%;"><i>euro 26,00 per diritti di istruttoria</i></a></span><br><span style="font-size:85%;"><i>euro 16,00 per un amarca da bollo assolta in maniera virtuale</i></a></span><br><span style="font-size:85%;"><i>euro 0,52 per diritti di segreteria</i></a></span><br><b>Per un totale di euro 42.52</b><br>che sarà effettuato con bonifico bancario su un conto corrente intestato al Comune di Trento - Servizio di tesoreria<br>- IBAN IT 73 I 02008 01820 000001202801<br>oppure<br>- SWIFT/BIC IT 73 I 02008 01820 000001202801 UNCRITM10HV<br>con causale: Rilascio tesserino di hobbista</p>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+
+
+<!-- <h1 class="Modulo">
+  COMUNICA
+</h1>
+
+
+<p class="Modulo" style="line-height:1.6;">
+  di acconsentire all'utilizzo dei dati riportati nella presente, con le modalità illustrate nella nota di seguito riportata, in 
+  conformità a quanto previsto dal Regolamento UE n. 2016/679.
+</p> -->
+
+<br>
+
+<table class="Modulo" name="Fototessera" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Consegna_fototessera" name="Consegna_fototessera" label="Consgna fototessera al rilascio del tesserino" mandatory_enabled="true"> </div>
+          <input group="Consegna_fototessera" id="Consegna_fototessera_check" name="Consegna_fototessera_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>di impegnarsi alla consegna di n. 1 fototessera a colori al ritiro del tesserino</b></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<br>
+
+<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>di aver preso visione dell'<a href="https://sportellotest.comune.trento.it/document/inform-tratt-dati-sviluppoeconomico-hob" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> 
+  
+<br>
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top; width: 4%;" rowspan="3">
+          <div id="esenz_bollo" name="esenz_bollo" label="Esenzione bollo" dynamic_check="true"> </div>
+          <input group="esenz_bollo" id="esenz_bollo1" name="esenz_bollo" type="radio" value="1" /> 
+        </td>
+        <td>
+          <p style="line-height:1.6;">che la seguente <b>marca da bollo</b> è stata annullata per la presentazione della documentazione sopra indicata: <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory_enabled="#esenz_bollo1.checked()" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p><b>Il richiedente si impegna a conservare l'originale della marca da bollo annullata</b></p>
+        </td>
+      </tr>
+      <!-- <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="esenz_bollo" id="esenz_bollo2" name="esenz_bollo" type="radio" value="2" /> 
+        </td>
+        <td colspan="9">
+          <p style="line-height:1.6;">che non è necessario annullare marca da bollo in quanto soggetto esente</p>
+        </td>
+      </tr> -->
+    </tbody>
+  </table>
+  </div>
+  
+<br>
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <tbody >
+        <tr class="Rigaintestazione">
+            <td colspan="3">
+              <p style="text-align: center;">
+                <b>Elenco degli allegati</b>
+                <br>
+                <span style="font-size:70%">
+                  <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+                </span>
+              </p>
+            </td>
+          </tr>  
+      <tr>
+          <td style="vertical-align: top; width: 4%;">
+            <input id="RIC_BONIFICO" name="RIC_BONIFICO" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+          </td>
+          <td style="background-color: #eeeeee;"  style="width:100%">
+            <p>
+              <b>ricevuta bonifico pari ad Euro 42,52 (Euro 26,00 per diritti di istruttoria, una marca da bollo da Euro 16 assolta in maniera virtuale ed Euro 0,52 per diritti di segreteria)</b>                                                                         
+            </p>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  
+<br>
+<br/>
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br/>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cM47290-A01-RIC-PAG-HOB" name="GLOBO_allegato_cM47290-A01-RIC-PAG-HOB" obbligatorio="#RIC_BONIFICO.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+{% endblock content %}
