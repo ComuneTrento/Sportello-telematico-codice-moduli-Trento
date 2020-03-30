@@ -48,6 +48,19 @@ urlhelp="/modulistica/moduli/GEN-IMMAGG-DELEGA"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
+descrizione_estesa="Allegato - Copia del modulo firmata dal titolare con firma digitale"
+filename="Modulo_compilato_firma_digitale.pdf"
+firmato="SI"
+firmatari="AventeTitolo_CodiceFiscale"
+firmatari_label="Il/La titolare"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-EL"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 
 
 
@@ -252,7 +265,7 @@ function get_ufficio_dest() {
 		</tbody>
 	</table>
 </div>
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Progettista_Cognome.value().toUpperCase() + ' ' + #Progettista_Nome.value().toUpperCase() + ' - ulteriori particelle o subalterni'"/>
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' - ulteriori particelle o subalterni'"/>
 
  <h1 class="Modulo">
   Ulteriori particelle o subalterni oggetto del procedimento
@@ -1896,17 +1909,60 @@ function get_ufficio_dest() {
 <br>
 <br>
 
-<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width:4%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+      </td>
+      <td style="width:15%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Indicare il numero di documenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#rich_ha_firma_digit.value() == 'firma digitale'" enabled="#rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>Copia del modulo</b> firmata dal titolare con <b>firma digitale</b></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="#Modulo_compilato_firmato.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+      <td style="width: 35%; text-align: center;">
+        <p style="line-height:1.8;">
+          <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#rich_ha_firma_digit.value() == 'firma digitale' ? #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase() : ''" style="width:99%; text-align: center;"/>
+        </p>
+      </td>
+      <td style="width: 35%; text-align: center;">
+        <p style="line-height:1.8;">
+          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value() + ' ' + #Progettista_Cognome.value()" style="width:99%; text-align: center;"/>
+        </p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -1917,7 +1973,10 @@ function get_ufficio_dest() {
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il progettista/tecnico incaricato delegato <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il/la titolare<br><span style="font-size:95%"><i><input id="tipo_firma_tit" name="tipo_firma_tit" dynamic_value="#rich_ha_firma_digit.value() == 'firma autografa' ? '(firma autografa)' : (#rich_ha_firma_digit.value() == 'firma digitale' ? '(firma digitale)' : '')" style="width: 80%; text-align: center;"/></i></span></p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il progettista/tecnico incaricato delegato<br><span style="font-size:95%"><i>(firma digitale)</i></span></p>
       </td>
     </tr>
   </tbody>
@@ -1943,6 +2002,8 @@ function get_ufficio_dest() {
 <input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden" readonly/>
 <input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden" readonly/>
 <input id="Progettista_Nome" name="Progettista_Nome" type="hidden" readonly/>
+
+<input id="rich_ha_firma_digit" name="rich_ha_firma_digit" type="hidden" readonly/>
 
 
 
