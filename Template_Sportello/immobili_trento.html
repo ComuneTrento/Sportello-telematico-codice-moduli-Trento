@@ -6411,18 +6411,16 @@
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 {% macro immobile_mod_E_resid( prefix='Immobile', intestazione="immobile", annotazioniSolo1="Immobile principale oggetto dell'istanza", visibilty_carica_dati="visibility:hidden", pointer_carica_dati="cursor:default", visibility_intestazione="display:visibility", civico_obbligatorio="false", carica_campi="", tipo_obbligatorio="false", disattivato="true" ) -%}
-<!-- visibility:visibility or hidden, cursor:pointer or default -->
+
 <div type="Immobile">
 
-  <div class="simpatico-block simpatico-query-and-answer">
+  <input id="{{ prefix }}_DatiToponomasticiObbligatori"       name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
+  <input id="{{ prefix }}_Tipo"       name="{{ prefix }}_Tipo"       type="hidden" dynamic_value="#{{ prefix }}_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #{{ prefix }}_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #{{ prefix }}_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
+  <input id="{{ prefix }}_NumeroUlterioriImmobili" name="{{ prefix }}_NumeroUlterioriImmobili" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltriImmobili.value() / 16) ">
+  <input id="{{ prefix }}_Note"       name="{{ prefix }}_Note"       type="hidden" value="{{ annotazioniSolo1 }}"/>
+  <input id="{{ prefix }}_CatNote"    name="{{ prefix }}_CatNote"    type="hidden" value="{{ annotazioniSolo1 }}"/>
 
-<!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
-    <input id="{{ prefix }}_DatiToponomasticiObbligatori"       name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
-    <input id="{{ prefix }}_Tipo"       name="{{ prefix }}_Tipo"       type="hidden" dynamic_value="#{{ prefix }}_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #{{ prefix }}_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #{{ prefix }}_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
-    <input id="{{ prefix }}_NumeroUlterioriImmobili" name="{{ prefix }}_NumeroUlterioriImmobili" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltriImmobili.value() / 16) ">
-    <input id="{{ prefix }}_Note"       name="{{ prefix }}_Note"       type="hidden" value="{{ annotazioniSolo1 }}"/>
-    <input id="{{ prefix }}_CatNote"    name="{{ prefix }}_CatNote"    type="hidden" value="{{ annotazioniSolo1 }}"/>
-    <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
+  <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
       <tbody>
         <tr class="Rigaintestazione">
           <td style="border-right:0px">
@@ -6587,11 +6585,9 @@
 			  </tr>
 			</tbody>
 		</table>
-  </div>
 
   <br>
 
-  <div class="simpatico-block simpatico-query-and-answer">
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
       <tbody>
 		    <tr class="Rigaintestazione" >
@@ -7876,7 +7872,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+
 </div>
 {%- endmacro %}
 
