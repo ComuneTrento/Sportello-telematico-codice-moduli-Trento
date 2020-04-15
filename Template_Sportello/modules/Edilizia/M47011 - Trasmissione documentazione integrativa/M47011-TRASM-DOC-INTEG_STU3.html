@@ -1,6 +1,5 @@
 {% set CodiceModulo = "M47011-TRASM-DOC-INTEG" %}
 {% set Urn =  "document:c_l378:m47011.trasmissione.documentazione.integrativa" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47011-TRASM-DOC-INTEG_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -31,7 +30,7 @@ tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47011-TRASM-DOC-INTEG"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016"
-generabile_da="M47005-COMUNICAZIONE-INIZIO-LAVORI,M47010-DICHIARAZIONE-ULTIMAZIONE-LAVORI,M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA,M47561-COMUNICAZIONE-OPERE-LIBERE,M47622-CERTIFICATO-CONFORMITA-EDIFICI-ESISTENTI,M47675-DICHIARAZIONE-CONFORMITA-IMPIANTI,M47750-AUTORIZZAZIONE-CPC" />
+generabile_da="M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA" />
 
 <meta codice_allegato="GEN-ALLEGATI-VARI"
 urn_allegato="document:c_l378:allegato.allegati.vari"
@@ -76,62 +75,6 @@ urn_report="report:CSP_SESSION_REPORT"
 
 {% endblock meta %}
 
-<!--{% block simpaticoconfig %}
-  {% set simpaticoEservice="6" %}
-  {% set simpaticoEserviceName="Trasmissione documentazione integrativa" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47011-TRASM-DOC-INTEG" %}  
-  {% set simpaticoForm="main" %}
-  {% set simpaticoCategory="Edilizia" %}
-  {% set simpaticoMapping=["AventeTitolo_Cognome",
-                          "AventeTitolo_Nome",
-                          "AventeTitolo_CodiceFiscale",
-                          "AventeTitolo_DataNascita",
-                          "AventeTitolo_Sesso",
-                          "AventeTitolo_Cittadinanza",
-                          "AventeTitolo_LuogoNascita",
-                          "AventeTitolo_ProvinciaResidenza",
-                          "AventeTitolo_ComuneResidenza",
-                          "AventeTitolo_ViaResidenza",
-                          "AventeTitolo_CivicoResidenza",
-                          "AventeTitolo_CAPResidenza",
-                          "AventeTitolo_Telefono",
-                          "AventeTitolo_Tel_Fisso",
-                          "AventeTitolo_EMail",
-                          "AventeTitolo_EMailPEC",
-                          "Progettista_Cognome",
-                          "Progettista_Nome",
-                          "Progettista_CodiceFiscale",
-                          "Progettista_DataNascita",
-                          "Progettista_Sesso",
-                          "Progettista_Cittadinanza",
-                          "Progettista_LuogoNascita",
-                          "Progettista_PartitaIVA",
-                          "Progettista_Attributi_Albo",
-                          "Progettista_Attributi_DellaProvincia",
-                          "Progettista_Attributi_AlNumero",
-                          "Progettista_ProvinciaStudio",
-                          "Progettista_ComuneStudio",
-                          "Progettista_ViaStudio",
-                          "Progettista_CivicoStudio",
-                          "Progettista_CAPStudio",
-                          "Progettista_TelefonoStudio",
-                          "Progettista_Tel_FissoStudio",
-                          "Progettista_EMailPEC"] %}
-
-  {% set ERROR_LABELS=[ ('block1' , 'Selezionare una delle opzioni'),
-                        ('block2' , 'Inserire il nominativo del proprietario o soggetto avente titolo idoneo'),
-                        ('block3' , 'Selezionare il ruolo'),
-                        ('block5' , 'Inserire il nominativo del progettista'),
-                        ('block6' , 'Inserire i riferimenti alla pratica per cui si sta trasmettendo una integrazione'),
-                        ('block7' , 'Particella edilizia non valida'),
-                        ('block8' , 'Indirizzo non inserito'),
-                        ('block9' , 'Indirizzo non verificato'),
-                        ('block10' , 'Selezionare una delle opzioni'),
-                        ('block11' , 'Selezionare una delle opzioni'),
-                        ('block13' , 'Selezionare una delle opzioni')] %}
-  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
-{% endblock simpaticoconfig %}-->
-
 
 {% block title %}M47011-TRASMISSIONE-DOCUMENTAZIONE-INTEGRATIVA{% endblock title %}
 
@@ -139,7 +82,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Trasmissione documentazione integrativa'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + '(' + #AventeTitolo_CodiceFiscale.value() + ')' + ' - SCIA EDILIZIA - Trasmissione documentazione integrativa'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -151,33 +94,13 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
+      <td>
         <p style="line-height:1.6;"><b>La compilazione del modulo seguente viene eseguita da:</b></p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
-        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">Proprietario dell'immobile o soggetto in possesso di titolo idoneo</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
-        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">Progettista / Tecnico abilitato incaricato</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input group="Tipo_richiedente" id="Tipo_richiedente3" name="Tipo_richiedente" type="radio" value="3" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">Legale rappresentante dell'impresa incaricata dei lavori, avente codice fiscale: <input class="" format="cf" id="cf_legale_rappres" name="cf_legale_rappres" label="codice fiscale del legale rappresentante" mandatory_enabled="#Tipo_richiedente3.checked()" size="23"/></p>
+        <input id="Tipo_compilante" name="Tipo_compilante" style="width:100%;"/>
       </td>
     </tr>
   </tbody>
@@ -573,9 +496,9 @@ urn_report="report:CSP_SESSION_REPORT"
       <td>
         <select class="inputNormal" id="Tipo_istanza" name="Tipo_istanza" style="width:100%" label="Tipo istanza" mandatory_enabled="true">
           <option value=""></option>
-          <option value="CPC">Domanda di autorizzazione paesaggistica (CPC)</option>
-          <option value="Comunicazione inizio lavori">Comunicazione di inizio lavori</option>      
-          <option value="Ultimazione lavori">Dichiarazione di ultimazione lavori</option> 
+          <!--<option value="CPC">Domanda di autorizzazione paesaggistica (CPC)</option>-->
+          <!--<option value="Comunicazione inizio lavori">Comunicazione di inizio lavori</option>-->    
+          <!--<option value="Ultimazione lavori">Dichiarazione di ultimazione lavori</option>-->
           <option value="SCIA">Segnalazione certificata di inizio attività (SCIA)</option> 
           <!--<option value="Comunicazione opere libere">Comunicazione opere libere</option>-->  
           <!--<option value="Conformita edifici">Certificato di conformità edifici esistenti</option>-->  
@@ -592,8 +515,9 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
-<input class="" id="nominativo_firmatario_integr" name="nominativo_firmatario_integr" dynamic_value="#Tipo_istanza.value() != 'Conformita edifici' ? #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase() : #Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%;"/>
-<input class="" id="cf_firmatario_integr" name="cf_firmatario_integr" dynamic_value="#Tipo_istanza.value() != 'Conformita edifici' ? #AventeTitolo_CodiceFiscale.value() : #Progettista_CodiceFiscale.value()" style="width:90%;"/>
+<!--<input class="" id="cf_firmatario_integr" name="cf_firmatario_integr" dynamic_value="#Tipo_istanza.value() != 'Conformita edifici' ? #AventeTitolo_CodiceFiscale.value() : #Progettista_CodiceFiscale.value()" style="width:90%;"/>-->
+<input class="" id="nominativo_firmatario_integr" name="nominativo_firmatario_integr" dynamic_value="#Tipo_istanza.value() == 'SCIA' ? #Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase() : #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%;" type="hidden"/>
+<input class="" id="cf_firmatario_integr" name="cf_firmatario_integr" dynamic_value="#Tipo_istanza.value() == 'SCIA' ? #Progettista_CodiceFiscale.value() : #AventeTitolo_CodiceFiscale.value()" style="width:90%;" type="hidden"/>
 
 <br>
 <br>
@@ -701,7 +625,7 @@ urn_report="report:CSP_SESSION_REPORT"
   <tbody>
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <textarea class="inputNormal" id="Documentazione_integrativa" name="Documentazione_integrativa" label="Documentazione_integrativa" style="width:100%;height:5cm" mandatory_enabled="true" maxlength="270">
+        <textarea class="inputNormal" id="Documentazione_integrativa" name="Documentazione_integrativa" label="Documentazione_integrativa" style="width:100%;height:5cm" mandatory_enabled="true" maxlength="1000">
         </textarea>
       </td>
     </tr>
@@ -756,7 +680,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
 			<td style="background-color: #eeeeee;" colspan="4">
-        <p style="line-height:1.6; text-align: center;"><b>ATTENZIONE! Limite max di 20 MB per allegato</b></p>
+        <p style="line-height:1.6; text-align: center;"><b>ATTENZIONE! Limite max di 15 MB per allegato</b></p>
 			</td>
 		</tr>
   </tbody>
@@ -786,10 +710,10 @@ urn_report="report:CSP_SESSION_REPORT"
   <tbody>
     <tr>
       <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
         <input class="" id="firmat_integr" name="firmat_integr" dynamic_value="#nominativo_firmatario_integr.value()" style="width:90%; text-align: center;"/>
@@ -797,13 +721,13 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr class="Rigaintestazioneridotta">
       <td>
-        <p class="Labelcella" style="text-align: center">Luogo</p>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Luogo</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Data</p>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il dichiarante <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;"><input class="" id="label_firmatario" name="label_firmatario" dynamic_value="#Tipo_istanza.value() == 'SCIA' ? 'Il progettista/tecnico incaricato delegato ((accesso eseguito mediante SPID o CPS/CNS))' : 'Il dichiarante (accesso eseguito mediante SPID o CPS/CNS)'" style="width:90%;"/></p>
       </td>
     </tr>
   </tbody>
