@@ -1,6 +1,5 @@
 {% set CodiceModulo = "M1234-TEST-ANDREA" %}
 {% set Urn = "document:c_l378:test.modulo.andrea;servizio.test.andrea;modulo.test.andrea" %}
-<!--{% set modulo_workflow_model =  "M1462-IMIS_v1.0" %}-->
 {% extends "base_trento_new_TEST_ONLOAD .html" %}
 
 {% block meta %}
@@ -32,6 +31,24 @@ urlhelp="DomandeRisposte/FAQ"
 verifica_pagamento="NO"
 versione="1.0|23/02/2018" />
 
+<meta codice_modulo_figlio="GEN-IMMAGG"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
@@ -59,10 +76,6 @@ urn_report="report:CSP_SESSION_REPORT"
 </h3>
 
 <br>
-{{anagrafica.persona_fisica("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
-
-<!--{{anagrafica_trento.richiedente_IMIS("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
-{{anagrafica.soggetto_riferimento_servizi_demografici("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "Paolino Paperino")}} -->
 
 <br>
 
@@ -202,6 +215,15 @@ Esito verifica validità:
   <input group="Tassonomia_Checkbox" id="Tassonomia_Checkbox1" name="Tassonomia_Checkbox1" type="checkbox" value="SI"/>
   <input group="Tassonomia_Checkbox" id="Tassonomia_Checkbox2" name="Tassonomia_Checkbox2" type="checkbox" value="SI"/>
   <input group="Tassonomia_Checkbox" id="Tassonomia_Checkbox3" name="Tassonomia_Checkbox3" type="checkbox" value="SI"/>
+</p>
+
+<br/>
+<p class="Modulo">
+  <b>Esempio 9:</b> Checkbox - controllo allegati<br/>
+  <div id="Tassonomia_Checkbox_Allegati" name="Tassonomia_Checkbox_Allegati" label="Esempio 8" mandatory="true"></div>
+  <input group="Tassonomia_Checkbox_Allegati" id="Tassonomia_Checkbox1_Al" name="Tassonomia_Checkbox1_Al" type="checkbox" value="SI"/>
+  <input group="Tassonomia_Checkbox_Allegati" id="Tassonomia_Checkbox2_Al" name="Tassonomia_Checkbox2_Al" type="checkbox" value="SI"/>
+  <input group="Tassonomia_Checkbox_Allegati" id="Tassonomia_Checkbox3_Al" name="Tassonomia_Checkbox3_Al" type="checkbox" value="SI"/>
 </p>
 
 <br/>
@@ -527,47 +549,31 @@ Esito verifica validità:
 <br>
 <br>
 
-<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="width: 33%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
-      </td>
-      <td style="width: 33%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:50%;" type="text"/>
-      </td>
-      <td style="width: 34%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()"/>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella" style="text-align: center">Luogo</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Data</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Il richiedente</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
-<br>
-<br>
+<!--TEST ALLEGATI + FIRMA -->
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="1" obbligatorio="#Tassonomia_Checkbox1_Al.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="1" obbligatorio="#Tassonomia_Checkbox2_Al.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="1" obbligatorio="#Tassonomia_Checkbox3_Al.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<p class="Modulo">
-  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
-</p>
-<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
 
-<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
 
-<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
-<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
-<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+{{ utils.firma() }}
 
-<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
-
+  <br>
+  <br>
+  
+  <p class="Modulo">
+    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+  </p>
+  <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+  
+  <input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+  
+  <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+  
+  <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+  
+  
 {% endblock content %}
