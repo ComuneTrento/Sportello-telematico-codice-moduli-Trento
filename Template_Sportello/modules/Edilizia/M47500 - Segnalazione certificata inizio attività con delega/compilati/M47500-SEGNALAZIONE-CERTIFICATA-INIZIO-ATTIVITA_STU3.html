@@ -139,7 +139,7 @@ obbligatorio="DINAMICO"/>
 
 <meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
 urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
-descrizione_estesa="Allegato - Copia del modulo firmata dal titolare con firma digitale"
+descrizione_estesa="Allegato - Copia del modulo principale SCIA firmata dal titolare con firma digitale"
 filename="Modulo_compilato_firma_digitale.pdf"
 firmato="SI"
 firmatari="AventeTitolo_CodiceFiscale"
@@ -270,7 +270,11 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Segnalazione certificata di inizio attività'" id="Oggetto" name="Oggetto" type="hidden"/>
+<input class="Modulo" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + '(' + #AventeTitolo_CodiceFiscale.value() + ')' + ' - SCIA EDILIZIA'" id="Oggetto_parte1" name="Oggetto_parte1" style="width:100%;" type="hidden"/>
+<input class="Modulo" dynamic_value="#Immobile_TipoImmobile.value() == 'F' ? 'P.f.:' + ' ' + #Immobile_CatNumero.value() : (#Immobile_TipoImmobile.value() == 'S' || #Immobile_TipoImmobile.value() == 'E' ? 'P.ed.:' + ' ' + #Immobile_CatNumero.value() : '')" id="Oggetto_parte2" name="Oggetto_parte2" style="width:100%;" type="hidden"/> 
+<input class="Modulo" dynamic_value="#Immobile_CatPM.value() == '' ? '' : '- P.M.: ' + #Immobile_CatPM.value()" id="Oggetto_parte3" name="Oggetto_parte3" style="width:100%;" type="hidden"/>
+<input class="Modulo" dynamic_value="#Oggetto_parte1.value() + ' - ' + #Oggetto_parte2.value() + #Oggetto_parte3.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/> 
+
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
@@ -458,6 +462,8 @@ function get_ufficio_dest() {
   <span style="font-size:75%">(artt. 85 e ss. della legge provinciale del 4 agosto 2015, n. 15)</span>
 </h1>
 
+<input id="Tipo_compilante" name="Tipo_compilante" dynamic_value="'progettista/tecnico incaricato delegato'" style="width:30%;" type="hidden" readonly/>
+
 <br>
 
 <input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="#AventeTitolo_Telefono.value() == ''" type="hidden" />
@@ -474,7 +480,7 @@ function get_ufficio_dest() {
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="5">
-        <p><b>DATI DEL TITOLARE:</b></p>
+        <p style="line-height: 1.6;"><b>DATI DEL TITOLARE:</b></p>
       </td>
     </tr>
     <tr class="Rigaintestazione">
@@ -524,10 +530,10 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td colspan="3">
-          <p class="Labelcella">Cognome</p>
+          <p class="Labelcella" style="line-height:1.6;">Cognome</p>
         </td>
         <td>
-          <p class="Labelcella">Nome</p>
+          <p class="Labelcella" style="line-height:1.6;">Nome</p>
         </td>
       </tr>
       <tr>
@@ -540,16 +546,16 @@ function get_ufficio_dest() {
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td style="width:15%;">
-          <p class="Labelcella">Data di nascita</p>
+          <p class="Labelcella" style="line-height:1.6;">Data di nascita</p>
         </td>
         <td style="width:9%;">
-          <p class="Labelcella">Sesso</p>
+          <p class="Labelcella" style="line-height:1.6;">Sesso</p>
         </td>
         <td style="width: 26%;">
-          <p class="Labelcella">Cittadinanza</p>
+          <p class="Labelcella" style="line-height:1.6;">Cittadinanza</p>
         </td>
         <td style="width: 50%;">
-          <p class="Labelcella">Luogo di nascita</p>
+          <p class="Labelcella" style="line-height:1.6;">Luogo di nascita</p>
         </td>
       </tr>
       <tr>
@@ -582,27 +588,27 @@ function get_ufficio_dest() {
       <tbody>
         <tr class="Rigaintestazione">
           <td colspan="6">
-            <p><b>Residente a:</b></p>
+            <p style="line-height: 1.6;"><b>Residente a:</b></p>
           </td>
         </tr>
         <tr class="Rigaintestazioneridotta">
           <td style="width:9%;">
-            <p class="Labelcella">Provincia</p>
+            <p class="Labelcella" style="line-height:1.6;">Provincia</p>
           </td>
           <td style="width:33%;">
-            <p class="Labelcella">Comune</p>
+            <p class="Labelcella" style="line-height:1.6;">Comune</p>
           </td>
           <td style="width:33%;">
-            <p class="Labelcella">Indirizzo</p>
+            <p class="Labelcella" style="line-height:1.6;">Indirizzo</p>
           </td>
           <td style="width:9%;">
-            <p class="Labelcella">Civico</p>
+            <p class="Labelcella" style="line-height:1.6;">Civico</p>
           </td>
           <td style="width:9%;">
-            <p class="Labelcella">Barra</p>
+            <p class="Labelcella" style="line-height:1.6;">Barra</p>
           </td>
           <td style="width:16%;">
-            <p class="Labelcella">CAP</p>
+            <p class="Labelcella" style="line-height:1.6;">CAP</p>
           </td>
         </tr>
         <tr>
@@ -745,16 +751,16 @@ function get_ufficio_dest() {
       <tbody>
         <tr class="Rigaintestazioneridotta">
           <td style="width:16.5%;">
-            <p class="Labelcella">Telefono fisso</p>
+            <p class="Labelcella" style="line-height:1.6;">Telefono fisso</p>
           </td>
           <td style="width:16.5%;">
-            <p class="Labelcella">Cellulare</p>
+            <p class="Labelcella" style="line-height:1.6;">Cellulare</p>
           </td>
           <td style="width:33%;">
-            <p class="Labelcella">E-mail<i> (posta elettronica ordinaria)</i></p>
+            <p class="Labelcella" style="line-height:1.6;">E-mail<i> (posta elettronica ordinaria)</i></p>
           </td>
           <td>
-            <p class="Labelcella">E-mail PEC<i> (domicilio digitale)</i></p>
+            <p class="Labelcella" style="line-height:1.6;">E-mail PEC<i> (domicilio digitale)</i></p>
           </td>
         </tr>
         <tr>
@@ -782,7 +788,7 @@ function get_ufficio_dest() {
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="5">
-        <p><b>Ruolo del titolare</b></p>
+        <p style="line-height: 1.6;"><b>Ruolo del titolare</b></p>
       </td>
     </tr>
     <tr>
@@ -813,10 +819,10 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td colspan="3">
-          <p class="Labelcella">Denominazione/Ragione sociale (questa sezione deve essere compilata se il dichiarante non è la persona fisica)</p>
+          <p class="Labelcella" style="line-height:1.6;">Denominazione/Ragione sociale (questa sezione deve essere compilata se il dichiarante non è la persona fisica)</p>
         </td>
         <td colspan="2">
-          <p class="Labelcella">Tipologia</p>
+          <p class="Labelcella" style="line-height:1.6;">Tipologia</p>
         </td>
       </tr>
       <tr mandatory_enabled="#AventeTitolo_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento', 'Titolare omonima ditta individuale' ])">
@@ -844,24 +850,24 @@ function get_ufficio_dest() {
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td colspan="5">
-          <p class="Labelcella">Sede legale</p>
+          <p class="Labelcella" style="line-height:1.6;">Sede legale</p>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td style="width:9%;">
-          <p class="Labelcella">Provincia</p>
+          <p class="Labelcella" style="line-height:1.6;">Provincia</p>
         </td>
         <td style="width:33%;">
-          <p class="Labelcella">Comune</p>
+          <p class="Labelcella" style="line-height:1.6;">Comune</p>
         </td>
         <td style="width:33%;">
-          <p class="Labelcella">Indirizzo</p>
+          <p class="Labelcella" style="line-height:1.6;">Indirizzo</p>
         </td>
         <td style="width:9%;">
-          <p class="Labelcella">Civico</p>
+          <p class="Labelcella" style="line-height:1.6;">Civico</p>
         </td>
         <td style="width:16%;">
-          <p class="Labelcella">CAP</p>
+          <p class="Labelcella" style="line-height:1.6;">CAP</p>
         </td>
       </tr>
       <tr mandatory_enabled="#AventeTitolo_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento', 'Titolare omonima ditta individuale' ])">
@@ -1002,10 +1008,10 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td style="width:50%;">
-          <p class="Labelcella">Codice Fiscale / Partita IVA </p>
+          <p class="Labelcella" style="line-height:1.6;">Codice Fiscale / Partita IVA </p>
         </td>
         <td style="width:50%;">
-          <p class="Labelcella">E-mail PEC (domicilio digitale)</p>
+          <p class="Labelcella" style="line-height:1.6;">E-mail PEC (domicilio digitale)</p>
         </td>
       </tr>
       <tr>
@@ -1018,10 +1024,10 @@ function get_ufficio_dest() {
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td>
-          <p class="Labelcella">Telefono fisso</p>
+          <p class="Labelcella" style="line-height:1.6;">Telefono fisso</p>
         </td>
         <td>
-          <p class="Labelcella">Cellulare</p>
+          <p class="Labelcella" style="line-height:1.6;">Cellulare</p>
         </td>
       </tr>
       <tr>
@@ -1039,13 +1045,13 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td style="width:50%">
-          <p class="Labelcella">Iscrizione al Registro Imprese della Camera di Commercio</p>
+          <p class="Labelcella" style="line-height:1.6;">Iscrizione al Registro Imprese della Camera di Commercio</p>
         </td>
         <td style="width:9%">
-          <p class="Labelcella">Provincia</p>
+          <p class="Labelcella" style="line-height:1.6;">Provincia</p>
         </td>
         <td style="width:41%">
-          <p class="Labelcella">Numero iscrizione</p>
+          <p class="Labelcella" style="line-height:1.6;">Numero iscrizione</p>
         </td>
       </tr>
       <tr>
@@ -1278,13 +1284,16 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td style="width:15%">
-          <p class="Labelcella">Titolo</p>
+          <p class="Labelcella" style="line-height:1.6;">Titolo</p>
         </td>
-        <td style="width:45%">
-          <p class="Labelcella">Cognome</p>
+        <td style="width:25%">
+          <p class="Labelcella" style="line-height:1.6;">Cognome</p>
         </td>
-        <td style="width:40%">
-          <p class="Labelcella">Nome</p>
+        <td style="width:25%">
+          <p class="Labelcella" style="line-height:1.6;">Nome</p>
+        </td>
+        <td style="width:35%">
+          <p class="Labelcella" style="line-height:1.6;">Indirizzo PEC</p>
         </td>
       </tr>
       <tr>
@@ -1307,10 +1316,15 @@ function get_ufficio_dest() {
         <td>
           <input class="" id="Progettista_Nome" name="Progettista_Nome" style="width:100%" label="Nome del Progettista"/>
         </td>
+        <td>
+          <input class="" id="Progettista_EMailPEC" name="Progettista_EMailPEC" format="pec" style="width:100%" label="PEC del Progettista"/>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<input id="verifica_titol_prog" name="verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Progettista_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
 
 <br>
 
@@ -1363,16 +1377,16 @@ function get_ufficio_dest() {
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td style="width:13%">
-          <p class="Labelcella">Titolo</p>
+          <p class="Labelcella" style="line-height:1.6;">Titolo</p>
         </td>
         <td style="width:33%">
-          <p class="Labelcella">Cognome</p>
+          <p class="Labelcella" style="line-height:1.6;">Cognome</p>
         </td>
         <td style="width:32%">
-          <p class="Labelcella">Nome</p>
+          <p class="Labelcella" style="line-height:1.6;">Nome</p>
         </td>
         <td style="width:22%">
-          <p class="Labelcella">Codice Fiscale</p>
+          <p class="Labelcella" style="line-height:1.6;">Codice Fiscale</p>
         </td>
       </tr>
       <tr>
@@ -1548,7 +1562,7 @@ function get_ufficio_dest() {
           <p class="Labeltabella" style="line-height:1.6;">I lavori interessano le seguenti realtà immobiliari</p>
         </td>
         <td style="width:32%; border-left:0px; border-right:0px">
-          <p class="Labeltabella"></p>
+          <p class="Labeltabella" style="line-height:1.6;"></p>
         </td>
         <td style="width:3%; border-left:0px; cursor:default">
         </td>
@@ -1560,31 +1574,31 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td colspan="2">
-          <p class="Labelcella">Tipo</p>
+          <p class="Labelcella" style="line-height:1.6;">Tipo</p>
         </td>
         <td>
-          <p class="Labelcella">Comune catastale (codice)</p>
+          <p class="Labelcella" style="line-height:1.6;">Comune catastale (codice)</p>
         </td>
         <td colspan="2">
-          <p class="Labelcella">Comune catastale (nome esteso)</p>
+          <p class="Labelcella" style="line-height:1.6;">Comune catastale (nome esteso)</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Numero</p>
+          <p class="Labelcella" style="line-height:1.6;">Numero</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Barra</p>
+          <p class="Labelcella" style="line-height:1.6;">Barra</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Porzione Materiale</p>
+          <p class="Labelcella" style="line-height:1.6;">Porzione Materiale</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Subalterno</p>
+          <p class="Labelcella" style="line-height:1.6;">Subalterno</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Controllo particella</p>
+          <p class="Labelcella" style="line-height:1.6;">Controllo particella</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Mappa</p>
+          <p class="Labelcella" style="line-height:1.6;">Mappa</p>
         </td>
       </tr>
       <tr>
@@ -1730,28 +1744,28 @@ function get_ufficio_dest() {
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td style="width: 6%;">
-          <p class="Labelcella">Provincia</p>
+          <p class="Labelcella" style="line-height:1.6;">Provincia</p>
         </td>
         <td style="width: 12%;">
-          <p class="Labelcella">Comune</p>
+          <p class="Labelcella" style="line-height:1.6;">Comune</p>
         </td>
         <td>
-          <p class="Labelcella">Nome Via/Piazza/Vicolo,...</p>
+          <p class="Labelcella" style="line-height:1.6;">Nome Via/Piazza/Vicolo,...</p>
         </td>
         <td colspan="2">
-          <p class="Labelcella">Nome esteso Via/Piazza/Vicolo </p>
+          <p class="Labelcella" style="line-height:1.6;">Nome esteso Via/Piazza/Vicolo </p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Civico</p>
+          <p class="Labelcella" style="line-height:1.6;">Civico</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Barra</p>
+          <p class="Labelcella" style="line-height:1.6;">Barra</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Controllo indirizzo</p>
+          <p class="Labelcella" style="line-height:1.6;">Controllo indirizzo</p>
         </td>
         <td style="width: 8%;">
-          <p class="Labelcella">Mappa</p>
+          <p class="Labelcella" style="line-height:1.6;">Mappa</p>
         </td>
       </tr>
       <tr>
@@ -3454,31 +3468,31 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center;">
-        <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#verifica_titol_prog.value() == 'persone diverse'" enabled="#verifica_titol_prog.value() == 'persone diverse'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.8;">Modulo secondario - <b>Delega al progettista/tecnico incaricato</b> firmato:
           <br>- dal progettista/tecnico incaricato con firma digitale
           <br>- dal titolare con
-          <input class="" id="Tipo_Firma_delega" name="Tipo_Firma_delega" style="width: 40%;" label="Tipo firma modulo di delega" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" readonly />
+          <input class="" id="Tipo_Firma_delega" name="Tipo_Firma_delega" style="width: 40%;" label="Tipo firma modulo di delega" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" enabled="#verifica_titol_prog.value() == 'persone diverse'" readonly />
         </p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="'1''" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" obbligatorio="#Tipo_Firma_delega.value() == 'firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" />
-        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" obbligatorio="#Tipo_Firma_delega.value() == 'firma digitale' ? 'OBBLIGATORIO' : ''" type="hidden" />
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="#verifica_titol_prog.value() == 'persone diverse' ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" obbligatorio="#verifica_titol_prog.value() == 'persone diverse' and #Tipo_Firma_delega.value() == 'firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" />
+        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" obbligatorio="#verifica_titol_prog.value() == 'persone diverse' and #Tipo_Firma_delega.value() == 'firma digitale' ? 'OBBLIGATORIO' : ''" type="hidden" />
       </td>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#tit_firma_digit2.checked()" enabled="#tit_firma_digit2.checked()" value="OBBLIGATORIO"/>
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit2.checked()" enabled="#verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Copia del modulo</b> firmata dal titolare con <b>firma digitale</b></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#tit_firma_digit2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <p style="line-height:1.6;"><b>Copia del modulo principale SCIA</b> firmata dal titolare con <b>firma digitale</b></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="#tit_firma_digit2.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="#Modulo_compilato_firmato.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
@@ -3499,7 +3513,10 @@ function get_ufficio_dest() {
         <input id="Dichiar_titol_prog" name="Dichiar_titol_prog" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni congiunte del titolare e del progettista</b></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazioni congiunte del titolare e del progettista</b> firmato:
+          <br>- dal progettista/tecnico incaricato con firma digitale
+          <br>- dal titolare con
+          <input class="" id="Tipo_Firma_dich_cong" name="Tipo_Firma_dich_cong" style="width: 40%;" label="Tipo firma modulo dichiarazioni congiunte" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" readonly /></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="num_dich_cong" name="num_dich_cong" dynamic_value="'1'" style="width: 90%; text-align: center;"/></p>
@@ -3717,6 +3734,26 @@ function get_ufficio_dest() {
       <input id="GLOBO_allegato_cGEN-DIR-SEG" name="GLOBO_allegato_cGEN-DIR-SEG" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
     </td>
   </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Dich_conservazione" name="Dich_conservazione" label="Dichiarazione conservazione originale firmato dal titolare" mandatory_enabled="#verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit1.checked()"> </div>
+        <input group="Dich_conservazione" id="Dich_conservazione_check" name="Dich_conservazione_check" type="checkbox" value="1" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;"><b>Dichiaro di conservare presso il mio studio l'originale della stampa di questo modulo firmato con firma autografa dal titolare</b></p>
+      </td>
+      <td style="width:35%; background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="dichiar_richiesta" name="dichiar_richiesta" dynamic_value="(#verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit1.checked()) ? 'Dichiarazione obbligatoria' : ((#verifica_titol_prog.value() == 'stessa persona' || #tit_firma_digit2.checked()) ? 'Dichiarazione non necessaria' : '')" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
+    </tr>
   </tbody>
 </table>
 

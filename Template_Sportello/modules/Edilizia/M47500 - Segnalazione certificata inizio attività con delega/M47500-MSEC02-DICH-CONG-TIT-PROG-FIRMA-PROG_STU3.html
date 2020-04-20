@@ -232,7 +232,7 @@ tipo_mime="application/pdf"/>
         <input group="tipo_contributo" id="tipo_contributo1" name="tipo_contributo1" type="checkbox" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;">l'intervento, <b>per quanto concerne il titolare</b>, rientra nei casi di esenzione ai sensi dell'art. 90, comma 1, lettera <input class="" id="lettera_esenz" name="lettera_esenz" label="Lettera caso esenzione" size="3" mandatory_enabled="#tipo_contributo1.checked()"/>, della L.P. nr. 15/2015 e allega pertanto modulo esenzione a firma del titolare
+        <p style="line-height:1.6;">l'intervento, <b>per quanto concerne il titolare</b>, rientra nei casi di esenzione ai sensi dell'art. 90, comma 1, lettera <input class="" id="lettera_esenz" name="lettera_esenz" label="Lettera caso esenzione" size="3" mandatory_enabled="#tipo_contributo1.checked()" style="text-align:center;"/>, della L.P. nr. 15/2015 e allega pertanto modulo esenzione a firma del titolare
         <br><b>Nota bene:</b> <i><u>gli eventuali comproprietari aventi diritto alla richiesta di esenzione indicano tale volontà in un opportuno modulo da essi firmato</u></i></p>    
       </td>
     </tr>
@@ -251,7 +251,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="vertical-align: top; width: 4%; text-align: center;">
-        <input id="oneri_urb" name="oneri_urb" type="checkbox" value="1" />
+        <input id="oneri_urb" name="oneri_urb" type="checkbox" value="1" enabled="#richiesto_contributo_si.checked()"/>
       </td>
       <td colspan="2">
         <p style="line-height:1.6;">il titolare chiede di eseguire direttamente, a scomputo di quanto dovuto, le opere di urbanizzazione ed a tal fine allega la proposta di progetto per la realizzazione delle stesse, previa stipulazione della convenzione prevista dall’art. 84 della L.P. n. 15/2015</p>
@@ -283,7 +283,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#rich_ha_firma_digit.value() == 'firma digitale'" enabled="#rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma digitale'" enabled="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;"><b>Copia del modulo</b> firmata dal titolare con <b>firma digitale</b></p>
@@ -338,6 +338,26 @@ tipo_mime="application/pdf"/>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_prog_opere_urb" name="numero_prog_opere_urb" style="width: 90%; text-align: center;" mandatory_enabled="#prog_opere_urb.checked()" type="number" min="1" max="100"/></p>
         <input numero="#numero_prog_opere_urb.value()" id="GLOBO_allegato_cM47500-A01-PROGETTO-DIRETTA-ESECUZIONE" name="GLOBO_allegato_cM47500-A01-PROGETTO-DIRETTA-ESECUZIONE" obbligatorio="#oneri_urb.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Dich_conservazione" name="Dich_conservazione" label="Dichiarazione conservazione originale firmato dal titolare" mandatory_enabled="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma autografa'"> </div>
+        <input group="Dich_conservazione" id="Dich_conservazione_check" name="Dich_conservazione_check" type="checkbox" value="1" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;"><b>Dichiaro di conservare presso il mio studio l'originale della stampa di questo modulo firmato con firma autografa dal titolare</b></p>
+      </td>
+      <td style="width:35%; background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="dichiar_richiesta" name="dichiar_richiesta" dynamic_value="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma autografa' ? 'Dichiarazione obbligatoria' : ((#verifica_titol_prog.value() == 'stessa persona' || #rich_ha_firma_digit.value() == 'firma digitale') ? 'Dichiarazione non necessaria' : '')" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
   </tbody>
@@ -418,5 +438,6 @@ tipo_mime="application/pdf"/>
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" type="hidden" readonly/>
 
 <input id="rich_ha_firma_digit" name="rich_ha_firma_digit" type="hidden" readonly/>
+<input id="verifica_titol_prog" name="verifica_titol_prog" type="hidden" readonly/>
 
 {% endblock content %}

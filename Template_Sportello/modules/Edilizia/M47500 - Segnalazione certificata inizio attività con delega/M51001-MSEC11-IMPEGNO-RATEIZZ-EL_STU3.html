@@ -273,7 +273,7 @@ tipo_mime="application/pdf"/>
         <input group="Impegno_obbligat" id="Impegno_obbligat1" name="Impegno_obbligat1" type="checkbox" value="1" dynamic_check="true" />
       </td>
       <td>
-        <p style="line-height:1.6;"><b>Al versamento del contributo di costruzione</b>, che è stato determinato ai sensi della L.P. 15/2015 , del D.P.P. 6- 61/Leg. Del 19 maggio 2017 e del Regolamento Edilizio Comunale in complessivi € <input class="" label="entità contributo di costruzione" id="contr_costruz" name="contr_costruz" mandatory_enabled="true" style="width:15%"/>, in n. 3 (tre) rate come di seguito specificato:
+        <p style="line-height:1.6;"><b>Al versamento del contributo di costruzione</b>, che è stato determinato ai sensi della L.P. 15/2015 , del D.P.P. 6- 61/Leg. Del 19 maggio 2017 e del Regolamento Edilizio Comunale in complessivi <input class="" label="entità contributo di costruzione" id="contr_costruz" name="contr_costruz" dynamic_value="#Totale_da_pagare_arr.value()" style="width:15%; text-align: center;" readonly/>, in n. 3 (tre) rate come di seguito specificato:
           <br>&nbsp; &nbsp; &nbsp;--- la <b>prima rata</b>, pari al 50% dell’importo totale, da versare prima del rilascio del Permesso di Costruire o, 
           <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;in caso di SCIA, prima della presentazione della stessa come da quietanza di pagamento allegata al 
           <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;presente atto
@@ -298,8 +298,8 @@ tipo_mime="application/pdf"/>
       </td>
       <td>
         <p style="line-height:1.8;"><b>A corrispondere, per sé e/o per i suoi eredi o aventi causa, le rate alle scadenze sopra fissate</b>, garantendo tale impegno mediante <b>polizza fideiussoria assicurativa – bancaria n.</b> <input class="" label="numero polizza assicurativa" id="num_polizza" name="num_polizza" mandatory_enabled="true" style="width:33%"/>, 
-          <br>rilasciata il <input class="" label="data polizza assicurativa" id="data_polizza" name="data_polizza" mandatory_enabled="true" format="date" style="width:15%"/> &nbsp; &nbsp; da <input class="" label="fornitore polizza assicurativa" id="fornit_polizza" name="fornit_polizza" mandatory_enabled="true" style="width:40%"/>
-          <br>e firmata digitalmente da: <input class="" label="firmatario polizza assicurativa" id="FirmatarioPolizza_CodiceFiscale" name="FirmatarioPolizza_CodiceFiscale" mandatory_enabled="true" style="width:25%" format="cf" placeholder="codice fiscale firmatario"/>  che si allega alla presente richiesta che garantisce l’importo restante da pagare dopo il versamento della prima rata e valida fino al momento dell’esplicito svincolo da parte dell’Amministrazione comunale garantita</p>
+          <br>rilasciata il <input class="" label="data polizza assicurativa" id="data_polizza" name="data_polizza" mandatory_enabled="true" format="date" style="width:15%"/> &nbsp; &nbsp;da <i>(ente rilasciante)</i> <input class="" label="fornitore polizza assicurativa" id="fornit_polizza" name="fornit_polizza" mandatory_enabled="true" style="width:40%"/>
+          <br>e firmata digitalmente da: <i>(indicare il codice fiscale)</i> <input class="" label="firmatario polizza assicurativa" id="FirmatarioPolizza_CodiceFiscale" name="FirmatarioPolizza_CodiceFiscale" mandatory_enabled="true" style="width:25%" format="cf" placeholder="codice fiscale firmatario"/>  che si allega alla presente richiesta che garantisce l’importo restante da pagare dopo il versamento della prima rata e valida fino al momento dell’esplicito svincolo da parte dell’Amministrazione comunale garantita</p>
       </td>
     </tr>
   </tbody>
@@ -344,7 +344,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#rich_ha_firma_digit.value() == 'firma digitale'" enabled="#rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma digitale'" enabled="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;"><b>Copia del modulo</b> firmata dal titolare con <b>firma digitale</b></p>
@@ -376,6 +376,26 @@ tipo_mime="application/pdf"/>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_orig_polizza" name="numero_orig_polizza" style="width: 90%; text-align: center;" mandatory_enabled="true" type="number" min="1" max="100"/></p>
         <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-ORIGINALE-POLIZZA" name="GLOBO_allegato_cGEN-ORIGINALE-POLIZZA" numero="#numero_orig_polizza.value()" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Dich_conservazione" name="Dich_conservazione" label="Dichiarazione conservazione originale firmato dal titolare" mandatory_enabled="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma autografa'"> </div>
+        <input group="Dich_conservazione" id="Dich_conservazione_check" name="Dich_conservazione_check" type="checkbox" value="1" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;"><b>Dichiaro di conservare presso il mio studio l'originale della stampa di questo modulo firmato con firma autografa dal titolare</b></p>
+      </td>
+      <td style="width:35%; background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="dichiar_richiesta" name="dichiar_richiesta" dynamic_value="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma autografa' ? 'Dichiarazione obbligatoria' : ((#verifica_titol_prog.value() == 'stessa persona' || #rich_ha_firma_digit.value() == 'firma digitale') ? 'Dichiarazione non necessaria' : '')" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
   </tbody>
@@ -473,5 +493,8 @@ tipo_mime="application/pdf"/>
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" type="hidden" readonly/>
 
 <input id="rich_ha_firma_digit" name="rich_ha_firma_digit" type="hidden" readonly/>
+<input id="verifica_titol_prog" name="verifica_titol_prog" type="hidden" readonly/>
+
+<input id="Totale_da_pagare_arr" name="Totale_da_pagare_arr" type="hidden" readonly/></p>
 
 {% endblock content %}
