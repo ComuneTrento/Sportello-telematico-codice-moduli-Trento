@@ -1,0 +1,93 @@
+{% set CodiceModulo = "M1234-TEST-ANDREA" %}
+{% set Urn = "document:c_l378:test.modulo.andrea;servizio.test.andrea;modulo.test.andrea" %}
+{% extends "base_trento_new_TEST_ONLOAD .html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Ambito di Test"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Procedure Test Andrea"
+descrizione="Test Andrea"
+destinatario_amministrazione=""
+destinatario_ufficio="KT5TBQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="DomandeRisposte/FAQ"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_modulo_figlio="M5301-MSEC01-TEST-ANDREA-FIGLIO"
+urn_modulo_figlio="document:c_l378:test.modulo.andrea;servizio.test.andrea.MSEC01.figlio"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+
+{% block title %}TEST ANDREA{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input value="MODULO DI PROVA" id="Oggetto" name="Oggetto" type="hidden" />
+
+
+<h1 class="Modulo">
+    TEST ANDREA - Indirizzo di posta elettronica 
+</h1>
+<h3 class="Modulo">
+    <i>TEST ANDREA - Verifica passaggio METADATI</i>
+</h3>
+
+<input id="Titolare_DatiPersonaObbligatori" name="Titolare_DatiPersonaObbligatori" type="hidden" dynamic_check="true"/>
+<input id="Titolare_Titolo" name="Titolare_Titolo" type="hidden" value="Richiedente"/>
+<input id="Titolare_Ruolo" name="Titolare_Ruolo" type="hidden" value="Richiedente"/>
+{{ anagrafica.persona_fisica("Titolare", "Il sottoscritto", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria") }} <br>
+ 
+<!-- PASSAGGIO METADATI  -->
+<p>passo questo campo al modulo figlio e nipote:
+<input id="Referente22" name="Referente22" value="prova privilegiata"/></p>
+</p>
+
+<!-- AGGIUNGO MODULO FIGLIO -->
+<input id="GLOBO_modulofiglio_cM5301-MSEC01-TEST-ANDREA-FIGLIO" name="GLOBO_modulofiglio_cM5301-MSEC01-TEST-ANDREA-FIGLIO" numero="1" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+
+
+  <br>
+  <br>
+  
+  <!-- CODICE STANDARD PER SALVATAGGIO -->
+  <p class="Modulo">
+    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+  </p>
+  <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+  
+  <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+  <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+  <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+    
+  
+{% endblock content %}
