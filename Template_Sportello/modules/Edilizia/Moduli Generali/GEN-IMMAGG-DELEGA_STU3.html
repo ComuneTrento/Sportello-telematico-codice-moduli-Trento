@@ -3,7 +3,7 @@
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Progettista_CodiceFiscale"
+<meta campi_firma="Referente_Progettista_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -59,8 +59,8 @@ tipo_mime="application/pdf"/>
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="87"/>,<br>
-          per mezzo del <b>progettista/tecnico incaricato delegato</b> <input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Cognome.value() + ' ' + #Progettista_Nome.value()" size="51"/>,
+        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="70"/>,<br>
+          per mezzo del <b>progettista/tecnico incaricato delegato</b> <input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Referente_Progettista_TitoloPersona.value() + ' ' + #Referente_Progettista_Cognome.value() + ' ' + #Referente_Progettista_Nome.value()" size="40"/>,
         <br>valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti</p>
       </td>
     </tr>
@@ -153,7 +153,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma digitale'" enabled="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Copia del modulo</b> firmata dal titolare con <b>firma digitale</b></p>
@@ -173,14 +173,14 @@ tipo_mime="application/pdf"/>
   <tbody>
     <tr>
       <td style="width: 4%; vertical-align: center; text-align: center;">
-        <div id="Dich_conservazione" name="Dich_conservazione" label="Dichiarazione conservazione originale firmato dal titolare" mandatory_enabled="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma autografa'"> </div>
+        <div id="Dich_conservazione" name="Dich_conservazione" label="Dichiarazione conservazione originale firmato dal titolare" mandatory_enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'"> </div>
         <input group="Dich_conservazione" id="Dich_conservazione_check" name="Dich_conservazione_check" type="checkbox" value="1" />
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;"><b>Dichiaro di conservare presso il mio studio l'originale della stampa di questo modulo firmato con firma autografa dal titolare</b></p>
       </td>
       <td style="width:35%; background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="dichiar_richiesta" name="dichiar_richiesta" dynamic_value="#verifica_titol_prog.value() == 'persone diverse' and #rich_ha_firma_digit.value() == 'firma autografa' ? 'Dichiarazione obbligatoria' : ((#verifica_titol_prog.value() == 'stessa persona' || #rich_ha_firma_digit.value() == 'firma digitale') ? 'Dichiarazione non necessaria' : '')" style="width: 90%; text-align: center;" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="dichiar_richiesta" name="dichiar_richiesta" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa' ? 'Dichiarazione obbligatoria' : ((#AventeTitolo_verifica_titol_prog.value() == 'stessa persona' || #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale') ? 'Dichiarazione non necessaria' : '')" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
   </tbody>
@@ -200,12 +200,12 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="width: 35%; text-align: center;">
         <p style="line-height:1.8;">
-          <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#rich_ha_firma_digit.value() == 'firma digitale' ? #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase() : ''" style="width:99%; text-align: center;"/>
+          <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale' ? #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase() : ''" style="width:99%; text-align: center;"/>
         </p>
       </td>
       <td style="width: 35%; text-align: center;">
         <p style="line-height:1.8;">
-          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value() + ' ' + #Progettista_Cognome.value()" style="width:99%; text-align: center;"/>
+          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Referente_Progettista_TitoloPersona.value() + ' ' + #Referente_Progettista_Nome.value() + ' ' + #Referente_Progettista_Cognome.value()" style="width:99%; text-align: center;"/>
         </p>
       </td>
     </tr>
@@ -217,7 +217,7 @@ tipo_mime="application/pdf"/>
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il/la titolare<br><span style="font-size:95%"><i><input id="tipo_firma_tit" name="tipo_firma_tit" dynamic_value="#rich_ha_firma_digit.value() == 'firma autografa' ? '(firma autografa)' : (#rich_ha_firma_digit.value() == 'firma digitale' ? '(firma digitale)' : '')" style="width: 80%; text-align: center;"/></i></span></p>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il/la titolare<br><span style="font-size:95%"><i><input id="tipo_firma_tit" name="tipo_firma_tit" dynamic_value="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa' ? '(firma autografa)' : (#AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale' ? '(firma digitale)' : '')" style="width: 80%; text-align: center;"/></i></span></p>
       </td>
       <td>
         <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il progettista/tecnico incaricato delegato<br><span style="font-size:95%"><i>(firma digitale)</i></span></p>
@@ -242,12 +242,12 @@ tipo_mime="application/pdf"/>
 <input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
 <input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden" readonly/>
 
-<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden" readonly/>
-<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden" readonly/>
-<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden" readonly/>
-<input id="Progettista_Nome" name="Progettista_Nome" type="hidden" readonly/>
+<input id="Referente_Progettista_CodiceFiscale" name="Referente_Progettista_CodiceFiscale" type="hidden" readonly/>
+<input id="Referente_Progettista_TitoloPersona" name="Referente_Progettista_TitoloPersona" type="hidden" readonly/>
+<input id="Referente_Progettista_Cognome" name="Referente_Progettista_Cognome" type="hidden" readonly/>
+<input id="Referente_Progettista_Nome" name="Referente_Progettista_Nome" type="hidden" readonly/>
 
-<input id="rich_ha_firma_digit" name="rich_ha_firma_digit" type="hidden" readonly/>
-<input id="verifica_titol_prog" name="verifica_titol_prog" type="hidden" readonly/>
+<input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" type="hidden" readonly/>
+<input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" type="hidden" readonly/>
 
 {% endblock content %}

@@ -1,13 +1,13 @@
-{% set CodiceModulo =  "GEN-PROGETTISTA" %}
-{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.progettista" %}
+{% set CodiceModulo =  "GEN-CERT-ENERG-PROVA" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.certificatore.energetico.prova" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Referente_Progettista_CodiceFiscale"
+<meta campi_firma="CertificatoreEnergetico_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Modulo secondario - Anagrafica del progettista (firma digitale)"
+descrizione="Modulo secondario - Anagrafica del soggetto abilitato alla certificazione energetica (firma digitale)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
@@ -22,7 +22,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-PROGETTISTA"
+urlhelp="/modulistica/moduli/GEN-CERT-ENERG-PROVA"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
@@ -40,46 +40,56 @@ tipo_mime="application/pdf"/>
 {% endblock meta %}
 
 {% block title %}
-   Anagrafica del progettista
+   Anagrafica soggetto abilitato alla certificazione energetica
 {% endblock title %}
 
 {% block content %}
 
+
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
-<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Referente_Progettista_Cognome.value().toUpperCase() + ' - anagrafica progettista'"/>
+<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#CertificatoreEnergetico_Cognome.value().toUpperCase() + ' - anagrafica soggetto abilitato alla certificazione energetica'"/>
+
+<h1 class="Modulo">Anagrafica soggetto abilitato alla certificazione energetica</h1>
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-<h1 class="Modulo">Anagrafica del progettista (firma digitale)</h1>
+<input id="CertificatoreEnergetico_DatiProfessionistaObbligatori" name="CertificatoreEnergetico_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+<input id="CertificatoreEnergetico_DatiAlboProfessionistaObbligatori" name="CertificatoreEnergetico_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+ 
+<div class="simpatico-block simpatico-query-and-answer">
 
-<input id="recapito_obbligatorio" name="recapito_obbligatorio" dynamic_check="true" type="hidden" />
-<input id="pec_tecnico_obbligatoria" name="pec_tecnico_obbligatoria" dynamic_check="true" type="hidden" />
-{{anagrafica_trento_uniformata.professionista_dirlav("Referente_Progettista","Il progettista, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+  <!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+  <input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+  <!--<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />-->
+  <input id="pec_tecnico_obbligatoria" name="pec_tecnico_obbligatoria" dynamic_check="true" type="hidden" /> 
+
+  {{anagrafica_trento_uniformata.professionista("CertificatoreEnergetico","Il soggetto abilitato alla certificazione energetica","Certificatore_energ","visibility:visibility","cursor:pointer","","visibility:visibility","provinciale","no") }}
+
+  <br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="Dichiarazione_cert_energ" name="Dichiarazione_cert_energ" label="Dichiarazione certificatore energetico" mandatory_enabled="true"> </div>
+          <input group="Dichiarazione_cert_energ" id="Dichiarazione_cert_energ_check" name="Dichiarazione_cert_energ_check" type="checkbox" value="1" />
+        </td>
+        <td>
+          <p>Io sottoscritto dichiaro di aver preso conoscenza di aver ricevuto l'incarico di soggetto abilitato alla certificazione energetica</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <br>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Dichiarazione_delega" name="Dichiarazione_delega" label="Dichiarazione direttore lavori" enabled="#Metadati_check_delega.value() == 'DELEGA'"> </div>
-        <input group="Dichiarazione_delega" id="Dichiarazione_delega_check" name="Dichiarazione_delega_check" type="checkbox" value="1" dynamic_check="#Metadati_check_delega.value() == 'DELEGA'"/>
-      </td>
-      <td>
-        <p><input id="conferma_delega" name="conferma_delega" style="width:100%;" enabled="#Dichiarazione_delega_check.checked()" dynamic_value="#Dichiarazione_delega_check.checked() ? 'Dichiaro di essere consapevole di avere delega alla ricezione di tutte le comunicazioni relative al procedimento' : ''" readonly/></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 <br>
-<br>
-
+ 
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 4%; vertical-align: center; text-align: center;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
         <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
@@ -89,7 +99,7 @@ tipo_mime="application/pdf"/>
     </tr>
   </tbody>
 </table>
-
+ 
 <br>
 <br>
 
@@ -104,7 +114,7 @@ tipo_mime="application/pdf"/>
           <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
         </td>
         <td style="width: 50%; text-align: center; height: 1.5cm;">
-          <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_Progettista_TitoloPersona.value() + ' ' + #Referente_Progettista_Nome.value().toUpperCase() + ' ' + #Referente_Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+          <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#CertificatoreEnergetico_TitoloPersona.value() + ' ' + #CertificatoreEnergetico_Nome.value().toUpperCase() + ' ' + #CertificatoreEnergetico_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta">
@@ -115,13 +125,12 @@ tipo_mime="application/pdf"/>
           <p class="Labelcella" style="text-align: center">Data</p>
         </td>
         <td>
-          <p class="Labelcella" style="text-align: center">Il progettista <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+          <p class="Labelcella" style="text-align: center">Il sottoscritto <span style="font-size:95%"><i>(firma digitale)</i></span></p>
         </td>
       </tr>
     </tbody>
   </table>
-
-  <br>
+  
   <br>
 
   <p class="Modulo">
@@ -137,9 +146,6 @@ tipo_mime="application/pdf"/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
-{{ utils.passaggio_metadati() }}
-<input id="Metadati_check_delega" name="Metadati_check_delega" type="hidden"/>
-<input id="Metadati_Domicilio_Digitale" name="Metadati_Domicilio_Digitale" type="hidden"/>
+
 
 {% endblock content %}
-
