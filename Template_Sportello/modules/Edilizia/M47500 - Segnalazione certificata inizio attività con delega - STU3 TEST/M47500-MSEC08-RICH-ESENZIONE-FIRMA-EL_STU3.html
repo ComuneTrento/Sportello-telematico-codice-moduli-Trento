@@ -1,20 +1,20 @@
-{% set CodiceModulo =  "M47500-MSEC16-RICH-ESENZ-INTAGG-FIRMA-AU" %}
-{% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec16.m47500.ult.intest.rich.esenz.firma.autografa" %}
+{% set CodiceModulo =  "M47500-MSEC08-RICH-ESENZIONE-FIRMA-EL" %}
+{% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec08.m47500.richiesta.esenzione.firma.elettronica" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Referente7_AltroIntestatario_CodiceFiscale"
+<meta campi_firma="Referente_Progettista_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Modulo secondario - Altro intestatario richiesta di esenzione dal pagamento del contributo di costruzione (firma autografa)"
+descrizione="Modulo secondario - Richiesta di esenzione dal pagamento del contributo di costruzione (firma digitale delegato)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="NO"
+firmare="P7M_ELETTRONICA"
 istruzioni_compilazione=""
 istruzioni_invio=""
 metodo_invio=""
@@ -22,16 +22,18 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/M47500-MSEC16-RICH-ESENZ-INTAGG-FIRMA-AU"
+urlhelp="/modulistica/moduli/M47500-MSEC08-RICH-ESENZIONE-FIRMA-EL"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
-<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
-urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
-descrizione_estesa="Allegato - Scansione del modulo di richiesta esenzione compilato e firmato con firma autografa"
-filename="Modulo_rich_esenz_firma_autografa.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-AU"
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
+descrizione_estesa="Allegato - Copia del modulo firmata dal titolare con firma digitale"
+filename="Modulo_compilato_firma_digitale.pdf"
+firmato="SI"
+firmatari="AventeTitolo_CodiceFiscale"
+firmatari_label="Il/La titolare"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-EL"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -78,31 +80,35 @@ tipo_mime="application/pdf"/>
 
 
 {% block title %}
-    Richiesta di esenzione dal pagamento del contributo di costruzione (firma autografa)
+    Richiesta di esenzione dal pagamento del contributo di costruzione
 {% endblock title %}
 
 {% block content %}
 
 {{ intestazioni.intestazione_modulosecondario_senzabollo() }}
 
-<input id="Oggetto" name="Oggetto" dynamic_value="#Referente7_AltroIntestatario_Cognome.value().toUpperCase() + ' - Richiesta di esenzione dal pagamento del contributo di costruzione (firma autografa)'" type="hidden"/>
+<input id="Oggetto" name="Oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Richiesta di esenzione dal pagamento del contributo di costruzione (firma digitale delegato)'" type="hidden"/>
 
 <br>
 
-<h1 class="Modulo" style="line-height:1.6;">RICHIESTA DI ESENZIONE <br>DAL PAGAMENTO DEL CONTRIBUTO DI COSTRUZIONE<br>O DALLA MONETIZZAZIONE DEGLI SPAZI DI PARCHEGGIO PER PRIMA ABITAZIONE (firma autografa)</h1>
-<h3 class="Modulo" style="line-height:1.6; font-size: 95%;">(art. 90, comma 1, lettere b), c) e d) della L.P. 15/2015, artt. 16, comma 7 lett. c) <br>e 49, comma 1, del D.P.P. 19/05/2017 n. 8-61/leg.)</h3>
+<div class="simpatico-block simpatico-query-and-answer">
 
-<br>
+  <h1 class="Modulo" style="line-height:1.6;">RICHIESTA DI ESENZIONE <br>DAL PAGAMENTO DEL CONTRIBUTO DI COSTRUZIONE<br>O DALLA MONETIZZAZIONE DEGLI SPAZI DI PARCHEGGIO PER PRIMA ABITAZIONE</h1>
+  <h3 class="Modulo" style="line-height:1.6; font-size: 95%;">(art. 90, comma 1, lettere b), c) e d) della L.P. 15/2015, artt. 16, comma 7 lett. c) <br>e 49, comma 1, del D.P.P. 19/05/2017 n. 8-61/leg.)</h3>
 
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td>
-        <p style="line-height:1.6;"><b>Il sottoscritto</b>, <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#Referente7_AltroIntestatario_Cognome.value() + ' ' + #Referente7_AltroIntestatario_Nome.value()" size="70"/></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height:1.8;"><b>Il titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="70"/>,<br>
+            per mezzo del <b>progettista/tecnico incaricato delegato</b> <input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Referente_Progettista_TitoloPersona.value() + ' ' + #Referente_Progettista_Nome.value() + ' ' + #Referente_Progettista_Cognome.value()" size="45"/></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
@@ -317,7 +323,7 @@ tipo_mime="application/pdf"/>
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;">Il <b>sottoscritto</b> consapevole delle sanzioni penali previste dal codice penale e dalle leggi speciali in materia per le  dichiarazioni non veritiere e per la falsità in atti, risponde ai sensi degli articoli 47 e 76 del D.P.R. 28 dicembre 2000, n. 445 recante <i>"Testo unico delle disposizioni legislative e regolamentari in materia di documentazione amministrativa"</i>, per le attestazioni e le dichiarazioni contenute nel presente modello, fatta salva ogni altra forma di responsabilità prevista dall'ordinamento vigente</p>
+        <p style="line-height:1.6;">Il <b>titolare, per mezzo del progettista/tecnico incaricato delegato</b>, consapevole delle sanzioni penali previste dal codice penale e dalle leggi speciali in materia per le  dichiarazioni non veritiere e per la falsità in atti, risponde ai sensi degli articoli 47 e 76 del D.P.R. 28 dicembre 2000, n. 445 recante <i>"Testo unico delle disposizioni legislative e regolamentari in materia di documentazione amministrativa"</i>, per le attestazioni e le dichiarazioni contenute nel presente modello, fatta salva ogni altra forma di responsabilità prevista dall'ordinamento vigente</p>
       </td>
     </tr>
   </tbody>
@@ -429,7 +435,6 @@ tipo_mime="application/pdf"/>
         <p style="line-height:1.8;">di essere proprietario/i della/e seguente/i unità abitativa/e oggetto dell’intervento e che lo stesso non risulta gravato da diritti reali di uso, usufrutto e abitazione
           <br>p.ed. <input class="" id="ped1" name="ped1" style="width:8%; text-align: center;" label="particella edificiale 1" mandatory_enabled="true"/> &nbsp; &nbsp; &nbsp; p.m. <input class="" id="pm1" name="pm1" style="width:8%; text-align: center;" label="porzione materiale 1" mandatory_enabled="true"/> &nbsp; &nbsp; &nbsp; nel C.C. di <select class="" id="cc1" name="cc1" style="width:18%; text-align: center;" label="Comune catastale 1" mandatory_enabled="true">
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value=""></option>
-                                                                                                                                                                                                                                                                                                                                                                                                                          <option value="Trento">Trento</option>
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value="Trento">Trento</option>
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value="Aldeno">Aldeno</option>
                                                                                                                                                                                                                                                                                                                                                                                                                           <option value="Cadine">Cadine</option>
@@ -592,7 +597,7 @@ tipo_mime="application/pdf"/>
 <table class="Modulo" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="4">
+      <td colspan="3">
         <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
       </td>
     </tr>
@@ -600,7 +605,7 @@ tipo_mime="application/pdf"/>
       <td style="width:4%;">
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
       </td>
-      <td colspan="2">
+      <td>
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
       </td>
       <td style="width:15%;">
@@ -608,26 +613,26 @@ tipo_mime="application/pdf"/>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input id="Modulo_ult_part_firma_autografa" name="Modulo_ult_part_firma_autografa" dynamic_check="true" enabled="true" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Scansione della stampa di questo modulo firmata</p>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+        <p style="line-height:1.6;"><b>Copia del modulo</b> firmata dal titolare con <b>firma digitale</b></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="#Modulo_compilato_firmato.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
         <input id="elab_progetto" name="elab_progetto" type="checkbox" enabled="true" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;" colspan="2">
+      <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">Eventuale elaborato di progetto nel caso di nuova costruzione</p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_elab_progetto" name="numero_elab_progetto" style="width: 90%; text-align: center;" mandatory_enabled="#elab_progetto.checked()" min="1" max="100"  type="number"/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_elab_progetto" name="numero_elab_progetto" style="width: 90%; text-align: center;" enabled="#elab_progetto.checked()" min="1" max="100"  type="number"/></p>
         <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-ELABORATI-PROGETTUALI" name="GLOBO_allegato_cGEN-ELABORATI-PROGETTUALI" obbligatorio="#elab_progetto.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_elab_progetto.value()"/>
       </td>
     </tr>
@@ -635,12 +640,32 @@ tipo_mime="application/pdf"/>
       <td style="width:4%; vertical-align: top; text-align: center;">
         <input id="planim_alloggio" name="planim_alloggio" type="checkbox" dynamic_check="#Dichiarazioni_titolarita3.checked()" enabled="#Dichiarazioni_titolarita3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;" colspan="2">
+      <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">Planimetria quotata dell'alloggio stesso a firma di un tecnico abilitato con l'indicazione della superficie utile calpestabile ad uso abitativo (nel caso di quote di proprietà superiori a 1/4 su altro alloggio)</p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_planim" name="numero_planim" style="width: 90%; text-align: center;" enabled="#Dichiarazioni_titolarita3.checked()" min="1" max="100"  type="number"/></p>
         <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-PLANIMETRIA-STATO-DI-FATTO" name="GLOBO_allegato_cGEN-PLANIMETRIA-STATO-DI-FATTO" obbligatorio="#planim_alloggio.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_planim.value()"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Dich_conservazione" name="Dich_conservazione" label="Dichiarazione conservazione originale firmato dal titolare" mandatory_enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'"> </div>
+        <input group="Dich_conservazione" id="Dich_conservazione_check" name="Dich_conservazione_check" type="checkbox" value="1" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;"><b>Dichiaro di conservare presso il mio studio l'originale della stampa di questo modulo firmato con firma autografa dal titolare</b></p>
+      </td>
+      <td style="width:35%; background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="dichiar_richiesta" name="dichiar_richiesta" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa' ? 'Dichiarazione obbligatoria' : ((#AventeTitolo_verifica_titol_prog.value() == 'stessa persona' || #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale') ? 'Dichiarazione non necessaria' : '')" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
   </tbody>
@@ -669,24 +694,35 @@ tipo_mime="application/pdf"/>
 <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 50%; text-align: center; height: 1.5cm;">
+      <td style="width: 35%; text-align: center;">
+        <p style="line-height:1.8;">
+          <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale' ? #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase() : ''" style="width:99%; text-align: center;"/>
+        </p>
+      </td>
+      <td style="width: 35%; text-align: center;">
+        <p style="line-height:1.8;">
+          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Referente_Progettista_TitoloPersona.value() + ' ' + #Referente_Progettista_Nome.value() + ' ' + #Referente_Progettista_Cognome.value()" style="width:99%; text-align: center;"/>
+        </p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
       <td>
-        <p class="Labelcella" style="text-align: center;">Luogo</p>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center;">Data</p>
+        <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center;">Il sottoscritto <span style="font-size:95%"><i>(firma autografa)</i></span></p>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il/la titolare<br><span style="font-size:95%"><i><input id="tipo_firma_tit" name="tipo_firma_tit" dynamic_value="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa' ? '(firma autografa)' : (#AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale' ? '(firma digitale)' : '')" style="width: 80%; text-align: center;"/></i></span></p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il progettista/tecnico incaricato delegato<br><span style="font-size:95%"><i>(firma digitale)</i></span></p>
       </td>
     </tr>
   </tbody>
@@ -705,11 +741,14 @@ tipo_mime="application/pdf"/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
-<input id="Referente7_AltroIntestatario_CodiceFiscale" name="Referente7_AltroIntestatario_CodiceFiscale" type="hidden" readonly/>
-<input id="Referente7_AltroIntestatario_Cognome" name="Referente7_AltroIntestatario_Cognome" type="hidden" readonly/>
-<input id="Referente7_AltroIntestatario_Nome" name="Referente7_AltroIntestatario_Nome" type="hidden" readonly/>
+<input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden" readonly/>
+<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
+<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden" readonly/>
 
 <input id="Referente_Progettista_CodiceFiscale" name="Referente_Progettista_CodiceFiscale" type="hidden" readonly/>
+<input id="Referente_Progettista_TitoloPersona" name="Referente_Progettista_TitoloPersona" type="hidden" readonly/>
+<input id="Referente_Progettista_Cognome" name="Referente_Progettista_Cognome" type="hidden" readonly/>
+<input id="Referente_Progettista_Nome" name="Referente_Progettista_Nome" type="hidden" readonly/>
 
 <input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" type="hidden" readonly/>
 <input id="Immobile_ComuneCatastale_esteso" name="Immobile_ComuneCatastale_esteso" type="hidden" readonly/>
@@ -722,5 +761,8 @@ tipo_mime="application/pdf"/>
 <input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" type="hidden" readonly/>
 <input id="Immobile_numeroCivico" name="Immobile_numeroCivico" type="hidden" readonly/>
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" type="hidden" readonly/>
+
+<input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" type="hidden" readonly/>
+<input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" type="hidden" readonly/>
 
 {% endblock content %}
