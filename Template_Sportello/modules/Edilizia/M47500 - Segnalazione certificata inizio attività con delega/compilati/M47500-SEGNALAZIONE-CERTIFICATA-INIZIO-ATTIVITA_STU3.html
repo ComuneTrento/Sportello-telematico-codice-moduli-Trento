@@ -1300,8 +1300,8 @@ function get_ufficio_dest() {
         <td>
           <select class="inputNormal" id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" style="width:100%;" label="Titolo del Progettista">
             <option value=""></option>
-            <option value="Dott.">Sig.</option>
-            <option value="Dott.">Sig.ra</option>
+            <option value="Sig.">Sig.</option>
+            <option value="Sig.r.">Sig.ra</option>
             <option value="Dott.">Dott.</option>
             <option value="Dott.ssa">Dott.ssa</option>
             <option value="Arch.">Arch.</option>
@@ -1332,7 +1332,8 @@ function get_ufficio_dest() {
   <tbody>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input id="Progettista_direttorelavori" name="Progettista_direttorelavori" type="checkbox" enabled="true"/>
+        <div id="Progettista_direttorelavori" name="Progettista_direttorelavori" enabled="true"> </div>
+        <input group="Progettista_direttorelavori" id="Progettista_direttorelavori_check" name="Progettista_direttorelavori_check" type="checkbox" value="1" />
       </td>
       <td>
         <p style="line-height:1.6;"><b>Il progettista è incaricato anche della Direzione Lavori dell'opera</b></p>
@@ -1347,10 +1348,11 @@ function get_ufficio_dest() {
   <tbody>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input id="Altri_progettisti" name="Altri_progettisti" type="checkbox" enabled="true"/>
+        <div id="Altri_progettisti" name="Altri_progettisti" enabled="true"> </div>
+        <input group="Altri_progettisti" id="Altri_progettisti_check" name="Altri_progettisti_check" type="checkbox" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;"><b>Sono stati incaricati ulteriori n. <input class="" format="number" id="numero_altri_progettisti" name="numero_altri_progettisti" label="numero altri progettisti" mandatory_enabled="#Altri_progettisti.checked()" size="2" style="text-align: center;"/> progettisti</b></p>
+        <p style="line-height:1.6;"><b>Sono stati incaricati ulteriori n. <input class="" format="number" id="numero_altri_progettisti" name="numero_altri_progettisti" label="numero altri progettisti" mandatory_enabled="#Altri_progettisti_check.checked()" size="2" style="text-align: center;"/> progettisti</b></p>
       </td>
     </tr>
   </tbody>
@@ -1360,7 +1362,7 @@ function get_ufficio_dest() {
 <br>
   
 <input id="DirettoreLavori_checkobbligatorio" name="DirettoreLavori_checkobbligatorio" type="hidden" />
-<input id="DirettoreLavori_checkabilitato" name="DirettoreLavori_checkabilitato" dynamic_check="!#Progettista_direttorelavori.checked()" type="hidden" />
+<input id="DirettoreLavori_checkabilitato" name="DirettoreLavori_checkabilitato" dynamic_check="!#Progettista_direttorelavori_check.checked()" type="hidden" />
 
 
 
@@ -3504,8 +3506,8 @@ function get_ufficio_dest() {
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() and !#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() and !#Progettista_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Progettista_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
       </td>
     </tr>
     <tr>
@@ -3537,7 +3539,7 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input dynamic_check="#Altri_progettisti.checked()" enabled="#Altri_progettisti.checked()" id="GEN_ALTRI_PROG" name="GEN_ALTRI_PROG" type="checkbox" value="OBBLIGATORIO"/>
+        <input dynamic_check="#Altri_progettisti_check.checked()" enabled="#Altri_progettisti_check.checked()" id="GEN_ALTRI_PROG" name="GEN_ALTRI_PROG" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafiche degli ulteriori progettisti</b>, firmate con <b>firma digitale</b></p>
@@ -3549,7 +3551,7 @@ function get_ufficio_dest() {
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
+        <input dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori_check.checked()" enabled="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori_check.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b>, firmato con <b>firma digitale</b></p>
@@ -3614,6 +3616,7 @@ function get_ufficio_dest() {
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;"></td>
     </tr>
+    <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
         <div id="check_altri_sogg_coinv" name="check_altri_sogg_coinv" label="Indicare presenza altri soggetti coinvolti nel procedimento edilizio" mandatory_enabled="#altri_sogg_coinv.checked()"></div>
         <input group="check_altri_sogg_coinv" id="GEN_INTAGG_AU" name="GEN_INTAGG_AU" type="checkbox" value="OBBLIGATORIO" />
@@ -3724,16 +3727,16 @@ function get_ufficio_dest() {
     </tr>  
     <tr>
       <td style="width: 4%; vertical-align: center; text-align: center;">
-      <input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" />
-    </td>
-    <td style="background-color: #eeeeee;" colspan="2">
-      <p>Ricevuta del pagamento dei diritti di segreteria</p>
-    </td>
-    <td style="background-color: #eeeeee; vertical-align: center;">
-      <p style="line-height: 1.6; text-align: center;"><input id="numero_ric_dir_istr" name="numero_ric_dir_istr" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
-      <input id="GLOBO_allegato_cGEN-DIR-SEG" name="GLOBO_allegato_cGEN-DIR-SEG" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
-    </td>
-  </tr>
+        <input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p>Ricevuta del pagamento dei diritti di segreteria</p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_ric_dir_istr" name="numero_ric_dir_istr" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_allegato_cGEN-DIR-SEG" name="GLOBO_allegato_cGEN-DIR-SEG" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+      </td>
+    </tr>
   </tbody>
 </table>
 
