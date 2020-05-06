@@ -4,7 +4,7 @@
 
 {% block meta %}
 
-<meta campi_firma="Referente_Progettista_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 campi_firma_label="Il progettista/tecnico incaricato delegato"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
@@ -25,7 +25,7 @@ istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
 procura="NO,,"
-segnatura="Referente_Progettista"
+segnatura="Referente"
 tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA"
 verifica_pagamento="NO"
@@ -293,11 +293,11 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<input id="Referente_Progettista_checkobbligatorio" name="Referente_Progettista_checkobbligatorio" dynamic_check="true" type="hidden" />
-<input id="Referente_Progettista_checkabilitato" name="Referente_Progettista_checkabilitato" dynamic_check="true" type="hidden" />
-{{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente_Progettista","<b>DATI DEL PROGETTISTA</b>:","Referente_Progettista") }}
+<input id="Referente_checkobbligatorio" name="Referente_checkobbligatorio" dynamic_check="true" type="hidden" />
+<input id="Referente_checkabilitato" name="Referente_checkabilitato" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente","<b>DATI DEL PROGETTISTA</b>:","Referente") }}
 
-<input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_Progettista_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
+<input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
 
 <br>
 
@@ -305,8 +305,8 @@ urn_report="report:CSP_SESSION_REPORT"
   <tbody>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Referente_Progettista_direttorelavori" name="Referente_Progettista_direttorelavori" enabled="true"> </div>
-        <input group="Referente_Progettista_direttorelavori" id="Referente_Progettista_direttorelavori_check" name="Referente_Progettista_direttorelavori_check" type="checkbox" value="1" />
+        <div id="Referente_direttorelavori" name="Referente_direttorelavori" enabled="true"> </div>
+        <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="checkbox" value="1" />
       </td>
       <td>
         <p style="line-height:1.6;"><b>Il progettista è incaricato anche della Direzione Lavori dell'opera</b></p>
@@ -314,6 +314,8 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
   </tbody>
 </table>
+
+<input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="#Referente_direttorelavori_check.checked() ? 'Progettista e direttore lavori' : 'Progettista'" type="hidden" />
 
 <br>
 
@@ -334,10 +336,11 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
   
-<input id="Referente1_DirettoreLavori_checkobbligatorio" name="Referente1_DirettoreLavori_checkobbligatorio" type="hidden" />
-<input id="Referente1_DirettoreLavori_checkabilitato" name="Referente1_DirettoreLavori_checkabilitato" dynamic_check="!#Referente_Progettista_direttorelavori_check.checked()" type="hidden" />
-{{anagrafica_trento_uniformata.solo_nominativo("Referente1_DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
+<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio" type="hidden" />
+<input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="!#Referente_direttorelavori_check.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo("Referente1","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
 
+<input id="Referente1_Ruolo" name="Referente1_Ruolo" dynamic_value="'Direttore lavori'" type="hidden" />
 <br>
 <br>
 
@@ -935,8 +938,8 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() and !#Referente_Progettista_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Referente_Progettista_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() and !#Referente_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Referente_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
       </td>
     </tr>
     <tr>
@@ -980,7 +983,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input dynamic_check="#Referente1_DirettoreLavori_CodiceFiscale.value() != '' and !#Referente_Progettista_direttorelavori_check.checked()" enabled="#Referente1_DirettoreLavori_CodiceFiscale.value() != '' and !#Referente_Progettista_direttorelavori_check.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
+        <input dynamic_check="#Referente1_CodiceFiscale.value() != '' and !#Referente_direttorelavori_check.checked()" enabled="#Referente1_CodiceFiscale.value() != '' and !#Referente_direttorelavori_check.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b>, firmato con <b>firma digitale</b></p>
@@ -1213,7 +1216,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="width: 35%; text-align: center;">
         <p style="line-height:1.8;">
-          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Referente_Progettista_TitoloPersona.value() + ' ' + #Referente_Progettista_Nome.value() + ' ' + #Referente_Progettista_Cognome.value()" style="width:99%; text-align: center;"/>
+          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value() + ' ' + #Referente_Cognome.value()" style="width:99%; text-align: center;"/>
         </p>
       </td>
     </tr>
