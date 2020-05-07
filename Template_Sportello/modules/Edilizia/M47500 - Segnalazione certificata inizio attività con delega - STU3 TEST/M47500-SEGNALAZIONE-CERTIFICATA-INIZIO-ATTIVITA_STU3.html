@@ -4,7 +4,7 @@
 
 {% block meta %}
 
-<meta campi_firma="Referente_Progettista_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 campi_firma_label="Il progettista/tecnico incaricato delegato"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
@@ -25,7 +25,7 @@ istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
 procura="NO,,"
-segnatura="Referente_Progettista"
+segnatura="Referente"
 tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA"
 verifica_pagamento="NO"
@@ -151,10 +151,17 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<meta codice_modulo_figlio="M47500-MSEC01-DICH-PROG"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec01.m47500.dichiarazioni.progettista"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
 
-
-
-
+<meta codice_modulo_figlio="M47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG"
+urn_modulo_figlio="document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec02.m47500.dich.cong.tit.prog.firma.prog"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
 
 <meta codice_modulo_figlio="GEN-ALTRO-PROGETTISTA"
 urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.ulteriore.progettista"
@@ -286,11 +293,11 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<input id="Referente_Progettista_checkobbligatorio" name="Referente_Progettista_checkobbligatorio" dynamic_check="true" type="hidden" />
-<input id="Referente_Progettista_checkabilitato" name="Referente_Progettista_checkabilitato" dynamic_check="true" type="hidden" />
-{{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente_Progettista","<b>DATI DEL PROGETTISTA</b>:","Referente_Progettista") }}
+<input id="Referente_checkobbligatorio" name="Referente_checkobbligatorio" dynamic_check="true" type="hidden" />
+<input id="Referente_checkabilitato" name="Referente_checkabilitato" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente","<b>DATI DEL PROGETTISTA</b>:","Referente") }}
 
-<input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_Progettista_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
+<input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
 
 <br>
 
@@ -298,8 +305,8 @@ urn_report="report:CSP_SESSION_REPORT"
   <tbody>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Referente_Progettista_direttorelavori" name="Referente_Progettista_direttorelavori" enabled="true"> </div>
-        <input group="Referente_Progettista_direttorelavori" id="Referente_Progettista_direttorelavori_check" name="Referente_Progettista_direttorelavori_check" type="checkbox" value="1" />
+        <div id="Referente_direttorelavori" name="Referente_direttorelavori" enabled="true"> </div>
+        <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="checkbox" value="1" />
       </td>
       <td>
         <p style="line-height:1.6;"><b>Il progettista è incaricato anche della Direzione Lavori dell'opera</b></p>
@@ -307,6 +314,8 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
   </tbody>
 </table>
+
+<input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="#Referente_direttorelavori_check.checked() ? 'Progettista e direttore lavori' : 'Progettista'" type="hidden" />
 
 <br>
 
@@ -327,113 +336,11 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
   
-<input id="Referente1_DirettoreLavori_checkobbligatorio" name="Referente1_DirettoreLavori_checkobbligatorio" type="hidden" />
-<input id="Referente1_DirettoreLavori_checkabilitato" name="Referente1_DirettoreLavori_checkabilitato" dynamic_check="!#Referente_Progettista_direttorelavori_check.checked()" type="hidden" />
-{{anagrafica_trento_uniformata.solo_nominativo("Referente1_DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
+<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio" type="hidden" />
+<input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="!#Referente_direttorelavori_check.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo("Referente1","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
 
-<br>
-<br>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="6">
-        <p style="line-height:1.6;"><b>IMPRESA ESECUTRICE</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
-        <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
-        <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
-      </td>
-      <td colspan="5">
-        <p style="line-height:1.6;">il titolare dichiara che, in quanto opere di modesta entità che non interessano le specifiche normative di settore, i lavori saranno eseguiti in economia, senza alcun affidamento a ditte esterne</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="7">
-        <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2"/>
-      </td>
-      <td colspan="5">
-        <p style="line-height:1.6;">i lavori vengono eseguiti con le imprese / lavoratori autonomi come di seguito indicato:</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
-        <div id="Tipo_Esecuzione_lavori" name="Tipo_Esecuzione_lavori" label="Lavori svolti mediante:" mandatory_enabled="#Modalita_lavori2.checked()"> </div>
-        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori1" name="Esecuzione_lavori1" type="checkbox" value="1"/>
-      </td>
-      <td colspan="4">
-        <p style="line-height:1.6;">Numero imprese coinvolte: <input class="" format="number" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2" style="text-align: center;"/>, si indicano di seguito i dati della prima</p>
-      </td>
-    </tr>
-    
-    {% macro Ragione_sociale_imprese_coinvolte(prefix) %}
-    {% set prefix = prefix|string %}
-       
-    <tr class="Rigaintestazioneridotta">
-      <td colspan="2">
-        <p class="Labelcella">Ragione sociale</p>
-      </td>
-      <td>
-        <p class="Labelcella">P.IVA/Codice Fiscale</p>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <input class="inputNormal" id="Ragione_sociale{{ prefix }}" name="Ragione_sociale{{ prefix }}" style="width: 100%;" label="Ragione sociale imprese" enabled="#Esecuzione_lavori1.checked()" mandatory="#PIVA{{ prefix }}.value() != ''">
-      </td>
-      <td>
-        <input class="inputNormal" id="PIVA{{ prefix }}" name="PIVA{{ prefix }}" style="width: 100%;" label="Partita IVA / Codice fiscale" enabled="#Esecuzione_lavori1.checked()" mandatory="#Ragione_sociale{{ prefix }}.value() != ''">
-      </td>
-    </tr>
-    {%- endmacro %}
-        
-    {% for i in range(1, 2) %}
-      {{ Ragione_sociale_imprese_coinvolte(i) }}
-    {% endfor %}
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
-        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori2" name="Esecuzione_lavori2" type="checkbox" value="2"/>
-      </td>
-      <td colspan="4">
-        <p style="line-height:1.6;">Numero lavoratori autonomi coinvolti: <input class="" format="number" id="numero_lavoratori_autonomi" name="numero_lavoratori_autonomi" label="numero lavoratori autonomi coinvolti" mandatory_enabled="#Esecuzione_lavori2.checked()" size="2" style="text-align: center;"/>, si indicano di seguito i dati del primo</p>
-      </td>
-    </tr>
-
-    {% macro Lavoratori_autonomi_coinvolti(prefix) %}
-    {% set prefix = prefix|string %}
-       
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella">Cognome</p>
-      </td>
-      <td>
-        <p class="Labelcella">Nome</p>
-      </td>
-      <td>
-        <p class="Labelcella">P.IVA/Codice Fiscale</p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input class="inputNormal" id="Cognome_lav_aut{{ prefix }}" name="Cognome_lav_aut{{ prefix }}" style="width: 100%;" label="Cognome lavoratore autonomo" enabled="#Esecuzione_lavori2.checked()" mandatory="#Nome_lav_aut{{ prefix }}.value() != '' || #CF_lav_aut{{ prefix }}.value() != ''">
-      </td>
-      <td>
-        <input class="inputNormal" id="Nome_lav_aut{{ prefix }}" name="Nome_lav_aut{{ prefix }}" style="width: 100%;" label="Nome lavoratore autonomo" enabled="#Esecuzione_lavori2.checked()" mandatory="#Cognome_lav_aut{{ prefix }}.value() != '' || #CF_lav_aut{{ prefix }}.value() != ''">
-      </td>
-      <td>
-        <input class="inputNormal" id="CF_lav_aut{{ prefix }}" name="CF_lav_aut{{ prefix }}" style="width: 100%;" label="Codice fiscale lavoratore autonomo" enabled="#Esecuzione_lavori2.checked()" mandatory="#Nome_lav_aut{{ prefix }}.value() != '' || #Cognome_lav_aut{{ prefix }}.value() != ''">
-      </td>
-    </tr>
-    {%- endmacro %}
-        
-    {% for i in range(1, 2) %}
-      {{ Lavoratori_autonomi_coinvolti(i) }}
-    {% endfor %}
-  </tbody>
-</table>
-
+<input id="Referente1_Ruolo" name="Referente1_Ruolo" dynamic_value="'Direttore lavori'" type="hidden" />
 <br>
 <br>
 
@@ -459,6 +366,157 @@ urn_report="report:CSP_SESSION_REPORT"
         <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="Per esecuzione intervento di:" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
       </td>
     </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<h1 class="Modulo">SEGNALA</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>QUALIFICAZIONE DELL'INTERVENTO</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;">L'inizio dell'attività edilizia:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Inizio_attivita" name="Inizio_attivita" label="Inizio attività edilizia" mandatory_enabled="true"> </div>
+        <input group="Inizio_attivita" id="Inizio_attivita1" name="Inizio_attivita" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">ai sensi dell’art. 85 della legge provinciale del 4 agosto 2015, n. 15</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Inizio_attivita" id="Inizio_attivita2" name="Inizio_attivita" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">come variante ordinaria al permesso di costruire/SCIA nr. <input class="" id="var_ord_nr_scia" name="var_ord_nr_scia" label="Numero di protocollo della scia" size="16" mandatory_enabled="#Inizio_attivita2.checked()" style="text-align:center;"/> di data <input class="" id="Data_scia" name="Data_scia" label="Data della scia" format="date" size="8" mandatory_enabled="#Inizio_attivita2.checked()" style="text-align:center;"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Inizio_attivita" id="Inizio_attivita3" name="Inizio_attivita" type="radio" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">come variante in corso d'opera al permesso di costruire/SCIA nr. <input class="" id="var_corso_op_nr_scia" name="var_corso_op_nr_scia" label="Numero di protocollo della scia" size="16" mandatory_enabled="#Inizio_attivita3.checked()" style="text-align:center;"/> di data <input class="" id="Data_scia1" name="Data_scia1" label="Data della scia" format="date" size="8" mandatory_enabled="#Inizio_attivita3.checked()" style="text-align:center;"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Inizio_attivita" id="Inizio_attivita4" name="Inizio_attivita" type="radio" value="4" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">ai sensi dell’art. 85, comma 1, lettera i) della legge provinciale del 4 agosto 2015, n. 15, per la realizzazione della parte di intervento non ultimata</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="6">
+        <p style="line-height:1.6;"><b>IMPRESA ESECUTRICE</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
+        <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
+      </td>
+      <td colspan="5">
+        <p style="line-height:1.6;">il titolare dichiara che, in quanto opere di modesta entità che non interessano le specifiche normative di settore, i lavori saranno eseguiti in economia, senza alcun affidamento a ditte esterne</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="10">
+        <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2"/>
+      </td>
+      <td colspan="5">
+        <p style="line-height:1.6;">i lavori vengono eseguiti con le imprese / lavoratori autonomi come di seguito indicato:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <div id="Tipo_Esecuzione_lavori" name="Tipo_Esecuzione_lavori" label="Lavori svolti mediante:" mandatory="#Modalita_lavori2.checked()"> </div>
+        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori1" name="Esecuzione_lavori1" type="checkbox" value="1" enabled="#Modalita_lavori2.checked()"/>
+      </td>
+      <td colspan="4">
+        <p style="line-height:1.6;">Numero imprese coinvolte per le quali verrà compilata anagrafica completa: <input class="" format="number" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2" style="text-align: center;"/></p>
+        <p style="line-height:1.6; font-size: 85%;"><i><u><b>Nota bene:</b> per l'anagrafica completa si dovrà compilare apposito modulo secondario automaticamente generato dal sistema</u></i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori2" name="Esecuzione_lavori2" type="checkbox" value="2" enabled="#Modalita_lavori2.checked()"/>
+      </td>
+      <td colspan="4">
+        <p style="line-height:1.6;">Numero lavoratori autonomi coinvolti per i quali verrà compilata anagrafica completa: <input class="" format="number" id="numero_lavoratori_autonomi" name="numero_lavoratori_autonomi" label="numero lavoratori autonomi coinvolti" mandatory_enabled="#Esecuzione_lavori2.checked()" size="2" style="text-align: center;"/></p>
+        <p style="line-height:1.6; font-size: 85%;"><i><u><b>Nota bene:</b> per l'anagrafica completa si dovrà compilare apposito modulo secondario automaticamente generato dal sistema</u></i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="7">
+        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori3" name="Esecuzione_lavori3" type="checkbox" value="3" enabled="#Modalita_lavori2.checked() and (#Inizio_attivita2.checked() || #Inizio_attivita3.checked())"/>
+      </td>
+      <td colspan="4">
+        <p style="line-height:1.8;"><b><u>Variante SCIA:</u></b> le seguenti imprese/lavoratori autonomi sono già stati dichiarati (e le relative anagrafiche già compilate) nella SCIA n.prot: <input class="" id="prot_scia_orig" name="prot_scia_orig" label="Numero di protocollo della scia originale" style="text-align:center;" dynamic_value="#Inizio_attivita2.checked() ? #var_ord_nr_scia.value() : (#Inizio_attivita3.checked() ? #var_corso_op_nr_scia.value() : '')" size="16" mandatory_enabled="#Esecuzione_lavori3.checked()" readonly/> di data <input class="" id="Data_scia_orig" name="Data_scia_orig" style="text-align:center;" label="Data della scia originale" dynamic_value="#Inizio_attivita2.checked() ? #Data_scia.value() : (#Inizio_attivita3.checked() ? #Data_scia1.value() : '')" format="date" size="8" mandatory_enabled="#Esecuzione_lavori3.checked()" readonly/></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6; font-size: 85%;">Nominativo / Ragione sociale</p>
+      </td>
+      <td>
+        <p style="line-height:1.6; font-size: 85%;">P.IVA / Codice Fiscale</p>
+      </td>
+      <td>
+        <p style="line-height:1.6; font-size: 85%;">Recapito telefonico / Indirizzo mail</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Nominativo_gia_coinv1" name="Nominativo_gia_coinv1" style="width: 100%;" label="Nominativo lavoratore autonomo/Ragione sociale impresa già coinvolta" mandatory_enabled="#Esecuzione_lavori3.checked()">
+      </td>
+      <td>
+        <input class="inputNormal" id="CF_gia_coinv1" name="CF_gia_coinv1" style="width: 100%;" label="Codice fiscale/P.IVA lavoratore autonomo/impresa già coinvolta" mandatory_enabled="#Esecuzione_lavori3.checked()">
+      </td>
+      <td>
+        <input class="inputNormal" id="Recapito_gia_coinv1" name="Recapito_gia_coinv1" style="width: 100%;" label="Recapito lavoratore autonomo/impresa già coinvolta" mandatory_enabled="#Esecuzione_lavori3.checked()">
+      </td>
+    </tr>
+    {% macro imp_lav_aut_gia_coinvolti(prefix) %}
+    {% set prefix = prefix|string %}
+       
+    <tr>
+      <td>
+        <input class="inputNormal" id="Nominativo_gia_coinv{{ prefix }}" name="Nominativo_gia_coinv{{ prefix }}" style="width: 100%;" label="Nominativo lavoratore autonomo/Ragione sociale impresa già coinvolta" enabled="#Esecuzione_lavori3.checked()" mandatory="#CF_gia_coinv{{ prefix }}.value() != '' || #Recapito_gia_coinv{{ prefix }}.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="CF_gia_coinv{{ prefix }}" name="CF_gia_coinv{{ prefix }}" style="width: 100%;" label="Codice fiscale/P.IVA lavoratore autonomo/impresa già coinvolta" enabled="#Esecuzione_lavori3.checked()" mandatory="#Nominativo_gia_coinv{{ prefix }}.value() != '' || #Recapito_gia_coinv{{ prefix }}.value() != ''">
+      </td>
+      <td>
+        <input class="inputNormal" id="Recapito_gia_coinv{{ prefix }}" name="Recapito_gia_coinv{{ prefix }}" style="width: 100%;" label="Recapito lavoratore autonomo/impresa già coinvolta" enabled="#Esecuzione_lavori3.checked()" mandatory="#CF_gia_coinv{{ prefix }}.value() != '' || #Nominativo_gia_coinv{{ prefix }}.value() != ''">
+      </td>
+    </tr>
+    {%- endmacro %}
+        
+    {% for i in range(2, 6) %}
+      {{ imp_lav_aut_gia_coinvolti(i) }}
+    {% endfor %}
   </tbody>
 </table>
 
@@ -554,7 +612,7 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
-<input id="altri_soggetti" name="altri_soggetti" dynamic_value="#Parametri_Altro_titolo_reale1.checked() ? 'ALTRI SOGGETTI' : ''" type="hidden"/>
+<input id="Referente99_altri_soggetti" name="Referente99_altri_soggetti" dynamic_value="#Parametri_Altro_titolo_reale1.checked() ? 'ALTRI SOGGETTI' : ''" type="hidden"/>
 
 <br>
 <br>
@@ -812,59 +870,6 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<h1 class="Modulo">SEGNALA</h1>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>QUALIFICAZIONE DELL'INTERVENTO</b></p>
-      </td>
-    </tr>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.6;">L'inizio dell'attività edilizia:</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Inizio_attivita" name="Inizio_attivita" label="Inizio attività edilizia" mandatory_enabled="true"> </div>
-        <input group="Inizio_attivita" id="Inizio_attivita1" name="Inizio_attivita" type="radio" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">ai sensi dell’art. 85 della legge provinciale del 4 agosto 2015, n. 15</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input group="Inizio_attivita" id="Inizio_attivita2" name="Inizio_attivita" type="radio" value="2" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">come variante ordinaria al permesso di costruire/SCIA nr. <input class="" id="var_ord_nr_scia" name="var_ord_nr_scia" label="Numero di protocollo della scia" size="16" mandatory_enabled="#Inizio_attivita2.checked()"/> di data <input class="" id="Data_scia" name="Data_scia" label="Data della scia" format="date" size="8" mandatory_enabled="#Inizio_attivita2.checked()"/></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input group="Inizio_attivita" id="Inizio_attivita3" name="Inizio_attivita" type="radio" value="3" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">come variante in corso d'opera al permesso di costruire/SCIA nr. <input class="" id="var_corso_op_nr_scia" name="var_corso_op_nr_scia" label="Numero di protocollo della scia" size="16" mandatory_enabled="#Inizio_attivita3.checked()"/> di data <input class="" id="Data_scia1" name="Data_scia1" label="Data della scia" format="date" size="8" mandatory_enabled="#Inizio_attivita3.checked()"/></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input group="Inizio_attivita" id="Inizio_attivita4" name="Inizio_attivita" type="radio" value="4" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">ai sensi dell’art. 85, comma 1, lettera i) della legge provinciale del 4 agosto 2015, n. 15, per la realizzazione della parte di intervento non ultimata</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-<br>
-
 <table class="Modulo" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
@@ -933,8 +938,8 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() and !#Referente_Progettista_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Referente_Progettista_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() and !#Referente_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Referente_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
       </td>
     </tr>
     <tr>
@@ -949,6 +954,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="num_dich_cong" name="num_dich_cong" dynamic_value="'1'" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG" name="GLOBO_modulofiglio_cM47500-MSEC02-DICH-CONG-TIT-PROG-FIRMA-PROG" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>        
       </td>
     </tr>
     <tr>
@@ -960,6 +966,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="num_dich_prog" name="num_dich_prog" dynamic_value="'1'" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_modulofiglio_cM47500-MSEC01-DICH-PROG" name="GLOBO_modulofiglio_cM47500-MSEC01-DICH-PROG" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -976,7 +983,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input dynamic_check="#Referente1_DirettoreLavori_CodiceFiscale.value() != '' and !#Referente_Progettista_direttorelavori_check.checked()" enabled="#Referente1_DirettoreLavori_CodiceFiscale.value() != '' and !#Referente_Progettista_direttorelavori_check.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
+        <input dynamic_check="#Referente1_CodiceFiscale.value() != '' and !#Referente_direttorelavori_check.checked()" enabled="#Referente1_CodiceFiscale.value() != '' and !#Referente_direttorelavori_check.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b>, firmato con <b>firma digitale</b></p>
@@ -1209,7 +1216,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="width: 35%; text-align: center;">
         <p style="line-height:1.8;">
-          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Referente_Progettista_TitoloPersona.value() + ' ' + #Referente_Progettista_Nome.value() + ' ' + #Referente_Progettista_Cognome.value()" style="width:99%; text-align: center;"/>
+          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value() + ' ' + #Referente_Cognome.value()" style="width:99%; text-align: center;"/>
         </p>
       </td>
     </tr>
@@ -1243,6 +1250,8 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+<input id="Prova_passaggio_dati" name="Prova_passaggio_dati" dynamic_value="'prova passaggio dati'" readonly/>
 
 {% endblock content %}
 

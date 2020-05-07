@@ -3,7 +3,7 @@
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Progettista_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -21,6 +21,7 @@ metodo_invio=""
 name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
+segnatura="Referente"
 ufficio=""
 urlhelp="/modulistica/moduli/M47500-MSEC13-CONTR-PARCHEGGI"
 verifica_pagamento="NO"
@@ -48,7 +49,7 @@ tipo_mime="application/pdf"/>
 
 {{ intestazioni.intestazione_modulosecondario_senzabollo() }}
 
-<input id="Oggetto" name="Oggetto" dynamic_value="#Progettista_Cognome.value().toUpperCase() + ' - Schema di calcolo del contributo sostitutivo dello standard degli spazi di parcheggio'" type="hidden"/>
+<input id="Oggetto" name="Oggetto" dynamic_value="#Referente_Cognome.value().toUpperCase() + ' - Schema di calcolo del contributo sostitutivo dello standard degli spazi di parcheggio'" type="hidden"/>
 
 <br>
 
@@ -75,12 +76,12 @@ tipo_mime="application/pdf"/>
 <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="5">
+      <td colspan="6">
         <p style="line-height:1.6;"><b>CALCOLO DEL CONTRIBUTO SOSTITUTIVO DELLO STANDARD DEGLI SPAZI DI PARCHEGGIO<br>Nota bene:</b> utilizzare il <b>punto</b> come separatore decimale</p>
       </td>
     </tr>
     <tr>
-      <td style="width: 20%;">
+      <td style="width: 20%;" colspan="2">
         <p style="line-height:1.6; text-align: center;"><i>Superficie netta di parcheggio<br>(mq)</i></p>  
       </td>
       <td style="width: 20%;">
@@ -97,57 +98,62 @@ tipo_mime="application/pdf"/>
       </td>
     </tr>
     <tr>
-      <td>
-        <p style="line-height:1.6; text-align: center;">
-          <input id="sup_netta_parcheggio1" name="sup_netta_parcheggio1" style="width:100%; text-align: center;" label="Superficie netta di parcheggio" mandatory_enabled="true" />
-        </p>
-        <input id="verifica_sup_parch1" name="verifica_sup_parch1" dynamic_value="#sup_netta_parcheggio1.value() != '' ? 'OK' : 'KO'" type="hidden" readonly/>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="slot_parch" name="slot_parch" label="Slot parcheggio" mandatory_enabled="true"> </div>
+        <input group="slot_parch" id="slot_parch1" name="slot_parch1" type="checkbox" value="1" />
       </td>
       <td>
         <p style="line-height:1.6; text-align: center;">
-          <input id="volume_parcheggio1" name="volume_parcheggio1" dynamic_value="#sup_netta_parcheggio1.value() != '' ? (parseFloat(#sup_netta_parcheggio1.value()) * parseFloat('1.30') * parseFloat('2.4')).toFixed(2) : '0'" label="Volume del parcheggio" style="width:100%;text-align: center;" readonly/>
+          <input id="sup_netta_parcheggio1" name="sup_netta_parcheggio1" style="width:100%; text-align: center;" label="Superficie netta di parcheggio" mandatory_enabled="#slot_parch1.checked()" />
+        </p>
+      </td>
+      <td>
+        <p style="line-height:1.6; text-align: center;">
+          <input id="volume_parcheggio1" name="volume_parcheggio1" dynamic_value="(parseFloat(#sup_netta_parcheggio1.value()) * parseFloat('1.30') * parseFloat('2.4')).toFixed(2)" label="Volume del parcheggio" enabled="#slot_parch1.checked()" style="width:100%;text-align: center;" readonly/>
         </p>  
       </td>
       <td>
         <p style="line-height:1.6; text-align: center;">
-          <input id="sup_da_pagare1" name="sup_da_pagare1" dynamic_value="#sup_netta_parcheggio1.value() != '' ? (parseFloat(#volume_parcheggio1.value()) / 3).toFixed(2) : '0'" label="Superficie da pagare" enabled="#verifica_sup_parch1.value() == 'OK'" style="width:100%;text-align: center;" readonly/>
+          <input id="sup_da_pagare1" name="sup_da_pagare1" dynamic_value="(parseFloat(#volume_parcheggio1.value()) / 3).toFixed(2)" label="Superficie da pagare" enabled="#slot_parch1.checked()" style="width:100%;text-align: center;" readonly/>
         </p>      
       </td>             
       <td>
         <p style="line-height:1.6; text-align: center;">
-        <input id="importo_al_mq1" name="importo_al_mq1" style="width:100%; text-align: center;" dynamic_value="#sup_netta_parcheggio1.value() != '' ? '764.01' : '0'" label="importo al metro quadro" enabled="#verifica_sup_parch1.value() == 'OK'" readonly/></p>
+        <input id="importo_al_mq1" name="importo_al_mq1" style="width:100%; text-align: center;" dynamic_value="'764.01'" label="importo al metro quadro" enabled="#slot_parch1.checked()" readonly/></p>
       </td>
       <td>
         <p style="line-height:1.6; text-align: center;">
-        <input id="Totale_contr_parch1" name="Totale_contr_parch1" dynamic_value="#sup_netta_parcheggio1.value() != '' ? (parseFloat(#sup_da_pagare1.value()) * parseFloat(#importo_al_mq1.value())).toFixed(2) : '0'" label="Totale contributo parcheggio" enabled="#verifica_sup_parch1.value() == 'OK'" style="width:100%;text-align: right;"  value="" readonly/></p>
+        <input id="Totale_contr_parch1" name="Totale_contr_parch1" dynamic_value="(parseFloat(#sup_da_pagare1.value()) * parseFloat(#importo_al_mq1.value())).toFixed(2)" label="Totale contributo parcheggio" enabled="#slot_parch1.checked()" style="width:100%;text-align: right;" readonly/></p>
       </td>
     </tr>
     {% macro Altri_parcheggi(prefix) %}
     {% set prefix = prefix|string %}
     <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input group="slot_parch" id="slot_parch{{ prefix }}" name="slot_parch{{ prefix }}" type="checkbox" value="{{ prefix }}" />
+      </td>
       <td>
         <p style="line-height:1.6; text-align: center;">
-          <input id="sup_netta_parcheggio{{ prefix }}" name="sup_netta_parcheggio{{ prefix }}" style="width:100%; text-align: center;" label="Superficie netta di parcheggio" enabled="true" />
+          <input id="sup_netta_parcheggio{{ prefix }}" name="sup_netta_parcheggio{{ prefix }}" style="width:100%; text-align: center;" label="Superficie netta di parcheggio" mandatory_enabled="#slot_parch{{ prefix }}.checked()" />
         </p>
       </td>
       <td>
         <p style="line-height:1.6; text-align: center;">
-          <input id="volume_parcheggio{{ prefix }}" name="volume_parcheggio{{ prefix }}" dynamic_value="#sup_netta_parcheggio{{ prefix }}.value() != '' ? (parseFloat(#sup_netta_parcheggio{{ prefix }}.value()) * parseFloat('1.30') * parseFloat('2.4')).toFixed(2) : '0'" label="Volume del parcheggio" style="width:100%;text-align: center;" readonly/>
+          <input id="volume_parcheggio{{ prefix }}" name="volume_parcheggio{{ prefix }}" dynamic_value="(parseFloat(#sup_netta_parcheggio{{ prefix }}.value()) * parseFloat('1.30') * parseFloat('2.4')).toFixed(2)" label="Volume del parcheggio" enabled="#slot_parch{{ prefix }}.checked()" style="width:100%;text-align: center;" readonly/>
         </p>  
       </td>
       <td>
         <p style="line-height:1.6; text-align: center;">
-          <input id="sup_da_pagare{{ prefix }}" name="sup_da_pagare{{ prefix }}" dynamic_value="#sup_netta_parcheggio{{ prefix }}.value() != '' ? (parseFloat(#volume_parcheggio{{ prefix }}.value()) / 3).toFixed(2) : '0'" label="Superficie da pagare" style="width:100%;text-align: center;" readonly/>
+          <input id="sup_da_pagare{{ prefix }}" name="sup_da_pagare{{ prefix }}" dynamic_value="(parseFloat(#volume_parcheggio{{ prefix }}.value()) / 3).toFixed(2)" label="Superficie da pagare" enabled="#slot_parch{{ prefix }}.checked()" style="width:100%;text-align: center;" readonly/>
         </p>      
       </td>             
       <td>
         <p style="line-height:1.6; text-align: center;">
-          <input id="importo_al_mq{{ prefix }}" name="importo_al_mq{{ prefix }}" style="width:100%; text-align: center;" dynamic_value="'764.01'" label="importo al metro quadro" type="hidden" readonly/>
-          <input id="visual_importo_al_mq{{ prefix }}" name="visual_importo_al_mq{{ prefix }}" style="width:100%; text-align: center;" dynamic_value="'764.01'" enabled="#sup_netta_parcheggio{{ prefix }}.value() != ''" label="importo al metro quadro" readonly/></p>
+          <input id="importo_al_mq{{ prefix }}" name="importo_al_mq{{ prefix }}" style="width:100%; text-align: center;" dynamic_value="'764.01'" enabled="#slot_parch{{ prefix }}.checked()" label="importo al metro quadro" readonly/></p>
       </td>
       <td>
         <p style="line-height:1.6; text-align: center;">
-        <input id="Totale_contr_parch{{ prefix }}" name="Totale_contr_parch{{ prefix }}" dynamic_value="#sup_da_pagare{{ prefix }}.value() != '' ? (parseFloat(#sup_da_pagare{{ prefix }}.value()) * parseFloat(#importo_al_mq{{ prefix }}.value())).toFixed(2) : '0'" label="Totale contributo parcheggio" style="width:100%;text-align: right;" readonly/></p>
+        <input id="Totale_contr_parch{{ prefix }}" name="Totale_contr_parch{{ prefix }}" dynamic_value="(parseFloat(#sup_da_pagare{{ prefix }}.value()) * parseFloat(#importo_al_mq{{ prefix }}.value())).toFixed(2)" enabled="#slot_parch{{ prefix }}.checked()" label="Totale contributo parcheggio" style="width:100%;text-align: right;" readonly/></p>
       </td>
     </tr>
     {%- endmacro %}
@@ -160,7 +166,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td>
         <p style="line-height:1.6; text-align: center;">
-          <input id="Contributo_complessivo" name="Contributo_complessivo" dynamic_value="'€ ' + Math.ceil((parseFloat(#Totale_contr_parch1.value() != '' ? #Totale_contr_parch1.value() : '0') + parseFloat(#Totale_contr_parch2.value() != '' ? #Totale_contr_parch2.value() : '0') + parseFloat(#Totale_contr_parch3.value() != '' ? #Totale_contr_parch3.value() : '0') + parseFloat(#Totale_contr_parch4.value() != '' ? #Totale_contr_parch4.value() : '0') + parseFloat(#Totale_contr_parch5.value() != '' ? #Totale_contr_parch5.value() : '0')).toFixed(2))" label="Contributo complessivo" style="width:100%;text-align: right;" readonly/>
+          <input id="Contributo_complessivo" name="Contributo_complessivo" dynamic_value="'€ ' + (Math.ceil(parseFloat(#Totale_contr_parch1.value() != '' ? #Totale_contr_parch1.value() : '0') + parseFloat(#Totale_contr_parch2.value() != '' ? #Totale_contr_parch2.value() : '0') + parseFloat(#Totale_contr_parch3.value() != '' ? #Totale_contr_parch3.value() : '0') + parseFloat(#Totale_contr_parch4.value() != '' ? #Totale_contr_parch4.value() : '0') + parseFloat(#Totale_contr_parch5.value() != '' ? #Totale_contr_parch5.value() : '0'))).toFixed(2)" label="Contributo complessivo" style="width:100%;text-align: right;" readonly/>
         </p>
       </td>
     </tr>
@@ -216,7 +222,7 @@ tipo_mime="application/pdf"/>
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -244,9 +250,11 @@ tipo_mime="application/pdf"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
-<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden"/>
-<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden"/>
-<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden"/>
-<input id="Progettista_Nome" name="Progettista_Nome" type="hidden"/>
+<input id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" type="hidden"/>
+<input id="Referente_TitoloPersona" name="Referente_TitoloPersona" type="hidden"/>
+<input id="Referente_Cognome" name="Referente_Cognome" type="hidden"/>
+<input id="Referente_Nome" name="Referente_Nome" type="hidden"/>
+
+<input id="Prova_passaggio_dati" name="Prova_passaggio_dati"  readonly/>
 
 {% endblock content %}

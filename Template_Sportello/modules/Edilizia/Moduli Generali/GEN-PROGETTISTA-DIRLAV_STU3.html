@@ -3,7 +3,7 @@
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Referente_Progettista_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -21,6 +21,7 @@ metodo_invio=""
 name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
+segnatura="Referente"
 ufficio=""
 urlhelp="/modulistica/moduli/GEN-PROGETTISTA-DIRETT-LAV"
 verifica_pagamento="NO"
@@ -47,7 +48,7 @@ tipo_mime="application/pdf"/>
 {% block content %}
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
-<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Referente_Progettista_Cognome.value().toUpperCase() + ' - anagrafica progettista e direttore lavori'"/>
+<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Referente_Cognome.value().toUpperCase() + ' - anagrafica progettista e direttore lavori'"/>
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
@@ -56,7 +57,7 @@ tipo_mime="application/pdf"/>
 
 <input id="recapito_obbligatorio" name="recapito_obbligatorio" dynamic_check="true" type="hidden" />
 <input id="pec_tecnico_obbligatoria" name="pec_tecnico_obbligatoria" dynamic_check="true" type="hidden" />
-{{anagrafica_trento_uniformata.professionista_dirlav("Referente_Progettista","Il progettista, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+{{anagrafica_trento_uniformata.professionista_dirlav("Referente","Il progettista, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <br>
 
@@ -71,6 +72,7 @@ tipo_mime="application/pdf"/>
         <p style="line-height:1.6;">Il sottoscritto progettista, in quanto anche direttore dei lavori dichiara di aver preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto, nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo.</p>
       </td>
     </tr>
+    <!--
     <tr>
       <td style="vertical-align: center; width: 4%; text-align: center;">
         <div id="Dichiarazione_delega" name="Dichiarazione_delega" label="Dichiarazione direttore lavori" enabled="#Metadati_check_delega.value() == 'DELEGA'"> </div>
@@ -80,6 +82,7 @@ tipo_mime="application/pdf"/>
         <p><input id="conferma_delega" name="conferma_delega" style="width:100%;" enabled="#Dichiarazione_delega_check.checked()" dynamic_value="#Dichiarazione_delega_check.checked() ? 'Dichiaro inoltre di essere consapevole di avere delega del titolare per la ricezione di tutte le comunicazioni relative al procedimento.' : ''" readonly/></p>
       </td>
     </tr>
+    -->
   </tbody>
 </table>
 
@@ -113,7 +116,7 @@ tipo_mime="application/pdf"/>
        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
      </td>
      <td style="width: 50%; text-align: center; height: 1.5cm;">
-       <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_Progettista_TitoloPersona.value() + ' ' + #Referente_Progettista_Nome.value().toUpperCase() + ' ' + #Referente_Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+       <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
      </td>
    </tr>
    <tr class="Rigaintestazioneridotta">
@@ -134,17 +137,20 @@ tipo_mime="application/pdf"/>
 <br>
 
 
- <p class="Modulo">
+<p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
- </p>
- <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
- <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
- <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
- <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+</p>
 
- <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
- {{ utils.passaggio_metadati() }}
- <input id="Metadati_check_delega" name="Metadati_check_delega" type="hidden"/>
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
- {% endblock content %}
+<!--
+{{ utils.passaggio_metadati() }}
+<input id="Metadati_check_delega" name="Metadati_check_delega" type="hidden"/>
+-->
+
+{% endblock content %}
