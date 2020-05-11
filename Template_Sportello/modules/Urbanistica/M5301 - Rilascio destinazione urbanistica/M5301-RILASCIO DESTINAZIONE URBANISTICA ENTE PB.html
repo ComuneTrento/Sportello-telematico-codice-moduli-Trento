@@ -98,7 +98,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 <!--
 <script type="text/javascript">
-  var simpaticoEservice=""M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA";
+  var simpaticoEservice="M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA";
   var serviceName = "M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA"; // Eservice example
   var serviceURL="https://sportello.comune.trento.it/modulistica/moduli/M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA";
   var simpaticoForm="main";
@@ -278,19 +278,17 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </td>
 
       </tr>
-      <!--
       <tr>
         <td style="vertical-align: center; width: 4%;">
-          <input id="Parametri_Domanda_EntiPubblici" name="Parametri_Domanda_Delega" type="radio" value="7" />
+          <input id="Parametri_Domanda_EntiPubblici" name="Parametri_Domanda_Delega" type="radio" value="7"  onchange="GetEsenzioneBollo()"/>
         </td>
         <td colspan="2">
           <p>Enti pubblici
         </td>
       </tr>
-      -->
       <tr>
         <td style="vertical-align: center; width: 4%;" rowspan="2">
-          <input id="Parametri_Domanda_Delega2" name="Parametri_Domanda_Delega" type="radio" value="7" /> 
+          <input id="Parametri_Domanda_Delega2" name="Parametri_Domanda_Delega" type="radio" value="8" /> 
         </td>
         <td colspan="2">
           Legale rappresentante societa: 
@@ -762,7 +760,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       <tr>
         <td rowspan="5" style="width:4%;vertical-align:top;background-color:white">
           <div id="Parametri_Assoggettabilita" label="Assoggettabilità al pagamento dell'imposta di bollo" mandatory="true"></div>
-          <input id="Parametri_Assoggettabilita1" name="Parametri_Assoggettabilita" type="radio" value="1" placeholder="" class="mandatory" enabled="#Parametri_Domanda_DelegaConsulente.checked() ? false:true">
+          <input id="Parametri_Assoggettabilita1" name="Parametri_Assoggettabilita" type="radio" value="1" placeholder="" class="mandatory" enabled="#Parametri_Domanda_DelegaConsulente.checked() ? false:#Parametri_Domanda_EntiPubblici.checked() ? false:true">
         </td>
         <td colspan="3" style="border:0px;">
           <p>
@@ -807,7 +805,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td style="vertical-align:top">
-          <input id="Parametri_Assoggettabilita2" name="Parametri_Assoggettabilita" type="radio" value="2" placeholder="" class="" dynamic_check="#Parametri_Domanda_DelegaConsulente.checked()">
+          <input id="Parametri_Assoggettabilita2" name="Parametri_Assoggettabilita" type="radio" value="2" placeholder="" class="" dynamic_check="#Parametri_Domanda_DelegaConsulente.checked() || #Parametri_Domanda_EntiPubblici.checked()">
         </td>
         <td colspan="2">
           
@@ -828,7 +826,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <td colspan="4">
               <b>Per il rilascio del certificato è necessario il pagamento di: </b>
               <ul>
-                <input id="Totale_importo_shadow" name="Totale_importo shadow"  label="Importo diritti di segreteria ombra" style="width:8%;" value="0" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? '0': #Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" type="hidden"/>
+                <input id="Totale_importo_shadow" name="Totale_importo shadow"  label="Importo diritti di segreteria ombra" style="width:8%;" value="0" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? '0': #Parametri_Domanda_EntiPubblici.checked() ? '0': #Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" type="hidden"/>
                 <li>euro <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? parseFloat(#Totale_importo_shadow.value()/2) : parseFloat(#Totale_importo_shadow.value())" readonly/> per diritti sugli atti in materia urbanistico-edilizia</li>
                 <li>euro <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> per l'eventuale marca da bollo sull' emissione del certificato</li>
               </ul>
@@ -1102,15 +1100,15 @@ urn_report="report:CSP_SESSION_REPORT"/>
   function setSegreteriaSi(){
     //se è un consulente tecnico di ufficio non chiedo i soldi
     //per gli altri casi verifico se è esente dalla marca da bollo. 
-    if(document.getElementById("Parametri_Domanda_DelegaConsulente").checked == false && document.getElementById("Parametri_Assoggettabilita2").checked == false){
+    if(document.getElementById("Parametri_Domanda_DelegaConsulente").checked == false && document.getElementById("Parametri_Assoggettabilita2").checked == false && document.getElementById("Parametri_Domanda_EntiPubblici").checked == false){
       document.getElementById("Totale_importo").value = parseFloat("51.64"); 
       document.getElementById("Totale_spesa").value = parseFloat(parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat("51.64")); 
-    } elsif(document.getElementById("Parametri_Domanda_DelegaConsulente").checked == false && document.getElementById("Parametri_Assoggettabilita2").checked == true)
+    } elsif(document.getElementById("Parametri_Domanda_DelegaConsulente").checked == false && document.getElementById("Parametri_Assoggettabilita2").checked == true && document.getElementById("Parametri_Domanda_EntiPubblici").checked == false)
     {
       //In questo caso paga la metà 
       document.getElementById("Totale_importo").value = parseFloat("25.82"); 
       document.getElementById("Totale_spesa").value = parseFloat(parseFloat(document.getElementById("Totale_MarcaBollo").value) + parseFloat("51.64")); 
-    }
+    } 
   }
 
   function MyControlloData(dataDaControllare){
@@ -1144,10 +1142,14 @@ urn_report="report:CSP_SESSION_REPORT"/>
     return dateString;
   }
 
-  function GetEsenzioneBollo(){
-    if( document.getElementById("Parametri_Domanda_DelegaConsulente").checked == true){
+  function GetEsenzioneBollo(){ 
+    if(document.getElementById("Parametri_Domanda_DelegaConsulente").checked == true){
       document.getElementById("EsenzioneBollo").value = "Consulente Tecnico d\'Ufficio";
-    } else {
+    } 
+    if(document.getElementById("Parametri_Domanda_EntiPubblici").checked == true){
+      document.getElementById("EsenzioneBollo").value = "Ente Pubblico";
+    } 
+    if(document.getElementById("Parametri_Domanda_DelegaConsulente").checked == false && document.getElementById("Parametri_Domanda_EntiPubblici").checked == false ) {
       document.getElementById("EsenzioneBollo").value = "";
     }
   }
