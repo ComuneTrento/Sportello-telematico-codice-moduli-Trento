@@ -32,6 +32,42 @@ urlhelp="/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
+<meta codice_modulo_figlio="GEN-PROGETTISTA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-CPS"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-INTAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.intestatari.firma.autografa"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-INTAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.intestatari.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
 urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
 descrizione_estesa="Allegato - Copia del modulo compilato e firmato manualmente"
@@ -82,6 +118,17 @@ descrizione_estesa="Allegato - Documentazione comprovante il diritto contrattual
 filename="Doc_diritto_contrattuale.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-DOC-DIRITTO-CONTRATTUALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-DICH-ASSENSO-TITOLARI"
+urn_allegato="document:c_l378:allegato.dich.assenso.titolari"
+descrizione_estesa="Allegato - Dichiarazione di assenso e documento di identità dei terzi titolari di altri diritti reali o obbligatori"
+filename="Dich_ass_titolari.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-DICH-ASSENSO-TITOLARI"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -584,7 +631,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center;: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <input group="Tassonomia_DocEdi" id="Tassonomia_DocEdi8" name="Tassonomia_DocEdi" type="radio" value="8" />
       </td>
       <td colspan="5">
@@ -836,6 +883,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="'Progettista'" type="hidden" />
 
+
 <br>
 <br>
 
@@ -974,6 +1022,18 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input id="Dich_assenso_tit" name="Dich_assenso_tit" type="checkbox" dynamic_check="#titolo_da_allegare2.checked()" enabled="#titolo_da_allegare2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>Dichiarazione di assenso</b> e <b>documento di identità dei terzi titolari</b> di altri diritti reali o obbligatori</p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" type="number" id="num_dich_ass_tit" name="num_dich_ass_tit" min="1" max="100" label="Numero documenti dichiarazione di assenso dei terzi titolari di altri diritti reali o obbligatori" mandatory_enabled="#Dich_assenso_tit.checked()" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_allegato_cGEN-DICH-ASSENSO-TITOLARI" name="GLOBO_allegato_cGEN-DICH-ASSENSO-TITOLARI" obbligatorio="#Dich_assenso_tit.checked() ? 'OBBLIGATORIO' : ''" numero="#num_dich_ass_tit.value()" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
       <td style="vertical-align: center; text-align: center;">
         <input id="GEN_PROG_INC" name="GEN_PROG_INC" dynamic_check="#Tipo_richiedente2.checked() || (#Tipo_richiedente1.checked() and #AventeTitolo_CodiceFiscale.value() != #Referente_CodiceFiscale.value() and #Referente_CodiceFiscale.value() != '')" enabled="#Tipo_richiedente2.checked() || (#Tipo_richiedente1.checked() and #AventeTitolo_CodiceFiscale.value() != #Referente_CodiceFiscale.value() and #Referente_CodiceFiscale.value() != '')" type="checkbox" value="OBBLIGATORIO"/>
       </td>
@@ -982,6 +1042,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>   
     <tr>
@@ -991,7 +1052,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori particelle o subalterni</b> oggetto del procedimento edilizio</p>
         <p style="line-height:1.6;">
-          <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:50%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != '0'">
+          <select class="inputNormal" id="Tipo_Firma_ult_particelle" name="Tipo_Firma_ult_particelle" style="width:50%" label="Tipo firma modulo ulteriori particelle" mandatory_enabled="#Tipo_richiedente2.checked() and #Immobile_NumeroAltriImmobili.value() != 0">
             <option value=""></option>
             <option value="Firmato con firma autografa">Firmato con firma autografa del richiedente</option>
             <option value="Firmato con firma elettronica">Firmato con firma elettronica del richiedente</option>
@@ -999,12 +1060,15 @@ urn_report="report:CSP_SESSION_REPORT"
         </p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part" name="numero_ult_part" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? parseInt(#Immobile_NumeroAltriImmobili.value()) /10 : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part" name="numero_ult_part" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-CPS" name="GLOBO_modulofiglio_cGEN-IMMAGG-CPS" numero="#numero_ult_part.value()" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="#numero_ult_part.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="#numero_ult_part.value()" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center;" rowspan="3">
-        <input dynamic_check="#Tassonomia_Titolo2.checked()" enabled="#Tassonomia_Titolo2.checked()" id="altri_sogg_coinv" name="altri_sogg_coinv" type="checkbox" value="1"/>   
+        <input dynamic_check="#Parametri_Altro_titolo_reale1.checked()" enabled="#Parametri_Altro_titolo_reale1.checked()" id="altri_sogg_coinv" name="altri_sogg_coinv" type="checkbox" value="1"/>   
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
           <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori soggetti</b> coinvolti nel procedimento edilizio</p>
@@ -1020,6 +1084,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="NschedeAllegateAu" name="NschedeAllegateAu" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG_AU.checked()" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_modulofiglio_cGEN-INTAGG-AU" name="GLOBO_modulofiglio_cGEN-INTAGG-AU" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1031,6 +1096,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="NschedeAllegateEl" name="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG_EL.checked()" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_modulofiglio_cGEN-INTAGG-EL" name="GLOBO_modulofiglio_cGEN-INTAGG-EL" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1369,7 +1435,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? '' : #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? '' : #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
