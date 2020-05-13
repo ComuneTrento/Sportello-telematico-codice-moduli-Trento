@@ -1,0 +1,117 @@
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC_v3.0_vSTU3" %}
+
+
+<meta codice_modulo_figlio="GEN-PROGETTISTA"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-IMMAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-INTAGG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.intestatari.firma.elettronica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="GEN-INTAGG-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.intestatari.firma.autografa"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="1" %}
+  {% set simpaticoEserviceName="M47750 AUTORIZZAZIIONE CPC" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Edilizia" %}
+  {% set simpaticoMapping=[
+      "AventeTitolo_Cognome",
+      "AventeTitolo_Nome",
+      "AventeTitolo_CodiceFiscale",
+      "AventeTitolo_DataNascita",
+      "AventeTitolo_Sesso",
+      "AventeTitolo_ProvinciaResidenza",
+      "AventeTitolo_ComuneResidenza",
+      "AventeTitolo_ViaResidenza",
+      "AventeTitolo_CivicoResidenza",
+      "AventeTitolo_CAPResidenza",
+      "AventeTitolo_Telefono",
+      "AventeTitolo_Cittadinanza",
+      "AventeTitolo_LuogoNascita", 
+      "AventeTitolo_Tel_Fisso",
+      "AventeTitolo_EMail",
+      "AventeTitolo_EMailPEC",
+      "AventeTitolo_Telefono",
+      "AventeTitolo_TipologiaImpresa",
+      "AventeTitolo_Denominazione",
+      "AventeTitolo_ComuneSede",
+      "AventeTitolo_ProvinciaSede",
+      "AventeTitolo_ViaSede",
+      "AventeTitolo_CivicoSede",
+      "AventeTitolo_CAPSede",
+      "AventeTitolo_CFPI",
+      "AventeTitolo_APEC",
+      "AventeTitolo_TelefonoSede",
+      "AventeTitolo_Tel_FissoSede",
+      "AventeTitolo_Attributi_IscrittoCCIAA",
+      "AventeTitolo_Attributi_CCIAAProv",
+      "AventeTitolo_Attributi_CCIAANumero"] %}
+                        
+  {% set ERROR_LABELS=[   
+      ('block1' , 'Selezionare una delle opzioni')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
+
+
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+<input id="Metadati_num_int_firma_au" name="Metadati_num_int_firma_au" dynamic_value="#NschedeAllegateAu.value()" type="hidden"/>
+<input id="Metadati_num_int_firma_el" name="Metadati_num_int_firma_el" dynamic_value="#NschedeAllegateEl.value()" type="hidden"/>
+<input id="Metadati_firma_ult_part" name="Metadati_firma_ult_part" dynamic_value="#Tipo_Firma_ult_particelle.value()" type="hidden"/>
+
+
+
+
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+<input id="numeroallegati" name="numeroallegati" dynamic_value="parseInt(#Immobile_NumeroAltriImmobili.value()) /10" type="hidden" />
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG" name="GLOBO_modulofiglio_cGEN-IMMAGG" numero="Math.ceil(#numeroallegati.value())" obbligatorio="(#GEN_IMMAGG.checked() and #Tipo_richiedente1.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" numero="Math.ceil(#numeroallegati.value())" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-INTAGG-EL" name="GLOBO_modulofiglio_cGEN-INTAGG-EL" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-INTAGG-AU" name="GLOBO_modulofiglio_cGEN-INTAGG-AU" numero="#NschedeAllegateAu.value()" obbligatorio="#NschedeAllegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
