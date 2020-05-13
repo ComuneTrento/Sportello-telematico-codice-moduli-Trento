@@ -44,6 +44,7 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<!--
 <meta codice_allegato="GEN-CDI"
 urn_allegato="document:c_l378:allegato.copia.documento.identita"
 descrizione_estesa="Copia del documento di identità del richiedente"
@@ -120,7 +121,7 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
-
+-->
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
@@ -232,8 +233,8 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td>
         <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
-        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione2" name="Prot_concessione2" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione2" name="Data_concessione2" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
-        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione3" name="Prot_concessione3" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione3" name="Data_concessione3" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione2" name="Prot_concessione2" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione2" name="Data_concessione2" label="Data della concessione edilizia" type="date" size="8" enabled="#Permesso_costr1.checked()"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione3" name="Prot_concessione3" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione3" name="Data_concessione3" label="Data della concessione edilizia" type="date" size="8" enabled="#Permesso_costr1.checked()"/></p>
       </td>
     </tr>
     <tr>
@@ -300,15 +301,65 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <div class="simpatico-block simpatico-query-and-answer">
     
-  <input id="DirettoreLavori_checkobbligatorio" name="DirettoreLavori_checkobbligatorio" dynamic_check="#Progettista_direttorelavori.checked() == false" type="hidden" />
-  <input id="DirettoreLavori_checkabilitato" name="DirettoreLavori_checkabilitato" dynamic_check="#Progettista_direttorelavori.checked() == false" type="hidden" />
-  {{anagrafica_trento_uniformata.solo_nominativo("DirettoreLavori","<b>DATI DEL DIRETTORE DEI LAVORI</b>:") }}
+
+  <div type="nominativo_interessato">
+
+      <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="!#Progettista_direttorelavori.checked()">
+        <tbody>
+          <tr class="Rigaintestazione">
+            <td style="border-right:0px" colspan="4">
+              <p class="Labeltabella"  style="vertical-align:middle"><b>DATI DEL DIRETTORE DEI LAVORI</b>:
+              </p>
+            </td>
+          </tr>
+          <tr class="Rigaintestazioneridotta">
+            <td style="width:13%">
+              <p class="Labelcella" style="line-height:1.6;">Titolo</p>
+            </td>
+            <td style="width:33%">
+              <p class="Labelcella" style="line-height:1.6;">Cognome</p>
+            </td>
+            <td style="width:32%">
+              <p class="Labelcella" style="line-height:1.6;">Nome</p>
+            </td>
+            <td style="width:22%">
+              <p class="Labelcella" style="line-height:1.6;">Codice Fiscale</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <select class="inputNormal" id="Referente_TitoloPersona" name="Referente_TitoloPersona" style="width:100%;" label="Titolo del DirettoreLavori">
+                <option value=""></option>
+                <option value="Sig.">Sig.</option>
+                <option value="Sig.ra">Sig.ra</option>
+                <option value="Avv.">Avv.</option>
+                <option value="Dott.">Dott.</option>
+                <option value="Dott.ssa">Dott.ssa</option>
+                <option value="Arch.">Arch.</option>
+                <option value="Ing.">Ing.</option>
+                <option value="P.ind.">Perito</option>
+                <option value="Geom.">Geom.</option>
+              </select>
+            </td>
+            <td>
+              <input class="" id="Referente_Cognome" name="Referente_Cognome" style="width:100%" label="Cognome del soggetto interessato"/>
+            </td>
+            <td>
+              <input class="" id="Referente_Nome" name="Referente_Nome" style="width:100%" label="Nome del soggetto interessato"/>
+            </td>
+            <td>
+              <input class="" id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" style="width:100%" format="cf" label="Codice fiscale del soggetto interessato"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   <!--
-  <input id="Metadati_DirettoreLavori_TitoloPersona" name="Metadati_DirettoreLavori_TitoloPersona" dynamic_value="#DirettoreLavori_TitoloPersona.value()" />
-  <input id="Metadati_DirettoreLavori_Cognome" name="Metadati_DirettoreLavori_Cognome" dynamic_value="#DirettoreLavori_Cognome.value()" />
-  <input id="Metadati_DirettoreLavori_Nome" name="Metadati_DirettoreLavori_Nome" dynamic_value="#DirettoreLavori_Nome.value()" />
-  <input id="Metadati_DirettoreLavori_CodiceFiscale" name="Metadati_DirettoreLavori_CodiceFiscale" dynamic_value="#DirettoreLavori_CodiceFiscale.value()" />
+  <input id="Metadati_Referente_TitoloPersona" name="Metadati_Referente_TitoloPersona" dynamic_value="#Referente_TitoloPersona.value()" />
+  <input id="Metadati_Referente_Cognome" name="Metadati_Referente_Cognome" dynamic_value="#Referente_Cognome.value()" />
+  <input id="Metadati_Referente_Nome" name="Metadati_Referente_Nome" dynamic_value="#Referente_Nome.value()" />
+  <input id="Metadati_Referente_CodiceFiscale" name="Metadati_Referente_CodiceFiscale" dynamic_value="#Referente_CodiceFiscale.value()" />
   -->
 </div>
 
@@ -706,7 +757,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
         <td style="width:4%; vertical-align: top; text-align: center;">
-          <input id="GEN_DIR_LAV" name="GEN_DIR_LAV" dynamic_check="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#DirettoreLavori_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" type="checkbox" value="OBBLIGATORIO"/>
+          <input id="GEN_DIR_LAV" name="GEN_DIR_LAV" dynamic_check="#Referente_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#Referente_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" type="checkbox" value="OBBLIGATORIO"/>
         </td>
         <td style="background-color: #eeeeee;" colspan="2">
           <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore lavori</b>, firmato con <b>firma digitale</b></p>
@@ -991,9 +1042,10 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
-<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="#numero_anag_prog.value()"/>
-<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="#numero_anag_prog.value()"/>
-
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="1"/>
+<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" obbligatorio="#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="1"/>
+<!--TODO Aggiungere anagrafica direttore dei lavori che si basa su obbligatorio="!#Progettista_direttorelavori.checked() ? 'OBBLIGATORIO' : ''" -->
+<!--
 <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 <input id="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_autografa" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" />
 <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-Modulo_compilato_firma_elettronica" name="GLOBO_allegato_cGEN-Modulo_compilato_firma_elettronica" obbligatorio="#Tipo_Firma_modulo_compilato.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden"/>
@@ -1003,5 +1055,5 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" name="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" numero="#NumAltriAllegati.value()" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
-
+-->
 {% endblock content %}
