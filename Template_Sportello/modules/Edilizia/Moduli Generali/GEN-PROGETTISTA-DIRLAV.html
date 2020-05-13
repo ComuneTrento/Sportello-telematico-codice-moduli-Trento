@@ -1,5 +1,5 @@
-{% set CodiceModulo =  "GEN-PROGETTISTA" %}
-{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.progettista" %}
+{% set CodiceModulo =  "GEN-PROGETTISTA-DIRLAV" %}
+{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.progettista.direttore.lavori" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -7,7 +7,7 @@
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Modulo secondario - Anagrafica del progettista (firma digitale)"
+descrizione="Modulo secondario - Anagrafica del progettista e direttore lavori (firma elettronica)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
@@ -23,7 +23,7 @@ procura="NO,,"
 tipo_modulo="secondario"
 segnatura="Referente"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-PROGETTISTA"
+urlhelp="/modulistica/moduli/GEN-PROGETTISTA-DIRETT-LAV"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
@@ -40,19 +40,20 @@ tipo_mime="application/pdf"/>
 
 {% endblock meta %}
 
+
 {% block title %}
-   Anagrafica del progettista
+   Anagrafica del progettista e direttore lavori
 {% endblock title %}
 
 {% block content %}
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
-<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Referente_Cognome.value().toUpperCase() + ' - anagrafica progettista'"/>
+<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Referente_Cognome.value().toUpperCase() + ' - anagrafica progettista e direttore lavori'"/>
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-<h1 class="Modulo">Anagrafica del progettista (firma digitale)</h1>
+<h1 class="Modulo">Anagrafica del progettista e direttore dei lavori (firma digitale)</h1>
 
 <input id="recapito_obbligatorio" name="recapito_obbligatorio" dynamic_check="true" type="hidden" />
 <input id="pec_tecnico_obbligatoria" name="pec_tecnico_obbligatoria" dynamic_check="true" type="hidden" />
@@ -60,21 +61,30 @@ tipo_mime="application/pdf"/>
 
 <br>
 
-<!--
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <div id="Dichiarazione_direttore_lavori" name="Dichiarazione_direttore_lavori" label="Dichiarazione direttore lavori" mandatory_enabled="true"> </div>
+        <input group="Dichiarazione_direttore_lavori" id="Dichiarazione_direttore_lavori_check" name="Dichiarazione_direttore_lavori_check" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Il sottoscritto progettista, in quanto anche direttore dei lavori dichiara di aver preso conoscenza dei contenuti progettuali e della relazione geologica, geotecnica e idrogeologica eventualmente allegata al progetto, nonché degli adempimenti relativi all'utilizzo delle terre e rocce da scavo.</p>
+      </td>
+    </tr>
+    <!--
+    <tr>
+      <td style="vertical-align: center; width: 4%; text-align: center;">
         <div id="Dichiarazione_delega" name="Dichiarazione_delega" label="Dichiarazione direttore lavori" enabled="#Metadati_check_delega.value() == 'DELEGA'"> </div>
         <input group="Dichiarazione_delega" id="Dichiarazione_delega_check" name="Dichiarazione_delega_check" type="checkbox" value="1" dynamic_check="#Metadati_check_delega.value() == 'DELEGA'"/>
       </td>
       <td>
-        <p><input id="conferma_delega" name="conferma_delega" style="width:100%;" enabled="#Dichiarazione_delega_check.checked()" dynamic_value="#Dichiarazione_delega_check.checked() ? 'Dichiaro di essere consapevole di avere delega alla ricezione di tutte le comunicazioni relative al procedimento' : ''" readonly/></p>
+        <p><input id="conferma_delega" name="conferma_delega" style="width:100%;" enabled="#Dichiarazione_delega_check.checked()" dynamic_value="#Dichiarazione_delega_check.checked() ? 'Dichiaro inoltre di essere consapevole di avere delega del titolare per la ricezione di tutte le comunicazioni relative al procedimento.' : ''" readonly/></p>
       </td>
     </tr>
+    -->
   </tbody>
 </table>
--->
 
 <br>
 <br>
@@ -96,42 +106,40 @@ tipo_mime="application/pdf"/>
 <br>
 <br>
 
-<div class="simpatico-block">
-  <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
-    <tbody>
-      <tr>
-        <td style="width: 25%; text-align: center;">
-          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
-        </td>
-        <td style="width: 25%; text-align: center;">
-          <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
-        </td>
-        <td style="width: 50%; text-align: center; height: 1.5cm;">
-          <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
-        </td>
-      </tr>
-      <tr class="Rigaintestazioneridotta">
-        <td>
-          <p class="Labelcella" style="text-align: center">Luogo</p>
-        </td>
-        <td>
-          <p class="Labelcella" style="text-align: center">Data</p>
-        </td>
-        <td>
-          <p class="Labelcella" style="text-align: center">Il progettista <span style="font-size:95%"><i>(firma digitale)</i></span></p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+ <tbody>
+   <tr>
+     <td style="width: 25%; text-align: center;">
+       <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+     </td>
+     <td style="width: 25%; text-align: center;">
+       <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+     </td>
+     <td style="width: 50%; text-align: center; height: 1.5cm;">
+       <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+     </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta">
+     <td>
+       <p class="Labelcella" style="text-align: center">Luogo</p>
+     </td>
+     <td>
+       <p class="Labelcella" style="text-align: center">Data</p>
+     </td>
+     <td>
+       <p class="Labelcella" style="text-align: center">Il progettista/direttore dei lavori <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+     </td>
+   </tr>
+ </tbody>
+</table>
 
-  <br>
-  <br>
+<br>
+<br>
 
-  <p class="Modulo">
-    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
-  </p>
-</div>
 
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
 
 <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
@@ -147,5 +155,5 @@ tipo_mime="application/pdf"/>
 <input id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" type="hidden"/>
 <input id="Referente_TitoloPersona" name="Referente_TitoloPersona" type="hidden"/>
 
-{% endblock content %}
 
+{% endblock content %}
