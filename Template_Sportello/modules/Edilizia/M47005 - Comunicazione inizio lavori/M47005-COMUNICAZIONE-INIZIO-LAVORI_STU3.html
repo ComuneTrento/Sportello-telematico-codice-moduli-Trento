@@ -128,6 +128,12 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<meta codice_modulo_figlio="GEN-IMMAGG-CPS"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 <meta codice_modulo_figlio="M47005-MSEC01-INTAGG-INIZIO-LAVORI-AU"
 urn_modulo_figlio="document:c_l378:inizio.lavori;comunicazione.inizio.lavori;msec01.m47005.ulteriori.intestatari.firma.autografa"
 name="GLOBO_modulofiglio"
@@ -142,16 +148,6 @@ obbligatorio="DINAMICO"/>
 
 <meta codice_modulo_figlio="M47005-MSEC03-DOC-EDI-EL"
 urn_modulo_figlio="document:c_l378:inizio.lavori;comunicazione.inizio.lavori;msec03.m47005.doc.proc.edilizio.firma.elettronica"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
-
-<!--TODO 
-  - Modulo secondario - Anagrafica delle imprese coinvolte nel procedimento edilizio
-  - Modulo secondario - Anagrafica dei lavoratori autonomi coinvolti nel procedimento edilizio
-
-<meta codice_modulo_figlio="GEN-IMPRESE-AU"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.imprese.firma.autografa"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -173,7 +169,6 @@ urn_modulo_figlio="document:c_l378:inizio.lavori;comunicazione.inizio.lavori;mse
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
--->
 
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
@@ -189,8 +184,7 @@ tipo_mime="application/pdf"/>
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
-urn_report="report:CSP_SESSION_REPORT"
-/>
+urn_report="report:CSP_SESSION_REPORT"/>
 
 {% endblock meta %}
 
@@ -305,8 +299,8 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td>
         <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
-        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione2" name="Prot_concessione2" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione2" name="Data_concessione2" label="Data della concessione edilizia" type="date" size="8" enabled="#Permesso_costr1.checked()"/></p>
-        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione3" name="Prot_concessione3" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione3" name="Data_concessione3" label="Data della concessione edilizia" type="date" size="8" enabled="#Permesso_costr1.checked()"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione2" name="Prot_concessione2" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione2" name="Data_concessione2" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Prot_concessione2.value() != ''"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione3" name="Prot_concessione3" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione3" name="Data_concessione3" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Prot_concessione3.value() != ''"/></p>
       </td>
     </tr>
     <tr>
@@ -541,7 +535,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori1" name="Esecuzione_lavori1" type="checkbox" value="1"/>
       </td>
       <td colspan="3">
-        <p style="line-height:1.6;">Numero imprese coinvolte: <input class="" format="number" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2"/></p>
+        <p style="line-height:1.6;">Numero imprese coinvolte: <input class="" type="number" min="0" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2" style="width: 6%"/></p>
       </td>
     </tr>
     
@@ -583,7 +577,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori2" name="Esecuzione_lavori2" type="checkbox" value="2"/>
       </td>
       <td colspan="3">
-        <p style="line-height:1.6;">Numero lavoratori autonomi coinvolti: <input class="" format="number" id="numero_lavoratori_autonomi" name="numero_lavoratori_autonomi" label="numero lavoratori autonomi coinvolti" mandatory_enabled="#Esecuzione_lavori2.checked()" size="2"/></p>
+        <p style="line-height:1.6;">Numero lavoratori autonomi coinvolti: <input class="" type="number" min="0" id="numero_lavoratori_autonomi" name="numero_lavoratori_autonomi" label="numero lavoratori autonomi coinvolti" mandatory_enabled="#Esecuzione_lavori2.checked()" size="2" style="width: 6%"/></p>
       </td>
     </tr>
 
@@ -913,15 +907,17 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: top; text-align: center;" rowspan="3">
+        <td style="vertical-align: top; text-align: center;" >
           <input id="Anagrafica_imprese" name="Anagrafica_imprese" dynamic_check="#Esecuzione_lavori1.checked()" enabled="#Esecuzione_lavori1.checked()" type="checkbox" value="OBBLIGATORIO"/>   
         </td>
         <td style="background-color: #eeeeee;" colspan="2">
-          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica delle <input id="N_imprese" name="N_imprese" dynamic_value="#numero_imprese.value()" label="Numero imprese coinvolte" style="width: 8%; text-align: center;" enabled="#Esecuzione_lavori1.checked()" readonly/> imprese</b> coinvolte nel procedimento edilizio</p>
+          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica delle imprese</b> coinvolte nel procedimento edilizio</p>
         </td>
         <td style="background-color: #eeeeee;">
+          <p style="line-height: 1.6; text-align: center;"> <input id="N_imprese" name="N_imprese" dynamic_value="#numero_imprese.value()" label="Numero imprese coinvolte" style="width: 90%; text-align: center;" enabled="#Esecuzione_lavori1.checked()"/></p>
         </td>
       </tr>
+      <!--
       <tr>
         <td style="vertical-align: top; text-align: center;">
           <div id="check_imprese" name="check_imprese" label="Indicare numero delle imprese nel procedimento edilizio" mandatory_enabled="#Anagrafica_imprese.checked()"></div>
@@ -945,6 +941,7 @@ urn_report="report:CSP_SESSION_REPORT"
           <p style="line-height: 1.6; text-align: center;"><input class="" format="number" id="Nanag_imprese_allegateEl" name="Nanag_imprese_allegateEl" label="Numero anagrafiche imprese firmate elettronicamente" mandatory_enabled="#check_imprese_el.checked()" style="width: 90%; text-align: center;"/></p>
         </td>
       </tr>
+      -->
       <tr>
         <td style="vertical-align: top; text-align: center;" rowspan="3">
           <input id="Anagrafica_lavoratori_autonomi" name="Anagrafica_lavoratori_autonomi" dynamic_check="#Esecuzione_lavori2.checked()" enabled="#Esecuzione_lavori2.checked()" type="checkbox" value="OBBLIGATORIO"/>   
@@ -1134,19 +1131,18 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-AU" name="GLOBO_modulofiglio_cGEN-IMMAGG-AU" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" numero="#numero_ult_part.value()" />
 <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" obbligatorio="#Tipo_Firma_ult_particelle.value() == 'Firmato con firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" numero="#numero_ult_part.value()"/>
+<input id="GLOBO_modulofiglio_cGEN-IMMAGG-CPS" name="GLOBO_modulofiglio_cGEN-IMMAGG-CPS" obbligatorio="#Tipo_Firma_ult_particelle.value() == '' ? 'OBBLIGATORIO' : ''" type="hidden" numero="#numero_ult_part.value()"/>
 
 <input id="GLOBO_modulofiglio_cM47005-MSEC01-INTAGG-INIZIO-LAVORI-AU" name="GLOBO_modulofiglio_cM47005-MSEC01-INTAGG-INIZIO-LAVORI-AU" obbligatorio="#GEN_INTAGG_AU.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="#NschedeAllegateAu.value()"/>
 <input id="GLOBO_modulofiglio_cM47005-MSEC02-INTAGG-INIZIO-LAVORI-EL" name="GLOBO_modulofiglio_cM47005-MSEC02-INTAGG-INIZIO-LAVORI-EL" obbligatorio="#GEN_INTAGG_EL.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="#NschedeAllegateEl.value()"/>
 
 <input id="GLOBO_modulofiglio_cM47005-MSEC03-DOC-EDI-EL" name="GLOBO_modulofiglio_cM47005-MSEC03-DOC-EDI-EL" obbligatorio="#Doc_proc_edi.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="1"/>
 
-<!--
-<input id="GLOBO_modulofiglio_cGEN-IMPRESE-EL" name="GLOBO_modulofiglio_cGEN-IMPRESE-EL" numero="#Nanag_imprese_allegateEl.value()" obbligatorio="#Nanag_imprese_allegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_modulofiglio_cGEN-IMPRESE-AU" name="GLOBO_modulofiglio_cGEN-IMPRESE-AU" numero="#Nanag_imprese_allegateAu.value()" obbligatorio="#Nanag_imprese_allegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_modulofiglio_cM47005-MSEC05-LAV-AUTON-EL" name="GLOBO_modulofiglio_cM47005-MSEC05-LAV-AUTON-EL" numero="#Nanag_lav_allegateEl.value()" obbligatorio="#Nanag_lav_allegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-<input id="GLOBO_modulofiglio_cM47005-MSEC04-LAV-AUTON-AU" name="GLOBO_modulofiglio_cM47005-MSEC04-LAV-AUTON-AU" numero="#Nanag_lav_allegateAu.value()" obbligatorio="#Nanag_lav_allegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cGEN-IMPRESE-EL" name="GLOBO_modulofiglio_cGEN-IMPRESE-EL" numero="#numero_imprese.value()" obbligatorio="#numero_imprese.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden"/>
 
--->
+<input id="GLOBO_modulofiglio_cM47005-MSEC05-LAV-AUTON-EL" name="GLOBO_modulofiglio_cM47005-MSEC05-LAV-AUTON-EL" numero="#Nanag_lav_allegateEl.value()" obbligatorio="#Nanag_lav_allegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden"/>
+<input id="GLOBO_modulofiglio_cM47005-MSEC04-LAV-AUTON-AU" name="GLOBO_modulofiglio_cM47005-MSEC04-LAV-AUTON-AU" numero="#Nanag_lav_allegateAu.value()" obbligatorio="#Nanag_lav_allegateAu.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden"/>
+
 
 <!--Metadati da passare-->
 {{ utils.passaggio_metadati() }}
