@@ -609,115 +609,52 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <!--------------------INIZIO RACCOLTA ANAGRAFICA IMPRESE E LAVORATORI---------------------->
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="5">
-        <p style="line-height:1.6;"><b>I lavori vengono eseguiti</b></p>
+      <td colspan="6">
+        <p style="line-height:1.6;"><b>IMPRESA ESECUTRICE</b></p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <div id="Modalita_lavori" name="Modalita_lavori" label="Modalita lavori" mandatory_enabled="true"> </div>
         <input id="Modalita_lavori1" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="1" />
       </td>
+      <td colspan="5">
+        <p style="line-height:1.6;">il titolare dichiara che, in quanto opere di modesta entità che non interessano le specifiche normative di settore, i lavori saranno eseguiti in economia, senza alcun affidamento a ditte esterne</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
+        <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2"/>
+      </td>
+      <td colspan="5">
+        <p style="line-height:1.6;">i lavori vengono eseguiti con le imprese / lavoratori autonomi come di seguito indicato:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <div id="Tipo_Esecuzione_lavori" name="Tipo_Esecuzione_lavori" label="Lavori svolti mediante:" mandatory="#Modalita_lavori2.checked()"> </div>
+        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori1" name="Esecuzione_lavori1" type="checkbox" value="1" enabled="#Modalita_lavori2.checked()"/>
+      </td>
       <td colspan="4">
-        <p style="line-height:1.6;">in economia</p>
-        <span style="font-size:80%;"><i>(trattasi di lavori eseguiti direttamente dal titolare del provvedimento senza intervento di imprese esecutrici dei lavori o di lavoratori autonomi)</i></span>
+        <p style="line-height:1.6;">Numero imprese coinvolte per le quali verrà compilata anagrafica completa: <input class="" type="number" min="0" style="width: 6%" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2" style="text-align: center;"/></p>
+        <p style="line-height:1.6; font-size: 85%;"><i><u><b>Nota bene:</b> per l'anagrafica completa si dovrà compilare apposito modulo secondario automaticamente generato dal sistema</u></i></p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="23">
-        <input id="Modalita_lavori2" group="Modalita_lavori" name="Modalita_lavori" type="radio" value="2" />
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori2" name="Esecuzione_lavori2" type="checkbox" value="2" enabled="#Modalita_lavori2.checked()"/>
       </td>
       <td colspan="4">
-        <p style="line-height:1.6;">con le imprese / lavoratori autonomi come di seguito indicato:</p>
+        <p style="line-height:1.6;">Numero lavoratori autonomi coinvolti per i quali verrà compilata anagrafica completa: <input class="" type="number" min="0" style="width: 6%" id="numero_lavoratori_autonomi" name="numero_lavoratori_autonomi" label="numero lavoratori autonomi coinvolti" mandatory_enabled="#Esecuzione_lavori2.checked()" size="2" style="text-align: center;"/></p>
+        <p style="line-height:1.6; font-size: 85%;"><i><u><b>Nota bene:</b> per l'anagrafica completa si dovrà compilare apposito modulo secondario automaticamente generato dal sistema</u></i></p>
       </td>
     </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="11">
-        <div id="Tipo_Esecuzione_lavori" name="Tipo_Esecuzione_lavori" label="Lavori svolti mediante:" mandatory_enabled="#Modalita_lavori2.checked()"> </div>
-        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori1" name="Esecuzione_lavori1" type="checkbox" value="1"/>
-      </td>
-      <td colspan="3">
-        <p style="line-height:1.6;">Numero imprese coinvolte: <input class="" type="number" min="0" id="numero_imprese" name="numero_imprese" label="numero imprese coinvolte" mandatory_enabled="#Esecuzione_lavori1.checked()" size="2" style="width: 6%"/></p>
-      </td>
-    </tr>
-    
-    {% macro Ragione_sociale_imprese_coinvolte(prefix) %}
-    {% set prefix = prefix|string %}
-       
-    <tr class="Rigaintestazioneridotta">
-      <td colspan="2">
-        <p class="Labelcella">Ragione sociale</p>
-      </td>
-      <td>
-        <p class="Labelcella">P.IVA/Codice Fiscale</p>
-      </td>
-    </tr>
-    <tr enabled="#Esecuzione_lavori1.checked()" mandatory="#numero_imprese.value() >= parseInt({{ prefix }})">
-      <!--
-      <td colspan="2">
-        <input class="inputNormal" id="Ragione_sociale{{ prefix }}" name="Ragione_sociale{{ prefix }}" style="width: 100%;" label="Ragione sociale imprese" enabled="#Esecuzione_lavori1.checked()" mandatory="#PIVA{{ prefix }}.value() != ''">
-      </td>
-      <td>
-          <input class="inputNormal" id="PIVA{{ prefix }}" name="PIVA{{ prefix }}" style="width: 100%;" label="Partita IVA / Codice fiscale" enabled="#Esecuzione_lavori1.checked()" mandatory="#Ragione_sociale{{ prefix }}.value() != ''">
-      </td>
-      -->
-      <td colspan="2" >
-        <input class="inputNormal" id="Ragione_sociale{{ prefix }}" name="Ragione_sociale{{ prefix }}" style="width: 100%;" label="Ragione sociale imprese" >
-      </td>
-      <td>
-        <input class="inputNormal" id="PIVA{{ prefix }}" name="PIVA{{ prefix }}" style="width: 100%;" label="Partita IVA / Codice fiscale">
-      </td>
-    </tr>
-    {%- endmacro %}
-        
-    {% for i in range(1, 6) %}
-      {{ Ragione_sociale_imprese_coinvolte(i) }}
-    {% endfor %}
-
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="11">
-        <input group="Tipo_Esecuzione_lavori" id="Esecuzione_lavori2" name="Esecuzione_lavori2" type="checkbox" value="2"/>
-      </td>
-      <td colspan="3">
-        <p style="line-height:1.6;">Numero lavoratori autonomi coinvolti: <input class="" type="number" min="0" id="numero_lavoratori_autonomi" name="numero_lavoratori_autonomi" label="numero lavoratori autonomi coinvolti" mandatory_enabled="#Esecuzione_lavori2.checked()" size="2" style="width: 6%"/></p>
-      </td>
-    </tr>
-
-    {% macro Lavoratori_autonomi_coinvolti(prefix) %}
-    {% set prefix = prefix|string %}
-       
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella">Cognome</p>
-      </td>
-      <td>
-        <p class="Labelcella">Nome</p>
-      </td>
-      <td>
-        <p class="Labelcella">P.IVA/Codice Fiscale</p>
-      </td>
-    </tr>
-    <tr enabled="#Esecuzione_lavori2.checked()" mandatory="#numero_lavoratori_autonomi.value() >= parseInt({{ prefix }})">
-      <td>
-        <input class="inputNormal" id="Cognome_lav_aut{{ prefix }}" name="Cognome_lav_aut{{ prefix }}" style="width: 100%;" label="Cognome lavoratore autonomo" >
-      </td>
-      <td>
-        <input class="inputNormal" id="Nome_lav_aut{{ prefix }}" name="Nome_lav_aut{{ prefix }}" style="width: 100%;" label="Nome lavoratore autonomo">
-      </td>
-      <td>
-        <input class="inputNormal" id="CF_lav_aut{{ prefix }}" name="CF_lav_aut{{ prefix }}" style="width: 100%;" label="Codice fiscale lavoratore autonomo">
-      </td>
-    </tr>
-    {%- endmacro %}
-        
-    {% for i in range(1, 6) %}
-      {{ Lavoratori_autonomi_coinvolti(i) }}
-    {% endfor %}
   </tbody>
 </table>
+
 <!--------------------FINE RACCOLTA ANAGRAFICA IMPRESE E LAVORATORI---------------------->
 
 <br>
@@ -726,7 +663,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!--------------------INIZIO DICHIARAZIONE ESCLUSIVITA' TITOLO---------------------->
 
 <div class="Modulo">
-  <table class="simpatico-block simpatico-query-and-answer" name="Nota_bene" style="border: 1px solid grey">
+  <table class="Modulo simpatico-block simpatico-query-and-answer" name="Nota_bene" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td>
@@ -1177,7 +1114,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <!--------------------INIZIO DICHIARAZIONE CONSERVAZIONE ORIGINALE---------------------->
 
-<table class="Modulo" style="border: 1px solid grey">
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="width: 4%; vertical-align: center; text-align: center;">
