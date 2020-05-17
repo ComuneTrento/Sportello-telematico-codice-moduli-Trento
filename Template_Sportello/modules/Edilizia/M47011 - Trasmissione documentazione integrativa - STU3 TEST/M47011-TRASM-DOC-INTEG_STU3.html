@@ -1,0 +1,751 @@
+{% set CodiceModulo = "M47011-TRASM-DOC-INTEG" %}
+{% set Urn =  "document:c_l378:m47011.trasmissione.documentazione.integrativa" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Trasmissione documentazione integrativa"
+descrizione="Trasmissione di documentazione integrativa (SCIA)"
+destinatario_amministrazione=""
+destinatario_ufficio="OE7NEF"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="Titolare"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M47011-TRASM-DOC-INTEG"
+verifica_pagamento="NO"
+versione="1.0|06/04/2016"
+generabile_da="M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA,M47750-AUTORIZZAZIONE-CPC" />
+
+<meta codice_allegato="GEN-ALLEGATI-VARI"
+urn_allegato="document:c_l378:allegato.allegati.vari"
+descrizione_estesa="Allegato - Documentazione integrativa non firmata richiesta"
+filename="Integrazione.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-ALLEGATI-VARI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-ALLEGATI-VARI-FIRMATI"
+urn_allegato="document:c_l378:allegato.allegati.vari.firmati"
+descrizione_estesa="Allegato - Documentazione integrativa firmata richiesta"
+filename="Integrazione_firmata.pdf"
+firmato="SI"
+firmatari="Progettista_CodiceFiscale"
+firmatari_label="Il progettista / tecnico abilitato incaricato"
+istruzioni="/modulistica/moduli/GEN-ALLEGATI-VARI-FIRMATI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+
+{% block title %}M47011-TRASMISSIONE-DOCUMENTAZIONE-INTEGRATIVA{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input id="Oggetto" name="Oggetto" dynamic_value="#Oggetto_parte1.value() + #Oggetto_parte2.value()"type="hidden" />
+<input id="Oggetto_parte1" name="Oggetto_parte1" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + '(' + #AventeTitolo_CodiceFiscale.value() + ') - '"type="hidden" />
+<input id="Oggetto_parte2" name="Oggetto_parte2" dynamic_value="#Tipo_istanza.value() + ' - Trasmissione documentazione integrativa'"type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">TRASMISSIONE DOCUMENTAZIONE INTEGRATIVA</h1>
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;"><b>La compilazione del modulo seguente viene eseguita da:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Tipo_compilante" name="Tipo_compilante" style="width:100%;"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border:1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="6">
+        <p style="line-height:1.6;"><b>DATI DEL TITOLARE</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2" style="width:33%;">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td colspan="2" style="width:33%;">
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td colspan="2" style="width:33%;">
+        <p class="Labelcella">Codice Fiscale</p>
+      </td>
+     </tr>
+     <tr>
+      <td colspan="2" style="width:33%;">
+        <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome del titolare" mandatory_enabled="true"/>
+      </td>
+      <td colspan="2" style="width:33%;">
+        <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome del titolare" mandatory_enabled="true"/>
+      </td>
+      <td colspan="2" style="width:33%;">
+        <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del titolare" mandatory_enabled="true"/>
+      </td>
+     </tr>
+     <tr class="Rigaintestazioneridotta" style="border-top:0px">
+      <td style="width:20%;">
+        <p class="Labelcella">Data di nascita</p>
+      </td>
+      <td style="width:10;">
+        <p class="Labelcella">Sesso (M/F)</p>
+      </td>
+      <td colspan="2">
+        <p class="Labelcella">Nazionalità</p>
+      </td>
+      <td colspan="2">
+        <p class="Labelcella">Luogo di nascita</p>
+      </td>
+     </tr>
+     <tr>
+      <td style="width:20%;">
+        <input class="" id="AventeTitolo_DataNascita" name="AventeTitolo_DataNascita" style="width:100%;" format="date" label="Data di nascita del titolare" enabled="true"/>
+      </td>
+      <td style="width:10%;">
+        <select class="inputNormal" id="AventeTitolo_Sesso" name="AventeTitolo_Sesso" style="width:100%;" label="Sesso del titolare" enabled="true">
+          <option value=""></option>
+          <option value="M">M</option>
+          <option value="F">F</option>
+        </select>
+      </td>
+      <td colspan="2">
+        <input class="" id="AventeTitolo_Cittadinanza" name="AventeTitolo_Cittadinanza" style="width:100%;" label="Nazionalità" enabled="true"/>
+      </td>
+      <td colspan="2">
+        <input class="" id="AventeTitolo_LuogoNascita" name="AventeTitolo_LuogoNascita" style="width:100%;" label="Luogo di nascita del titolare" enabled="true"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey" mandatory="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="5">
+        <p style="line-height:1.6;"><b>Residente a: </b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:10%;">
+        <p class="Labelcella">Provincia</p>
+      </td>
+      <td style="width:33%;">
+        <p class="Labelcella">Comune</p>
+      </td>
+      <td style="width:33%;">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+      <td style="width:12%;">
+        <p class="Labelcella">Civico</p>
+      </td>
+      <td style="width:12%;">
+        <p class="Labelcella">CAP</p>
+      </td>
+   </tr>
+   <tr>
+     <td style="width:10%;">
+      {{ utils.provincie("AventeTitolo_ProvinciaResidenza", "Provincia di residenza")}}
+     </td>
+     <td style="width:33%;">
+       <select class="inputNormal" id="AventeTitolo_ComuneResidenza" name="AventeTitolo_ComuneResidenza" style="width:100%" label="Comune di residenza del titolare" dynamic_value="getComuniFromProvincia( #AventeTitolo_ProvinciaResidenza.value(), 'AventeTitolo_ComuneResidenza')" enabled="true"></select>
+     </td>
+     <td style="width:33%;">
+      <input class="" id="AventeTitolo_ViaResidenza" name="AventeTitolo_ViaResidenza" style="width:100%;" label="Via di residenza del titolare" enabled="true"/>
+     </td>
+     <td style="width:12%;">
+      <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" style="width:100%;" label="Civico di residenza del titolare" maxlength="10" enabled="true"/>
+     </td>
+     <td style="width:12%;">
+      <input class="" id="AventeTitolo_CAPResidenza" name="AventeTitolo_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del titolare" mandatory="#AventeTitolo_ProvinciaResidenza.value() != 'EE'" enabled="true"/>
+     </td>
+   </tr>
+ </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey">
+ <tbody>
+   <tr class="Rigaintestazioneridotta">
+     <td colspan="4">
+       <p class="Labelcella"><b>Recapito</b></p>
+     </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta">
+     <td style="width:20%;">
+       <p class="Labelcella">Telefono fisso</p>
+     </td>
+     <td style="width:20%;">
+       <p class="Labelcella">Cellulare</p>
+     </td>
+     <td style="width:30%;">
+       <p class="Labelcella">E-mail <i>(posta elettronica ordinaria)</i></p>
+     </td>
+     <td style="width:30%;">
+       <p class="Labelcella">E-mail PEC <i>(domicilio digitale)</i></p>
+     </td>
+   </tr>
+   <tr>
+     <td style="width:20%;">
+       <input class="inputNormal" id="AventeTitolo_Tel_Fisso" label="Tel_Fisso del titolare" name="AventeTitolo_Tel_Fisso" style="width:100%" enabled="true"/>
+     </td>
+     <td style="width:20%;">
+       <input class="inputNormal" id="AventeTitolo_Telefono" label="Telefono del titolare" name="AventeTitolo_Telefono" style="width:100%" mandatory_enabled="true"/>
+     </td>
+     <td style="width:30%;">
+       <input class="inputNormal" format="email" id="AventeTitolo_EMail" label="E-mail ordinaria del titolare" name="AventeTitolo_EMail" style="width:100%;" enabled="true"/>
+     </td>
+     <td style="width:30%;">
+       <input class="inputNormal" format="pec" id="AventeTitolo_EMailPEC" label="E-mail PEC del titolare" name="AventeTitolo_EMailPEC" style="width:100%;" enabled="true"/>
+     </td>
+   </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
+ <tbody>
+   <tr class="Rigaintestazione">
+     <td>
+       <p style="line-height:1.6;"><b>Ruolo del titolare</b></p>
+     </td>
+   </tr>
+   <tr>
+     <td>
+       <select class="inputNormal" id="AventeTitolo_Ruolo" name="AventeTitolo_Ruolo" style="width:100%;" label="Ruolo del titolare" enabled="true">
+         <option value=""></option>
+         <option value="Persona fisica">Persona fisica</option>
+         <option value="Legale rappresentante">Legale rappresentante</option>
+         <option value="Amministratore di condominio">Amministratore di condominio</option>
+         <option value="Procuratore">Procuratore</option>
+         <option value="Amministratore di sostegno">Amministratore di sostegno</option>
+       </select>
+     </td>
+   </tr>
+ </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" style="border:1px solid grey">
+ <tbody>
+   <tr class="Rigaintestazioneridotta">
+     <td style="width:75%;">
+       <p class="Labelcella"><b>Denominazione/Ragione sociale (questa sezione deve essere compilata se il dichiarante non è la persona fisica)</b></p>
+     </td>
+     <td style="width:25%;">
+       <p class="Labelcella">Tipologia</p>
+     </td>
+   </tr>
+   <tr mandatory_enabled="#AventeTitolo_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])">
+     <td style="width:75%;">
+       <input class="" id="AventeTitolo_Denominazione" name="AventeTitolo_Denominazione" style="width:100%" label="Denominazione/Ragione sociale"/>
+     </td>
+     <td style="width:25%;">
+       {{ utils.tipologiaimpresa('AventeTitolo_TipologiaImpresa')}}
+     </td>
+   </tr>
+ </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey">
+ <tbody>
+   <tr class="Rigaintestazioneridotta">
+     <td colspan="6">
+       <p class="Labelcella"><b>Sede legale</b></p>
+     </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta">
+     <td style="width:10%;">
+       <p class="Labelcella">Provincia</p>
+     </td>
+     <td style="width:33%;">
+       <p class="Labelcella">Comune</p>
+     </td>
+     <td style="width:33%;">
+       <p class="Labelcella">Indirizzo</p>
+     </td>
+     <td style="width:12%;">
+       <p class="Labelcella">Civico</p>
+     </td>
+     <td style="width:12%;">
+       <p class="Labelcella">CAP</p>
+     </td>
+   </tr>
+   <tr mandatory_enabled="#AventeTitolo_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])">
+     <td>
+       {{utils.provincie( 'AventeTitolo_ProvinciaSede', label="Provincia della sede legale")}}
+     </td>
+     <td>
+       <select class="inputNormal" id="AventeTitolo_ComuneSede" name="AventeTitolo_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #AventeTitolo_ProvinciaSede.value(), 'AventeTitolo_ComuneSede')">
+       </select>
+     </td>
+     <td>
+       <input class="" id="AventeTitolo_ViaSede" name="AventeTitolo_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
+     </td>
+     <td>
+       <input class="" id="AventeTitolo_CivicoSede" name="AventeTitolo_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
+     </td>
+     <td>
+       <input class="" id="AventeTitolo_CAPSede" name="AventeTitolo_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale"/>
+     </td>
+   </tr>
+ </tbody>
+</table>
+
+<table class="Modulo" style="border:1px solid grey">
+ <tbody>
+   <tr class="Rigaintestazioneridotta">
+     <td colspan="2">
+       <p class="Labelcella">Codice Fiscale / Partita IVA </p>
+     </td>
+     <td>
+       <p class="Labelcella">E-mail PEC (domicilio digitale)</p>
+     </td>
+   </tr>
+   <tr mandatory_enabled="#AventeTitolo_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])">
+     <td colspan="2">
+       <input class="" id="AventeTitolo_CFPI" name="AventeTitolo_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva"/>
+     </td>
+     <td>
+       <input class="" id="AventeTitolo_APEC" name="AventeTitolo_APEC" label="PEC Azienda" style="width:100%;" format="pec" />
+     </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta">
+     <td colspan="2">
+       <p class="Labelcella">Telefono fisso</p>
+     </td>
+     <td>
+       <p class="Labelcella">Cellulare</p>
+     </td>
+   </tr>
+   <tr mandatory_enabled="#AventeTitolo_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])">
+     <td colspan="2">
+       <input class="" id="AventeTitolo_Tel_FissoSede" name="AventeTitolo_Tel_FissoSede" label="Tel_Fisso della sede legale" style="width:100%;" mandatory="false"/>
+     </td>
+     <td>
+       <input class="" id="AventeTitolo_TelefonoSede" name="AventeTitolo_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>        
+     </td>
+   </tr>
+   <tr class="Rigaintestazioneridotta">
+     <td style="width:50%">
+       <p class="Labelcella">Iscrizione al Registro Imprese della Camera di Commercio</p>
+     </td>
+     <td style="width:9%">
+       <p class="Labelcella">Provincia</p>
+     </td>
+     <td style="width:41%">
+       <p class="Labelcella">Numero iscrizione</p>
+     </td>
+   </tr>
+   <tr>
+     <td>
+       <select class="inputNormal" id="AventeTitolo_Attributi_IscrittoCCIAA" name="AventeTitolo_Attributi_IscrittoCCIAA" label="Iscrizione al Registro Imprese della Camera di Commercio" style="width:100%" mandatory_enabled="#AventeTitolo_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])">
+         <option value=""></option>
+         <option value="iscritto">iscritto</option>
+         <option value="in attesa di iscrizione">in attesa di iscrizione</option>
+         <option value="non tenuto all'iscrizione">non tenuto all'iscrizione</option>
+       </select>
+     </td>
+     <td mandatory_enabled="#AventeTitolo_Attributi_IscrittoCCIAA.check_value([ 'iscritto','in attesa di iscrizione' ])">
+       {{utils.provincie( 'AventeTitolo_Attributi_CCIAAProv', label="Provincia iscrizione al Registro Imprese della Camera di Commercio")}}
+     </td>
+     <td mandatory_enabled="#AventeTitolo_Attributi_IscrittoCCIAA.check_value([ 'iscritto' ])">
+       <input class="" id="AventeTitolo_Attributi_CCIAANumero" name="AventeTitolo_Attributi_CCIAANumero" label="Numero iscrizione al Registro Imprese della Camera di Commercio" style="width:100%"/>
+     </td>
+   </tr>
+ </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="line-height:1.6;"><b>DATI DEL PROGETTISTA / TECNICO ABILITATO INCARICATO</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:13%">
+        <p class="Labelcella">Titolo</p>
+      </td>
+      <td style="width:31%">
+        <p class="Labelcella">Cognome</p>
+      </td>
+      <td>
+        <p class="Labelcella">Nome</p>
+      </td>
+      <td style="width:25%">
+        <p class="Labelcella">Codice Fiscale</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <select class="inputNormal" id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" style="width:100%;" label="Titolo del progettista / tecnico abilitato" enabled="true">
+          <option value=""></option>
+          <option value="Sig.">Sig.</option>
+          <option value="Sig.ra">Sig.ra</option>
+          <option value="Dott.">Dott.</option>
+          <option value="Dott.ssa">Dott.ssa</option>
+          <option value="Prof.">Prof.</option>
+          <option value="Prof.ssa">Prof.ssa</option>
+          <option value="Arch.">Arch.</option>
+          <option value="Ing.">Ing.</option>
+          <option value="Comm.">Comm.</option>
+          <option value="Avv.">Avv.</option>
+          <option value="Geom.">Geom.</option>
+        </select>
+      </td>
+      <td>
+        <input class="" id="Progettista_Cognome" name="Progettista_Cognome" style="width:100%;" label="Cognome del progettista / tecnico abilitato" enabled="true"/>
+      </td>
+      <td>
+        <input class="" id="Progettista_Nome" name="Progettista_Nome" style="width:100%;" label="Nome del progettista / tecnico abilitato" enabled="true"/>
+      </td>
+      <td>
+        <input class="" id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" style="width:100%;" format="cf" label="Codice fiscale del tecnico abilitato" enabled="true"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;">
+          <b>In riferimento all'istanza</b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <p style="line-height:1.6;">Intestata a: <input class="" label="Intestatario" id="Intestatario_istanza" name="Intestatario_istanza" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" style="width:89%;"/> </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td class="Labelcella">
+        <p style="font-size:75%;">Tipologia istanza</p>
+      </td>
+      <td class="Labelcella">
+        <p style="font-size:75%;">Num. Protocollo</p>
+      </td>
+      <td class="Labelcella">
+        <p style="font-size:75%;">Data</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <select class="inputNormal" id="Tipo_istanza" name="Tipo_istanza" style="width:100%" label="Tipo istanza" mandatory_enabled="true">
+          <option value=""></option>
+          <option value="CPC">Domanda di autorizzazione paesaggistica (CPC)</option>
+          <!--<option value="Comunicazione inizio lavori">Comunicazione di inizio lavori</option>-->    
+          <!--<option value="Ultimazione lavori">Dichiarazione di ultimazione lavori</option>-->
+          <option value="SCIA">Segnalazione certificata di inizio attività (SCIA)</option> 
+          <!--<option value="Comunicazione opere libere">Comunicazione opere libere</option>-->  
+          <!--<option value="Conformita edifici">Certificato di conformità edifici esistenti</option>-->  
+          <!--<option value="Conformità impianti">Dichiarazione di conformità impianti</option>-->  
+        </select>
+      </td>
+      <td>
+        <input class="" label="Numero protocollo" id="Numero_protocollo" name="Numero_protocollo" mandatory_enabled="true" style="width:100%"/>
+      </td>
+      <td>
+        <input class="" label="Data protocollazione" id="Data_protocollazione" name="Data_protocollazione" format="date" mandatory_enabled="true" style="width:100%"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!--<input class="" id="cf_firmatario_integr" name="cf_firmatario_integr" dynamic_value="#Tipo_istanza.value() != 'Conformita edifici' ? #AventeTitolo_CodiceFiscale.value() : #Progettista_CodiceFiscale.value()" style="width:90%;"/>-->
+<input class="" id="nominativo_firmatario_integr" name="nominativo_firmatario_integr" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%;" type="hidden"/>
+<input class="" id="Titolare_CodiceFiscale" name="Titolare_CodiceFiscale" dynamic_value="#Progettista_CodiceFiscale.value()" style="width:90%;" type="hidden"/>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="6">
+        <p style="line-height:1.6;"><b>Relativamente alla particella:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 30%;">
+        <p class="Labelcella">Tipo</p>
+      </td>
+      <td style="width: 30%;">
+        <p class="Labelcella">Comune catastale</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Numero</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Barra</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Porzione Materiale</p>
+      </td>
+      <td style="width: 10%;">
+        <p  class="Labelcella">Subalterno</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%;" class="" id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" label="Tipo particella intervento" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%;" class="" id="Immobile_ComuneCatastale_esteso" name="Immobile_ComuneCatastale_esteso" label="Comune catastale particella intervento" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Immobile_CatNumero" name="Immobile_CatNumero" label="Numero particella intervento" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Immobile_CatBarra" name="Immobile_CatBarra" label="Barra particella intervento" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Immobile_CatPM" name="Immobile_CatPM" label="Porzione materiale particella intervento" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Immobile_CatSubalterno" name="Immobile_CatSubalterno" label="Subalterno particella intervento" enabled="true">
+      </td>  
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p style="line-height:1.6;"><b>Ubicazione</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 10%;">
+        <p class="Labelcella">Prov.</p>
+      </td>
+      <td style="width: 25%;">
+        <p class="Labelcella">Comune</p>
+      </td>
+      <td style="width: 45%;">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Civico</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Barra</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Prov_particella_intervento" name="Prov_particella_intervento" label="Provincia particella intervento" dynamic_value="'TN'">
+      </td>
+      <td>
+        <input style="width:100%;" class="" id="Immobile_Comune" name="Immobile_Comune" label="Comune particella intervento" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%;" class="" id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" label="Indirizzo particella intervento" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Immobile_numeroCivico" name="Immobile_numeroCivico" label="Civico particella intervento" enabled="true">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Immobile_Barracivico" name="Immobile_Barracivico" label="Barra civico particella intervento" enabled="true">
+      </td>   
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<h1 class="Modulo">TRASMETTE LA SEGUENTE DOCUMENTAZIONE</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <textarea class="inputNormal" id="Documentazione_integrativa" name="Documentazione_integrativa" label="Documentazione_integrativa" style="width:100%;height:5cm" mandatory_enabled="true" maxlength="1000">
+        </textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width:4%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+      </td>
+      <td style="width:15%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Indicare il numero di documenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <div id="Allegati_richiesti" name="Allegati_richiesti" label="Allegati richiesti" mandatory_enabled="true"> </div>
+        <input group="Allegati_richiesti" id="Allegati_richiesti_firm" name="Allegati_richiesti_firm" type="checkbox" value="1" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Allegati integrativi che <b>richiedono firma digitale del progettista</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_all_firm" name="num_all_firm" type="number" min="1" max="100" style="width: 90%; text-align: center;" mandatory_enabled="#Allegati_richiesti_firm.checked()"/></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-ALLEGATI-VARI-FIRMATI" name="GLOBO_allegato_cGEN-ALLEGATI-VARI-FIRMATI" obbligatorio="#Allegati_richiesti_firm.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_all_firm.value()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input group="Allegati_richiesti" id="Allegati_richiesti_no_firm" name="Allegati_richiesti_no_firm" type="checkbox" value="2" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Allegati integrativi <b>non firmati</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_all_no_firm" name="num_all_no_firm" type="number" min="1" max="100" style="width: 90%; text-align: center;" mandatory_enabled="#Allegati_richiesti_no_firm.checked()"/></p>
+        <input id="GLOBO_allegato_cGEN-ALLEGATI-VARI" name="GLOBO_allegato_cGEN-ALLEGATI-VARI" obbligatorio="#Allegati_richiesti_no_firm.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_all_no_firm.value()"/>
+      </td>
+    </tr>
+    <tr>
+			<td style="background-color: #eeeeee;" colspan="4">
+        <p style="line-height:1.6; text-align: center;"><b>ATTENZIONE! Limite max di 15 MB per allegato</b></p>
+			</td>
+		</tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="firmat_integr" name="firmat_integr" dynamic_value="#nominativo_firmatario_integr.value()" style="width:90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;"><input class="" id="label_firmatario" name="label_firmatario" dynamic_value="#Tipo_istanza.value() == 'SCIA' ? 'Il progettista/tecnico incaricato delegato ((accesso eseguito mediante SPID o CPS/CNS))' : 'Il dichiarante (accesso eseguito mediante SPID o CPS/CNS)'" style="width:90%;"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
