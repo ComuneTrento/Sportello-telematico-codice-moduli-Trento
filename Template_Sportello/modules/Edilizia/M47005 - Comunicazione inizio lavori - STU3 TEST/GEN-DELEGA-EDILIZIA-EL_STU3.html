@@ -1,20 +1,20 @@
-{% set CodiceModulo =  "GEN-DELEGA-EDILIZIA-AU" %}
-{% set Urn =  "document:c_l378:modulo.secondario.delega.edilizia.au" %}
+{% set CodiceModulo =  "GEN-DELEGA-EDILIZIA-EL" %}
+{% set Urn =  "document:c_l378:modulo.secondario.delega.edilizia.el" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
-<meta campi_firma="Progettista_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale,AventeTitolo_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Modulo secondario - Modello di delega (titolare firma autografa)"
+descrizione="Modulo secondario - Modello di delega (titolare firma digitale)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="NO"
+firmare="P7M_ELETTRONICA"
 istruzioni_compilazione="ATTENZIONE: questo modulo deve essere compilato con i dati del sottoscrivente."
 istruzioni_invio=""
 metodo_invio=""
@@ -22,33 +22,9 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-DELEGA-EDILIZIA-AU"
+urlhelp="/modulistica/moduli/GEN-DELEGA-EDILIZIA-EL"
 verifica_pagamento="NO"
 versione="1.1|03/06/2016"/>
-
-<meta codice_allegato="GEN-CDI"
-urn_allegato="document:c_l378:allegato.copia.documento.identita"
-descrizione_estesa="Documento di identità"
-filename="Documento identita.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/GEN-CDI"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
-urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
-descrizione_estesa="Allegato - Scansione della delega firmata e controfirmata con firma autografa da titolare e progettista/tecnico incaricato e poi firmata dal progettista/tecnico incaricato con firma digitale"
-filename="Modulo_compilato_firma_elettronica.pdf"
-firmato="SI"
-firmatari="Progettista_CodiceFiscale"
-firmatari_label="Il progettista/tecnico incaricato"
-istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-EL"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
 
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
@@ -63,6 +39,24 @@ tipo_mime="application/pdf"/>
 
 {% endblock meta %}
 
+    
+    
+ <!--   
+<script type="text/javascript">
+  var simpaticoEservice = "GEN-DELEGA-EDILIZIA-EL"; //  the id corresponding to the e-service
+  var simpaticoEserviceName = "GEN-DELEGA-EDILIZIA-EL"; //  the name corresponding to the e-service
+  var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/GEN-DELEGA-EDILIZIA-EL" ; //  the url corresponding to the e-service
+  var simpaticoForm = "main";
+  var simpaticoCategory = "Edilizia"; // the general category of the e-service
+  var simpaticoMapping= ["AventeTitolo_Cognome",
+                          "AventeTitolo_Nome",
+                          "AventeTitolo_CodiceFiscale"
+                          ];
+  var ERROR_LABELS = { 
+      'block1' : 'Compilare l\'anagrafica', 
+  }
+</script>
+-->
 
 {% block title %}
 Modello di delega
@@ -72,6 +66,7 @@ Modello di delega
 
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
+
 
 <h1 class="Modulo">DELEGA AL PROGETTISTA / TECNICO INCARICATO</h1>
 
@@ -109,6 +104,8 @@ Modello di delega
   </tbody>
 </table>
 
+<br>
+
 <h3 class="Modulo" style="line-height:1.6;">in qualità di titolare/richiedente</h3>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey" >
@@ -135,16 +132,16 @@ Modello di delega
     </tr>
     <tr>
       <td colspan="2">
-        <input class="" id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" style="width:100%" label="Cognome del progettista" readonly/>
+        <input class="" id="Referente_TitoloPersona" name="Referente_TitoloPersona" style="width:100%" label="Cognome del progettista" readonly/>
       </td>
       <td>
-        <input class="" id="Progettista_Cognome" name="Progettista_Cognome" style="width:100%" label="Cognome del progettista" readonly/>
+        <input class="" id="Referente_Cognome" name="Referente_Cognome" style="width:100%" label="Cognome del progettista" readonly/>
       </td>
       <td>
-        <input class="" id="Progettista_Nome" name="Progettista_Nome" style="width:100%" label="Nome del progettista" readonly/>
+        <input class="" id="Referente_Nome" name="Referente_Nome" style="width:100%" label="Nome del progettista" readonly/>
       </td>
       <td>
-        <input class="" id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del progettista" readonly/>
+        <input class="" id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del progettista" readonly/>
       </td>
     </tr>            
     <tr class="Rigaintestazioneridotta"><td colspan="5"></td></tr>
@@ -170,13 +167,15 @@ Modello di delega
         <input group="delega_operazione" id="delega_operazione3" name="delega_operazione3" type="checkbox" value="3" dynamic_check="true"/> 
       </td>
       <td colspan="4">
-        <p style="line-height:1.6;">a ricevere per proprio nome e conto le comunicazioni relative al presente procedimento per il tramite del proprio indirizzo PEC (posta elettronica certificata): <input id="Progettista_EMailPEC" name="Progettista_EMailPEC" style="width:50%;" readonly/>
+        <p style="line-height:1.6;">a ricevere per proprio nome e conto le comunicazioni relative al presente procedimento per il tramite del proprio indirizzo PEC (posta elettronica certificata): <input id="Referente_EMailPEC" name="Referente_EMailPEC" style="width:50%;" readonly/>
           <br><span style="font-size:85%"><i>NB.: la delega riguarda tutte le comunicazioni relative alla fase istruttoria del progetto ai sensi dell'art. 86 della l.p. 15/2015</i></span>
         </p>
       </td>
     </tr>
   </tbody>
 </table>
+
+<br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey" >
   <h1 class="Modulo">DELEGA INOLTRE (FACOLTATIVO)</h1>
@@ -187,56 +186,8 @@ Modello di delega
           <input group="elez_dom_spec" id="elez_dom_spec1" name="elez_dom_spec1" type="checkbox" value="1"/> 
       </td>
       <td>
-        <p style="line-height:1.6;">il progettista/tecnico incaricato a ricevere per proprio nome e conto anche tutti gli atti e/o provvedimenti comunque denominati inerenti il procedimento, anche di carattere recettizio, presso l'indirizzo di Posta Elettronica Certificata del tecnico delegato: <input id="Mail_domic_digitale" name="Mail_domic_digitale" format="pec" style="width:50%;" dynamic_value="#Progettista_EMailPEC.value()" enabled="#elez_dom_spec1.checked()" readonly/>, <b>eleggendo presso di lui domicilio speciale</b> e <b><u>beneficiando così della riduzione dei diritti di segreteria</u></b> (come apposito provvedimento comunale adottato) 
+        <p style="line-height:1.6;">il progettista/tecnico incaricato a ricevere per proprio nome e conto anche tutti gli atti e/o provvedimenti comunque denominati inerenti il procedimento, anche di carattere recettizio, presso l'indirizzo di Posta Elettronica Certificata del tecnico delegato: <input id="Mail_domic_digitale" name="Mail_domic_digitale" format="pec" style="width:50%;" dynamic_value="#Referente_EMailPEC.value()" enabled="#elez_dom_spec1.checked()" readonly/>, <b>eleggendo presso di lui domicilio speciale</b> e <b><u>beneficiando così della riduzione dei diritti di segreteria</u></b> (come apposito provvedimento comunale adottato) 
         </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-<br>
-
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="3">
-        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
-      </td>
-    </tr>
-    <tr class="Rigaintestazione">
-      <td style="width:10%;">
-        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
-      </td>
-      <td>
-        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
-      </td>
-      <td style="width:20%;">
-        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width:4%;">
-        <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6;">Copia del documento d'identità del titolare</p>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_docident" name="numero_copia_docident" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>
-    <tr>
-      <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height:1.6;">Delega firmata dal titolare con firma autografa, controfirmata dal progettista/tecnico incaricato con firma autografa e quindi con firma digitale</p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
-      </td>
-      <td style="background-color: #eeeeee; vertical-align: center;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
   </tbody>
@@ -260,6 +211,7 @@ Modello di delega
 </table>
 
 <br>
+<br>
 
 <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
@@ -270,7 +222,10 @@ Modello di delega
       <td style="width: 25%; text-align: center;">
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
-      <td style="width: 50%; text-align: center; height: 1.5cm;">
+      <td style="width: 50%; text-align: center;">
+        <p style="line-height:1.8;">
+          <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#AventeTitolo_Nome.value() + ' ' + #AventeTitolo_Cognome.value()" style="width:99%; text-align: center;"/>
+        </p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -281,7 +236,7 @@ Modello di delega
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il/La titolare <span style="font-size:95%"><i>(firma autografa)</i></span></p>
+        <p class="Labelcella" style="text-align: center">Il/La titolare <span style="font-size:95%"><i>(firma digitale)</i></span></p>
       </td>
     </tr>
   </tbody>
@@ -320,16 +275,16 @@ Modello di delega
     </tr>
     <tr>
       <td colspan="2">
-        <input class="" id="titolo_prog" name="titolo_prog" style="width:100%" label="Cognome del progettista" dynamic_value="#Progettista_TitoloPersona.value()"/>
+        <input class="" id="titolo_prog" name="titolo_prog" style="width:100%" label="Cognome del progettista" dynamic_value="#Referente_TitoloPersona.value()"/>
       </td>
       <td>
-        <input class="" id="cogn_prog" name="cogn_prog" style="width:100%" label="Cognome del progettista"  dynamic_value="#Progettista_Cognome.value()"/>
+        <input class="" id="cogn_prog" name="cogn_prog" style="width:100%" label="Cognome del progettista"  dynamic_value="#Referente_Cognome.value()"/>
       </td>
       <td>
-        <input class="" id="nome_prog" name="nome_prog" style="width:100%" label="Nome del progettista"  dynamic_value="#Progettista_Nome.value()"/>
+        <input class="" id="nome_prog" name="nome_prog" style="width:100%" label="Nome del progettista"  dynamic_value="#Referente_Nome.value()"/>
       </td>
       <td>
-        <input class="" id="cf_prog" name="cf_prog" style="width:100%" format="cf" label="Il codice fiscale del progettista"  dynamic_value="#Progettista_CodiceFiscale.value()"/>
+        <input class="" id="cf_prog" name="cf_prog" style="width:100%" format="cf" label="Il codice fiscale del progettista"  dynamic_value="#Referente_CodiceFiscale.value()"/>
       </td>
     </tr>  
     <tr class="Rigaintestazione">
@@ -421,6 +376,7 @@ Modello di delega
         <input class="" id="Data" name="Data" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_progettista" name="nominativo_progettista" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -431,7 +387,7 @@ Modello di delega
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il progettista/tecnico incaricato <span style="font-size:95%"><i>(firma autografa)</i></span></p>
+        <p class="Labelcella" style="text-align: center">Il progettista/tecnico incaricato <span style="font-size:95%"><i>(firma digitale)</i></span></p>
       </td>
     </tr>
   </tbody>

@@ -25,11 +25,11 @@
         <link rel="stylesheet" type="text/css" href="./validator/css/moduli.css"/>
 
     
-<meta campi_firma="Metadati_CertificatoreEnergetico_CodiceFiscale"
+<meta campi_firma="Referente8_CodiceFiscale"
 classi_modulo="Generale"
-codice_modulo="GEN-CERT-ENERG-EL-PROVA"
-urn="document:c_l378:modulo.secondario.anagrafica.certificatore.energetico.firma.elettronica.prova"
-descrizione="Modulo secondario TEST- Anagrafica del soggetto abilitato alla certificazione energetica (firma elettronica)"
+codice_modulo="GEN-CERT-ENERG-EL"
+urn="document:c_l378:modulo.secondario.anagrafica.certificatore.energetico.firma.elettronica"
+descrizione="Modulo secondario - Anagrafica del soggetto abilitato alla certificazione energetica (firma digitale)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
@@ -43,8 +43,9 @@ metodo_invio=""
 name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
+segnatura="Referente8"
 ufficio=""
-urlhelp="/modulistica/moduli/GEN-CERT-ENERG-EL-PROVA"
+urlhelp="/modulistica/moduli/GEN-CERTIFIC-ENERG-EL"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
@@ -77,10 +78,23 @@ tipo_mime="application/pdf"/>
 
     
 
-    
-    
 
-    <form data-simpatico-workflow="" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
+  <script type="text/javascript">
+    var simpaticoEservice = "GEN-CERT-ENERG-EL"; //  the id corresponding to the e-service
+    var simpaticoEserviceName = "GEN-CERT-ENERG-EL"; //  the name corresponding to the e-service
+    var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/GEN-CERT-ENERG-EL" ; //  the url corresponding to the e-service
+    var simpaticoForm = "main";
+    var simpaticoCategory = "Edilizia"; // the general category of the e-service
+    var simpaticoMapping= ["AventeTitolo_Cognome",
+                            "AventeTitolo_Nome",
+                            "AventeTitolo_CodiceFiscale"
+                            ];
+    var ERROR_LABELS = { 
+        'block1' : 'Compilare l\'anagrafica', 
+    }
+  </script>
+
+  <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/GEN-CERT-ENERG-EL" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
 
         
 
@@ -263,72 +277,56 @@ function get_ufficio_dest() {
 		</tbody>
 	</table>
 </div>
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_CertificatoreEnergetico_Cognome.value().toUpperCase() + ' - anagrafica soggetto abilitato alla certificazione energetica'"/>
+<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Referente8_Cognome.value().toUpperCase() + ' - anagrafica soggetto abilitato alla certificazione energetica'"/>
 
- <h1 class="Modulo">
-  Anagrafica soggetto abilitato alla certificazione energetica
- </h1>
+<h1 class="Modulo">Anagrafica soggetto abilitato alla certificazione energetica</h1>
 
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+ 
+<input id="Referente8_DatiProfessionistaObbligatori" name="Referente8_DatiProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+<input id="Referente8_DatiAlboProfessionistaObbligatori" name="Referente8_DatiAlboProfessionistaObbligatori" dynamic_check="true" type="hidden" />
+ 
+<div class="simpatico-block simpatico-query-and-answer">
 
- <div class="simpatico-block simpatico-query-and-answer">
+  <!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+  <input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+  <!--<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />-->
+  <input id="pec_tecnico_obbligatoria" name="pec_tecnico_obbligatoria" dynamic_check="true" type="hidden" /> 
 
-    <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
-    <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
-
-
-<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
-<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
-<!--<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />-->
-<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" /> 
-
-
+  
 
 
 
 <div type="Anagrafica_professionista">
 
-  <input id="CertificatoreEnergetico_Titolo" name="CertificatoreEnergetico_Titolo" type="hidden" value="professionista"/>
-  <input id="CertificatoreEnergetico_Ruolo" name="CertificatoreEnergetico_Ruolo" type="hidden" value="professionista"/>
-
-	<table class="Modulo" style="border:1px solid grey; visibility:visibility">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td style="border-right:0px">
-          <p class="Labeltabella">Il soggetto abilitato alla certificazione energetica</p>
-        </td>
-        <td style="width:39%; border-left:0px; border-right:0px">
-          <p class="Labeltabella"></p>
-        </td>
-        <td style="width:25%; cursor:pointer; border-left:0px">
-          <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
-
-<button type="button" class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility" title="Carica dati da profilo utente" onclick="recuperaAnagrafica( 'CertificatoreEnergetico' )">Carica dati personali</button>
-
-</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <input id="Referente8_Titolo" name="Referente8_Titolo" type="hidden" value="professionista"/>
+  <input id="Referente8_Ruolo" name="Referente8_Ruolo" type="hidden" value="professionista"/>
 
   <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
     <tbody>
+      <tr class="Rigaintestazione">
+        <td style="border-right:0px" colspan="4">
+          <p style="line-height:1.6;"><b>Il soggetto abilitato alla certificazione energetica</b></p>
+        </td>
+      </tr>
       <tr class="Rigaintestazioneridotta">
         <td style="width:13%">
-          <p class="Labelcella">Titolo</p>
+          <p class="Labelcella" style="line-height:1.6;">Titolo</p>
         </td>
         <td style="width:31%">
-          <p class="Labelcella">Cognome</p>
+          <p class="Labelcella" style="line-height:1.6;">Cognome</p>
         </td>
         <td>
-          <p class="Labelcella">Nome</p>
+          <p class="Labelcella" style="line-height:1.6;">Nome</p>
         </td>
         <td style="width:25%">
-          <p class="Labelcella">Codice Fiscale</p>
+          <p class="Labelcella" style="line-height:1.6;">Codice Fiscale</p>
         </td>
       </tr>
       <tr>
         <td>
-          <select class="inputNormal" id="CertificatoreEnergetico_TitoloPersona" name="CertificatoreEnergetico_TitoloPersona" style="width:100%;" label="Titolo del professionista">
+          <select class="inputNormal" id="Referente8_TitoloPersona" name="Referente8_TitoloPersona" style="width:100%;" label="Titolo del professionista">
             <option value=""></option>
             <option value="Sig.">Sig.</option>
             <option value="Sig.ra">Sig.ra</option>
@@ -344,13 +342,13 @@ function get_ufficio_dest() {
           </select>
         </td>
         <td>
-          <input class="" id="CertificatoreEnergetico_Cognome" name="CertificatoreEnergetico_Cognome" style="width:100%" label="Cognome del professionista"/>
+          <input class="" id="Referente8_Cognome" name="Referente8_Cognome" style="width:100%" label="Cognome del professionista"/>
         </td>
         <td>
-          <input class="" id="CertificatoreEnergetico_Nome" name="CertificatoreEnergetico_Nome" style="width:100%" label="Nome del professionista"/>
+          <input class="" id="Referente8_Nome" name="Referente8_Nome" style="width:100%" label="Nome del professionista"/>
         </td>
         <td>
-          <input class="" id="CertificatoreEnergetico_CodiceFiscale" name="CertificatoreEnergetico_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del professionista"/>
+          <input class="" id="Referente8_CodiceFiscale" name="Referente8_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del professionista"/>
         </td>
       </tr>
 	  </tbody>
@@ -360,31 +358,31 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td style="width:24%;">
-          <p class="Labelcella">Data di nascita</p>
+          <p class="Labelcella" style="line-height:1.6;">Data di nascita</p>
         </td>
         <td style="width:9%;">
-          <p class="Labelcella">Sesso (M/F)</p>
+          <p class="Labelcella" style="line-height:1.6;">Sesso (M/F)</p>
         </td>
         <td style="width: 33%;">
-          <p class="Labelcella">Nazionalità del progettista</p>
+          <p class="Labelcella" style="line-height:1.6;">Nazionalità del progettista</p>
         </td>
         <td style="width: 34%;">
-          <p class="Labelcella">Luogo di nascita</p>
+          <p class="Labelcella" style="line-height:1.6;">Luogo di nascita</p>
         </td>
       </tr>
       <tr>
         <td>
-          <input class="" id="CertificatoreEnergetico_DataNascita" name="CertificatoreEnergetico_DataNascita" style="width:100%;" format="date" label="Data nascita del professionista"/>
+          <input class="" id="Referente8_DataNascita" name="Referente8_DataNascita" style="width:100%;" format="date" label="Data nascita del professionista"/>
         </td>
         <td>
-          <select class="inputNormal" id="CertificatoreEnergetico_Sesso" name="CertificatoreEnergetico_Sesso" style="width:100%;" label="Sesso del professionista">
+          <select class="inputNormal" id="Referente8_Sesso" name="Referente8_Sesso" style="width:100%;" label="Sesso del professionista">
             <option value=""></option>
             <option value="M">M</option>
             <option value="F">F</option>
           </select>
         </td>
         <td>
-          <select id="CertificatoreEnergetico_Cittadinanza" name="CertificatoreEnergetico_Cittadinanza" style="width:100%" label="Cittadinanza" >
+          <select id="Referente8_Cittadinanza" name="Referente8_Cittadinanza" style="width:100%" label="Cittadinanza" >
 		<option value=""></option>
     <optgroup label="Unione Europea">
         <option value="Italia">ITALIA</option>
@@ -635,7 +633,7 @@ function get_ufficio_dest() {
 </select>
         </td>
         <td>
-          <input class="" id="CertificatoreEnergetico_LuogoNascita" name="CertificatoreEnergetico_LuogoNascita" style="width:100%;" label="Lugo di nascita del professionista"/>
+          <input class="" id="Referente8_LuogoNascita" name="Referente8_LuogoNascita" style="width:100%;" label="Lugo di nascita del professionista"/>
         </td>
       </tr>
 		</tbody>
@@ -646,24 +644,24 @@ function get_ufficio_dest() {
     <tbody>
 	    <tr class="Rigaintestazioneridotta">
 				<td style="width:24%">
-					<p class="Labelcella">Partita IVA</p>
+					<p class="Labelcella" style="line-height:1.6;">Partita IVA</p>
 				</td>
 				<td style="width:42%">
-					<p class="Labelcella">Albo o Ordine</p>
+					<p class="Labelcella" style="line-height:1.6;">Albo o Ordine</p>
 				</td>
 				<td style="width:9%">
-					<p class="Labelcella">Provincia</p>
+					<p class="Labelcella" style="line-height:1.6;">Provincia</p>
 				</td>
 				<td style="width:25%">
-					<p class="Labelcella">Numero iscrizione</p>
+					<p class="Labelcella" style="line-height:1.6;">Numero iscrizione</p>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<input style="width: 100%" id="CertificatoreEnergetico_PartitaIVA" class="inputNormal" name="CertificatoreEnergetico_PartitaIVA" format="cfpiva" label="Partita IVA del professionista" mandatory="false"/>
+					<input style="width: 100%" id="Referente8_PartitaIVA" class="inputNormal" name="Referente8_PartitaIVA" format="cfpiva" label="Partita IVA del professionista" mandatory="false"/>
 				</td>
-				<td mandatory="#CertificatoreEnergetico_DatiProfessionistaObbligatori.checked()">
-					<select id="CertificatoreEnergetico_Attributi_Albo" name="CertificatoreEnergetico_Attributi_Albo" style="width:100%" label="Albo o Ordine">
+				<td mandatory="#Referente8_DatiProfessionistaObbligatori.checked()">
+					<select id="Referente8_Attributi_Albo" name="Referente8_Attributi_Albo" style="width:100%" label="Albo o Ordine">
 	  <option value=""></option>
 	  <option value="agrotecnici">agrotecnici</option>
 	  <option value="architetti, pianificatori, paesaggisti">architetti, pianificatori, paesaggisti</option>
@@ -679,8 +677,8 @@ function get_ufficio_dest() {
 	  <option value="non tenuto all'iscrizione all'Albo o all'Ordine">non tenuto all'iscrizione all'Albo o all'Ordine</option>
 </select>
 				</td>
-				<td mandatory_enabled="#CertificatoreEnergetico_Attributi_Albo.value() != '' and #CertificatoreEnergetico_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
-					<select id="CertificatoreEnergetico_Attributi_DellaProvincia" name="CertificatoreEnergetico_Attributi_DellaProvincia" style="width:100%" label="Provincia iscrizione Albo" >
+				<td mandatory_enabled="#Referente8_Attributi_Albo.value() != '' and #Referente8_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
+					<select id="Referente8_Attributi_DellaProvincia" name="Referente8_Attributi_DellaProvincia" style="width:100%" label="Provincia iscrizione Albo" >
     <option value=""></option>
     <option value="AG">AG</option>
     <option value="AL">AL</option>
@@ -795,8 +793,8 @@ function get_ufficio_dest() {
     <option value="EE">EE</option>
 </select>
 				</td>
-				<td mandatory_enabled="#CertificatoreEnergetico_Attributi_Albo.value() != '' and #CertificatoreEnergetico_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
-					<input style="width: 100%" id="CertificatoreEnergetico_Attributi_AlNumero" class="inputNormal" name="CertificatoreEnergetico_Attributi_AlNumero" label="Numero iscrizione Albo"/>
+				<td mandatory_enabled="#Referente8_Attributi_Albo.value() != '' and #Referente8_Attributi_Albo.value() != 'non tenuto all\'iscrizione all\'Albo o all\'Ordine'">
+					<input style="width: 100%" id="Referente8_Attributi_AlNumero" class="inputNormal" name="Referente8_Attributi_AlNumero" label="Numero iscrizione Albo"/>
 				</td>
 			</tr>
 		</tbody>
@@ -812,29 +810,29 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td colspan="5" style="width: 100%;">
-          <p class="Labelcella">Studio Professionale</p>
+          <p class="Labelcella" style="line-height:1.6;">Studio Professionale</p>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta">
         <td style="width:9%;">
-          <p class="Labelcella">Provincia</p>
+          <p class="Labelcella" style="line-height:1.6;">Provincia</p>
         </td>
         <td style="width:33%;">
-          <p class="Labelcella">Comune</p>
+          <p class="Labelcella" style="line-height:1.6;">Comune</p>
         </td>
         <td style="width:33%;">
-          <p class="Labelcella">Indirizzo</p>
+          <p class="Labelcella" style="line-height:1.6;">Indirizzo</p>
         </td>
         <td style="width:9%;">
-          <p class="Labelcella">Civico</p>
+          <p class="Labelcella" style="line-height:1.6;">Civico</p>
         </td>
         <td style="width:16%;">
-          <p class="Labelcella">CAP</p>
+          <p class="Labelcella" style="line-height:1.6;">CAP</p>
         </td>
       </tr>
       <tr>
         <td>
-  				<select id="CertificatoreEnergetico_ProvinciaStudio" name="CertificatoreEnergetico_ProvinciaStudio" style="width:100%" label="Provincia dello studio" >
+  				<select id="Referente8_ProvinciaStudio" name="Referente8_ProvinciaStudio" style="width:100%" label="Provincia dello studio" >
     <option value=""></option>
     <option value="AG">AG</option>
     <option value="AL">AL</option>
@@ -950,16 +948,16 @@ function get_ufficio_dest() {
 </select>
         </td>
         <td>
-					<select class="inputNormal" id="CertificatoreEnergetico_ComuneStudio" name="CertificatoreEnergetico_ComuneStudio" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #CertificatoreEnergetico_ProvinciaStudio.value(), 'CertificatoreEnergetico_ComuneStudio')"></select>
+					<select class="inputNormal" id="Referente8_ComuneStudio" name="Referente8_ComuneStudio" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #Referente8_ProvinciaStudio.value(), 'Referente8_ComuneStudio')"></select>
         </td>
         <td>
-          <input class="" id="CertificatoreEnergetico_ViaStudio" name="CertificatoreEnergetico_ViaStudio" style="width:100%;" label="Indirizzo dello studio del professionista"/>
+          <input class="" id="Referente8_ViaStudio" name="Referente8_ViaStudio" style="width:100%;" label="Indirizzo dello studio del professionista"/>
         </td>
         <td>
-          <input class="" id="CertificatoreEnergetico_CivicoStudio" name="CertificatoreEnergetico_CivicoStudio" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
+          <input class="" id="Referente8_CivicoStudio" name="Referente8_CivicoStudio" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="CertificatoreEnergetico_CAPStudio" name="CertificatoreEnergetico_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="true"/>
+          <input class="" id="Referente8_CAPStudio" name="Referente8_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="true"/>
         </td>
       </tr>
     </tbody>
@@ -970,47 +968,49 @@ function get_ufficio_dest() {
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td style="width:20%;">
-          <p class="Labelcella">Telefono fisso</p>
+          <p class="Labelcella" style="line-height:1.6;">Telefono fisso</p>
         </td>
         <td style="width:20%;">
-          <p class="Labelcella">Cellulare</p>
+          <p class="Labelcella" style="line-height:1.6;">Cellulare</p>
         </td>
         <td style="width:28%;">
-          <p class="Labelcella">E-mail<i> (posta elettronica ordinaria)</i></p>
+          <p class="Labelcella" style="line-height:1.6;">E-mail<i> (posta elettronica ordinaria)</i></p>
         </td>
         <td style="width:32%;">
-          <p class="Labelcella">E-mail PEC<i> (domicilio digitale)</i></p>
+          <p class="Labelcella" style="line-height:1.6;">E-mail PEC<i> (domicilio digitale)</i></p>
         </td>
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="CertificatoreEnergetico_Tel_FissoStudio" name="CertificatoreEnergetico_Tel_FissoStudio" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
+          <input class="inputNormal" id="Referente8_Tel_FissoStudio" name="Referente8_Tel_FissoStudio" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="CertificatoreEnergetico_TelefonoStudio" name="CertificatoreEnergetico_TelefonoStudio" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
+          <input class="inputNormal" id="Referente8_TelefonoStudio" name="Referente8_TelefonoStudio" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="CertificatoreEnergetico_EMailStudio" name="CertificatoreEnergetico_EMailStudio" label="E-mail del professionista" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
+          <input class="inputNormal" id="Referente8_EMailStudio" name="Referente8_EMailStudio" label="E-mail del professionista" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="CertificatoreEnergetico_EMailPECStudio" name="CertificatoreEnergetico_EMailPECStudio" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
+          <input class="inputNormal" id="Referente8_EMailPECStudio" name="Referente8_EMailPECStudio" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_tecnico_obbligatoria.checked()"/>
         </td>
       </tr>
     </tbody>
   </table>                  
 
-	<input id="CertificatoreEnergetico_Attributi_Albo_categoria" 			name="CertificatoreEnergetico_Attributi_Albo_categoria" 		   type="hidden" value="Altri dati"/>
-	<input id="CertificatoreEnergetico_Attributi_Albo_nome" 				name="CertificatoreEnergetico_Attributi_Albo_nome" 			   type="hidden" value="Albo professionale"/>
-	<input id="CertificatoreEnergetico_Attributi_AlNumero_categoria" 		name="CertificatoreEnergetico_Attributi_AlNumero_categoria"	   type="hidden" value="Altri dati"/>
-	<input id="CertificatoreEnergetico_Attributi_AlNumero_nome" 			name="CertificatoreEnergetico_Attributi_AlNumero_nome" 		   type="hidden" value="Numero iscrizione Albo professionale"/>
-	<input id="CertificatoreEnergetico_Attributi_DellaProvincia_categoria" name="CertificatoreEnergetico_Attributi_DellaProvincia_categoria" type="hidden" value="Altri dati"/>
-  <input id="CertificatoreEnergetico_Attributi_DellaProvincia_nome" 		name="CertificatoreEnergetico_Attributi_DellaProvincia_nome" 	   type="hidden" value="Provincia Albo professionale"/>
+	<input id="Referente8_Attributi_Albo_categoria" 			name="Referente8_Attributi_Albo_categoria" 		   type="hidden" value="Altri dati"/>
+	<input id="Referente8_Attributi_Albo_nome" 				name="Referente8_Attributi_Albo_nome" 			   type="hidden" value="Albo professionale"/>
+	<input id="Referente8_Attributi_AlNumero_categoria" 		name="Referente8_Attributi_AlNumero_categoria"	   type="hidden" value="Altri dati"/>
+	<input id="Referente8_Attributi_AlNumero_nome" 			name="Referente8_Attributi_AlNumero_nome" 		   type="hidden" value="Numero iscrizione Albo professionale"/>
+	<input id="Referente8_Attributi_DellaProvincia_categoria" name="Referente8_Attributi_DellaProvincia_categoria" type="hidden" value="Altri dati"/>
+  <input id="Referente8_Attributi_DellaProvincia_nome" 		name="Referente8_Attributi_DellaProvincia_nome" 	   type="hidden" value="Provincia Albo professionale"/>
    
 </div>
 
-<br>
+  <input id="Referente8_Ruolo" name="Referente8_Ruolo" dynamic_value="'Certificatore energetico'" type="hidden" /> 
+  <br>
+</div>
 
-<table class="Modulo" style="border: 1px solid grey">
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
@@ -1023,75 +1023,71 @@ function get_ufficio_dest() {
     </tr>
   </tbody>
 </table>
- </div>
 
- <br>
- <br>
+<br>
+<br>
  
- <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
-   <tbody>
-     <tr>
-       <td style="width: 4%; vertical-align: center; text-align: center;">
-         <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
-         <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
-       </td>
-       <td colspan="2" style="background-color: #eeeeee;">
-         <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
-       </td>
-     </tr>
-   </tbody>
- </table>
- 
- <br>
- <br>
-
- <table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
-      <td style="width: 25%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
-      </td>
-      <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Metadati_CertificatoreEnergetico_TitoloPersona.value() + ' ' + #Metadati_CertificatoreEnergetico_Nome.value().toUpperCase() + ' ' + #Metadati_CertificatoreEnergetico_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella" style="text-align: center">Luogo</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Data</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Il sottoscritto <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
       </td>
     </tr>
   </tbody>
 </table>
-<br/>
-
-
- <p class="Modulo">
-  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
- </p>
- <input id="GLOBO_modulo_cGEN-CERT-ENERG-EL-PROVA" name="GLOBO_modulo_cGEN-CERT-ENERG-EL-PROVA" type="hidden" value=""/>
- <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
- <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
- <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="GEN-CERT-ENERG-EL-PROVA"/>
-
- <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
-
  
+<br>
+<br>
+
+<div class="simpatico-block">
+  <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 50%; text-align: center; height: 1.5cm;">
+          <input class="" id="nominativo_cert_energ" name="nominativo_cert_energ" dynamic_value="#Referente8_TitoloPersona.value() + ' ' + #Referente8_Nome.value().toUpperCase() + ' ' + #Referente8_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella" style="text-align: center">Luogo</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Data</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Il sottoscritto <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   
+  <br>
 
- <input id="Metadati_CertificatoreEnergetico_TitoloPersona" name="Metadati_CertificatoreEnergetico_TitoloPersona"/>
- <input id="Metadati_CertificatoreEnergetico_Cognome" name="Metadati_CertificatoreEnergetico_Cognome" />
- <input id="Metadati_CertificatoreEnergetico_Nome" name="Metadati_CertificatoreEnergetico_Nome" />
- <input id="Metadati_CertificatoreEnergetico_CodiceFiscale" name="Metadati_CertificatoreEnergetico_CodiceFiscale"/>
- 
+  <p class="Modulo">
+    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+  </p>
+</div>
+
+<input id="GLOBO_modulo_cGEN-CERT-ENERG-EL" name="GLOBO_modulo_cGEN-CERT-ENERG-EL" type="hidden" value=""/>
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="GEN-CERT-ENERG-EL"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+
+
 
 
 
@@ -1149,9 +1145,7 @@ function get_ufficio_dest() {
 
 			 $('#UfficioDestinatario').val(get_ufficio_dest());
 
-					
-
-                loadForm( ["CertificatoreEnergetico", "Metadati"] ); //autoload prefix.
+                loadForm( ["Referente8"] ); //autoload prefix.
 
 
 
