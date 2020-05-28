@@ -1,5 +1,5 @@
 {% set CodiceModulo = "M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA" %}
-{% set Urn = "document:c_l378:chiedere.rilascio.certificato.urbanistico;rilascio.certificato.urbanistico;modulo.certificato.urbanistico" %}
+{% set Urn = "document:c_l378:cdu;rilascio.certificato.urbanistico;m5301.cdu" %}
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -49,8 +49,8 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="M5301-MSEC02-RIC-DIR-SEG-BNC"
-urn_modulo_figlio="document:c_l378:chiedere.rilascio.certificato.urbanistico;rilascio.certificato.urbanistico;a01.m5301.dir.seg.istr.bnc"
+<meta codice_modulo_figlio="M5301-MSEC01-RIC-DIR-SEG-BNC"
+urn_modulo_figlio="document:c_l378:cdu;rilascio.certificato.urbanistico;msec01.m5301.dir.seg.istr.bnc"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -77,12 +77,12 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="M5301-A02-RIC-INCARICO"
-urn_allegato="document:c_l378:chiedere.rilascio.certificato.urbanistico;rilascio.certificato.urbanistico;a02.m5301.ric.incarico"
+<meta codice_allegato="M5301-A03-RIC-INCARICO"
+urn_allegato="document:c_l378:cdu;rilascio.certificato.urbanistico;a03.m5301.ric.incarico"
 descrizione_estesa="Richiesta incarico consulete d'ufficio"
 filename="Incarico consulete d'ufficio.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/M5301-A02-RIC-INCARICO"
+istruzioni="/modulistica/moduli/M5301-A03-RIC-INCARICO"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -98,7 +98,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
 <!--
 <script type="text/javascript">
-  var simpaticoEservice=""M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA";
+  var simpaticoEservice="M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA";
   var serviceName = "M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA"; // Eservice example
   var serviceURL="https://sportello.comune.trento.it/modulistica/moduli/M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA";
   var simpaticoForm="main";
@@ -192,18 +192,19 @@ urn_report="report:CSP_SESSION_REPORT"/>
 -->
 <!-- *********** FINE ATTIVAZIONE STRUMENTI SIMPATICO *********** -->  
 
-{% block title %}M5301-RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA{% endblock title %}
+{% block title %}RICHIESTA-CERTIFICATO-DI-DESTINAZIONE-URBANISTICA (CDU) {% endblock title %}
 
 {% block content %}
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - RICHIESTA CERTIFICATO DI DESTINAZIONE URBANISTICA'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ') ' + ' - RICHIESTA CERTIFICATO DI DESTINAZIONE URBANISTICA'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
 <h1 class="Modulo">
-  M5301-RICHIESTA CERTIFICATO DI DESTINAZIONE URBANISTICA</h1>
+  RICHIESTA CERTIFICATO DI DESTINAZIONE URBANISTICA (CDU)
+</h1>
 
 <h4 class="Modulo" style="text-align: center">
   <i>Ai sensi dell'articolo 30 del Decreto del Presidente della Repubblica 06/06/2001, n.380</i>
@@ -676,8 +677,6 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
     {{ immobili_trento.immobile_destinazione_urbanistica_particelle("Immobile1", "Particella 1", disattivato="true") }}  
 
-    <globo_salto_pagina/>
-
     {{ immobili_trento.immobile_destinazione_urbanistica_particelle("Immobile2", "Particella 2", disattivato="#Totale_particelle.value() >= 2") }}
 
     {{ immobili_trento.immobile_destinazione_urbanistica_particelle("Immobile3", "Particella 3", disattivato="#Totale_particelle.value() >= 3") }}
@@ -854,7 +853,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
               oppure<br>
               - SWIFT/BIC IT 73 I 02008 01820 000001202801 UNCRITM10HV<br>
               con causale: 
-              M5301 seguito da COGNOME NOME del richiedente e dall’oggetto dell'istanza. (esempio: M5301 ROSSI MARIO CDU Certificato destinazione urbanistica) <br>
+              <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bdiritti.segreteria.istruttoria"><i>Codice dell'istanza</i></a> seguito da COGNOME NOME del richiedente e dall’oggetto dell'istanza. (esempio: M5301 ROSSI MARIO CDU Certificato destinazione urbanistica) <br>
           </p>
         </td>
       </tr>
@@ -870,8 +869,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
   </tbody>
 </table>
 
-<input  id="Tassonomia_DocEdi1" name="Tassonomia_DocEdi" value="OK" hidden="true" />
-<input  id="Tassonomia_DocEdi2" name="Tassonomia_DocEdi"  hidden="true" />
+<input  id="Tassonomia_DocEdi1" name="Tassonomia_DocEdi" value="OK" type="hidden" />
+<input  id="Tassonomia_DocEdi2" name="Tassonomia_DocEdi"  type="hidden" />
 
 <!-- *********** FINE MODULO PAGAMENTI *********** -->
 
@@ -1022,8 +1021,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
 </p>
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
 
-<input id="Referente99_Metadati_AventeTitolo_Cognome_Dato" name="Referente99_AventeTitolo_Cognome_Dato" dynamic_value="#AventeTitolo_Cognome.value()" hidden="true" />
-<input id="Referente99_AventeTitolo_Nome_Dato" name="Referente99_AventeTitolo_Nome_Dato" dynamic_value="#AventeTitolo_Nome.value()" hidden="true"/>
+<input id="Referente99_Metadati_AventeTitolo_Cognome_Dato" name="Referente99_AventeTitolo_Cognome_Dato" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden" />
+<input id="Referente99_AventeTitolo_Nome_Dato" name="Referente99_AventeTitolo_Nome_Dato" dynamic_value="#AventeTitolo_Nome.value()" type="hidden"/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
@@ -1033,10 +1032,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="GLOBO_allegato_cM5301-A01-RIC-DIR-SEG" name="GLOBO_allegato_cM5301-A01-RIC-DIR-SEG" numero="1" obbligatorio="'OBBLIGATORIO'" type="hidden" value="" />
 
 <!-- richiedi inserimento allegato per consulente d'ufficio--> 
-<input id="GLOBO_allegato_cM5301-A02-RIC-INCARICO" name="GLOBO_allegato_cM5301-A02-RIC-INCARICO" numero="1" obbligatorio="#Parametri_Domanda_DelegaConsulente.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
+<input id="GLOBO_allegato_cM5301-A03-RIC-INCARICO" name="GLOBO_allegato_cM5301-A03-RIC-INCARICO" numero="1" obbligatorio="#Parametri_Domanda_DelegaConsulente.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
 
 <!-- richiedi inserimento modulo secondario per i diritti di segreteria / bancomat
-<input id="GLOBO_modulofiglio_cM5301-MSEC02-RIC-DIR-SEG-BNC" name="GLOBO_modulofiglio_cM5301-MSEC02-RIC-DIR-SEG-BNC" numero="1" obbligatorio="#Tassonomia_DocEdi2.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
+<input id="GLOBO_modulofiglio_cM5301-MSEC01-RIC-DIR-SEG-BNC" name="GLOBO_modulofiglio_cM5301-MSEC01-RIC-DIR-SEG-BNC" numero="1" obbligatorio="#Tassonomia_DocEdi2.checked() ?  'OBBLIGATORIO' : ''" type="hidden" value="" />
 -->
 
 <!-- richiedi inserimento situazione storica iniziale -->
