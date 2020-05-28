@@ -57,7 +57,7 @@
                 "completed": "context['Impresa_ProvinciaSede'] != null && context['Impresa_ProvinciaSede'] != '' && context['Impresa_Denominazione'] != null && context['Impresa_Denominazione'] != '' && context['Impresa_ViaSede'] != null && context['Impresa_ViaSede'] != '' && context['Impresa_CivicoSede'] != null && context['Impresa_CivicoSede'] != '' && context['Impresa_ComuneSede'] != null && context['Impresa_ComuneSede'] != '' && context['Impresa_CAPSede'] != null && context['Impresa_CAPSede'] != '' && context['Impresa_CFPI'] != null && context['Impresa_CFPI'] != ''",
                 "annotations": [],
                 "description": {
-                    "it": "Inserire i dati dell'impresa ed almeno un indirizzo mail (PEC o mail) e recapito telefonico (fisso o cellulare)"
+                    "it": "Inserire i dati dell'impresa ed almeno un indirizzo mail (PEC o mail) e recapito telefonico (fisso o cellulare).<br>Cosa fare se l’impresa straniera con sede legale all’estero non è provvista di codice fiscale?<br>Occorre che l’impresa, avente sede legale all’estero e priva di sede organizzativa in Italia, si metta in contatto con gli uffici del Servizio Servizi Funerari per procedere alla presentazione cartacea dell’istanza."
                 },
                 "concepts": null
             },
@@ -111,7 +111,7 @@
                 "completed": "context['Defunto_Provincia'] != null && context['Defunto_Provincia'] != ''",
                 "annotations": [],
                 "description": {
-                    "it": "Inserire i dati del defunto"
+                    "it": "Inserire i dati del defunto (nome, cognome, codice fiscale, data di nascita, luogo di nascita, stato civile, residenza, data, luogo e ora del decesso).<br>Cosa cambia in caso di decesso all’estero?<br>Per i decessi all’estero è necessario valorizzare la dicitura “EE” nel campo “Provincia”."
                 },
                 "concepts": null
             },
@@ -134,7 +134,7 @@
                 "completed": null,
                 "annotations": [],
                 "description": {
-                    "it": "Inserire i dati del trasporto"
+                    "it": "Inserire il luogo di destinazione, la data di partenza e l’ora della stessa."
                 },
                 "concepts": null
             },
@@ -157,7 +157,7 @@
                 "completed": null,
                 "annotations": [],
                 "description": {
-                    "it": "Se scelto di renderli noti, vanno inseriti i dati relativi al funerale."
+                    "it": "Se si dà il consenso alla pubblicazione dei dati relativi al funerale sui canali del Comune di Trento (sito internet, totem, app), occorre specificare data e luogo della cerimonia funebre."
                 },
                 "concepts": null
             },
@@ -180,7 +180,7 @@
                 "completed": null,
                 "annotations": [],
                 "description": {
-                    "it": "Inserire i dati della richiesta"
+                    "it": "Inserire la tipologia della richiesta (cliccare su “altro” in casi particolari diversi da inumazione/tumulazione quali, ad esempio, affidamento in famiglia o dispersione). In caso di cremazione cliccare sul “sì” indicando se il defunto è iscritto alla Socrem o se è portatore di pacemaker.<br>Occorre obbligatoriamente indicare l’impianto crematorio dove avverrà la cremazione del defunto."
                 },
                 "concepts": null
             },
@@ -188,39 +188,62 @@
                 "id": "block8",
                 "type": "BLOCK",
                 "name": {
-                    "it": "Dati del bollo"
+                    "it": "Note aggiuntive"
                 },
                 "xpath": "(//*[contains(@class, 'simpatico-block')])[8]",
                 "tags": [],
                 "fields": [
-                   "Parametri_NumeroBollo"
+                   "Parametri_Note"
                 ],
                 "blocks": [],
                 "dependencies": [
                     "block7"
                 ],
                 "condition": null,
-                "completed": "context['Parametri_NumeroBollo'] != null && context['Parametri_NumeroBollo'] != ''",
+                "completed": null,
                 "annotations": [],
                 "description": {
-                    "it": "Inserire il numero identificativo della marca da bollo"
+                    "it": "Inserire eventuali note aggiuntive."
                 },
                 "concepts": null
             },
             {
-				"id": "block9",
+                "id": "block9",
+                "type": "BLOCK",
+                "name": {
+                    "it": "Dati del bollo"
+                },
+                "xpath": "(//*[contains(@class, 'simpatico-block')])[9]",
+                "tags": [],
+                "fields": [
+                   "Parametri_NumeroBollo"
+                ],
+                "blocks": [],
+                "dependencies": [
+                    "block8"
+                ],
+                "condition": null,
+                "completed": "context['Parametri_NumeroBollo'] != null && context['Parametri_NumeroBollo'] != ''",
+                "annotations": [],
+                "description": {
+                    "it": "Inserire il numero identificativo del contrassegno telematico o “marca da bollo”."
+                },
+                "concepts": null
+            },
+            {
+				"id": "block10",
 				"type": "BLOCK",
 				"name": {
 					"it": "Informativa sul trattamento dei dati personali"
 				},
-				"xpath": "(//*[contains(@class, 'simpatico-block')])[9]",
+				"xpath": "(//*[contains(@class, 'simpatico-block')])[10]",
 				"tags": [],
 				"fields": [ 
 					"Presa_visione_check"
 				],
 				"blocks": [],
 				"dependencies": [
-					"block8"
+					"block9"
 				],
 				"condition": null,
 				"completed": "context['Presa_visione_check'] != null",
@@ -405,6 +428,14 @@
                 "xpath": "//*[@id=\"Defunto_AStato\"]",
                 "mapping": {
                     "key": "Defunto_AStato",
+                    "binding": "OUT"
+                }
+            },
+            {
+                "id": "Parametri_Note",
+                "xpath": "//*[@id=\"Parametri_Note\"]",
+                "mapping": {
+                    "key": "Parametri_Note",
                     "binding": "OUT"
                 }
             },
