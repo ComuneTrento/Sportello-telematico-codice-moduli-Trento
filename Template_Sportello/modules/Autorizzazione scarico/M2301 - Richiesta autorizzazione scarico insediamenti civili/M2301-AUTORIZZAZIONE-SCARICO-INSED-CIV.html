@@ -56,8 +56,8 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_modulo_figlio="GEN-PROGETTISTA-PROVA"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista.prova"
+<meta codice_modulo_figlio="GEN-PROGETTISTA-DELEGATO"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista.delegato"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -339,7 +339,7 @@ generate_on="sending"
 name="GLOBO_report"
 urn_report="report:CSP_SESSION_REPORT"/>
 
-<!--TODO meta nei moduli secondari+ GEN-PROGETTISTA-PROVA modificare in urn e codice valido-->
+<!--TODO meta nei moduli secondari-->
 
 {% endblock meta %}
 
@@ -455,6 +455,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="Referente_checkobbligatorio" name="Referente_checkobbligatorio" dynamic_check="true" type="hidden" />
 <input id="Referente_checkabilitato" name="Referente_checkabilitato" dynamic_check="true" type="hidden" />
 {{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente","DATI DEL PROFESSIONISTA", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
 
 <!--------------------FINE ANAGRAFICA--------------------->
 
@@ -995,14 +997,14 @@ urn_report="report:CSP_SESSION_REPORT"/>
     -->
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input dynamic_check="#Tipo_richiedente2.checked() || #Progettista_CodiceFiscale.value() != ''" enabled="#Tipo_richiedente2.checked() || #Progettista_CodiceFiscale.value() != ''" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
+        <input dynamic_check="#Tipo_richiedente2.checked() || #Referente_CodiceFiscale.value() != ''" enabled="#Tipo_richiedente2.checked() || #Referente_CodiceFiscale.value() != ''" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del professionista incaricato</b>, firmato con <b>firma digitale</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.8; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DELEGATO" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DELEGATO" obbligatorio="#GEN_PROG_INC.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <!--
@@ -1303,6 +1305,29 @@ urn_report="report:CSP_SESSION_REPORT"/>
 </table>
 
 <!--------------------FINE BLOCCO ALLEGATI--------------------->
+
+<br>
+<br>
+
+<!--------------------INIZIO DICHIARAZIONE CONSERVAZIONE ORIGINALE---------------------->
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Dich_conservazione" name="Dich_conservazione" label="Dichiarazione conservazione originale firmato dal titolare" mandatory_enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit1.checked()"> </div>
+        <input group="Dich_conservazione" id="Dich_conservazione_check" name="Dich_conservazione_check" type="checkbox" value="1" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;"><b>Dichiaro di conservare presso il mio studio l'originale della stampa di questo modulo firmato con firma autografa dal titolare</b></p>
+      </td>
+      <td style="width:35%; background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="dichiar_richiesta" name="dichiar_richiesta" dynamic_value="(#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit1.checked()) ? 'Dichiarazione obbligatoria' : ((#AventeTitolo_verifica_titol_prog.value() == 'stessa persona' || #tit_firma_digit2.checked()) ? 'Dichiarazione non necessaria' : '')" style="width: 90%; text-align: center;" readonly/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!--------------------FINE DICHIARAZIONE CONSERVAZIONE ORIGINALE---------------------->
 
 <br>
 <br>
