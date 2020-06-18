@@ -164,7 +164,11 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr class="Rigaintestazioneridotta">
       <td colspan="4">
-        <p style="line-height: 1.6;">in questo caso la compilazione viene eseguita da:</p>
+        <p style="line-height: 1.6;">in questo caso la compilazione viene eseguita da:
+          <span style="pd4ml-visibility: hidden; pd4ml-display: none; float:right">
+            {{ utils.recupero_dati( 'compilante', visibility_carica_dati ) }}
+          </span>
+        </p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -180,13 +184,13 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td colspan="2" style="width: 35%;">
-        <input id="compilante_Cognome" name="compilante_Cognome" style="width:100%" label="Cognome del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()"/>
+        <input id="compilante_Cognome" name="compilante_Cognome" style="width:100%" label="Cognome del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()" readonly/>
       </td>
       <td>
-        <input id="compilante_Nome" name="compilante_Nome" style="width:100%" label="Nome del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()"/>
+        <input id="compilante_Nome" name="compilante_Nome" style="width:100%" label="Nome del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()" readonly/>
       </td>
       <td>
-        <input format="cf" id="compilante_CodiceFiscale" name="compilante_CodiceFiscale" style="width:100%" label="Codice fiscale del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()"/>
+        <input format="cf" id="compilante_CodiceFiscale" name="compilante_CodiceFiscale" style="width:100%" label="Codice fiscale del dichiarante" mandatory_enabled="#Tipo_richiedente2.checked()" readonly/>
       </td>
     </tr>
     <tr class="Rigaintestazione">
@@ -232,7 +236,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td>
         <p style="line-height:1.6;">Dichiarazione di residenza con provenienza dal seguente comune:<br>
         {{ utils.provincie_cambio_res( 'AventeTitolo_provincia_provenienza', 'Provincia di provenienza del richiedente' )}}
-        <select class="inputNormal" id="AventeTitolo_comune_provenienza" name="AventeTitolo_comune_provenienza" style="width:60%" label="Comune di provenienza" dynamic_value="getComuniFromProvincia(#AventeTitolo_provincia_provenienza.value(), 'AventeTitolo_comune_provenienza')" mandatory_enabled="#AventeTitolo_provincia_provenienza.value() != ''"></select></p>
+        <select class="inputNormal" id="AventeTitolo_comune_provenienza" name="AventeTitolo_comune_provenienza" style="width:60%" label="Comune di provenienza" dynamic_value="getComuniFromProvincia(#AventeTitolo_provincia_provenienza.value(), 'AventeTitolo_comune_provenienza')" mandatory_enabled="#Tipo_residenza1.checked()"></select></p>
       </td>
     </tr>
     <tr>
@@ -252,7 +256,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td>
         <p style="line-height:1.6;">Dichiarazione di residenza di cittadini italiani iscritti all'AIRE (Anagrafe degli Italiani residenti all'estero),<br>
            presso il seguente comune: {{ utils.provincie_cambio_res_aire( 'AventeTitolo_provincia_iscr_aire', 'Provincia di iscrizione AIRE del richiedente' )}}
-           <select class="inputNormal" id="AventeTitolo_comune_iscr_aire" name="AventeTitolo_comune_iscr_aire" style="width:64%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #AventeTitolo_provincia_iscr_aire.value(), 'AventeTitolo_comune_iscr_aire')" mandatory_enabled="#AventeTitolo_provincia_iscr_aire.value() != ''"></select><br>
+           <select class="inputNormal" id="AventeTitolo_comune_iscr_aire" name="AventeTitolo_comune_iscr_aire" style="width:64%" label="Comune di iscrizione AIRE" dynamic_value="getComuniFromProvincia( #AventeTitolo_provincia_iscr_aire.value(), 'AventeTitolo_comune_iscr_aire')" mandatory_enabled="#Tipo_residenza3.checked()"></select><br>
            con provenienza dalla seguente nazione estera:
            {{ utils.stato_cambio_res_aire( 'AventeTitolo_comune_iscr_aire_nazione_provenienza', 'Nazione di provenienza del richiedente' )}}
         </p>
@@ -429,7 +433,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="trasferimento_familiari" id="trasferimento_familiari2" name="trasferimento_familiari" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height: 1.6;">si sono trasferiti n. <input style="text-align: center;" size="4" class="Modulo" id="familiari_trasferiti" type="number" min="1" max="20" ame="familiari_trasferiti" label="Numero familiari trasferiti al nuovo indirizzo" mandatory_enabled="#trasferimento_familiari2.checked()"> familiari</p>
+        <p style="line-height: 1.6;">si sono trasferiti n. <input style="text-align: center;" size="4" id="familiari_trasferiti" type="number" min="1" max="20" name="familiari_trasferiti" label="Numero familiari trasferiti al nuovo indirizzo" mandatory_enabled="#trasferimento_familiari2.checked()"> familiari</p>
       </td>
     </tr>
   </tbody>
@@ -661,10 +665,10 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td>
-        <input style="width:100%;" class="Modulo" id="cognome_ref_utenze" name="cognome_ref_utenze" label="Cognome del referente per le utenze" enabled="#ref_utenze2.checked()">
+        <input style="width:100%;" class="Modulo" id="cognome_ref_utenze" name="cognome_ref_utenze" label="Cognome del referente per le utenze" mandatory_enabled="#ref_utenze2.checked()">
       </td>
       <td>
-        <input style="width:100%;" class="Modulo" id="nome_ref_utenze" name="nome_ref_utenze" label="Nome del referente per le utenze" enabled="#ref_utenze2.checked()">
+        <input style="width:100%;" class="Modulo" id="nome_ref_utenze" name="nome_ref_utenze" label="Nome del referente per le utenze" mandatory_enabled="#ref_utenze2.checked()">
       </td>
     </tr>
   </tbody>
@@ -1397,7 +1401,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Tipo_richiedente2.checked() ? #compilante_Nome.value().toUpperCase() + ' ' + #compilante_Cognome.value().toUpperCase() : #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -1429,30 +1433,54 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-RESIDENZA" name="GLOBO_allegato_cINFORM-TRATT-DATI-RESIDENZA" obbligatorio="''" type="hidden" value=""/>
 
 <!-- METADATI DICHIARANTE -->
+<!--
 <input id="Metadati_Compilante_Cognome" name="Metadati_Compilante_Cognome" dynamic_value="#compilante_Cognome.value()" type="hidden"/>
 <input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome" dynamic_value="#compilante_Nome.value()" type="hidden"/>
 <input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale" dynamic_value="#compilante_CodiceFiscale.value()" type="hidden"/>
 <br>
+-->
+<input id="Referente99_Compilante_Cognome" name="Referente99_Compilante_Cognome" dynamic_value="#compilante_Cognome.value()" type="hidden"/>
+<input id="Referente99_Compilante_Nome" name="Referente99_Compilante_Nome" dynamic_value="#compilante_Nome.value()" type="hidden"/>
+<input id="Referente99_Compilante_CodiceFiscale" name="Referente99_Compilante_CodiceFiscale" dynamic_value="#compilante_CodiceFiscale.value()" type="hidden"/>
+<br>
 <!-- METADATI AventeTitolo -->
+<!--
 <input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_Cognome.value() : ''" type="hidden"/>
 <input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_Nome.value() : ''" type="hidden"/>
 <input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_CodiceFiscale.value() : ''" type="hidden"/>
 <input id="Metadati_AventeTitolo_datanasc" name="Metadati_AventeTitolo_datanasc" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_DataNascita.value() : ''" type="hidden"/>
 <input id="Metadati_AventeTitolo_luogonasc" name="Metadati_AventeTitolo_luogonasc" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_LuogoNascita.value() : ''" type="hidden"/>
 <br>
+
+<input id="Referente99_Cognome_Dichiarante" name="Referente99_Cognome_Dichiarante" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_Cognome.value() : ''" type="hidden"/>
+<input id="Referente99_Nome_Dichiarante" name="Referente99_Nome_Dichiarante" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_Nome.value() : ''" type="hidden"/>
+<input id="Referente99_CodiceFiscale_Dichiarante" name="Referente99_CodiceFiscale_Dichiarante" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_CodiceFiscale.value() : ''" type="hidden"/>
+<input id="Referente99_datanasc_Dichiarante" name="Referente99_datanasc_Dichiarante" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_DataNascita.value() : ''" type="hidden"/>
+<input id="Referente99_luogonasc_Dichiarante" name="Referente99_luogonasc_Dichiarante" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_LuogoNascita.value() : ''" type="hidden"/>
+<br>
+-->
 <!-- METADATI MINORE -->
+<!--
 <input id="Metadati_Minore_Cognome" name="Metadati_Minore_Cognome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_Cognome.value() : ''" type="hidden"/>
 <input id="Metadati_Minore_Nome" name="Metadati_Minore_Nome" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_Nome.value() : ''" type="hidden"/>
 <input id="Metadati_Minore_CodiceFiscale" name="Metadati_Minore_CodiceFiscale" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_CodiceFiscale.value() : ''" type="hidden"/>
 <input id="Metadati_Minore_DataNascita" name="Metadati_Minore_DataNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_DataNascita.value() : ''" type="hidden"/>
 <input id="Metadati_Minore_LuogoNascita" name="Metadati_Minore_LuogoNascita" dynamic_value="#Tipo_cambio_res_minore1.checked() ? #AventeTitolo_LuogoNascita.value() : ''" type="hidden"/>
 <br>
+-->
 <!-- METADATI PERSONA GIA' RESIDENTE AL NUOVO INDIRIZZO-->
+<!--
 <input id="Metadati_cognome_fam_iscritto" name="Metadati_cognome_fam_iscritto" dynamic_value="#cognome_fam_iscritto.value()" type="hidden"/>
 <input id="Metadati_nome_fam_iscritto" name="Metadati_nome_fam_iscritto" dynamic_value="#nome_fam_iscritto.value()" type="hidden"/>
 <input id="Metadati_luogo_nasc_fam_iscritto" name="Metadati_luogo_nasc_fam_iscritto" dynamic_value="#luogo_nasc_fam_iscritto.value()" type="hidden"/>
 <input id="Metadati_data_nasc_fam_iscritto" name="Metadati_data_nasc_fam_iscritto" dynamic_value="#data_nasc_fam_iscritto.value()" type="hidden"/>
 <br>
+-->
+<input id="Referente99_cognome_fam_iscritto" name="Referente99_cognome_fam_iscritto" dynamic_value="#cognome_fam_iscritto.value()" type="hidden"/>
+<input id="Referente99_nome_fam_iscritto" name="Referente99_nome_fam_iscritto" dynamic_value="#nome_fam_iscritto.value()" type="hidden"/>
+<input id="Referente99_luogo_nasc_fam_iscritto" name="Referente99_luogo_nasc_fam_iscritto" dynamic_value="#luogo_nasc_fam_iscritto.value()" type="hidden"/>
+<input id="Referente99_data_nasc_fam_iscritto" name="Referente99_data_nasc_fam_iscritto" dynamic_value="#data_nasc_fam_iscritto.value()" type="hidden"/>
+
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
 {% endblock content %}
