@@ -127,7 +127,7 @@ tipo_mime="application/pdf"/>
     'block4' : 'Valorizzare tutti i dati del defunto.',
     'block5' : 'Valorizzare tutti i dati del trasporto.',
     'block6' : 'Valorizzare i dati del funerale se è stato scelto di renderli pubblici.',
-    'block7' : 'Valorizzare i dati della Domanda.',
+    'block7' : 'Valorizzare i dati della richiesta.',
     'block8' : 'Inserire eventuali note aggiuntive.',
     'block9' : 'Valorizzare i dati della marca da bollo.',
     'block10' : 'Informativa dati personali'
@@ -192,7 +192,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
                 <input class="" id="Impresa_NomeLegaleRappresentante" name="Impresa_NomeLegaleRappresentante" style="width:100%" mandatory="true" label="Nome del Legale rappresentante"/>
             </td>
               <td>
-                <input class="" id="Impresa_CFLegaleRappresentante" name="Impresa_CFLegaleRappresentante" label="Codice fiscale legale rappresentante" style="width:100%;" format="cf" mandatory="true" label="Codice fiscale legale rappresentante"/>
+                <input class="" id="Impresa_CFLegaleRappresentante" name="Impresa_CFLegaleRappresentante" label="Codice fiscale legale rappresentante" style="width:100%;" format="cf" mandatory="true" label="Codice fiscale legale rappresentante" onkeyup="this.value = this.value.toUpperCase();"/>
               </td>
         </tr>
         <tr>
@@ -258,7 +258,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
       </td>
     <tr>
       <td mandatory="true">
-        {{ utils.provincie( 'Impresa_ProvinciaSede', label="Provincia della sede legale") }}
+        {{ utils.provincie_patente( 'Impresa_ProvinciaSede', label="Provincia della sede legale") }}
       </td>
       <td>
         <input class="" id="Impresa_ComuneSede" name="Impresa_ComuneSede" style="width:100%" mandatory="true" label="Comune della sede legale"/>
@@ -366,6 +366,16 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
         <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" dynamic_value="#Impresa_CivicoSede.value()"/>
       </td>
     </tr>
+    <tr>
+      <td>
+        <input class="" id="AventeTitolo_EMail" name="AventeTitolo_EMail" dynamic_value="#Impresa_Mail.value() != '' ? #Impresa_Mail.value() : ''"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="AventeTitolo_EMailPEC" name="AventeTitolo_EMailPEC" dynamic_value="#Impresa_APEC.value() != '' ? #Impresa_APEC.value() : ''"/>
+      </td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -429,7 +439,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
     </td>
   <tr>
     <td mandatory="#Fattura_Cognome.value() != ''">
-      {{ utils.provincie( 'Fattura_Provincia', label="Provincia intestatario fattura") }}
+      {{ utils.provincie_patente( 'Fattura_Provincia', label="Provincia intestatario fattura") }}
     </td>
     <td>
       <input class="" id="Fattura_Comune" name="Fattura_Comune" style="width:100%" label="Comune intestatario fattura" mandatory="#Fattura_Cognome.value() != ''"/>
@@ -450,7 +460,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
   </tr>
   <tr>
     <td>
-      <input class="" id="Fattura_CF" name="Fattura_CF" label="Codice fiscale intestatario fattura" style="width:100%;" format="cf" mandatory="#Fattura_Cognome.value() != ''"/>
+      <input class="" id="Fattura_CF" name="Fattura_CF" label="Codice fiscale intestatario fattura" style="width:100%;" format="cf" mandatory="#Fattura_Cognome.value() != ''" onkeyup="this.value = this.value.toUpperCase();"/>
     </td>
     <td colspan="2">
       <input class="" id="Fattura_Mail" name="Fattura_Mail" format="email" label="Mail intestatario fattura" style="width:100%;" mandatory="#Fattura_Cognome.value() != ''"/>
@@ -496,7 +506,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
           <input class="" id="Defunto_Nome" name="Defunto_Nome" style="width:100%;" mandatory="true" label="Nome del defunto"/>
           </td>
           <td>
-              <input class="" id="Defunto_CF" name="Defunto_CF" mandatory="true" label="Codice fiscale del defunto" style="width:100%;" format="cf"/>
+              <input class="" id="Defunto_CF" name="Defunto_CF" mandatory="true" label="Codice fiscale del defunto" style="width:100%;" format="cf" onkeyup="this.value = this.value.toUpperCase();"/>
           </td>
           </tr>
           
@@ -565,7 +575,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
     </td>
   <tr>
     <td mandatory="true">
-      {{ utils.provincie( 'Defunto_Provincia', label="Provincia del defunto") }}
+      {{ utils.provincie_patente( 'Defunto_Provincia', label="Provincia del defunto") }}
     </td>
     <td colspan="2">
       <input class="" id="Defunto_Comune" name="Defunto_Comune" style="width:100%" mandatory="true" label="Comune del defunto"/>
@@ -606,7 +616,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
        <input class="" id="Defunto_LuogoDecesso" name="Defunto_LuogoDecesso" mandatory="true" style="width:100%;" label="Luogo di decesso"/>
       </td>
       <td mandatory="true">
-        {{ utils.provincie( 'Defunto_ProvinciaDecesso', label="Provincia di decesso") }}
+        {{ utils.provincie_patente( 'Defunto_ProvinciaDecesso', label="Provincia di decesso") }}
       </td>
       <td>
       <input class="" id="Defunto_OraDecesso" name="Defunto_OraDecesso" mandatory="true" style="width:100%;" format="time" label="Ora di decesso">
@@ -655,7 +665,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
           <input class="" id="Trasporto_A" name="Trasporto_A" style="width:100%;" mandatory="true" label="Destinazione"/>
           </td>
           <td mandatory="true">
-            {{ utils.provincie( 'Trasporto_Provincia', label="Provincia di destinazione") }}
+            {{ utils.provincie_patente( 'Trasporto_Provincia', label="Provincia di destinazione") }}
           </td>
           <td mandatory="#Trasporto_Provincia.value() == 'EE'" >
             {{ utils.stato( 'Defunto_AStato', label="Stato di destinazione del trasporto")}}
@@ -737,7 +747,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
                     <input class="" id="Luogo_Funerale" name="Luogo_Funerale" style="width:100%;" mandatory="#Tipo_DatiFunerale1.checked()" label="Luogo del funerale"/>
                     </td>
                     <td>
-                      {{ utils.provincie( 'Provincia_Funerale', label="Provincia del funerale") }}
+                      {{ utils.provincie_patente( 'Provincia_Funerale', label="Provincia del funerale") }}
                     </td>
                     <td>
                       <input class="" id="Defunto_OraFunerale" name="Defunto_OraFunerale" format="time" style="width:100%;" label="Ora del funerale"/>
@@ -778,7 +788,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
               <td colspan="3">
                 <p>
                   <b>
-                    Dati della Domanda
+                    Dati della richiesta
                   </b>
                 </p>
               </td>
@@ -1077,7 +1087,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
           <p class="Labelcella" style="text-align: center">Data</p>
         </td>
         <td>
-          <p class="Labelcella" style="text-align: center">Il legale rappresentante</p>
+          <p class="Labelcella" style="text-align: center">Il legale rappresentante <br> (firmato digitalmente)</p>
         </td>
       </tr>
     </tbody>
