@@ -153,6 +153,7 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
                             "Fattura_CF",
                             "Defunto_Provincia",
                             "Defunto_AStato",
+                            "Parametri_Note",
                             "Parametri_NumeroBollo",
                             "Presa_visione_check"
                             ];
@@ -163,14 +164,16 @@ DOMANDA PER TRASPORTO DEFUNTO FUORI COMUNE
       'block4' : 'Valorizzare tutti i dati del defunto.',
       'block5' : 'Valorizzare tutti i dati del trasporto.',
       'block6' : 'Valorizzare i dati del funerale se è stato scelto di renderli pubblici.',
-      'block7' : 'Valorizzare i dati della Domanda.',
-      'block8' : 'Valorizzare i dati della marca da bollo.',
-      'block9' : 'Informativa dati personali'
+      'block7' : 'Valorizzare i dati della richiesta.',
+      'block8' : 'Inserire eventuali note aggiuntive.',
+      'block9' : 'Valorizzare i dati della marca da bollo.',
+      'block10' : 'Informativa dati personali'
     }
   </script>
   
   <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/M3801-DOMANDA-TRASPORTO-DEFUNTO-FUORI-COMUNE" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
-         
+        
+      
 
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
@@ -375,7 +378,7 @@ function get_ufficio_dest() {
             <td colspan="3">
               <p>
                 <b>
-                  Dati del Legale rappresentante
+                  Dati del legale rappresentante
                 </b>
               </p>
             </td>
@@ -399,7 +402,7 @@ function get_ufficio_dest() {
                 <input class="" id="Impresa_NomeLegaleRappresentante" name="Impresa_NomeLegaleRappresentante" style="width:100%" mandatory="true" label="Nome del Legale rappresentante"/>
             </td>
               <td>
-                <input class="" id="Impresa_CFLegaleRappresentante" name="Impresa_CFLegaleRappresentante" label="Codice fiscale legale rappresentante" style="width:100%;" format="cf" mandatory="true" label="Codice fiscale legale rappresentante"/>
+                <input class="" id="Impresa_CFLegaleRappresentante" name="Impresa_CFLegaleRappresentante" label="Codice fiscale legale rappresentante" style="width:100%;" format="cf" mandatory="true" label="Codice fiscale legale rappresentante" onkeyup="this.value = this.value.toUpperCase();"/>
               </td>
         </tr>
         <tr>
@@ -561,7 +564,7 @@ function get_ufficio_dest() {
     <option value="SV">SV</option>
     <option value="TA">TA</option>
     <option value="TE">TE</option>
-    <option value="TN" selected>TN</option>
+    <option value="TN">TN</option>
     <option value="TO">TO</option>
     <option value="TP">TP</option>
     <option value="TR">TR</option>
@@ -634,6 +637,7 @@ function get_ufficio_dest() {
 </table>
 </div>
 
+<div style="display:none">
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazioneridotta">
@@ -685,8 +689,19 @@ function get_ufficio_dest() {
         <input class="" id="AventeTitolo_CivicoResidenza" name="AventeTitolo_CivicoResidenza" dynamic_value="#Impresa_CivicoSede.value()"/>
       </td>
     </tr>
+    <tr>
+      <td>
+        <input class="" id="AventeTitolo_EMail" name="AventeTitolo_EMail" dynamic_value="#Impresa_Mail.value() != '' ? #Impresa_Mail.value() : ''"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="AventeTitolo_EMailPEC" name="AventeTitolo_EMailPEC" dynamic_value="#Impresa_APEC.value() != '' ? #Impresa_APEC.value() : ''"/>
+      </td>
+    </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 <br>
@@ -843,7 +858,7 @@ function get_ufficio_dest() {
     <option value="SV">SV</option>
     <option value="TA">TA</option>
     <option value="TE">TE</option>
-    <option value="TN" selected>TN</option>
+    <option value="TN">TN</option>
     <option value="TO">TO</option>
     <option value="TP">TP</option>
     <option value="TR">TR</option>
@@ -881,7 +896,7 @@ function get_ufficio_dest() {
   </tr>
   <tr>
     <td>
-      <input class="" id="Fattura_CF" name="Fattura_CF" label="Codice fiscale intestatario fattura" style="width:100%;" format="cf" mandatory="#Fattura_Cognome.value() != ''"/>
+      <input class="" id="Fattura_CF" name="Fattura_CF" label="Codice fiscale intestatario fattura" style="width:100%;" format="cf" mandatory="#Fattura_Cognome.value() != ''" onkeyup="this.value = this.value.toUpperCase();"/>
     </td>
     <td colspan="2">
       <input class="" id="Fattura_Mail" name="Fattura_Mail" format="email" label="Mail intestatario fattura" style="width:100%;" mandatory="#Fattura_Cognome.value() != ''"/>
@@ -890,6 +905,8 @@ function get_ufficio_dest() {
 </tbody>
 </table>
 </div>
+
+<globo_salto_pagina></globo_salto_pagina>
 
 <br>
 <br>
@@ -925,7 +942,7 @@ function get_ufficio_dest() {
           <input class="" id="Defunto_Nome" name="Defunto_Nome" style="width:100%;" mandatory="true" label="Nome del defunto"/>
           </td>
           <td>
-              <input class="" id="Defunto_CF" name="Defunto_CF" mandatory="true" label="Codice fiscale del defunto" style="width:100%;" format="cf"/>
+              <input class="" id="Defunto_CF" name="Defunto_CF" mandatory="true" label="Codice fiscale del defunto" style="width:100%;" format="cf" onkeyup="this.value = this.value.toUpperCase();"/>
           </td>
           </tr>
           
@@ -1090,7 +1107,7 @@ function get_ufficio_dest() {
     <option value="SV">SV</option>
     <option value="TA">TA</option>
     <option value="TE">TE</option>
-    <option value="TN" selected>TN</option>
+    <option value="TN">TN</option>
     <option value="TO">TO</option>
     <option value="TP">TP</option>
     <option value="TR">TR</option>
@@ -1244,7 +1261,7 @@ function get_ufficio_dest() {
     <option value="SV">SV</option>
     <option value="TA">TA</option>
     <option value="TE">TE</option>
-    <option value="TN" selected>TN</option>
+    <option value="TN">TN</option>
     <option value="TO">TO</option>
     <option value="TP">TP</option>
     <option value="TR">TR</option>
@@ -1406,7 +1423,7 @@ function get_ufficio_dest() {
     <option value="SV">SV</option>
     <option value="TA">TA</option>
     <option value="TE">TE</option>
-    <option value="TN" selected>TN</option>
+    <option value="TN">TN</option>
     <option value="TO">TO</option>
     <option value="TP">TP</option>
     <option value="TR">TR</option>
@@ -1849,7 +1866,7 @@ function get_ufficio_dest() {
     <option value="SV">SV</option>
     <option value="TA">TA</option>
     <option value="TE">TE</option>
-    <option value="TN" selected>TN</option>
+    <option value="TN">TN</option>
     <option value="TO">TO</option>
     <option value="TP">TP</option>
     <option value="TR">TR</option>
@@ -1907,7 +1924,7 @@ function get_ufficio_dest() {
               <td colspan="3">
                 <p>
                   <b>
-                    Dati della Domanda
+                    Dati della richiesta
                   </b>
                 </p>
               </td>
@@ -2028,6 +2045,31 @@ function get_ufficio_dest() {
     </table>
   </div> 
 
+  <br>
+
+  <globo_salto_pagina></globo_salto_pagina>
+
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+        <tr class="Rigaintestazioneridotta">
+            <td>
+              <p>
+                <b>
+                  Note (per eventuali indicazioni aggiuntive)
+                </b>
+              </p>
+            </td>
+          </tr>
+      <tr>
+        <td>  
+        <textarea class="inputNormal" id="Parametri_Note" name="Parametri_Note" style="width: 100%; height: 3cm;" label="Note aggiuntive a disposizione"></textarea>
+      </td>
+      </tr>
+   </tbody>
+  </table>
+  </div>
 
 <br>
 <br>
@@ -2083,7 +2125,7 @@ function get_ufficio_dest() {
             <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
           </td>
           <td style="background-color: #eeeeee;">
-            <p style="line-height:1.4;"><b>Di aver preso visione dell'<a href="https://sportellotest.comune.trento.it/document/inform-tratt-dati-sviluppoeconomico" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+            <p style="line-height:1.4;"><b>Di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-funerario" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
           </td>
         </tr>
       </tbody>
@@ -2158,44 +2200,36 @@ function get_ufficio_dest() {
   </table>
 
 
-<br>
-
-
- 
-
-<br>
-<br/>
-  <table class="Modulo" id="firme" name="Firme" style="border:1px solid grey; pd4ml-display: none;">
-	<tbody>
-		<tr>
-			<td style="width: 33%; text-align: center;">
-				<input class="" id="Luogo" label="Luogo" mandatory="true" name="Luogo" style="width:80%;" type="text"/>
-			</td>
-			<td style="width: 33%; text-align: center;">
-				<input class="" format="date" id="Data" label="Data" mandatory="true" name="Data" style="width:50%;" type="text"/>
-			</td>
-			<td style="width: 34%; text-align: center; height: 1.5cm;">
-			</td>
-		</tr>
-		<tr class="Rigaintestazioneridotta">
-			<td>
-				<p class="Labelcella" style="text-align: center">Luogo</p>
-			</td>
-			<td>
-				<p class="Labelcella" style="text-align: center">Data</p>
-			</td>
-			<td>
-				<p class="Labelcella" style="text-align: center">il Legale rappresentante</p>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="3">
-				<p><span style="font-size:70%"><i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (artt. 13 e 14 Regolamento UE n. 2016/679).</i></span></p>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<br/>
+  <br>
+  <br/>
+  <table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Luogo_PDF" name="Luogo_PDF" type="text"/>
+        </td>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Data_PDF" name="Data_PDF" type="text"/>
+        </td>
+        <td style="width: 50%; text-align: center; height: 1.5cm;">
+          <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella" style="text-align: center">Luogo</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Data</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Il legale rappresentante <br> (firmato digitalmente)</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br/>
+  
 
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
