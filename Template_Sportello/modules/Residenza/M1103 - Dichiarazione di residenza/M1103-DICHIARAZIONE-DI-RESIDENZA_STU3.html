@@ -55,11 +55,13 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<!--
 <meta codice_modulo_figlio="M1103-MSEC05-ALL-D"
 urn_modulo_figlio="document:c_l378:residenza;cambio.residenza;msec05.m1103.allegatoD"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
+-->
 
 <meta codice_modulo_figlio="M1103-MSEC06-ALL-E"
 urn_modulo_figlio="document:c_l378:residenza;cambio.residenza;msec06.m1103.allegatoE"
@@ -290,7 +292,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
 <input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
 <!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
-{{anagrafica_trento_uniformata.richiedente_cambio_res("AventeTitolo","Il/La richiedente, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+{{anagrafica_trento_uniformata.richiedente_cambio_res("AventeTitolo","Il/La dichiarante, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <input id="verifica_non_UE" name="verifica_non_UE" dynamic_value="#AventeTitolo_Cittadinanza.value() != '' and !#AventeTitolo_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) ? 'non UE' : ''" type="hidden"/>
 
@@ -506,7 +508,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<table class="Modulo" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey" enabled="#persone_iscritte2.checked()">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="4">
@@ -515,7 +517,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <div id="rapporti_residenti" name="rapporti_residenti" label="Rapporti con le persone già iscritte al nuovo indirizzo" mandatory_enabled="true"> </div>
+        <div id="rapporti_residenti" name="rapporti_residenti" label="Rapporti con le persone già iscritte al nuovo indirizzo" mandatory_enabled="#persone_iscritte2.checked()"> </div>
         <input group="rapporti_residenti" id="rapporti_residenti1" name="rapporti_residenti" type="radio" value="1" />
       </td>
       <td colspan="3">
@@ -822,7 +824,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="4">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
         <div id="titolo_occupazione" name="titolo_occupazione" label="Specificare il titolo di occupazione dell'alloggio" mandatory_enabled="true"> </div>
         <input group="titolo_occupazione" id="titolo_occupazione1" name="titolo_occupazione" type="radio" value="1" />
       </td>
@@ -852,19 +854,27 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="width: 5%;">
         <p  class="Labelcella">Subalterno</p>
       </td>
+      <!--
       <td style="width: 3%;">
         <p class="Labelcella" style="line-height: 1.6;">Controllo particella</p>
       </td>
       <td style="width: 3%;">
         <p class="Labelcella" style="line-height: 1.6;">Mappa</p>
       </td>
+      -->
     </tr>
+    <!--
     <tr valid="#RisultatoVerificaCatastale.value() == 'SI' || #RisultatoVerificaCatastale.value() == ''">
+    -->
+    <tr class="Rigaintestazioneridotta">
       <td colspan="2">
+        <!--
         <select class="inputNormal" id="TipoImmobile" name="TipoImmobile" style="width:100%" label="Tipo immobile" mandatory_enabled="#titolo_occupazione1.checked()">
           <option value=""></option>
           <option value="S">Abitazione</option>
         </select>
+        -->
+        <p style="line-height: 1.6;">Abitazione</p>
       </td>
       <td>
         <select class="inputNorma2" id="CatComune" name="CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#titolo_occupazione1.checked()">
@@ -905,6 +915,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td>
         <input name="CatSubalterno" id="CatSubalterno" style="width:100%; text-align: center;" label="Subalterno" mandatory_enabled="#titolo_occupazione1.checked()"/>
       </td>
+      <!--
       <td>
         <button type="button" class="real-button" style="width:34px; height:28px" id="ControlloDatiCatastaliButton" name="ControlloDatiCatastaliButton"><img src="./appoggio/img/valida.png"/></button>
           {{ service.verifica_particella(
@@ -932,7 +943,9 @@ urn_report="report:CSP_SESSION_REPORT"
       <td>
         <button type="button" class="real-button" enabled="#RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('CatComune').value; num = document.getElementById('CatNumero').value; barra = document.getElementById('CatBarra').value; tipo = document.getElementById('TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
       </td>
+      -->
     </tr>
+    <!--
     <tr class="Rigaintestazione">
       <td colspan="10"><p style="line-height:1.6;">
         <b>Verifica esito particella:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -956,6 +969,7 @@ urn_report="report:CSP_SESSION_REPORT"
         Particella NON esistente</p>
       </td>
     </tr>
+    -->
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="7">
         <input group="titolo_occupazione" id="titolo_occupazione2" name="titolo_occupazione" type="radio" value="2" />
@@ -1155,7 +1169,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="proprieta_immobile" id="proprieta_immobile3" name="proprieta_immobile" type="radio" value="3" />
       </td>
       <td colspan="9">
-        <p style="line-height: 1.6;">dichiara di essere ospite presso una Convivenza anagrafica</p>
+        <p style="line-height: 1.6;">dichiara di essere ospite presso una Convivenza anagrafica (casa di riposo, appartamenti gestiti da strutture)</p>
       </td>
     </tr>
   </tbody>
@@ -1320,6 +1334,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="GLOBO_modulofiglio_cM1103-MSEC04-ALL-C" name="GLOBO_modulofiglio_cM1103-MSEC04-ALL-C" obbligatorio="#DICH_RES_ALL_C.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+    <!--
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_D" name="DICH_RES_ALL_D" type="checkbox" dynamic_check="#persone_iscritte2.checked()" enabled="#persone_iscritte2.checked()" value="OBBLIGATORIO"/>
@@ -1332,6 +1347,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="GLOBO_modulofiglio_cM1103-MSEC05-ALL-D" name="GLOBO_modulofiglio_cM1103-MSEC05-ALL-D" obbligatorio="#DICH_RES_ALL_D.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+    -->
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" enabled="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" value="OBBLIGATORIO"/>
@@ -1412,7 +1428,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+        <p class="Labelcella" style="text-align: center">Il dichiarante <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
       </td>
     </tr>
   </tbody>
