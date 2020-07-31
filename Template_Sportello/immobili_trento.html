@@ -10611,7 +10611,7 @@
 </div>
 {%- endmacro %}
 
-{% macro immobile_destinazione_urbanistica_particelle( prefix='Immobile', intestazione="immobile", annotazioniSolo1="Immobile principale oggetto dell'istanza", visibilty_carica_dati="visibility:hidden", pointer_carica_dati="cursor:default", visibility_intestazione="display:visibility", civico_obbligatorio="false", carica_campi="", tipo_obbligatorio="false", disattivato="true" ) -%}
+{% macro immobile_destinazione_urbanistica_particelle_old_version( prefix='Immobile', intestazione="immobile", annotazioniSolo1="Immobile principale oggetto dell'istanza", visibilty_carica_dati="visibility:hidden", pointer_carica_dati="cursor:default", visibility_intestazione="display:visibility", civico_obbligatorio="false", carica_campi="", tipo_obbligatorio="false", disattivato="true" ) -%}
 <div type="Immobile">
   
   <div class="simpatico-block simpatico-query-and-answer">
@@ -10749,7 +10749,174 @@
       </tbody>
     </table>
 
-    <br>
+  </div>
+
+  <br>
+  
+</div>
+{%- endmacro %}
+
+{% macro immobile_destinazione_urbanistica_particelle( prefix='Immobile', intestazione="immobile", annotazioniSolo1="Immobile principale oggetto dell'istanza", visibilty_carica_dati="visibility:hidden", pointer_carica_dati="cursor:default", visibility_intestazione="display:visibility", civico_obbligatorio="false", carica_campi="", tipo_obbligatorio="false", disattivato="true" ) -%}
+<div type="Immobile">
+  
+  <div class="simpatico-block simpatico-query-and-answer">
+    <input id="{{ prefix }}_DatiToponomasticiObbligatori"       name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
+    <input id="{{ prefix }}_Tipo"       name="{{ prefix }}_Tipo"       type="hidden" dynamic_value="#{{ prefix }}_TipoImmobile.value() == 'unità immobiliare urbana' ? 'UIU' : ( #{{ prefix }}_TipoImmobile.value() == 'particella terreni' ? 'PT' : ( #{{ prefix }}_TipoImmobile.value() == 'intero edificio' ? 'intero edificio' : '' )) " />
+    <input id="{{ prefix }}_NumeroUlterioriImmobili" name="{{ prefix }}_NumeroUlterioriImmobili" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltriImmobili.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltriImmobili.value() / 16) ">
+    <input id="{{ prefix }}_Note"       name="{{ prefix }}_Note"       type="hidden" value="{{ annotazioniSolo1 }}"/>
+    <input id="{{ prefix }}_CatNote"    name="{{ prefix }}_CatNote"    type="hidden" value="{{ annotazioniSolo1 }}"/>
+    <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td style="border-right:0px">
+            <p style="line-height:1.6;">{{ intestazione|safe }}</p><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+      <tbody>
+        <tr class="Rigaintestazioneridotta">
+          <td colspan="2">
+            <p class="Labelcella">Tipo</p>
+          </td>
+          <td>
+            <p class="Labelcella">Comune catastale (codice)</p>
+          </td>
+          <td colspan="2">
+            <p class="Labelcella">Comune catastale (nome esteso)</p>
+          </td>
+          <td style="width: 8%;">
+            <p class="Labelcella">Numero</p>
+          </td>
+          <td style="width: 8%;">
+            <p class="Labelcella">Barra</p>
+          </td>
+          <td style="width: 8%;">
+            <p class="Labelcella">Mappa</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <select class="inputNormal" id="{{ prefix }}_TipoImmobile" name="{{ prefix }}_TipoImmobile" style="width:100%" label="Tipo immobile" mandatory="true" mandatory_enabled="{{ disattivato }}">
+              <option value=""></option>
+              <!--<option value="S">porzione di edificio</option> -->
+	            <option value="E">particella edificiale</option>
+              <option value="F">particella fondiaria</option>
+            </select>
+          </td>
+          <td>
+            <!-- select class="inputNormal" id="{{ prefix }}_NomeComuneCatastale" name="{{ prefix }}_NomeComuneCatastale" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['E','F'])" -->
+            <select class="inputNormal" id="{{ prefix }}_CatComune" name="{{ prefix }}_CatComune" style="width:100%" label="Comune Catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])">
+              <option value=""></option>
+              <option value="17">Baselga del Bondone</option>
+              <option value="50">Cadine</option>
+              <option value="108">Cognola</option>
+              <option value="161">Gardolo</option>
+              <option value="222">Mattarello</option>
+              <option value="224">Meano</option>
+              <option value="244">Montevaccino</option>
+              <option value="285">Povo</option>
+              <option value="305">Ravina</option>
+              <option value="308">Romagnano</option>
+              <option value="337">Sardagna</option>
+              <option value="355">Sopramonte</option>
+              <option value="406">Trento</option>
+              <option value="432">Vigolo Baselga</option>
+              <option value="437">Villamontagna</option>
+              <option value="439">Villazzano</option>
+            </select>
+          </td>
+          <td colspan="2">
+            <input name="{{ prefix }}_ComuneCatastale_esteso" id="{{ prefix }}_ComuneCatastale_esteso" style="width:100%;" label="Comune catastale" dynamic_value="switch(#{{ prefix }}_CatComune.value()) { case '17': 'Baselga del Bondone'; break; case '50': 'Cadine'; break; case '108': 'Cognola'; break; case '161': 'Gardolo'; break; case '222': 'Mattarello'; break; case '224': 'Meano'; break; case '244': 'Montevaccino'; break; case '285': 'Povo'; break; case '305': 'Ravina'; break; case '308': 'Romagnano'; break; case '337': 'Sardagna'; break; case '355': 'Sopramonte'; break; case '406': 'Trento'; break; case '432': 'Vigolo Baselga'; break; case '437': 'Villamontagna'; break; case '439': 'Villazzano'; break; case '4': 'Aldeno'; break; case '101': 'Cimone'; break; case '162': 'Garniga'; break;}" readonly/>
+          </td>
+          <td>
+            <input name="{{ prefix }}_CatNumero" id="{{ prefix }}_CatNumero" style="width:100%;" label="Numero particella catastale" mandatory_enabled="#{{ prefix }}_TipoImmobile.check_value(['S','E','F'])"/>
+          </td>
+          <td>
+            <input name="{{ prefix }}_CatBarra" id="{{ prefix }}_CatBarra" style="width:100%;" label="Barra particella catastale"  enabled="{{ disattivato }}"/>
+          </td>
+          <td>
+            <button class="real-button" type="button" enabled="#{{ prefix }}_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('{{ prefix }}_CatComune').value; num = document.getElementById('{{ prefix }}_CatNumero').value; barra = document.getElementById('{{ prefix }}_CatBarra').value; tipo = document.getElementById('{{ prefix }}_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"/></button>
+          </td>
+			  </tr>
+      </tbody>
+	  </table>
+    <!--Aggiungo controllo frazionamento-->
+    <table class="Modulo" style="border:1px solid grey;">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="5">
+            <p style="line-height:1.6;">
+              <b>La particella selezionata è soggetta a <a href="https://sportello.comune.trento.it/faq%3Ac_l378%3Adati.frazionamento" target="_blank">frazionamento</i></a>?</b>
+            </p>
+          </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: center; width: 4%;">
+              <div id="{{ prefix }}_Parametri_Titolo" name="{{ prefix }}_Parametri_Titolo" label="{{ prefix }} particella soggetta a frazionamento" mandatory_enabled="#{{ prefix }}_TipoImmobile.value() != ''"></div>
+              <input id="{{ prefix }}_Parametri_Titolo2" name="{{ prefix }}_Parametri_Titolo" type="radio" value="1" />
+            </td>
+            <td colspan="5">
+              <p style="line-height:1.6;">NO</p> 
+            </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: center; width: 4%;" rowspan="4">
+            <input id="{{ prefix }}_Parametri_Titolo1" name="{{ prefix }}_Parametri_Titolo" type="radio" value="2"/>
+          </td>
+          <td rowspan="4">
+            <p style="line-height:1.6;">SI</p>
+            <td style="width:5%">
+                <div id="{{ prefix }}_Parametri_Titolo_Sec" name="{{ prefix }}_Parametri_Titolo_Sec" label="{{ prefix }} particella soggetta a frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"></div>
+                <input id="{{ prefix }}_Parametri_Titolo3" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="1" style="vertical-align: top; width: 100%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>
+            </td> 
+            <td colspan="3"> 
+                con situazione catastale ante-frazionamento
+            </td>  
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3">
+            <input id="{{ prefix }}_Parametri_Titolo4" name="{{ prefix }}_Parametri_Titolo_Sec" type="radio" value="2" style="vertical-align: top; width: 100%;" mandatory_enabled="#{{ prefix }}_Parametri_Titolo1.checked()"/>   
+          </td>
+          <!--
+          <td>
+            con situazione catastale come da tipo di frazionamento <b>approvato dal catasto in data </b>     
+            <input id="{{ prefix }}_DataAttoFrazionamenti" name="{{ prefix }}_DataAttoFrazionamenti" style="width:25%;" type="date" label="Data catasto frazionamenti" mandatory_enabled="#{{ prefix }}_Parametri_Titolo4.checked()" enabled="{{disattivato}}"/> 
+            - protocollo N° <input id="{{ prefix }}_NumeroFrazionamento" name="{{ prefix }}_NumeroFrazionamento" style="width:10%;" type="number" min="0" label="{{ prefix }}_Numero frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo4.checked()" enabled="{{disattivato}}"/>
+            Anno <input id="{{ prefix }}_AnnoFrazionamento" name="{{ prefix }}_AnnoFrazionamento" style="width:10%;" type="number" label="{{ prefix }}_Anno frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo4.checked()" enabled="{{disattivato}}"/> 
+            <br> 
+            <b>N.B: non inserire il numero progressivo della semplice ricevuta del catasto</b>   
+          </td>
+          -->
+          <td>
+            con situazione catastale come da tipo di frazionamento <b>approvato dal catasto in data </b> 
+          </td>
+          <td style="width:12%">
+            <input id="{{ prefix }}_DataAttoFrazionamenti" name="{{ prefix }}_DataAttoFrazionamenti" style="width:100%;" type="date" label="Data catasto frazionamenti" mandatory_enabled="#{{ prefix }}_Parametri_Titolo4.checked()" enabled="{{disattivato}}"/> 
+          </td>
+        </tr>
+        <tr>
+          <td>
+            protocollo N°:
+          </td>
+          <td>
+            <input id="{{ prefix }}_NumeroFrazionamento" name="{{ prefix }}_NumeroFrazionamento" style="width:100%;" type="number" min="0" label="{{ prefix }}_Numero frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo4.checked()" enabled="{{disattivato}}"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Anno: 
+          </td>
+          <td>
+            <input id="{{ prefix }}_AnnoFrazionamento" name="{{ prefix }}_AnnoFrazionamento" style="width:100%;" type="number" label="{{ prefix }}_Anno frazionamento" mandatory_enabled="#{{ prefix }}_Parametri_Titolo4.checked()" enabled="{{disattivato}}"/> 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
 
   <br>

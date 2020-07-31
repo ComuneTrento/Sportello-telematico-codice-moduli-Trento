@@ -1659,7 +1659,7 @@
         <input id="check_minorenne" name="check_minorenne" type="checkbox" dynamic_check="menoDiXAnni(#{{ prefix }}_DataNascita.value(), 18)" enabled="menoDiXAnni(#{{ prefix }}_DataNascita.value(), 18)"/>
       </td>
       <td colspan="2">
-        <p style="line-height: 1.6;"><b>Il/La richiedente è minorenne ed è:</b></p>
+        <p style="line-height: 1.6;"><b>Il/La dichiarante è minorenne ed è:</b></p>
       </td>
     </tr>
     <tr>
@@ -1774,6 +1774,53 @@
       </td>
     </tr>
     <tr>
+      <td colspan="2">
+        <p style="line-height: 1.6;">Possesso patente di guida:</p>
+      </td>
+      <div id="{{ prefix }}_check_patente" name="{{ prefix }}_check_patente" label="In possesso di patente" mandatory_enabled="true"> 
+        <td>
+          <p style="line-height: 1.6;"> <input id="{{ prefix }}_patente_SI" name="{{ prefix }}_check_patente" type="radio" value="1"/> SI </p>
+        </td>
+        <td>
+          <p style="line-height: 1.6;"> <input id="{{ prefix }}_patente_NO" name="{{ prefix }}_check_patente" type="radio" value="2"/> NO </p>
+        </td>
+    </div>
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height: 1.6;"> <a href="https://www.patentati.it/blog/articoli-patente/come-si-legge-la-patente-di-guida.html" target="_blank">Numero patente</a>: </p>
+      </td>
+      <td>
+        <input class="inputNormal" id="{{ prefix }}_Numero_patente" label="Numero patente del dichiarante" name="{{ prefix }}_Numero_patente" maxlength="10" style="width: 100%;" enabled="#{{ prefix }}_patente_SI.checked()"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;"> Data rilascio: </p>
+      </td>
+      <td>
+        <input class="inputNormal" id="{{ prefix }}_Data_rilascio_patente" label="Data di rilascio della patente del dichiarante" name="{{ prefix }}_Data_rilascio_patente" style="width: 100%;" type="date" enabled="#{{ prefix }}_patente_SI.checked()"/>       
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height: 1.6;"> Organo di rilascio: </p>
+      </td>
+      <td>
+        <select class="inputNormal" id="{{ prefix }}_Organorilasciopatente" name="{{ prefix }}_Organorilasciopatente" style="width:100%" label="Organo di rilascio della patente" enabled="#{{ prefix }}_patente_SI.checked()">
+            <option value=""></option>
+            <option value="Prefettura">Prefettura</option>
+            <option value="MCTC">M.C.T.C.</option>
+            <option value="UCO">U.C.O.</option>
+        </select>
+      </td>
+      <td>
+        <p style="line-height: 1.6;"> Provincia: </p>
+      </td>
+      <td enabled="#{{ prefix }}_patente_SI.checked()">
+          {{ utils.provincie_patente( prefix + '_provrilasciopatente', 'Provincia di rilascio della patente' )}}
+      </td>
+    </tr>
+    <!--
+    <tr>
       <td colspan="4">
         <input id="{{ prefix }}_Tipo_patente1" name="{{ prefix }}_Tipo_patente1" type="checkbox" value="1"/>AM &nbsp; &nbsp; &nbsp; &nbsp; <input id="{{ prefix }}_Tipo_patente2" name="{{ prefix }}_Tipo_patente2" type="checkbox" value="2"/>A1 &nbsp; &nbsp; &nbsp; &nbsp; <input id="{{ prefix }}_Tipo_patente3" name="{{ prefix }}_Tipo_patente3" type="checkbox" value="3"/>A2 &nbsp; &nbsp; &nbsp; &nbsp; <input id="{{ prefix }}_Tipo_patente4" name="{{ prefix }}_Tipo_patente4" type="checkbox" value="4"/>A<br><br>
         <input id="{{ prefix }}_Tipo_patente5" name="{{ prefix }}_Tipo_patente5" type="checkbox" value="5"/>B1 &nbsp; &nbsp; &nbsp; &nbsp; <input id="{{ prefix }}_Tipo_patente6" name="{{ prefix }}_Tipo_patente6" type="checkbox" value="6"/>B &nbsp; &nbsp; &nbsp; &nbsp; <input id="{{ prefix }}_Tipo_patente7" name="{{ prefix }}_Tipo_patente7" type="checkbox" value="7"/>BE<br><br>
@@ -1799,12 +1846,30 @@
         </div>
       </td>
     </tr>
+    -->
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="4">
+        <p style="line-height: 1.6;"><b>Dati veicolo</b></p>
+      </td>
+    </tr>
+    <tr mandatory_enabled="true">
+      <td colspan="2">
+        <p style="line-height: 1.6;">Possesso veicoli:</p>
+      </td>
+      <div id="{{ prefix }}_check_veicoli" name="{{ prefix }}_check_veicoli" label="In possesso di veicolo" mandatory_enabled="true"> 
+      <td>
+        <p style="line-height: 1.6;"> <input id="{{ prefix }}_veicoli_SI" name="{{ prefix }}_check_veicoli" type="radio" value="1"/> SI </p>
+      </td>
+      <td>
+        <p style="line-height: 1.6;"> <input id="{{ prefix }}_veicoli_NO" name="{{ prefix }}_check_veicoli" type="radio" value="2"/> NO </p>
+      </td>
+    </tr>
     <tr class="Rigaintestazioneridotta">
       <td colspan="4">
         <p style="line-height: 1.6;"><b>Targhe veicoli immatricolati in Italia in qualità di proprietario/comproprietario, usufruttuario/locatario</b></p>
       </td>
     </tr>
-    <tr>
+    <tr enabled="#{{ prefix }}_veicoli_SI.checked()">
       <td>
         <p style="line-height: 1.6;">Autoveicoli:</p>
       </td>
@@ -1818,7 +1883,7 @@
         <input class="inputNormal" id="{{ prefix }}_Targaauto3" label="Targa auto 3 del dichiarante" name="{{ prefix }}_Targaauto3" style="width:100%;"/>
       </td>
     </tr>
-    <tr>
+    <tr enabled="#{{ prefix }}_veicoli_SI.checked()">
       <td>
         <p style="line-height: 1.6;">Rimorchi:</p>
       </td>
@@ -1832,7 +1897,7 @@
         <input class="inputNormal" id="{{ prefix }}_Targarimorchio3" label="Targa rimorchio 3 del dichiarante" name="{{ prefix }}_Targarimorchio3" style="width:100%;"/>
       </td>
     </tr>
-    <tr>
+    <tr enabled="#{{ prefix }}_veicoli_SI.checked()">
       <td>
         <p style="line-height: 1.6;">Motoveicoli/Ciclomotori:</p>
       </td>

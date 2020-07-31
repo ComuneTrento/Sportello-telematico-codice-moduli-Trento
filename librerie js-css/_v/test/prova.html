@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>QUnit Test Suite</title>
+    <link rel="stylesheet" href="./qunit/qunit.css">
+    <style>
+        .mandatory {
+          border: 1px solid #004080 ;
+          color: #004080;
+          background-color: #FCB014;
+        }
+
+        .format {
+          border: 1px dashed red;
+          background-color: #FDF337;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+    <script src="./qunit/qunit.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../js/jquery.json-2.3.min.js"></script>
+    <script type="text/javascript" src="../js/test_eval.js"></script>
+    <script type="text/javascript" src="../js/validator.js"></script>
+    <script type="text/javascript" src="../js/moduli-config.js"></script>
+    <script type="text/javascript" src="../js/moduli-driver.js"></script>
+    <script type="text/javascript" id="load_system">
+      $(document).ready( function() { validator.tree_builder(); } );
+    </script>
+    <script src="test.js"></script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture">test markup</div>
+
+    <table id='content' class="hide">
+        <div id="test_group" mandatory_enabled="#checkbox1.checked()"/>
+        <tr>
+            <td>
+                <input type='checkbox' id='checkbox1' name='checkbox1' enabled="true"/>
+            </td>
+            <td>
+                <input type="radio" name="test_group" id="text_group1" value="1" />
+            </td>
+            <td>
+                <input name="textbox1" id="textbox1" mandatory_enabled="#text_group1.checked()"/>
+            </td>
+            <td>
+                <input name="textbox2" id="textbox2" mandatory_enabled="#text_group1.checked()"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"/>
+            <td>
+                <input name="textbox3" id="textbox3" enabled="#text_group1.checked()" mandatory="false"/>
+            </td>
+            <td>
+                <input name="textbox4" id="textbox4" enabled="#text_group1.checked()" mandatory="false"/>
+            </td>
+        </tr>
+        <tr>
+            <td />
+            <td>
+                <input type="radio" name="test_group" id="text_group3" value="3" />
+            </td>
+            <td>
+                <input name="textbox5" id="textbox5" mandatory_enabled="#text_group3.checked()"/>
+            </td>
+            <td>
+                <input name="textbox6" id="textbox6" mandatory_enabled="#text_group3.checked()"/>
+            </td>
+        </tr>
+        <tr>
+            <td />
+            <td>
+                <input type="radio" name="test_group" id="text_group4" value="4" />
+            </td>
+            <td>
+                <input name="textbox7" id="textbox7" mandatory_enabled="#text_group4.checked()"/>
+            </td>
+            <td>
+                <input name="textbox8" id="textbox8" mandatory_enabled="#text_group4.checked()"/>
+            </td>
+        </tr>
+    </table>
+    <table id="issue41" class="" >
+        <tr>
+            <td colspan="2">
+                <select id="select1" name="select1">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </td>
+        </tr>
+        <tr mandatory_enabled="#select1.check_value(['2'])">
+            <td><p>number</p></td>
+            <td><input id="TestSelectNumber" type="text" format="number" /></td>
+        </tr>
+         <tr mandatory_enabled="#select1.check_value(['2'])">
+            <td><p>alphabetic</p></td>
+            <td><input id="TestSelectAlphabetic" type="text" format="alphabetic" /></td>
+        </tr>
+         <tr mandatory_enabled="#select1.check_value(['2'])">
+            <td><p>alphanumeric</p></td>
+            <td><input id="TestSelectAlphanumeric" type="text" format="alphanumeric" /></td>
+        </tr>
+         <tr mandatory_enabled="#select1.check_value(['2'])">
+            <td><p>alnumhyphen</p></td>
+            <td><input id="TestSelectAlnumhyphen" type="text" format="alnumhyphen" /></td>
+        </tr>
+    </table>
+    <table id="formatter" class="hide">
+        <tr>
+            <td><p>number</p></td>
+            <td><input id="number" type="text" format="number" /></td>
+        </tr>
+        <tr>
+            <td><p>alphabetic</p></td>
+            <td><input id="alphabetic" type="text" format="alphabetic" /></td>
+        </tr>
+        <tr>
+            <td><p>alphanumeric</p></td>
+            <td><input id="alphanumeric" type="text" format="alphanumeric" /></td>
+        </tr>
+        <tr>
+            <td><p>alnumhyphen</p></td>
+            <td><input id="alnumhyphen" type="text" format="alnumhyphen" /></td>
+        </tr>
+        <tr>
+            <td><p>alnumhyphenat</p></td>
+            <td><input id="alnumhyphenat" type="text" format="alnumhyphenat" /></td>
+        </tr>
+        <tr>
+            <td><p>alphaspace</p></td>
+            <td><input id="alphaspace" type="text" format="alphaspace" /></td>
+        </tr>
+        <tr>
+            <td><p>email</p></td>
+            <td><input id="email" type="text" format="email" /></td>
+        </tr>
+        <tr>
+            <td><p>cap</p></td>
+            <td><input id="cap" type="text" format="cap" /></td>
+        </tr>
+        <tr>
+            <td><p>provincia</p></td>
+            <td><input id="provincia" type="text" format="provincia" /></td>
+        </tr>
+        <tr>
+            <td><p>cf</p></td>
+            <td><input id="cf" type="text" format="cf" /></td>
+        </tr>
+        <tr>
+            <td><p>piva</p></td>
+            <td><input id="piva" type="text" format="piva" /></td>
+        </tr>
+        <tr>
+            <td><p>cfpiva</p></td>
+            <td><input id="cfpiva" type="text" format="cfpiva" /></td>
+        </tr>
+        <tr>
+            <td><p>catcom</p></td>
+            <td><input id="catcom" type="text" format="catcom" /></td>
+        </tr>
+        <tr>
+            <td><p>catcat</p></td>
+            <td><input id="catcat" type="text" format="catcat" /></td>
+        </tr>
+        <tr>
+            <td><p>date</p></td>
+            <td><input id="date" type="text" format="date" /></td>
+        </tr>
+        </table>
+</body>
+</html>
