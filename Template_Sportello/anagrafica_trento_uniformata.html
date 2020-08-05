@@ -6,12 +6,9 @@
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!-- compare in: M2204-AUTORIZZAZIONE-DEROGA-ACUSTICA-CANTIERI
-                 M47005-COMUNICAZIONE-INIZIO-LAVORI
                  M47010-DICHIARAZIONE-ULTIMAZIONE-LAVORI
                  M47011-TRASM-DOC-INTEG
-                 M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA
-                 M47561-COMUNICAZIONE-OPERE-LIBERE
-                 M47750-AUTORIZZAZIONE-CPC -->
+                 M47561-COMUNICAZIONE-OPERE-LIBERE-->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
@@ -385,6 +382,385 @@
 </div>
 {%- endmacro %}
 
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- compare in: M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA
+                 M47750-AUTORIZZAZIONE-CPC
+                 M2301-AUTORIZZAZIONE-SCARICO-INSED-CIV
+                 M47005-COMUNICAZIONE-INIZIO-LAVORI -->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+{% macro titolare_segnatura( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", ruoli=["Persona fisica", "Titolare", "Legale rappresentante", "Amministratore di condominio", "Responsabile unico del procedimento", "Procuratore legale"], visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do AventeTitoloNonImportarePresente.append('0') %}
+{% endif %}
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; {{ visibility_intestazione }}">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p style="line-height: 1.6;"><b>DATI DEL TITOLARE:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width: 40%; border-left:0px; border-right:0px">
+        <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}</p>
+      </td>
+      <td style="width:3%; border-left:0px; border-right:0px">
+        <p class="Labeltabella">{{ carica_campi|safe }}</p>
+      </td>
+      <td style="width: 3%; {{ pointer_carica_dati }}; border-left:0px; border-right:0px">
+        <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+          {{ utils.recupero_dati( prefix, visibility_carica_dati ) }}
+        </span>
+      </td>
+      <td style="width:27%; border-left:0px; border-right:0px">
+        <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true"/>
+      </td>
+      <td style="width:25%; border-left:0px; border-right:0px">
+        <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
+      </td>
+    </tr>
+  </tbody>
+  
+  {{ service.getPersonaREST( prefix + '_CodiceFiscale','TipoContesto', 'TipoLista',  {
+      prefix + '_DataNascita':  'datanascita',
+      prefix + '_Nome':  'nome',
+      prefix + '_Cognome':  'cognome',
+      prefix + '_Sesso':  'sesso',
+      prefix + '_Nazionalita':  'stato',
+      prefix + '_Cittadinanza':  'nazionalita',
+      prefix + '_CodiceFamiglia':  'codiceFamiglia',
+      prefix + '_CodiceVia':  'codiceVia',
+      prefix + '_ProvinciaResidenza' : 'provincia',
+      prefix + '_ComuneResidenza' : 'citta',
+      prefix + '_ViaResidenza' : 'indirizzo',
+      prefix + '_CivicoResidenza' : 'numeroCivico',
+      prefix + '_BarraResidenza' : 'barra',
+      prefix + '_CAPResidenza' : 'cap',
+      prefix + '_Nazione' : 'nazione',
+      prefix + '_LuogoNascita' : 'comuneNascita',
+      prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
+      prefix + '_MatricolaAnagrafe' : 'matricola',
+    },
+    '#RecuperaDatiAnagr:click','true') }}
+
+</table>
+
+<br>
+
+<div type="Anagrafica_persona_fisica">
+  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="3">
+          <p class="Labelcella" style="line-height:1.6;">Cognome</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="line-height:1.6;">Nome</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome" />
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome" />
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:15%;">
+          <p class="Labelcella" style="line-height:1.6;">Data di nascita</p>
+        </td>
+        <td style="width:9%;">
+          <p class="Labelcella" style="line-height:1.6;">Sesso</p>
+        </td>
+        <td style="width: 26%;">
+          <p class="Labelcella" style="line-height:1.6;">Cittadinanza</p>
+        </td>
+        <td style="width: 50%;">
+          <p class="Labelcella" style="line-height:1.6;">Luogo di nascita</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita" />
+        </td>
+        <td>
+          <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso" >
+            <option value=""></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_Cittadinanza" name="{{ prefix }}_Cittadinanza" style="width:100%;" label="Nazionalità"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <div type="Residenza_persona_fisica">
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="6">
+            <p style="line-height: 1.6;"><b>Residente a:</b></p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Provincia</p>
+          </td>
+          <td style="width:33%;">
+            <p class="Labelcella" style="line-height:1.6;">Comune</p>
+          </td>
+          <td style="width:33%;">
+            <p class="Labelcella" style="line-height:1.6;">Indirizzo</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Civico</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Barra</p>
+          </td>
+          <td style="width:16%;">
+            <p class="Labelcella" style="line-height:1.6;">CAP</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza") }}
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" enabled="true" label="Barra di residenza" maxlength="3" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:16.5%;">
+            <p class="Labelcella" style="line-height:1.6;">Telefono fisso</p>
+          </td>
+          <td style="width:16.5%;">
+            <p class="Labelcella" style="line-height:1.6;">Cellulare</p>
+          </td>
+          <td style="width:33%;">
+            <p class="Labelcella" style="line-height:1.6;">E-mail<i> (posta elettronica ordinaria)</i></p>
+          </td>
+          <td>
+            <p class="Labelcella" style="line-height:1.6;">E-mail PEC<i> (domicilio digitale)</i></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="inputNormal" id="{{ prefix }}_Fisso" name="{{ prefix }}_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
+          </td>
+          <td>
+            <input class="inputNormal" id="{{ prefix }}_Telefono" name="{{ prefix }}_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
+          </td>
+          <td>
+            <input class="inputNormal" id="Segnatura_EMail" name="Segnatura_EMail" label="E-mail ordinaria" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
+          </td>
+          <td>
+            <input class="inputNormal" id="Segnatura_EMailPEC" name="Segnatura_EMailPEC" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p style="line-height: 1.6;"><b>Ruolo del titolare</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5">
+        <select class="inputNormal" id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" style="width:100%;" mandatory_enabled="true" label="Ruolo del titolare">
+          <option value=""></option>
+          {% for ruolo in ruoli %}
+          <option value="{{ ruolo }}">{{ ruolo }}</option>
+          {% endfor %}
+        </select>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border:1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="3">
+          <p class="Labelcella" style="line-height:1.6;">Denominazione/Ragione sociale (questa sezione deve essere compilata se il dichiarante non è la persona fisica)</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella" style="line-height:1.6;">Tipologia</p>
+        </td>
+      </tr>
+      <tr mandatory_enabled="#{{ prefix }}_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento', 'Titolare omonima ditta individuale' ])">
+        <td colspan="3">
+          <input class="" id="{{ prefix }}_Denominazione" name="{{ prefix }}_Denominazione" style="width:100%" label="Denominazione/Ragione sociale"/>
+        </td>
+        <td colspan="2">
+          {{ utils.tipologiaimpresa( prefix + '_TipologiaImpresa' )}}
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="5">
+          <p class="Labelcella" style="line-height:1.6;">Sede legale</p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:9%;">
+          <p class="Labelcella" style="line-height:1.6;">Provincia</p>
+        </td>
+        <td style="width:33%;">
+          <p class="Labelcella" style="line-height:1.6;">Comune</p>
+        </td>
+        <td style="width:33%;">
+          <p class="Labelcella" style="line-height:1.6;">Indirizzo</p>
+        </td>
+        <td style="width:9%;">
+          <p class="Labelcella" style="line-height:1.6;">Civico</p>
+        </td>
+        <td style="width:16%;">
+          <p class="Labelcella" style="line-height:1.6;">CAP</p>
+        </td>
+      </tr>
+      <tr mandatory_enabled="#{{ prefix }}_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento', 'Titolare omonima ditta individuale' ])">
+        <td>
+          {{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia della sede legale") }}
+        </td>
+        <td>
+          <select class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaSede.value(), '{{ prefix }}_ComuneSede')">
+          </select>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_CivicoSede" name="{{ prefix }}_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_CAPSede" name="{{ prefix }}_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" enabled="#{{ prefix }}_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Titolare omonima ditta individuale' ])" mandatory="#{{ prefix }}_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Titolare omonima ditta individuale' ]) and #{{ prefix }}_ProvinciaSede.value() != 'EE'"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#{{ prefix }}_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Responsabile unico del procedimento', 'Titolare omonima ditta individuale' ])">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:50%;">
+          <p class="Labelcella" style="line-height:1.6;">Codice Fiscale / Partita IVA </p>
+        </td>
+        <td style="width:50%;">
+          <p class="Labelcella" style="line-height:1.6;">E-mail PEC (domicilio digitale)</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="{{ prefix }}_CFPI" name="{{ prefix }}_CFPI" label="Codice fiscale" style="width:100%;" format="cfpiva"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_APEC" name="{{ prefix }}_APEC" label="PEC Azienda" style="width:100%;" format="pec" />
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella" style="line-height:1.6;">Telefono fisso</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="line-height:1.6;">Cellulare</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="{{ prefix }}_Tel_FissoSede" name="{{ prefix }}_Tel_FissoSede" label="Tel_Fisso della sede legale" style="width:100%;" mandatory="false"/>
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_TelefonoSede" name="{{ prefix }}_TelefonoSede" label="Telefono della sede legale" style="width:100%;"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="Modulo" style="margin-top:-1px; border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:50%">
+          <p class="Labelcella" style="line-height:1.6;">Iscrizione al Registro Imprese della Camera di Commercio</p>
+        </td>
+        <td style="width:9%">
+          <p class="Labelcella" style="line-height:1.6;">Provincia</p>
+        </td>
+        <td style="width:41%">
+          <p class="Labelcella" style="line-height:1.6;">Numero iscrizione</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <select class="inputNormal" id="{{ prefix }}_Attributi_IscrittoCCIAA" name="{{ prefix }}_Attributi_IscrittoCCIAA" label="Iscrizione al Registro Imprese della Camera di Commercio" style="width:100%" mandatory_enabled="#{{ prefix }}_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Amministratore di condominio', 'Erede o avente causa', 'Curatore fallimentare','Procuratore legale', 'Titolare omonima ditta individuale' ])">
+            <option value=""></option>
+            <option value="iscritto">iscritto</option>
+            <option value="in attesa di iscrizione">in attesa di iscrizione</option>
+            <option value="non tenuto all'iscrizione">non tenuto all'iscrizione</option>
+          </select>
+        </td>
+        <td mandatory_enabled="#{{ prefix }}_Attributi_IscrittoCCIAA.check_value([ 'iscritto','in attesa di iscrizione' ])">
+          {{ utils.provincie( prefix + '_Attributi_CCIAAProv', label="Provincia iscrizione al Registro Imprese della Camera di Commercio") }}
+        </td>
+        <td mandatory_enabled="#{{ prefix }}_Attributi_IscrittoCCIAA.check_value([ 'iscritto' ])">
+          <input class="" id="{{ prefix }}_Attributi_CCIAANumero" name="{{ prefix }}_Attributi_CCIAANumero" label="Numero iscrizione al Registro Imprese della Camera di Commercio" style="width:100%"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+	<input id="{{ prefix }}_Attributi_CCIAAProv_categoria" 		name="{{ prefix }}_Attributi_CCIAAProv_categoria" 		type="hidden" value="Altri dati"/>
+	<input id="{{ prefix }}_Attributi_CCIAAProv_nome" 			name="{{ prefix }}_Attributi_CCIAAProv_nome" 			type="hidden" value="Provincia registro imprese Camera Commercio"/>
+	<input id="{{ prefix }}_Attributi_CCIAANumero_categoria" 	name="{{ prefix }}_Attributi_CCIAANumero_categoria" 	type="hidden" value="Altri dati"/>
+	<input id="{{ prefix }}_Attributi_CCIAANumero_nome" 		name="{{ prefix }}_Attributi_CCIAANumero_nome" 			type="hidden" value="Numero iscrizione registro imprese Camera Commerci"/>
+	<input id="{{ prefix }}_Attributi_IscrittoCCIAA_categoria" 	name="{{ prefix }}_Attributi_IscrittoCCIAA_categoria" 	type="hidden" value="Altri dati"/>
+	<input id="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		name="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		type="hidden" value="Iscrizione registro imprese Camera Commercio"/>
+</div>
+{%- endmacro %}
+
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -392,7 +768,6 @@
                  M1876-ISCRIZIONE-NIDO
                  M1451-RICHIESTA-RIDUZIONE-TARI-ISEE
                  M5101-RILASCIO-ELENCO-TITOLI-EDILIZI
-                 M2301-AUTORIZZAZIONE-SCARICO-INSED-CIV
                  M2305-NULLAOSTA-SCARICO-INSED-CIV 
                  -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
