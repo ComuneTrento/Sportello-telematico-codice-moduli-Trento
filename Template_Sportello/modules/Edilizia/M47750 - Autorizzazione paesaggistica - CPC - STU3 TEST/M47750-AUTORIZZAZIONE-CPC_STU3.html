@@ -25,11 +25,19 @@ istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
 procura="NO,,"
-segnatura="Referente"
+segnatura="AventeTitolo"
 tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47750-AUTORIZZAZIONE-CPC"
 verifica_pagamento="NO"
 versione="1.0|09/02/2018" />
+
+<!--DICHIARO PROCURA
+<meta codice_modulo_figlio="INCARICO_PROCURA"
+urn_modulo_figlio="document:c_l378:generale;incarico.procura"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+-->
 
 <meta codice_modulo_figlio="GEN-DELEGA-EDILIZIA-AU"
 urn_modulo_figlio="document:c_l378:modulo.secondario.delega.edilizia.au"
@@ -367,8 +375,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
 <!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
 
-{{anagrafica_trento_uniformata.titolare("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
-
+{{anagrafica_trento_uniformata.titolare_segnatura("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}}  
 <br>
 
 <table class="Modulo" style="border: 1px solid grey">
@@ -406,6 +413,9 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="Referente_checkobbligatorio" name="Referente_checkobbligatorio" dynamic_check="true" type="hidden" />
 <input id="Referente_checkabilitato" name="Referente_checkabilitato" dynamic_check="true" type="hidden" />
 {{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente","<b>DATI DEL PROGETTISTA</b>:","Referente") }}
+<!------PREDISPONGO MAIL PER LA SEGNATURA------>
+<input id="AventeTitolo_EMail" name="AventeTitolo_EMail" dynamic_value="#AventeTitolo_Segnatura_EMail.value()" type="hidden"/>
+<input id="AventeTitolo_EMailPEC" name="AventeTitolo_EMailPEC" dynamic_value="#Referente_EMailPEC.value()" type="hidden"/>
 
 <input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
 <input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="'Progettista'" type="hidden" />
@@ -1421,6 +1431,10 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
   </tbody>
 </table>
+
+<!--RICHIAMO PROCURA
+<input id="GLOBO_modulofiglio_cINCARICO_PROCURA" name="GLOBO_modulofiglio_cINCARICO_PROCURA" obbligatorio="'OBBLIGATORIO'" type="hidden" numero="1"/>
+-->
 
 <br>
 

@@ -1,0 +1,263 @@
+{% set CodiceModulo = "INCARICO_PROCURA" %}
+{% set Urn = "document:c_l378:generale;incarico.procura" %}
+{% extends "base_trento_new.html" %}
+{% block meta %}
+
+<meta campi_firma="Referente99_CodiceFiscale"
+campi_firma_label="il procuratore"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Accettazione dell'incarico di procuratore speciale (da compilare solo se ci si avvale di un procuratore speciale per l'apposizione della firma elettronica)"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="SI"
+firmare="P7M_DIGITALE"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo" 
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+versione="1.5|23/12/2019"/>
+
+<!--
+<meta codice_allegato="CONFERIMENTO_PROCURA"
+urn_allegato="document:s_italia:generale;conferimento.incarico.procura"
+descrizione_estesa="Conferimento procura"
+dimensione_massima="4"
+filename="Conferimento procura.pdf"
+firmato="SI"
+istruzioni="/modulistica/moduli/CONFERIMENTO_PROCURA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="DAE-CDI"
+urn_allegato="document:s_italia:generale;documento.identita;documentazione"
+descrizione_estesa="Copie dei documenti d'identità dei soggetti rappresentati"
+dimensione_massima="4"
+filename="Documento identita.pdf"
+firmato="SI"
+istruzioni="/modulistica/moduli/DAE-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+-->
+
+{% endblock meta %}
+
+{% block title %}
+  Accettazione dell'incarico di procuratore speciale
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input type="hidden" id="Oggetto" name="Oggetto" dynamic_value="'Accettazione dell\'incarico di procuratore speciale'"/>
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+
+<h1 class="Modulo">
+  Accettazione dell'incarico di procuratore speciale
+</h1>
+
+<h2 class="Modulo">
+  Ai sensi dell'articolo 1392 del Regio Decreto 16/03/1942, n. 262 "Codice Civile"
+</h2>
+
+<input id="Referente99_Titolo" name="Referente99_Titolo" type="hidden" value="Procuratore"/>
+<input id="Referente99_Ruolo"  name="Referente99_Ruolo"  type="hidden" value="Procuratore"/>
+<input id="Referente99_DatiPersonaObbligatori"  name="Referente99_DatiPersonaObbligatori"  type="hidden" checked="checked" dynamic_check="true"/>
+
+{{ anagrafica.persona_fisica("Referente99", "Il sottoscritto procuratore speciale", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:none", "mail_pec") }}
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p>
+          <b>
+            in relazione all'istanza
+          </b>
+        </p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">
+          Breve descrizione istanza
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="Parametri_OggettoIstanza" label="Breve descrizione istanza" mandatory="true" name="Parametri_OggettoIstanza"
+          style="width:100%" fatal="true" />
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:40%;">
+        <p class="Labelcella">
+          Codice univoco istanza
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="Codice_istanza" label="Codice univoco istanza" mandatory="true" name="Codice_istanza" style="width:100%"
+          fatal="true" readonly />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{{ utils.Dichiara_445() }}
+
+<input checked="checked" id="SempreSI" name="SempreSI" style="display:none;" type="checkbox" value="si" />
+<table class="Modulo" style="border: 0px;">
+  <tbody>
+    <tr style="border: 0px;">
+      <td style="width: 20px; border: 0px; vertical-align: top;">
+        <input checked="checked" dynamic_check="true" id="Parametri_Dichiara1" name="Parametri_Dichiara1" type="checkbox" value="si"
+        />
+      </td>
+      <td style="border: 0px;">
+        <p>
+          di agire in qualità di procuratore speciale in rappresentanza del soggetto o dei soggetti che hanno apposto la propria firma
+          autografa sul/i modello/i di conferimento di procura speciale allegato/i
+        </p>
+      </td>
+    </tr>
+    <tr style="border: 0px;">
+      <td style="width: 20px; border: 0px; vertical-align: top;">
+        <input checked="checked" dynamic_check="true" id="Parametri_Dichiara3" name="Parametri_Dichiara3" type="checkbox" value="si"
+        />
+      </td>
+      <td style="border: 0px;">
+        <p>
+          che le copie informatiche degli eventuali documenti non notarili e/o contenenti dichiarazioni presenti nella modulistica
+          corrispondono ai documenti consegnatigli dal/i soggetti obbligati/legittimati per l’espletamento degli adempimenti
+          di cui alla sopra citata pratica
+        </p>
+      </td>
+    </tr>
+    <tr style="border: 0px;">
+      <td style="width: 20px; border: 0px; vertical-align: top;">
+        <input checked="checked" dynamic_check="true" id="Parametri_Dichiara2" name="Parametri_Dichiara2" type="checkbox" value="si"
+        />
+      </td>
+      <td style="border: 0px;">
+        <p>
+          che sarà sua cura comunicare tempestivamente all'ente l'eventuale revoca della procura speciale
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="Modulo">
+  SI IMPEGNA
+</h3>
+
+<input dynamic_check="true" id="ImmDaNonImportare_DatiImmobileRichiesti" name="ImmDaNonImportare_DatiImmobileRichiesti" type="checkbox" style="display:none" value="si"/>
+<input id="ImmDaNonImportare_DatiCatastaliObbligatori" name="ImmDaNonImportare_DatiCatastaliObbligatori" type="checkbox" style="display:none" value="si"/>
+
+<p class="Modulo">
+  a conservare presso
+</p>
+
+<!--
+{{ immobili.immobile_toponomastica("ImmNonImportare","","","display:none","cursor:default","display:none")}}
+-->
+
+<p class="Modulo">
+  gli originali del modello di procura speciale e di eventuali dichiarazioni integrative, sottoscritti con firma autografa dai soggetti rappresentati, e a renderli disponibili all'amministrazione per eventuali controlli d'ufficio. Si impegna altresì a consegnare all'amministrazione i documenti originali al momento del ritiro dall'attività professionale.
+</p>
+
+<br/>
+
+<!--
+<table class="Modulo" name="Allegati" style="border:1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;">
+          <b>
+            Elenco degli allegati
+          </b>
+          <br/>
+          <span style="font-size:70%">
+            <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top; width:3%">
+        <input dynamic_check="true" id="CONFERIMENTO_PROCURA" name="CONFERIMENTO_PROCURA" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>copie dei modelli di conferimento di procura speciale sottoscritte con firma autografa dai soggetti rappresentati
+          <br>
+          <span style="font-size:70%">
+            <i>
+              (tutti i modelli devono essere contenuti in un unico file in formato PDF)
+            </i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top">
+        <input dynamic_check="true" id="DAE-CDI" name="DAE-CDI" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>copie dei documenti d'identità dei soggetti rappresentati
+          <br>
+          <span style="font-size:70%">
+            <i>
+              (tutte le copie devono essere contenuti in un unico file in formato PDF)
+            </i>
+          </span>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+-->
+
+<br/>
+{{ utils.firma_hidden() }}
+<br/>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<!-- da eliminare, segnalazione issues 133 -->
+<div style="visibility:none">{{anagrafica.cognome_nome_fittizio()}}</div>
+<!-- -->
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<!--
+<input id="GLOBO_allegato_cCONFERIMENTO_PROCURA" name="GLOBO_allegato_cCONFERIMENTO_PROCURA" type="hidden" value="" obbligatorio="#CONFERIMENTO_PROCURA.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cDAE-CDI" name="GLOBO_allegato_cDAE-CDI" type="hidden" value="" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''"/>
+-->
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+{% endblock content %}
