@@ -627,9 +627,7 @@
 							  name="lista_vie1"
 							  style="width:100%;"
 								mandatory="true"
-							  label="Elenco vie"
-							  onChange="document.getElementById('Immobile_Via').value = this.options[this.selectedIndex].text;"
-								>
+							  label="Elenco vie">
 							</select>
           </td>
 
@@ -674,6 +672,85 @@
 		    </tr>
 		</tbody>
 		</table>
+
+</div>
+{%- endmacro %}
+
+
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- compare in: INCARICO_PROCURA -->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+{% macro immobile_toponomastica_procura( prefix='Immobile', intestazione="immobile", annotazioniSolo1="Immobile principale oggetto dell'istanza", visibility_intestazione="display:visibility", visibilty_carica_dati="visibility:hidden", pointer_carica_dati="cursor:default", civico_obbligatorio="true" ) -%}
+{% do all_prefix.append( prefix ) %}
+
+<div type="Immobile">
+	<input id="{{ prefix }}_Tipo"    name="{{ prefix }}_Tipo"    type="hidden" value="PT" />
+	<input id="{{ prefix }}_CatComune"    	name="{{ prefix }}_CatComune"       type="hidden" value=""/>
+	<input id="{{ prefix }}_Note"    	name="{{ prefix }}_Note"       type="hidden" value="{{ annotazioniSolo1 }}"/>
+	<input id="{{ prefix }}_DatiToponomasticiObbligatori"    	name="{{ prefix }}_DatiToponomasticiObbligatori"   style="display:none"    type="checkbox" dynamic_check="true"/>
+    <input id="{{ prefix }}_NumeroUlterioriVie" name="{{ prefix }}_NumeroUlterioriVie" type="hidden" dynamic_value="#{{ prefix }}_NumeroAltreVie.value() == 0 ? '0' :  Math.ceil(#{{ prefix }}_NumeroAltreVie.value() / 16) ">
+	<table class="Modulo" style="border:1px solid grey;{{visibility_intestazione}}">
+        <tbody>
+            <tr class="Rigaintestazione">
+                <td style="border-right:0px">
+                    <p class="Labeltabella">{{ intestazione|safe }}</p>
+                </td>
+				<td style="width:3%; border-left:0px; {{ pointer_carica_dati }}">
+                    <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+                    {{ utils.recupero_immobile( prefix, visibilty_carica_dati ) }}
+                </span>
+                </td>
+            </tr>
+		</tbody>
+    </table>
+
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+        <tbody>
+            <tr class="Rigaintestazioneridotta">
+                <td style="width: 8%;">
+                    <p class="Labelcella">Provincia</p>
+                </td>
+                <td style="width: 25%;">
+                    <p class="Labelcella">Comune</p>
+                </td>
+                <td style="width: 40%;">
+                    <p class="Labelcella">Nome Via/Piazza/Vicolo...</p>
+                </td>
+                <td style="width: 8%;">
+                    <p class="Labelcella">Civico</p>
+                </td>
+                <td style="width: 8%;">
+                    <p class="Labelcella">Barra</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td mandatory="true">
+                    {{ utils.provincie( prefix + '_Provincia', label="Provincia") }}
+                </td>
+                <td mandatory="true">
+                    <select class="inputNorma2" id="{{ prefix }}_Comune" name="{{ prefix }}_Comune" style="width:100%" label="Comune" dynamic_value="getComuniFromProvincia( #{{ prefix }}_Provincia.value(), '{{ prefix }}_Comune')"></select>
+                    {{ service.lista_vie(
+                        prefix + '_Provincia',
+                        prefix + '_Comune',
+                        'lista_vie1_procura',
+                        '#' + prefix + '_Comune:change') 
+                    }}
+                </td>
+                <td >
+                    <input class="" id="{{ prefix }}_Via" name="{{ prefix }}_Via" style="width:100%;" label="Nome Via" mandatory="true"/>
+                </td>
+                <td>
+                    <input class="" id="{{ prefix }}_Civico" name="{{ prefix }}_Civico" style="width:100%;" maxlength="10" label="Civico immobile" mandatory="true" />
+                </td>
+                <td>
+                    <input class="" id="{{ prefix }}_Barrato" name="{{ prefix }}_Barrato"style= "width:100%;" mandatory="false" label="Barrato immobile"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
 </div>
 {%- endmacro %}

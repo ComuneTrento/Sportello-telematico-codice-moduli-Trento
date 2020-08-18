@@ -1,16 +1,16 @@
 {% set CodiceModulo = "INCARICO_PROCURA" %}
 {% set Urn = "document:c_l378:generale;incarico.procura" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 {% block meta %}
 
-<meta campi_firma="Referente99_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 campi_firma_label="il procuratore"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{% block urn %}{{ Urn }}{% endblock urn %}"
 sub_urn_list=""
 uo_globo_list=""
-descrizione="Accettazione dell'incarico di procuratore speciale (da compilare solo se ci si avvale di un procuratore speciale per l'apposizione della firma elettronica)"
+descrizione="Accettazione dell'incarico di procuratore speciale"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
@@ -28,31 +28,28 @@ ufficio=""
 urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
 versione="1.5|23/12/2019"/>
 
-<!--
-<meta codice_allegato="CONFERIMENTO_PROCURA"
-urn_allegato="document:s_italia:generale;conferimento.incarico.procura"
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
 descrizione_estesa="Conferimento procura"
-dimensione_massima="4"
 filename="Conferimento procura.pdf"
 firmato="SI"
-istruzioni="/modulistica/moduli/CONFERIMENTO_PROCURA"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-AU"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="DAE-CDI"
-urn_allegato="document:s_italia:generale;documento.identita;documentazione"
+<meta codice_allegato="GEN-CDI"
+urn_allegato="document:c_l378:allegato.copia.documento.identita"
 descrizione_estesa="Copie dei documenti d'identità dei soggetti rappresentati"
-dimensione_massima="4"
 filename="Documento identita.pdf"
 firmato="SI"
-istruzioni="/modulistica/moduli/DAE-CDI"
+istruzioni="/modulistica/moduli/GEN-CDI"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
--->
+
 
 {% endblock meta %}
 
@@ -61,10 +58,6 @@ tipo_mime="application/pdf"/>
 {% endblock title %}
 
 {% block content %}
-
-<globo_fondo_pagina areaheight="150" scope="1">
-  {{ utils.firma() }}
-</globo_fondo_pagina>
 
 <input type="hidden" id="Oggetto" name="Oggetto" dynamic_value="'Accettazione dell\'incarico di procuratore speciale'"/>
 
@@ -78,11 +71,18 @@ tipo_mime="application/pdf"/>
   Ai sensi dell'articolo 1392 del Regio Decreto 16/03/1942, n. 262 "Codice Civile"
 </h2>
 
-<input id="Referente99_Titolo" name="Referente99_Titolo" type="hidden" value="Procuratore"/>
-<input id="Referente99_Ruolo"  name="Referente99_Ruolo"  type="hidden" value="Procuratore"/>
-<input id="Referente99_DatiPersonaObbligatori"  name="Referente99_DatiPersonaObbligatori"  type="hidden" checked="checked" dynamic_check="true"/>
+<!-----------------INIZIO CAMPO ANAGRAFICA------------------->
+<input id="Referente_Titolo" name="Referente_Titolo" type="hidden" value="Procuratore"/>
+<input id="Referente_DatiPersonaObbligatori"  name="Referente_DatiPersonaObbligatori"  type="hidden" checked="checked" dynamic_check="true"/>
+<!-- <input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />-->
+<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />
 
-{{ anagrafica.persona_fisica("Referente99", "Il sottoscritto procuratore speciale", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:none", "mail_pec") }}
+{{anagrafica_trento_uniformata.richiedente("Referente","Il sottoscritto procuratore speciale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+<!-----------------FINE CAMPO ANAGRAFICA------------------->
+
+<br>
+
+<!-----------------INIZIO CAMPO ISTANZA------------------->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -117,12 +117,17 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td>
-        <input class="" id="Codice_istanza" label="Codice univoco istanza" mandatory="true" name="Codice_istanza" style="width:100%"
-          fatal="true" readonly />
+        <input class="" id="Codice_istanza" label="Codice univoco istanza" style="text-transform:uppercase;" mandatory="true" name="Codice_istanza" style="width:100%" fatal="true" readonly />
       </td>
     </tr>
   </tbody>
 </table>
+
+<!-----------------FINE CAMPO ISTANZA------------------->
+
+<br>
+
+<!-----------------INIZIO CAMPO 445------------------->
 
 {{ utils.Dichiara_445() }}
 
@@ -168,6 +173,12 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
+<!-----------------FINE CAMPO 445------------------->
+
+<br>
+
+<!-----------------INIZIO CAMPO IMPEGNA + IMMOBILE------------------->
+
 <h3 class="Modulo">
   SI IMPEGNA
 </h3>
@@ -176,20 +187,21 @@ tipo_mime="application/pdf"/>
 <input id="ImmDaNonImportare_DatiCatastaliObbligatori" name="ImmDaNonImportare_DatiCatastaliObbligatori" type="checkbox" style="display:none" value="si"/>
 
 <p class="Modulo">
-  a conservare presso
+  <b>a conservare presso:</b>
 </p>
 
-<!--
-{{ immobili.immobile_toponomastica("ImmNonImportare","","","display:none","cursor:default","display:none")}}
--->
+{{ immobili.immobile_toponomastica_procura("ImmProcuratore","","","display:none","cursor:default","display:none")}}
 
 <p class="Modulo">
   gli originali del modello di procura speciale e di eventuali dichiarazioni integrative, sottoscritti con firma autografa dai soggetti rappresentati, e a renderli disponibili all'amministrazione per eventuali controlli d'ufficio. Si impegna altresì a consegnare all'amministrazione i documenti originali al momento del ritiro dall'attività professionale.
 </p>
 
+<!-----------------FINE CAMPO IMPEGNA + IMMOBILE------------------->
+
 <br/>
 
-<!--
+<!-----------------INIZIO CAMPO ALLEGATI------------------->
+
 <table class="Modulo" name="Allegati" style="border:1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
@@ -222,7 +234,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="vertical-align:top">
-        <input dynamic_check="true" id="DAE-CDI" name="DAE-CDI" type="checkbox" value="OBBLIGATORIO" />
+        <input dynamic_check="true" id="copia_ID" name="copia_ID" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;">
         <p>copie dei documenti d'identità dei soggetti rappresentati
@@ -237,25 +249,63 @@ tipo_mime="application/pdf"/>
     </tr>
   </tbody>
 </table>
--->
+
+<!-----------------FINE CAMPO ALLEGATI------------------->
 
 <br/>
-{{ utils.firma_hidden() }}
+
+<!-----------------INIZIO CAMPO FIRMA + SALVA------------------->
+
+<div type="firma">
+	<table class="Modulo" name="Firme" style="border:1px solid grey;">
+		<tbody>
+			<tr>
+				<td style="width: 33%; text-align: center;">
+					<input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%;" type="text"/>
+				</td>
+				<td style="width: 33%; text-align: center;">
+					<input class="" id="Data_PDF" name="Data_PDF" style="width:50%;" type="text"/>
+				</td>
+				<td style="width: 34%; text-align: center; height: 1.5cm;"></td>
+			</tr>
+			<tr class="Rigaintestazioneridotta">
+				<td>
+					<p class="Labelcella" style="text-align: center">Luogo</p>
+				</td>
+				<td>
+					<p class="Labelcella" style="text-align: center">Data</p>
+				</td>
+				<td>
+					<p class="Labelcella" style="text-align: center">{{ firmatario }}</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<p><span style="font-size:70%"><i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (artt. 13 e 14 Regolamento UE n. 2016/679).</i></span></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
 <br/>
 
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
 </p>
 
-<!-- da eliminare, segnalazione issues 133 -->
-<div style="visibility:none">{{anagrafica.cognome_nome_fittizio()}}</div>
-<!-- -->
+<!-----------------FINE CAMPO FIRMA + SALVA------------------->
+
+<!-----------------INIZIO DICHIARAZIONE MODULI SECONDARI/ALLEGATI------------------->
 
 <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
-<!--
-<input id="GLOBO_allegato_cCONFERIMENTO_PROCURA" name="GLOBO_allegato_cCONFERIMENTO_PROCURA" type="hidden" value="" obbligatorio="#CONFERIMENTO_PROCURA.checked() ? 'OBBLIGATORIO' : ''"/>
-<input id="GLOBO_allegato_cDAE-CDI" name="GLOBO_allegato_cDAE-CDI" type="hidden" value="" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''"/>
--->
+
+<input id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" type="hidden" value="" obbligatorio="#CONFERIMENTO_PROCURA.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" type="hidden" value="" obbligatorio="#copia_ID.checked() ? 'OBBLIGATORIO' : ''"/>
+
+
+<!-----------------FINE DICHIARAZIONE MODULI SECONDARI/ALLEGATI------------------->
+
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
