@@ -1,36 +1,3 @@
-{% set CodiceModulo = "M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA" %}
-{% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;m47500.scia" %}
-{% extends "base_trento_ok.html" %}
-
-{% block meta %}
-
-<meta campi_firma="Referente_CodiceFiscale80"
-campi_firma_label="Il richiedente"
-classi_modulo="Tributi"
-codice_modulo="{{ CodiceModulo }}"
-urn="{{ Urn }}"
-sub_urn_list=""
-uo_globo_list=""
-contesto_procedurale="Segnalazione certificata di inizio attività (SCIA)"
-descrizione="Segnalazione certificata di inizio attività (SCIA)"
-destinatario_amministrazione=""
-destinatario_ufficio="OE7NEF"
-dinamico="SI"
-email_a=""
-ente_abilitato="TUTTI"
-filigrana="NO"
-firmare="P7M_ELETTRONICA"
-istruzioni_compilazione=""
-istruzioni_invio="mail_pec"
-metodo_invio="mail"
-name="GLOBO_modulo"
-procura="NO,,"
-segnatura="AventeTitolo"
-tipo_modulo="principale"
-urlhelp="/modulistica/moduli/M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA"
-verifica_pagamento="NO"
-versione="1.0|09/02/2018" />
-
 <meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
 urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
 descrizione_estesa="Allegato - Copia del modulo principale SCIA firmata dal titolare con firma digitale"
@@ -205,201 +172,15 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
-urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
-descrizione_estesa="Informativa trattamento dati EDILIZIA"
-filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<meta codice_report="CSP_SESSION_REPORT"
-generate_on="sending"
-name="GLOBO_report"
-urn_report="report:CSP_SESSION_REPORT"
-/>
 
 
-{% endblock meta %}
 
 
-{% block title %}M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA{% endblock title %}
 
 
-{% block content %}
-
-<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
-
-<input class="Modulo" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + '(' + #AventeTitolo_CodiceFiscale.value() + ')' + ' - SCIA EDILIZIA'" id="Oggetto_parte1" name="Oggetto_parte1" style="width:100%;" type="hidden"/>
-<input class="Modulo" dynamic_value="#Immobile_TipoImmobile.value() == 'F' ? 'P.f.:' + ' ' + #Immobile_CatNumero.value() : (#Immobile_TipoImmobile.value() == 'S' || #Immobile_TipoImmobile.value() == 'E' ? 'P.ed.:' + ' ' + #Immobile_CatNumero.value() : '')" id="Oggetto_parte2" name="Oggetto_parte2" style="width:100%;" type="hidden"/> 
-<input class="Modulo" dynamic_value="#Immobile_CatPM.value() == '' ? '' : '- P.M.: ' + #Immobile_CatPM.value()" id="Oggetto_parte3" name="Oggetto_parte3" style="width:100%;" type="hidden"/>
-<input class="Modulo" dynamic_value="#Oggetto_parte1.value() + ' - ' + #Oggetto_parte2.value() + #Oggetto_parte3.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/> 
 
 
-<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
-<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
-
-<h1 class="Modulo" style="text-align: center;">SEGNALAZIONE CERTIFICATA DI INIZIO ATTIVITA'<br>
-  <span style="font-size:75%">(artt. 85 e ss. della legge provinciale del 4 agosto 2015, n. 15)</span>
-</h1>
-
-<!--<input id="Tipo_compilante" name="Tipo_compilante" dynamic_value="'progettista/tecnico incaricato delegato'" style="width:30%;" type="hidden" readonly/>-->
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>La compilazione del modulo seguente viene eseguita da:</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
-        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">Titolare o soggetto in possesso di titolo idoneo alla presentazione dell'istanza</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">Progettista incaricato</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<input id="Referente_CodiceFiscale80" name="Referente_CodiceFiscale80" dynamic_value="#Tipo_richiedente1.checked() and #tit_firma_digit2.checked() ? #AventeTitolo_CodiceFiscale.value() : #Referente_CodiceFiscale.value()" style="width:30%;"  readonly/>
-
-<br>
-
-<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="#AventeTitolo_Telefono.value() == ''" type="hidden" />
-<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="#AventeTitolo_Fisso.value() == ''" type="hidden" />
-<!--<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="#Tipo_richiedente1.checked()" type="hidden" />-->
-<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
-
-{{anagrafica_trento_uniformata.titolare_segnatura("AventeTitolo","Il/La titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio","Procuratore","Amministratore di sostegno"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
-
-<br>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>Il/La titolare:</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="tit_firma_digit" name="tit_firma_digit" label="Il titolare possiede dispositivo di firma digitale?" mandatory_enabled="true"> </div>
-        <input group="tit_firma_digit" id="tit_firma_digit1" name="tit_firma_digit" type="radio" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.8;">non possiede alcun dispositivo di firma digitale</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input group="tit_firma_digit" id="tit_firma_digit2" name="tit_firma_digit" type="radio" value="2" />
-      </td>
-      <td>
-        <p style="line-height:1.8;">possiede dispositivo di firma digitale</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" style="width:30%;" type="hidden" readonly/>
-
-<br>
-<br>
-
-<input id="Referente_checkobbligatorio" name="Referente_checkobbligatorio" dynamic_check="true" type="hidden" />
-<input id="Referente_checkabilitato" name="Referente_checkabilitato" dynamic_check="true" type="hidden" />
-{{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente","<b>DATI DEL PROGETTISTA</b>:","Referente") }}
-<!------PREDISPONGO MAIL PER LA SEGNATURA------>
-<input id="AventeTitolo_EMail" name="AventeTitolo_EMail" dynamic_value="#AventeTitolo_Segnatura_EMail.value()" type="hidden"/>
-<input id="AventeTitolo_EMailPEC" name="AventeTitolo_EMailPEC" dynamic_value="#Referente_EMailPEC.value()" type="hidden"/>
-
-<input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
-
-<br>
-
-<table class="Modulo" style="border:1px solid grey;">
-  <tbody>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Referente_direttorelavori" name="Referente_direttorelavori" enabled="true"> </div>
-        <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="checkbox" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.6;"><b>Il progettista è incaricato anche della Direzione Lavori dell'opera</b></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="#Referente_direttorelavori_check.checked() ? 'Progettista e direttore lavori' : 'Progettista'" type="hidden" />
-
-<br>
-
-<table class="Modulo" style="border:1px solid grey;">
-  <tbody>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Altri_progettisti" name="Altri_progettisti" enabled="true"> </div>
-        <input group="Altri_progettisti" id="Altri_progettisti_check" name="Altri_progettisti_check" type="checkbox" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.6;"><b>Sono stati incaricati ulteriori n. <input class="" format="number" id="numero_altri_progettisti" name="numero_altri_progettisti" label="numero altri progettisti" mandatory_enabled="#Altri_progettisti_check.checked()" size="2" style="text-align: center;"/> progettisti</b></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-<br>
-  
-<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio" type="hidden" />
-<input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="!#Referente_direttorelavori_check.checked()" type="hidden" />
-{{anagrafica_trento_uniformata.solo_nominativo("Referente1","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
-
-<input id="Referente1_Ruolo" name="Referente1_Ruolo" dynamic_value="'Direttore lavori'" type="hidden" />
-<br>
-<br>
-
-<input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_value="'vero'" type="hidden"/>
-{{ immobili_trento_uniformata.immobile_solo_trento("Immobile", "LOCALIZZAZIONE DELL'INTERVENTO" ,"I lavori interessano le seguenti realtà immobiliari") }}
-
-<input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" dynamic_value="#Immobile_TipoImmobile.value() == 'S' ? 'Porzione di edificio' : (#Immobile_TipoImmobile.value() == 'E' ? 'Intero edificio' : (#Immobile_TipoImmobile.value() == 'F' ? 'Particella fondiaria' : ''))" type="hidden"/>
-<input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? #Immobile_Localita_part_fondiaria.value() : #Immobile_Nomevia_esteso.value()" type="hidden"/>
-<input id="Immobile_numeroCivico" name="Immobile_numeroCivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Civico.value()" type="hidden"/>
-<input id="Immobile_Barracivico" name="Immobile_Barracivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
-
-<br>
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td>
-        <p style="line-height:1.6;"><b>DESCRIZIONE DELL'INTERVENTO</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="Per esecuzione intervento di:" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 <br>
 <br>
@@ -1217,80 +998,40 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
-<br>
-<br>
-
-<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="width: 4%; vertical-align: center; text-align: center;">
-        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
-        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
-      </td>
-      <td colspan="2" style="background-color: #eeeeee;">
-        <p style="line-height:1.6;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-<br>
 
 <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
-  <tbody>
-    <tr>
-      <td style="width: 15%; text-align: center;">
-        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
-      </td>
-      <td style="width: 15%; text-align: center;">
-        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
-      </td>
-      <td style="width: 35%; text-align: center;">
-        <p style="line-height:1.8;">
-          <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#tit_firma_digit2.checked() ? #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase() : ''" style="width:99%; text-align: center;"/>
-        </p>
-      </td>
-      <td style="width: 35%; text-align: center;">
-        <p style="line-height:1.8;">
-          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value() + ' ' + #Referente_Cognome.value()" style="width:99%; text-align: center;"/>
-        </p>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta">
-      <td>
-        <p class="Labelcella" style="text-align: center">Luogo</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center">Data</p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il/la titolare<br><span style="font-size:95%"><i><input id="tipo_firma_tit" name="tipo_firma_tit" dynamic_value="#tit_firma_digit1.checked() ? '(firma autografa)' : (#tit_firma_digit2.checked() ? '(firma digitale)' : '')" style="width: 80%; text-align: center;"/></i></span></p>
-      </td>
-      <td>
-        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il progettista/tecnico incaricato delegato<br><span style="font-size:95%"><i>(firma digitale)</i></span></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-
-<p class="Modulo">
-  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
-</p>
-
-<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
-
-<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
-<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
-<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
-
-<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
-
-<input id="Prova_passaggio_dati" name="Prova_passaggio_dati" dynamic_value="'prova passaggio dati'" readonly type="hidden"/>
-
-{% endblock content %}
-
-
-
+    <tbody>
+      <tr>
+        <td style="width: 15%; text-align: center;">
+          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 15%; text-align: center;">
+          <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 35%; text-align: center;">
+          <p style="line-height:1.8;">
+            <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#tit_firma_digit2.checked() ? #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase() : ''" style="width:99%; text-align: center;"/>
+          </p>
+        </td>
+        <td style="width: 35%; text-align: center;">
+          <p style="line-height:1.8;">
+            <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="(#tit_firma_digit1.checked() || #delega_progett_si.checked()) ? #Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value() + ' ' + #Referente_Cognome.value() : ''" style="width:99%; text-align: center;"/>
+          </p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella" style="text-align: center">Luogo</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Data</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center; line-height: 1.6;"><input id="tipo_firma_tit" name="tipo_firma_tit" dynamic_value="#tit_firma_digit1.checked() ? 'Il/la titolare (firma autografa)' : (#tit_firma_digit2.checked() ? 'Il/la titolare (firma digitale)' : '')" style="width: 99%; text-align: center; font-size: 95%;"/></i></span></p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center; line-height: 1.6;"><input class="" id="delega_firmat_prog" name="delega_firmat_prog" dynamic_value="(#tit_firma_digit1.checked() || #delega_progett_si.checked()) ? 'Il progettista/tecnico incaricato delegato (firma digitale)' : ''" style="width:99%; text-align: center; font-size: 95%;"/></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
