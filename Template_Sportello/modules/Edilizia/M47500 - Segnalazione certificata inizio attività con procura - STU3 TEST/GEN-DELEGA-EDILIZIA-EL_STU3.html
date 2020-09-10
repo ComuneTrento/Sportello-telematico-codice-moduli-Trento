@@ -1,13 +1,13 @@
 {% set CodiceModulo =  "GEN-DELEGA-EDILIZIA-EL" %}
 {% set Urn =  "document:c_l378:modulo.secondario.delega.edilizia.el" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
-<meta campi_firma="Referente_CodiceFiscale,AventeTitolo_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
-descrizione="Modulo secondario - Modello di delega (titolare firma digitale)"
+descrizione="Modulo secondario - Modello di delega/procura al progettista (firma digitale)"
 destinatario_amministrazione=""
 destinatario_ufficio=""
 dinamico="SI"
@@ -26,6 +26,42 @@ urlhelp="/modulistica/moduli/GEN-DELEGA-EDILIZIA-EL"
 verifica_pagamento="NO"
 versione="1.1|03/06/2016"/>
 
+<meta codice_allegato="GEN-CDI"
+urn_allegato="document:c_l378:allegato.copia.documento.identita"
+descrizione_estesa="Copia del documento di identità del titolare"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
+descrizione_estesa="Allegato - Scansione della delega firmata e controfirmata con firma autografa da titolare e progettista/tecnico incaricato e poi firmata dal progettista/tecnico incaricato con firma digitale"
+filename="Copia_modulo_delega.pdf"
+firmato="SI"
+firmatari="Referente_CodiceFiscale"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-AU"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
+descrizione_estesa="Allegato - Scansione della delega firmata dal titolare con firma digitale"
+filename="Copia_modulo_delega.pdf"
+firmato="SI"
+firmatari="AventeTitolo_CodiceFiscale"
+firmatari_label="Il titolare"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-EL"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
 descrizione_estesa="Informativa trattamento dati EDILIZIA"
@@ -39,27 +75,8 @@ tipo_mime="application/pdf"/>
 
 {% endblock meta %}
 
-    
-    
- <!--   
-<script type="text/javascript">
-  var simpaticoEservice = "GEN-DELEGA-EDILIZIA-EL"; //  the id corresponding to the e-service
-  var simpaticoEserviceName = "GEN-DELEGA-EDILIZIA-EL"; //  the name corresponding to the e-service
-  var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/GEN-DELEGA-EDILIZIA-EL" ; //  the url corresponding to the e-service
-  var simpaticoForm = "main";
-  var simpaticoCategory = "Edilizia"; // the general category of the e-service
-  var simpaticoMapping= ["AventeTitolo_Cognome",
-                          "AventeTitolo_Nome",
-                          "AventeTitolo_CodiceFiscale"
-                          ];
-  var ERROR_LABELS = { 
-      'block1' : 'Compilare l\'anagrafica', 
-  }
-</script>
--->
-
 {% block title %}
-Modello di delega
+Modello di delega/procura
 {% endblock title %}
 
 {% block content %}
@@ -68,7 +85,7 @@ Modello di delega
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
 
 
-<h1 class="Modulo">DELEGA AL PROGETTISTA / TECNICO INCARICATO</h1>
+<h1 class="Modulo">DELEGA/PROCURA AL PROGETTISTA</h1>
 
 <input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Delega'" id="Oggetto" name="Oggetto" type="hidden"/>
 
@@ -92,13 +109,13 @@ Modello di delega
     </tr>
     <tr>
       <td>
-        <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome del titolare"/>
+        <input class="" id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" style="width:100%" label="Cognome del titolare" readonly/>
       </td>
       <td>
-        <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome del titolare"/>
+        <input class="" id="AventeTitolo_Nome" name="AventeTitolo_Nome" style="width:100%" label="Nome del titolare" readonly/>
       </td>
       <td>
-        <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del titolare"/>
+        <input class="" id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale del titolare" readonly/>
       </td>
     </tr>
   </tbody>
@@ -106,9 +123,12 @@ Modello di delega
 
 <br>
 
+<input id="AventeTitolo_tipo_delega" name="AventeTitolo_tipo_delega" type="hidden" readonly/>
+
+
 <h3 class="Modulo" style="line-height:1.6;">in qualità di titolare/richiedente</h3>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey" >
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
   <h1 class="Modulo">DELEGA</h1>
   <tbody>
     <tr class="Rigaintestazione">
@@ -147,8 +167,8 @@ Modello di delega
     <tr class="Rigaintestazioneridotta"><td colspan="5"></td></tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="delega_operazione" name="delega_operazione" label="Delega operazione" mandatory_enabled="true"> </div>
-          <input group="delega_operazione" id="delega_operazione1" name="delega_operazione1" type="checkbox" value="1" dynamic_check="true"/> 
+        <div id="delega_operazione" name="delega_operazione" label="Delega operazione" mandatory="true"> </div>
+          <input group="delega_operazione" id="delega_operazione1" name="delega_operazione1" type="checkbox" value="1" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa'"/> 
       </td>
       <td colspan="4">
         <p style="line-height:1.6;">alla gestione online della presente pratica edilizia e all'invio telematico della stessa</p>
@@ -156,7 +176,7 @@ Modello di delega
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input group="delega_operazione" id="delega_operazione2" name="delega_operazione2" type="checkbox" value="2" dynamic_check="true"/> 
+        <input group="delega_operazione" id="delega_operazione2" name="delega_operazione2" type="checkbox" value="2" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa'"/> 
       </td>
       <td colspan="4">
         <p style="line-height:1.6;">alla firma digitale delle dichiarazioni da me rese</p>
@@ -164,7 +184,7 @@ Modello di delega
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <input group="delega_operazione" id="delega_operazione3" name="delega_operazione3" type="checkbox" value="3" dynamic_check="true"/> 
+        <input group="delega_operazione" id="delega_operazione3" name="delega_operazione3" type="checkbox" value="3" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'"/> 
       </td>
       <td colspan="4">
         <p style="line-height:1.6;">a ricevere per proprio nome e conto le comunicazioni relative al presente procedimento per il tramite del proprio indirizzo PEC (posta elettronica certificata): <input id="Referente_EMailPEC" name="Referente_EMailPEC" style="width:50%;" readonly/>
@@ -177,17 +197,77 @@ Modello di delega
 
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey" >ù
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey" >
   <h1 class="Modulo">DELEGA INOLTRE (FACOLTATIVO)</h1>
   <tbody>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <div id="elez_dom_spec" name="elez_dom_spec" label="elezione domicilio speciale" enabled="true"> </div>
-          <input group="elez_dom_spec" id="elez_dom_spec1" name="elez_dom_spec1" type="checkbox" value="1"/> 
+        <div id="elez_dom_spec" name="elez_dom_spec" label="elezione domicilio speciale"> </div>
+        <input group="elez_dom_spec" id="elez_dom_spec1" name="elez_dom_spec1" type="checkbox" value="1" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'"/> 
       </td>
       <td>
         <p style="line-height:1.6;">il progettista/tecnico incaricato a ricevere per proprio nome e conto anche tutti gli atti e/o provvedimenti comunque denominati inerenti il procedimento, anche di carattere recettizio, presso l'indirizzo di Posta Elettronica Certificata del tecnico delegato: <input id="Mail_domic_digitale" name="Mail_domic_digitale" format="pec" style="width:50%;" dynamic_value="#Referente_EMailPEC.value()" enabled="#elez_dom_spec1.checked()" readonly/>, <b>eleggendo presso di lui domicilio speciale</b> e <b><u>beneficiando così della riduzione dei diritti di segreteria</u></b> (come apposito provvedimento comunale adottato) 
         </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border:1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width:10%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+      </td>
+      <td>
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+      </td>
+      <td style="width:20%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: top; text-align: center;">
+        <input id="Modulo_compilato_firmato_au" name="Modulo_compilato_firmato_au" type="checkbox" dynamic_check="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'" enabled="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">Copia del modulo di delega firmata dal titolare con firma autografa, controfirmata dal progettista/tecnico incaricato con firma autografa e quindi con firma digitale</p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo_au" name="numero_copia_modulo_au" dynamic_value="#Modulo_compilato_firmato_au.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width:4%;">
+        <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'" enabled="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6;">Copia del documento d'identità del titolare</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_docident" name="numero_copia_docident" dynamic_value="#GEN_CDI.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input id="Modulo_compilato_firmato_el" name="Modulo_compilato_firmato_el" type="checkbox" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.6;">Copia del modulo di delega firmata dal titolare con firma digitale</p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo_el" name="numero_copia_modulo_el" dynamic_value="#Modulo_compilato_firmato_el.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
     </tr>
   </tbody>
@@ -224,7 +304,7 @@ Modello di delega
       </td>
       <td style="width: 50%; text-align: center;">
         <p style="line-height:1.8;">
-          <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#AventeTitolo_Nome.value() + ' ' + #AventeTitolo_Cognome.value()" style="width:99%; text-align: center;"/>
+          <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale' ? #AventeTitolo_Nome.value() + ' ' + #AventeTitolo_Cognome.value() : ''" style="width:99%; text-align: center;"/>
         </p>
       </td>
     </tr>
@@ -236,11 +316,13 @@ Modello di delega
         <p class="Labelcella" style="text-align: center">Data</p>
       </td>
       <td>
-        <p class="Labelcella" style="text-align: center">Il/La titolare <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+        <p class="Labelcella" style="text-align: center">Il/La titolare <i><input class="" id="tipo_firma_delega_tit" name="tipo_firma_delega_tit" dynamic_value="#AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale' ? '(firma digitale)' : '(firma autografa)'" style="width:25%; text-align: center; font-size:100%;"/></i></p>
       </td>
     </tr>
   </tbody>
 </table>
+
+<input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" type="hidden" readonly/>
 
 <br>
 <br>
@@ -251,7 +333,7 @@ Modello di delega
 <br>
 
 <h1 class="Modulo">PARTE RISERVATA AL PROGETTISTA / TECNICO INCARICATO</h1>
-
+  
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey" >
   <tbody>
     <tr class="Rigaintestazione">
@@ -302,8 +384,8 @@ Modello di delega
   <tbody>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <div id="accett_delega_operazione" name="accett_delega_operazione" label="Accettazione_delega operazione" mandatory_enabled="true"> </div>
-          <input group="accett_delega_operazione" id="accett_delega_operazione1" name="accett_delega_operazione1" type="checkbox" value="1" dynamic_check="true"/> 
+        <div id="accett_delega_operazione" name="accett_delega_operazione" label="Accettazione_delega operazione" mandatory="true"> </div>
+        <input group="accett_delega_operazione" id="accett_delega_operazione1" name="accett_delega_operazione1" type="checkbox" value="1" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa'"/> 
       </td>
       <td colspan="4">
         <p style="line-height:1.6;">di aver accettato l'incarico di gestione digitale della presente pratica edilizia, dalla formazione all'invio telematico della stessa</p>
@@ -311,7 +393,7 @@ Modello di delega
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <input group="accett_delega_operazione" id="accett_delega_operazione2" name="accett_delega_operazione2" type="checkbox" value="2" dynamic_check="true"/> 
+        <input group="accett_delega_operazione" id="accett_delega_operazione2" name="accett_delega_operazione2" type="checkbox" value="2" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa'"/> 
       </td>
       <td colspan="4">
         <p style="line-height:1.6;">che le dichiarazioni del richiedente/titolare contenute nella pratica da me sottoscritta in formato digitale corrsipondono a quelle sottoscritte in formato cartaceo dal medesimo che così le ha rese; tali dichiarazioni sono conservate in originale presso il mio studio/ufficio</p>
@@ -319,7 +401,7 @@ Modello di delega
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
-        <input group="accett_delega_operazione" id="accett_delega_operazione3" name="accett_delega_operazione3" type="checkbox" value="3" dynamic_check="true"/> 
+        <input group="accett_delega_operazione" id="accett_delega_operazione3" name="accett_delega_operazione3" type="checkbox" value="3" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'"/> 
       </td>
       <td colspan="4">
         <p style="line-height:1.6;">di aver accettato la ricezione per proprio nome e conto le comunicazioni relative al presente procedimento anche per il tramite del proprio indirizzo PEC (posta elettronica certificata)</p>
@@ -407,5 +489,6 @@ Modello di delega
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
 
 {% endblock content %}
