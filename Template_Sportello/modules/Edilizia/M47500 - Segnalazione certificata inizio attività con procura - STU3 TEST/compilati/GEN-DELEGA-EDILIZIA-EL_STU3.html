@@ -48,9 +48,41 @@ urlhelp="/modulistica/moduli/GEN-DELEGA-EDILIZIA-EL"
 verifica_pagamento="NO"
 versione="1.1|03/06/2016"/>
 
-<!-- AGGIUNGERE ALLEGATO COPIA MODULO CON FIRMA DIGITALE DEL TITOLARE -->
-<!-- AGGIUNGERE ALLEGATO COPIA MODULO CON FIRMA AUTOGRAFA DEL TITOLARE -->
-<!-- AGGIUNGERE ALLEGATO DOCUMENTO DI IDENTITA' -->
+<meta codice_allegato="GEN-CDI"
+urn_allegato="document:c_l378:allegato.copia.documento.identita"
+descrizione_estesa="Copia del documento di identità del titolare"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
+descrizione_estesa="Allegato - Scansione della delega firmata e controfirmata con firma autografa da titolare e progettista/tecnico incaricato e poi firmata dal progettista/tecnico incaricato con firma digitale"
+filename="Copia_modulo_delega.pdf"
+firmato="SI"
+firmatari="Referente_CodiceFiscale"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-AU"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
+descrizione_estesa="Allegato - Scansione della delega firmata dal titolare con firma digitale"
+filename="Copia_modulo_delega.pdf"
+firmato="SI"
+firmatari="AventeTitolo_CodiceFiscale"
+firmatari_label="Il titolare"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-EL"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
@@ -423,10 +455,11 @@ function get_ufficio_dest() {
         <input id="Modulo_compilato_firmato_au" name="Modulo_compilato_firmato_au" type="checkbox" dynamic_check="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'" enabled="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height:1.6;">Copia del modulo di procura firmata dal titolare con firma autografa, controfirmata dal progettista/tecnico incaricato con firma autografa e quindi con firma digitale</p>
+        <p style="line-height:1.6;">Copia del modulo di delega firmata dal titolare con firma autografa, controfirmata dal progettista/tecnico incaricato con firma autografa e quindi con firma digitale</p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo_au" name="numero_copia_modulo_au" dynamic_value="#Modulo_compilato_firmato_au.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -438,6 +471,7 @@ function get_ufficio_dest() {
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_docident" name="numero_copia_docident" dynamic_value="#GEN_CDI.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -445,11 +479,11 @@ function get_ufficio_dest() {
         <input id="Modulo_compilato_firmato_el" name="Modulo_compilato_firmato_el" type="checkbox" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
-        <!-- continuiamo a chiederla se titolare ha firma digitale ma delega? -->
-        <p style="line-height:1.6;">Copia del modulo di procura firmata dal titolare con firma digitale</p>
+        <p style="line-height:1.6;">Copia del modulo di delega firmata dal titolare con firma digitale</p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo_el" name="numero_copia_modulo_el" dynamic_value="#Modulo_compilato_firmato_el.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
     </tr>
   </tbody>
