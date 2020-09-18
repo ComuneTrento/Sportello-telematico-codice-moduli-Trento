@@ -123,7 +123,8 @@ Modello di delega/procura
 
 <br>
 
-<input id="AventeTitolo_tipo_delega" name="AventeTitolo_tipo_delega" type="hidden" readonly/>
+<!--TODO-->
+<input id="AventeTitolo_tipo_delega" name="AventeTitolo_tipo_delega" dynamic_value="#Referente99_Titolare_Delega_Parziale.value() == 'SI' ? 'delega comunicazioni' : 'delega completa'" type="hidden" readonly/>
 
 
 <h3 class="Modulo" style="line-height:1.6;">in qualità di titolare/richiedente</h3>
@@ -183,7 +184,7 @@ Modello di delega/procura
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="delega_operazione" id="delega_operazione3" name="delega_operazione3" type="checkbox" value="3" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'"/> 
       </td>
       <td colspan="4">
@@ -201,7 +202,7 @@ Modello di delega/procura
   <h1 class="Modulo">DELEGA INOLTRE (FACOLTATIVO)</h1>
   <tbody>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="elez_dom_spec" name="elez_dom_spec" label="elezione domicilio speciale"> </div>
         <input group="elez_dom_spec" id="elez_dom_spec1" name="elez_dom_spec1" type="checkbox" value="1" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'"/> 
       </td>
@@ -234,8 +235,9 @@ Modello di delega/procura
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
       </td>
     </tr>
+    <!--
     <tr>
-      <td style="width:4%; vertical-align: top; text-align: center;">
+      <td style="width:4%; vertical-align: center; text-align: center;">
         <input id="Modulo_compilato_firmato_au" name="Modulo_compilato_firmato_au" type="checkbox" dynamic_check="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'" enabled="#AventeTitolo_rich_ha_firma_digit.value() == 'firma autografa'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
@@ -243,7 +245,7 @@ Modello di delega/procura
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo_au" name="numero_copia_modulo_au" dynamic_value="#Modulo_compilato_firmato_au.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="#Modulo_compilato_firmato_au.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -258,6 +260,7 @@ Modello di delega/procura
         <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+    -->
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
         <input id="Modulo_compilato_firmato_el" name="Modulo_compilato_firmato_el" type="checkbox" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" enabled="#AventeTitolo_tipo_delega.value() == 'delega completa' and #AventeTitolo_rich_ha_firma_digit.value() == 'firma digitale'" value="OBBLIGATORIO"/>
@@ -267,7 +270,7 @@ Modello di delega/procura
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo_el" name="numero_copia_modulo_el" dynamic_value="#Modulo_compilato_firmato_el.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#Modulo_compilato_firmato_el.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
   </tbody>
@@ -383,7 +386,7 @@ Modello di delega/procura
   <h1 class="Modulo">DICHIARA / ATTESTA</h1>
   <tbody>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="accett_delega_operazione" name="accett_delega_operazione" label="Accettazione_delega operazione" mandatory="true"> </div>
         <input group="accett_delega_operazione" id="accett_delega_operazione1" name="accett_delega_operazione1" type="checkbox" value="1" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa'"/> 
       </td>
@@ -392,7 +395,7 @@ Modello di delega/procura
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="accett_delega_operazione" id="accett_delega_operazione2" name="accett_delega_operazione2" type="checkbox" value="2" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa'"/> 
       </td>
       <td colspan="4">
@@ -400,7 +403,7 @@ Modello di delega/procura
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="accett_delega_operazione" id="accett_delega_operazione3" name="accett_delega_operazione3" type="checkbox" value="3" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'"/> 
       </td>
       <td colspan="4">
@@ -416,9 +419,9 @@ Modello di delega/procura
   <h1 class="Modulo">DICHIARA / ATTESTA INOLTRE</h1>
   <tbody>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="accett_elez_dom_spec" name="accett_elez_dom_spec" label="accettazione elezione domicilio speciale" mandatory_enabled="#elez_dom_spec1.checked()"> </div>
-          <input group="accett_elez_dom_spec" id="accett_elez_dom_spec1" name="accett_elez_dom_spec1" type="checkbox" value="1"/> 
+          <input group="accett_elez_dom_spec" id="accett_elez_dom_spec1" name="accett_elez_dom_spec1" type="checkbox" value="1" dynamic_check="#AventeTitolo_tipo_delega.value() == 'delega completa' || #AventeTitolo_tipo_delega.value() == 'delega comunicazioni'"/> 
       </td>
       <td>
         <p style="line-height:1.6;">di aver accettato la ricezione per per proprio nome e conto anche tutti gli atti e/o provvedimenti comunque denominati inerenti il procedimento, di carattere recettizio per il tramite presso il proprio indirizzo di Posta Elettronica Certificata, eletto dal titolare come proprio domicilio speciale. 
@@ -487,6 +490,9 @@ Modello di delega/procura
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<!--METADATI-->
+<input id="Referente99_Titolare_Delega_Parziale" name="Referente99_Titolare_Delega_Parziale" type="hidden" />
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 

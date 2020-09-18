@@ -24,12 +24,18 @@ istruzioni_compilazione=""
 istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
-procura="SI,GEN-DELEGA-EDILIZIA-EL,Referente_CodiceFiscale"
+procura="SI,GEN-DELEGA-EDILIZIA-AU,Referente_CodiceFiscale"
 segnatura="AventeTitolo"
 tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA"
 verifica_pagamento="NO"
 versione="1.0|09/02/2018" />
+
+<meta codice_modulo_figlio="GEN-DELEGA-EDILIZIA-AU"
+urn_modulo_figlio="document:c_l378:modulo.secondario.delega.edilizia.au"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
 
 <meta codice_modulo_figlio="GEN-DELEGA-EDILIZIA-EL"
 urn_modulo_figlio="document:c_l378:modulo.secondario.delega.edilizia.el"
@@ -264,6 +270,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height:1.8;">il titolare compila e firma la SCIA con la propria firma digitale</p>
       </td>
     </tr>
+    <!--
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;">
         <input group="delega_progett" id="delega_progett_solo_com" name="delega_progett" type="radio" value="2" />
@@ -272,19 +279,20 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height:1.8;">il titolare compila e firma la SCIA con la propria firma digitale, ma delega al progettista la ricezione di tutte le comunicazioni ad essa inerenti</p>
       </td>
     </tr>
+    -->
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
-        <input group="delega_progett" id="delega_progett_si" name="delega_progett" type="radio" value="3" />
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="delega_progett" id="delega_progett_si" name="delega_progett" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height:1.8;">il titolare delega al progettista la compilazione e la firma della presente SCIA, nonchè la ricezione di tutte le comunicazioni ad essa inerenti</p>
+        <p style="line-height:1.8;">il titolare delega al progettista la compilazione e la firma della presente SCIA</p>
       </td>
     </tr>
   </tbody>
 </table>
 
 <input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" style="width:30%;" type="hidden" readonly/>
-<input id="AventeTitolo_tipo_delega" name="AventeTitolo_tipo_delega" dynamic_value="#tit_firma_digit1.checked() || #delega_progett_si.checked() ? 'delega completa' : (#delega_progett_solo_com.checked() ? 'delega comunicazioni' : 'nessuna delega')" style="width:30%;" type="hidden" readonly/>
+<input id="AventeTitolo_tipo_delega" name="AventeTitolo_tipo_delega" dynamic_value="#tit_firma_digit1.checked() || #delega_progett_si.checked() ? 'delega completa' : (#delega_progett_no.checked() ? 'delega comunicazioni' : 'delega parziale')" style="width:30%;" type="hidden" readonly/>
 
 <br>
 <br>
@@ -890,21 +898,27 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <!-- 
       1. titolare non ha firma digitale (modulo firmato dal progettista), procura con firma digitale del progettista allegando copia con firma autografa del titolare + carta di identità 
-      2. titolare ha firma digitale e non delega (modulo firmato dal titolare), non viene lanciata delega
+      2. titolare ha firma digitale e non delega (modulo firmato dal titolare), viene lanciata delega con campi check 3 e 4 spuntati
       3. titolare ha firma digitale e delega solo comunicazioni (modulo firmato dal titolare), delega specifica con firma digitale del progettista allegando copia con firma digitale del titolare
       4. titolare ha firma digitale e delega (modulo firmato dal progettista), procura con firma digitale del progettista allegando copia con firma digitale del titolare 
     -->
     <tr>
-      <td style="vertical-align: top; text-align: center;">
-        <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and (#tit_firma_digit1.checked() || #delega_progett_solo_com.checked() || #delega_progett_si.checked())" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and (#tit_firma_digit1.checked() || #delega_progett_solo_com.checked() || #delega_progett_si.checked())" value="OBBLIGATORIO"/>
+      <td style="vertical-align: center; text-align: center;">
+        <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.8;">Modulo secondario - <b>Delega al progettista</b> incaricato della <input class="" id="Testo_all_delega1" name="Testo_all_delega1" style="width: 20%;" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit1.checked() ? ' gestione e firma' : (#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #delega_progett_solo_com.checked() ? ' ricezione' : (#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #delega_progett_si.checked() ? ' gestione e firma' : '')) " enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and (#tit_firma_digit1.checked() || #delega_progett_solo_com.checked() || #delega_progett_si.checked())" readonly />
+        <p style="line-height:1.8;">Modulo secondario - <b>Delega al progettista/tecnico</b> incaricato
+
+        <input class="" id="Referente99_Titolare_Delega_Parziale" name="Referente99_Titolare_Delega_Parziale" dynamic_value="#delega_progett_no.checked() ? 'SI':'NO'" type="hidden"/>        
+        <!--
+        <input class="" id="Testo_all_delega1" name="Testo_all_delega1" style="width: 20%;" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit1.checked() ? ' gestione e firma' : (#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #delega_progett_solo_com.checked() ? ' ricezione' : (#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #delega_progett_si.checked() ? ' gestione e firma' : '')) " enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and (#tit_firma_digit1.checked() || #delega_progett_solo_com.checked() || #delega_progett_si.checked())" readonly />
         <br><input class="" id="Testo_all_delega2" name="Testo_all_delega2" style="width: 70%;" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit1.checked() ? 'di tutta la modulistica inerente la presente SCIA' : (#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #delega_progett_solo_com.checked() ? 'di tutte le comunicazioni inerenti la presente SCIA' : (#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #delega_progett_si.checked() ? 'di tutta la modulistica inerente la presente SCIA' : '')) " enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and (#tit_firma_digit1.checked() || #delega_progett_solo_com.checked() || #delega_progett_si.checked())" readonly /></p>
+        -->
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and (#tit_firma_digit1.checked() || #delega_progett_solo_com.checked() || #delega_progett_si.checked()) ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" obbligatorio="#Modulo_delega.checked() ? 'OBBLIGATORIO' : ''" type="hidden" />
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and (#tit_firma_digit1.checked() || #delega_progett_si.checked()) ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" obbligatorio="#Modulo_delega.checked() ? #tit_firma_digit1.checked() ? 'OBBLIGATORIO' : '' : ''" type="hidden" />
+        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" obbligatorio="#Modulo_delega.checked() ? #tit_firma_digit2.checked() ? 'OBBLIGATORIO' : '' : ''" type="hidden" />
       </td>
     </tr>
     <tr>

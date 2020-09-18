@@ -1,0 +1,1308 @@
+{% set CodiceModulo = "M1234-TEST-ANDREA" %}
+{% set Urn = "document:c_l378:test.modulo.andrea;servizio.test.andrea;modulo.test.andrea" %}
+{% extends "base_trento_ok.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Comunicazione indirizzo di posta per recapito IMIS"
+descrizione="Comunicazione indirizzo di posta per recapito IMIS"
+destinatario_amministrazione=""
+destinatario_ufficio="KT5TBQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="AUTENTICATO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M1462-IMIS"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<!--
+<meta codice_allegato="INFORM-TRATT-DATI-IMIS"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.imis"
+descrizione_estesa="Informativa trattamento dati IMIS"
+filename="INFORM-TRATT-DATI-IMIS.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-IMIS"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+-->
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"/>
+
+{% endblock meta %}
+
+{% block title %}M1462-DOMANDA DI LOCAZIONE{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' - Liberatoria per invio di prospetto IMIS e comunicazioni tributarie tramite posta elettronica'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<br>
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<h1 class="Modulo" style="line-height:1.6;">
+  DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA PUBBLICA E CONTRIBUTO INTEGRATIVO ALL’AFFITTO
+</h1>
+<h3>
+  (ai sensi della L.P. 7 novembre 2005, n. 15 e s.m.i. e del suo Regolamento d'esecuzione)
+</h3>
+
+<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="#AventeTitolo_Telefono.value() == ''" type="hidden" />
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="#AventeTitolo_Fisso.value() == ''" type="hidden" />
+
+{{anagrafica_trento_uniformata.richiedente("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+
+<!--INIZIO BLOCCO SCELTA DOMANDA-->
+<div class="simpatico-block simpatico-query-and-answer">
+<h2 class="Modulo">
+  con la presente istanza presenta (barrare la scelta di interesse):
+</h2>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+      <tr>
+        <td>
+          <div id="Scelta_Domanda" name="Scelta_Domanda" label="Tipo di domanda" mandatory_enabled="true"></div>
+          <input id="cb_domanda_locazione" name="Scelta_Domanda" type="radio" value="1"/>
+        </td>
+        <td>
+          <p>DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA PUBBLICA</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_affitto" name="Scelta_Domanda" type="radio" value="2"/>
+        </td>
+        <td>
+          <p>DOMANDA DI CONTRIBUTO INTEGRATIVO ALL’AFFITTO</p>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <input id="cb_entrambe" name="Scelta_Domanda" type="radio" value="3"/>
+        </td>
+        <td>
+          <p>ENTRAMBE LE DOMANDE DI LOCAZIONE ALLOGGIO EDILIZIA PUBBILCA E DI CONTRIBUTO INTEGRATIVO ALL’AFFITTO</p>
+        </td>
+      </tr>   
+  </tbody>
+</table>
+</div>
+
+<!--FINE BLOCCO SCELTA DOMANDA-->
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer" >
+  <p class="Modulo">a tal fine, ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445, consapevole delle sanzioni penali, nel caso di dichiarazioni non veritiere, di formazione o uso di atti falsi, richiamate dall’art. 76 del d.P.R. 445/2000, nonché della decadenza dai benefici conseguenti al provvedimento eventualmente emanato sulla base della dichiarazione non veritiera, qualora dal controllo effettuato emerga la non veridicità del contenuto di taluna delle dichiarazioni rese (art. 75 D.P.R. 28/12/2000 n. 445)
+  </p>
+  <h1 class="Modulo">DICHIARA</h1>
+  <p class="Modulo">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</p>
+  <h3 class="Modulo">(requisiti generali comuni ad entrambe le domande)</h3>
+</div>
+
+<br>
+
+<!-- *********** INIZIO MODULO CITTADINO *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer">  
+    
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p>
+            <b>Di essere cittadino:</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <div id="Parametri_Cittadino" name="Parametri_Cittadino" label="Di essere cittadino:" mandatory_enabled="true"></div>
+          <input id="Parametri_citt_ita" name="Parametri_Cittadino" type="radio" value="1" />
+        </td>
+        <td colspan="3">
+          <p>italiano/a o di altro Stato appartenente all’Unione Europea</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;" rowspan="6">
+          <input id="Parametri_citt_non_EU" name="Parametri_Cittadino" type="radio" value="2"/>
+        </td>
+        <td colspan="3">
+          <p>di altro Stato NON appartenente all’Unione Europea ed in possesso dei seguenti requisiti:</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <div id="Parametri_Cittadino_non_UE" name="Parametri_Cittadino_non_UE" label="Di essere cittadino:" mandatory_enabled="#Parametri_citt_non_EU.checked()"></div>
+          <input id="Parametri_citt_permesso" name="Parametri_Cittadino_non_UE" type="radio" value="1" />
+        </td>
+        <td colspan="2">
+          <p>Permesso di soggiorno UE per soggiornanti di lungo periodo</p> 
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;" rowspan="4">
+          <div id="Parametri_Cittadino_non_UE" name="Parametri_Cittadino_non_UE" label="Di essere cittadino" mandatory_enabled="true"></div>
+          <input id="Parametri_citt_scadenza" name="Parametri_Cittadino_non_UE" type="radio" value="2" />
+        </td>
+        <td colspan="2">
+          <p>Permesso di soggiorno con scadenza il
+            <input type="date" id="Data_scadenza_permesso" name="Data_scadenza_permesso" label="Scadenza permesso" mandatory_enabled="#Parametri_citt_scadenza.checked()" size="8"> 
+            <br>
+            <i>In caso di permesso scaduto: ID ricevuta postale inoltro richiesta di rinnovo</i>
+            <input id="ricevuta_postale" name="ricevuta_postale" label="Ricevuta postale" style="width: 30%;"> 
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p><b>In caso di permesso di soggiorno, indicare l’attuale occupazione:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <div id="Parametri_Cittadino_occupazione" name="Parametri_Cittadino_occupazione" label="Occupazione" mandatory_enabled="true"></div>
+          <input id="Parametri_citt_costanza" name="Parametri_Cittadino_occupazione" type="radio" value="1" />
+        </td>
+        <td colspan="2">
+          <p>costanza di lavoro</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <input id="Parametri_citt_iscritto" name="Parametri_Cittadino_occupazione" type="radio" value="2" />
+        </td>
+        <td colspan="2">
+          <p>iscritto nelle liste dei Centri per l'impiego</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- *********** FINE MODULO CITTADINO *********** -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO TIPO RESIDENZA *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer">  
+    
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p>
+            <b>Di avere residenza anagrafica:</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <div id="Parametri_Residenza" name="Parametri_Residenza" label="Avere residenza" mandatory_enabled="true"></div>
+          <input id="Parametri_dieci_anni" name="Parametri_Residenza" type="radio" value="1" />
+        </td>
+        <td>
+          <p>in Italia da almeno 10 anni, di cui gli ultimi 2 in modo continuativo</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_tre_anni" name="Parametri_Residenza" type="radio" value="2"/>
+        </td>
+        <td>
+          <p>sul territorio della Provincia di Trento da almeno 3 anni, in via continuativa e senza interruzioni (o iscrizione AIRE)</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- *********** FINE MODULO TIPO RESIDENZA *********** -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO TRIENNIO PRECEDENTE *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer">  
+  
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p>
+            <b>Di essere cittadino:Che nel triennio precedente alla data di presentazione della domanda, il proprio nucleo familiare:</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <div id="Parametri_Triennio" name="Parametri_Triennio" label="Nucleo familiare:" mandatory_enabled="true"></div>
+          <input id="Parametri_titolare_proprieta_NO" name="Parametri_Triennio" type="radio" value="1" />
+        </td>
+        <td colspan="3">
+          <p>NON è stato titolare di diritti esclusivi di proprietà, usufrutto o abitazione su un alloggio adeguato (alloggio dotato di servizi igienici e non dichiarato inagibile);</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;" rowspan="6">
+          <input id="Parametri_titolare_proprieta_SI" name="Parametri_Cittadino" type="radio" value="2"/>
+        </td>
+        <td colspan="3">
+          <p>È stato (o è tutt’ora) titolare dei diritti di cui sopra, ma ricorre uno dei seguenti casi:</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <div id="Parametri_Esenzione" name="Parametri_Esenzione" label="Titolarità" mandatory_enabled="#Parametri_titolare_proprieta_SI.checked()"></div>
+          <input id="Parametri_citt_separato" name="Parametri_Esenzione" type="radio" value="1" />
+        </td>
+        <td colspan="2">
+          <p>separazione giudiziale con assegnazione della casa all’altro coniuge</p> 
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; width: 4%;">
+          <input id="Parametri_citt_immobiliare" name="Parametri_Esenzione" type="radio" value="2" />
+        </td>
+        <td colspan="2">
+          <p>titolo cessato per esecuzione immobiliare</p> 
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_citt_invalido" name="Parametri_Esenzione" type="radio" value="3" />
+        </td>
+        <td colspan="2">
+          <p>esenzioni per casi di invalidità
+            <br>
+            - presenza nel nucleo familiare di un componente con invalidità 100%, che necessiti di cure specialistiche. La domanda deve essere presentata presso l’Ente nel cui territorio si trova il luogo di cura, che deve distare più di 50 km dall’alloggio in proprietà, usufrutto o abitazione 
+            <br>
+            - richiedente con invalidità superiore al 75%, a condizione che l’alloggio di proprietà abbia rendita catastale rivalutata non superiore ad € 400,00 e sia situato a più di 50 chilometri dal luogo di residenza anagrafica del nucleo familiare
+          </p> 
+        </td>
+      </tr>           
+    </tbody>
+  </table>
+</div>
+
+<!-- *********** FINE MODULO TRIENNIO PRECEDENTE *********** -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO TIPO RESIDENZA *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer">  
+    
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p>
+            <b>Che nel proprio nucleo familiare sono presenti:</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Parametri_Nucleo_Fam" name="Parametri_Nucleo_Fam" label="Nucleo familiare" mandatory_enabled="true"></div>
+          <input id="Parametri_comp_invalidita" name="Parametri_Nucleo_Fam" type="checkbox" value="1" />
+        </td>
+        <td>
+          <p>n° <input id="Numero_Componenti_invalidi" type="number" name="Numero_Componenti_invalidi" min="0" style="width:8%"> 
+            componenti con invalidità certificata o con accertata difficoltà a svolgere compiti e funzioni proprie dell'età, come specificato nel certificato di invalidità (da allegare)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_comp_rientrati" name="Parametri_Nucleo_Fam" type="checkbox" value="2" />
+        </td>
+        <td>
+            <p>n° <input id="Numero_Componenti_rientrati" type="number" name="Numero_Componenti_invalidi" min="0" style="width:8%"> 
+            componenti rientrati nel nucleo familiare da non piu di due anni a seguito di permanenza per almeno sei mesi consecutivi in strutture, enti, aziende residenziali di cura, assistenza, accoglienza o recupero
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_comp_minori" name="Parametri_Nucleo_Fam" type="checkbox" value="3" />
+        </td>
+        <td>
+          <p>n° <input id="Numero_Componenti_minori" type="number" name="Numero_Componenti_invalidi" min="0" style="width:8%"> 
+          figli minori del richiedente o del coniuge/convivente (i minori in affido familiare o sottoposti a tutela sono equiparati ai figli minori)          
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_comp_coniuge" name="Parametri_Nucleo_Fam" type="checkbox" value="4" />
+        </td>
+        <td>
+          <p> 
+            coniuge/convivente lavoratrice, in presenza di figli minori nel nucleo familiare (i minori in affido familiare o sottoposti a tutela sono equiparati ai figli minori)              
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- *********** FINE MODULO TIPO RESIDENZA *********** -->
+  
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO NUCELO FAMILIARE COMPOSTO *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer">  
+    
+  <table class="Modulo" style="border:1px solid grey;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p>
+            <b>Che il proprio nucleo familiare è composto in via esclusiva da:</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Parametri_Composizione_Nucleo" name="Parametri_Composizione_Nucleo" label="Nucleo familiare" mandatory_enabled="true"></div>
+          <input id="Parametri_eta_min" name="Parametri_Composizione_Nucleo" type="checkbox" value="1" />
+        </td>
+        <td>
+          <p>un componente di età inferiore a 35 anni</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_ass_mantenimento" name="Parametri_Composizione_Nucleo" type="checkbox" value="2" />
+        </td>
+        <td>
+          <p>
+            un componente, legalmente separato o divorziato, tenuto all’assegnazione della casa familiare o alla corresponsione dell’assegno di mantenimento
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input id="Parametri_giovane_copia" name="Parametri_Nucleo_Fam" type="checkbox" value="3" />
+        </td>
+        <td>
+          <p>
+            una giovane coppia (soggetti di età non superiore a 35 anni, che siano sposati o conviventi di fatto da non più di 5 anni)         
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  
+<!-- *********** FINE MODULO NUCELO FAMILIARE COMPOSTO *********** -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO ACQUISIZIONE DIRETTA DEL DATO *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer" >
+  <h1 class="Modulo">AI FINI DELL’ACQUISIZIONE DIRETTA DEL DATO, COMUNICA
+    <br>
+    (requisiti generali comuni ad entrambe le domande)
+  </h1>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height:1.6;"><b>Indicare i comuni in cui il richiedente risiede o ha risieduto:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="Per esecuzione intervento di:" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  
+<!-- *********** FINE MODULO ACQUISIZIONE DIRETTA DEL DATO *********** -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO ANNI DI LAVORO *********** -->
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="line-height:1.6;"><b>Anni di lavoro (Indicare il componente del nucleo che vanta maggior anzianità lavorativa):</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><b>Cognome</b></p>
+      </td>
+      <td>
+        <p><b>Nome</b></p>
+      </td>
+      <td>
+        <p><b>Codice fiscale/ data di nascita</b></p>
+      </td>
+      <td style="width: 10%">
+        <p><b>Anni di lavoro</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="Componente_Anzianita_Cognome" name="Componente_Anzianita_Cognome" style="width: 100%">
+      </td>
+      <td>
+        <input id="Componente_Anzianita_Nome" name="Componente_Anzianita_Nome" style="width: 100%">
+      </td>
+      <td>
+        <input id="Componente_Anzianita_CF" name="Componente_Anzianita_CF" format="cf" style="width: 100%">
+      </td>
+      <td>
+        <input id="Componente_Anzianita_Anni_Lavoro" name="Componente_Anzianita_Anni_Lavoro" type="number" min="0" style="width: 100%">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- *********** FINE MODULO ANNI DI LAVORO *********** -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO 2 LOCAZIONE *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer" >
+  <h1 class="Modulo">DICHIARA</h1>
+  <p class="Modulo">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</p>
+  <h3 class="Modulo">(da compilare solo per la domanda di locazione alloggio di edilizia pubblica)</h3>
+</div>
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO POSSESSO ICEF *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer" >
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p style="line-height:1.6;"><b>Di essere in possesso di indicatore ICEF EDILIZIA PUBBLICA anno 2020, inferiore al valore di :0,23</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p style="text-align: left">ID domanda: <input id="Parametri_ID_domanda" name="Parametri_ID_domanda" style="width: 85%"></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p style="line-height:1.6;">Che il proprio nucleo familiare anagrafico coincide con il nucleo familiare dichiarato ai fini del calcolo dell’ICEF 2020</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="radio_Coincidenza_nucleo" name="radio_Coincidenza_nucleo" label="Coincidenza nucleo familiare" mandatory_enabled="true"></div>
+          <input id="radio_Coincidenza_nucleo_SI" name="radio_Coincidenza_nucleo" type="radio" value="1"/>
+        </td>
+        <td colspan="2">
+          SI
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="5">
+          <input id="radio_Coincidenza_nucleo_NO" name="radio_Coincidenza_nucleo" type="radio" value="1"/>
+        </td>
+        <td colspan="2">
+          NO, perché
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="cb_NON_Coincidenza_nucleo" name="cb_NON_Coincidenza_nucleo" label="NON coincidenza nucleo familiare" mandatory_enabled="true"></div>
+          <input id="cb_Coincidenza_nucleo_badante" name="cb_NON_Coincidenza_nucleo" type="checkbox" value="1"/>
+        </td>
+        <td>
+          nel nucleo risiede anche la propria badante
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Coincidenza_nucleo_cancellazione" name="cb_NON_Coincidenza_nucleo" type="checkbox" value="2"/>
+        </td>
+        <td>
+          nel nucleo risiedono componenti con avvio di cancellazione
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Coincidenza_nucleo_non_convivente" name="cb_NON_Coincidenza_nucleo" type="checkbox" value="3"/>
+        </td>
+        <td>
+          ai fini della dichiarazione ICEF rileva anche il coniuge non convivente
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Coincidenza_nucleo_deroga" name="cb_NON_Coincidenza_nucleo" type="checkbox" value="4"/>
+        </td>
+        <td>
+            ricorrono i casi di deroga di cui all’art. 3, comma 4, lettera a) b) c)   
+            <br>
+            specificare: <input id="input_Casi_deroga" name="input_Casi_deroga" style="width: 100%">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- *********** FINE MODULO POSSESSO ICEF *********** -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO ICEF ALLOGGIO IDONEO *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer" >
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.6;"><b>Che il nucleo familiare risiede in alloggio inidoneo:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="radio_Alloggio_Adeguato" name="radio_Alloggio_Adeguato" label="Coincidenza nucleo familiare" mandatory_enabled="true"></div>
+          <input id="radio_Alloggio_No_servizi" name="radio_Alloggio_Adeguato" type="radio" value="1"/>
+        </td>
+        <td>
+          <p>Alloggio senza servizi igienici all’interno</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_Alloggio_improprio" name="radio_Alloggio_Adeguato" type="radio" value="2"/>
+        </td>
+        <td>
+          <p>Luogo impropriamente adibito ad abitazione da almeno 2 anni alla data di presentazione della domanda</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_Alloggio_stanzeletto" name="radio_Alloggio_Adeguato" type="radio" value="3"/>
+        </td>
+        <td>
+          <p>
+            Alloggio dotato di un numero di stanze da letto inferiore rispetto al minimo previsto per i componenti del nucleo 
+            <br>­
+            Num. stanze da letto: <input id="Parametri_numero_stanze" name="Parametri_numero_stanze" style="width: 8%" type="number" min="0" mandatory_enabled="#radio_Alloggio_stanzeletto.checked()">  
+          </p>      
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- *********** FINE MODULO ICEF ALLOGGIO IDONEO *********** -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO SCELTA ZONA *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer" >
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.6;"><b>Scelta della zona (una sola scelta possibile):</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 3%">
+          <div id="radio_Scelta_Zona" name="radio_Scelta_Zona" label="Scelta zona" mandatory_enabled="true"></div>
+          <input id="radio_zona1" name="radio_Scelta_Zona" type="radio" value="1"/>
+        </td>
+        <td>
+          <p>1- Gardolo</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona2" name="radio_Scelta_Zona" type="radio" value="2"/>
+        </td>
+        <td>
+          <p>2- Meano</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona3" name="radio_Scelta_Zona" type="radio" value="3"/>
+        </td>
+        <td>
+          <p>3- Bondone</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona4" name="radio_Scelta_Zona" type="radio" value="4"/>
+        </td>
+        <td>
+          <p>4- Sardagna</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona5" name="radio_Scelta_Zona" type="radio" value="5"/>
+        </td>
+        <td>
+          <p>5- Ravina – Romagnano</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona6" name="radio_Scelta_Zona" type="radio" value="6"/>
+        </td>
+        <td>
+          <p>6- Argentario</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona7" name="radio_Scelta_Zona" type="radio" value="7"/>
+        </td>
+        <td>
+          <p>7- Povo</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona8" name="radio_Scelta_Zona" type="radio" value="8"/>
+        </td>
+        <td>
+          <p>8- Mattarello</p>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <input id="radio_zona9" name="radio_Scelta_Zona" type="radio" value="9"/>
+        </td>
+        <td>
+          <p>9- Villazzano</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona10" name="radio_Scelta_Zona" type="radio" value="10"/>
+        </td>
+        <td>
+          <p>10- Oltrefersina</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona11" name="radio_Scelta_Zona" type="radio" value="11"/>
+        </td>
+        <td>
+          <p>11- San Giuseppe – Santa Chiara</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona12" name="radio_Scelta_Zona" type="radio" value="12"/>
+        </td>
+        <td>
+          <p>12- Centro storico – Piedicastello</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona13" name="radio_Scelta_Zona" type="radio" value="13"/>
+        </td>
+        <td>
+          <p>13- Aldeno, Cimone e Garniga</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_zona14" name="radio_Scelta_Zona" type="radio" value="14"/>
+        </td>
+        <td>
+          <p>14- Nessuna preferenza</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="line-height:1.6;">Necessità alloggio sbarrierato:</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 3%">
+          <div id="radio_Alloggio_sbarrierato" name="radio_Alloggio_sbarrierato" label="Scelta zona" mandatory_enabled="true"></div>
+          <input id="radio_sbarrierato_SI" name="radio_Alloggio_sbarrierato" type="radio" value="1"/>
+        </td>
+        <td>
+          <p>SI</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_sbarrierato_NO" name="radio_Alloggio_sbarrierato" type="radio" value="2"/>
+        </td>
+        <td>
+          <p>NO</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- *********** FINE MODULO SCELTA ZONA *********** -->
+
+<br>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer" >
+  <h1 class="Modulo">DICHIARA INOLTRE</h1>
+   <h1 class="Modulo" style="text-align: justify">
+    di essere consapevole che per  l’assegnazione dell’alloggio pubblico   a canone sostenibile è necessario il requisito dell’assenza di condanne di cui all’art. 5, comma 2, lett.  C ter e c quater; di prendere atto che il Comune di Trento all’atto dell’assegnazione provvederà d’ufficio alla verifica puntuale di tale requisito, a pena  di esclusione  dalla graduatoria.
+  </h1>
+  <h1 class="Modulo">DICHIARA</h1>
+  <p class="Modulo">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</p>
+  <h3 class="Modulo">(da compilare solo per la domanda di contributo integrativo all’affitto)</h3>
+</div>
+
+<br>
+
+<!-- *********** INIZIO MODULO INDICATORE ICEF *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer" >
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p style="line-height:1.6;"><b>Di essere in possesso di indicatore ICEF EDILIZIA PUBBLICA anno 2020, inferiore al valore di :0,21</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p style="text-align: left">ID domanda: <input id="Parametri_ID_domanda_Minima" name="Parametri_ID_domanda_Minima" style="width: 85%"></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="4">
+          <p style="line-height:1.6;"><b>Che il proprio nucleo familiare:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="radio_Nucleo_Beneficiario" name="radio_Nucleo_Beneficiario" label="Nucleo familiare beneficiario" mandatory_enabled="true"></div>
+          <input id="radio_Nucleo_Beneficiario_SI" name="radio_Nucleo_Beneficiario" type="radio" value="1"/>
+        </td>
+        <td colspan="2">
+          <p>
+            è beneficiario della componente b) del reddito/pensione di cittadinanza prevista dall’articolo 3, comma 1, del decreto legge 28 gennaio 2019, n. 4 
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="4"  style="vertical-align: top;">
+          <input id="radio_Nucleo_Beneficiario_NO" name="radio_Coincidenza_nucleo" type="radio" value="2" />
+        </td>
+        <td colspan="2">
+          <p>
+            non è beneficiario della componente b) del reddito/pensione di cittadinanza prevista dall’articolo 3, comma 1, del decreto legge 28 gennaio 2019, n. 4, in quanto:
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="radio_NON_beneficiario" name="radio_NON_beneficiario" label="NON beneficiario" mandatory_enabled="#radio_Nucleo_Beneficiario_NO.checked()"></div>
+          <input id="radio_No_requisiti" name="radio_NON_beneficiario" type="checkbox" value="1"/>
+        </td>
+        <td>
+          <p>
+            non ha i requisiti per l’accesso 
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_No_risposta" name="radio_NON_beneficiario" type="checkbox" value="2"/>
+        </td>
+        <td>
+          <p>
+            ha presentato domanda di reddito/pensione di cittadinanza, ma non ha ancora ottenuto risposta
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="radio_no_domanda" name="radio_NON_beneficiario" type="checkbox" value="3"/>
+        </td>
+        <td>
+          <p>
+            non ha presentato domanda, ma si impegna entro 3 mesi dalla data di presentazione della domanda di contributo integrativo, A PENA DI DICHIARAZIONE DI INAMISSIBILITA’ DELLA STESSA, a presentare:
+            <br>
+            &nbsp;- richiesta di reddito/pensione di cittadinanza (presso INPS, patronato o poste)
+            <br>
+            &nbsp;- oppure dichiarazione attestante la mancanza dei requisiti per l’accesso al reddito/pensione di cittadinanza (presso ufficio casa)
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+  
+<!-- *********** FINE MODULO INDICATORE ICEF *********** -->
+
+<br>
+
+
+<br>
+
+<!-- *********** FINE MODULO CONTRATTO LOCAZIONE *********** -->
+
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="3">
+          <p style="line-height:1.6;"><b>Che il contratto di locazione per cui si chiede il contributo:</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="cb_Contratto_locazione" name="cb_Contratto_locazione" label="Contratto di locazione" mandatory_enabled="true"></div>
+          <input id="cb_Contratto_Intestato" name="cb_Contratto_locazione" type="checkbox" value="1"/>
+        </td>
+        <td colspan="2">
+          <p>
+            è intestato a un componente del nucleo familiare          
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Contratto_Residenza_propria" name="cb_Contratto_locazione" type="checkbox" value="2"/>
+        </td>
+        <td colspan="2"> 
+          <p>
+            si riferisce all’abitazione in cui il nucleo familiare ha la propria residenza anagrafica   
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Contratto_no_coniugi" name="cb_Contratto_locazione" type="checkbox" value="3"/>
+        </td>
+        <td colspan="2">
+          <p>
+            non è stato stipulato tra coniugi non legalmente separati o parenti o affini di primo grado;  
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Contratto_sensi_articolo2" name="cb_Contratto_locazione" type="checkbox" value="4"/>
+        </td>
+        <td colspan="2">
+          <p>
+            è stato stipulato ai sensi dell’articolo 2 della Legge 9 dicembre 1998, n. 431. Sono esclusi i contratti di locazione relativi ad unità abitative appartenenti alle categorie catastali A/1, A/7, A/8, A/9 e gli alloggi di edilizia abitativa pubblica locati a canone sostenibile, a canone moderato o a canone concordato.
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="width: 4%; vertical-align: top;">
+          <input id="cb_Contratto_prima_registrazione" name="cb_Contratto_locazione" type="checkbox" value="5"/>
+        </td>
+        <td colspan="2">
+          <p>
+              è stato registrato (prima registrazione) in data: <input id="data_contratto" name="data_contratto" type="date"> 
+              <br>
+              e segue le seguenti regole di registrazione:          
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="cb_Tipo_stipula_Contratto" name="cb_Tipo_stipula_Contratto" label="Contratto di locazione" mandatory_enabled="#cb_Contratto_prima_registrazione.checked()"></div>
+          <input id="cb_Contratto_cedolare_Secca" name="cb_Tipo_stipula_Contratto" type="radio" value="1"/>
+        </td>
+        <td>
+          <p>
+            cedolare secca
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Contratto_annuale" name="cb_Tipo_stipula_Contratto" type="radio" value="2"/>
+        </td>
+        <td>
+          <p>
+            registrazione annuale. Indicare data di ultima registrazione: <input id="data_registrazione" name="data_registrazione" type="date">  
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="4">
+          <input id="cb_Contratto_Durata" name="cb_Contratto_locazione" type="checkbox" value="6"/>
+        </td>
+        <td colspan="2">
+          <p>
+            ha la seguente durata:
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="radio_Durata_contratto" name="radio_Durata_contratto" label="Contratto di locazione" mandatory_enabled="#cb_Contratto_Durata.checked()"></div>
+          <input id="cb_Contratto_4x4" name="radio_Durata_contratto" type="radio" value="1"/>
+        </td>
+        <td>
+          <p>
+            4+4
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Contratto_3x2" name="radio_Durata_contratto" type="radio" value="2"/>
+        </td>
+        <td>
+          <p>
+            3+2
+          </p>       
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Contratto_Altro" name="radio_Durata_contratto" type="radio" value="3"/>
+        </td>
+        <td>
+          <p style="text-align: left">
+            Altro specificare: <input id="input_Contratto_altro" name="input_Contratto_altro" style="width: 100%">
+          </p> 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="cb_Contratto_Canone" name="cb_Contratto_locazione" type="checkbox" value="7"/>
+        </td>
+        <td colspan="2">
+          <p>
+            ha un canone di locazione di Euro <input id="Input_canone_locazione" name="Input_canone_locazione" type="number" min="0" mandatory_enabled="#cb_Contratto_Canone.checked()" style="width: 10%"> mensili
+          </p>       
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<!-- *********** FINE MODULO CONTRATTO LOCAZIONE *********** -->
+
+<br>
+
+<!-- *********** INIZIO MODULO MARCA BOLLO *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer">
+  
+  <h1 class="Modulo">DICHIARA</h1>
+
+  <table class="Modulo" style="border: 1px solid grey;">
+    <tbody>
+        <tr class="Rigaintestazione" >
+            <td colspan="4">
+              <b>In merito ai pagamenti relativi alla marca da bollo per la presentazione della richiesta: </b>
+            </td>
+        </tr>
+      <tr>
+        <td rowspan="7" style="width:4%;vertical-align:top;background-color:white">
+          <div id="Parametri_Assoggettabilita" label="Assoggettabilità al pagamento dell'imposta di bollo" mandatory_enabled="true"></div>
+          <input id="Parametri_Assoggettabilita1" name="Parametri_Assoggettabilita" type="radio" value="1">
+        </td>
+        <td colspan="3" style="border:0px;">
+          <p>
+          di essere soggetto al pagamento della marca da bollo, pertanto     
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="width:4%;vertical-align:top;background-color:white">
+          <div id="Parametri_MarcaBollo" name="Parametri_MarcaBollo" label="Soggetto al pagamento della marca da bollo" mandatory_enabled="#Parametri_Assoggettabilita1.checked()"></div>   
+          <input id="Parametri_BolloDichiara1" name="Parametri_MarcaBollo" type="checkbox" value="1" placeholder="" disabled="">
+        </td>
+        <td>
+          <p>
+          che la seguente marca da bollo è stata annullata per la presentazione della domanda di ALLOGGIO EDILIZIA PUBBLICA
+          <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span>
+        </p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta" style="border:0px;">
+        <td>
+          <p class="Labelcella">
+            Numero seriale marca da bollo
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="Parametri_NumeroBollo" name="Parametri_NumeroBollo" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory="#Parametri_BolloDichiara1.checked()" enabled="#Parametri_BolloDichiara1.checked()" placeholder="" disabled="" maxlength="14">
+          <br> di impegnarsi a conservare l'originale della marca da bollo annullata 
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="3">
+          <input id="Parametri_BolloDichiara2" name="Parametri_MarcaBollo" type="checkbox" value="2" >
+        </td>
+        <td>
+          <p>
+            che la seguente marca da bollo è stata annullata per la presentazione della domanda di CONTRIBUTO INTEGRATIVO AFFITTO
+            <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span>
+          </p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta" style="border:0px;">
+        <td>
+          <p class="Labelcella">
+            Numero seriale marca da bollo
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="Parametri_NumeroBollo2" name="Parametri_NumeroBollo2" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory="#Parametri_BolloDichiara2.checked()" enabled="#Parametri_BolloDichiara2.checked()" placeholder="" disabled="" maxlength="14">
+          <br> di impegnarsi a conservare l'originale della marca da bollo annullata 
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align:top">
+          <input id="Parametri_Assoggettabilita2" name="Parametri_Assoggettabilita" type="radio" value="2" placeholder="" class="" dynamic_check="#Parametri_Domanda_DelegaConsulente.checked() || #Parametri_Domanda_EntiPubblici.checked()">
+        </td>
+        <td colspan="2">
+          
+          di non essere soggetto al pagamento della marca da bollo, <a href="https://sportello.comune.trento.it/faq%3As_italia%3Acdu.casistiche.esenzione.bollo" target="_blank">ricadendo nel caso di:</a> 
+          <input class="" id="EsenzioneBollo" name="EsenzioneBollo" label="Motivo esenzione bollo" enabled="#Parametri_Assoggettabilita2.checked()" mandatory_enabled="#Parametri_Assoggettabilita2.checked()" style="width:100%;" type="text">
+        
+        </td>
+      </tr>
+    </tbody>
+  </table>  
+</div>
+
+<!-- *********** FINE MODULO MARCA BOLLO *********** -->
+
+<br>
+
+<!-- *********** TODO GESTIONE ALLEGATI - INIZIO MODULO ALLEGATI *********** -->
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo">ALLEGA</h1>
+  <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <tbody >
+        <tr class="Rigaintestazione">
+            <td colspan="4">
+              <p style="text-align: center;">
+                <b>Elenco degli allegati</b>
+                <br>
+                <span style="font-size:70%">
+                  <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+                </span>
+              </p>
+            </td>
+          </tr>
+      <tr>
+        <td>
+          <input id="Permesso_Soggiorno" name="Permesso_Soggiorno" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;"  style="width:100%">
+          <p>
+            <b>Permesso di soggiorno</b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="Certificato_Invalidità" name="Certificato_Invalidità" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;"  style="width:100%">
+          <p>
+            <b>Certificato di invalidità</b> 
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="Senteza_Separazione" name="Senteza_Separazione" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;"  style="width:100%">
+          <p>
+            <b>Sentenza di separazione o dovorzio</b>                                                                         
+          </p>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <input id="Contratto_Locazione" name="Contratto_Locazione" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;"  style="width:100%">
+          <p>
+            <b>Contratto di locazione</b>                                                                         
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="Registrazione_Contratto" name="Registrazione_Contratto" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;"  style="width:100%">
+          <p>
+            <b>Documentazione relativa all’ultima registrazione del contratto</b>                                                                         
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- *********** FINE MODULO ALLEGATI *********** -->
+
+<br>
+<br>
+
+<!-- *********** TODO - INIZIO INFO DATI PERSONALI *********** -->
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- *********** FINE INFO DATI PERSONALI *********** -->
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 20%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 65%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()" type="hidden"/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-IMIS" name="GLOBO_allegato_cINFORM-TRATT-DATI-IMIS" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
