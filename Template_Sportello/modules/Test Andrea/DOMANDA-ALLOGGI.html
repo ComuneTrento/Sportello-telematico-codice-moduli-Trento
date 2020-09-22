@@ -131,7 +131,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
   <br>
   <h1 class="Modulo">PARTE I – REQUISITI COMUNI AD ENTRAMBE LE DOMANDE</h1>
   <h2 class="Modulo">DICHIARA</h2>
-  <p class="Modulo">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</p>
+  <p class="Modulo" style="text-align: center">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</p>
 </div>
 
 <br>
@@ -434,139 +434,131 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <br>
 
-<!--
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 0px">
-    <tbody>
-        <th colspan="6">
-            <button type="button" class="real-button" id="RecuperaListaFam">Recupera dati famiglia</button>
-                {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile1', '#RecuperaListaFam:click', 'listaFam1') }}
-                {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile2', '#RecuperaListaFam:click', 'listaFam2') }}
-                {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile3', '#RecuperaListaFam:click', 'listaFam3') }}
-        </th>
-    </tbody>
-</table>
-  
-<br>
--->
 <div class="simpatico-block simpatico-query-and-answer">
     
-    <table class="Modulo" style="border: 1px solid grey">
-        <tbody>
-            <tr class="Rigaintestazioneridotta">
-              <td colspan="7">
-                  <p style="line-height: 1.6; text-align: left"><b>Che la propria famiglia, come registrata all'anagrafe del Comune di residenza è così composta:</b></p>
-              
-                  <button type="button" class="real-button" id="RecuperaListaFam">Recupera dati famiglia</button>
-                  {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile1', '#RecuperaListaFam:click', 'listaFam1') }}
-                  {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile2', '#RecuperaListaFam:click', 'listaFam2') }}
-                  {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile3', '#RecuperaListaFam:click', 'listaFam3') }}
-   
-                  <br>
+  <table class="Modulo" style="border: 1px solid grey">
+      <tbody>
+          <tr class="Rigaintestazioneridotta">
+            <td colspan="7">
+                <p style="line-height: 1.6; text-align: left"><b>Che la propria famiglia, come registrata all'anagrafe del Comune di residenza è così composta:</b></p>
+                <button type="button" class="real-button" id="RecuperaListaFam">Recupera dati famiglia</button>  
+                <br>
+            </td>
+          </tr>
+
+          <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Familiari del bambino/a"> </div>
+          {{ service.getListaFamigliaREST('AventeTitolo_CodiceFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
+
+          {% macro Tassonomia_Familiare(prefix) %}
+              {% set prefix = prefix|string %}
+
+              {{ service.getPersonaREST('Parametri_CFFam' + prefix, 'TipoContesto', 'TipoLista',{
+                  'Parametri_CognomeFam' + prefix: 'cognome',
+                  'Parametri_NomeFam' + prefix: 'nome',
+                  'Parametri_DataNas' + prefix: 'datanascita',
+                  'Parametri_SessoFam' + prefix: 'sesso',
+                  'Parametri_MatricolaAnagrafeFam' + prefix: 'matricola',
+                  'Parametri_CodiceFamigliaFam' + prefix: 'codiceFamiglia',
+                  'Parametri_CodiceComuneNascitaFam' + prefix: 'codiceComuneNascita',
+                  'Parametri_CodiceViaResidenzaFam' + prefix: 'codiceVia',
+                  'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
+                  'Parametri_BarraResidenzaFam' + prefix: 'barra',
+                  'Parametri_NazioneFam' + prefix: 'nazione',
+              }, '#Parametri_CFFam' + prefix + ':change' )}}
+
+          <tr class="Rigaintestazioneridotta">
+              <td style="width: 18%;">
+                  <p class="Labelcella">Cognome</p>
               </td>
-            </tr>
-  
-            <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Familiari del bambino/a"> </div>
-            {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
-  
-            {% macro Tassonomia_Familiare(prefix) %}
-                {% set prefix = prefix|string %}
-  
-                {{ service.getPersonaREST('Parametri_CFFam' + prefix, 'TipoContesto', 'TipoLista',{
-                    'Parametri_CognomeFam' + prefix: 'cognome',
-                    'Parametri_NomeFam' + prefix: 'nome',
-                    'Parametri_DataNas' + prefix: 'datanascita',
-                    'Parametri_SessoFam' + prefix: 'sesso',
-                    'Parametri_MatricolaAnagrafeFam' + prefix: 'matricola',
-                    'Parametri_CodiceFamigliaFam' + prefix: 'codiceFamiglia',
-                    'Parametri_CodiceComuneNascitaFam' + prefix: 'codiceComuneNascita',
-                    'Parametri_CodiceViaResidenzaFam' + prefix: 'codiceVia',
-                    'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
-                    'Parametri_BarraResidenzaFam' + prefix: 'barra',
-                    'Parametri_NazioneFam' + prefix: 'nazione',
-                }, '#Parametri_CFFam' + prefix + ':change' )}}
-  
-            <tr class="Rigaintestazioneridotta">
-                <td style="width: 18%;">
-                    <p class="Labelcella">Cognome</p>
-                </td>
-                <td style="width: 18%;">
-                    <p class="Labelcella">Nome</p>
-                </td>
-                <td style="width: 20%;">
-                    <p class="Labelcella">Stato civile</p>
-                </td>
-                <td colspan="2" style="width: 20%;">
-                    <p class="Labelcella">Grado parentela rispetto al bambino</p>
-                </td>
-                <td style="width: 7%;">
-                    <p class="Labelcella" style="text-align: left" >% di invalidità</p>
-                </td>
-                <td style="width: 7%;">
-                    <p class="Labelcella">Altri dati*</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input class="inputNormal" id="Parametri_CognomeFam{{ prefix }}" name="Parametri_CognomeFam{{ prefix }}" style="width: 100%;" label="Cognome del familiare" readonly>
-                </td>
-                <td>
-                    <input class="inputNormal" id="Parametri_NomeFam{{ prefix }}" name="Parametri_NomeFam{{ prefix }}" style="width: 100%;" label="Nome del familiare" readonly>
-                </td>
-                <td>
-                    <select class="inputNormal" id="ParametriStatoCivile{{ prefix }}" name="ParametriStatoCivile{{ prefix }}" style="width: 100%;" label="Stato civile"> 
-                        <option value=""></option>
-                        <option value="Coniugato">Coniugato</option>
-                        <option value="ConiugatoNO">Non coniugato</option>
-                        <option value="Separato">Separato</option>
-                    </select>
-                </td>
-                <td colspan="2" style="width: 30%;" >
-                    <select id="Parametri_GradoParFam{{ prefix }}" name="Parametri_GradoParFam{{ prefix }}" style="width: 100%;">
-                        <option value=""></option>
-                        <option value="M">Madre/compagna convivente</option>
-                        <option value="P">Padre/compagno convivente</option>
-                        <option value="F">Fratello/sorella</option>
-                        <option value="I">Bambino/a da iscrivere</option>
-                        <option value="A">Altro</option>
-                    </select>
-                </td>
-                <td style="width: 8%;">
-                    <input class="inputNormal" id="Parametri_Invalidità{{ prefix }}" name="Parametri_Invalidità{{ prefix }}" type="number" min="0" style="width: 100%;" label="% di invalidità">
-                </td>
-                <td>
-                    <input class="inputNormal" id="Parametri_Altri{{ prefix }}" name="Parametri_Altri{{ prefix }}" style="width: 100%;" type="number" min="0" max="5" label="Altro">
-                </td>
-            </tr>
-            {%- endmacro %}
-  
-            {% for i in range(1, 10) %}
-                {{ Tassonomia_Familiare(i) }}
-                <input type="hidden" id="Parametri_MatricolaAnagrafeFam{{ i }}" name="Parametri_MatricolaAnagrafeFam{{ i }}">
-                <input type="hidden" id="Parametri_CodiceFamigliaFam{{ i }}" name="Parametri_CodiceFamigliaFam{{ i }}">
-                <input type="hidden" id="Parametri_CodiceComuneNascitaFam{{ i }}" name="Parametri_CodiceComuneNascitaFam{{ i }}">
-                <input type="hidden" id="Parametri_CodiceViaResidenzaFam{{ i }}" name="Parametri_CodiceViaResidenzaFam{{ i }}">
-                <input type="hidden" id="Parametri_NumeroCivicoResidenzaFam{{ i }}" name="Parametri_NumeroCivicoResidenzaFam{{ i }}" format="number">
-                <input type="hidden" id="Parametri_BarraResidenzaFam{{ i }}" name="Parametri_BarraResidenzaFam{{ i }}" maxlength="3">
-                <input type="hidden" id="Parametri_NazioneFam{{ i }}" name="Parametri_NazioneFam{{ i }}"/>
-            {% endfor %}
-        </tbody>
-    </table>
+              <td style="width: 18%;">
+                  <p class="Labelcella">Nome</p>
+              </td>
+              <td style="width: 20%;">
+                  <p class="Labelcella">Stato civile</p>
+              </td>
+              <td colspan="2" style="width: 20%;">
+                  <p class="Labelcella">Grado parentela rispetto al bambino</p>
+              </td>
+              <td style="width: 7%;">
+                  <p class="Labelcella" style="text-align: left" >% di invalidità</p>
+              </td>
+              <td style="width: 7%;">
+                  <p class="Labelcella">Altri dati (*)</p>
+              </td>
+          </tr>
+          <tr>
+            <td>
+                <input class="inputNormal" id="Parametri_CognomeFam{{ prefix }}" name="Parametri_CognomeFam{{ prefix }}" style="width: 100%;" label="Cognome del familiare" readonly>
+              </td>
+            <td>
+                <input class="inputNormal" id="Parametri_NomeFam{{ prefix }}" name="Parametri_NomeFam{{ prefix }}" style="width: 100%;" label="Nome del familiare" readonly>
+                <input class="inputNormal" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" style="width: 100%;" type="hidden" readonly>
+            </td>
+            <td>
+                <select class="inputNormal" id="ParametriStatoCivile{{ prefix }}" name="ParametriStatoCivile{{ prefix }}" style="width: 100%;" label="Stato civile" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''"> 
+                    <option value=""></option>
+                    <option value="Coniugato">Coniugato</option>
+                    <option value="ConiugatoNO">Non coniugato</option>
+                    <option value="Separato">Separato</option>
+                </select>
+            </td>
+            <td colspan="2" style="width: 30%;" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
+                <select id="Parametri_GradoParFam{{ prefix }}" name="Parametri_GradoParFam{{ prefix }}" style="width: 100%;">
+                    <option value=""></option>
+                    <option value="Cg">Coniuge</option>
+                    <option value="Cn">Convivente</option>
+                    <option value="F">Figlio</option>
+                    <option value="G">Genitore</option>
+                    <option value="A">Altro</option>
+                </select>
+            </td>
+            <td style="width: 8%;">
+                <input class="inputNormal" id="Parametri_Invalidità{{ prefix }}" name="Parametri_Invalidità{{ prefix }}" type="number" min="0" style="width: 100%;" label="% di invalidità" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
+            </td>
+            <td>
+                <input class="inputNormal" id="Parametri_Altri{{ prefix }}" name="Parametri_Altri{{ prefix }}" style="width: 100%;" type="number" min="0" max="5" label="Altro" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
+            </td>
+          
+          </tr>
+          {%- endmacro %}
+
+          {% for i in range(1, 10) %}
+              {{ Tassonomia_Familiare(i) }}
+              <input type="hidden" id="Parametri_MatricolaAnagrafeFam{{ i }}" name="Parametri_MatricolaAnagrafeFam{{ i }}">
+              <input type="hidden" id="Parametri_CodiceFamigliaFam{{ i }}" name="Parametri_CodiceFamigliaFam{{ i }}">
+              <input type="hidden" id="Parametri_CodiceComuneNascitaFam{{ i }}" name="Parametri_CodiceComuneNascitaFam{{ i }}">
+              <input type="hidden" id="Parametri_CodiceViaResidenzaFam{{ i }}" name="Parametri_CodiceViaResidenzaFam{{ i }}">
+              <input type="hidden" id="Parametri_NumeroCivicoResidenzaFam{{ i }}" name="Parametri_NumeroCivicoResidenzaFam{{ i }}" format="number">
+              <input type="hidden" id="Parametri_BarraResidenzaFam{{ i }}" name="Parametri_BarraResidenzaFam{{ i }}" maxlength="3">
+              <input type="hidden" id="Parametri_NazioneFam{{ i }}" name="Parametri_NazioneFam{{ i }}"/>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td>
+          <p>
+            (*) come altri dati, indicare uno dei seguenti codici (o lasciare vuoto se non ricorre nessuno dei casi):
+            <br>
+            1. persona che è stata per almeno 6 mesi consecutivi in strutture, enti, aziende residenziali di cura, assistenza, accoglienza o recupero e che è rientrata in famiglia da non piu di due anni;
+            <br>
+            2. persona con avvio di cancellazione;
+            <br>
+            3. coniuge / convivente che lavora;
+            <br>
+            4. richiedente separato/divorziato tenuto all’assegnazione della casa familiare o alla corresponsione dell’assegno di mantenimento;
+            <br>
+            5. giovane coppia (soggetti di età non superiore a 35 anni, sposati o conviventi di fatto da non più di 5 anni);
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 </div>
   
-<input class="inputNormal" type="hidden" id="Nominativo_Fam1" name="Nominativo_Fam1" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam1.value() + ',' + #Parametri_NomeFam1.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam2" name="Nominativo_Fam2" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam2.value() + ',' + #Parametri_NomeFam2.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam3" name="Nominativo_Fam3" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam3.value() + ',' + #Parametri_NomeFam3.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam4" name="Nominativo_Fam4" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam4.value() + ',' + #Parametri_NomeFam4.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam5" name="Nominativo_Fam5" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam5.value() + ',' + #Parametri_NomeFam5.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam6" name="Nominativo_Fam6" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam6.value() + ',' + #Parametri_NomeFam6.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam7" name="Nominativo_Fam7" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam7.value() + ',' + #Parametri_NomeFam7.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam8" name="Nominativo_Fam8" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam8.value() + ',' + #Parametri_NomeFam8.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam9" name="Nominativo_Fam9" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam9.value() + ',' + #Parametri_NomeFam9.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam10" name="Nominativo_Fam10" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam10.value() + ',' + #Parametri_NomeFam10.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam11" name="Nominativo_Fam11" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam11.value() + ',' + #Parametri_NomeFam11.value()">
-<input class="inputNormal" type="hidden" id="Nominativo_Fam12" name="Nominativo_Fam12" label="Nominativo_Familiare" dynamic_value="#Parametri_CognomeFam12.value() + ',' + #Parametri_NomeFam12.value()">
-
 <br>
 
 <br>
@@ -658,7 +650,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <div class="simpatico-block simpatico-query-and-answer" >
   <h1 class="Modulo">PARTE II - REQUISITI SPECIFICI DOMANDA DI LOCAZIONE ALLOGGIO EDILIZIA PUBBLICA</h1>
   <h3 class="Modulo">DICHIARA</h3>
-  <h3 class="Modulo">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</h3>
+  <h3 class="Modulo" style="text-align: center">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</h3>
 
 </div>
 
@@ -1068,7 +1060,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <div class="simpatico-block simpatico-query-and-answer" >
   <h1 class="Modulo">PARTE III – REQUISITI SPECIFICI  DOMANDA DI CONTRIBUTO INTEGATIVO AFFITTO</h1>
   <h1 class="Modulo">DICHIARA</h1>
-  <p class="Modulo">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</p>
+  <p class="Modulo" style="text-align: center">ai sensi degli articoli 46 e 47 del d.P.R. 28 dicembre 2000 n. 445</p>
 </div>
 
 <br>
