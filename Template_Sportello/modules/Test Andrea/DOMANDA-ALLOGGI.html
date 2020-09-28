@@ -220,7 +220,6 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;" rowspan="4">
-          <div id="Parametri_Cittadino_non_UE" name="Parametri_Cittadino_non_UE" label="Di essere cittadino" mandatory_enabled="true"></div>
           <input id="Parametri_citt_scadenza" name="Parametri_Cittadino_non_UE" type="radio" value="2" />
         </td>
         <td colspan="2">
@@ -279,7 +278,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       <tr>
         <td style="vertical-align: center; width: 4%;">
           <div id="Parametri_Residenza" name="Parametri_Residenza" label="Residenza anagrafica" mandatory_enabled="true"></div>
-          <input id="Parametri_dieci_anni" name="Parametri_Residenza" type="checkbox" value="1" label="Residenza anagrafica" mandatory="true" />
+          <input id="Parametri_dieci_anni" name="Parametri_Residenza" type="checkbox" value="1" label="Residenza anagrafica" mandatory_enabled="true" />
         </td>
         <td>
           <p>in Italia da almeno 10 anni, di cui gli ultimi 2 in modo continuativo</p>
@@ -287,7 +286,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td style="vertical-align: center; width: 4%;">
-          <input id="Parametri_tre_anni" name="Parametri_Residenza" type="checkbox" value="2" label="Residenza anagrafica" mandatory="true"/>
+          <input id="Parametri_tre_anni" name="Parametri_Residenza" type="checkbox" value="2" label="Residenza anagrafica" mandatory_enabled="true"/>
         </td>
         <td>
           <p>sul territorio della Provincia di Trento da almeno 3 anni, in via continuativa e senza interruzioni (o iscrizione AIRE)</p>
@@ -556,10 +555,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
                 </select>
             </td>
             <td style="width: 8%;">
-                <input class="inputNormal" id="Parametri_Invalidità{{ prefix }}" name="Parametri_Invalidità{{ prefix }}" type="number" min="0" style="width: 100%;" label="% di invalidità" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
+                <input class="inputNormal" id="Parametri_Invalidita{{ prefix }}" name="Parametri_Invalidita{{ prefix }}" type="number" min="0" style="width: 100%;" label="% di invalidità" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != '' || #Parametri_Invalidita{{ prefix }}.value() != ''">
             </td>
             <td>
-                <input class="inputNormal" id="Parametri_Altri{{ prefix }}" name="Parametri_Altri{{ prefix }}" style="width: 100%;" type="number" min="0" max="5" label="Altro" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
+                <input class="inputNormal" id="Parametri_Altri{{ prefix }}" name="Parametri_Altri{{ prefix }}" style="width: 100%;" type="number" min="1" max="5" label="Altro" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != '' || #Parametri_Altri{{ prefix }}.value() != ''">
             </td>
           
           </tr>
@@ -742,7 +741,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td>
-          <div id="radio_Coincidenza_nucleo" name="radio_Coincidenza_nucleo" label="Coincidenza nucleo familiare" mandatory_enabled="true"></div>
+          <div id="radio_Coincidenza_nucleo" name="radio_Coincidenza_nucleo" label="Coincidenza nucleo familiare" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"></div>
           <input id="radio_Coincidenza_nucleo_SI" name="radio_Coincidenza_nucleo" type="radio" value="1"/>
         </td>
         <td colspan="2">
@@ -804,7 +803,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td>
-          <div id="radio_Alloggio_Adeguato" name="radio_Alloggio_Adeguato" label="Tipologia alloggio" mandatory_enabled="true"></div>
+          <div id="radio_Alloggio_Adeguato" name="radio_Alloggio_Adeguato" label="Tipologia alloggio" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"></div>
           <input id="radio_Alloggio_No_servizi" name="radio_Alloggio_Adeguato" type="radio" value="1"/>
         </td>
         <td>
@@ -851,8 +850,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </tr>
     <tr>
       <td>
-        <div id="cb_Dichiara_Inoltre" name="cb_Dichiara_Inoltre" label="Dichiara" mandatory_enabled="true"></div>
-        <input id="cb_consapevole1" name="cb_Dichiara_Inoltre" type="checkbox" value="1"/>
+        <div id="cb_Dichiara_Inoltre" name="cb_Dichiara_Inoltre" label="Dichiara" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"></div>
+        <input group="cb_Dichiara_Inoltre" id="cb_consapevole1" name="cb_consapevole1" type="checkbox" value="1"/>
       </td>
       <td>
         <p>di non  aver subito condanne, anche non definitive, o di applicazione della pena su richiesta delle parti nei casi previsti dall’art. 3 bis del decreto legge 14 agosto 2013 n. 93, convertito, con modificazioni, dalla Legge 15.10.2013 n. 119, recante “Disposizioni urgenti in materia di sicurezza e per il contrasto alla violenza di genere, nonché in tema di protezione civile e di commissariamento delle province”</p>
@@ -860,7 +859,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </tr>
     <tr>
       <td>
-        <input id="cb_consapevole2" name="cb_Dichiara_Inoltre" type="checkbox" value="2"/>
+        <input group="cb_Dichiara_Inoltre" id="cb_consapevole2" name="cb_consapevole2" type="checkbox" value="2"/>
       </td>
       <td>
         <p>che nessuno dei componenti del proprio nucleo ha subito, nei dieci anni precedenti la data di presentazione della domanda, condanne definitive per delitti non colposi per il quali la legge prevede la pena della reclusione non inferiore nel minimo a 5 anni, nonché per i reati previsti dall’art. 380, comma 2 del codice di procedura penale</p>
@@ -880,7 +879,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </tr>
     <tr>
       <td style="width: 3%">
-        <div id="cb_Dichiara_Zona_Intensa" name="cb_Dichiara_Zona_Intensa" label="Zona di provenienza" mandatory_enabled="true"></div>
+        <div id="cb_Dichiara_Zona_Intensa" name="cb_Dichiara_Zona_Intensa" label="Zona di provenienza" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"></div>
         <input id="cb_zona1" name="cb_Dichiara_Zona_Intensa" type="radio" value="1"/>
       </td>
       <td>
@@ -922,7 +921,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td style="width: 3%">
-          <div id="radio_Scelta_Zona" name="radio_Scelta_Zona" label="Scelta zona" mandatory_enabled="true"></div>
+          <div id="radio_Scelta_Zona" name="radio_Scelta_Zona" label="Scelta zona" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"></div>
           <input id="radio_zona1" name="radio_Scelta_Zona" type="radio" value="1"/>
         </td>
         <td>
@@ -1022,13 +1021,13 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td>
-          <input id="radio_zona14" name="radio_Scelta_Zona" type="radio" value="15"/>
+          <input id="radio_zona15" name="radio_Scelta_Zona" type="radio" value="15"/>
         </td>
         <td>
           <p>15- Cimone</p>
         </td>
         <td>
-          <input id="radio_zona14" name="radio_Scelta_Zona" type="radio" value="16"/>
+          <input id="radio_zona16" name="radio_Scelta_Zona" type="radio" value="16"/>
         </td>
         <td>
           <p>16- Nessuna preferenza / tutte le zone</p>
@@ -1048,7 +1047,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td style="width: 3%">
-          <div id="radio_Alloggio_sbarrierato" name="radio_Alloggio_sbarrierato" label="Alloggio sbarrierato" mandatory_enabled="true"></div>
+          <div id="radio_Alloggio_sbarrierato" name="radio_Alloggio_sbarrierato" label="Alloggio sbarrierato" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"></div>
           <input id="radio_sbarrierato_SI" name="radio_Alloggio_sbarrierato" type="radio" value="1"/>
         </td>
         <td>
@@ -1093,7 +1092,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       <tr>
         <td>
           <p>
-            La seguente marca da bollo è stata annullata per la presentazione della <b>DOMANDA ALLOGGIO EDILIZIA PUBBLICA</b>:
+            La seguente marca da bollo è stata annullata per la presentazione della <b>DOMANDA ALLOGGIO EDILIZIA RESIDENZIALE PUBBLICA</b>:
             <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span>
           </p>
         </td>
@@ -1107,7 +1106,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td>
-          <input class="" id="Parametri_NumeroBolloAlloggio" name="Parametri_NumeroBolloAlloggio" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory="#Parametri_BolloDichiara1.checked()" enabled="#Parametri_BolloDichiara1.checked()" maxlength="14">
+          <input class="" id="Parametri_NumeroBolloAlloggio" name="Parametri_NumeroBolloAlloggio" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()" maxlength="14">
           <br> <p>di impegnarsi a conservare l'originale della marca da bollo annullata. <b>L’originale potrà essere richiesto dall’ufficio in sede di controlli.</b> </p>
         </td>
       </tr>
@@ -1136,7 +1135,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!-- *********** verifica che icef inserito sia effettivamente minore o ugale al valore ammissibile 0,21 *********** -->
 <div id="controllo_secondo_ICEF" type="hidden" style="display:none; pd4ml-display:none;">
   <input id="Parametri_Valore_ICEF_Verfica_Valore2" type="checkbox" name="Parametri_Valore_ICEF_Verfica_Valore2" dynamic_check="#Parametri_ICEF_domanda_Minima.value() &lt; parseFloat(0,21) ? true:false"> Verifica inserimento ICEF minore di 0,21
-  <input id="Esito_controllo_2" name="Esito_controllo_2" dynamic_value="#Parametri_Valore_ICEF_Verfica_Valore2.checked() ? 'OK':''" mandatory="true" label="ICEF deve essere minore di 0.21">
+  <input id="Esito_controllo_2" name="Esito_controllo_2" dynamic_value="#Parametri_Valore_ICEF_Verfica_Valore2.checked() ? 'OK':''" mandatory_enabled="#cb_affitto.checked() || #cb_entrambe.checked()" label="ICEF deve essere minore di 0.21">
 </div>
 
 <div class="simpatico-block simpatico-query-and-answer" >
@@ -1171,7 +1170,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td>
-          <div id="radio_Nucleo_Beneficiario" name="radio_Nucleo_Beneficiario" label="Nucleo familiare beneficiario" mandatory_enabled="true"></div>
+          <div id="radio_Nucleo_Beneficiario" name="radio_Nucleo_Beneficiario" label="Nucleo familiare beneficiario" mandatory_enabled="#cb_affitto.checked() || #cb_entrambe.checked()"></div>
           <input id="radio_Nucleo_Beneficiario_SI" name="radio_Nucleo_Beneficiario" type="radio" value="1"/>
         </td>
         <td colspan="2">
@@ -1240,7 +1239,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!-- *********** FINE MODULO CONTRATTO LOCAZIONE ***********  -->
 
 <div id="div_Verifica_Contratto" type="hidden" style="display:none; pd4ml-display:none;"> 
-  <div id="div_Verifica_Contratto_Checked"  label="Contratto di locazione, tutti i campi sono obbligatori" mandatory_enabled="true"> </div>
+  <div id="div_Verifica_Contratto_Checked"  label="Contratto di locazione, tutti i campi sono obbligatori" mandatory_enabled="#cb_affitto.checked() || #cb_entrambe.checked()"> </div>
   <input group="div_Verifica_Contratto_Checked" id="cb_Verifica_Contratto" name="div_Verifica_Contratto_Checked" type="checkbox" dynamic_check="#cb_Contratto_Intestato.checked() && #cb_Contratto_Residenza_propria.checked() && #cb_Contratto_no_coniugi.checked() && #cb_Contratto_sensi_articolo2.checked() && #cb_Contratto_prima_registrazione.checked() && #cb_Contratto_Durata.checked() && #cb_Contratto_Canone.checked()"/>
 </div>
 
@@ -1253,7 +1252,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td>
-          <div id="div_Contratto_Intestato" name="div_Contratto_Intestato" mandatory_enabled="true"></div>
+          <div id="div_Contratto_Intestato" name="div_Contratto_Intestato" mandatory_enabled="#cb_affitto.checked() || #cb_entrambe.checked()"></div>
           <input group="div_Contratto_Intestato" id="cb_Contratto_Intestato" name="div_Contratto_Intestato" type="checkbox" value="1" />
         </td>
         <td colspan="2">
@@ -1406,7 +1405,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <tr>
           <td>
             <p>
-              La seguente marca da bollo è stata annullata per la presentazione della <b>DOMANDA CONTRIBUTO INTEGRATIVO AFFITTO</b>:
+              La seguente marca da bollo è stata annullata per la presentazione della <b>DOMANDA CONTRIBUTO INTEGRATIVO AL CANONE DI LOCAZIONE</b>:
               <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span>
             </p>
           </td>
@@ -1420,7 +1419,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </tr>
         <tr>
           <td>
-            <input class="" id="Parametri_NumeroBollo_Affitto" name="Parametri_NumeroBollo_Affitto" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory="#Parametri_BolloDichiara_Affitto1.checked()" enabled="#Parametri_BolloDichiara_Affitto1.checked()" maxlength="14">
+            <input class="" id="Parametri_NumeroBollo_Affitto" name="Parametri_NumeroBollo_Affitto" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory_enabled="#cb_affitto.checked() || #cb_entrambe.checked()" maxlength="14">
             <br> <p>di impegnarsi a conservare l'originale della marca da bollo annullata. <b>L’originale potrà essere richiesto dall’ufficio in sede di controlli.</b> </p>
           </td>
         </tr>
