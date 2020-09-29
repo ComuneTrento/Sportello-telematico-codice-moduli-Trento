@@ -13,7 +13,7 @@ urn="{{ Urn }}"
 sub_urn_list=""
 uo_globo_list=""
 contesto_procedurale="Iscrizione al nido d'infanzia"
-descrizione="Iscrizione al nido d'infanzia - FACSIMILE"
+descrizione="Iscrizione al nido d'infanzia"
 destinatario_amministrazione=""
 destinatario_ufficio="EBPGCM"
 dinamico="SI"
@@ -194,8 +194,8 @@ M1876-ISCRIZIONE-NIDO
         <p style="line-height: 1.6;"><b>appartenente</b> al mio nucleo familiare</p>
       </td>
       <td style="width:36%;">
-        {{ service.getListaFamigliaREST(
-          'AventeTitolo_CodiceFamiglia',
+        {{ service.getListaFamigliaCodiceFiscaleREST(
+          'AventeTitolo_CodiceFiscale',
           'Tassonomia_ListaFam1',
           '#AventeTitolo_CodiceFamiglia:change'
         )}}
@@ -235,7 +235,8 @@ M1876-ISCRIZIONE-NIDO
 
 <div class="simpatico-block simpatico-query-and-answer">
     {{ anagrafica_trento_uniformata.anagrafica_bambino('Bambino', 'Anagrafica del/la bambino/a') }}
-    <input name="SvCodiceFamiglia" id="SvCodiceFamiglia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFamiglia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceFamiglia.value() : 0)" />
+    <!--<input name="SvCodiceFamiglia" id="SvCodiceFamiglia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFamiglia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceFamiglia.value() : 0)" />-->
+    <input name="SvCodiceFiscaleFamiglia" id="SvCodiceFiscaleFamiglia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" />
     <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceVia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceVia.value() : 0 )" />
     <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CivicoResidenza.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CivicoResidenza.value() : 0 )" format="number" />
     <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
@@ -367,9 +368,9 @@ M1876-ISCRIZIONE-NIDO
     <tbody>
         <th colspan="6">
             <button type="button" class="real-button" id="RecuperaListaFam">Recupera dati famiglia</button>
-                {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile1', '#RecuperaListaFam:click', 'listaFam1') }}
-                {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile2', '#RecuperaListaFam:click', 'listaFam2') }}
-                {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Tassonomia_FamDisabile3', '#RecuperaListaFam:click', 'listaFam3') }}
+                {{ service.getListaFamigliaCodiceFiscaleREST('SvCodiceFiscaleFamiglia', 'Tassonomia_FamDisabile1', '#RecuperaListaFam:click', 'listaFam1') }}
+                {{ service.getListaFamigliaCodiceFiscaleREST('SvCodiceFiscaleFamiglia', 'Tassonomia_FamDisabile2', '#RecuperaListaFam:click', 'listaFam2') }}
+                {{ service.getListaFamigliaCodiceFiscaleREST('SvCodiceFiscaleFamiglia', 'Tassonomia_FamDisabile3', '#RecuperaListaFam:click', 'listaFam3') }}
         </th>
     </tbody>
 </table>
@@ -403,7 +404,7 @@ M1876-ISCRIZIONE-NIDO
             </tr>
   
             <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Familiari del bambino/a"> </div>
-            {{ service.getListaFamigliaREST('SvCodiceFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
+            {{ service.getListaFamigliaCodiceFiscaleREST('SvCodiceFiscaleFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
   
             {% macro Tassonomia_Familiare(prefix) %}
                 {% set prefix = prefix|string %}
