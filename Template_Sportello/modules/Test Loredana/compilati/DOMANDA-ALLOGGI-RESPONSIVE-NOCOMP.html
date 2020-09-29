@@ -573,35 +573,38 @@ versione="1.0|01/01/2019"/>
   <div class="container border bg-light">
     <div class="form-row">
       <div class="col-lg-12">
-        <label class="title">
-          <b>Che la propria famiglia, come registrata all'anagrafe del Comune di residenza è così composta:</b>
-          <br>
-          Se residente nel Comune di Trento clicca: 
-        </label>
-        <div class="form-row mt-1" style="display: grid;">
-          <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Composizione della famiglia"> </div>
-          <button type="button" class="btn btn-secondary btn-sm pull-right" id="RecuperaListaFam">Recupera dati famiglia</button>
+        <span class="title mr-3">Che la propria famiglia, come registrata all'anagrafe del Comune di residenza è così composta (se residente clicca sul bottone):</span>
+        <div class="d-inline" style="cursor:pointer">
+          <button type="button" class="btn btn-secondary btn-sm pull-right" id="RecuperaListaFam">Recupera dati famiglia</button> 
+        </div>        
+      </div>
+    </div>
+  <!-- </div> -->
   
-          {{ service.getListaFamigliaREST('AventeTitolo_CodiceFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
+  <!-- <div class="container border bg-light"> -->
+        <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Composizione della famiglia"> </div>
+        {{ service.getListaFamigliaREST('AventeTitolo_CodiceFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
+        
+        {% macro Tassonomia_Familiare(prefix) %}
+            {% set prefix = prefix|string %}
 
-          {% macro Tassonomia_Familiare(prefix) %}
-              {% set prefix = prefix|string %}
+            {{ service.getPersonaREST('Parametri_CFFam' + prefix, 'TipoContesto', 'TipoLista',{
+                'Parametri_CognomeFam' + prefix: 'cognome',
+                'Parametri_NomeFam' + prefix: 'nome',
+                'Parametri_DataNas' + prefix: 'datanascita',
+                'Parametri_SessoFam' + prefix: 'sesso',
+                'Parametri_MatricolaAnagrafeFam' + prefix: 'matricola',
+                'Parametri_CodiceFamigliaFam' + prefix: 'codiceFamiglia',
+                'Parametri_CodiceComuneNascitaFam' + prefix: 'codiceComuneNascita',
+                'Parametri_CodiceViaResidenzaFam' + prefix: 'codiceVia',
+                'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
+                'Parametri_BarraResidenzaFam' + prefix: 'barra',
+                'Parametri_NazioneFam' + prefix: 'nazione',
+            }, '#Parametri_CFFam' + prefix + ':change' )}} 
 
-              {{ service.getPersonaREST('Parametri_CFFam' + prefix, 'TipoContesto', 'TipoLista',{
-                  'Parametri_CognomeFam' + prefix: 'cognome',
-                  'Parametri_NomeFam' + prefix: 'nome',
-                  'Parametri_DataNas' + prefix: 'datanascita',
-                  'Parametri_SessoFam' + prefix: 'sesso',
-                  'Parametri_MatricolaAnagrafeFam' + prefix: 'matricola',
-                  'Parametri_CodiceFamigliaFam' + prefix: 'codiceFamiglia',
-                  'Parametri_CodiceComuneNascitaFam' + prefix: 'codiceComuneNascita',
-                  'Parametri_CodiceViaResidenzaFam' + prefix: 'codiceVia',
-                  'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
-                  'Parametri_BarraResidenzaFam' + prefix: 'barra',
-                  'Parametri_NazioneFam' + prefix: 'nazione',
-              }, '#Parametri_CFFam' + prefix + ':change' )}}        
-  
+      
         <div class="form-row">
+
           <div class="form-group col-lg-3">
             <label for="Parametri_CognomeFam{{ prefix }}"> Cognome </label>
             <input class="form-control" id="Parametri_CognomeFam{{ prefix }}" name="Parametri_CognomeFam{{ prefix }}" readonly>
@@ -639,18 +642,11 @@ versione="1.0|01/01/2019"/>
             <label for="Parametri_Altri{{ prefix }}">Altri dati</label>
             <input class="form-control" id="Parametri_Altri{{ prefix }}" name="Parametri_Altri{{ prefix }}">
           </div>
-        </div>
-  
-        {{ prefix }}
-  
+          
       </div>
-    </div>   
-  
-  </div>
-  
-  {%- endmacro %}
-
-  {% for i in range(1, 10) %}
+      {%- endmacro %}
+      
+      {% for i in range(1, 10) %}
       {{ Tassonomia_Familiare(i) }}
       <input type="hidden" id="Parametri_MatricolaAnagrafeFam{{ i }}" name="Parametri_MatricolaAnagrafeFam{{ i }}">
       <input type="hidden" id="Parametri_CodiceFamigliaFam{{ i }}" name="Parametri_CodiceFamigliaFam{{ i }}">
@@ -659,7 +655,10 @@ versione="1.0|01/01/2019"/>
       <input type="hidden" id="Parametri_NumeroCivicoResidenzaFam{{ i }}" name="Parametri_NumeroCivicoResidenzaFam{{ i }}" format="number">
       <input type="hidden" id="Parametri_BarraResidenzaFam{{ i }}" name="Parametri_BarraResidenzaFam{{ i }}" maxlength="3">
       <input type="hidden" id="Parametri_NazioneFam{{ i }}" name="Parametri_NazioneFam{{ i }}"/>
-  {% endfor %}
+      {% endfor %}
+    </div> 
+
+  
   
   <div class="container border bg-light">
     <span>
@@ -746,7 +745,6 @@ versione="1.0|01/01/2019"/>
       </div>
     </div>
   </div>
-</div>
   
   <!-- FINE BLOCCO ANNI DI LAVORO -->
   
@@ -1167,7 +1165,7 @@ versione="1.0|01/01/2019"/>
   <!-- FINE BLOCCO MARCA DA BOLLO -->
   
   <div class="space-1"></div>
-  
+  <div class="space-1"></div>
   <globo_salto_pagina/>
   
   
@@ -1330,7 +1328,7 @@ versione="1.0|01/01/2019"/>
       </label>
     </div>
     <div class="form-check indent-1">
-      <div id="cb_Contratto_Durata" name="cb_Contratto_Durata" label="Tutte le opzioni relative al contratto sono richieste" mandatory="true"></div>
+      <div id="cb_Contratto_Durata" name="cb_Contratto_Durata" label="Tutte le opzioni relative al contratto sono richieste"mandatory_enabled="#cb_Contratto_annuale.checked()"></div>
       <input group="cb_Contratto_Durata" class="form-check-input" id="cb_contratto6" name="cb_Contratto_Durata" type="checkbox" value="6">
       <label class="form-check-label" for="cb_contratto6"> 
         ha la seguente durata:
@@ -1351,7 +1349,7 @@ versione="1.0|01/01/2019"/>
     <div class="form-check indent-2">
       <input class="form-check-input" id="cb_Contratto_Altro" name="radio_Durata_contratto" type="radio" value="3">
       <label class="form-check-label" for="cb_Contratto_Altro"> 
-        Altro specificare: <input id="input_Contratto_altro" name="input_Contratto_altro" style="width: 100%" mandatory_enabled="#cb_Contratto_Altro.checked()">
+        Altro specificare: <input id="input_Contratto_altro" name="input_Contratto_altro" mandatory_enabled="#cb_Contratto_Altro.checked()">
       </label>
     </div>
     </div><div class="form-check indent-1">
