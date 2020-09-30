@@ -1488,13 +1488,22 @@ function get_ufficio_dest() {
             </tr>
             <tr>
                 <td style="text-align:center; width: 4%;"> 
-                    <input
+                    <!--DATA LIMITE PER IL CALCONO DELL'ETA' AMMISSIBILE - DA MODIFICARE DI VOLTA IN VOLTA COME DA RICHIESTA DEL SERVIZIO-->
+                    <input id="data_limite_ammissibile" name="data_limite_ammissibile" format="date" value="31/01/2018" type="hidden">
+                    <!--<input
                         id="Modulo_Compilabile2"
                         name="Modulo_Compilabile2"
                         dynamic_check="piuDiXAnni(#Bambino_DataNascita.value(), 3)"
                         enabled="piuDiXAnni(#Bambino_DataNascita.value(), 3)"
                         type="checkbox"
-                        value="1" />                   
+                        value="1" />      -->     
+                    <input
+                        id="Modulo_Compilabile2"
+                        name="Modulo_Compilabile2"
+                        dynamic_check="giorni_differenza(#data_limite_ammissibile.value(), #Bambino_DataNascita.value()) <= 0"
+                        enabled="giorni_differenza(#data_limite_ammissibile.value(), #Bambino_DataNascita.value()) <= 0"
+                        type="checkbox"
+                        value="1" />         
                 </td>
                 <td>
                     <p style="line-height: 1.6;">ATTENZIONE! Il bambino indicato ha più di 3 anni di età</p>
@@ -1516,11 +1525,20 @@ function get_ufficio_dest() {
             </tr>
             <tr>
                 <td style="text-align:center; width: 4%;">
+                    <!--
                     <input
                         id="Modulo_Compilabile1"
                         name="Modulo_Compilabile1"
                         dynamic_check="menoDiXAnni(#Bambino_DataNascita.value(), 3) and #Parametri_TipoOperazioneFT.value() != 'ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'ACCETTAZIONE'"
                         enabled="menoDiXAnni(#Bambino_DataNascita.value(), 3) and #Parametri_TipoOperazioneFT.value() != 'ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'ACCETTAZIONE'"
+                        type="checkbox"
+                        label="Modulo compilabile"
+                        value="3"/>-->
+                    <input
+                        id="Modulo_Compilabile1"
+                        name="Modulo_Compilabile1"
+                        dynamic_check="giorni_differenza(#data_limite_ammissibile.value(), #Bambino_DataNascita.value()) > 0 and #Parametri_TipoOperazioneFT.value() != 'ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'ACCETTAZIONE'"
+                        enabled="giorni_differenza(#data_limite_ammissibile.value(), #Bambino_DataNascita.value()) > 0 and #Parametri_TipoOperazioneFT.value() != 'ACCETTAZIONE' and #Parametri_TipoOperazionePT.value() != 'ACCETTAZIONE'"
                         type="checkbox"
                         label="Modulo compilabile"
                         value="3"/>
