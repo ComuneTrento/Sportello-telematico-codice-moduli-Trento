@@ -137,7 +137,27 @@ versione="1.0|01/01/2019"/>
         </div>
         <div class="form-row mt-1" style="display: grid;">
           <button type="button" class="btn btn-secondary btn-sm pull-right" id="RecuperaDatiAnagr"> Carica dati anagrafici </button>
-          <div ws-name="getPersonaREST" ws-param-in="contesto=TipoContesto;listaAut=TipoLista;codiceFiscale=AventeTitolo_CodiceFiscale" ws-param-out="AventeTitolo_ProvinciaResidenza=provincia;AventeTitolo_ViaResidenza=indirizzo;AventeTitolo_CodiceComuneNascita=codiceComuneNascita;AventeTitolo_Cognome=cognome;AventeTitolo_CodiceFamiglia=codiceFamiglia;AventeTitolo_CodiceVia=codiceVia;AventeTitolo_CivicoResidenza=numeroCivico;AventeTitolo_MatricolaAnagrafe=matricola;AventeTitolo_Nazionalita=stato;AventeTitolo_Nazione=nazione;AventeTitolo_Cittadinanza=nazionalita;AventeTitolo_Sesso=sesso;AventeTitolo_ComuneResidenza=citta;AventeTitolo_CAPResidenza=cap;AventeTitolo_BarraResidenza=barra;AventeTitolo_LuogoNascita=comuneNascita;AventeTitolo_Nome=nome;AventeTitolo_DataNascita=datanascita" ws-on="#RecuperaDatiAnagr:click" ws-allow-edit="true"></div>
+          {{ service.getPersonaREST( 'AventeTitolo_CodiceFiscale','TipoContesto', 'TipoLista',  {
+            'AventeTitolo_DataNascita':  'datanascita',
+            'AventeTitolo_Nome':  'nome',
+            'AventeTitolo_Cognome':  'cognome',
+            'AventeTitolo_Sesso':  'sesso',
+            'AventeTitolo_Nazionalita':  'stato',
+            'AventeTitolo_Cittadinanza':  'nazionalita',
+            'AventeTitolo_CodiceFamiglia':  'codiceFamiglia',
+            'AventeTitolo_CodiceVia':  'codiceVia',
+            'AventeTitolo_ProvinciaResidenza' : 'provincia',
+            'AventeTitolo_ComuneResidenza' : 'citta',
+            'AventeTitolo_ViaResidenza' : 'indirizzo',
+            'AventeTitolo_CivicoResidenza' : 'numeroCivico',
+            'AventeTitolo_BarraResidenza' : 'barra',
+            'AventeTitolo_CAPResidenza' : 'cap',
+            'AventeTitolo_Nazione' : 'nazione',
+            'AventeTitolo_LuogoNascita' : 'comuneNascita',
+            'AventeTitolo_CodiceComuneNascita' : 'codiceComuneNascita',
+            'AventeTitolo_MatricolaAnagrafe' : 'matricola',
+          },
+          '#RecuperaDatiAnagr:click','true') }}
         </div>
       </div>
   
@@ -583,7 +603,7 @@ versione="1.0|01/01/2019"/>
   
   <!-- <div class="container border bg-light"> -->
         <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Composizione della famiglia"> </div>
-        {{ service.getListaFamigliaREST('AventeTitolo_CodiceFamiglia', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
+        {{ service.getListaFamigliaCodiceFiscaleREST('AventeTitolo_CodiceFiscale', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
         
         {% macro Tassonomia_Familiare(prefix) %}
             {% set prefix = prefix|string %}
@@ -1495,9 +1515,10 @@ versione="1.0|01/01/2019"/>
     
   <!-- FINE BLOCCO FIRMA -->
 
-<p class="Modulo">
-  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
-</p>
+
+  <div class="container">
+    <button type="submit" class="btn btn-success btn-lg btn-block" id="SalvaModulo" name="SalvaModulo" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza."> Salva modulo </button>
+  </div>
 
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 
