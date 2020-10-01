@@ -1,7 +1,7 @@
-{% set CodiceModulo =  "TSCW2019" %}
-{% set Urn =  "document:c_l378:tscw;trento.smart.city.week;tscw2019" %}
-{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/TSCW2019_vSTU3" %}
-{% extends "base_trento_new.html" %}
+{% set CodiceModulo =  "M0802-CERTIFICATO-CITTADINO-DIGITALE" %}
+{% set Urn =  "document:c_l378:cittadino.digitale;certificato.cittadino.digitale;m0803.certificato.cittadino.digitale" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M0802-CERTIFICATO-CITTADINO-DIGITALE" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 
@@ -12,8 +12,8 @@ codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
 sub_urn_list=""
 uo_globo_list=""
-contesto_procedurale="Trento Smart City Week 2019"
-descrizione="Trento Smart City Week 2019"
+contesto_procedurale="Cittadino digitale"
+descrizione="Cittadino digitale"
 destinatario_amministrazione=""
 destinatario_ufficio="94SMCB"
 dinamico="SI"
@@ -28,16 +28,16 @@ name="GLOBO_modulo"
 procura="NO,,"
 segnatura="AventeTitolo"
 tipo_modulo="principale"
-urlhelp="/modulistica/moduli/TSCW2019"
+urlhelp="/modulistica/moduli/CERTIFICATO-CITTADINO-DIGITALE"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
-<meta codice_allegato="INFORM-TRATT-DATI-TSCW"
-urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.tscw"
+<meta codice_allegato="INFORM-TRATT-DATI-CITTADINO-DIGITALE"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.cittadino.digitale"
 descrizione_estesa="Informativa trattamento dati TSCW 2019"
-filename="INFORM-TRATT-DATI-TSCW.pdf"
+filename="INFORM-TRATT-DATI-CITTADINO-DIGITALE.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-TSCW"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-CITTADINO-DIGITALE"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -51,9 +51,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
 {% endblock meta %}
 
 {% block simpaticoconfig %}
-  {% set simpaticoEservice="25" %}
-  {% set simpaticoEserviceName="TSCW2019" %}
-  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/TSCW2019" %}
+  {% set simpaticoEservice="M0802-CERTIFICATO-CITTADINO-DIGITALE" %}
+  {% set simpaticoEserviceName="M0802-CERTIFICATO-CITTADINO-DIGITALE" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M0802-CERTIFICATO-CITTADINO-DIGITALE" %}
   {% set simpaticoForm="main" %}
   {% set simpaticoCategory="Infanzia" %}
   {% set simpaticoMapping=["AventeTitolo_Cognome",
@@ -71,29 +71,32 @@ urn_report="report:CSP_SESSION_REPORT"/>
                            "AventeTitolo_Tel_Fisso",
                            "AventeTitolo_Cittadinanza",
                            "AventeTitolo_EMail",
-                           "AventeTitolo_LuogoNascita"] %}
+                           "AventeTitolo_LuogoNascita",
+                           "richieste1",
+                           "richieste2",
+                           "richieste3"] %}
   
   {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
-                          ('block7', 'Seleziona almeno una opzione'),
-                          ('block8', 'Confermare presa visione dell’informativa')] %}
+                          ('block6', 'Seleziona almeno una opzione'),
+                          ('block7', 'Confermare presa visione dell’informativa')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
 {% endblock simpaticoconfig %}
 
 {% block title %}
-TSCW2019
+CERTIFICATO-CITTADINO-DIGITALE
 {% endblock title %}
 
 {% block content %}
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
-<input dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' - Trento Smart City Week 2019'" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="'Domanda - Cittadino digitale: Richiedente' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ')'" id="Oggetto" name="Oggetto" type="hidden"/>
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
 <br>
 
 <h1 class="Modulo">
-  Partecipazione a Trento Smart City Week 2019
+  Cittadino digitale
 </h1>
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
@@ -110,40 +113,11 @@ TSCW2019
 <br>
 <br>
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>Partecipo a Trento Smart City Week 2019 in quanto:</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory="true"> </div>
-        <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" dynamic_check="#AventeTitolo_ComuneResidenza.value() == 'TRENTO'" enabled="#AventeTitolo_ComuneResidenza.value() == 'TRENTO' and #AventeTitolo_Cognome.value() != ''"/>
-      </td>
-      <td>
-        <p style="line-height:1.6;">Residente a Trento</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" dynamic_check="#AventeTitolo_ComuneResidenza.value() != 'TRENTO'" enabled="#AventeTitolo_ComuneResidenza.value() != 'TRENTO' and #AventeTitolo_Cognome.value() != ''"/>
-      </td>
-      <td>
-        <p style="line-height:1.6;">Visitatore da altro Comune / Turista</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-<br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 0px">
   <tbody>
     <th colspan="6">
-      <button type="button" class="real-button" id="RecuperaListaFam">Recupera dati famiglia</button>
+      Se residente a Trento: <button type="button" class="real-button" id="RecuperaListaFam" style="width:50%; height:100%;">Recupera dati famiglia</button> 
     </th>
   </tbody>
 </table>
@@ -248,7 +222,7 @@ TSCW2019
         <input group="richieste" id="richieste1" name="richieste1" type="checkbox" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;">di ricevere il gadget per aver utilizzato il servizio online</p>
+        <p style="line-height:1.6;">di ricevere il certificato di cittadino digitale</p>
       </td>
     </tr>
     <tr>
@@ -264,7 +238,7 @@ TSCW2019
         <input group="richieste" id="richieste3" name="richieste3" type="checkbox" value="3" />
       </td>
       <td>
-        <p style="line-height:1.6;">di poter partecipare ad altre sperimentazioni di nuovi servizi smart (con nuovi gadget)</p>
+        <p style="line-height:1.6;">di poter partecipare ad altre sperimentazioni di nuovi servizi smart</p>
       </td>
     </tr>
   </tbody>
@@ -282,7 +256,7 @@ TSCW2019
         <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
       <td colspan="2" style="background-color: #eeeeee;">
-        <p style="line-height:1.4;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/INFORM-TRATT-DATI-TSCW" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        <p style="line-height:1.4;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-cittadino-digitale" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
       </td>
     </tr>
   </tbody>
@@ -330,5 +304,4 @@ TSCW2019
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
-
 {% endblock content %}
