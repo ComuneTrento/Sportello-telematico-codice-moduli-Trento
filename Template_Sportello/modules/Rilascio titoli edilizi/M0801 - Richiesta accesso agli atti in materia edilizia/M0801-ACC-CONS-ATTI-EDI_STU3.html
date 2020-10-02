@@ -1,6 +1,6 @@
 {% set CodiceModulo = "M0801-ACC-CONS-ATTI-EDI" %}
 {% set Urn = "document:c_l378:accesso.atti.edilizia;richiesta.accesso;m0801.accesso.atti" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 
@@ -18,7 +18,7 @@ destinatario_ufficio="94SMCB"
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
-filigrana="NO"
+filigrana="SI"
 firmare="NO"
 istruzioni_compilazione=""
 istruzioni_invio="mail_pec"
@@ -90,7 +90,11 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="'Domanda di accesso/consultazione p.ed.: ' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value() + ' - ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/>
+<!-- GESTIONE DINAMICA DEL TESTO DI OGGETTO -->
+<input dynamic_value="#Tipo_professionista2.checked() ? #Oggetto_Delegato.value() : #Oggetto_No_Delegato.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/>
+<input dynamic_value="'Domanda di accesso/consultazione - Richiedente: ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ') Particelle Edificiale' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value()" id="Oggetto_No_Delegato" name="Oggetto_No_Delegato" type="hidden" />
+<input dynamic_value="'Domanda di accesso/consultazione - Richiedente: ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ') Particelle Edificiale' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value() + ' - Delegato ' + #CodiceFiscale_proprietario_immobile.value() " id="Oggetto_Delegato" name="Oggetto_Delegato" type="hidden" />
+
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -149,7 +153,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="6">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="7">
         <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
       </td>
       <td colspan="11">
@@ -164,38 +168,48 @@ urn_report="report:CSP_SESSION_REPORT"
       <td colspan="10">dal tribunale o altro organo giudiziario</td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="5">
         <input group="Tipo_professionista" id="Tipo_professionista2" name="Tipo_professionista" type="radio" value="2" />
       </td>
       <td colspan="10">dal proprietario dell'immobile oggetto della richiesta presentata:</td>
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td colspan="3">
+      <td colspan="4">
         <p class="Labelcella">Cognome</p>
       </td>
-      <td colspan="3">
+      <td colspan="6">
         <p class="Labelcella">Nome</p>
       </td>
+    </tr>
+    <tr>
       <td colspan="4">
+        <input class="" id="Referente_Cognome" name="Referente_Cognome" label="Cognome del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_professionista2.checked()"/>
+      </td>
+      <td colspan="6">
+        <input class="" id="Referente_Nome" name="Referente_Nome" label="Nome del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_professionista2.checked()"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="4">
+        <p class="Labelcella">Codice Fiscale</p>
+      </td>
+      <td colspan="6">
         <p class="Labelcella">Indirizzo</p>
       </td>
     </tr>
     <tr>
-      <td colspan="3">
-        <input class="" id="Cognome_proprietario_immobile" name="Cognome_proprietario_immobile" label="Cognome del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_professionista2.checked()"/>
-      </td>
-      <td colspan="3">
-        <input class="" id="Nome_proprietario_immobile" name="Nome_proprietario_immobile" label="Nome del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_professionista2.checked()"/>
-      </td>
       <td colspan="4">
-        <input class="" id="Indirizzo_proprietario_immobile" name="Indirizzo_proprietario_immobile" label="Indirizzo del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_professionista2.checked()"/>
+        <input class="" id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" label="Codice fiscale del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_professionista2.checked()"/>
+      </td>
+      <td colspan="6">
+        <input class="" id="Referente_ViaResidenza" name="Referente_ViaResidenza" label="Indirizzo del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_professionista2.checked()"/>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Tipo_professionista" id="Tipo_professionista3" name="Tipo_professionista" type="radio" value="3" />
       </td>
-      <td colspan="10">da altro soggetto: <input class="" id="altro_tipo_incarico" name="altro_tipo_incarico" size="74" mandatory_enabled="#Tipo_professionista3.checked()" label="Specificare da chi si è incaricati"/></td>
+      <td colspan="11">da altro soggetto: <input class="" id="altro_tipo_incarico" name="altro_tipo_incarico" style="width: 100%;" mandatory_enabled="#Tipo_professionista3.checked()" label="Specificare da chi si è incaricati"/></td>
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
@@ -654,7 +668,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
       </td>
       <td colspan="2" style="background-color: #eeeeee;">
-        <p style="line-height:1.6;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-archivio" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        <p style="line-height:1.6;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-archivio" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
       </td>
     </tr>
   </tbody>
