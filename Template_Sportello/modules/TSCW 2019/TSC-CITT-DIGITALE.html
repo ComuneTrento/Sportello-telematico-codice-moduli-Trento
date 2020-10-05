@@ -1,5 +1,5 @@
 {% set CodiceModulo =  "M0802-CERTIFICATO-CITTADINO-DIGITALE" %}
-{% set Urn =  "document:c_l378:cittadino.digitale;certificato.cittadino.digitale;m0803.certificato.cittadino.digitale" %}
+{% set Urn =  "document:c_l378:cittadinanza.digitale;certificato.cittadino.digitale;m0802.certificato.cittadino.digitale" %}
 {% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M0802-CERTIFICATO-CITTADINO-DIGITALE" %}
 {% extends "base_trento_ok.html" %}
 
@@ -12,8 +12,8 @@ codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
 sub_urn_list=""
 uo_globo_list=""
-contesto_procedurale="Cittadino digitale"
-descrizione="Cittadino digitale"
+contesto_procedurale="Domanda di attestazione cittadino digitale"
+descrizione="Domanda di attestazione cittadino digitale"
 destinatario_amministrazione=""
 destinatario_ufficio="94SMCB"
 dinamico="SI"
@@ -77,8 +77,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
                            "richieste3"] %}
   
   {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
+                          ('block2', 'Inserire cognome e nome'),
+                          ('block3', 'Inserire indirizzo mail e cellulare'),
                           ('block6', 'Seleziona almeno una opzione'),
-                          ('block7', 'Confermare presa visione dell’informativa')] %}
+                          ('block7', 'Confermare presa visione dell\’informativa')] %}
   {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
 {% endblock simpaticoconfig %}
 
@@ -89,7 +91,7 @@ CERTIFICATO-CITTADINO-DIGITALE
 {% block content %}
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
-<input dynamic_value="'Domanda - Cittadino digitale: Richiedente' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ')'" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="'Domanda - Cittadino digitale: Richiedente ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ')'" id="Oggetto" name="Oggetto" type="hidden"/>
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -117,7 +119,7 @@ CERTIFICATO-CITTADINO-DIGITALE
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 0px">
   <tbody>
     <th colspan="6">
-      Se residente a Trento: <button type="button" class="real-button" id="RecuperaListaFam" style="width:50%; height:100%;">Recupera dati famiglia</button> 
+      <b>Se residente a Trento:</b> <button type="button" class="real-button" id="RecuperaListaFam" style="width:50%; height:100%;">Recupera dati famiglia</button> 
     </th>
   </tbody>
 </table>
@@ -172,23 +174,23 @@ CERTIFICATO-CITTADINO-DIGITALE
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="Parametri_CognomeFam{{ prefix }}" name="Parametri_CognomeFam{{ prefix }}" style="width: 100%;" label="Cognome del familiare" readonly>
+          <input class="inputNormal" id="Parametri_CognomeFam{{ prefix }}" name="Parametri_CognomeFam{{ prefix }}" style="width: 100%;" label="Cognome del familiare" >
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_NomeFam{{ prefix }}" name="Parametri_NomeFam{{ prefix }}" style="width: 100%;" label="Nome del familiare" readonly>
+          <input class="inputNormal" id="Parametri_NomeFam{{ prefix }}" name="Parametri_NomeFam{{ prefix }}" style="width: 100%;" label="Nome del familiare" >
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" style="width: 100%;" label="Codice fiscale del familiare" readonly>
+          <input class="inputNormal" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" style="width: 100%;" label="Codice fiscale del familiare" >
         </td>
         <td>
-          <select class="inputNormal" id="Parametri_SessoFam{{ prefix }}" name="Parametri_SessoFam{{ prefix }}" style="width:100%;" label="Sesso" readonly>
+          <select class="inputNormal" id="Parametri_SessoFam{{ prefix }}" name="Parametri_SessoFam{{ prefix }}" style="width:100%;" label="Sesso" >
             <option value=""></option>
             <option value="M">M</option>
             <option value="F">F</option>
           </select>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_DataNas{{ prefix }}" name="Parametri_DataNas{{ prefix }}" format="date" style="width: 100%;" label="Data di nascita del familiare" readonly>
+          <input class="inputNormal" id="Parametri_DataNas{{ prefix }}" name="Parametri_DataNas{{ prefix }}" format="date" style="width: 100%;" label="Data di nascita del familiare" >
         </td>
       </tr>
     {%- endmacro %}
