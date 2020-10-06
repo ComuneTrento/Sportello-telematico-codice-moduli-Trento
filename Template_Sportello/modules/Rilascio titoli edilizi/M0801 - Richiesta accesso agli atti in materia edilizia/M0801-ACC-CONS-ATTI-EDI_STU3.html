@@ -92,9 +92,8 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <!-- GESTIONE DINAMICA DEL TESTO DI OGGETTO -->
 <input dynamic_value="#Tipo_professionista2.checked() ? #Oggetto_Delegato.value() : #Oggetto_No_Delegato.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/>
-<input dynamic_value="'Domanda di accesso/consultazione - Richiedente: ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ') Particelle Edificiale' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value()" id="Oggetto_No_Delegato" name="Oggetto_No_Delegato" type="hidden" />
-<input dynamic_value="'Domanda di accesso/consultazione - Richiedente: ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ') Particelle Edificiale' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value() + ' - Delegato ' + #CodiceFiscale_proprietario_immobile.value() " id="Oggetto_Delegato" name="Oggetto_Delegato" type="hidden" />
-
+<input dynamic_value="'Domanda di accesso/consultazione - Richiedente: ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ') Particelle Edificiale ' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value()" id="Oggetto_No_Delegato" name="Oggetto_No_Delegato" type="hidden" />
+<input dynamic_value="'Domanda di accesso/consultazione - Richiedente: ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ') Particelle Edificiale' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value() + ' - Delegato ' + #Referente_CodiceFiscale.value() " id="Oggetto_Delegato" name="Oggetto_Delegato" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -127,6 +126,9 @@ urn_report="report:CSP_SESSION_REPORT"
 {{anagrafica_trento_uniformata.richiedente_elettorale("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <br>
+<br>
+
+<!--------------------- INIZIO BLOCCO IN QUALITA' DI --------------------->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -137,7 +139,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
+        <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente richiesto" mandatory_enabled="true"> </div>
         <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
       </td>
       <td colspan="11">
@@ -160,13 +162,15 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height:1.6;"><b>Professionista/Agente immobiliare incaricato</b></p>
       </td>
     </tr>
+    
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Tipo_professionista" name="Tipo_professionista" label="TipoTipo_professionistarichiedente" mandatory_enabled="#Tipo_richiedente2.checked()"> </div>
+        <div id="Tipo_professionista" name="Tipo_professionista" label="Tipo professionista richiesto" mandatory_enabled="#Tipo_richiedente2.checked()"> </div>
         <input group="Tipo_professionista" id="Tipo_professionista1" name="Tipo_professionista" type="radio" value="1" />
       </td>
       <td colspan="10">dal tribunale o altro organo giudiziario</td>
     </tr>
+
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="5">
         <input group="Tipo_professionista" id="Tipo_professionista2" name="Tipo_professionista" type="radio" value="2" />
@@ -205,12 +209,14 @@ urn_report="report:CSP_SESSION_REPORT"
         <input class="" id="Referente_ViaResidenza" name="Referente_ViaResidenza" label="Indirizzo del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_professionista2.checked()"/>
       </td>
     </tr>
+    
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Tipo_professionista" id="Tipo_professionista3" name="Tipo_professionista" type="radio" value="3" />
       </td>
       <td colspan="11">da altro soggetto: <input class="" id="altro_tipo_incarico" name="altro_tipo_incarico" style="width: 100%;" mandatory_enabled="#Tipo_professionista3.checked()" label="Specificare da chi si è incaricati"/></td>
     </tr>
+
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Tipo_richiedente" id="Tipo_richiedente3" name="Tipo_richiedente" type="radio" value="3" />
@@ -230,19 +236,30 @@ urn_report="report:CSP_SESSION_REPORT"
     <input id="confinante_DatiCatastaliObbligatori" name="confinante_DatiCatastaliObbligatori" dynamic_value="#Tipo_richiedente4.checked() ? 'vero' : 'falso'" type="hidden"/>
     <input id="confinante_DatiCatastaliAbilitati" name="confinante_DatiCatastaliAbilitati" dynamic_value="#Tipo_richiedente4.checked() ? 'vero' : 'falso'" type="hidden"/>
     {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='confinante', intestazione="e proprietario del seguente immobile:", visibility_intestazione="display:visibility") }}
+    
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Tipo_richiedente" id="Tipo_richiedente5" name="Tipo_richiedente" type="radio" value="5" />
       </td>
       <td colspan="11">
-        <p style="line-height:1.6;"><b>Altro titolo:</b> <input class="" id="altro_tipo_richiedente" name="altro_tipo_richiedente" size="90" mandatory_enabled="#Tipo_richiedente5.checked()" label="Specificare titolo per effettuare la richiesta"/></p>
+        <p style="line-height:1.6; text-align: left;"><b>Altro titolo:</b> <input id="altro_tipo_richiedente" name="altro_tipo_richiedente" size="90" mandatory_enabled="#Tipo_richiedente5.checked()" label="Specificare titolo per effettuare la richiesta"/></p>
       </td>
     </tr>
+
   </tbody>
 </table>
 
+<!--------------------- POPOLO CAMPO PER MOD INTEGRAZIONE --------------------->
+<input id="Referente99_Tipo_Richiedente" name="Referente99_Tipo_Richiedente" type="hidden" dynamic_value="#Tipo_richiedente1.checked() ? 'Proprietario dell\'immobile oggetto della richiesta presentata' : #Tipo_richiedente6.checked() ? 'Amministratore del condominio oggetto della richiesta presentata' : #Tipo_richiedente2.checked() ? 'Professionista/Agente immobiliare incaricato' : #Tipo_richiedente3.checked() ? 'Notaio rogante' : #Tipo_richiedente4.checked() ? 'Confinante' : #Tipo_richiedente5.checked() ? #altro_tipo_richiedente.value() : '' ">
+
+<!--------------------- FINE BLOCCO IN QUALITA' DI --------------------->
+
+
+
 <br>
 <br>
+
+<!-------------- INIZIO BLOCCO GESTIONE PARTICELLE PER ACCESSO -------------->
 
 <h1 class="Modulo">CHIEDE</h1>
 
@@ -263,21 +280,21 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
 
-    <input id="accesso1_DatiCatastaliObbligatori" name="accesso1_DatiCatastaliObbligatori" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'"  type="hidden"/>
-    <input id="accesso1_DatiCatastaliAbilitati" name="accesso1_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='accesso1', intestazione="Particella #1") }}
+    <input id="Immobile1_DatiCatastaliObbligatori" name="Immobile1_DatiCatastaliObbligatori" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'"  type="hidden"/>
+    <input id="Immobile1_DatiCatastaliAbilitati" name="Immobile1_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='Immobile1', intestazione="Particella #1") }}
 
     <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
-    <input class="" id="accesso2_DatiCatastaliAbilitati" name="accesso2_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='accesso2', intestazione="Particella #2") }}
+    <input class="" id="Immobile2_DatiCatastaliAbilitati" name="Immobile2_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='Immobile2', intestazione="Particella #2") }}
 
     <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
-    <input class="" id="accesso3_DatiCatastaliAbilitati" name="accesso3_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='accesso3', intestazione="Particella #3") }}
+    <input class="" id="Immobile3_DatiCatastaliAbilitati" name="Immobile3_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='Immobile3', intestazione="Particella #3") }}
 
     <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
-    <input class="" id="accesso4_DatiCatastaliAbilitati" name="accesso4_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='accesso4', intestazione="Particella #4") }}
+    <input class="" id="Immobile4_DatiCatastaliAbilitati" name="Immobile4_DatiCatastaliAbilitati" dynamic_value="#Servizio_richiesto2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='Immobile4', intestazione="Particella #4") }}
 
     <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
     <tr class="Rigaintestazioneridotta">
@@ -334,6 +351,9 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta"><td colspan="12"></td></tr>
+
+    <!-------------- INIZIO BLOCCO GESTIONE PARTICELLE PER CONSULTAZIONE -------------->
+
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="22">
         <input group="Servizio_richiesto" id="Servizio_richiesto1" name="Servizio_richiesto1" type="checkbox" value="1" /> 
@@ -354,29 +374,36 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     
-    <input class="" id="consultazione1_DatiCatastaliObbligatori" name="consultazione1_DatiCatastaliObbligatori" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden"/>
-    <input class="" id="consultazione1_DatiCatastaliAbilitati" name="consultazione1_DatiCatastaliAbilitati" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden"/>
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='consultazione1', intestazione="Particella #1") }}
+    <input class="" id="Immobile5_DatiCatastaliObbligatori" name="Immobile5_DatiCatastaliObbligatori" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden"/>
+    <input class="" id="Immobile5_DatiCatastaliAbilitati" name="Immobile5_DatiCatastaliAbilitati" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden"/>
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='Immobile5', intestazione="Particella #1") }}
     <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
-    <input class="" id="consultazione2_DatiCatastaliAbilitati" name="consultazione2_DatiCatastaliAbilitati" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden" />
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='consultazione2', intestazione="Particella #2") }}
+    <input class="" id="Immobile6_DatiCatastaliAbilitati" name="Immobile6_DatiCatastaliAbilitati" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='Immobile6', intestazione="Particella #2") }}
 
     <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
-    <input class="" id="consultazione3_DatiCatastaliAbilitati" name="consultazione3_DatiCatastaliAbilitati" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden" />
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='consultazione3', intestazione="Particella #3") }}
+    <input class="" id="Immobile7_DatiCatastaliAbilitati" name="Immobile7_DatiCatastaliAbilitati" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='Immobile7', intestazione="Particella #3") }}
 
     <tr class="Rigaintestazioneridotta"><td colspan="11"></td></tr>
-    <input class="" id="consultazione4_DatiCatastaliAbilitati" name="consultazione4_DatiCatastaliAbilitati" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden" />
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='consultazione4', intestazione="Particella #4") }}
+    <input class="" id="Immobile8_DatiCatastaliAbilitati" name="Immobile8_DatiCatastaliAbilitati" dynamic_value="#Realta_immobil_copia2.checked() ? 'vero' : 'falso'" type="hidden" />
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='Immobile8', intestazione="Particella #4") }}
    
   </tbody>
 </table>
 
-<input class="" id="num_part_oggetto" name="num_part_oggetto" style="width:100%;" dynamic_value="#accesso1_CatNumero.value() != '' ? #accesso1_CatNumero.value() : #consultazione1_CatNumero.value()" type="hidden"/>
-<input class="" id="com_part_oggetto" name="com_part_oggetto" style="width:100%;" dynamic_value="#accesso1_ComuneCatastale_esteso.value() != '' ? #accesso1_ComuneCatastale_esteso.value() : #consultazione1_ComuneCatastale_esteso.value()" type="hidden"/>
+<!------------- POPOLO CAMPO PER TIPO ACCESSO SU DOC PER INTEGRAZIONE -------------->
+<input id="Referente99_Tipologia_Accesso" name="Referente99_Tipologia_Accesso" type="hidden" dynamic_value="#Tipo_accesso1.checked() ? 'Presa visione' : #Tipo_accesso3.checked() ? 'Estrazione copia in carta semplice' : #Tipo_accesso4.checked() ? 'Estrazione copia conforme all\'originale' : '' ">
+
+<!-------------- GESTIONE DINAMICA CONTROLLO NUM PARTICELLE -------------->
+<input class="" id="num_part_oggetto" name="num_part_oggetto" style="width:100%;" dynamic_value="#Immobile1_CatNumero.value() != '' ? #Immobile1_CatNumero.value() : #Immobile5_CatNumero.value()" type="hidden"/>
+<input class="" id="com_part_oggetto" name="com_part_oggetto" style="width:100%;" dynamic_value="#Immobile1_ComuneCatastale_esteso.value() != '' ? #Immobile1_ComuneCatastale_esteso.value() : #Immobile5_ComuneCatastale_esteso.value()" type="hidden"/>
+
+<!-------------- FINE BLOCCO GESTIONE PARTICELLE PER CONSULTAZIONE -------------->
 
 <br>
 <br>
+
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -674,7 +701,6 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
-
 <br>
 <br>
 
@@ -704,8 +730,6 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
   </tbody>
 </table>
-
-<br>
 
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
