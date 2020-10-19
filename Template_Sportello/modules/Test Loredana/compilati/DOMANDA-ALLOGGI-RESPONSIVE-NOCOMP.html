@@ -3,6 +3,9 @@
 {% set Urn = "document:c_l378:test.loredana.ediliziapubblica;servizio.loredana.ediliziapubblica;modulo.loredana.ediliziapubblica" %}
 {% extends "base_trento_ok.html" %}
 
+<!--document:c_l378:edilizia.abitativa.pubblica;domanda.locazione.alloggi.affitto;m1652.domanda.locazione.alloggi.affitto-->
+<!--M1652-DOMANDA-LOCAZIONE-ALLOGGI-E-CONTRIBUTO-AFFITTO-->
+
 {% block meta %}
 
 <meta campi_firma="AventeTitolo_CodiceFiscale"
@@ -31,11 +34,45 @@ urlhelp="/modulistica/moduli/TEST1652-DOMANDA-LOCAZIONE-CONTRIBUTO"
 verifica_pagamento="NO"
 versione="1.0|01/01/2019"/>
 
+<!--
+<meta codice_allegato="M1652-A01-CONTRATTO-LOCAZIONE-PAG1"
+urn_allegato="document:c_l378:edilizia.abitativa.pubblica;domanda.locazione.alloggi.affitto;m1652.a01.contratto.locazione.p1"
+descrizione_estesa="Contratto di locazione prima pagina"
+filename="contratto prima pagina.jpg,contratto prima pagina.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1652-A01-CONTRATTO-LOCAZIONE-PAG1"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M1652-A02-CONTRATTO-LOCAZIONE-PAG2"
+urn_allegato="document:c_l378:edilizia.abitativa.pubblica;domanda.locazione.alloggi.affitto;m1652.a02.contratto.locazione.p2"
+descrizione_estesa="Contratto di locazione ultima pagina"
+filename="contratto ultima pagina.jpg,contratto ultima pagina.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1652-A02-CONTRATTO-LOCAZIONE-PAG2"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M1652-A03-REGISTRAZIONE-CONTRATTO"
+urn_allegato="document:c_l378:edilizia.abitativa.pubblica;domanda.locazione.alloggi.affitto;m1652.a03.registrazione.contratto"
+descrizione_estesa="Ultimo contratto registrato"
+filename="contratto.jpg,contratto.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1652-A03-REGISTRAZIONE-CONTRATTO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+-->
 
 {% endblock meta %}
 
 {% block title %}  
-    DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA PUBBLICA E CONTRIBUTO INTEGRATIVO ALL’AFFITTO 
+DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO INTEGRATIVO AL CANONE DI LOCAZIONE 
 {% endblock title %}
 
 {% block content %}
@@ -80,7 +117,7 @@ versione="1.0|01/01/2019"/>
   <div class="space-1"></div>
   
   <div class="container">
-    <div class="title-1">DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA PUBBLICA E CONTRIBUTO INTEGRATIVO ALL’AFFITTO </div>
+    <div class="title-1">DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO INTEGRATIVO AL CANONE DI LOCAZIONE</div>
   </div>
   
   <div class="container">
@@ -352,6 +389,11 @@ versione="1.0|01/01/2019"/>
         </div>
       </div>
       <div class="form-row">
+        <div class="form-group col-lg-12 border-bottom">
+          <label> Recapiti: </label>
+        </div>
+      </div>
+      <div class="form-row">
         <div class="form-group col-lg-2">
             <label for="AventeTitolo_Telefono"> Telefono Fisso </label>
             <input class="form-control" id="AventeTitolo_Telefono" name="AventeTitolo_Telefono">
@@ -486,7 +528,13 @@ versione="1.0|01/01/2019"/>
         <input type="date" name="Data_scadenza_permesso" id="Data_scadenza_permesso" mandatory_enabled="#Parametri_citt_scadenza.checked()" label="Data scadenza permesso di soggiorno">
         <br>
         <i>In caso di permesso scaduto: ID ricevuta postale inoltro richiesta di rinnovo</i>
-        <input id="ricevuta_postale" name="ricevuta_postale" label="ID ricevuta postale rinnovo permesso di soggiorno" enabled="#Parametri_citt_scadenza.checked()" style="width: 30%;"> 
+        
+        <input id="Trasforma_data" name="Trasforma_data" dynamic_value="#Data_scadenza_permesso.value().replace(/-/g, '/');" type="hidden">
+        <input id="sposta_data" name="sposta_data" dynamic_value="#Trasforma_data.value().substring(8, 10) + '/' + #Trasforma_data.value().substring(5, 8) + #Trasforma_data.value().substring(0, 4)" type="hidden">>
+
+        <input type="checkbox" id="Verifica_Data" name="Verifica_Data" dynamic_check="giorni_differenza(#sposta_data.value(),#Data_PDF.value()) > 0" style="display:none; pd4ml-display:none;">
+        
+        <input id="ricevuta_postale" name="ricevuta_postale" label="ID ricevuta postale rinnovo permesso di soggiorno" mandatory="#Verifica_Data.checked()" enabled="#Parametri_citt_scadenza.checked()" style="width: 30%;"> 
       </label>
     </div>
 
@@ -518,20 +566,19 @@ versione="1.0|01/01/2019"/>
   <div class="container border bg-light">
     <div class="form-row">
       <div class="col-lg-12">
-        <span class="title"><b>Di essere (requisiti obbligatori):</b> </span>
+        <span class="title"><b>Di essere:</b> </span>
       </div>
     </div>
     <div class="container border bg-light">
       <div class="form-check indent-1 border-bottom">
         <div id="Parametri_Residenza_Provincia" name="Parametri_Residenza_Provincia" label="Entrambe le opzioni relative alla residenza anagrafica sono richieste" mandatory="true"></div>
-        <input group="Parametri_Residenza_Provincia" class="form-check-input" id="Parametri_residenza_3anni" name="Parametri_Residenza_Provincia" type="checkbox" value="1">
+        <input group="Parametri_Residenza_Provincia" class="form-check-input" id="Parametri_residenza_3anni" name="Parametri_Residenza_Provincia" type="radio" value="1">
         <label class="form-check-label" for="Parametri_residenza_3anni"> 
           residente in Provincia di Trento da almeno 3 anni, in via continuativa e senza interruzioni 
         </label>
       </div>
       <div class="form-check indent-1">
-        <div id="Parametri_iscritto_AIRE" name="Parametri_iscritto_AIRE" label="Entrambe le opzioni relative alla residenza anagrafica sono richieste" mandatory="true"></div>
-        <input group="Parametri_iscritto_AIRE" class="form-check-input" id="Parametri_iscrizione" name="Parametri_iscritto_AIRE" type="checkbox" value="2">
+        <input group="Parametri_Residenza_Provincia" class="form-check-input" id="Parametri_iscrizione" name="Parametri_Residenza_Provincia" type="radio" value="2">
         <label class="form-check-label" for="Parametri_iscrizione"> 
           iscritto all’AIRE (anagrafe italiani residenti all’estero) a seguito di emigrazione da un comune della Provincia di Trento, per un periodo complessivo di almeno 3 anni continuativi (nel calcolo dei 3 anni si tiene conto sia dell’iscrizione AIRE che della precedente residenza in Provincia)
         </label>
@@ -567,7 +614,11 @@ versione="1.0|01/01/2019"/>
       </div>
       <div class="form-check indent-1">
         <label> 
-          <i>Con recente sentenza il requisito della residenza decennale in Italia è stato dichiarato illegittimo per contrasto con il diritto europeo. La domanda viene quindi raccolta anche in assenza di tale requisito, in attesa dell’adeguamento della normativa di riferimento. </i>  
+          <i>Con recente ordinanza, non ancora definitiva, il requisito della residenza decennale in Italia è
+            stato dichiarato illegittimo per contrasto con il diritto europeo.
+            Le domande possono quindi essere presentate anche in assenza di tale requisito.
+            L’ammissione di tali domande in graduatoria rimane comunque condizionata dall’evolversi del
+            quadro normativo e giurisprudenziale.</i>  
         </label>
       </div>
     </div>
@@ -609,7 +660,7 @@ versione="1.0|01/01/2019"/>
       <div class="form-check indent-2">
         <input class="form-check-input" id="Parametri_citt_immobiliare" name="Parametri_Esenzione" type="radio" value="2">
         <label class="form-check-label" for="Parametri_citt_immobiliare"> 
-          titolo cessato per esecuzione immobiliare
+          titolo di disponibilità cessato per esecuzione immobiliare
         </label>
       </div>
       <div class="form-check indent-2">
@@ -639,7 +690,7 @@ versione="1.0|01/01/2019"/>
       <div class="container border bg-light">
         <div class="col-lg-12">
           <span>
-            <i>altrimenti indicare tutti i componenti, compreso il richiedente. Il nucleo di appartenenza deve coincidere con quello risultante all’anagrafe, salvi i casi di esenzione previsti per la locazione di alloggio (si veda la III parte):</i>
+            <i>indicare tutti i componenti, compreso il richiedente. Il nucleo di appartenenza deve coincidere con quello risultante all’anagrafe, salvi i casi di esenzione previsti per la locazione di alloggio (si veda la III parte):</i>
           </span>
         </div>
         <div>
@@ -731,7 +782,7 @@ versione="1.0|01/01/2019"/>
 
   <div class="container border bg-light">
     <span>
-      (*) come altri dati, indicare uno dei seguenti codici (o lasciare vuoto se non ricorre nessuno dei casi):
+      (*) come altri dati, indicare uno dei seguenti codici:
       <br>
       1. persona che è stata per almeno 6 mesi consecutivi in strutture, enti, aziende residenziali di cura, assistenza, accoglienza o recupero e che è rientrata in famiglia da non piu di due anni;
       <br>
@@ -794,7 +845,7 @@ versione="1.0|01/01/2019"/>
     <div class="form-row">
       <div class="col-lg-12">
         <label class="title">
-          <b>Anni di lavoro (Indicare il componente del nucleo che ha lavorato per più anni):</b>
+          <b>Anni di lavoro</b> (Indicare il componente del nucleo che ha lavorato per più anni):
         </label>
       </div>
     </div>
@@ -815,7 +866,7 @@ versione="1.0|01/01/2019"/>
           <input class="form-control" id="Componente_Anzianita_CF" name="Componente_Anzianita_CF" format="cf" mandatory="true">
         </div>
         <div class="form-group col-lg-4">
-          <label for="Componente_Anzianita_Data_Nascita"> Codice fiscale </label>
+          <label for="Componente_Anzianita_Data_Nascita"> Data di nascita </label>
           <input class="form-control" id="Componente_Anzianita_Data_Nascita" name="Componente_Anzianita_Data_Nascita" type="date" mandatory="true">
         </div>
         <div class="form-group col-lg-2">
@@ -856,7 +907,7 @@ versione="1.0|01/01/2019"/>
 <div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
-      <span class="title"><b>Di essere in possesso di indicatore <u>ICEF EDILIZIA PUBBLICA anno 2020</u>, pari o inferiore al valore di: 0,23</b></span>
+      <span class="title"><b>Di essere in possesso di indicatore <u>ICEF EDILIZIA PUBBLICA anno 2020</u>, inferiore al valore di: 0,2300</b></span>
     </div>
   </div>
   <div class="container border bg-light">
@@ -866,8 +917,8 @@ versione="1.0|01/01/2019"/>
         <input class="form-control" id="Parametri_ID_domanda" name="Parametri_ID_domanda"  mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()" format="regular_expression" expression="[0-9]{1,15}$" maxlength="15">
       </div>
       <div class="form-group col-lg-6">
-        <label for="Parametri_Valore_ICEF">Valore ICEF: </label>
-        <input class="form-control" id="Parametri_Valore_ICEF" name="Parametri_Valore_ICEF"  mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()" label="Valore ICEF" type="number" min="0" value="0" step=".01">
+        <label for="Parametri_Valore_ICEF">Valore ICEF (“ICEF medio degli ultimi due anni – per l’accesso”): </label>
+        <input class="form-control" id="Parametri_Valore_ICEF" name="Parametri_Valore_ICEF"  mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()" label="Valore ICEF" type="number" maxlength="4" min="0" value="0" step=".01" onkeydown="return false">
       </div>
     </div>
   </div>
@@ -903,7 +954,7 @@ versione="1.0|01/01/2019"/>
     <div class="form-check indent-2 border-bottom">
       <input class="form-check-input" id="cb_Coincidenza_nucleo_badante" name="cb_NON_Coincidenza_nucleo" type="radio" value="1">
       <label class="form-check-label" for="cb_Coincidenza_nucleo_badante"> 
-        genitore residente in provincia che si stacca dal nucleo di origine per formarne uno nuovo con i propro figli
+        genitore residente in provincia che si stacca dal nucleo di origine per formarne uno nuovo con i propri figli
       </label>
     </div>
     <div class="form-check indent-2 border-bottom">
@@ -936,24 +987,37 @@ versione="1.0|01/01/2019"/>
     </div>
   </div>
   <div class="container border bg-light">
-    <div id="radio_Alloggio_Adeguato" name="radio_Alloggio_Adeguato" label="Tipo di alloggio in cui risiede il nucleo" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"> </div>
+    <div id="cb_Alloggio_Idoneo" name="cb_Alloggio_Idoneo" label="Alloggio inidoneo" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"> </div>
     <div class="form-check indent-1 border-bottom">
+      <input class="form-check-input" id="radio_inidoneoSI" name="cb_Alloggio_Idoneo" type="radio" value="1">
+      <label class="form-check-label" for="radio_inidoneoSI"> 
+        SI
+      </label>
+    </div>
+    <div id="radio_Alloggio_Adeguato" name="radio_Alloggio_Adeguato" label="Tipo di alloggio in cui risiede il nucleo" mandatory_enabled="#radio_inidoneoSI.checked()"> </div>
+    <div class="form-check indent-2 border-bottom">
       <input class="form-check-input" id="radio_Alloggio_No_servizi" name="radio_Alloggio_Adeguato" type="radio" value="1">
       <label class="form-check-label" for="radio_Alloggio_No_servizi"> 
         Alloggio senza servizi igienici all’interno o dichiarato inagibile dalla competente autorità
       </label>
     </div>
-    <div class="form-check indent-1 border-bottom">
+    <div class="form-check indent-2 border-bottom">
       <input class="form-check-input" id="radio_Alloggio_improprio" name="radio_Alloggio_Adeguato" type="radio" value="2">
       <label class="form-check-label" for="radio_Alloggio_improprio"> 
         Luogo impropriamente adibito ad abitazione da almeno 2 anni alla data di presentazione della domanda
       </label>
     </div>
-    <div class="form-check indent-1">
+    <div class="form-check indent-2 border-bottom">
       <input class="form-check-input" id="radio_Alloggio_stanzeletto" name="radio_Alloggio_Adeguato" type="radio" value="3">
       <label class="form-check-label" for="radio_Alloggio_stanzeletto"> 
         Alloggio dotato di un numero di stanze da letto inferiore rispetto al minimo previsto per i componenti del nucleo. ­
           Numero stanze da letto: <input id="Parametri_numero_stanze" name="Parametri_numero_stanze" style="width: 8%" type="number" min="1" mandatory_enabled="#radio_Alloggio_stanzeletto.checked()">  
+      </label>
+    </div>
+    <div class="form-check indent-1">
+      <input class="form-check-input" id="radio_inidoneoNO" name="cb_Alloggio_Idoneo" type="radio" value="2">
+      <label class="form-check-label" for="radio_inidoneoNO"> 
+        NO
       </label>
     </div>
   </div>
@@ -968,7 +1032,7 @@ versione="1.0|01/01/2019"/>
 <div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
-      <span class="title"><b>Dichiara:</b> </span>
+      <span class="title"><b>Dichiara (obbligatorio barrare entrambe le caselle):</b> </span>
     </div>
   </div>
   <div class="container border bg-light">
@@ -993,12 +1057,47 @@ versione="1.0|01/01/2019"/>
 
 <div class="space-1"></div>
 
+<!-- INIZIO BLOCCO PENDENZE ITEA -->
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title"><b>Dichiara (obbligatorio barrare tutte le caselle):</b> </span>
+    </div>
+  </div>
+  <div class="container border bg-light">
+    <div class="form-check indent-1 border-bottom">
+      <div id="cb_Debiti_ITEA" name="cb_Debiti_ITEA" label="PARTE II - Pendenze ITEA tutti i requisiti sono obbligatori" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"></div>
+      <input group="cb_Debiti_ITEA" class="form-check-input" id="cb_debiti_NO" name="cb_Debiti_ITEA" type="checkbox" value="1">
+      <label class="form-check-label" for="cb_debiti_NO"> 
+        che nessuno dei componenti maggiorenni del proprio nucleo familiare ha debiti nei confronti di ITEA Spa
+      </label>
+    </div>
+    <div class="form-check indent-1">
+      <input group="cb_Debiti_ITEA" class="form-check-input" id="cb_revocatoNO" name="cb_Debiti_ITEA" type="checkbox" value="2">
+      <label class="form-check-label" for="cb_revocatoNO"> 
+        che al sottoscritto richiedente non è mai stato revocato un alloggio di edilizia pubblica
+      </label>
+    </div>
+    <div class="form-check indent-1">
+      <input group="cb_Debiti_ITEA" class="form-check-input" id="cb_rifiutoNO" name="cb_Debiti_ITEA" type="checkbox" value="2">
+      <label class="form-check-label" for="cb_rifiutoNO"> 
+        che il sottoscritto richiedente non è soggetto al divieto di presentazione della domanda per precedente rifiuto di alloggio di edilizia pubblica
+    </label>
+    </div>
+  </div>
+</div>
+
+<!-- FINE BLOCCO PENDENZE ITEA -->
+
+<div class="space-1"></div>
+
 <!-- INIZIO BLOCCO TIPO ZONA ABITATIVA -->
 
 <div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
-      <span class="title"><b>Dichiara di provenire da una zona ad elevata intensità abitativa e di richiedere alloggio <u>esclusivamente per una zona a bassa intensità abitativa</u> (solo zone di Aldeno, Cimone e Garniga Terme) ai fini dell’ottenimento del punteggio premiante (15 punti) previsto per tale caso:</b> </span>
+      <span class="title"><b>Dichiara di provenire da una zona ad elevata intensità abitativa e di richiedere alloggio <u>esclusivamente per una zona a bassa intensità abitativa</u></b> (solo zone di Aldeno, Cimone e Garniga Terme) <b>ai fini dell’ottenimento del punteggio premiante (15 punti) previsto per tale caso:</b> </span>
     </div>
   </div>
   <div class="container border bg-light">
@@ -1039,150 +1138,155 @@ versione="1.0|01/01/2019"/>
   </div>
   <div class="container border bg-light">
     <div id="radio_Scelta_Zona" name="radio_Scelta_Zona" label="Indicare una preferenza di zona per l'eventuale assegnazione" mandatory_enabled="#cb_domanda_locazione.checked() || #cb_entrambe.checked()"> </div>
-    <div class="form-row border-bottom">
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona1" name="radio_Scelta_Zona" type="radio" value="1">
-            <label class="form-check-label" for="radio_zona1"> 
-            1- Gardolo
-            </label>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona2" name="radio_Scelta_Zona" type="radio" value="2">
-            <label class="form-check-label" for="radio_zona2"> 
-            2- Meano
-            </label>
-        </div>  
-        </div>
-    </div>
-    <div class="form-row border-bottom">
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona3" name="radio_Scelta_Zona" type="radio" value="3">
-            <label class="form-check-label" for="radio_zona3"> 
-            3- Bondone
-            </label>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona4" name="radio_Scelta_Zona" type="radio" value="4">
-            <label class="form-check-label" for="radio_zona4"> 
-            4- Sardagna
-            </label>
-        </div>  
-        </div>
-    </div>
-    <div class="form-row border-bottom">
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona5" name="radio_Scelta_Zona" type="radio" value="5">
-            <label class="form-check-label" for="radio_zona5"> 
-            5- Ravina – Romagnano
-            </label>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona6" name="radio_Scelta_Zona" type="radio" value="6">
-            <label class="form-check-label" for="radio_zona6"> 
-            6- Argentario
-            </label>
-        </div>  
-        </div>
-    </div>
-    <div class="form-row border-bottom">
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona7" name="radio_Scelta_Zona" type="radio" value="7">
-            <label class="form-check-label" for="radio_zona7"> 
-            7- Povo
-            </label>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona8" name="radio_Scelta_Zona" type="radio" value="8">
-            <label class="form-check-label" for="radio_zona8"> 
-            8- Mattarello
-            </label>
-        </div>  
-        </div>
-    </div>
-    <div class="form-row border-bottom">
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona9" name="radio_Scelta_Zona" type="radio" value="9">
-            <label class="form-check-label" for="radio_zona9"> 
-            9- Villazzano
-            </label>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona10" name="radio_Scelta_Zona" type="radio" value="10">
-            <label class="form-check-label" for="radio_zona10"> 
-            10- Oltrefersina
-            </label>
-        </div>  
-        </div>
-    </div>
-    <div class="form-row border-bottom">
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona11" name="radio_Scelta_Zona" type="radio" value="11">
-            <label class="form-check-label" for="radio_zona11"> 
-            11- San Giuseppe – Santa Chiara
-            </label>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona12" name="radio_Scelta_Zona" type="radio" value="12">
-            <label class="form-check-label" for="radio_zona12"> 
-            12- Centro storico – Piedicastello
-            </label>
-        </div>  
-        </div>
-    </div>
-    <div class="form-row border-bottom">
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona13" name="radio_Scelta_Zona" type="radio" value="13">
-            <label class="form-check-label" for="radio_zona13"> 
-            13- Aldeno
-            </label>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona14" name="radio_Scelta_Zona" type="radio" value="14">
-            <label class="form-check-label" for="radio_zona14"> 
-            14- Garniga Terme
-            </label>
-        </div>  
-        </div>
+      <div class="form-row border-bottom">
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona1" name="radio_Scelta_Zona" type="radio" value="1">
+              <label class="form-check-label" for="radio_zona1"> 
+              1- Gardolo
+              </label>
+          </div>
+          </div>
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona2" name="radio_Scelta_Zona" type="radio" value="2">
+              <label class="form-check-label" for="radio_zona2"> 
+              2- Meano
+              </label>
+          </div>  
+          </div>
+      </div>
+      <div class="form-row border-bottom">
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona3" name="radio_Scelta_Zona" type="radio" value="3">
+              <label class="form-check-label" for="radio_zona3"> 
+              3- Bondone
+              </label>
+          </div>
+          </div>
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona4" name="radio_Scelta_Zona" type="radio" value="4">
+              <label class="form-check-label" for="radio_zona4"> 
+              4- Sardagna
+              </label>
+          </div>  
+          </div>
+      </div>
+      <div class="form-row border-bottom">
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona5" name="radio_Scelta_Zona" type="radio" value="5">
+              <label class="form-check-label" for="radio_zona5"> 
+              5- Ravina – Romagnano
+              </label>
+          </div>
+          </div>
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona6" name="radio_Scelta_Zona" type="radio" value="6">
+              <label class="form-check-label" for="radio_zona6"> 
+              6- Argentario
+              </label>
+          </div>  
+          </div>
+      </div>
+      <div class="form-row border-bottom">
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona7" name="radio_Scelta_Zona" type="radio" value="7">
+              <label class="form-check-label" for="radio_zona7"> 
+              7- Povo
+              </label>
+          </div>
+          </div>
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona8" name="radio_Scelta_Zona" type="radio" value="8">
+              <label class="form-check-label" for="radio_zona8"> 
+              8- Mattarello
+              </label>
+          </div>  
+          </div>
+      </div>
+      <div class="form-row border-bottom">
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona9" name="radio_Scelta_Zona" type="radio" value="9">
+              <label class="form-check-label" for="radio_zona9"> 
+              9- Villazzano
+              </label>
+          </div>
+          </div>
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona10" name="radio_Scelta_Zona" type="radio" value="10">
+              <label class="form-check-label" for="radio_zona10"> 
+              10- Oltrefersina
+              </label>
+          </div>  
+          </div>
+      </div>
+      <div class="form-row border-bottom">
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona11" name="radio_Scelta_Zona" type="radio" value="11">
+              <label class="form-check-label" for="radio_zona11"> 
+              11- San Giuseppe – Santa Chiara
+              </label>
+          </div>
+          </div>
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona12" name="radio_Scelta_Zona" type="radio" value="12">
+              <label class="form-check-label" for="radio_zona12"> 
+              12- Centro storico – Piedicastello
+              </label>
+          </div>  
+          </div>
+      </div>
+      <div class="form-row border-bottom">
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona13" name="radio_Scelta_Zona" type="radio" value="13">
+              <label class="form-check-label" for="radio_zona13"> 
+              13- Aldeno
+              </label>
+          </div>
+          </div>
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona14" name="radio_Scelta_Zona" type="radio" value="14">
+              <label class="form-check-label" for="radio_zona14"> 
+              14- Garniga Terme
+              </label>
+          </div>  
+          </div>
+      </div>
+      <div class="form-row">
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona15" name="radio_Scelta_Zona" type="radio" value="15">
+              <label class="form-check-label" for="radio_zona15"> 
+              15- Cimone
+              </label>
+          </div>
+          </div>
+          <div class="col-lg-6">
+          <div class="form-check indent-1">
+              <input class="form-check-input" id="radio_zona16" name="radio_Scelta_Zona" type="radio" value="16">
+              <label class="form-check-label" for="radio_zona16"> 
+              16- Nessuna preferenza / tutte le zone
+              </label>
+          </div>  
+          </div>
+      </div>
     </div>
     <div class="form-row">
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona15" name="radio_Scelta_Zona" type="radio" value="15">
-            <label class="form-check-label" for="radio_zona15"> 
-            15- Cimone
-            </label>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="form-check indent-1">
-            <input class="form-check-input" id="radio_zona16" name="radio_Scelta_Zona" type="radio" value="16">
-            <label class="form-check-label" for="radio_zona16"> 
-            16- Nessuna preferenza / tutte le zone
-            </label>
-        </div>  
-        </div>
-    </div>
+      <div class="col-lg-12">
+        <span><i>La preferenza di zona non è vincolante. In sede di assegnazione dell’alloggio possono essere proposte anche zone diverse da quella opzionata, in relazione agli alloggi che si rendono disponibili</i> </span>
+      </div>
     </div>
   </div>
 </div>
@@ -1197,7 +1301,7 @@ versione="1.0|01/01/2019"/>
   <div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
-      <span class="title"><b>Necessità di alloggio accessibile a persone con disabilità:</b> </span>
+      <span class="title"><b>Necessità di alloggio accessibile a persone con disabilità (sbarrierato):</b> </span>
     </div>
   </div>
   <div class="container border bg-light">
@@ -1294,7 +1398,7 @@ versione="1.0|01/01/2019"/>
 <div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
-      <span class="title"><b>Di essere in possesso di indicatore <u>ICEF EDILIZIA PUBBLICA anno 2020</u>, pari o inferiore al valore di: 0,21</b></span>
+      <span class="title"><b>Di essere in possesso di indicatore <u>ICEF EDILIZIA PUBBLICA anno 2020</u>, inferiore al valore di: 0,2100</b></span>
     </div>
   </div>
   <div class="container border bg-light">
@@ -1305,7 +1409,7 @@ versione="1.0|01/01/2019"/>
       </div>
       <div class="form-group col-lg-6">
         <label for="Parametri_ICEF_domanda_Minima">Valore ICEF: </label>
-        <input class="form-control" id="Parametri_ICEF_domanda_Minima" name="Parametri_ICEF_domanda_Minima" mandatory_enabled="#cb_affitto.checked() || #cb_entrambe.checked()" label="Inserire il valore ICEF per il contributo affitto" type="number" min="0" value="0" step=".01">
+        <input class="form-control" id="Parametri_ICEF_domanda_Minima" name="Parametri_ICEF_domanda_Minima" mandatory_enabled="#cb_affitto.checked() || #cb_entrambe.checked()" label="Inserire il valore ICEF per il contributo affitto" type="number" maxlength="4" min="0" value="0" step=".01" onkeydown="return false">
       </div>
     </div>
   </div>
@@ -1377,7 +1481,7 @@ versione="1.0|01/01/2019"/>
 <div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
-      <span class="title"><b>Che il contratto di locazione per cui si chiede il contributo:</b> </span>
+      <span class="title"><b>Che il contratto di locazione per cui si chiede il contributo: (obbligatorio barrare tutti le caselle)</b> </span>
     </div>
   </div>
   <div class="container border bg-light">
@@ -1433,6 +1537,12 @@ versione="1.0|01/01/2019"/>
         <input class="form-check-input" id="cb_Contratto_annuale" name="cb_Tipo_stipula_Contratto" type="radio" value="2">
         <label class="form-check-label" for="cb_Contratto_annuale"> 
           registrazione annuale. Indicare data di ultima registrazione: <input id="data_registrazione" name="data_registrazione" type="date" mandatory_enabled="#cb_Contratto_annuale.checked()">  
+        </label>
+      </div>
+      <div class="form-check indent-2">
+          <label for="controllo_campi">Verifica inserimento data prima registrazione:</label>
+          <input class="form-control" id="controllo_campi" name="controllo_campi" dynamic_value="giorni_differenza(#data_contratto.value(),#Data_PDF.value()) > 0 ? 'Data inserita corretta.':'ATTENZIONE! La data di prima registrazione deve essere precedente alla data odierna.'" mandatory_enabled="#cb_contratto5.checked()" style="width:100%" >  
+          <input type="checkbox" id="cb_controllo_data_contratto" name="cb_controllo_data_contratto" label="La data di prima registrazione deve essere precedente alla data odierna." mandatory="true" dynamic_check="#controllo_campi.value() == 'Data inserita corretta.' ? true : false" style="display:none; pd4ml-display:none;">
         </label>
       </div>
    </div>
@@ -1494,7 +1604,7 @@ versione="1.0|01/01/2019"/>
     <div class="form-check indent-1 border-bottom">
       <input class="form-check-input" id="radio_Coincidenza_nucleo_Benefici_SI" name="radio_Coincidenza_nucleo_Benefici" type="radio" value="2">
       <label class="form-check-label" for="radio_Coincidenza_nucleo_Benefici_SI"> 
-        ha beneficiato del contributo integrativo su entrambe le graduatorie 2018 e 2019, ma può comunque presentare domanda perché rientra in uno dei seguenti casi::
+        ha beneficiato del contributo integrativo su entrambe le graduatorie 2018 e 2019, ma può comunque presentare domanda perché rientra in uno dei seguenti casi:
       </label>
     </div>
     <div id="cb_NON_Coincidenza_nucleo_Benefici" name="cb_NON_Coincidenza_nucleo_Benefici" label="Motivo non coincidenza nucleo familiare" mandatory_enabled="#radio_Coincidenza_nucleo_Benefici_SI.checked()"> </div>
@@ -1585,15 +1695,9 @@ versione="1.0|01/01/2019"/>
   <div class="container border bg-light">
     <div class="form-row">
       <div class="form-check indent-1 border-bottom">
-          <input class="form-check-input" id="Certificato_Invalidità" name="Certificato_Invalidità" type="checkbox" dynamic_check="#Parametri_citt_invalido.checked()" value="OBBLIGATORIO">
-          <label class="form-check-label" for="Certificato_Invalidità"><b>Certificato/i di invalidità</b></label> 
+          <input class="form-check-input" id="Contratto_Locazione_p1" name="Contratto_Locazione_p1" type="checkbox" value="OBBLIGATORIO" dynamic_check="true">
+          <label class="form-check-label" for="Contratto_Locazione_p1"><b>Contratto di locazione prima pagina</b> (se non già presentato negli anni precedenti)</b></label> 
       </div>
-    </div>
-  <div class="form-row">
-    <div class="form-check indent-1 border-bottom">
-        <input class="form-check-input" id="Contratto_Locazione_p1" name="Contratto_Locazione_p1" type="checkbox" value="OBBLIGATORIO" dynamic_check="true">
-        <label class="form-check-label" for="Contratto_Locazione_p1"><b>Contratto di locazione prima pagina</b> (se non già presentato negli anni precedenti)</b></label> 
-    </div>
     </div>
     <div class="form-row">
       <div class="form-check indent-1 border-bottom">
