@@ -1,6 +1,6 @@
 {% set CodiceModulo = "M47010-DICHIARAZIONE-ULTIMAZIONE-LAVORI" %}
 {% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;m47010.dichiarazione.ultimazione.lavori" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 
@@ -30,6 +30,8 @@ tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47010-DICHIARAZIONE-ULTIMAZIONE-LAVORI"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
+
+<!-- INIZIO DICHIARAZIONE ALLEGATI -->
 
 <meta codice_modulo_figlio="GEN-IMMAGG"
 urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
@@ -170,8 +172,10 @@ tipo_mime="application/pdf"/>
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
-urn_report="report:CSP_SESSION_REPORT"
-/>
+urn_report="report:CSP_SESSION_REPORT"/>
+
+<!-- FINE DICHIARAZIONE ALLEGATI -->
+
 
 {% endblock meta %}
 
@@ -188,6 +192,8 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<!-- INIZIO BLOCCO COMPILATO DA -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <h1 class="Modulo">DICHIARAZIONE DI ULTIMAZIONE LAVORI<br><span style="font-size:75%">(ai sensi degli artt. 93 e 86 della legge provinciale 4 agosto 2015, n. 15)</span></h1>
@@ -227,10 +233,14 @@ urn_report="report:CSP_SESSION_REPORT"
   </table>
 </div>
 
+<!-- FINE BLOCCO COMPILATO DA -->
+
 <input id="Metadati_Tipo_richiedente" name="Metadati_Tipo_richiedente" dynamic_value="#Tipo_richiedente1.checked() ? '1' : (#Tipo_richiedente2.checked() ? '2' : '')" type="hidden"/>
 
 <br>
 <br>
+
+<!-- INIZIO BLOCCO ANAGRAFICA -->
 
 <input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
 <input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
@@ -255,8 +265,12 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="Metadati_AventeTitolo_EMail" name="Metadati_AventeTitolo_EMail" dynamic_value="#AventeTitolo_EMail.value()" type="hidden"/>
 <input id="Metadati_AventeTitolo_EMailPEC" name="Metadati_AventeTitolo_EMailPEC" dynamic_value="#AventeTitolo_EMailPEC.value()" type="hidden"/>
 
+<!-- FINE BLOCCO ANAGRAFICA -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO TITOLARI -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <table class="Modulo" style="border: 1px solid grey">
@@ -288,7 +302,7 @@ urn_report="report:CSP_SESSION_REPORT"
           <input class="" id="Prot_documento{{ prefix }}" name="Prot_documento{{ prefix }}" enabled="true" label="Numero protocollo documento {{ prefix }}" style="width:100%; text-align: center;"/>
         </td>
         <td>
-          <input class="" id="Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%; text-align: center;" format="date"/>
+          <input class="" id="Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%; text-align: center;" type="date"/>
         </td>
       </tr>
       {%- endmacro %}
@@ -308,7 +322,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
         <td>
-          <p style="line-height:1.6;">Esistono ulteriori n°: <input id="NumeroAltriTitoli" name="NumeroAltriTitoli" style="width:5%; text-align: center;" label="Numero altri titoli" enabled="true"/> ulteriori titoli abilitativi relativi all'intervento</p>
+          <p style="line-height:1.6;">Esistono ulteriori n°: <input id="NumeroAltriTitoli" name="NumeroAltriTitoli" style="width:5%; text-align: center;" label="Numero altri titoli" type="number" min="0" enabled="true"/> ulteriori titoli abilitativi relativi all'intervento</p>
         </td>
       </tr>
     </tbody>
@@ -317,8 +331,12 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="Metadati_altri_titoli" name="Metadati_altri_titoli" dynamic_value="#{{ prefix }}_NumeroAltriTitoli.value()" type="hidden"/>
 
+<!-- FINE BLOCCO TITOLARI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO INTERVENTO -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -335,9 +353,13 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO INTERVENTO -->
+
 <br>
 <br>
  
+<!-- INIZIO BLOCCO LOCALIZZAZIONE INTERVENTO -->
+
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_value="'vero'" type="hidden"/>
   
 {{immobili_trento_uniformata.immobile_solo_trento_nocontrollovia("Immobile", "LOCALIZZAZIONE DELL'INTERVENTO" , "IMMOBILE INTERESSATO AI LAVORI")}}
@@ -358,8 +380,12 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
 <input id="Immobile_check_numero_particelle" name="Immobile_check_numero_particelle" dynamic_value="#altre_particelle1.checked() ? '1' : (#altre_particelle2.checked() ? '2' : '' )" type="hidden">
 
+<!-- FINE BLOCCO LOCALIZZAZIONE INTERVENTO -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO TITOLARE DICHIARA -->
 
 <div class="simpatico-block simpatico-query-and-answer">  
   <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
@@ -452,8 +478,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </table>
 </div>
 
+<!-- FINE BLOCCO TITOLARE DICHIARA -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO COMUNICA TECNICO CERTIFICATORE -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <h1 class="Modulo">COMUNICA</h1>
@@ -462,7 +492,7 @@ urn_report="report:CSP_SESSION_REPORT"
     <tbody>
       <tr class="Rigaintestazione">
         <td>
-          <p style="line-height:1.6;">che in data <input class="" id="data_ult_lavori" name="data_ult_lavori" mandatory_enabled="true" size="12" format="date" style="text-align: center;"/> si sono conclusi i lavori previsti dagli atti sopracitati, presentando congiuntamente Segnalazione Certificata di Agibilità SCAGI nei casi in cui risulti necessaria</p>
+          <p style="line-height:1.6;">che in data <input class="" id="data_ult_lavori" name="data_ult_lavori" mandatory_enabled="true" size="12" type="date" style="text-align: center;"/> si sono conclusi i lavori previsti dagli atti sopracitati, presentando congiuntamente Segnalazione Certificata di Agibilità SCAGI nei casi in cui risulti necessaria</p>
         </td>
       </tr>
     </tbody>
@@ -566,8 +596,12 @@ urn_report="report:CSP_SESSION_REPORT"
 <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
 </div>
 
+<!-- FINE BLOCCO COMUNICA TECNICO CERTIFICATORE -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO INFORMA -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <h1 class="Modulo">INFORMA</h1>
@@ -577,15 +611,19 @@ urn_report="report:CSP_SESSION_REPORT"
       <tr class="Rigaintestazione">
         <td>
           <p style="line-height:1.6;">in relazione a quanto previsto dall'art. 88 comma 3 del regolamento l.p. 15/2015 in materia di cambio di coltura, 
-          <br>di aver depositato in data <input class="" id="data_comun_forest" name="data_comun_forest" enabled="true" size="7" format="date"/> la comunicazione di fine lavori all'autorità Forestale</p>
+          <br>di aver depositato in data <input class="" id="data_comun_forest" name="data_comun_forest" enabled="true" size="7" type="date"/> la comunicazione di fine lavori all'autorità Forestale</p>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
 
+<!-- FINE BLOCCO INFORMA -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO ALLEGATI -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
   <tbody>
@@ -775,8 +813,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO ALLEGATI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO PRESA VISIONE -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
@@ -792,8 +834,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO PRESA VISIONE -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO FIRMA + SALVA-->
 
 <div class="simpatico-block">
   <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
@@ -830,17 +876,19 @@ urn_report="report:CSP_SESSION_REPORT"
   </p>
 </div>
 
+<!-- FINE BLOCCO FIRMA + SALVA-->
+
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
-<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
-
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
+<!--
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 <input id="prova_passaggio_dati_padre" name="prova_passaggio_dati_padre" dynamic_value="'dati del padre'" readonly/>
-
 <input id="Metadati_prova" name="Metadati_prova" dynamic_value="#Tipo_documento1.value()"/>
+-->
 {% endblock content %}
