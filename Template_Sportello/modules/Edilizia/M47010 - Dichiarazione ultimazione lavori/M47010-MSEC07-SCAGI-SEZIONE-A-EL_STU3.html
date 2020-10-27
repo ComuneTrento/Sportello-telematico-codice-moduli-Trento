@@ -1,9 +1,9 @@
 {% set CodiceModulo = "M47010-MSEC07-SCAGI-SEZIONE-A-EL" %}
 {% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec07.m47010.scagi.seza.el" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
-<meta campi_firma="AventeTitolo_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -61,7 +61,7 @@ tipo_mime="application/pdf"/>
 
 {% block content %}
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Segnalazione certificata di agibilità - sezione A (firma elettronica)'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#Referente_Cognome.value().toUpperCase() + ' - Segnalazione certificata di agibilità - sezione A (firma elettronica)'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_modulosecondario_senzabollo() }}
 
@@ -72,7 +72,7 @@ tipo_mime="application/pdf"/>
     <tbody>
       <tr class="Rigaintestazione">
         <td>
-          <p style="line-height:1.6;">Il <b>titolare,</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="97"/></p>
+          <p style="line-height:1.6;">Il <b>tecnico,</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#Referente_Cognome.value() + ' ' + #Referente_Nome.value()" size="97"/></p>
         </td>
       </tr>
     </tbody>
@@ -249,13 +249,13 @@ tipo_mime="application/pdf"/>
       {% set prefix = prefix|string %}
       <tr>
         <td>
-          <input class="" id="Tipo_documento{{ prefix }}" name="Tipo_documento{{ prefix }}" style="width:100%;" readonly/>
+          <input class="" id="Referente99_Tipo_documento{{ prefix }}" name="Tipo_documento{{ prefix }}" style="width:100%;" readonly/>
         </td>
         <td>
-          <input class="" id="Prot_documento{{ prefix }}" name="Prot_documento{{ prefix }}"  style="width:100%; text-align: center;" readonly/>
+          <input class="" id="Referente99_Prot_documento{{ prefix }}" name="Prot_documento{{ prefix }}"  style="width:100%; text-align: center;" readonly/>
         </td>
         <td>
-          <input class="" id="Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" style="width:100%; text-align: center;" readonly/>
+          <input class="" id="Referente99_Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" style="width:100%; text-align: center;" type="date" readonly/>
         </td>
       </tr>
       {%- endmacro %}
@@ -270,7 +270,7 @@ tipo_mime="application/pdf"/>
     <tbody>
       <tr class="Rigaintestazioneridotta">
         <td>
-          <p>e agli ulteriori <input id="NumeroAltriTitoli" name="NumeroAltriTitoli" style="width:5%; text-align: center;" readonly/> titoli abitativi relativi all'intervento indicati nell'apposito allegato</p>
+          <p>e agli ulteriori <input id="NumeroAltriTitoli" name="NumeroAltriTitoli" dynamic_value="#Referente99_altri_titoli.value()" style="width:5%; text-align: center;" readonly/> titoli abitativi relativi all'intervento indicati nell'apposito allegato</p>
         </td>
       </tr>
     </tbody>
@@ -523,7 +523,7 @@ tipo_mime="application/pdf"/>
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -553,19 +553,16 @@ tipo_mime="application/pdf"/>
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
 <!-- Passaggio dati dal principale senza usare metadati -->
-<input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden" readonly/>
-<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
-<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden" readonly/>
-
-<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden"  readonly/>
-<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden"  readonly/>
-<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden"  readonly/>
-<input id="Progettista_Nome" name="Progettista_Nome" type="hidden"  readonly/>
-<input id="Progettista_LuogoNascita" name="Progettista_LuogoNascita" type="hidden"  readonly/>
-<input id="Progettista_Attributi_Albo" name="Progettista_Attributi_Albo" type="hidden"  readonly/>
-<input id="Progettista_Attributi_AlNumero" name="Progettista_Attributi_AlNumero" type="hidden"  readonly/>
-<input id="Progettista_Attributi_DellaProvincia" name="Progettista_Attributi_DellaProvincia" type="hidden"  readonly/>
-<input id="Progettista_Indirizzocompleto" name="Progettista_Indirizzocompleto" type="hidden"  readonly/>
+{{ utils.passaggio_metadati() }}
+<input id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" type="hidden" readonly/>
+<input id="Referente_Cognome" name="Referente_Cognome" type="hidden" readonly/>
+<input id="Referente_Nome" name="Referente_Nome" type="hidden" readonly/>
+<input id="Referente_TitoloPersona" name="Referente_TitoloPersona" type="hidden"  readonly/>
+<input id="Referente_LuogoNascita" name="Referente_LuogoNascita" type="hidden"  readonly/>
+<input id="Referente_Attributi_Albo" name="Referente_Attributi_Albo" type="hidden"  readonly/>
+<input id="Referente_Attributi_AlNumero" name="Referente_Attributi_AlNumero" type="hidden"  readonly/>
+<input id="Referente_Attributi_DellaProvincia" name="Referente_Attributi_DellaProvincia" type="hidden"  readonly/>
+<input id="Referente_Indirizzocompleto" name="Referente_Indirizzocompleto" type="hidden"  readonly/>
 
 <input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" type="hidden" readonly/>
 <input id="Immobile_ComuneCatastale_esteso" name="Immobile_ComuneCatastale_esteso" type="hidden" readonly/>
@@ -583,9 +580,11 @@ tipo_mime="application/pdf"/>
 
 <input id="Immobile_check_numero_particelle" name="Immobile_check_numero_particelle" type="hidden"/>
 
-<input id="cf_tecnico_firmatario_scagi" name="cf_tecnico_firmatario_scagi" type="hidden" readonly/>
+<input id="Referente99_cf_tecnico_firmatario_scagi" name="Referente99_cf_tecnico_firmatario_scagi" type="hidden" readonly/>
 
-<input id="nominativo_tecnico_firmatario_scagi" name="nominativo_tecnico_firmatario_scagi" type="hidden" readonly/>
-<input id="cognome_tecnico_firmatario_scagi" name="cognome_tecnico_firmatario_scagi" type="hidden" readonly/>
+<input id="Referente99_altri_titoli" name="Referente99_altri_titoli" type="hidden" readonly/>
+
+<input id="Referente99_nominativo_tecnico_firmatario_scagi" name="Referente99_nominativo_tecnico_firmatario_scagi" type="hidden" readonly/>
+<input id="Referente99_cognome_tecnico_firmatario_scagi" name="Referente99_cognome_tecnico_firmatario_scagi" type="hidden" readonly/>
 
 {% endblock content %}

@@ -1,9 +1,9 @@
 {% set CodiceModulo = "M47010-MSEC11-CONFORMITA-IMPIANTI-EL" %}
 {% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec11.m47010.conformita.impianti.el" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
-<meta campi_firma="AventeTitolo_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -168,7 +168,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 {% block content %}
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Dichiarazione di conformità degli impianti (firma elettronica)'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#Referente_Cognome.value().toUpperCase() + ' - Dichiarazione di conformità degli impianti (firma elettronica)'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_modulosecondario_senzabollo() }}
 
@@ -181,7 +181,7 @@ urn_report="report:CSP_SESSION_REPORT"
     <tbody>
       <tr class="Rigaintestazione">
         <td>
-          <p style="line-height:1.6;">Il <b>titolare,</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="97"/></p>
+          <p style="line-height:1.6;">Il <b>tecnico,</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#Referente_Cognome.value() + ' ' + #Referente_Nome.value()" size="97"/></p>
         </td>
       </tr>
     </tbody>
@@ -352,13 +352,13 @@ urn_report="report:CSP_SESSION_REPORT"
       {% set prefix = prefix|string %}
       <tr>
         <td>
-          <input class="" id="Tipo_documento{{ prefix }}" name="Tipo_documento{{ prefix }}" style="width:100%;" readonly/>
+          <input class="" id="Referente99_Tipo_documento{{ prefix }}" name="Tipo_documento{{ prefix }}" style="width:100%;" readonly/>
         </td>
         <td>
-          <input class="" id="Prot_documento{{ prefix }}" name="Prot_documento{{ prefix }}"  style="width:100%; text-align: center;" readonly/>
+          <input class="" id="Referente99_Prot_documento{{ prefix }}" name="Prot_documento{{ prefix }}"  style="width:100%; text-align: center;" readonly/>
         </td>
         <td>
-          <input class="" id="Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" style="width:100%; text-align: center;" readonly/>
+          <input class="" id="Referente99_Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" style="width:100%; text-align: center;" type="date" readonly/>
         </td>
       </tr>
       {%- endmacro %}
@@ -614,7 +614,7 @@ urn_report="report:CSP_SESSION_REPORT"
   </table>
 </div>
 
-<input id="cf_firmat_allegati" name="cf_firmat_allegati" dynamic_value="#firmatario_allegati_impianti1.checked() ? #Progettista_CodiceFiscale.value() : (#firmatario_allegati_impianti2.checked() ? #cf_tecnico_firmatario_scagi.value() : (#firmatario_allegati_impianti3.checked() ? #Tecn_firm_alleg_CodiceFiscale.value() : ''))" style="width:50%;"/>
+<input id="cf_firmat_allegati" name="cf_firmat_allegati" dynamic_value="#firmatario_allegati_impianti1.checked() ? #Referente_CodiceFiscale.value() : (#firmatario_allegati_impianti2.checked() ? #cf_tecnico_firmatario_scagi.value() : (#firmatario_allegati_impianti3.checked() ? #Tecn_firm_alleg_CodiceFiscale.value() : ''))" style="width:50%;"/>
 
 
 <br>
@@ -648,7 +648,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -679,18 +679,14 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
 <!-- Passaggio dati dal principale senza usare metadati -->
-<input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden" readonly/>
-<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
-<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden" readonly/>
+<input id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" type="hidden" readonly/>
+<input id="Referente_Cognome" name="Referente_Cognome" type="hidden" readonly/>
+<input id="Referente_Nome" name="Referente_Nome" type="hidden" readonly/>
+<input id="Referente_TitoloPersona" name="Referente_TitoloPersona" type="hidden" readonly/>
 
-<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden" readonly/>
-<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden" readonly/>
-<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden" readonly/>
-<input id="Progettista_Nome" name="Progettista_Nome" type="hidden" readonly/>
-
-<input id="nominat_tecnico_abil" name="nominat_tecnico_abil" type="hidden" readonly/>
-<input id="cf_tecnico_firmatario_scagi" name="cf_tecnico_firmatario_scagi" type="hidden" readonly/>
-<input id="nominativo_tecnico_firmatario_scagi" name="nominativo_tecnico_firmatario_scagi"type="hidden" readonly/>
+<input id="Referente99_nominat_tecnico_abil" name="Referente99_nominat_tecnico_abil" type="hidden" readonly/>
+<input id="Referente99_cf_tecnico_firmatario_scagi" name="Referente99_cf_tecnico_firmatario_scagi" type="hidden" readonly/>
+<input id="Referente99_nominativo_tecnico_firmatario_scagi" name="Referente99_nominativo_tecnico_firmatario_scagi"type="hidden" readonly/>
 
 <input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" type="hidden" readonly/>
 <input id="Immobile_ComuneCatastale_esteso" name="Immobile_ComuneCatastale_esteso" type="hidden" readonly/>

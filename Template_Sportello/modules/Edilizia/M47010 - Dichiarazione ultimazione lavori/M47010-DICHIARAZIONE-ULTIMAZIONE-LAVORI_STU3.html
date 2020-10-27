@@ -71,6 +71,7 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<!-- TODO DA MODIFICARE URN E CODICE MODULO -->
 <meta codice_modulo_figlio="GEN-INTAGG-AU-NUOVO"
 urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.intestatari.firma.autografa.nuovo"
 name="GLOBO_modulofiglio"
@@ -360,13 +361,13 @@ urn_report="report:CSP_SESSION_REPORT"/>
       {% set prefix = prefix|string %}
       <tr>
         <td>
-          <input class="" id="Tipo_documento{{ prefix }}" name="Tipo_documento{{ prefix }}" enabled="true" label="Dati documento {{ prefix }}" style="width:100%;"/>
+          <input class="" id="Referente99_Tipo_documento{{ prefix }}" name="Referente99_Tipo_documento{{ prefix }}" enabled="true" label="Dati documento {{ prefix }}" style="width:100%;"/>
         </td>
         <td>
-          <input class="" id="Prot_documento{{ prefix }}" name="Prot_documento{{ prefix }}" enabled="true" label="Numero protocollo documento {{ prefix }}" style="width:100%; text-align: center;"/>
+          <input class="" id="Referente99_Prot_documento{{ prefix }}" name="Referente99_Prot_documento{{ prefix }}" enabled="true" label="Numero protocollo documento {{ prefix }}" style="width:100%; text-align: center;"/>
         </td>
         <td>
-          <input class="" id="Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%; text-align: center;" type="date"/>
+          <input class="" id="Referente99_Data_documento{{ prefix }}" name="Referente99_Data_documento{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%; text-align: center;" type="date"/>
         </td>
       </tr>
       {%- endmacro %}
@@ -393,7 +394,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
   </table>
 </div>
 
-<input id="Metadati_altri_titoli" name="Metadati_altri_titoli" dynamic_value="#{{ prefix }}_NumeroAltriTitoli.value()" type="hidden"/>
+<input id="Referente99_altri_titoli" name="Referente99_altri_titoli" dynamic_value="#{{ prefix }}_NumeroAltriTitoli.value()" type="hidden"/>
 
 <!-- FINE BLOCCO TITOLARI -->
 
@@ -427,8 +428,14 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_value="'vero'" type="hidden"/>
   
 {{immobili_trento_uniformata.immobile_solo_trento_nocontrollovia("Immobile", "LOCALIZZAZIONE DELL'INTERVENTO" , "IMMOBILE INTERESSATO AI LAVORI")}}
-<!--
 <input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" dynamic_value="#Immobile_TipoImmobile.value() == 'S' ? 'Porzione di edificio' : (#Immobile_TipoImmobile.value() == 'E' ? 'Intero edificio' : (#Immobile_TipoImmobile.value() == 'F' ? 'Particella fondiaria' : ''))" type="hidden"/>
+<input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? #Immobile_Localita_part_fondiaria.value() : #Immobile_Nomevia_esteso.value()" type="hidden"/>
+<input id="Immobile_numeroCivico" name="Immobile_numeroCivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Civico.value()" type="hidden"/>
+<input id="Immobile_Barracivico" name="Immobile_Barracivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
+<input id="Immobile_check_numero_particelle" name="Immobile_check_numero_particelle" dynamic_value="#altre_particelle1.checked() ? '1' : (#altre_particelle2.checked() ? '2' : '' )" type="hidden">
+
+<!--
+<input id="Metadati_Immobile_Barrato" name="Metadati_Immobile_Barrato" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
 <input id="Metadati_Immobile_TipoImmobile" name="Metadati_Immobile_TipoImmobile" dynamic_value="#Immobile_TipoImmobile.value() == 'S' ? 'Porzione di edificio' : (#Immobile_TipoImmobile.value() == 'E' ? 'Intero edificio' : (#Immobile_TipoImmobile.value() == 'F' ? 'Particella fondiaria' : ''))" type="hidden"/>
 <input id="Metadati_Immobile_ComuneCatastale_esteso" name="Metadati_Immobile_ComuneCatastale_esteso" dynamic_value="#Immobile_ComuneCatastale_esteso.value()" type="hidden"/>
 <input id="Metadati_Immobile_CatNumero" name="Metadati_Immobile_CatNumero" dynamic_value="#Immobile_CatNumero.value()" type="hidden"/>
@@ -439,12 +446,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="Metadati_Immobile_Comune" name="Metadati_Immobile_Comune" dynamic_value="'TRENTO'" type="hidden"/>
 <input id="Metadati_Immobile_Nomevia_esteso" name="Metadati_Immobile_Nomevia_esteso" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? #Immobile_Localita_part_fondiaria.value() : #Immobile_Nomevia_esteso.value()" type="hidden"/>
 <input id="Metadati_Immobile_Civico" name="Metadati_Immobile_Civico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Civico.value()" type="hidden"/>
-<input id="Metadati_Immobile_Barrato" name="Metadati_Immobile_Barrato" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
-<input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? #Immobile_Localita_part_fondiaria.value() : #Immobile_Nomevia_esteso.value()" type="hidden"/>
-<input id="Immobile_numeroCivico" name="Immobile_numeroCivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Civico.value()" type="hidden"/>
-<input id="Immobile_Barracivico" name="Immobile_Barracivico" dynamic_value="#Immobile_Localita_part_fondiaria.value() != '' ? '' : #Immobile_Barrato.value()" type="hidden"/>
-<input id="Immobile_check_numero_particelle" name="Immobile_check_numero_particelle" dynamic_value="#altre_particelle1.checked() ? '1' : (#altre_particelle2.checked() ? '2' : '' )" type="hidden">
 -->
+
 <!-- FINE BLOCCO LOCALIZZAZIONE INTERVENTO -->
 
 <br>
