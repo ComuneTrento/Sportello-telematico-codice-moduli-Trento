@@ -4,8 +4,8 @@
 
 {% block meta %}
 
-<meta campi_firma="Referente80_CodiceFiscale"
-campi_firma_label="Il richiedente"
+<meta campi_firma="Referente_CodiceFiscale"
+campi_firma_label="Il progettista/tecnico incaricato delegato"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -30,6 +30,8 @@ tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47563-COMUNICAZIONE-INIZIO-LAVORI-ASSEVERATA"
 verifica_pagamento="NO"
 versione="1.0|09/02/2018" />
+
+<!-- DICHIARAZIONE MOD SECONDARI -->
 
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
@@ -96,11 +98,13 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<!--
 <meta codice_modulo_figlio="GEN-IMMAGG-EL"
 urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
+-->
 
 <meta codice_modulo_figlio="GEN-IMMAGG-DELEGA"
 urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.con.delega"
@@ -119,6 +123,19 @@ urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.intestatari.firma
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
+
+<!-- DICHIARAZIONE ALLEGATI -->
+
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
+descrizione_estesa="Allegato - Modulo compilato e firmato elettronicamente"
+filename="Modulo_compilato_firma_elettronica.pdf"
+firmato="SI"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-EL"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-DOC-DIRITTO-CONTRATTUALE"
 urn_allegato="document:c_l378:allegato.doc.diritto.contrattuale"
@@ -189,9 +206,9 @@ tipo_mime="application/pdf"/>
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
-urn_report="report:CSP_SESSION_REPORT"
-/>
+urn_report="report:CSP_SESSION_REPORT"/>
 
+<!-- FINE DICHIARAZIONE ALLEGATI/MOD SECONDARI -->
 
 {% endblock meta %}
 
@@ -203,35 +220,38 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input class="Modulo" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + '(' + #AventeTitolo_CodiceFiscale.value() + ')' + ' - CILA'" id="Oggetto_parte1" name="Oggetto_parte1" style="width:100%;" type="hidden"/>
-<input class="Modulo" dynamic_value="#Immobile_TipoImmobile.value() == 'F' ? 'P.f.:' + ' ' + #Immobile_CatNumero.value() : (#Immobile_TipoImmobile.value() == 'S' || #Immobile_TipoImmobile.value() == 'E' ? 'P.ed.:' + ' ' + #Immobile_CatNumero.value() : '')" id="Oggetto_parte2" name="Oggetto_parte2" style="width:100%;" type="hidden"/> 
-<input class="Modulo" dynamic_value="#Immobile_CatPM.value() == '' ? '' : '- P.M.: ' + #Immobile_CatPM.value()" id="Oggetto_parte3" name="Oggetto_parte3" style="width:100%;" type="hidden"/>
-<input class="Modulo" dynamic_value="#Oggetto_parte1.value() + ' - ' + #Oggetto_parte2.value() + #Oggetto_parte3.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/> 
+<input dynamic_value="'CILA - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ') - Particella Edificale: Comune ' + #Immobile_ComuneCatastale_esteso.value() + '/' + #Immobile_CatNumero.value() + ' - Delegato ' + #Referente_CodiceFiscale.value().toUpperCase()" id="Oggetto" name="Oggetto" type="hidden" />
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+{{ intestazioni.intestazione_moduloprincipale_conbollo() }}
 
-<h1 class="Modulo" style="text-align: center;">COMUNICAZIONE INIZIO LAVORI ASSEVERATA<br>
+<h1 class="Modulo" style="text-align: center;">COMUNICAZIONE INIZIO LAVORI ASSEVERATA (CILA)<br>
   <span style="font-size:75%">(art. 78 bis della legge provinciale del 4 agosto 2015, n. 15)</span>
 </h1>
 
 <br>
 
-<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="#AventeTitolo_Telefono.value() == ''" type="hidden" />
-<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="#AventeTitolo_Fisso.value() == ''" type="hidden" />
-<!--<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="#Tipo_richiedente1.checked()" type="hidden" />-->
+<!-- INIZIO BLOCCO ANAGRAFICA -->
+
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
 <!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
 
-{{anagrafica_trento_uniformata.titolare_segnatura("AventeTitolo","Il/La titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio","Procuratore","Amministratore di sostegno"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+{{anagrafica_trento_uniformata.titolare_segnatura("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Persona Giuridica"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}}  
+
+<!-- FINE BLOCCO ANAGRAFICA -->
 
 <br>
+
+<!-- INIZIO BLOCCO TITOLARE -->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="3">
+      <td colspan="2">
         <p style="line-height:1.6;"><b>Il/La titolare:</b></p>
       </td>
     </tr>
@@ -240,45 +260,29 @@ urn_report="report:CSP_SESSION_REPORT"
         <div id="tit_firma_digit" name="tit_firma_digit" label="Il titolare possiede dispositivo di firma digitale?" mandatory_enabled="true"> </div>
         <input group="tit_firma_digit" id="tit_firma_digit1" name="tit_firma_digit" type="radio" value="1" />
       </td>
-      <td colspan="2">
-        <p style="line-height:1.8;">non possiede alcun dispositivo di firma digitale, pertanto <b>delega il progettista</b> a firmare digitalmente la CILA</p>
+      <td>
+        <p style="line-height:1.8;">non possiede alcun dispositivo di firma digitale</p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
-        <input group="tit_firma_digit" id="tit_firma_digit2" name="tit_firma_digit" type="radio" value="2"/>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="tit_firma_digit" id="tit_firma_digit2" name="tit_firma_digit" type="radio" value="2" />
       </td>
-      <td colspan="2">
+      <td>
         <p style="line-height:1.8;">possiede dispositivo di firma digitale</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="delega_progett" name="delega_progett" label="Il titolare delega il progettista?" mandatory_enabled="#tit_firma_digit2.checked()"> </div>
-        <input group="delega_progett" id="delega_progett_no" name="delega_progett" type="radio" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.8;">il titolare firma la CILA con la propria firma digitale</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <input group="delega_progett" id="delega_progett_si" name="delega_progett" type="radio" value="2" />
-      </td>
-      <td>
-        <p style="line-height:1.8;">il titolare <b>delega il progettista</b> a firmare digitalmente la CILA</p>
       </td>
     </tr>
   </tbody>
 </table>
 
-<input id="Referente80_CodiceFiscale" name="Referente80_CodiceFiscale" enabled="#tit_firma_digit1.checked() || #delega_progett_no.checked() || #delega_progett_si.checked()" dynamic_value="#tit_firma_digit2.checked() and #delega_progett_no.checked() ? #AventeTitolo_CodiceFiscale.value() : #Referente_CodiceFiscale.value()" style="width:30%;"  readonly/>
+<input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" style="width:30%;" type="hidden" readonly/>
 
-<input id="Tipo_compilante" name="Tipo_compilante" dynamic_value="#delega_progett_no.checked() ? 'titolare' : 'progettista/tecnico incaricato delegato'" style="width:30%;" readonly/>
-<!--<input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" style="width:30%;" type="hidden" readonly/>-->
+<!-- FINE BLOCCO TITOLARE -->
 
 <br>
 <br>
+
+<!-- INIZIO BLOCCO REFERENTE TECNICO INCARICATO -->
 
 <input id="Referente_checkobbligatorio" name="Referente_checkobbligatorio" dynamic_check="true" type="hidden" />
 <input id="Referente_checkabilitato" name="Referente_checkabilitato" dynamic_check="true" type="hidden" />
@@ -323,17 +327,25 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO REFERENTE TECNICO INCARICATO -->
+
 <br>
 <br>
   
+<!-- INIZIO BLOCCO DATI DIR LAVORI -->
+
 <input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio" type="hidden" />
 <input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="!#Referente_direttorelavori_check.checked()" type="hidden" />
 {{anagrafica_trento_uniformata.solo_nominativo("Referente1","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
 
 <input id="Referente1_Ruolo" name="Referente1_Ruolo" dynamic_value="'Direttore lavori'" type="hidden" />
 
+<!-- FINE BLOCCO DATI DIR LAVORI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO IMPRESA ESECUTRICE -->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -381,8 +393,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO IMPRESA ESECUTRICE -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO LOCALIZZAZIONE INTERVENTO -->
 
 <input id="Immobile_DatiCatastaliObbligatori" name="Immobile_DatiCatastaliObbligatori" dynamic_value="'vero'" type="hidden"/>
 {{ immobili_trento_uniformata.immobile_solo_trento("Immobile", "LOCALIZZAZIONE DELL'INTERVENTO" ,"I lavori interessano le seguenti realtà immobiliari") }}
@@ -398,7 +414,7 @@ urn_report="report:CSP_SESSION_REPORT"
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;"><b>DESCRIZIONE DELL'INTERVENTO</b></p>
+        <p style="line-height:1.6;"><b>DESCRIZIONE DELL'INTERVENTO</b> (descrizione sommaria dei lavori illustrati dettagliatamente nella relazione tecnica allegata)</p>
       </td>
     </tr>
     <tr>
@@ -409,14 +425,18 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- INIZIO BLOCCO LOCALIZZAZIONE INTERVENTO -->
+
 <br>
 <br>
   
+<!-- INIZIO BLOCCO DICHIARAZIONI -->
+
 <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;">Il <b>titolare</b>, per mezzo del progettista/tecnico incaricato delegato, consapevole delle sanzioni penali previste dal codice penale e dalle leggi speciali in materia per le dichiarazioni non veritiere e per la falsità in atti, risponde ai sensi degli articoli 47 e 76 del D.P.R. 28 dicembre 2000, n. 445 recante <i>"Testo unico delle disposizioni legislative e regolamentari in materia di documentazione amministrativa"</i>, per le attestazioni e le dichiarazioni contenute nel presente modello, fatta salva ogni altra forma di responsabilità prevista dall'ordinamento vigente</p>
+        <p style="line-height:1.6;">Il <b>titolare</b> consapevole delle sanzioni penali previste dal codice penale e dalle leggi speciali in materia per le dichiarazioni non veritiere e per la falsità in atti, risponde ai sensi degli articoli 47 e 76 del D.P.R. 28 dicembre 2000, n. 445 recante <i>"Testo unico delle disposizioni legislative e regolamentari in materia di documentazione amministrativa"</i>, per le attestazioni e le dichiarazioni contenute nel presente modello, fatta salva ogni altra forma di responsabilità prevista dall'ordinamento vigente</p>
       </td>
     </tr>
   </tbody>
@@ -503,8 +523,12 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="Referente99_altri_soggetti" name="Referente99_altri_soggetti" dynamic_value="#Parametri_Altro_titolo_reale1.checked() ? 'ALTRI SOGGETTI' : ''" type="hidden"/>
 
+<!-- FINE BLOCCO DICHIARAZIONI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO STATO AUTORIZZATO O ATTUALE -->
 
 <table class="Modulo" style="border:1px solid grey;">
   <tbody>
@@ -538,8 +562,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO STATO AUTORIZZATO O ATTUALE -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO OPERE PARTI COMUNI -->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -609,14 +637,18 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Assenso_compropr" id="Assenso_compropr_si" name="Assenso_compropr" type="radio" value="2" />
       </td>
       <td colspan="2">
-        <p style="line-height:1.6;">necessita di atto di assenso dei comproprietari,che si allega</p>
+        <p style="line-height:1.6;">necessita di atto di assenso dei comproprietari, che si allega</p>
       </td>
     </tr>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO OPERE PARTI COMUNI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO OBBLIGHI IN MATERIA DI SALUTE -->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -625,13 +657,13 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height:1.6;"><b>3 - OBBLIGHI IN MATERIA DI SALUTE E SICUREZZA NEI LUOGHI DI LAVORO</b></p>
       </td>
     </tr>
-    <tr>
+    <tr class="Rigaintestazioneridotta">
       <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="9">
         <div id="Obblighi_sicurezza" name="Obblighi_sicurezza" label="Obblighi in materia di sicurezza" mandatory_enabled="true"> </div>
         <input group="Obblighi_sicurezza" id="Obblighi_sicurezza1" name="Obblighi_sicurezza" type="radio" value="1" />
       </td>
       <td colspan="3">
-        <p style="line-height:1.6;">l’intervento <b>ricade nell’ambito di applicazione del d.lgs. n. 81/2008</b> e pertanto</p>
+        <p style="line-height:1.6;"><b>l’intervento ricade nell’ambito di applicazione del d.lgs. n. 81/2008 e pertanto:</b></p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -675,7 +707,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Notifica_richiesta" id="Notifica_richiesta_si" name="Notifica_richiesta" type="radio" value="2" />
       </td>
       <td colspan="2">
-        <p style="line-height:1.6;">dichiara che l’intervento <b>è soggetto</b> all’invio della notifica</p>
+        <p style="line-height:1.6;">dichiara che l’intervento <b>è soggetto</b> all’invio della notifica e pertanto:</p> 
       </td>
     </tr>
     <tr>
@@ -684,7 +716,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Scelta_alleg_o_estr_not" id="Scelta_alleg_o_estr_not1" name="Scelta_alleg_o_estr_not" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;">Allega alla presente segnalazione la documentazione necessaria per la notifica, il cui contenuto sarà riprodotto su apposita tabella esposta in cantiere per tutta la durata dei lavori, in luogo visibile dall'esterno</p>
+        <p style="line-height:1.6;"><b>Allega</b> alla presente segnalazione <b>la documentazione necessaria per la notifica</b>, il cui contenuto sarà riprodotto su apposita tabella esposta in cantiere per tutta la durata dei lavori, in luogo visibile dall'esterno</p>
       </td>
     </tr>
     <tr>
@@ -692,7 +724,9 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Scelta_alleg_o_estr_not" id="Scelta_alleg_o_estr_not2" name="Scelta_alleg_o_estr_not" type="radio" value="2" />       
       </td>
       <td>
-        <p style="line-height:1.6;">Indica di seguito gli estremi della notifica, già trasmessa in data <input class="" type="date" id="data_notifica" label="Data trasmissione della notifica" mandatory_enabled="#Scelta_alleg_o_estr_not2.checked()" name="data_notifica" size="7"/>, con prot./cod. n. <input class="" id="num_prot" label="Num. prot. della notifica" mandatory_enabled="#Scelta_alleg_o_estr_not2.checked()" name="num_prot" size="11"/>, il cui contenuto sarà riprodotto su apposita tabella esposta in cantiere per tutta la durata dei lavori, in luogo visibile dall'esterno</p>
+        <p style="line-height:1.6;"><b>Indica di seguito gli estremi della notifica</b>, il cui contenuto sarà riprodotto su apposita tabella esposta in cantiere per tutta la durata dei lavori, in luogo visibile dall'esterno, 
+          già trasmessa in data <input class="" type="date" id="data_notifica" label="Data trasmissione della notifica" mandatory_enabled="#Scelta_alleg_o_estr_not2.checked()" name="data_notifica" size="7"/>, con prot./cod. n. <input class="" id="num_prot" label="Num. prot. della notifica" mandatory_enabled="#Scelta_alleg_o_estr_not2.checked()" name="num_prot" size="11"/>
+        </p>
       </td>
     </tr>
     <tr>
@@ -706,8 +740,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO OBBLIGHI IN MATERIA DI SALUTE -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO LIBRO FONDIARIO -->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -730,14 +768,21 @@ urn_report="report:CSP_SESSION_REPORT"
         <input group="Vincoli_fondiari" id="Vincoli_fondiari_si" name="Vincoli_fondiari" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height:1.6;"><b>sussistono</b> i seguenti vincoli:<br> <textarea class="inputNormal" id="Elenco_vincoli" name="Elenco_vincoli" label="Vincoli libro fondiario esistenti" style="width:99%;height:3cm" mandatory_enabled="#Vincoli_fondiari_si.checked()"></textarea></p>
+        <p style="line-height:1.6;"><b>sussistono i seguenti vincoli</b>:
+          <br> 
+          <textarea class="inputNormal" id="Elenco_vincoli" name="Elenco_vincoli" label="Vincoli libro fondiario esistenti" style="width:99%;height:3cm" mandatory_enabled="#Vincoli_fondiari_si.checked()"></textarea>
+        </p>
       </td>
     </tr>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO LIBRO FONDIARIO -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO COMUNICA: QUALIFICAZIONE INTERVENTO -->
 
 <h1 class="Modulo">COMUNICA</h1>
 
@@ -781,8 +826,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO COMUNICA: QUALIFICAZIONE INTERVENTO -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO COMUNICA: PRESENTAZIONE INIZIO LAVORI -->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -856,8 +905,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO COMUNICA: PRESENTAZIONE INIZIO LAVORI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO ALLEGATI -->
 
 <table class="Modulo" name="Allegati" style="border: 1px solid grey">
   <tbody>
@@ -877,6 +930,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Indicare il numero di documenti</p>
       </td>
     </tr>
+    <!--
     <tr>
       <td style="vertical-align: top; text-align: center;">
         <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" value="OBBLIGATORIO"/>
@@ -894,12 +948,43 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
+    -->
+    
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.8;">Modulo secondario - <b>Delega al progettista/tecnico incaricato</b> firmato:
+          <br>- dal progettista/tecnico incaricato con firma digitale
+          <br>- dal titolare con
+          <input class="" id="Tipo_Firma_delega" name="Tipo_Firma_delega" style="width: 40%;" label="Tipo firma modulo di delega" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" readonly />
+        </p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" obbligatorio="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #Tipo_Firma_delega.value() == 'firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" />
+        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" obbligatorio="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #Tipo_Firma_delega.value() == 'firma digitale' ? 'OBBLIGATORIO' : ''" type="hidden" />
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit2.checked()" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>Copia del modulo principale</b> firmata dal titolare con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="#Modulo_compilato_firmato.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
         <input dynamic_check="true" enabled="true" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista incaricato</b>, firmato con <b>firma digitale</b></p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista incaricato</b>, firmato con <b>firma digitale TODO Rimanda a modulo dir lavori sbagliato</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
@@ -907,6 +992,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRETT-LAV" obbligatorio="#Referente_direttorelavori_check.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/> 
       </td>
     </tr>
+    <!--
     <tr>
       <td style="width:4%; vertical-align: top; text-align: center;">
         <input id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO" dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" />
@@ -921,6 +1007,19 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="numeroallegati" name="numeroallegati" dynamic_value="Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10)" type="hidden" />
         <input id="GLOBO_modulofiglio_cGEN-IMMAGG-EL" name="GLOBO_modulofiglio_cGEN-IMMAGG-EL" numero="#numeroallegati.value()" obbligatorio="#GEN_IMMAGG.checked() and #delega_progett_no.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
         <input id="GLOBO_modulofiglio_cGEN-IMMAGG-DELEGA" name="GLOBO_modulofiglio_cGEN-IMMAGG-DELEGA" numero="#numeroallegati.value()" obbligatorio="#GEN_IMMAGG.checked() and (#tit_firma_digit1.checked() || #delega_progett_si.checked()) ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    -->
+    <tr>
+      <td style="width:4%; vertical-align: top; text-align: center;">
+        <input id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO" dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.8;">Modulo secondario - <b>Ulteriori particelle</b> oggetto del procedimento, firmato con <b>firma digitale</b> dal progettista/tecnico incaricato delegato dal titolare</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part_del" name="numero_ult_part_del" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-IMMAGG-DELEGA" name="GLOBO_modulofiglio_cGEN-IMMAGG-DELEGA" numero="#numero_ult_part_del.value()" obbligatorio="#GEN_IMMAGG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1102,8 +1201,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO ALLEGATI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO CONSERVA ORIGINALE -->
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -1127,8 +1230,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO CONSERVA ORIGINALE -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO CONSENSO PRIVACY -->
 
 <table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
@@ -1144,8 +1251,12 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO CONSENSO PRIVACY -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO FIRMA -->
 
 <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
   <tbody>
@@ -1184,11 +1295,17 @@ urn_report="report:CSP_SESSION_REPORT"
   </tbody>
 </table>
 
+<!-- FINE BLOCCO FIRMA -->
+
 <br>
+
+<!-- INIZIO BLOCCO SALVA -->
 
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
 </p>
+
+<!-- FINE BLOCCO FIRMA -->
 
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
 

@@ -27,6 +27,8 @@ urlhelp="/modulistica/moduli/M47563-MSEC01-DICH-PROG"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
+<!-- INIZIO DICHIARAZIONE MODULI SECONDARI E ALLEGATI -->
+
 <meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
 urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
 descrizione_estesa="Informativa trattamento dati EDILIZIA"
@@ -97,6 +99,8 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<!-- FINE DICHIARAZIONE MODULI SECONDARI E ALLEGATI -->
+
 {% endblock meta %}
 
 
@@ -108,7 +112,7 @@ tipo_mime="application/pdf"/>
 
 {{ intestazioni.intestazione_modulosecondario_senzabollo() }}
 
-<input id="Oggetto" name="Oggetto" dynamic_value="#Referente_Cognome.value().toUpperCase() + ' - dichiarazioni del progettista'" type="hidden"/>
+<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="'Dichiarazioni del tecnico abilitato incaricato - Richiedente ' + #Referente_Cognome.value().toUpperCase() + ' ' + #Referente_Nome.value().toUpperCase() + ' (' + #Referente_CodiceFiscale.value().toUpperCase() + ')'"/>
 
 <br>
 
@@ -118,11 +122,68 @@ tipo_mime="application/pdf"/>
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;"><b>Il progettista</b> delle opere, <input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Cognome.value() + ' ' + #Referente_Nome.value()" size="55"/>, preso atto di assumere la qualità di persona esercente un servizio di pubblica necessità ai sensi degli artt. 359 e 481 cp, consapevole che le dichiarazioni false, le falsità negli atti e l'uso di atti falsi comportano l'applicazione delle sanzioni penali previste dagli art. 75 e 76 del d.p.r. 445/2000, sotto la propria responsabilità</p>
+        <p style="line-height:1.6;">Il sottoscritto <b>progettista</b> delle opere, 
+          <!--<input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Cognome.value() + ' ' + #Referente_Nome.value()" size="55"/>-->
+          preso atto di assumere la qualità di persona esercente un servizio di pubblica necessità ai sensi degli artt. 359 e 481 cp, consapevole che le dichiarazioni false, le falsità negli atti e l'uso di atti falsi comportano l'applicazione delle sanzioni penali previste dagli art. 75 e 76 del d.p.r. 445/2000, sotto la propria responsabilità</p>
       </td>
     </tr>
   </tbody>
 </table>
+
+<div type="Anagrafica_persona_fisica">
+  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="3">
+          <p class="Labelcella" style="line-height:1.6;">Cognome</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="line-height:1.6;">Nome</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <input class="" id="Referente_Cognome" name="Referente_Cognome" style="width:100%" label="Cognome" />
+        </td>
+        <td>
+          <input class="" id="Referente_Nome" name="Referente_Nome" style="width:100%" label="Nome" />
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:15%;">
+          <p class="Labelcella" style="line-height:1.6;">Data di nascita</p>
+        </td>
+        <td style="width:9%;">
+          <p class="Labelcella" style="line-height:1.6;">Sesso</p>
+        </td>
+        <td style="width: 26%;">
+          <p class="Labelcella" style="line-height:1.6;">Luogo di nascita</p>
+        </td>
+        <td style="width: 50%;">
+          <p class="Labelcella" style="line-height:1.6;">Codice Fiscale</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="Referente_DataNascita" name="Referente_DataNascita" style="width:100%;" type="date" label="Data di nascita" />
+        </td>
+        <td>
+          <select class="inputNormal" id="Referente_Sesso" name="Referente_Sesso" style="width:100%;" label="Sesso" >
+            <option value=""></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </td>
+        <td>
+          <input class="" id="Referente_LuogoNascita" name="Referente_LuogoNascita" style="width:100%;" label="Luogo di nascita" />
+        </td>
+        <td>
+          <input class="" id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" format="cf" style="width:100%;" label="Nazionalità"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
@@ -899,7 +960,7 @@ tipo_mime="application/pdf"/>
         <input group="atti_acquisiti" id="atti_acquisiti6" name="atti_acquisiti6" type="checkbox" value="6" />
       </td>
       <td>
-        <p style="line-height: 1.6; font-size: 85%;">Autorizzazione relativa al vincolo idraulico</p>
+        <p style="line-height: 1.6; font-size: 85%;">Autorizzazione relativa al pericolo idrogeologico</p>
       </td>
       <td>
         <input class="" id="Aut_comp_atto6" name="Aut_comp_atto6" mandatory_enabled="#atti_acquisiti6.checked()" label="Autorità competente al rilascio atto 6" style="width:100%; font-size: 85%;"/>
@@ -968,6 +1029,14 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; text-align: center;">
+        <input group="attestazione_prog" id="attestazione3_prog_check" name="attestazione3_prog_check" type="checkbox" value="3" dynamic_check="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>la corrispondenza della copia digitale con l'eventuale copia cartacea</b> presentata in scala grafica ai sensi dell'art. 11 della L.P. n. 15/2015;</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top; text-align: center;">
         <input group="attestazione_prog" id="attestazione2_prog_check" name="attestazione2_prog_check" type="checkbox" value="1" dynamic_check="true"/>
       </td>
       <td>
@@ -977,8 +1046,7 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
-<br>
-<br>
+<h1 class="Modulo">ALLEGA</h1>
 
 <table class="Modulo" name="Allegati" style="border: 1px solid grey">
   <tbody>
@@ -1000,7 +1068,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: center; text-align: center;">
-        <input id="docum_fotog" name="docum_fotog" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="docum_fotog" name="docum_fotog" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td colspan="2">
         <p style="line-height:1.6;"><b>Documentazione fotografica</b></p>
@@ -1012,7 +1080,7 @@ tipo_mime="application/pdf"/>
     </tr>  
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="Elaborati_progettuali" name="Elaborati_progettuali" type="checkbox" value="OBBLIGATORIO" dynamic_check="true"/>
+        <input id="Elaborati_progettuali" name="Elaborati_progettuali" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td colspan="2">
         <p style="line-height:1.6;"><b>Elaborati progettuali rappresentativi dell'intervento</p>
@@ -1024,7 +1092,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="elaborato_progettuale_impianti" name="elaborato_progettuale_impianti" type="checkbox" value="OBBLIGATORIO" dynamic_check="true"/>
+        <input id="elaborato_progettuale_impianti" name="elaborato_progettuale_impianti" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td colspan="2">
         <p style="line-height:1.6;"><b>Elaborato/i progettuale/i relativo/i agli impianti</b> di cui al D.M. 37/2008</p>
@@ -1036,7 +1104,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; text-align: center;">
-        <input id="relazione_ditta_tecnico" name="relazione_ditta_tecnico" type="checkbox" value="OBBLIGATORIO" dynamic_check="true"/>
+        <input id="relazione_ditta_tecnico" name="relazione_ditta_tecnico" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td colspan="2">
         <p style="line-height:1.6;"><b>Relazione della ditta/tecnico</b> attestante i requisiti di prestazione energetica (nel caso in cui gli interventi ricadano nell'articolo 4, del D. P . P . 13 luglio 2009, n. 1 1-13/Leg. e ss.mm)</p>
@@ -1048,10 +1116,10 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; text-align: center;">
-        <input id="relazione_energetica" name="relazione_energetica" type="checkbox" value="OBBLIGATORIO" dynamic_check="true"/>
+        <input id="relazione_energetica" name="relazione_energetica" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td colspan="2">
-        <p style="line-height:1.6;"><b></b>Relazione energetica</b> (Allegati dm. 26 giugno 2009 Schemi e modalità di riferimento per la compilazione della relazione tecnica di progetto ai fini dell’applicazione delle prescrizioni e dei requisiti minimi di prestazione energetica negli edifici) nel caso in cui gli interventi ricadano nell'articolo 4, commi 3, 4 o 5 del d. P . P . 13 luglio 2009, n. 1 1- 13/Leg. e s.m.i</p>
+        <p style="line-height:1.6;"><b>Relazione energetica</b> (Allegati dm. 26 giugno 2009 Schemi e modalità di riferimento per la compilazione della relazione tecnica di progetto ai fini dell’applicazione delle prescrizioni e dei requisiti minimi di prestazione energetica negli edifici) nel caso in cui gli interventi ricadano nell'articolo 4, commi 3, 4 o 5 del d. P . P . 13 luglio 2009, n. 1 1- 13/Leg. e s.m.i</p>
       </td>
       <td>
         <p style="line-height: 1.6; text-align: center;"><input id="num_relaz_energ" name="num_relaz_energ" mandatory_enabled="#relazione_energetica.checked()" style="width: 90%; text-align: center;" type="number" min="1" max="100"/></p>
