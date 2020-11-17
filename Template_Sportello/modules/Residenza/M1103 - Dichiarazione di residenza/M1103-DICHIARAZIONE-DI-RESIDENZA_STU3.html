@@ -1,6 +1,6 @@
 {% set CodiceModulo = "M1103-DICHIARAZIONE-RESIDENZA" %}
 {% set Urn =  "document:c_l378:residenza;cambio.residenza;m1103.cambio.residenza" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 
@@ -31,8 +31,14 @@ urlhelp="/modulistica/moduli/M1103-DICHIARAZIONE-RESIDENZA"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
-<meta codice_modulo_figlio="M1103-MSEC01-ALTRI-FAM"
-urn_modulo_figlio="document:c_l378:residenza;cambio.residenza;msec01.m1103.altri.familiari"
+<meta codice_modulo_figlio="M1103-MSEC01-ALTRI-FAM-COMUNITARI"
+urn_modulo_figlio="document:c_l378:residenza;cambio.residenza;msec01.m1103.altri.familiari.comunitari"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M1103-MSEC01-ALTRI-FAM-NON-COMUNITARI"
+urn_modulo_figlio="document:c_l378:residenza;cambio.residenza;msec01.m1103.altri.familiari.comunitari.non.comunitari"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -128,7 +134,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Dichiarazione di residenza'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="'Dichiarazione di residenza - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -141,6 +147,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <!------------------INIZIO MODULO COMPILATO DA------------------>
 
+<!--
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
@@ -221,6 +228,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
   </tbody>
 </table>
+-->
 
 <!------------------FINE MODULO COMPILATO DA------------------>
 
@@ -449,7 +457,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="2">
+      <td colspan="6">
         <p style="line-height: 1.6;"><b>che nell'abitazione sita al nuovo indirizzo:</b></p>
       </td>
     </tr>
@@ -458,16 +466,288 @@ urn_report="report:CSP_SESSION_REPORT"
         <div id="trasferimento_familiari" name="trasferimento_familiari" label="Trasferimento di familiari al nuovo indirizzo" mandatory_enabled="true"> </div>
         <input group="trasferimento_familiari" id="trasferimento_familiari1" name="trasferimento_familiari" type="radio" value="1" />
       </td>
-      <td>
+      <td colspan="6">
         <p style="line-height: 1.6;">non si sono trasferiti altri familiari</p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
+      <td style="vertical-align: top; text-align: center; width: 4%;"  rowspan="9">
         <input group="trasferimento_familiari" id="trasferimento_familiari2" name="trasferimento_familiari" type="radio" value="2" />
       </td>
-      <td>
+      <td colspan="6">
         <p style="line-height: 1.6;">si sono trasferiti n. <input style="text-align: center;" size="4" id="familiari_trasferiti" type="number" min="1" max="20" name="familiari_trasferiti" label="Numero familiari trasferiti al nuovo indirizzo" mandatory_enabled="#trasferimento_familiari2.checked()"> familiari</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione" mandatory_enabled="#familiari_trasferiti.value() >= 1" label="Dati altri familiari">
+      <td style="width: 20%;">
+        <p>Nome</p>
+        <input id="Nome_Fam1" name="Nome_Fam1" style="width: 100%;" />
+      </td>
+      <td style="width: 20%;">
+        <p>Cognome</p>
+        <input id="Cognome_Fam1" name="Cognome_Fam1" style="width: 100%;"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Codice FIscale</p>
+        <input id="CF_Fam1" name="CF_Fam1" style="width: 100%;" type="cf"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Cittadinanza</p>
+        {{ utils.cittadinanza( 'CF_Citt1', 'Cittadinanza' )}}
+      </td>
+      <td style="width: 20%;">
+        <p>Parentela</p>
+        <select class="inputNormal" id="CF_Parentela1" name="CF_Parentela1" style="width:100%">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Nessuno">Nessuno</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione" mandatory_enabled="#familiari_trasferiti.value() >= 2" label="Dati altri familiari">
+      <td>
+        <p>Nome</p>
+        <input id="Nome_Fam2" name="Nome_Fam2" style="width: 100%;" />
+      </td>
+      <td>
+        <p>Cognome</p>
+        <input id="Cognome_Fam2" name="Cognome_Fam2" style="width: 100%;"/>
+      </td>
+      <td>
+        <p>Codice FIscale</p>
+        <input id="CF_Fam2" name="CF_Fam2" style="width: 100%;" type="cf"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Cittadinanza</p>
+        {{ utils.cittadinanza( 'CF_Citt2', 'Cittadinanza' )}}
+      </td>
+      <td style="width: 20%;">
+        <p>Parentela</p>
+        <select class="inputNormal" id="CF_Parentela2" name="CF_Parentela2" style="width:100%">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Nessuno">Nessuno</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione" mandatory_enabled="#familiari_trasferiti.value() >= 3" label="Dati altri familiari">
+      <td>
+        <p>Nome</p>
+        <input id="Nome_Fam3" name="Nome_Fam3" style="width: 100%;" />
+      </td>
+      <td>
+        <p>Cognome</p>
+        <input id="Cognome_Fam3" name="Cognome_Fam3" style="width: 100%;"/>
+      </td>
+      <td>
+        <p>Codice FIscale</p>
+        <input id="CF_Fam3" name="CF_Fam3" style="width: 100%;" type="cf"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Cittadinanza</p>
+        {{ utils.cittadinanza( 'CF_Citt3', 'Cittadinanza' )}}
+      </td>
+      <td style="width: 20%;">
+        <p>Parentela</p>
+        <select class="inputNormal" id="CF_Parentela13" name="CF_Parentela3" style="width:100%">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Nessuno">Nessuno</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione" mandatory_enabled="#familiari_trasferiti.value() >= 4" label="Dati altri familiari">
+      <td>
+        <p>Nome</p>
+        <input id="Nome_Fam4" name="Nome_Fam4" style="width: 100%;" />
+      </td>
+      <td>
+        <p>Cognome</p>
+        <input id="Cognome_Fam4" name="Cognome_Fam4" style="width: 100%;"/>
+      </td>
+      <td>
+        <p>Codice FIscale</p>
+        <input id="CF_Fam4" name="CF_Fam4" style="width: 100%;" type="cf"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Cittadinanza</p>
+        {{ utils.cittadinanza( 'CF_Citt41', 'Cittadinanza' )}}
+      </td>
+      <td style="width: 20%;">
+        <p>Parentela</p>
+        <select class="inputNormal" id="CF_Parentela4" name="CF_Parentela4" style="width:100%">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Nessuno">Nessuno</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione" mandatory_enabled="#familiari_trasferiti.value() >= 5" label="Dati altri familiari">
+      <td>
+        <p>Nome</p>
+        <input id="Nome_Fam5" name="Nome_Fam5" style="width: 100%;" />
+      </td>
+      <td>
+        <p>Cognome</p>
+        <input id="Cognome_Fam5" name="Cognome_Fam5" style="width: 100%;"/>
+      </td>
+      <td>
+        <p>Codice FIscale</p>
+        <input id="CF_Fam5" name="CF_Fam5" style="width: 100%;" type="cf"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Cittadinanza</p>
+        {{ utils.cittadinanza( 'CF_Citt5', 'Cittadinanza' )}}
+      </td>
+      <td style="width: 20%;">
+        <p>Parentela</p>
+        <select class="inputNormal" id="CF_Parentela5" name="CF_Parentela5" style="width:100%">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Nessuno">Nessuno</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione" mandatory_enabled="#familiari_trasferiti.value() >= 6" label="Dati altri familiari">
+      <td>
+        <p>Nome</p>
+        <input id="Nome_Fam6" name="Nome_Fam6" style="width: 100%;" />
+      </td>
+      <td>
+        <p>Cognome</p>
+        <input id="Cognome_Fam6" name="Cognome_Fam6" style="width: 100%;"/>
+      </td>
+      <td>
+        <p>Codice FIscale</p>
+        <input id="CF_Fam6" name="CF_Fam6" style="width: 100%;" type="cf"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Cittadinanza</p>
+        {{ utils.cittadinanza( 'CF_Citt6', 'Cittadinanza' )}}
+      </td>
+      <td style="width: 20%;">
+        <p>Parentela</p>
+        <select class="inputNormal" id="CF_Parentela6" name="CF_Parentela6" style="width:100%">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Nessuno">Nessuno</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione" mandatory_enabled="#familiari_trasferiti.value() >= 7" label="Dati altri familiari">
+      <td>
+        <p>Nome</p>
+        <input id="Nome_Fam7" name="Nome_Fam7" style="width: 100%;" />
+      </td>
+      <td>
+        <p>Cognome</p>
+        <input id="Cognome_Fam7" name="Cognome_Fam7" style="width: 100%;"/>
+      </td>
+      <td>
+        <p>Codice FIscale</p>
+        <input id="CF_Fam7" name="CF_Fam7" style="width: 100%;" type="cf"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Cittadinanza</p>
+        {{ utils.cittadinanza( 'CF_Citt7', 'Cittadinanza' )}}
+      </td>
+      <td style="width: 20%;">
+        <p>Parentela</p>
+        <select class="inputNormal" id="CF_Parentela7" name="CF_Parentela7" style="width:100%">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Nessuno">Nessuno</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione" mandatory_enabled="#familiari_trasferiti.value() >= 8" label="Dati altri familiari">
+      <td>
+        <p>Nome</p>
+        <input id="Nome_Fam8" name="Nome_Fam8" style="width: 100%;" />
+      </td>
+      <td>
+        <p>Cognome</p>
+        <input id="Cognome_Fam8" name="Cognome_Fam8" style="width: 100%;"/>
+      </td>
+      <td>
+        <p>Codice FIscale</p>
+        <input id="CF_Fam8" name="CF_Fam8" style="width: 100%;" type="cf"/>
+      </td>
+      <td style="width: 20%;">
+        <p>Cittadinanza</p>
+        {{ utils.cittadinanza( 'CF_Citt8', 'Cittadinanza' )}}
+      </td>
+      <td style="width: 20%;">
+        <p>Parentela</p>
+        <select class="inputNormal" id="CF_Parentela8" name="CF_Parentela8" style="width:100%">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Nessuno">Nessuno</option>
+        </select>
       </td>
     </tr>
   </tbody>
@@ -557,13 +837,36 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="12">
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="2">
         <input group="rapporti_residenti" id="rapporti_residenti2" name="rapporti_residenti" type="radio" value="2" />
       </td>
       <td colspan="3">
         <p style="line-height: 1.6;"><b>SUSSISTE</b> il seguente vincolo rispetto al suindicato componente della famiglia già residente:</p>
       </td>
     </tr>
+    <tr class="Rigaintestazione">
+      <td style="width: 30%;">
+        <p>Vincolo:</p>
+        <select class="inputNormal" id="CF_ParentelaResidente" name="CF_ParentelaResidente" style="width:100%" mandatory_enabled="#rapporti_residenti2.checked()">
+          <option value=""></option>
+          <option value="Matrimonio">Matrimonio</option>
+          <option value="Civile">Unione civile</option>
+          <option value="Figlio">Figlio/a</option>
+          <option value="Genitore">Padre/Madre</option>
+          <option value="Fratello">Fratello/Sorella</option>
+          <option value="Affinita">Affinità</option>
+          <option value="Adozione">Adozione</option>
+          <option value="Tutela">Tutela</option>
+          <option value="Affetto">Vincoli affettivi</option>
+          <option value="Altro">Altro</option>
+        </select>
+      </td>
+      <td style="width: 70%;">
+        <p>Altro:</p>
+        <input id="Altro_Rapporto" name="Altro_Rapporto" style="width: 100%;" mandatory_enabled="#CF_ParentelaResidente.value() == 'Altro'" />
+      </td>
+    </tr>
+    <!--
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <div id="tipo_rapporto" name="tipo_rapporto" label="Tipo di raporto" mandatory_enabled="#rapporti_residenti2.checked()"> </div>
@@ -654,6 +957,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <p style="line-height: 1.6;">Altro (specificare): <input style="width: 75%;" class="Modulo" id="Altro_tipo_parentela" name="Altro_tipo_parentela" label="Specificare altro tipo di parentela" mandatory_enabled="#tipo_rapporto8.checked()"></p>
       </td>
     </tr>
+  -->
   </tbody>
 </table>
 
@@ -1306,7 +1610,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="3">
+      <td colspan="4">
         <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
       </td>
     </tr>
@@ -1314,13 +1618,14 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="width:4%;">
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
       </td>
-      <td>
+      <td colspan="2">
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
       </td>
       <td style="width:15%;">
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
       </td>
     </tr>
+    <!--
     <tr>
       <td style="vertical-align: center; text-align: center; width:4%">
         <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#poss_carta_id1.checked()" enabled="#poss_carta_id1.checked()" value="OBBLIGATORIO"/>
@@ -1333,23 +1638,48 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+    -->
     <tr>
-      <td style="vertical-align: center; text-align: center; width:4%">
+      <td style="vertical-align: top; text-align: center; width:4%" rowspan="3">
         <input id="GEN_ALTRI_FAM" name="GEN_ALTRI_FAM" type="checkbox" dynamic_check="#familiari_trasferiti.value() != 0" enabled="#familiari_trasferiti.value() != 0" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Modulo secondario - Anagrafica dei <input id="num_fam_trasf" name="num_fam_trasf" dynamic_value="#familiari_trasferiti.value()" size="4" style="text-align: center;" readonly> familiari trasferitisi al nuovo indirizzo</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_ALTRI_FAM" name="numero_GEN_ALTRI_FAM" dynamic_value="#GEN_ALTRI_FAM.checked() ? #familiari_trasferiti.value() : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM" name="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM" numero="#familiari_trasferiti.value()" obbligatorio="#GEN_ALTRI_FAM.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <!--<input id="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM" name="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM" numero="#familiari_trasferiti.value()" obbligatorio="#GEN_ALTRI_FAM.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>-->
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <input id="GEN_ALTRI_NON_FAM" name="GEN_ALTRI_NON_FAM" type="checkbox" enabled="#GEN_ALTRI_FAM.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6;">Indicare il numero dei familiari <b>stranieri e non comunitari</b> trasferitasi</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_ALTRI_FAM_NON_COM" name="numero_GEN_ALTRI_FAM_NON_COM" style="width: 90%; text-align: center;" type="number" mandatory_enabled="#GEN_ALTRI_NON_FAM.checked()"/></p>
+        <input id="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM-NON-COMUNITARI" name="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM-NON-COMUNITARI" numero="#numero_GEN_ALTRI_FAM_NON_COM.value()" obbligatorio="#GEN_ALTRI_NON_FAM.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <input id="GEN_ALTRI_COM" name="GEN_ALTRI_COM" type="checkbox" enabled="#GEN_ALTRI_FAM.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6;">Indicare il numero dei familiari <b>comunitari</b> trasferitasi</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_ALTRI_FAM_COM" name="numero_GEN_ALTRI_FAM_COM" style="width: 90%; text-align: center;" type="number" mandatory_enabled="#GEN_ALTRI_COM.checked()"/></p>
+        <input id="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM-COMUNITARI" name="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM-COMUNITARI" numero="#numero_GEN_ALTRI_FAM_COM.value()" obbligatorio="#GEN_ALTRI_COM.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_A" name="DICH_RES_ALL_A" type="checkbox" dynamic_check="#verifica_non_UE.value() == 'non UE'" enabled="#verifica_non_UE.value() == 'non UE'" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Modulo secondario - Allegato A - Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini stranieri non comunitari</b></p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1361,7 +1691,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#AventeTitolo_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" enabled="#AventeTitolo_Cittadinanza.value() != '' and #AventeTitolo_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Modulo secondario - Allegato B - Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini comunitari</b></p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1369,6 +1699,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="GLOBO_modulofiglio_cM1103-MSEC03-ALL-B" name="GLOBO_modulofiglio_cM1103-MSEC03-ALL-B" obbligatorio="#DICH_RES_ALL_B.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+    <!--
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_C" name="DICH_RES_ALL_C" type="checkbox" dynamic_check="#Tipo_cambio_res_minore1.checked()" enabled="#Tipo_cambio_res_minore1.checked()" value="OBBLIGATORIO"/>
@@ -1381,6 +1712,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input id="GLOBO_modulofiglio_cM1103-MSEC04-ALL-C" name="GLOBO_modulofiglio_cM1103-MSEC04-ALL-C" obbligatorio="#DICH_RES_ALL_C.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+    -->
     <!--
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%">
@@ -1399,7 +1731,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" enabled="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Modulo secondario - Allegato E - Titolo di occupazione dell'alloggio, da compilarsi da parte del proprietario dell'immobile</p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1411,7 +1743,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: center; text-align: center; width:4%">
         <input id="GEN_CONTR_LOC" name="GEN_CONTR_LOC" type="checkbox" dynamic_check="#titolo_occupazione3.checked()" enabled="#titolo_occupazione3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Copia del contratto o del verbale di consegna dell'immobile I.T.E.A.</p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1423,7 +1755,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: center; text-align: center; width:4%">
         <input id="GEN_ENTR_CONV" name="GEN_ENTR_CONV" type="checkbox" dynamic_check="#proprieta_immobile3.checked()" enabled="#proprieta_immobile3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Dichiarazione di entrata in convivenza (casa di riposo, appartamenti gestiti da strutture)</p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1464,7 +1796,7 @@ urn_report="report:CSP_SESSION_REPORT"
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Tipo_richiedente2.checked() ? #compilante_Nome.value().toUpperCase() + ' ' + #compilante_Cognome.value().toUpperCase() : #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -1502,10 +1834,13 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale" dynamic_value="#compilante_CodiceFiscale.value()" type="hidden"/>
 <br>
 -->
+<!--NON PIU NECESSARI-->
+<!--
 <input id="Referente99_Compilante_Cognome" name="Referente99_Compilante_Cognome" dynamic_value="#compilante_Cognome.value()" type="hidden"/>
 <input id="Referente99_Compilante_Nome" name="Referente99_Compilante_Nome" dynamic_value="#compilante_Nome.value()" type="hidden"/>
 <input id="Referente99_Compilante_CodiceFiscale" name="Referente99_Compilante_CodiceFiscale" dynamic_value="#compilante_CodiceFiscale.value()" type="hidden"/>
 <br>
+-->
 <!-- METADATI AventeTitolo -->
 <!--
 <input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="!#check_minorenne.checked() ? #AventeTitolo_Cognome.value() : ''" type="hidden"/>

@@ -1,9 +1,9 @@
 {% set CodiceModulo =  "M47010-MSEC13-PREV-INF-CADUTA" %}
 {% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec13.m47010.prev.infortunio.caduta" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
-<meta campi_firma="Progettista_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -37,8 +37,7 @@ Dichiarazioni del tecnico riguardo la prevenzione dei rischi di infortunio a seg
 {% block content %}
 
 {{ intestazioni.intestazione_modulosecondario_senzabollo() }}
-<input id="Oggetto" name="Oggetto" dynamic_value="#Progettista_Cognome.value().toUpperCase() + ' - Dichiarazioni del tecnico riguardo la prevenzione dei rischi di infortunio a seguito di cadute'" type="hidden"/>
-
+<input id="Oggetto" name="Oggetto" dynamic_value="'Dichiarazioni del tecnico riguardo la prevenzione dei rischi di infortunio a seguito di cadute - Richiedente ' + #Referente_Cognome.value().toUpperCase() + ' ' + #Referente_Nome.value().toUpperCase() + ' (' + #Referente_CodiceFiscale.value().toUpperCase() + ')'" type="hidden"/>
 
 <h1 class="Modulo" style="line-height:1.6;">DICHIARAZIONE DEL TECNICO<br><span style="font-size:75%">(ai sensi dell'art. 91 ter della L.P. 22/91)</span></h1>
 
@@ -46,8 +45,8 @@ Dichiarazioni del tecnico riguardo la prevenzione dei rischi di infortunio a seg
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.8;"><b>Il sottoscritto</b>, <input id="Nominativo_tecnico" name="Nominativo_tecnico" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Cognome.value() + ' ' + #Progettista_Nome.value() + ' ' + '(' + #Progettista_CodiceFiscale.value() + ')'" size="81" readonly/>
-            <br>nato a &nbsp; <input id="Luogo_nascita_progettista" name="Luogo_nascita_progettista" dynamic_value="#Progettista_LuogoNascita.value()" size="30" readonly/> &nbsp; e iscritto all'Ordine degli &nbsp; <input id="Albo_progettista" name="Albo_progettista" dynamic_value="#Progettista_Attributi_Albo.value()" size="30" readonly/> &nbsp;<br>della Provincia di &nbsp; <input id="Provincia_albo_progettista" name="Provincia_albo_progettista" dynamic_value="#Progettista_Attributi_DellaProvincia.value()" size="10" readonly/> &nbsp; al n. &nbsp; <input id="Num_albo_progettista" name="Num_albo_progettista" dynamic_value="#Progettista_Attributi_AlNumero.value()" size="30" readonly/>, in qualità di tecnico abilitato, in ottemperanza alle vigenti disposizioni di legge e consapevole della responsabilità che con la presente si assume</p>
+        <p style="line-height:1.8;"><b>Il sottoscritto</b>, <input id="Nominativo_tecnico" name="Nominativo_tecnico" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Cognome.value() + ' ' + #Referente_Nome.value() + ' ' + '(' + #Referente_CodiceFiscale.value() + ')'" size="81" readonly/>
+            <br>nato a &nbsp; <input id="Luogo_nascita_progettista" name="Luogo_nascita_progettista" dynamic_value="#Referente_LuogoNascita.value()" size="30" readonly/> &nbsp; e iscritto all'Ordine degli &nbsp; <input id="Albo_progettista" name="Albo_progettista" dynamic_value="#Referente_Attributi_Albo.value()" size="30" readonly/> &nbsp;<br>della Provincia di &nbsp; <input id="Provincia_albo_progettista" name="Provincia_albo_progettista" dynamic_value="#Referente_Attributi_DellaProvincia.value()" size="10" readonly/> &nbsp; al n. &nbsp; <input id="Num_albo_progettista" name="Num_albo_progettista" dynamic_value="#Referente_Attributi_AlNumero.value()" size="30" readonly/>, in qualità di tecnico abilitato, in ottemperanza alle vigenti disposizioni di legge e consapevole della responsabilità che con la presente si assume</p>
       </td>
     </tr>
   </tbody>
@@ -81,7 +80,7 @@ Dichiarazioni del tecnico riguardo la prevenzione dei rischi di infortunio a seg
         <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
       </td>
       <td style="width: 50%; text-align: center; height: 1.5cm;">
-        <input class="" id="nominativo_tecnico" name="nominativo_tecnico" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        <input class="" id="nominativo_tecnico" name="nominativo_tecnico" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -116,15 +115,15 @@ Dichiarazioni del tecnico riguardo la prevenzione dei rischi di infortunio a seg
 <input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden"  readonly/>
 <input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden"  readonly/>
 
-<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden"  readonly/>
-<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden"  readonly/>
-<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden"  readonly/>
-<input id="Progettista_Nome" name="Progettista_Nome" type="hidden"  readonly/>
-<input id="Progettista_LuogoNascita" name="Progettista_LuogoNascita" type="hidden"  readonly/>
-<input id="Progettista_Attributi_Albo" name="Progettista_Attributi_Albo" type="hidden"  readonly/>
-<input id="Progettista_Attributi_AlNumero" name="Progettista_Attributi_AlNumero" type="hidden"  readonly/>
-<input id="Progettista_Attributi_DellaProvincia" name="Progettista_Attributi_DellaProvincia" type="hidden"  readonly/>
-<input id="Progettista_Indirizzocompleto" name="Progettista_Indirizzocompleto" type="hidden"  readonly/>
+<input id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" type="hidden"  readonly/>
+<input id="Referente_TitoloPersona" name="Referente_TitoloPersona" type="hidden"  readonly/>
+<input id="Referente_Cognome" name="Referente_Cognome" type="hidden"  readonly/>
+<input id="Referente_Nome" name="Referente_Nome" type="hidden"  readonly/>
+<input id="Referente_LuogoNascita" name="Referente_LuogoNascita" type="hidden"  readonly/>
+<input id="Referente_Attributi_Albo" name="Referente_Attributi_Albo" type="hidden"  readonly/>
+<input id="Referente_Attributi_AlNumero" name="Referente_Attributi_AlNumero" type="hidden"  readonly/>
+<input id="Referente_Attributi_DellaProvincia" name="Referente_Attributi_DellaProvincia" type="hidden"  readonly/>
+<input id="Referente_Indirizzocompleto" name="Referente_Indirizzocompleto" type="hidden"  readonly/>
 
 <input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" type="hidden"  readonly/>
 <input id="Immobile_ComuneCatastale_esteso" name="Immobile_ComuneCatastale_esteso" type="hidden"  readonly/>

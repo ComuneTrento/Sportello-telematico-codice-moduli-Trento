@@ -239,11 +239,18 @@ M1876-ISCRIZIONE-NIDO
     <input name="SvCodiceFiscaleFamiglia" id="SvCodiceFiscaleFamiglia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" />
     <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceVia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceVia.value() : 0 )" />
     <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CivicoResidenza.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CivicoResidenza.value() : 0 )" format="number" />
+    <!--
     <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
     <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
+    -->
+    <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Paternita.value()" type="hidden"/>
+    <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
+
     <input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" >
    
     <input id="check_CFBambino" name="check_CFBambino" type="hidden" label="ATTENZIONE! Il codice fiscale del bambino non risulta essere stato ancora convalidato dall'Agenzia delle Entrate" dynamic_value="!#Tassonomia_CF3.checked() and #Bambino_CFBambino.value() == '' ? '' : 'OK'" mandatory="true"/>
+
+    <input name="Parametri_Ascolto_WS_SvCFBambino" id="Parametri_Ascolto_WS_SvCFBambino" type="hidden" dynamic_value="#SvCFBambino.value() != '' ? #SvCFBambino.value() : #Parametri_Ascolto_WS_SvCFBambino.value()" >
 
 </div>
 
@@ -261,7 +268,7 @@ M1876-ISCRIZIONE-NIDO
         'Parametri_DataDomValFT': 'dtDomanda',
         'Parametri_RichDomValFT': 'richiedente',
         },
-        '#SvCFBambino:change' ) }}
+        '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
   
     {{ service.getDomandaAttiva('SvCFBambino','TipoDomandaPartTime',   {
         'Parametri_TipoDomandaPT': 'tipoServizio',
@@ -270,7 +277,7 @@ M1876-ISCRIZIONE-NIDO
         'Parametri_RichDomValPT': 'richiedente',
         'Parametri_DataDomValPT': 'dtDomanda',
         },
-        '#SvCFBambino:change' ) }}
+        '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
   
     <input type="hidden" id="Parametri_TipoDomandaFT" name="Parametri_TipoDomandaFT" />
     <input type="hidden" id="Parametri_NumeroDomandaValFT" name="Parametri_NumeroDomandaValFT"/>
@@ -439,7 +446,7 @@ M1876-ISCRIZIONE-NIDO
                     'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
                     'Parametri_BarraResidenzaFam' + prefix: 'barra',
                     'Parametri_NazioneFam' + prefix: 'nazione',
-                }, '#Parametri_CFFam' + prefix + ':change' )}}
+                }, '#Parametri_Ascolto_WS_Parametri_CFFam' + prefix + ':change' )}}
   
             <tr class="Rigaintestazioneridotta">
                 <td style="width: 18%;">
@@ -470,6 +477,7 @@ M1876-ISCRIZIONE-NIDO
                 </td>
                 <td>
                     <input class="inputNormal" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" style="width: 100%;" label="Codice fiscale del familiare" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" readonly>
+                    <input name="Parametri_Ascolto_WS_Parametri_CFFam{{ prefix }}" id="Parametri_Ascolto_WS_Parametri_CFFam{{ prefix }}" type="hidden" dynamic_value="#Parametri_CFFam{{ prefix }}.value() != '' ? #Parametri_CFFam{{ prefix }}.value() : #Parametri_Ascolto_WS_Parametri_CFFam{{ prefix }}.value()" >
                 </td>
                 <td>
                     <select class="inputNormal" id="Parametri_SessoFam{{ prefix }}" name="Parametri_SessoFam{{ prefix }}" style="width:100%;" label="Sesso" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" readonly>

@@ -1,9 +1,9 @@
 {% set CodiceModulo =  "M47010-MSEC01-DICH-TECN" %}
 {% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec01.m47010.dichiarazioni.tecnico" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
-<meta campi_firma="Metadati_Progettista_CodiceFiscale"
+<meta campi_firma="Referente_CodiceFiscale"
 classi_modulo="Generale"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -26,12 +26,14 @@ urlhelp="/modulistica/moduli/M47010-MSEC01-DICH-TECN"
 verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
+<!-- INIZIO DICHIARAZIONE ALLEGATI E MOD SECONDARI -->
+
 <meta codice_allegato="M47010-A02-RELAZ-ULTIMAZ-PARZ"
 urn_allegato="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;a02.m47010.relazione.ultimazione.parziale"
 descrizione_estesa="Allegato - Planimetria/Relazione grafica delle opere ultimate in forma parziale"
 filename="Relazione opere parziali.pdf"
 firmato="SI"
-firmatari="Metadati_Progettista_CodiceFiscale"
+firmatari="Referente_CodiceFiscale"
 firmatari_label="Il tecnico abilitato incaricato"
 istruzioni="/modulistica/moduli/M47010-A02-RELAZ-ULTIMAZ-PARZ"
 name="GLOBO_allegato"
@@ -116,6 +118,7 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<!--
 <meta codice_modulo_figlio="M47010-MSEC09-CONFORMITA-IMPIANTI"
 urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec09.m47010.conformita.impianti"
 name="GLOBO_modulofiglio"
@@ -127,6 +130,7 @@ urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
+-->
 
 <meta codice_modulo_figlio="M47010-MSEC11-CONFORMITA-IMPIANTI-EL"
 urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec11.m47010.conformita.impianti.el"
@@ -134,6 +138,7 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<!--
 <meta codice_modulo_figlio="M47010-MSEC05-SCAGI-SEZIONE-A"
 urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec05.m47010.scagi.seza"
 name="GLOBO_modulofiglio"
@@ -145,6 +150,7 @@ urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
+-->
 
 <meta codice_modulo_figlio="M47010-MSEC07-SCAGI-SEZIONE-A-EL"
 urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec07.m47010.scagi.seza.el"
@@ -174,6 +180,8 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
+
+<!-- FINE DICHIARAZIONE ALLEGATI E MOD SECONDARI -->
 	
 {% endblock meta %}
 
@@ -184,24 +192,32 @@ tipo_mime="application/pdf"/>
 
 {% block content %}
 
-{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
-<input id="Oggetto" name="Oggetto" dynamic_value="#Metadati_Progettista_Cognome.value().toUpperCase() + ' - dichiarazioni del tecnico abilitato incaricato'" type="hidden"/>
 
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="'Dichiarazioni del tecnico abilitato incaricato - Richiedente ' + #Referente_Cognome.value().toUpperCase() + ' ' + #Referente_Nome.value().toUpperCase() + ' (' + #Referente_CodiceFiscale.value().toUpperCase() + ')'"/>
 
 <h1 class="Modulo">DICHIARAZIONI DEL TECNICO ABILITATO INCARICATO</h1>
+
+<!-- INIZIO BLOCCO TECNICO INCARICATO -->
 
 <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td>
-        <p style="line-height:1.6;"><b>Il tecnico abilitato</b>, <input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Metadati_Progettista_TitoloPersona.value() + ' ' + #Metadati_Progettista_Cognome.value() + ' ' + #Metadati_Progettista_Nome.value() + ' ' + '(' + #Metadati_Progettista_CodiceFiscale.value() + ')'" size="81"/>
-            <br>ai sensi dell'art. 86, comma 5, e dell'art. 93, comma 2, della l.p. 15/2015</p>
+        <p style="line-height:1.6; text-align: left;"><b>Il tecnico abilitato</b>, 
+          <input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Cognome.value() + ' ' + #Referente_Nome.value() + ' ' + '(' + #Referente_CodiceFiscale.value() + ')'" size="81"/>
+          <br>
+          ai sensi dell'art. 86, comma 5, e dell'art. 93, comma 2, della l.p. 15/2015</p>
       </td>
     </tr>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO TECNICO INCARICATO -->
+
 <br>
+
+<!-- INIZIO BLOCCO CERTIFICA -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <h1 class="Modulo">CERTIFICA</h1>
@@ -265,8 +281,12 @@ tipo_mime="application/pdf"/>
   </table>
 </div>
 
+<!-- FINE BLOCCO CERTIFICA -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO ATTESTA -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
@@ -334,7 +354,7 @@ tipo_mime="application/pdf"/>
           <input group="present_scagi" id="present_scagi1" name="present_scagi" type="radio" value="1" />
         </td>
         <td colspan="4">
-          <p style="line-height:1.6;">il sottoscritto tecnico abilitato incaricato: <input class="" id="firmatario_scagi" name="firmatario_scagi" dynamic_value="#Metadati_Progettista_TitoloPersona.value() + ' ' + #Metadati_Progettista_Nome.value().toUpperCase() + ' ' + #Metadati_Progettista_Cognome.value().toUpperCase()" style="width:60%;" enabled="#present_scagi1.checked()" readonly/></p>
+          <p style="line-height:1.6;">il sottoscritto tecnico abilitato incaricato: <input class="" id="firmatario_scagi" name="firmatario_scagi" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:60%;" enabled="#present_scagi1.checked()" readonly/></p>
         </td>
       </tr>
       <tr>
@@ -403,55 +423,12 @@ tipo_mime="application/pdf"/>
   </table>
 </div>
 
-<br>
-<br>
-
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="3">
-        <p style="line-height:1.6;"><b>che l'intervento, per quanto riguarda gli aspetti di toponomastica:</b></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Toponom_variaz" name="Toponom_variaz" label="Aspetti toponomastica" mandatory_enabled="true"> </div>
-        <input group="Toponom_variaz" id="Toponom_variaz1" name="Toponom_variaz" type="radio" value="1" />
-      </td>
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>non comporta</b> variazione di numerazione civica</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
-        <input group="Toponom_variaz" id="Toponom_variaz2" name="Toponom_variaz" type="radio" value="2"/>
-      </td>
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>comporta</b> variazione di numerazione civica</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
-        <div id="Variaz_num_civ" name="Variaz_num_civ" label="Variazione numerazione civica" mandatory_enabled="#Toponom_variaz2.checked()"> </div>
-        <input group="Variaz_num_civ" id="Variaz_num_civ1" name="Variaz_num_civ" type="radio" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">si allega pertanto la nota di assegnazione o aggiornamento di numerazione civica rilasciata dagli uffici comunali competenti prot.n./ ric. <input class="" id="prot_nota_ass_num_civ" name="prot_nota_ass_num_civ" label="Numero di protocollo della nota di assegnazione numero civico" size="16" mandatory_enabled="#Variaz_num_civ1.checked()"/> di data <input class="" id="Data_nota_ass_num_civ" name="Data_nota_ass_num_civ" label="Data della nota di assegnazione numero civico" format="date" size="8" mandatory_enabled="#Variaz_num_civ1.checked()"/></p>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
-        <input group="Variaz_num_civ" id="Variaz_num_civ2" name="Variaz_num_civ" type="radio" value="2" />
-      </td>
-      <td>
-        <p style="line-height:1.6;">si comunicano gli estremi della richiesta di assegnazione o aggiornamento di numerazione civica, già presentata all'amministrazione comunale prot.n./ ric. <input class="" id="prot_nota_pres" name="prot_nota_pres" label="Numero di protocollo della nota presentata" size="16" mandatory_enabled="#Variaz_num_civ2.checked()"/> di data <input class="" id="Data_nota_pres" name="Data_nota_pres" label="Data della nota presentata" format="date" size="8" mandatory_enabled="#Variaz_num_civ2.checked()"/></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<!-- FINE BLOCCO ATTESTA -->
 
 <br>
 <br>
+
+<!-- INIZIO BLOCCO ATTESTA INOLTRE -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <h1 class="Modulo">ATTESTA INOLTRE</h1>
@@ -486,8 +463,63 @@ tipo_mime="application/pdf"/>
   </table>
 </div>
 
+<!-- FINE BLOCCO ATTESTA INOLTRE -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO TOPONOMASTICA -->
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>che l'intervento, per quanto riguarda gli aspetti di toponomastica:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Toponom_variaz" name="Toponom_variaz" label="Aspetti toponomastica" mandatory_enabled="true"> </div>
+        <input group="Toponom_variaz" id="Toponom_variaz1" name="Toponom_variaz" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>non comporta</b> variazione di numerazione civica</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
+        <input group="Toponom_variaz" id="Toponom_variaz2" name="Toponom_variaz" type="radio" value="2"/>
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>comporta</b> variazione di numerazione civica</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <div id="Variaz_num_civ" name="Variaz_num_civ" label="Variazione numerazione civica" mandatory_enabled="#Toponom_variaz2.checked()"> </div>
+        <input group="Variaz_num_civ" id="Variaz_num_civ1" name="Variaz_num_civ" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">si allega pertanto la nota di assegnazione o aggiornamento di numerazione civica rilasciata dagli uffici comunali competenti prot.n./ ric. <input class="" id="prot_nota_ass_num_civ" name="prot_nota_ass_num_civ" label="Numero di protocollo della nota di assegnazione numero civico" size="16" mandatory_enabled="#Variaz_num_civ1.checked()"/> di data <input class="" id="Data_nota_ass_num_civ" name="Data_nota_ass_num_civ" label="Data della nota di assegnazione numero civico" type="date" size="8" mandatory_enabled="#Variaz_num_civ1.checked()"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Variaz_num_civ" id="Variaz_num_civ2" name="Variaz_num_civ" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">si comunicano gli estremi della richiesta di assegnazione o aggiornamento di numerazione civica, già presentata all'amministrazione comunale prot.n./ ric. <input class="" id="prot_nota_pres" name="prot_nota_pres" label="Numero di protocollo della nota presentata" size="16" mandatory_enabled="#Variaz_num_civ2.checked()"/> di data <input class="" id="Data_nota_pres" name="Data_nota_pres" label="Data della nota presentata" type="date" size="8" mandatory_enabled="#Variaz_num_civ2.checked()"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- FINE BLOCCO TOPONOMASTICA -->
+
+<br>
+<br>
+
+<!-- INIZIO BLOCCO DICHIARA -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <h1 class="Modulo">VARIAZIONE CATASTALE</h1>
@@ -545,9 +577,13 @@ tipo_mime="application/pdf"/>
   </table>
 </div>
 
+<!-- FINE BLOCCO DICHIARA -->
+
 <br>
 <br>
 <br>
+
+<!-- INIZIO BLOCCO PREV INFORTUNI -->
 
 <div class="simpatico-block simpatico-query-and-answer">
   <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
@@ -592,8 +628,12 @@ tipo_mime="application/pdf"/>
   </table>
 </div>
 
+<!-- FINE BLOCCO PREV INFORTUNI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO IMPIANTI -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -657,7 +697,7 @@ tipo_mime="application/pdf"/>
         <input class="" id="Prot_conformita{{ prefix }}" name="Prot_conformita{{ prefix }}" enabled="true" label="Numero protocollo documento {{ prefix }}" style="width:100%;"/>
       </td>
       <td>
-        <input class="" id="Data_conformita{{ prefix }}" name="Data_conformita{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%;" format="date"/>
+        <input class="" id="Data_conformita{{ prefix }}" name="Data_conformita{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%;" type="date"/>
       </td>
     </tr>
     {%- endmacro %}
@@ -668,8 +708,12 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO IMPIANTI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO SICUREZZA STATICA -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -715,8 +759,12 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO SICUREZZA STATICA -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO PREST ENERGETICA -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -746,8 +794,12 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO PREST ENERGETICA -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO SIC ANTINCENDIO -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
@@ -793,8 +845,13 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO SIC ANTINCENDIO -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO ALLEGATI -->
+
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
   <tbody>
@@ -819,19 +876,23 @@ tipo_mime="application/pdf"/>
         <input id="rich_conf_imp" name="rich_conf_imp" type="checkbox" dynamic_check="#dich_conf_imp1.checked()" enabled="#dich_conf_imp1.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Deposito dichiarazioni di conformità degli impianti</b><br>
+        <p style="line-height:1.6;">Modulo secondario - <b>Deposito dichiarazioni di conformità degli impianti</b>, firmato con firma digitale dal progettista/tecnico incaricato delegato dal titolare<br>
+          <!--
           <select class="inputNormal" id="Tipo_Firma_conf_imp" name="Tipo_Firma_conf_imp" style="width:60%;" label="Tipo firma modulo conformità impianti" mandatory_enabled="#Metadati_Tipo_richiedente.value() == '2' and #rich_conf_imp.checked()">
             <option value=""></option>
             <option value="Firmato con firma autografa">firmato dal titolare con firma autografa</option>
             <option value="Firmato con firma elettronica">firmato dal titolare con firma elettronica</option>
           </select>
+          -->
         </p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_rich_conf_imp" name="numero_rich_conf_imp" dynamic_value="#rich_conf_imp.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <!--
         <input id="GLOBO_modulofiglio_cM47010-MSEC09-CONFORMITA-IMPIANTI" name="GLOBO_modulofiglio_cM47010-MSEC09-CONFORMITA-IMPIANTI" obbligatorio="(#rich_conf_imp.checked() and #Metadati_Tipo_richiedente.value() == '1') ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
         <input id="GLOBO_modulofiglio_cM47010-MSEC10-CONFORMITA-IMPIANTI-AU" name="GLOBO_modulofiglio_cM47010-MSEC10-CONFORMITA-IMPIANTI-AU" obbligatorio="(#rich_conf_imp.checked() and #Tipo_Firma_conf_imp.value() == 'Firmato con firma autografa') ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cM47010-MSEC11-CONFORMITA-IMPIANTI-EL" name="GLOBO_modulofiglio_cM47010-MSEC11-CONFORMITA-IMPIANTI-EL" obbligatorio="(#rich_conf_imp.checked() and #Tipo_Firma_conf_imp.value() == 'Firmato con firma elettronica') ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        -->
+        <input id="GLOBO_modulofiglio_cM47010-MSEC11-CONFORMITA-IMPIANTI-EL" name="GLOBO_modulofiglio_cM47010-MSEC11-CONFORMITA-IMPIANTI-EL" obbligatorio="#rich_conf_imp.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -839,19 +900,24 @@ tipo_mime="application/pdf"/>
         <input id="scagi_richiesta_tit" name="scagi_richiesta_tit" type="checkbox" dynamic_check="#Attestazione_opere1.checked()" enabled="#Attestazione_opere1.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-          <p style="line-height:1.6;">Modulo secondario - <b>Segnalazione certificata di agibilità - sezione A</b><br>
+          <p style="line-height:1.6;">Modulo secondario - <b>Segnalazione certificata di agibilità - sezione A</b>, firmato con firma digitale dal progettista/tecnico incaricato delegato dal titolare
+            <br>
+            <!--
             <select class="inputNormal" id="Tipo_Firma_scagi" name="Tipo_Firma_scagi" style="width:60%;" label="Tipo firma modulo scagi" mandatory_enabled="#Metadati_Tipo_richiedente.value() == '2' and #scagi_richiesta_tit.checked()">
               <option value=""></option>
               <option value="Firmato con firma autografa">firmato dal titolare con firma autografa</option>
               <option value="Firmato con firma elettronica">firmato dal titolare con firma elettronica</option>
             </select>
+            -->
           </p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_scagi_richiesta_tit" name="numero_scagi_richiesta_tit" dynamic_value="#scagi_richiesta_tit.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <!--
         <input id="GLOBO_modulofiglio_cM47010-MSEC05-SCAGI-SEZIONE-A" name="GLOBO_modulofiglio_cM47010-MSEC05-SCAGI-SEZIONE-A" obbligatorio="(#scagi_richiesta_tit.checked() and #Metadati_Tipo_richiedente.value() == '1') ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
         <input id="GLOBO_modulofiglio_cM47010-MSEC06-SCAGI-SEZIONE-A-AU" name="GLOBO_modulofiglio_cM47010-MSEC06-SCAGI-SEZIONE-A-AU" obbligatorio="(#scagi_richiesta_tit.checked() and #Tipo_Firma_scagi.value() == 'Firmato con firma autografa') ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input id="GLOBO_modulofiglio_cM47010-MSEC07-SCAGI-SEZIONE-A-EL" name="GLOBO_modulofiglio_cM47010-MSEC07-SCAGI-SEZIONE-A-EL" obbligatorio="(#scagi_richiesta_tit.checked() and #Tipo_Firma_scagi.value() == 'Firmato con firma elettronica') ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        -->
+        <input id="GLOBO_modulofiglio_cM47010-MSEC07-SCAGI-SEZIONE-A-EL" name="GLOBO_modulofiglio_cM47010-MSEC07-SCAGI-SEZIONE-A-EL" obbligatorio="#scagi_richiesta_tit.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -977,8 +1043,12 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO ALLEGATI -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO PRESA VISIONE -->
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
@@ -994,8 +1064,12 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
+<!-- FINE BLOCCO PRESA VISIONE -->
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO FIRMA -->
 
 <div class="simpatico-block">
   <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
@@ -1008,7 +1082,7 @@ tipo_mime="application/pdf"/>
           <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
         </td>
         <td style="width: 50%; text-align: center; height: 1.5cm;">
-          <input class="" id="nominativo_tecnico" name="nominativo_tecnico" dynamic_value="#Metadati_Progettista_TitoloPersona.value() + ' ' + #Metadati_Progettista_Nome.value().toUpperCase() + ' ' + #Metadati_Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+          <input class="" id="nominativo_tecnico" name="nominativo_tecnico" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
         </td>
       </tr>
       <tr class="Rigaintestazioneridotta">
@@ -1032,47 +1106,33 @@ tipo_mime="application/pdf"/>
   </p>
 </div>
 
+<!-- FINE BLOCCO FIRMA -->
+
+<!-- INIZIO BLOCCO METADATI -->
+
+<!-- Metadati utilizzati in questo modulo -->
+
 <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
- 
 
-<input id="Nominativo_CodiceFiscale" name="Nominativo_CodiceFiscale" dynamic_value="#Metadati_AventeTitolo_CodiceFiscale.value()" type="hidden"/>
-<input id="Metadati_CodiceFiscale" name="Metadati_CodiceFiscale" dynamic_value="#Nominativo_CodiceFiscale.value()" type="hidden"/>
+<input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden"/>
+<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden"/>
+<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden"/>
 
-<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+<input id="Referente_TitoloPersona" name="Referente_TitoloPersona" type="hidden"/>
+<input id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" type="hidden"/>
+<input id="Referente_Cognome" name="Referente_Cognome" type="hidden"/>
+<input id="Referente_Nome" name="Referente_Nome" type="hidden"/>
 
-{{ utils.passaggio_metadati() }}
+<!-- Metadati di passaggio per i moduli nipoti -->
 
-<input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" type="hidden"/>
-<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" type="hidden"/>
-<input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" type="hidden"/>
-
-<input id="Metadati_Progettista_CodiceFiscale" name="Metadati_Progettista_CodiceFiscale" type="hidden"/>
-<input id="Metadati_Progettista_TitoloPersona" name="Metadati_Progettista_TitoloPersona" type="hidden"/>
-<input id="Metadati_Progettista_Cognome" name="Metadati_Progettista_Cognome" type="hidden"/>
-<input id="Metadati_Progettista_Nome" name="Metadati_Progettista_Nome" type="hidden"/>
-
-<input id="Metadati_Tipo_richiedente" name="Metadati_Tipo_richiedente" type="hidden"/>
-
-
-<!-- Passaggio dati dal principale senza usare metadati -->
-<input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden" readonly/>
-<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
-<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden" readonly/>
-
-<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden" readonly/>
-<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden" readonly/>
-<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden" readonly/>
-<input id="Progettista_Nome" name="Progettista_Nome" type="hidden" readonly/>
-<input id="Progettista_LuogoNascita" name="Progettista_LuogoNascita" type="hidden" readonly/>
-<input id="Progettista_Attributi_Albo" name="Progettista_Attributi_Albo" type="hidden" readonly/>
-<input id="Progettista_Attributi_AlNumero" name="Progettista_Attributi_AlNumero" type="hidden" readonly/>
-<input id="Progettista_Attributi_DellaProvincia" name="Progettista_Attributi_DellaProvincia" type="hidden" readonly/>
-<input id="Progettista_Indirizzocompleto" name="Progettista_Indirizzocompleto" type="hidden" readonly/>
-
-
+<input id="Referente_LuogoNascita" name="Referente_LuogoNascita" type="hidden" readonly/>
+<input id="Referente_Attributi_Albo" name="Referente_Attributi_Albo" type="hidden" readonly/>
+<input id="Referente_Attributi_AlNumero" name="Referente_Attributi_AlNumero" type="hidden" readonly/>
+<input id="Referente_Attributi_DellaProvincia" name="Referente_Attributi_DellaProvincia" type="hidden" readonly/>
+<input id="Referente_Indirizzocompleto" name="Referente_Indirizzocompleto" type="hidden" readonly/>
 
 <input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" type="hidden" readonly/>
 <input id="Immobile_ComuneCatastale_esteso" name="Immobile_ComuneCatastale_esteso" type="hidden" readonly/>
@@ -1085,65 +1145,60 @@ tipo_mime="application/pdf"/>
 <input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" type="hidden" readonly/>
 <input id="Immobile_numeroCivico" name="Immobile_numeroCivico" type="hidden" readonly/>
 <input id="Immobile_Barracivico" name="Immobile_Barracivico" type="hidden" readonly/>
-
 <input id="Immobile_NumeroAltriImmobili" name="Immobile_NumeroAltriImmobili" type="hidden"/>
+<input id="Referente99_check_numero_particelle" name="Referente99_check_numero_particelle" type="hidden"/>
 
-<input id="Immobile_check_numero_particelle" name="Immobile_check_numero_particelle" type="hidden"/>
+<!-- Passaggio dati dal principale al nipote usando metadati Referente99 come in accordo con Globo -->
 
-<input id="Tipo_documento1" name="Tipo_documento1" type="hidden" readonly/>
-<input id="Prot_documento1" name="Prot_documento1" type="hidden" readonly/>
-<input id="Data_documento1" name="Data_documento1" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento1" name="Referente99_Tipo_documento1" type="hidden" readonly/>
+<input id="Referente99_Prot_documento1" name="Referente99_Prot_documento1" type="hidden" readonly/>
+<input id="Referente99_Data_documento1" name="Referente99_Data_documento1" type="hidden" readonly/>
 
-<input id="Tipo_documento2" name="Tipo_documento2" type="hidden" readonly/>
-<input id="Prot_documento2" name="Prot_documento2" type="hidden" readonly/>
-<input id="Data_documento2" name="Data_documento2" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento2" name="Referente99_Tipo_documento2" type="hidden" readonly/>
+<input id="Referente99_Prot_documento2" name="Referente99_Prot_documento2" type="hidden" readonly/>
+<input id="Referente99_Data_documento2" name="Referente99_Data_documento2" type="hidden" readonly/>
 
-<input id="Tipo_documento3" name="Tipo_documento3" type="hidden" readonly/>
-<input id="Prot_documento3" name="Prot_documento3" type="hidden" readonly/>
-<input id="Data_documento3" name="Data_documento3" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento3" name="Referente99_Tipo_documento3" type="hidden" readonly/>
+<input id="Referente99_Prot_documento3" name="Referente99_Prot_documento3" type="hidden" readonly/>
+<input id="Referente99_Data_documento3" name="Referente99_Data_documento3" type="hidden" readonly/>
 
-<input id="Tipo_documento4" name="Tipo_documento4" type="hidden" readonly/>
-<input id="Prot_documento4" name="Prot_documento4" type="hidden" readonly/>
-<input id="Data_documento4" name="Data_documento4" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento4" name="Referente99_Tipo_documento4" type="hidden" readonly/>
+<input id="Referente99_Prot_documento4" name="Referente99_Prot_documento4" type="hidden" readonly/>
+<input id="Referente99_Data_documento4" name="Referente99_Data_documento4" type="hidden" readonly/>
 
-<input id="Tipo_documento5" name="Tipo_documento5" type="hidden" readonly/>
-<input id="Prot_documento5" name="Prot_documento5" type="hidden" readonly/>
-<input id="Data_documento5" name="Data_documento5" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento5" name="Referente99_Tipo_documento5" type="hidden" readonly/>
+<input id="Referente99_Prot_documento5" name="Referente99_Prot_documento5" type="hidden" readonly/>
+<input id="Referente99_Data_documento5" name="Referente99_Data_documento5" type="hidden" readonly/>
 
-<input id="Tipo_documento6" name="Tipo_documento6" type="hidden" readonly/>
-<input id="Prot_documento6" name="Prot_documento6" type="hidden" readonly/>
-<input id="Data_documento6" name="Data_documento6" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento6" name="Referente99_Tipo_documento6" type="hidden" readonly/>
+<input id="Referente99_Prot_documento6" name="Referente99_Prot_documento6" type="hidden" readonly/>
+<input id="Referente99_Data_documento6" name="Referente99_Data_documento6" type="hidden" readonly/>
 
-<input id="Tipo_documento7" name="Tipo_documento7" type="hidden" readonly/>
-<input id="Prot_documento7" name="Prot_documento7" type="hidden" readonly/>
-<input id="Data_documento7" name="Data_documento7" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento7" name="Referente99_Tipo_documento7" type="hidden" readonly/>
+<input id="Referente99_Prot_documento7" name="Referente99_Prot_documento7" type="hidden" readonly/>
+<input id="Referente99_Data_documento7" name="Referente99_Data_documento7" type="hidden" readonly/>
 
-<input id="Tipo_documento8" name="Tipo_documento8" type="hidden" readonly/>
-<input id="Prot_documento8" name="Prot_documento8" type="hidden" readonly/>
-<input id="Data_documento8" name="Data_documento8" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento8" name="Referente99_Tipo_documento8" type="hidden" readonly/>
+<input id="Referente99_Prot_documento8" name="Referente99_Prot_documento8" type="hidden" readonly/>
+<input id="Referente99_Data_documento8" name="Referente99_Data_documento8" type="hidden" readonly/>
 
-<input id="Tipo_documento9" name="Tipo_documento9" type="hidden" readonly/>
-<input id="Prot_documento9" name="Prot_documento9" type="hidden" readonly/>
-<input id="Data_documento9" name="Data_documento9" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento9" name="Referente99_Tipo_documento9" type="hidden" readonly/>
+<input id="Referente99_Prot_documento9" name="Referente99_Prot_documento9" type="hidden" readonly/>
+<input id="Referente99_Data_documento9" name="Referente99_Data_documento9" type="hidden" readonly/>
 
-<input id="Tipo_documento10" name="Tipo_documento10" type="hidden" readonly/>
-<input id="Prot_documento10" name="Prot_documento10" type="hidden" readonly/>
-<input id="Data_documento10" name="Data_documento10" type="hidden" readonly/>
+<input id="Referente99_Tipo_documento10" name="Referente99_Tipo_documento10" type="hidden" readonly/>
+<input id="Referente99_Prot_documento10" name="Referente99_Prot_documento10" type="hidden" readonly/>
+<input id="Referente99_Data_documento10" name="Referente99_Data_documento10" type="hidden" readonly/>
 
-<input id="NumeroAltriTitoli" name="NumeroAltriTitoli" type="hidden" readonly/>
+<input id="Referente99_altri_titoli" name="Referente99_altri_titoli" type="hidden" readonly/>
 
-<input id="cf_tecnico_firmatario_scagi" name="cf_tecnico_firmatario_scagi" dynamic_value="#present_scagi2.checked() ? #altroProg_CodiceFiscale.value() : #Progettista_CodiceFiscale.value()" type="hidden" readonly/>
+<input id="Referente99_cf_tecnico_firmatario_scagi" name="Referente99_cf_tecnico_firmatario_scagi" dynamic_value="#present_scagi2.checked() ? #altroProg_CodiceFiscale.value() : #Referente_CodiceFiscale.value()" type="hidden" readonly/>
 
-<input id="nominat_altro_tecn" name="nominat_altro_tecn" dynamic_value="#altroProg_Titolo.value() + ' ' + #altroProg_Nome.value().toUpperCase() + ' ' + #altroProg_Cognome.value().toUpperCase()" type="hidden" readonly/>
-<input id="nominat_tecnico_abil" name="nominat_tecnico_abil" dynamic_value="#Progettista_TitoloPersona.value() + ' ' + #Progettista_Nome.value().toUpperCase() + ' ' + #Progettista_Cognome.value().toUpperCase()" type="hidden" readonly/>
+<input id="Referente99_nominat_altro_tecn" name="Referente99_nominat_altro_tecn" dynamic_value="#altroProg_Titolo.value() + ' ' + #altroProg_Nome.value().toUpperCase() + ' ' + #altroProg_Cognome.value().toUpperCase()" type="hidden" readonly/>
+<input id="Referente99_nominat_tecnico_abil" name="Referente99_nominat_tecnico_abil" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" type="hidden" readonly/>
 
-<input id="nominativo_tecnico_firmatario_scagi" name="nominativo_tecnico_firmatario_scagi" dynamic_value="#present_scagi2.checked() ? #nominat_altro_tecn.value() : #nominat_tecnico_abil.value()" type="hidden" readonly/>
-<input id="cognome_tecnico_firmatario_scagi" name="cognome_tecnico_firmatario_scagi" dynamic_value="#present_scagi2.checked() ? #altroProg_Cognome.value() : #Progettista_Cognome.value()" type="hidden" readonly/>
+<input id="Referente99_nominativo_tecnico_firmatario_scagi" name="Referente99_nominativo_tecnico_firmatario_scagi" dynamic_value="#present_scagi2.checked() ? #Referente99_nominat_altro_tecn.value() : #Referente99_nominat_tecnico_abil.value()" type="hidden" readonly/>
+<input id="Referente99_cognome_tecnico_firmatario_scagi" name="Referente99_cognome_tecnico_firmatario_scagi" dynamic_value="#present_scagi2.checked() ? #altroProg_Cognome.value() : #Referente_Cognome.value()" type="hidden" readonly/>
 
-<input id="prova_passaggio_dati_padre" name="prova_passaggio_dati_padre" readonly/>
 
-{{utils.passaggio_metadati()}}
-<input id="Metadati_prova" name="Metadati_prova"/>
-
-<input id="Metadati_provafiglio" name="Metadati_provafiglio" dynamic_value="#Tipo_conformita1.value()"/>
 {% endblock content %}
