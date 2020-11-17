@@ -31,8 +31,14 @@ urlhelp="/modulistica/moduli/M1103-DICHIARAZIONE-RESIDENZA"
 verifica_pagamento="NO"
 versione="1.0|06/04/2016" />
 
-<meta codice_modulo_figlio="M1103-MSEC01-ALTRI-FAM"
-urn_modulo_figlio="document:c_l378:residenza;cambio.residenza;msec01.m1103.altri.familiari"
+<meta codice_modulo_figlio="M1103-MSEC01-ALTRI-FAM-COMUNITARI"
+urn_modulo_figlio="document:c_l378:residenza;cambio.residenza;msec01.m1103.altri.familiari.comunitari"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_modulo_figlio="M1103-MSEC01-ALTRI-FAM-NON-COMUNITARI"
+urn_modulo_figlio="document:c_l378:residenza;cambio.residenza;msec01.m1103.altri.familiari.comunitari.non.comunitari"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -128,7 +134,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Dichiarazione di residenza'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="'Dichiarazione di residenza - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -1604,7 +1610,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo" name="Allegati" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
-      <td colspan="3">
+      <td colspan="4">
         <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
       </td>
     </tr>
@@ -1612,7 +1618,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="width:4%;">
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
       </td>
-      <td>
+      <td colspan="2">
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
       </td>
       <td style="width:15%;">
@@ -1634,22 +1640,46 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     -->
     <tr>
-      <td style="vertical-align: center; text-align: center; width:4%">
+      <td style="vertical-align: top; text-align: center; width:4%" rowspan="3">
         <input id="GEN_ALTRI_FAM" name="GEN_ALTRI_FAM" type="checkbox" dynamic_check="#familiari_trasferiti.value() != 0" enabled="#familiari_trasferiti.value() != 0" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Modulo secondario - Anagrafica dei <input id="num_fam_trasf" name="num_fam_trasf" dynamic_value="#familiari_trasferiti.value()" size="4" style="text-align: center;" readonly> familiari trasferitisi al nuovo indirizzo</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_ALTRI_FAM" name="numero_GEN_ALTRI_FAM" dynamic_value="#GEN_ALTRI_FAM.checked() ? #familiari_trasferiti.value() : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM" name="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM" numero="#familiari_trasferiti.value()" obbligatorio="#GEN_ALTRI_FAM.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <!--<input id="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM" name="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM" numero="#familiari_trasferiti.value()" obbligatorio="#GEN_ALTRI_FAM.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>-->
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <input id="GEN_ALTRI_NON_FAM" name="GEN_ALTRI_NON_FAM" type="checkbox" enabled="#GEN_ALTRI_FAM.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6;">Indicare il numero dei familiari <b>stranieri e non comunitari</b> trasferitasi</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_ALTRI_FAM_NON_COM" name="numero_GEN_ALTRI_FAM_NON_COM" style="width: 90%; text-align: center;" type="number" mandatory_enabled="#GEN_ALTRI_NON_FAM.checked()"/></p>
+        <input id="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM-NON-COMUNITARI" name="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM-NON-COMUNITARI" numero="#numero_GEN_ALTRI_FAM_NON_COM.value()" obbligatorio="#GEN_ALTRI_NON_FAM.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <input id="GEN_ALTRI_COM" name="GEN_ALTRI_COM" type="checkbox" enabled="#GEN_ALTRI_FAM.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6;">Indicare il numero dei familiari <b>comunitari</b> trasferitasi</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_ALTRI_FAM_COM" name="numero_GEN_ALTRI_FAM_COM" style="width: 90%; text-align: center;" type="number" mandatory_enabled="#GEN_ALTRI_COM.checked()"/></p>
+        <input id="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM-COMUNITARI" name="GLOBO_modulofiglio_cM1103-MSEC01-ALTRI-FAM-COMUNITARI" numero="#numero_GEN_ALTRI_FAM_COM.value()" obbligatorio="#GEN_ALTRI_COM.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_A" name="DICH_RES_ALL_A" type="checkbox" dynamic_check="#verifica_non_UE.value() == 'non UE'" enabled="#verifica_non_UE.value() == 'non UE'" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Modulo secondario - Allegato A - Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini stranieri non comunitari</b></p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1661,7 +1691,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_B" name="DICH_RES_ALL_B" type="checkbox" dynamic_check="#AventeTitolo_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" enabled="#AventeTitolo_Cittadinanza.value() != '' and #AventeTitolo_Cittadinanza.check_value(['AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) and !#Tipo_residenza1.checked() and !#Tipo_residenza4.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Modulo secondario - Allegato B - Documentazione necessaria per l'iscrizione anagrafica di <b>cittadini comunitari</b></p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1701,7 +1731,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: top; text-align: center; width:4%">
         <input id="DICH_RES_ALL_E" name="DICH_RES_ALL_E" type="checkbox" dynamic_check="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" enabled="#dati_propr_com2.checked() || #dati_propr_loc2.checked() || #proprieta_immobile2.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Modulo secondario - Allegato E - Titolo di occupazione dell'alloggio, da compilarsi da parte del proprietario dell'immobile</p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1713,7 +1743,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: center; text-align: center; width:4%">
         <input id="GEN_CONTR_LOC" name="GEN_CONTR_LOC" type="checkbox" dynamic_check="#titolo_occupazione3.checked()" enabled="#titolo_occupazione3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Copia del contratto o del verbale di consegna dell'immobile I.T.E.A.</p>
       </td>
       <td style="background-color: #eeeeee;">
@@ -1725,7 +1755,7 @@ urn_report="report:CSP_SESSION_REPORT"
       <td style="vertical-align: center; text-align: center; width:4%">
         <input id="GEN_ENTR_CONV" name="GEN_ENTR_CONV" type="checkbox" dynamic_check="#proprieta_immobile3.checked()" enabled="#proprieta_immobile3.checked()" value="OBBLIGATORIO"/>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Dichiarazione di entrata in convivenza (casa di riposo, appartamenti gestiti da strutture)</p>
       </td>
       <td style="background-color: #eeeeee;">
