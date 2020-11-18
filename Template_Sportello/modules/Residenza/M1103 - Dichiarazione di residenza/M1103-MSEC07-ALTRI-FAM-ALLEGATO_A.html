@@ -1,5 +1,5 @@
-{% set CodiceModulo =  "M1103-MSEC01-ALTRI-FAM-COMUNITARI" %}
-{% set Urn =  "document:c_l378:residenza;cambio.residenza;msec01.m1103.altri.familiari.comunitari" %}
+{% set CodiceModulo =  "M1103-MSEC07-ALTRI-FAM-NON-COMUNITARI" %}
+{% set Urn =  "document:c_l378:residenza;cambio.residenza;msec07.m1103.altri.familiari.non.comunitari" %}
 {% extends "base_trento_ok.html" %}
 
 {% block meta %}
@@ -60,7 +60,6 @@ obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
 <!-- ALLEGATI PARTE A -->
-<!--
 <meta codice_allegato="M1103-A19-DOC-ID-NON-UE"
 urn_allegato="document:c_l378:residenza;cambio.residenza;a19.m1103.passaporto"
 descrizione_estesa="Allegato - Copia del passaporto o documento equipollente in corso di validità"
@@ -148,9 +147,9 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
--->
 
 <!-- ALLEGATI PARTE B -->
+<!--
 <meta codice_allegato="M1103-A20-DOC-ID-UE"
 urn_allegato="document:c_l378:residenza;cambio.residenza;a20.m1103.passaporto"
 descrizione_estesa="Allegato - Copia di un documento di identità UE valido per l'espatrio"
@@ -260,6 +259,7 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
+-->
 
 {% endblock meta %}
 
@@ -276,11 +276,11 @@ Anagrafica dei familiari trasferiti nella nuova residenza
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-<input dynamic_value="'Anagrafica del familiare appartenente all\'UE e trasferito nella nuova residenza ' + #AltroFamiliare_Cognome.value().toUpperCase() + ' ' + #AltroFamiliare_Nome.value().toUpperCase()" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="'Anagrafica del familiare non appartenenti all\'UE e trasferito nella nuova residenza ' + #AltroFamiliare_Cognome.value().toUpperCase() + ' ' + #AltroFamiliare_Nome.value().toUpperCase()" id="Oggetto" name="Oggetto" type="hidden"/>
 
+<h1 class="Modulo">Anagrafica del familiare non appartenente all'UE e trasferito nella nuova residenza</h1>
 
-<h1 class="Modulo">Anagrafica del familiare appartenente all'UE e trasferito nella nuova residenza</h1>
-
+<br>
 <br>
 
 <!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
@@ -329,14 +329,13 @@ Anagrafica dei familiari trasferiti nella nuova residenza
 <br>
 <br>
 
-<input id="altro_fam_verifica_non_UE" name="altro_fam_verifica_non_UE" dynamic_value="!#poss_carta_id2.checked() and #AltroFamiliare_Cittadinanza.value() != '' and !#AltroFamiliare_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) ? 'non UE' : ''" type="hidden"/>
-<input id="altro_fam_verifica_UE" name="altro_fam_verifica_UE" dynamic_value="!#poss_carta_id2.checked() and #AltroFamiliare_Cittadinanza.value() != '' and #AltroFamiliare_Cittadinanza.check_value([ 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) ? 'UE' : ''" type="hidden"/>
-<input id="altro_fam_verifica_ITA" name="altro_fam_verifica_ITA" dynamic_value="!#poss_carta_id2.checked() and #AltroFamiliare_Cittadinanza.value() != '' and #AltroFamiliare_Cittadinanza.check_value([ 'ITALIA' ]) ? 'ITA' : ''" type="hidden"/>
+<input id="altro_fam_verifica_non_UE" name="altro_fam_verifica_non_UE" dynamic_value="!#AltroFamiliare_Cittadinanza.check_value([ 'ITALIA', 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) ? 'non UE' : ''" type="hidden"/>
+<input id="altro_fam_verifica_UE" name="altro_fam_verifica_UE" dynamic_value="#AltroFamiliare_Cittadinanza.check_value([ 'AUSTRIA', 'BELGIO', 'BULGARIA', 'CIPRO', 'DANIMARCA', 'EIRE', 'ESTONIA', 'FINLANDIA', 'FRANCIA', 'GERMANIA', 'GRECIA', 'LETTONIA', 'LITUANIA', 'LUSSEMBURGO', 'MALTA', 'PAESI BASSI', 'POLONIA', 'PORTOGALLO', 'REGNO UNITO', 'REPUBBLICA CECA', 'ROMANIA', 'SLOVACCHIA', 'SLOVENIA', 'SPAGNA', 'SVEZIA', 'UNGHERIA']) ? 'UE' : ''" type="hidden"/>
+<input id="altro_fam_verifica_ITA" name="altro_fam_verifica_ITA" dynamic_value="#AltroFamiliare_Cittadinanza.check_value([ 'ITALIA' ]) ? 'ITA' : ''" type="hidden"/>
 
-<!--
 <h1 class="Modulo" style="font-size:180%;">Allegato A</h1>
 
-<h2 class="Modulo" style="font-size:120%;"><i>da compilarsi soltanto per l'iscrizione anagrafica di cittadini di Stati non appartenenti all'UE</i></h2>
+<h2 class="Modulo" style="font-size:120%;"><i>da compilarsi per l'iscrizione anagrafica di cittadini di Stati non appartenenti all'UE</i></h2>
 
 <br>
 
@@ -351,7 +350,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Tipo_cittadinanza_no_UE" name="Tipo_cittadinanza_no_UE" label="Tipo permesso di soggiorno posseduto" mandatory_enabled="#altro_fam_verifica_non_UE.value() == 'non UE'"> </div>
+        <div id="Tipo_cittadinanza_no_UE" name="Tipo_cittadinanza_no_UE" label="Tipo permesso di soggiorno posseduto" mandatory_enabled="true"> </div>
         <input group="Tipo_cittadinanza_no_UE" id="Tipo_cittadinanza_no_UE1" name="Tipo_cittadinanza_no_UE" type="radio" value="1" />
       </td>
       <td>
@@ -387,11 +386,10 @@ Anagrafica dei familiari trasferiti nella nuova residenza
 
 <br>
 <br>
--->
-
+<!--
 <h1 class="Modulo" style="font-size:180%;">Allegato B</h1>
 
-<h2 class="Modulo" style="font-size:120%;"><i>da compilarsi per l'iscrizione anagrafica di cittadini di Stati appartenenti all'UE</i></h2>
+<h2 class="Modulo" style="font-size:120%;"><i>da compilarsi soltanto per l'iscrizione anagrafica di cittadini di Stati appartenenti all'UE</i></h2>
 
 <br>
 
@@ -458,6 +456,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
 
 <br>
 <br>
+-->
 
 <h1 class="Modulo" style="font-size:180%;">Allegato C</h1>
 
@@ -577,9 +576,10 @@ Anagrafica dei familiari trasferiti nella nuova residenza
         <input id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
     </tr>
+    <!--
     <tr>
       <td style="vertical-align: center; text-align: center; width:4%;">
-        <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#altro_fam_verifica_ITA.value() == 'ITA' and #check_minorenne.checked()" enabled="#altro_fam_verifica_ITA.value() == 'ITA' and #check_minorenne.checked()" value="OBBLIGATORIO"/>
+        <input id="GEN_CDI" name="GEN_CDI" type="checkbox" dynamic_check="#altro_fam_verifica_ITA.value() == 'ITA'" enabled="#altro_fam_verifica_ITA.value() == 'ITA'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Copia del documento d'identità del familiare se maggiorenne e avente cittadinanza italiana</p>
@@ -589,9 +589,10 @@ Anagrafica dei familiari trasferiti nella nuova residenza
         <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+    -->
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%;">
-        <input id="GEN_DOC_STATO_CIV" name="GEN_DOC_STATO_CIV" type="checkbox" enabled="#Tipo_cittadinanza_UE1.checked() || #Tipo_cittadinanza_UE2.checked() || #Tipo_cittadinanza_UE3.checked()" dynamic_value="#Tipo_cittadinanza_UE1.checked() || #Tipo_cittadinanza_UE2.checked() || #Tipo_cittadinanza_UE3.checked()" value="OBBLIGATORIO"/>
+        <input id="GEN_DOC_STATO_CIV" name="GEN_DOC_STATO_CIV" type="checkbox" enabled="#Tipo_cittadinanza_no_UE1.checked() || #Tipo_cittadinanza_no_UE2.checked() || #Tipo_cittadinanza_no_UE3.checked() || #Tipo_cittadinanza_no_UE4.checked()" dynamic_check="#Tipo_cittadinanza_no_UE1.checked() || #Tipo_cittadinanza_no_UE2.checked() || #Tipo_cittadinanza_no_UE3.checked() || #Tipo_cittadinanza_no_UE4.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Copia degli atti originali, tradotti e legalizzati, comprovanti lo stato civile e la composizione della famiglia</p>
@@ -601,15 +602,15 @@ Anagrafica dei familiari trasferiti nella nuova residenza
         <input id="GLOBO_allegato_cM1103-A18-STATO-CIV" name="GLOBO_allegato_cM1103-A18-STATO-CIV" obbligatorio="#GEN_DOC_STATO_CIV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_GEN_DOC_STATO_CIV.value()"/>
       </td>
     </tr>
+    
     <tr class="Rigaintestazione">
       <td colspan="3">
         <p style="line-height:1.6; text-align: center;"><b>DOCUMENTI SEZIONE ALLEGATO A</b></p>
       </td>
     </tr>
-    <!--
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%;">
-        <input id="GEN_CDI_NO_UE" name="GEN_CDI_NO_UE" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="GEN_CDI_NO_UE" name="GEN_CDI_NO_UE" type="checkbox" dynamic_check="#altro_fam_verifica_non_UE.value() == 'non UE'" enabled="#altro_fam_verifica_non_UE.value() == 'non UE'" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Copia del passaporto o documento equipollente in corso di validità, se maggiorenne e non avente cittadinanza UE</p>
@@ -619,10 +620,9 @@ Anagrafica dei familiari trasferiti nella nuova residenza
         <input id="GLOBO_allegato_cM1103-A19-DOC-ID-NON-UE" name="GLOBO_allegato_cM1103-A19-DOC-ID-NON-UE" obbligatorio="#GEN_CDI_NO_UE.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
-    -->
     <tr>
       <td style="vertical-align: center; text-align: center; width:4%;">
-        <input id="GEN_TIT_SOGG" name="GEN_TIT_SOGG" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="GEN_TIT_SOGG" name="GEN_TIT_SOGG" type="checkbox" dynamic_check="#Tipo_cittadinanza_no_UE1.checked()" enabled="#Tipo_cittadinanza_no_UE1.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Copia del titolo di soggiorno in corso di validità</p>
@@ -634,7 +634,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width:4%;">
-        <input id="GEN_TIT_SOGG_SCAD" name="GEN_TIT_SOGG_SCAD" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="GEN_TIT_SOGG_SCAD" name="GEN_TIT_SOGG_SCAD" type="checkbox" dynamic_check="#Tipo_cittadinanza_no_UE2.checked()" enabled="#Tipo_cittadinanza_no_UE2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Copia del titolo di soggiorno scaduto</p>
@@ -646,7 +646,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width:4%;">
-        <input id="GEN_RIC_RICH_RINN" name="GEN_RIC_RICH_RINN" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="GEN_RIC_RICH_RINN" name="GEN_RIC_RICH_RINN" type="checkbox" dynamic_check="#Tipo_cittadinanza_no_UE2.checked()" enabled="#Tipo_cittadinanza_no_UE2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Ricevuta della richiesta di rinnovo del titolo di soggiorno</p>
@@ -658,7 +658,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width:4%;">
-        <input id="GEN_CONTR_SOGG" name="GEN_CONTR_SOGG" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="GEN_CONTR_SOGG" name="GEN_CONTR_SOGG" type="checkbox" dynamic_check="#Tipo_cittadinanza_no_UE3.checked()" enabled="#Tipo_cittadinanza_no_UE3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Copia del contratto di soggiorno presso lo Sportello Unico per l’immigrazione</p>
@@ -670,7 +670,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%;">
-        <input id="GEN_RIC_DOM_PERM_SOGG" name="GEN_RIC_DOM_PERM_SOGG" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="GEN_RIC_DOM_PERM_SOGG" name="GEN_RIC_DOM_PERM_SOGG" type="checkbox" dynamic_check="#Tipo_cittadinanza_no_UE3.checked() || #Tipo_cittadinanza_no_UE4.checked()" enabled="#Tipo_cittadinanza_no_UE3.checked() || #Tipo_cittadinanza_no_UE4.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Ricevuta rilasciata dall’ufficio postale attestante l’avvenuta presentazione della richiesta di permesso di soggiorno</p>
@@ -682,7 +682,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width:4%;">
-        <input id="GEN_PERM_SOGG_LAV_SUB" name="GEN_PERM_SOGG_LAV_SUB" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="GEN_PERM_SOGG_LAV_SUB" name="GEN_PERM_SOGG_LAV_SUB" type="checkbox" dynamic_check="#Tipo_cittadinanza_no_UE3.checked()" enabled="#Tipo_cittadinanza_no_UE3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Domanda di rilascio del permesso di soggiorno per lavoro subordinato presentata allo Sportello Unico</p>
@@ -694,7 +694,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width:4%;">
-        <input id="GEN_NULLA_OSTA" name="GEN_NULLA_OSTA" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
+        <input id="GEN_NULLA_OSTA" name="GEN_NULLA_OSTA" type="checkbox" dynamic_check="#Tipo_cittadinanza_no_UE4.checked()" enabled="#Tipo_cittadinanza_no_UE4.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6;">Copia (anche non autenticata) del nulla osta rilasciato dallo Sportello unico</p>
@@ -775,10 +775,11 @@ Anagrafica dei familiari trasferiti nella nuova residenza
 <input id="Metadati_Compilante_Nome" name="Metadati_Compilante_Nome" type="hidden"/>
 <input id="Metadati_Compilante_CodiceFiscale" name="Metadati_Compilante_CodiceFiscale" type="hidden"/>
 <br>
--->
+
 <input id="Referente99_Compilante_Cognome" name="Referente99_Compilante_Cognome" type="hidden"/>
 <input id="Referente99_Compilante_Nome" name="Referente99_Compilante_Nome" type="hidden"/>
 <input id="Referente99_Compilante_CodiceFiscale" name="Referente99_Compilante_CodiceFiscale" type="hidden"/>
+-->
 <!-- METADATI TITOLARE -->
 <!--
 <input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" type="hidden"/>
@@ -787,6 +788,7 @@ Anagrafica dei familiari trasferiti nella nuova residenza
 <input id="Metadati_AventeTitolo_datanasc" name="Metadati_AventeTitolo_datanasc" type="hidden"/>
 <input id="Metadati_AventeTitolo_luogonasc" name="Metadati_AventeTitolo_luogonasc" type="hidden"/>
 -->
+
 <input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden"/>
 <input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden"/>
 <input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden"/>

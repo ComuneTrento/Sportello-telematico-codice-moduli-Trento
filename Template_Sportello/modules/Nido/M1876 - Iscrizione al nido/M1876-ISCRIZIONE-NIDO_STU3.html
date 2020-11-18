@@ -239,11 +239,18 @@ M1876-ISCRIZIONE-NIDO
     <input name="SvCodiceFiscaleFamiglia" id="SvCodiceFiscaleFamiglia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" />
     <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceVia.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceVia.value() : 0 )" />
     <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CivicoResidenza.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CivicoResidenza.value() : 0 )" format="number" />
+    <!--
     <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Cognome.value() + ',' + #Bambino_Paternita.value()" type="hidden"/>
     <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
+    -->
+    <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Paternita.value()" type="hidden"/>
+    <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
+
     <input name="SvCFBambino" id="SvCFBambino" type="hidden" dynamic_value="(#Tassonomia_CF3.checked() ? #AventeTitolo_CodiceFiscale.value() : 0) || ((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" >
    
     <input id="check_CFBambino" name="check_CFBambino" type="hidden" label="ATTENZIONE! Il codice fiscale del bambino non risulta essere stato ancora convalidato dall'Agenzia delle Entrate" dynamic_value="!#Tassonomia_CF3.checked() and #Bambino_CFBambino.value() == '' ? '' : 'OK'" mandatory="true"/>
+
+    <input name="Parametri_Ascolto_WS_SvCFBambino" id="Parametri_Ascolto_WS_SvCFBambino" type="hidden" dynamic_value="#SvCFBambino.value() != '' ? #SvCFBambino.value() : #Parametri_Ascolto_WS_SvCFBambino.value()" >
 
 </div>
 
@@ -261,7 +268,7 @@ M1876-ISCRIZIONE-NIDO
         'Parametri_DataDomValFT': 'dtDomanda',
         'Parametri_RichDomValFT': 'richiedente',
         },
-        '#SvCFBambino:change' ) }}
+        '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
   
     {{ service.getDomandaAttiva('SvCFBambino','TipoDomandaPartTime',   {
         'Parametri_TipoDomandaPT': 'tipoServizio',
@@ -270,7 +277,7 @@ M1876-ISCRIZIONE-NIDO
         'Parametri_RichDomValPT': 'richiedente',
         'Parametri_DataDomValPT': 'dtDomanda',
         },
-        '#SvCFBambino:change' ) }}
+        '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
   
     <input type="hidden" id="Parametri_TipoDomandaFT" name="Parametri_TipoDomandaFT" />
     <input type="hidden" id="Parametri_NumeroDomandaValFT" name="Parametri_NumeroDomandaValFT"/>
@@ -439,7 +446,7 @@ M1876-ISCRIZIONE-NIDO
                     'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
                     'Parametri_BarraResidenzaFam' + prefix: 'barra',
                     'Parametri_NazioneFam' + prefix: 'nazione',
-                }, '#Parametri_CFFam' + prefix + ':change' )}}
+                }, '#Parametri_Ascolto_WS_Parametri_CFFam' + prefix + ':change' )}}
   
             <tr class="Rigaintestazioneridotta">
                 <td style="width: 18%;">
@@ -470,6 +477,7 @@ M1876-ISCRIZIONE-NIDO
                 </td>
                 <td>
                     <input class="inputNormal" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" style="width: 100%;" label="Codice fiscale del familiare" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" readonly>
+                    <input name="Parametri_Ascolto_WS_Parametri_CFFam{{ prefix }}" id="Parametri_Ascolto_WS_Parametri_CFFam{{ prefix }}" type="hidden" dynamic_value="#Parametri_CFFam{{ prefix }}.value() != '' ? #Parametri_CFFam{{ prefix }}.value() : #Parametri_Ascolto_WS_Parametri_CFFam{{ prefix }}.value()" >
                 </td>
                 <td>
                     <select class="inputNormal" id="Parametri_SessoFam{{ prefix }}" name="Parametri_SessoFam{{ prefix }}" style="width:100%;" label="Sesso" enabled="!#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" readonly>
@@ -1157,16 +1165,17 @@ M1876-ISCRIZIONE-NIDO
 
         {{ service.getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido1FT' + prefix, {
             'Parametri_DettaglioServizio1FT' + prefix: 'descrizione'
-        }, '#Parametri_CodiceServizioNido1FT' + prefix + ':change' )}}
+        }, '#Parametri_Ascolto_1FT' + prefix + ':change' )}}
 
         <tr>
             <td style="vertical-align: center; text-align: center; width: 4%;">
                 <input group="Tassonomia_ServiziPrimoNidoFT" id="Tassonomia_TipoSceltaServizioAsilo1FT{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo1FT{{ prefix }}" enabled="#Parametri_CodiceServizioNido1FT{{ prefix }}.value() != ''" type="checkbox" value="{{ prefix }}" />
             </td>
             <td colspan="2">
-                <input class="inputNormal" id="Parametri_DettaglioServizio1FT{{ prefix }}" name="Parametri_DettaglioServizio1FT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" readonly>
+                <input class="inputNormal" id="Parametri_DettaglioServizio1FT{{ prefix }}" name="Parametri_DettaglioServizio1FT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" enabled="#Parametri_CodiceServizioNido1FT{{ prefix }}.value() != ''" readonly>
             </td>
             <td>
+                <input id="Parametri_Ascolto_1FT{{ prefix }}" name="Parametri_Ascolto_1FT{{ prefix }}" dynamic_value="#Parametri_CodiceServizioNido1FT{{ prefix }}.value() != '' ? #Parametri_CodiceServizioNido1FT{{ prefix }}.value() : #Parametri_Ascolto_1FT{{ prefix }}.value()" type="hidden">
                 <input id="Parametri_CodiceServizioNido1FT{{ prefix }}" name="Parametri_CodiceServizioNido1FT{{ prefix }}" style="width: 100%;" label="Codice servizio opzionale offerto" readonly>
             </td>
         </tr>
@@ -1256,16 +1265,17 @@ M1876-ISCRIZIONE-NIDO
 
         {{ service.getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido2FT' + prefix, {
             'Parametri_DettaglioServizio2FT' + prefix: 'descrizione'
-        }, '#Parametri_CodiceServizioNido2FT' + prefix + ':change' )}}
+        }, '#Parametri_Ascolto_2FT' + prefix + ':change' )}}
 
         <tr>
             <td style="vertical-align: center; text-align: center; width: 4%;">
                 <input group="Tassonomia_ServiziSecondoNidoFT" id="Tassonomia_TipoSceltaServizioAsilo2FT{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo2FT{{ prefix }}" enabled="#Parametri_CodiceServizioNido2FT{{ prefix }}.value() != ''" type="checkbox" value="{{ prefix }}" />
             </td>
             <td colspan="2">
-                <input class="inputNormal" id="Parametri_DettaglioServizio2FT{{ prefix }}" name="Parametri_DettaglioServizio2FT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" readonly>
+                <input class="inputNormal" id="Parametri_DettaglioServizio2FT{{ prefix }}" name="Parametri_DettaglioServizio2FT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" enabled="#Parametri_CodiceServizioNido2FT{{ prefix }}.value() != ''" readonly>
             </td>
             <td>
+                <input id="Parametri_Ascolto_2FT{{ prefix }}" name="Parametri_Ascolto_2FT{{ prefix }}" dynamic_value="#Parametri_CodiceServizioNido2FT{{ prefix }}.value() != '' ? #Parametri_CodiceServizioNido2FT{{ prefix }}.value() : #Parametri_Ascolto_2FT{{ prefix }}.value()" type="hidden">
                 <input id="Parametri_CodiceServizioNido2FT{{ prefix }}" name="Parametri_CodiceServizioNido2FT{{ prefix }}" style="width: 100%;" label="Codice servizio opzionale offerto" readonly>
             </td>
         </tr>
@@ -1438,16 +1448,17 @@ M1876-ISCRIZIONE-NIDO
 
         {{ service.getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido1PT' + prefix, {
             'Parametri_DettaglioServizio1PT' + prefix: 'descrizione'
-        }, '#Parametri_CodiceServizioNido1PT' + prefix + ':change' )}}
+        }, '#Parametri_Ascolto_1PT' + prefix + ':change' )}}
 
         <tr>
             <td style="vertical-align: top; text-align: center; width: 4%;">
                 <input group="Tassonomia_ServiziPrimoNidoPT" id="Tassonomia_TipoSceltaServizioAsilo1PT{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo1PT{{ prefix }}" enabled="#Parametri_CodiceServizioNido1PT{{ prefix }}.value() != ''" type="checkbox" value="{{ prefix }}" />
             </td>
             <td colspan="2">
-                <input class="inputNormal" id="Parametri_DettaglioServizio1PT{{ prefix }}" name="Parametri_DettaglioServizio1PT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" readonly>
+                <input class="inputNormal" id="Parametri_DettaglioServizio1PT{{ prefix }}" name="Parametri_DettaglioServizio1PT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" enabled="#Parametri_CodiceServizioNido1PT{{ prefix }}.value() != ''" readonly>
             </td>
             <td>
+                <input id="Parametri_Ascolto_1PT{{ prefix }}" name="Parametri_Ascolto_1PT{{ prefix }}" dynamic_value="#Parametri_CodiceServizioNido1PT{{ prefix }}.value() != '' ? #Parametri_CodiceServizioNido1PT{{ prefix }}.value() : #Parametri_Ascolto_1PT{{ prefix }}.value()" type="hidden">
                 <input id="Parametri_CodiceServizioNido1PT{{ prefix }}" name="Parametri_CodiceServizioNido1PT{{ prefix }}" style="width: 100%;" label="Codice servizio opzionale offerto" readonly>
             </td>
         </tr>
@@ -1537,16 +1548,17 @@ M1876-ISCRIZIONE-NIDO
 
         {{ service.getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido2PT' + prefix, {
             'Parametri_DettaglioServizio2PT' + prefix: 'descrizione'
-        }, '#Parametri_CodiceServizioNido2PT' + prefix + ':change' )}}
+        }, '#Parametri_Ascolto_2PT' + prefix + ':change' )}}
 
         <tr>
             <td style="vertical-align: center; text-align: center; width: 4%;">
                 <input group="Tassonomia_ServiziSecondoNidoPT" id="Tassonomia_TipoSceltaServizioAsilo2PT{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo2PT{{ prefix }}" enabled="#Parametri_CodiceServizioNido2PT{{ prefix }}.value() != ''" type="checkbox" value="{{ prefix }}" />
             </td>
             <td colspan="2">
-                <input class="inputNormal" id="Parametri_DettaglioServizio2PT{{ prefix }}" name="Parametri_DettaglioServizio2PT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" readonly>
+                <input class="inputNormal" id="Parametri_DettaglioServizio2PT{{ prefix }}" name="Parametri_DettaglioServizio2PT{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" enabled="#Parametri_CodiceServizioNido2PT{{ prefix }}.value() != ''" readonly>
             </td>
             <td>
+                <input id="Parametri_Ascolto_2PT{{ prefix }}" name="Parametri_Ascolto_2PT{{ prefix }}" dynamic_value="#Parametri_CodiceServizioNido2PT{{ prefix }}.value() != '' ? #Parametri_CodiceServizioNido2PT{{ prefix }}.value() : #Parametri_Ascolto_2PT{{ prefix }}.value()" type="hidden">
                 <input id="Parametri_CodiceServizioNido2PT{{ prefix }}" name="Parametri_CodiceServizioNido2PT{{ prefix }}" style="width: 100%;" label="Codice servizio opzionale offerto" readonly>
             </td>
         </tr>
@@ -1840,7 +1852,7 @@ M1876-ISCRIZIONE-NIDO
                 <p style="line-height: 1.6;">e-mail</p>
             </td>
             <td>
-                <input class="inputNormal" id="Parametri_ContattoEmail" name="Parametri_ContattoEmail" format="email" maxlength="60" style="width: 100%;" label="Email per comunicazioni" mandatory_enabled="#Tassonomia_TipoContatto1.checked()" dynamic_value="#AventeTitolo_EMail.value()">
+                <input class="inputNormal" id="Parametri_ContattoEmail" name="Parametri_ContattoEmail" maxlength="60" style="width: 100%;" label="Email per comunicazioni" mandatory_enabled="#Tassonomia_TipoContatto1.checked()" dynamic_value="#AventeTitolo_EMail.value()">
             </td>
         </tr>
         <tr>
@@ -1851,7 +1863,7 @@ M1876-ISCRIZIONE-NIDO
                 <p style="line-height: 1.6;">e-mail PEC</p>
             </td>
             <td>
-                <input class="inputNormal" id="Parametri_ContattoEmailPEC" name="Parametri_ContattoEmailPEC" format="email" maxlength="60" style="width: 100%;" label="Email PEC per comunicazioni" mandatory_enabled="#Tassonomia_TipoContatto2.checked()" dynamic_value="#AventeTitolo_EMailPEC.value()">
+                <input class="inputNormal" id="Parametri_ContattoEmailPEC" name="Parametri_ContattoEmailPEC" maxlength="60" style="width: 100%;" label="Email PEC per comunicazioni" mandatory_enabled="#Tassonomia_TipoContatto2.checked()" dynamic_value="#AventeTitolo_EMailPEC.value()">
             </td>
         </tr>
     </tbody>
