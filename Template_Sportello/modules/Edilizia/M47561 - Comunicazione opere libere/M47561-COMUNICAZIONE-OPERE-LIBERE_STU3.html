@@ -1,6 +1,6 @@
 {% set CodiceModulo = "M47561-COMUNICAZIONE-OPERE-LIBERE" %}
 {% set Urn =  "document:c_l378:opere.libere;comunicazione.opere.libere;m47561.comunicazione.opere.libere" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 
@@ -299,8 +299,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Comunicazione opere libere'" id="Oggetto" name="Oggetto" type="hidden" />
-<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+<input dynamic_value="'Comunicazione opere libere - Richiedente: ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'" id="Oggetto" name="Oggetto" type="hidden" />
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
@@ -361,27 +360,6 @@ urn_report="report:CSP_SESSION_REPORT"
 <!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
 
 {{anagrafica_trento_uniformata.titolare("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio","Procuratore","Amministratore di sostegno"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
-
-<!-- -------------------- METADATI ANAGRAFICI ------------------------- -->
-<!--
-<input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" dynamic_value="#AventeTitolo_CodiceFiscale.value()"/>
-<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" dynamic_value="#AventeTitolo_Cognome.value()"/>
-<input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" dynamic_value="#AventeTitolo_Nome.value()"/>
-<input id="Metadati_AventeTitolo_DataNascita" name="Metadati_AventeTitolo_DataNascita" dynamic_value="#AventeTitolo_DataNascita.value()"/>
-<input id="Metadati_AventeTitolo_Sesso" name="Metadati_AventeTitolo_Sesso" dynamic_value="#AventeTitolo_Sesso.value()"/>
-<input id="Metadati_AventeTitolo_Cittadinanza" name="Metadati_AventeTitolo_Cittadinanza" dynamic_value="#AventeTitolo_Cittadinanza.value()"/>
-<input id="Metadati_AventeTitolo_LuogoNascita" name="Metadati_AventeTitolo_LuogoNascita" dynamic_value="#AventeTitolo_LuogoNascita.value()"/>
-<input id="Metadati_AventeTitolo_ProvinciaResidenza" name="Metadati_AventeTitolo_ProvinciaResidenza" dynamic_value="#AventeTitolo_ProvinciaResidenza.value()"/>
-<input id="Metadati_AventeTitolo_ComuneResidenza" name="Metadati_AventeTitolo_ComuneResidenza" dynamic_value="#AventeTitolo_ComuneResidenza.value()"/>
-<input id="Metadati_AventeTitolo_ViaResidenza" name="Metadati_AventeTitolo_ViaResidenza" dynamic_value="#AventeTitolo_ViaResidenza.value()"/>
-<input id="Metadati_AventeTitolo_CivicoResidenza" name="Metadati_AventeTitolo_CivicoResidenza" dynamic_value="#AventeTitolo_CivicoResidenza.value()"/>
-<input id="Metadati_AventeTitolo_BarraResidenza" name="Metadati_AventeTitolo_BarraResidenza" dynamic_value="#AventeTitolo_BarraResidenza.value()"/>
-<input id="Metadati_AventeTitolo_CAPResidenza" name="Metadati_AventeTitolo_CAPResidenza" dynamic_value="#AventeTitolo_CAPResidenza.value()"/>
-<input id="Metadati_AventeTitolo_Fisso" name="Metadati_AventeTitolo_Fisso" dynamic_value="#AventeTitolo_Fisso.value()"/>
-<input id="Metadati_AventeTitolo_Telefono" name="Metadati_AventeTitolo_Telefono" dynamic_value="#AventeTitolo_Telefono.value()"/>
-<input id="Metadati_AventeTitolo_EMail" name="Metadati_AventeTitolo_EMail" dynamic_value="#AventeTitolo_EMail.value()"/>
-<input id="Metadati_AventeTitolo_EMailPEC" name="Metadati_AventeTitolo_EMailPEC" dynamic_value="#AventeTitolo_EMailPEC.value()"/>
--->
 
 <br>
 <br>
@@ -523,8 +501,6 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-
-<!-- TODO  DA QUA -->
 <div class="simpatico-block simpatico-query-and-answer">
   
   <h1 class="Modulo">COMUNICA</h1>
@@ -533,7 +509,11 @@ urn_report="report:CSP_SESSION_REPORT"
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
-          <p style="line-height:1.6;"><b>che in data <input class="" format="date" id="data_lavori" name="data_lavori" label="data inizio lavori" mandatory="#inizio_lavori1.checked()" enabled="true" size="10" style="text-align: center;"/>:</b></p>     
+          <p style="line-height:1.6;"><b>che in data <input class="" type="date" id="data_lavori" name="data_lavori" label="data inizio lavori" mandatory="#inizio_lavori1.checked()" enabled="true" size="10" style="text-align: center;"/>:</b></p>     
+           <!-- GESTIONE FORMATO DATA COMPATIBILE CON IL JAVASCRIPT DI VERIFICA DATE -->
+          <input id="Trasforma_data" name="Trasforma_data" dynamic_value="#data_lavori.value().replace(/-/g, '/');" type="hidden">
+          <input id="sposta_data" name="sposta_data" dynamic_value="#Trasforma_data.value().substring(8, 10) + '/' + #Trasforma_data.value().substring(5, 8) + #Trasforma_data.value().substring(0, 4)" type="hidden">
+
         </td>
       </tr>
       <tr>
@@ -543,9 +523,9 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
         <td>
           <p style="line-height:1.6;">avranno inizio i lavori sopradescritti</p>
-          <p style="line-height:1.6;"><input id="correttezza_date" name="correttezza_date" dynamic_check="DaysBetweenDate(#Data_PDF.value(), #data_lavori.value()) >= 1" type="hidden"/>
-            <input id="correttezza_date_testo" name="correttezza_date_testo" enabled="#inizio_lavori1.checked() and #data_lavori.value() != ''" dynamic_value="#correttezza_date.checked() ? 'Ok, la data inserita è successiva alla data odierna' : 'ATTENZIONE: la data di inizio lavori indicata è antecedente alla data di oggi'" style="width: 100%;"/>
-            <input id="check_correttezza_date" name="check_correttezza_date" enabled="#inizio_lavori1.checked()" dynamic_value="#correttezza_date.checked() ? 'OK' : ''" mandatory="true" label="ATTENZIONE: errore nella data di inizio lavori indicata" /></p>
+          <p style="line-height:1.6;"><input id="correttezza_date" name="correttezza_date" dynamic_check="DaysBetweenDate(#Data_PDF.value(), #sposta_data.value()) >= 1" type="hidden"/>
+            <input id="correttezza_date_testo" name="correttezza_date_testo" enabled="#inizio_lavori1.checked() and #sposta_data.value() != ''" dynamic_value="#correttezza_date.checked() ? 'Ok, la data inserita è successiva alla data odierna' : 'ATTENZIONE: la data di inizio lavori indicata è antecedente alla data di oggi'" style="width: 100%;"/>
+            <input id="check_correttezza_date" name="check_correttezza_date" enabled="#inizio_lavori1.checked()" dynamic_value="#correttezza_date.checked() ? 'OK' : ''" mandatory="true" label="ATTENZIONE: errore nella data di inizio lavori indicata" type="hidden"/></p>
         </td>
       </tr>
       <tr>
@@ -554,8 +534,8 @@ urn_report="report:CSP_SESSION_REPORT"
         </td>
         <td>
           <p style="line-height:1.6;">sono stati eseguiti i lavori sopradescritti in assenza della necessaria comunicazione preventiva, con gli effetti sanzionatori previsti dall’art. 78, comma 4, della L.P. n. 15/2015</p>
-          <p style="line-height:1.6;"><input id="correttezza_date2" name="correttezza_date2" enabled="#inizio_lavori2.checked() and #data_lavori.value() != ''" dynamic_value="#correttezza_date.checked() ? 'ATTENZIONE: la data di esecuzione lavori indicata è successiva alla data di oggi' : 'OK'" style="width: 100%;"/>
-            <input id="check_correttezza_date2" name="check_correttezza_date2" enabled="#inizio_lavori2.checked()" dynamic_value="#correttezza_date.checked() ? '' : 'OK'" mandatory="true" label="ATTENZIONE: errore nella data di inizio lavori indicata" /></p>
+          <p style="line-height:1.6;"><input id="correttezza_date2" name="correttezza_date2" enabled="#inizio_lavori2.checked() and #sposta_data.value() != ''" dynamic_value="#correttezza_date.checked() ? 'ATTENZIONE: la data di esecuzione lavori indicata è successiva alla data di oggi' : 'OK'" style="width: 100%;"/>
+            <input id="check_correttezza_date2" name="check_correttezza_date2" enabled="#inizio_lavori2.checked()" dynamic_value="#correttezza_date.checked() ? '' : 'OK'" mandatory="true" label="ATTENZIONE: errore nella data di inizio lavori indicata" type="hidden"/></p>
         </td>
       </tr>
     </tbody>
@@ -678,9 +658,11 @@ urn_report="report:CSP_SESSION_REPORT"
       <td>
         <p style="line-height:1.6;"><b>opere precarie</b> facilmente rimovibili e destinate a soddisfare esigenze improrogabili e temporanee</p>
         <span style="font-size:75%;line-height:1.6;">(articolo 78, comma 3, lettera k) della legge provinciale del 4 agosto 2015, n. 15. Si ricorda che la comunicazione deve essere presentata al comune <b>almeno 10 giorni prima dell’inizio lavori</b> ai sensi dell’art. 32, comma 5, del regolamento urbanistico-edilizio provinciale)</span>
-        <p style="line-height:1.6;"><input id="controllo_10gg" name="controllo_10gg" dynamic_check="#inizio_lavori2.checked() || (#inizio_lavori1.checked() and DaysBetweenDate(#Data_PDF.value(), #data_lavori.value()) < 10)" type="hidden"/>
-          <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #data_lavori.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" style="width: 100%;"/>
-          <input id="check_controllo_10gg" name="check_controllo_10gg" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" /></p>
+        <p style="line-height:1.6;">
+          <!-- CONTROLLO CHE LA DATA DI INIZIO LAVORI SIA 10 GIORNI PRIMA DELLA DATA ODIERNA -->
+          <input id="controllo_10gg" type="checkbox" style="display:none; pd4ml-display:none;" name="controllo_10gg" dynamic_check="#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) < 10)" />
+          <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" style="width: 100%;"/>
+          <input id="check_controllo_10gg" name="check_controllo_10gg" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="hidden"/></p>
       </td>
     </tr>
     <tr>
@@ -1607,7 +1589,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
   </tbody>
 </table>
-<!-- TODO  A QUA -->
+
 <br>
 <br>
 
