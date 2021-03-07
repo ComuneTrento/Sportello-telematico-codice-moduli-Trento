@@ -183,7 +183,7 @@ tipo_mime="application/pdf,image/jpeg"/>
       </tr>
 
     <tr>
-    <td rowspan="7" style="vertical-align: top; width: 4%;">
+    <td rowspan="5" style="vertical-align: top; width: 4%;">
       <input id="Tassonomia_Cittadinanza4" name="Tassonomia_Cittadinanza" type="radio" value="4" />
     </td>
     <td colspan="2">
@@ -225,15 +225,15 @@ tipo_mime="application/pdf,image/jpeg"/>
       </tr>
   
       <tr class="Rigaintestazioneridotta" colspan="2">
-        <td colspan="2">
-          <p class="Labelcella">Godimento di diritti e padronanza lingua italiana</p>
+        <td colspan="3">
+          <p class="Labelcella">Godimento dei diritti civili e politici e padronanza lingua italiana</p>
         </td>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
           <input id="Tassonomia_ConoscenzaItaliano" name="Tassonomia_ConoscenzaItaliano"  label="Nome coniuge/convivente/futuro coniuge" type="checkbox" value="SI" mandatory_enabled="#Tassonomia_Cittadinanza2.checked() || #Tassonomia_Cittadinanza3.checked() || #Tassonomia_Cittadinanza4.checked()"/>
         </td>
-        <td>
+        <td colspan="2">
           <p>
             di godere dei diritti civili e politici anche nello stato di appartenenza o di provenienza (in caso negativo indicare i motivi del mancato godimento), di essere in possesso, fatta eccezione della titolarità della  cittadinanza italiana, di tutti gli altri requisiti previsti per i cittadini della Repubblica e di avere adeguata conoscenza della lingua italiana
           </p>
@@ -246,15 +246,10 @@ tipo_mime="application/pdf,image/jpeg"/>
 {% endblock dichiarazioni_cittadinanza %} 
 
 <br>
-
+ 
 {% block dichiarazioni_listeElettorali %} 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
-    <!-- <tr class="Rigaintestazione">
-      <td colspan="5">
-        <p style="line-height: 1.6;"><b>Che il nucleo destinatario dell’alloggio è composto da</b></p>
-      </td>
-    </tr> -->
     
     <div id="Tassonomia_ListeElettorali" name="Tassonomia_ListeElettorali" label="Indicare l'iscrizione alle liste elettorali" mandatory="true"> </div>
     <tr>
@@ -276,10 +271,12 @@ tipo_mime="application/pdf,image/jpeg"/>
     </tr>
     <tr>
       <td>
-        <input name="Parametri_ProvListeElettorali" id="Parametri_ProvListeElettorali" style="width:50%;" label="Provincia in cui si è iscritti alle liste elettorali" mandatory_enabled="#Tassonomia_ListeElettorali1.checked()"/>
+        <input name="Parametri_ProvListeElettorali" id="Parametri_ProvListeElettorali" style="width:50%;" label="Provincia in cui si è iscritti alle liste elettorali"  mandatory_enabled="#Tassonomia_ListeElettorali1.checked()" dynamic_value="#Titolare_ProvinciaResidenza.value()"/>
+        <!-- <input name="Parametri_ProvListeElettorali" id="Parametri_ProvListeElettorali" style="width:50%;" label="Provincia in cui si è iscritti alle liste elettorali" dynamic_value="#Titolare_Cittadinanza().value().toUpperCase() == 'ITALIA' ? #Titolare_ProvinciaResidenza() : ''" mandatory_enabled="#Tassonomia_ListeElettorali1.checked()"/> -->
       </td>
       <td>
-        <input name="Parametri_ComuneListeElettorali" id="Parametri_ComuneListeElettorali" style="width:50%;" label="Comune in cui si è iscritti alle liste elettorali" mandatory_enabled="#Tassonomia_ListeElettorali1.checked()"/>
+        <input name="Parametri_ComuneListeElettorali" id="Parametri_ComuneListeElettorali" style="width:50%;" label="Comune in cui si è iscritti alle liste elettorali"  mandatory_enabled="#Tassonomia_ListeElettorali1.checked()" dynamic_value="#Titolare_ComuneResidenza.value()"/>
+        <!-- <input name="Parametri_ComuneListeElettorali" id="Parametri_ComuneListeElettorali" style="width:50%;" label="Comune in cui si è iscritti alle liste elettorali" dynamic_value="#Titolare_Cittadinanza().value().toUpperCase() == 'ITALIA' ? #Titolare_ComuneResidenza() : ''" mandatory_enabled="#Tassonomia_ListeElettorali1.checked()"/> -->
       </td>
     </tr>
     <tr>
@@ -705,6 +702,7 @@ tipo_mime="application/pdf,image/jpeg"/>
 {% block dichiarazioni_titoloStudio %}
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
+    <tr style="border:0px;"></tr>
       <td colspan="6" style="border:0px;">
         <p>
           di essere in possesso del seguente titolo di studio richiesto per l’ammissione al bando di concorso
@@ -712,88 +710,88 @@ tipo_mime="application/pdf,image/jpeg"/>
       </td>
     </tr>
 
-    <!-- Magistrale -->
-    <tr style="border:0px;">
-      <td rowspan="7" style="vertical-align: top; width: 4%; background-color:white">
-        <div id="Tassonomia_ConseguimentoTitoloStudio" mandatory_enabled="true" label="Indicare il titolo di studio"/>
-        <input group="Tassonomia_ConseguimentoTitoloStudio" id="Tassonomia_ConseguimentoTitoloStudio1" name="Tassonomia_ConseguimentoTitoloStudio1" type="checkbox" value="SI"/>
-      </td>
-      <td colspan="5">
-        <p>diploma di laurea magistrale (LM), conseguito con il nuovo ordinamento universitario, rientrante in una delle classi elencate nell'ex D.M. 270/2004 ed in particolare in:</p>
-        <input class="inputNormal" id="Parametri_TitoloStudioLM" name="Parametri_TitoloStudioLM" style="width: 100%;" label="Titolo di studio LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta" style="border:0px;">
-      <td>
-        <p class="Labelcella">Anno conseguimento</p>
-      </td>
-      <td>
-        <p class="Labelcella">Data</p>
-      </td>
-      <td colspan="3">
-        <p class="Labelcella">Facoltà</p>
-      </td>
-    </tr>
-   
-    <tr style="border:0px;">
-      <td>
-        <input class="inputNormal" id="Parametri_AnnoLM" name="Parametri_AnnoLM" style="width: 30%;" label="Anno di conseguimento LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()" format="number" maxlength="4"/>
-      </td>
-      <td>
-        <input class="" id="Parametri_DataLM" name="Parametri_DataLM" style="width:30%;" format="date" enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()" label="Data conseguimento LM" maxlength="10"/> 
-      </td>
-      <td colspan="3">
-        <input class="inputNormal" id="Parametri_FacoltaLM" name="Parametri_FacoltaLM" style="width: 100%;" label="Facoltà LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
-      </td>
-    </tr>
-   
-    <tr class="Rigaintestazioneridotta" style="border:0px;">
-      <td colspan="5">
-        <p class="Labelcella">
-          Università
-        </p>
-      </td>
-    </tr>
-    <tr style="border:0px;">
-      <td colspan="5">
-        <input class="inputNormal" id="Parametri_UniversitaLM" name="Parametri_UniversitaLM" style="width: 100%;" label="Università LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
-      </td>
-    </tr>
-    <tr class="Rigaintestazioneridotta" style="border:0px;">
-      <td>
-        <p class="Labelcella">Classe di laurea</p>
-      </td>
-      <td>
-        <p class="Labelcella">Durata legale</p>
-      </td>
-      <td>
-        <p class="Labelcella">Voto di</p>
-      </td>
-      <td>
-        <p class="Labelcella">Su</p>
-      </td>
-      <td>
-        <p class="Labelcella">Lode</p>
-      </td>
-    </tr>
-    <tr style="border:0px;">
-      <td>
-        <input class="inputNormal" id="Parametri_ClasseLM" name="Parametri_ClasseLM" style="width: 50%;" label="Classe di laurea LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
-      </td>
-      <td>
-        <input class="inputNormal" id="Parametri_DurataLM" name="Parametri_DurataLM" size="3" format="number" style="width: 20%;" label="Durata legale del corso LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
-      </td>
-      <td>
-        <input class="inputNormal" id="Parametri_VotoLM" name="Parametri_VotoLM" size="3" format="number" style="width: 30%;" label="Voto LM conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
-      </td>
-      <td>
-        <input class="inputNormal" id="Parametri_SuLM" name="Parametri_SuLM" size="3" format="number" style="width: 30%;" label="Indicare per il voto di LM se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
-      </td>
-      <td>
-        <input id="Parametri_LodeLM" name="Parametri_LodeLM" type="checkbox" value="SI" style="width: 30%;" label="Indicare se ottenuta la lode per la LM" enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
-      </td> 
-    </tr>
-    
+<!-- Magistrale -->
+<tr style="border:0px;">
+  <td rowspan="7" style="vertical-align: top; width: 4%; background-color:white">
+    <div id="Tassonomia_ConseguimentoTitoloStudio" mandatory_enabled="true" label="Indicare il titolo di studio"/>
+    <input group="Tassonomia_ConseguimentoTitoloStudio" id="Tassonomia_ConseguimentoTitoloStudio1" name="Tassonomia_ConseguimentoTitoloStudio1" type="checkbox" value="SI"/>
+  </td>
+  <td colspan="5">
+    <p>diploma di laurea magistrale (LM), conseguito con il nuovo ordinamento universitario, rientrante in una delle classi elencate nell'ex D.M. 270/2004 ed in particolare in:</p>
+    <input class="inputNormal" id="Parametri_TitoloStudioLM" name="Parametri_TitoloStudioLM" style="width: 100%;" label="Titolo di studio LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+  </td>
+</tr>
+<tr class="Rigaintestazioneridotta" style="border:0px;">
+  <td>
+    <p class="Labelcella">Anno conseguimento</p>
+  </td>
+  <td>
+    <p class="Labelcella">Data</p>
+  </td>
+  <td colspan="3">
+    <p class="Labelcella">Facoltà</p>
+  </td>
+</tr>
+
+<tr style="border:0px;">
+  <td>
+    <input class="inputNormal" id="Parametri_AnnoLM" name="Parametri_AnnoLM" style="width: 100%;" label="Anno di conseguimento LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()" format="number" maxlength="4"/>
+  </td>
+  <td>
+    <input class="" id="Parametri_DataLM" name="Parametri_DataLM" style="width:100%;" format="date" enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()" label="Data conseguimento LM" maxlength="10"/> 
+  </td>
+  <td colspan="3">
+    <input class="inputNormal" id="Parametri_FacoltaLM" name="Parametri_FacoltaLM" style="width: 100%;" label="Facoltà LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+  </td>
+</tr>
+
+<tr class="Rigaintestazioneridotta" style="border:0px;">
+  <td colspan="5">
+    <p class="Labelcella">
+      Università
+    </p>
+  </td>
+</tr>
+<tr style="border:0px;">
+  <td colspan="5">
+    <input class="inputNormal" id="Parametri_UniversitaLM" name="Parametri_UniversitaLM" style="width: 100%;" label="Università LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+  </td>
+</tr>
+<tr class="Rigaintestazioneridotta" style="border:0px;">
+  <td>
+    <p class="Labelcella">Classe di laurea</p>
+  </td>
+  <td>
+    <p class="Labelcella">Durata legale</p>
+  </td>
+  <td>
+    <p class="Labelcella">Voto di</p>
+  </td>
+  <td>
+    <p class="Labelcella">Su</p>
+  </td>
+  <td>
+    <p class="Labelcella">Lode</p>
+  </td>
+</tr>
+<tr style="border:0px;">
+  <td>
+    <input class="inputNormal" id="Parametri_ClasseLM" name="Parametri_ClasseLM" style="width: 100%;" label="Classe di laurea LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+  </td>
+  <td>
+    <input class="inputNormal" id="Parametri_DurataLM" name="Parametri_DurataLM" size="3" format="number" style="width: 100%;" label="Durata legale del corso LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+  </td>
+  <td>
+    <input class="inputNormal" id="Parametri_VotoLM" name="Parametri_VotoLM" size="3" format="number" style="width: 100%;" label="Voto LM conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+  </td>
+  <td>
+    <input class="inputNormal" id="Parametri_SuLM" name="Parametri_SuLM" size="3" format="number" style="width: 100%;" label="Indicare per il voto di LM se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+  </td>
+  <td>
+    <input id="Parametri_LodeLM" name="Parametri_LodeLM" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LM" enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+  </td> 
+</tr>
+
 <!-- Specialistica -->
 <tr style="border:0px;">
   <td rowspan="7" style="vertical-align: top; width: 4%; background-color:white">
@@ -818,10 +816,10 @@ tipo_mime="application/pdf,image/jpeg"/>
 
 <tr style="border:0px;">
   <td>
-    <input class="inputNormal" id="Parametri_AnnoLS" name="Parametri_AnnoLS" style="width: 30%;" label="Anno di conseguimento LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()" format="number" maxlength="4"/>
+    <input class="inputNormal" id="Parametri_AnnoLS" name="Parametri_AnnoLS" style="width: 100%;" label="Anno di conseguimento LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()" format="number" maxlength="4"/>
   </td>
   <td>
-    <input class="" id="Parametri_DataLS" name="Parametri_DataLS" style="width:30%;" format="date" enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()" label="Data conseguimento LS" maxlength="10"/> 
+    <input class="" id="Parametri_DataLS" name="Parametri_DataLS" style="width:100%;" format="date" enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()" label="Data conseguimento LS" maxlength="10"/> 
   </td>
   <td colspan="3">
     <input class="inputNormal" id="Parametri_FacoltaLS" name="Parametri_FacoltaLS" style="width: 100%;" label="Facoltà LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
@@ -859,19 +857,19 @@ tipo_mime="application/pdf,image/jpeg"/>
 </tr>
 <tr style="border:0px;">
   <td>
-    <input class="inputNormal" id="Parametri_ClasseLS" name="Parametri_ClasseLS" style="width: 50%;" label="Classe di laurea LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="inputNormal" id="Parametri_ClasseLS" name="Parametri_ClasseLS" style="width: 100%;" label="Classe di laurea LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_DurataLS" name="Parametri_DurataLS" size="3" format="number" style="width: 20%;" label="Durata legale del corso LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="inputNormal" id="Parametri_DurataLS" name="Parametri_DurataLS" size="3" format="number" style="width: 100%;" label="Durata legale del corso LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoLS" name="Parametri_VotoLS" size="3" format="number" style="width: 30%;" label="Voto LS conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="inputNormal" id="Parametri_VotoLS" name="Parametri_VotoLS" size="3" format="number" style="width: 100%;" label="Voto LS conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuLS" name="Parametri_SuLS" size="3" format="number" style="width: 30%;" label="Indicare per il voto di LS se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="inputNormal" id="Parametri_SuLS" name="Parametri_SuLS" size="3" format="number" style="width: 100%;" label="Indicare per il voto di LS se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input id="Parametri_LodeLS" name="Parametri_LodeLS" type="checkbox" value="SI" style="width: 30%;" label="Indicare se ottenuta la lode per la LS" enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input id="Parametri_LodeLS" name="Parametri_LodeLS" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LS" enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td> 
 </tr>
 
@@ -899,10 +897,10 @@ tipo_mime="application/pdf,image/jpeg"/>
 
 <tr style="border:0px;">
   <td>
-    <input class="inputNormal" id="Parametri_AnnoV" name="Parametri_AnnoV" style="width: 30%;" label="Anno di conseguimento vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()" format="number" maxlength="4"/>
+    <input class="inputNormal" id="Parametri_AnnoV" name="Parametri_AnnoV" style="width: 100%;" label="Anno di conseguimento vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()" format="number" maxlength="4"/>
   </td>
   <td>
-    <input class="" id="Parametri_DataV" name="Parametri_DataV" style="width:30%;" format="date" enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()" label="Data conseguimento vecchio ordinamento" maxlength="10"/> 
+    <input class="" id="Parametri_DataV" name="Parametri_DataV" style="width:100%;" format="date" enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()" label="Data conseguimento vecchio ordinamento" maxlength="10"/> 
   </td>
   <td colspan="3">
     <input class="inputNormal" id="Parametri_FacoltaV" name="Parametri_FacoltaV" style="width: 100%;" label="Facoltà vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
@@ -940,21 +938,22 @@ tipo_mime="application/pdf,image/jpeg"/>
 </tr>
 <tr style="border:0px;">
   <td>
-    <input class="inputNormal" id="Parametri_ClasseV" name="Parametri_ClasseV" style="width: 50%;" label="Classe di laurea vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="inputNormal" id="Parametri_ClasseV" name="Parametri_ClasseV" style="width: 100%;" label="Classe di laurea vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_DurataV" name="Parametri_DurataV" size="3" format="number" style="width: 20%;" label="Durata legale del corso vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="inputNormal" id="Parametri_DurataV" name="Parametri_DurataV" size="3" format="number" style="width: 100%;" label="Durata legale del corso vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoV" name="Parametri_VotoV" size="3" format="number" style="width: 30%;" label="Voto vecchio ordinamento conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="inputNormal" id="Parametri_VotoV" name="Parametri_VotoV" size="3" format="number" style="width: 100%;" label="Voto vecchio ordinamento conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuV" name="Parametri_SuV" size="3" format="number" style="width: 30%;" label="Indicare per il voto di vecchio ordinamento se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="inputNormal" id="Parametri_SuV" name="Parametri_SuV" size="3" format="number" style="width: 100%;" label="Indicare per il voto di vecchio ordinamento se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input id="Parametri_LodeV" name="Parametri_LodeV" type="checkbox" value="SI" style="width: 30%;" label="Indicare se ottenuta la lode per la LAUREA CON vecchio ordinamento" enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input id="Parametri_LodeV" name="Parametri_LodeV" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LAUREA CON vecchio ordinamento" enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td> 
 </tr>
+
 
 <!-- Triennale -->
 <tr style="border:0px;">
@@ -980,10 +979,10 @@ tipo_mime="application/pdf,image/jpeg"/>
 
 <tr style="border:0px;">
   <td>
-    <input class="inputNormal" id="Parametri_AnnoT" name="Parametri_AnnoT" style="width: 30%;" label="Anno di conseguimento triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()" format="number" maxlength="4"/>
+    <input class="inputNormal" id="Parametri_AnnoT" name="Parametri_AnnoT" style="width: 100%;" label="Anno di conseguimento triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()" format="number" maxlength="4"/>
   </td>
   <td>
-    <input class="" id="Parametri_DataT" name="Parametri_DataT" style="width:30%;" format="date" enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()" label="Data conseguimento triennale" maxlength="10"/> 
+    <input class="" id="Parametri_DataT" name="Parametri_DataT" style="width:100%;" format="date" enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()" label="Data conseguimento triennale" maxlength="10"/> 
   </td>
   <td colspan="3">
     <input class="inputNormal" id="Parametri_FacoltaT" name="Parametri_FacoltaT" style="width: 100%;" label="Facoltà triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
@@ -1021,22 +1020,23 @@ tipo_mime="application/pdf,image/jpeg"/>
 </tr>
 <tr style="border:0px;">
   <td>
-    <input class="inputNormal" id="Parametri_ClasseT" name="Parametri_ClasseT" style="width: 50%;" label="Classe di laurea triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="inputNormal" id="Parametri_ClasseT" name="Parametri_ClasseT" style="width: 100%;" label="Classe di laurea triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_DurataT" name="Parametri_DurataT" size="3" format="number" style="width: 20%;" label="Durata legale del corso triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="inputNormal" id="Parametri_DurataT" name="Parametri_DurataT" size="3" format="number" style="width: 100%;" label="Durata legale del corso triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoT" name="Parametri_VotoT" size="3" format="number" style="width: 30%;" label="Voto triennale conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="inputNormal" id="Parametri_VotoT" name="Parametri_VotoT" size="3" format="number" style="width: 100%;" label="Voto triennale conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuT" name="Parametri_SuT" size="3" format="number" style="width: 30%;" label="Indicare per il voto di triennale se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="inputNormal" id="Parametri_SuT" name="Parametri_SuT" size="3" format="number" style="width: 1030%;" label="Indicare per il voto di triennale se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input id="Parametri_LodeT" name="Parametri_LodeT" type="checkbox" value="SI" style="width: 30%;" label="Indicare se ottenuta la lode per la triennale" enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input id="Parametri_LodeT" name="Parametri_LodeT" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la triennale" enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td> 
 </tr> 
-  </tbody>
+
+</tbody>
 </table>
 
 <br>
@@ -1044,12 +1044,16 @@ tipo_mime="application/pdf,image/jpeg"/>
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr style="border:0px;">
-      <td colspan="2" style="border:0px;">
-        <p>in caso di conseguimento del titolo di studio all’estero</p>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Titolo_Estero" name="Titolo_Estero" label="Indicare se il titolo di studio è stato conseguito all'estero"> </div>
+        <input group="Titolo_Estero" id="Titolo_Estero_check" name="Titolo_Estero_check" type="checkbox" value="SI" />
+      </td>
+      <td style="border:0px;">
+        <p>di aver conseguito il titolo all'estero</p>
       </td>
     </tr>
     
-    <div id="Tassonomia_TitoloEstero" name="Tassonomia_TitoloEstero" label="Indicare le informazioni di equipollenza/equivalenza per il titolo di studio conseguito all'estero"> </div>
+    <div id="Tassonomia_TitoloEstero" name="Tassonomia_TitoloEstero" label="Indicare le informazioni di equipollenza/equivalenza per il titolo di studio conseguito all'estero" mandatory_enabled="#Titolo_Estero_check.checked()"> </div>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
         <input group="Tassonomia_TitoloEstero" id="Tassonomia_TitoloEstero1" name="Tassonomia_TitoloEstero" type="radio" value="1" />
@@ -1077,7 +1081,6 @@ tipo_mime="application/pdf,image/jpeg"/>
       </td>
     </tr>
     <tr>
-      <td>
         <td colspan="2">
           <p style="line-height:1.6;"><span style="font-size:85%;"><i>L'amministrazione provvede all'ammissione con riserva del candidato che ha avviato la procedura di richiesta di equivalenza del proprio titolo di studio straniero ai sensi dell'art. 38 del D.Lgs 165/2001, fermo restando che l'equivalenza del titolo di studio straniero a quello richiesto dal presente avviso dovrà comunque essere ottenuta dal candidato per l'assunzione. <br>
 E'onere del candidato produrre tempestivamente la documentazione relativa all'avvenuto ottenimento dell'equivalenza del proprio titolo di studio
@@ -1087,7 +1090,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
 
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Tassonomia_AllTitoloEstero" name="Tassonomia_AllTitoloEstero" label="Scelta produzione allegato equivalenza titolo estero" mandatory_enabled="#Tassonomia_TitoloEstero1.checked() || #Tassonomia_TitoloEstero.checked() || #Tassonomia_TitoloEstero3.checked()"> </div>
+        <div id="Tassonomia_AllTitoloEstero" name="Tassonomia_AllTitoloEstero" label="Scelta produzione allegato equivalenza titolo estero" mandatory_enabled="#Tassonomia_TitoloEstero1.checked() || #Tassonomia_TitoloEstero2.checked() || #Tassonomia_TitoloEstero3.checked()"> </div>
         <input group="Tassonomia_AllTitoloEstero" id="Tassonomia_AllTitoloEstero1" name="Tassonomia_AllTitoloEstero" type="radio" value="1" />
       </td>
       <td>
@@ -1103,10 +1106,10 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
       </td>
     </tr>
   </tbody>
-</table> 
-
+</table>
 {% endblock dichiarazioni_titoloStudio %}
 
+<br>
 <br>
 {% block sezione_riserve_graduatoria_merito %} 
   <table class="Modulo" style="border: 0px; margin-top:0px">
@@ -1402,12 +1405,10 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
   </table>
 {% endblock sezione_preferenza %} 
 
-<br>
-<br>
-<br>
-
 <globo_salto_pagina></globo_salto_pagina>
- 
+
+<br>
+<br>
 <table class="Modulo" style="border:1px solid grey">
     <tbody>
      <tr class="Rigaintestazioneridotta">
@@ -1428,7 +1429,8 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
    
    <br>
    <br>
-   <globo_salto_pagina></globo_salto_pagina>
+
+<globo_salto_pagina></globo_salto_pagina>
 
 <br>
  <br>
@@ -1496,7 +1498,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
       </tr>
     </tbody>
   </table>
-  
+
 <br>
 <br>
 <h3 class="Modulo">
@@ -1512,9 +1514,18 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="2">
+      <td style="vertical-align: top; text-align: center; width: 4%;">
         <div id="recapito_scelto" name="recapito_scelto" label="Recapito per le comunicazioni" mandatory="true"> </div>
         <input group="recapito_scelto" id="recapito_scelto1" name="recapito_scelto" type="radio" value="1" />
+      </td>
+      <td colspan="4">
+        <p style="line-height: 1.6;">all'indirizzo di residenza</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="2">
+        <div id="recapito_scelto" name="recapito_scelto" label="Recapito per le comunicazioni" mandatory="true"> </div>
+        <input group="recapito_scelto" id="recapito_scelto2" name="recapito_scelto" type="radio" value="2" />
       </td>
       <td colspan="4">
         <p style="line-height: 1.6;">al seguente indirizzo PEC</p>
@@ -1522,12 +1533,12 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
     </tr>
     <tr>
       <td colspan="4">
-        <input name="EMailPEC_recapito" id="EMailPEC_recapito" style="width:100%;" label="PEC per il recapito comunicazioni" mandatory_enabled="#recapito_scelto1.checked()"/>
+        <input name="EMailPEC_recapito" id="EMailPEC_recapito" style="width:100%;" format="pec" label="PEC per il recapito comunicazioni" mandatory_enabled="#recapito_scelto2.checked()"/>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="5">
-        <input group="recapito_scelto" id="recapito_scelto2" name="recapito_scelto" type="radio" value="2" />
+        <input group="recapito_scelto" id="recapito_scelto3" name="recapito_scelto" type="radio" value="3" />
       </td>
       <td colspan="4">
         <p style="line-height: 1.6;">OPPURE al seguente indirizzo</p>
@@ -1539,9 +1550,9 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
       <td colspan="2"><p class="Labelcella" style="line-height: 1.6;">Presso Famiglia (nome indicato sul campanello)</p></td>
     </tr>
     <tr>
-      <td><input name="cognome_recapito_diverso" id="cognome_recapito_diverso" style="width:100%;" label="Cognome per il recapito comunicazioni" mandatory_enabled="#recapito_scelto2.checked()"/></td>
-      <td><input name="nome_recapito_diverso" id="nome_recapito_diverso" style="width:100%;" label="Nome per il recapito comunicazioni" mandatory_enabled="#recapito_scelto2.checked()"/></td>
-      <td colspan="2"><input name="famiglia_recapito_diverso" id="famiglia_recapito_diverso" style="width:100%;" label="Comunicazioni presso famiglia (come sul campanello)" mandatory_enabled="#recapito_scelto2.checked()"/></td>
+      <td><input name="cognome_recapito_diverso" id="cognome_recapito_diverso" style="width:100%;" label="Cognome per il recapito comunicazioni" mandatory_enabled="#recapito_scelto3.checked()"/></td>
+      <td><input name="nome_recapito_diverso" id="nome_recapito_diverso" style="width:100%;" label="Nome per il recapito comunicazioni" mandatory_enabled="#recapito_scelto3.checked()"/></td>
+      <td colspan="2"><input name="famiglia_recapito_diverso" id="famiglia_recapito_diverso" style="width:100%;" label="Comunicazioni presso famiglia (come sul campanello)" mandatory_enabled="#recapito_scelto3.checked()"/></td>
     </tr>
     <tr class="Rigaintestazioneridotta">
       <td><p class="Labelcella" style="line-height: 1.6;">Provincia</p></td>
@@ -1550,17 +1561,17 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
       <td><p class="Labelcella" style="line-height: 1.6;">Numero civico</p></td>
     </tr>
     <tr>
-      <td mandatory_enabled="#recapito_scelto2.checked()">{{ utils.provincie( 'prov_recapito_diverso', 'Provincia per il recapito comunicazioni' )}}</td>
-      <td><select name="comune_recapito_diverso" id="comune_recapito_diverso" style="width:100%;" label="Comune per il recapito comunicazioni" dynamic_value="getComuniFromProvincia( #prov_recapito_diverso.value(), 'comune_recapito_diverso')" mandatory_enabled="#recapito_scelto2.checked()"></select></td>
-      <td><input name="indirizzo_recapito_diverso" id="indirizzo_recapito_diverso" style="width:100%;" label="Indirizzo per il recapito comunicazioni" mandatory_enabled="#recapito_scelto2.checked()"/></td>
-      <td><input name="num_civ_recapito_diverso" id="num_civ_recapito_diverso" style="width:100%;" label="Numero civico per il recapito comunicazioni" mandatory_enabled="#recapito_scelto2.checked()"/></td>
+      <td mandatory_enabled="#recapito_scelto3.checked()">{{ utils.provincie( 'prov_recapito_diverso', 'Provincia per il recapito comunicazioni' )}}</td>
+      <td><select name="comune_recapito_diverso" id="comune_recapito_diverso" style="width:100%;" label="Comune per il recapito comunicazioni" dynamic_value="getComuniFromProvincia( #prov_recapito_diverso.value(), 'comune_recapito_diverso')" mandatory_enabled="#recapito_scelto3.checked()"></select></td>
+      <td><input name="indirizzo_recapito_diverso" id="indirizzo_recapito_diverso" style="width:100%;" label="Indirizzo per il recapito comunicazioni" mandatory_enabled="#recapito_scelto3.checked()"/></td>
+      <td><input name="num_civ_recapito_diverso" id="num_civ_recapito_diverso" style="width:100%;" label="Numero civico per il recapito comunicazioni" mandatory_enabled="#recapito_scelto3.checked()"/></td>
     </tr>
   </tbody>
 </table>
   <br>
   <br>
 
-{% block allegati %}
+  {% block allegati %}
   <table class="Modulo" name="Allegati" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
@@ -1604,9 +1615,9 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
     </tr>
     </tbody>
   </table>
-  {% endblock allegati %}  
+  {% endblock allegati %}
 
-  <br>
+<br>
   <br>
   
   <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
@@ -1636,7 +1647,6 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
     </tbody>
   </table>
 
-
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
 </p>
@@ -1647,7 +1657,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
 
 <input id="GLOBO_allegato_cM0701-A02-CERT-MED" name="GLOBO_allegato_cM0701-A02-CERT-MED" type="hidden" value="" obbligatorio="#CERT_MED.checked() ? 'OBBLIGATORIO' : ''"/>
 
-<input id="GLOBO_allegato_cM0701-A03-TITOLO-EQUIV" name="GLOBO_allegato_cM0701-A03-TITOLO-EQUIV" type="hidden" value="" obbligatorio="#TITOLO-EQUIV.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM0701-A03-TITOLO-EQUIV" name="GLOBO_allegato_cM0701-A03-TITOLO-EQUIV" type="hidden" value="" obbligatorio="#TITOLO_EQUIV.checked() ? 'OBBLIGATORIO' : ''"/>
 
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
