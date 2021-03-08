@@ -1,5 +1,5 @@
-{% set CodiceModulo = "M1234-TEST-ANDREA" %}
-{% set Urn =  "document:c_l378:test.modulo.andrea;servizio.test.andrea;modulo.test.andrea" %}
+{% set CodiceModulo = "M0701-DOMANDA-SELEZIONE-FUNZIONARIO-AMM-CONTABILE-DET" %}
+{% set Urn =  "document:c_l378:concorso.pubblico;selezione.funzionario.amm-contabile-det;domanda" %}
 {% extends "base_trento_new.html" %}
 {% block meta %}
 
@@ -10,26 +10,27 @@ codice_modulo="{% block codice %}{{ CodiceModulo }}{% endblock codice %}"
 urn="{% block urn %}{{ Urn }}{% endblock urn %}"
 sub_urn_list=""
 uo_globo_list=""
-descrizione="Domanda di partecipazione a concorso pubblico"
+descrizione="Domanda di partecipazione a selezione funzionario amministrativo/contabile (tempo determinato)"
 destinatario_amministrazione=""
 destinatario_ufficio="AMK73K"
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="NO"
+firmare="AUTENTICATO"
 istruzioni_compilazione=""
 istruzioni_invio="mail_pec"
 metodo_invio="mail"
 name="GLOBO_modulo"
 procura="NO,,"
+segnatura="Titolare"
 tipo_modulo="principale"
 urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
 verifica_pagamento="NO"
 versione="2.0|29/05/2020"/>
 
 <meta codice_allegato="M0701-A01-CERT-PROT"
-urn_allegato="document:c_l378:concorsi.selezioni;partecipazione.concorso.pubblico;verbale.commissione.medica"
+urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.amm-contabile-det;a01.M0701.verbale.commissione.medica"
 descrizione_estesa="Copia del verbale della commissione medica"
 filename="Verbale commissione.pdf"
 firmato="NO"
@@ -37,10 +38,10 @@ istruzioni="/modulistica/moduli/M0701-A01-CERT-PROT"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/>
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="M0701-A02-CERT-MED"
-urn_allegato="document:c_l378:concorsi.selezioni;partecipazione.concorso.pubblico;certificato.medico"
+urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.amm-contabile-det;a02.M0701.certificato.medico"
 descrizione_estesa="Copia del certificato medico"
 filename="Certificato medico.pdf"
 firmato="SI"
@@ -48,10 +49,10 @@ istruzioni="/modulistica/moduli/M0701-A02-CERT-MED"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/>
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="M0701-A03-TITOLO-EQUIV"
-urn_allegato="document:c_l378:concorsi.selezioni;partecipazione.concorso.pubblico;provvedimento.equipollenza.equivalenza.titolo"
+urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.amm-contabile-det;a03.M0701.provvedimento.equipollenza.equivalenza.titolo"
 descrizione_estesa="Copia del provvedimento di equipollenza o di equivalenza del titolo di studio"
 filename="Provvedimento equipollenza.pdf"
 firmato="NO"
@@ -59,7 +60,7 @@ istruzioni="/modulistica/moduli/M0701-A03-TITOLO-EQUIV"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/>
+tipo_mime="application/pdf"/>
 
 
 
@@ -79,7 +80,7 @@ tipo_mime="application/pdf,image/jpeg"/>
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden"/>
 
 {% block oggetto %}
-<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' (' + #Titolare_CodiceFiscale.value().toUpperCase() + ')' + ' - partecipazione a concorso pubblico'" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="'Domanda di partecipazione a selezione funzionario amministrativo/contabile (tempo determinato)' + ' ' + #Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' (' + #Titolare_CodiceFiscale.value().toUpperCase() + ')'" id="Oggetto" name="Oggetto" type="hidden"/>
 {% endblock oggetto %}
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
@@ -92,7 +93,7 @@ tipo_mime="application/pdf,image/jpeg"/>
 <input dynamic_check="true" id="Titolare_DatiPersonaObbligatori" name="Titolare_DatiPersonaObbligatori" type="hidden"/>
 <input id="Titolare_Titolo" name="Titolare_Titolo" type="hidden" value="Richiedente"/>
 <input id="Titolare_Ruolo" name="Titolare_Ruolo" type="hidden" value="Richiedente"/>
-{{ anagrafica_trento_uniformata.persona_fisica("Titolare", "Il sottoscritto", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria", "", "true", "false", "false", "", "false", "true", "display:none", "visibility:visibility" ) }}
+{{ anagrafica_trento_uniformata.persona_fisica("Titolare", "Il sottoscritto", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria", "", "true", "false", "false", " ", "true", "true", "display:none", "visibility:visibility" ) }}
 
 <br>
 <p class="Modulo" style="text-align: center;">presa visione dell’Avviso della selezione prot. n. C_L378/RFS007/____________ pubblicato il ____________:</p>
@@ -143,8 +144,9 @@ tipo_mime="application/pdf,image/jpeg"/>
       </td>
     </tr>
     <tr> 
-      <td colspan="2" mandatory_enabled="#Tassonomia_Cittadinanza2.checked()">
-          {{ utils.nazionalita( 'Parametri_Cittadinanza', 'Cittadinanza' )}}
+      <td colspan="2">
+          <!-- {{ utils.nazionalita( 'Parametri_Cittadinanza', 'Cittadinanza' )}} -->
+          <input class="inputNormal" id="Parametri_Cittadinanza" name="Parametri_Cittadinanza" style="width: 100%;" mandatory_enabled="#Tassonomia_Cittadinanza2.checked()" dynamic_value="#Titolare_Cittadinanza.value()"/>
       </td>
     </tr>
     
@@ -153,7 +155,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input id="Tassonomia_Cittadinanza3" name="Tassonomia_Cittadinanza" type="radio" value="3" />
       </td>
       <td colspan="2">
-        <p>di essere familiare di cittadino/a dell'Unione Europea, anche se cittadino di stato terzo. Specificare la relazione di parentela con il cittadino dell'unione europea <input class="" label="Indicare la relazione di parentela con familiare cittadino UE" id="Parametri_RelazioneFamUE" mandatory_enabled="#Tassonomia_Cittadinanza3.checked()" name="Parametri_RelazioneFamUE"/>
+        <p>di essere familiare di cittadino/a dell'Unione Europea, anche se cittadino/a di stato terzo. Specificare la relazione di parentela con il cittadino/a dell'unione europea <input class="" label="Indicare la relazione di parentela con familiare cittadino UE" id="Parametri_RelazioneFamUE" mandatory_enabled="#Tassonomia_Cittadinanza3.checked()" name="Parametri_RelazioneFamUE"/>
         </p>
       </td>
     </tr>
@@ -231,13 +233,45 @@ tipo_mime="application/pdf,image/jpeg"/>
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input id="Tassonomia_ConoscenzaItaliano" name="Tassonomia_ConoscenzaItaliano"  label="Nome coniuge/convivente/futuro coniuge" type="checkbox" value="SI" mandatory_enabled="#Tassonomia_Cittadinanza2.checked() || #Tassonomia_Cittadinanza3.checked() || #Tassonomia_Cittadinanza4.checked()"/>
+          <div id="Tassonomia_GodimentoDiritti" name="Tassonomia_GodimentoDiritti" label="Indicare il godimento dei diritti civili e politici" mandatory_enabled="!#Tassonomia_Cittadinanza1.checked()"> </div>
+          <input group="Tassonomia_GodimentoDiritti" id="Tassonomia_GodimentoDiritti1" name="Tassonomia_GodimentoDiritti" type="radio" value="1" />
         </td>
         <td colspan="2">
           <p>
-            di godere dei diritti civili e politici anche nello stato di appartenenza o di provenienza (in caso negativo indicare i motivi del mancato godimento), di essere in possesso, fatta eccezione della titolarità della  cittadinanza italiana, di tutti gli altri requisiti previsti per i cittadini della Repubblica e di avere adeguata conoscenza della lingua italiana
+            di godere dei diritti civili e politici anche nello stato di appartenenza o di provenienza
           </p>
-          <input class="" label="Indicare le motivazioni di non godimento dei diritti civili e politici" id="Parametri_Godimento" name="Parametri_Godimento" style="width: 100%;"/>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Tassonomia_GodimentoDiritti" id="Tassonomia_GodimentoDiritti2" name="Tassonomia_GodimentoDiritti" type="radio" value="2" />
+        </td>
+        <td colspan="2">
+          <p>
+            di <b>non</b> godere dei diritti civili e politici nello stato di appartenenza o di provenienza (indicare la motivazione)
+          </p>
+          <input class="" label="Indicare le motivazioni di non godimento dei diritti civili e politici" id="Parametri_Godimento" name="Parametri_Godimento" style="width: 100%;" mandatory_enabled="#Tassonomia_GodimentoDiritti2.checked()"/>
+        </td>
+      </tr>
+      <div id="Tassonomia_Requisiti" name="Tassonomia_Requisiti" label="Selezionare di godere dei requisiti previsti per i cittadini della Repubblica e conoscenza lingua italiana" mandatory_enabled="!#Tassonomia_Cittadinanza1.checked()"> </div>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Tassonomia_Requisiti" id="Tassonomia_RequisitiRepubblica" name="Tassonomia_RequisitiRepubblica" type="checkbox" value="SI" enabled="!#Tassonomia_Cittadinanza1.checked()"/>
+        </td>
+        <td colspan="2">
+          <p>
+            di godere di tutti gli altri requisiti previsti per i cittadini della Repubblica
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Tassonomia_Requisiti" id="Tassonomia_ConoscenzaItaliano" name="Tassonomia_ConoscenzaItaliano" type="checkbox" value="SI" enabled="!#Tassonomia_Cittadinanza1.checked()"/>
+        </td>
+        <td colspan="2">
+          <p>
+            di avere adeguata conoscenza della lingua italiana
+          </p>
         </td>
       </tr>
 
@@ -258,7 +292,7 @@ tipo_mime="application/pdf,image/jpeg"/>
       </td>
     
       <td colspan="2">
-        <p style="line-height: 1.6;">di essere iscritto/a  nelle liste elettorali del Comune di</p>
+        <p style="line-height: 1.6;">di essere iscritto/a  nelle liste elettorali del Comune di residenza</p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta" colspan="2">
@@ -279,14 +313,48 @@ tipo_mime="application/pdf,image/jpeg"/>
         <!-- <input name="Parametri_ComuneListeElettorali" id="Parametri_ComuneListeElettorali" style="width:50%;" label="Comune in cui si è iscritti alle liste elettorali" dynamic_value="#Titolare_Cittadinanza().value().toUpperCase() == 'ITALIA' ? #Titolare_ComuneResidenza() : ''" mandatory_enabled="#Tassonomia_ListeElettorali1.checked()"/> -->
       </td>
     </tr>
+
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
+      <td style="vertical-align: center; text-align: center; width: 4%;" rowspan="3">
         <input group="Tassonomia_ListeElettorali" id="Tassonomia_ListeElettorali2" name="Tassonomia_ListeElettorali" type="radio" value="2" />
       </td>
+    
       <td colspan="2">
-        <p style="line-height: 1.6;">di non essere iscritto/a  per i seguenti motivi:
+        <p style="line-height: 1.6;">di essere iscritto/a  nelle liste elettorali di altro Comune</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta" colspan="2">
+      <td>
+        <p class="Labelcella">Provincia</p>
+      </td>
+      <td>
+        <p class="Labelcella">Comune</p>
+      </td>
+    </tr>
+    <!-- <tr>
+      <td>
+        <input name="Parametri_ProvAltroListeElettorali" id="Parametri_ProvAltroListeElettorali" style="width:50%;" label="Provincia di altro comune in cui si è iscritti alle liste elettorali"  mandatory_enabled="#Tassonomia_ListeElettorali2.checked()"/>
+      </td>
+      <td>
+        <input name="Parametri_ComuneAltroListeElettorali" id="Parametri_ComuneAltroListeElettorali" style="width:50%;" label="Altro comune in cui si è iscritti alle liste elettorali"  mandatory_enabled="#Tassonomia_ListeElettorali2.checked()"/>
+      </td>
+    </tr> -->
+    <tr>
+    <td mandatory_enabled="#Tassonomia_ListeElettorali2.checked()">
+      {{ utils.provincie( 'Parametri_ProvAltroListeElettorali', label="Provincia lista elettorale altro Comune") }}
+    </td>
+    <td>
+      <select class="inputNormal" id="Parametri_ComuneAltroListeElettorali" name="Parametri_ComuneAltroListeElettorali" style="width:100%" label="Comune del domicilio" dynamic_value="getComuniFromProvincia( #Parametri_ProvAltroListeElettorali.value(), 'Parametri_ComuneAltroListeElettorali')" mandatory_enabled="#Tassonomia_ListeElettorali2.checked()"></select>
+    </td>
+  </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Tassonomia_ListeElettorali" id="Tassonomia_ListeElettorali3" name="Tassonomia_ListeElettorali" type="radio" value="3" />
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6;">di <b>non</b> essere iscritto/a  per i seguenti motivi:
         <br>
-        <input class="" id="Parametri_NoListeElettorali" name="Parametri_NoListeElettorali" mandatory_enabled="#Tassonomia_ListeElettorali2.checked()" label="Indicare i motivi per cui non si è iscritti alle liste elettorali" style="width: 100%;"/> 
+        <input class="" id="Parametri_NoListeElettorali" name="Parametri_NoListeElettorali" mandatory_enabled="#Tassonomia_ListeElettorali3.checked()" label="Indicare i motivi per cui non si è iscritti alle liste elettorali" style="width: 100%;"/> 
         </p>
       </td>
     </tr>
@@ -311,7 +379,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Tassonomia_CondannePenali" id="Tassonomia_CondannePenali1" name="Tassonomia_CondannePenali" type="radio" value="1" />
       </td>
       <td colspan="3">
-        <p style="line-height: 1.6;">di non aver riportato condanne penali</p>
+        <p style="line-height: 1.6;">di <b>non</b> aver riportato condanne penali</p>
       </td>
     </tr>
     <tr rowspan="5">
@@ -355,7 +423,7 @@ tipo_mime="application/pdf,image/jpeg"/>
 </tr>
 <tr>
   <td colspan="3">
-    <input type="text" name="Parametri_ElencoCondanne" id="Parametri_ElencoCondanne"style="width:100%;"  mandatory_enabled="#Tassonomia_CondannePenali2.checked()" label="Indicare l'elenco delle condanne penali">
+    <textarea class="inputNormal" name="Parametri_ElencoCondanne" id="Parametri_ElencoCondanne"style="width:100%;"  mandatory_enabled="#Tassonomia_CondannePenali2.checked()" label="Indicare l'elenco delle condanne penali" style="width:100%;height:3cm;"></textarea>
   </td>
  </tr>
   
@@ -387,7 +455,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Tassonomia_ProcedimentiPenali" id="Tassonomia_ProcedimentiPenali1" name="Tassonomia_ProcedimentiPenali" type="radio" value="1" />
       </td>
       <td colspan="3">
-        <p style="line-height: 1.6;">di non avere procedimenti penali pendenti</p>
+        <p style="line-height: 1.6;">di <b>non</b> avere procedimenti penali pendenti</p>
       </td>
     </tr>
     <tr rowspan="5">
@@ -431,7 +499,7 @@ tipo_mime="application/pdf,image/jpeg"/>
 </tr>
 <tr>
   <td colspan="3">
-    <input type="text" name="Parametri_TipoReato" id="Parametri_TipoReato"style="width:100%;"  mandatory_enabled="#Tassonomia_ProcedimentiPenali2.checked()" label="Indicare il tipo di reato per il procedimento penale pendente">
+    <textarea class="inputNormal" name="Parametri_TipoReato" id="Parametri_TipoReato" style="width:100%;"  mandatory_enabled="#Tassonomia_ProcedimentiPenali2.checked()" label="Indicare il tipo di reato per il procedimento penale pendente" style="width:100%;height:3cm;"></textarea>
   </td>
  </tr>
 
@@ -456,7 +524,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Tassonomia_ServizioPA" id="Tassonomia_ServizioPA1" name="Tassonomia_ServizioPA" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di aver prestato/di prestare servizio presso la/le seguenti Pubbliche Amministrazioni (in qualità di lavoratore dipendente)<p>
+        <p style="line-height: 1.6;">di aver prestato/di prestare servizio presso la/le seguenti Pubbliche Amministrazioni (in qualità di lavoratore/trice dipendente)<p>
           <textarea class="inputNormal" name="Parametri_ServizioPA" id="Parametri_ServizioPA" style="width:100%;"  mandatory_enabled="#Tassonomia_ServizioPA1.checked()" label="Indicare le PA presso cui si è prestato servizio" style="width:100%;height:3cm;"></textarea>
         </td>
     </tr>
@@ -465,7 +533,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Tassonomia_ServizioPA" id="Tassonomia_ServizioPA2" name="Tassonomia_ServizioPA" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di non aver prestato/prestare servizio presso Pubbliche Amministrazioni</p>
+        <p style="line-height: 1.6;">di <b>non</b> aver prestato/prestare servizio presso Pubbliche Amministrazioni</p>
       </td>
     </tr>
  
@@ -489,7 +557,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Tassonomia_Dispensato" id="Tassonomia_Dispensato1" name="Tassonomia_Dispensato" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di non essere mai stata/o dispensata/o o destituita/o o licenziata/o dal servizio presso Pubbliche Amministrazioni<p>
+        <p style="line-height: 1.6;">di <b>non</b> essere mai stato/a dispensato/a o destituito/a o licenziato/a dal servizio presso Pubbliche Amministrazioni<p>
       </td>
     </tr>
     <tr>
@@ -497,7 +565,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Tassonomia_Dispensato" id="Tassonomia_Dispensato2" name="Tassonomia_Dispensato" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di essere stato dispensata/o o destituita/o o licenziata/o dal servizio presso Pubbliche Amministrazioni per i seguenti motivi:</p>
+        <p style="line-height: 1.6;">di essere stato dispensato/a o destituito/a o licenziato/a dal servizio presso Pubbliche Amministrazioni per i seguenti motivi:</p>
         <textarea class="inputNormal" name="Parametri_Dispensato" id="Parametri_Dispensato" style="width:100%;"  mandatory_enabled="#Tassonomia_Dispensato2.checked()" label="Indicare il motivo per si è dispensato dal servizio presso PA" style="width:100%;height:3cm;"></textarea>
       </td>
     </tr>
@@ -522,7 +590,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Tassonomia_Decadimento" id="Tassonomia_Decadimento1" name="Tassonomia_Decadimento" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di non essere stato dichiarato decaduto dall'impiego per aver conseguito l'impiego mediante produzione di documenti falsi o per lo svolgimento di attività incompatibile con il rapporto di lavoro alle dipendenze della pubblica amministrazione<p>
+        <p style="line-height: 1.6;">di <b>non</b> essere stato dichiarato decaduto dall'impiego per aver conseguito l'impiego mediante produzione di documenti falsi o per lo svolgimento di attività incompatibile con il rapporto di lavoro alle dipendenze della pubblica amministrazione<p>
       </td>
     </tr>
     <tr>
@@ -548,7 +616,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Idoneita_Impiego" id="Idoneita_Impiego_check" name="Idoneita_Impiego_check" type="checkbox" value="1" />
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height:1.4;">l'idoneità fisica all'impiego in relazione alle mansioni lavorative richieste dalla figura professionale messa a selezione</p>
+        <p style="line-height:1.4;">di possedere l'idoneità fisica all'impiego in relazione alle mansioni lavorative richieste dalla figura professionale messa a selezione</p>
       </td>
     </tr>
   </tbody>
@@ -588,7 +656,7 @@ tipo_mime="application/pdf,image/jpeg"/>
         <input group="Tassonomia_ObblighiLeva" id="Tassonomia_ObblighiLeva3" name="Tassonomia_ObblighiLeva" type="radio" value="3" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di non essere soggetto agli obblighi di leva (ai sensi della Legge 23.08.2004 n. 226)<p>
+        <p style="line-height: 1.6;">di <b>non</b> essere soggetto agli obblighi di leva (ai sensi della Legge 23.08.2004 n. 226)<p>
       </td>
     </tr>
   </tbody>
@@ -630,7 +698,7 @@ tipo_mime="application/pdf,image/jpeg"/>
           <input group="Tassonomia_AllCategoriaProtetta" id="Tassonomia_AllCategoriaProtetta2" name="Tassonomia_AllCategoriaProtetta" type="radio" value="2" />
         </td>
         <td>
-          <p style="line-height: 1.6;">che ci si impegna ad inviare all’indirizzo PEC <a href="mailto:servizio.risorseumane@pec.comune.trento.it">servizio.risorseumane@pec.comune.trento.it</a></p>
+          <p style="line-height: 1.6;">che ci si impegna ad inviare tempestivamente all’indirizzo PEC <a href="mailto:servizio.risorseumane@pec.comune.trento.it">servizio.risorseumane@pec.comune.trento.it</a></p>
         </td>
       </tr>
   </tbody>
@@ -643,7 +711,7 @@ tipo_mime="application/pdf,image/jpeg"/>
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
-          <p style="line-height: 1.6;">Di richiedere per l’espletamento della prova orale come attestato da certificazione medica:
+          <p style="line-height: 1.6;">di richiedere per l’espletamento della prova orale come attestato da certificazione medica:
           </p>
         </td>
       </tr>
@@ -691,7 +759,7 @@ tipo_mime="application/pdf,image/jpeg"/>
           <input group="Tassonomia_AllAusili" id="Tassonomia_AllAusili2" name="Tassonomia_AllAusili" type="radio" value="2" />
         </td>
         <td>
-          <p style="line-height: 1.6;">che ci si impegna ad inviare all’indirizzo PEC <a href="mailto:servizio.risorseumane@pec.comune.trento.it">servizio.risorseumane@pec.comune.trento.it</a></p>
+          <p style="line-height: 1.6;">che ci si impegna ad inviare tempestivamente all’indirizzo PEC <a href="mailto:servizio.risorseumane@pec.comune.trento.it">servizio.risorseumane@pec.comune.trento.it</a></p>
         </td>
       </tr>
     </tbody>
@@ -705,7 +773,7 @@ tipo_mime="application/pdf,image/jpeg"/>
     <tr style="border:0px;"></tr>
       <td colspan="6" style="border:0px;">
         <p>
-          di essere in possesso del seguente titolo di studio richiesto per l’ammissione al bando di concorso
+          di essere in possesso del/i seguente/i titolo/i di studio richiesto/i per l’ammissione al bando di concorso
         </p>
       </td>
     </tr>
@@ -762,7 +830,7 @@ tipo_mime="application/pdf,image/jpeg"/>
     <p class="Labelcella">Classe di laurea</p>
   </td>
   <td>
-    <p class="Labelcella">Durata legale</p>
+    <p class="Labelcella">Durata legale (anni)</p>
   </td>
   <td>
     <p class="Labelcella">Voto di</p>
@@ -779,13 +847,13 @@ tipo_mime="application/pdf,image/jpeg"/>
     <input class="inputNormal" id="Parametri_ClasseLM" name="Parametri_ClasseLM" style="width: 100%;" label="Classe di laurea LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_DurataLM" name="Parametri_DurataLM" size="3" format="number" style="width: 100%;" label="Durata legale del corso LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+    <input class="inputNormal" id="Parametri_DurataLM" name="Parametri_DurataLM" maxlength="1" format="number" style="width: 100%;" label="Durata legale del corso LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoLM" name="Parametri_VotoLM" size="3" format="number" style="width: 100%;" label="Voto LM conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+    <input class="inputNormal" id="Parametri_VotoLM" name="Parametri_VotoLM" maxlength="3" format="number" style="width: 100%;" label="Voto LM conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuLM" name="Parametri_SuLM" size="3" format="number" style="width: 100%;" label="Indicare per il voto di LM se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+    <input class="inputNormal" id="Parametri_SuLM" name="Parametri_SuLM" maxlength="3" format="number" style="width: 100%;" label="Indicare per il voto di LM se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
   </td>
   <td>
     <input id="Parametri_LodeLM" name="Parametri_LodeLM" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LM" enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
@@ -843,7 +911,7 @@ tipo_mime="application/pdf,image/jpeg"/>
     <p class="Labelcella">Classe di laurea</p>
   </td>
   <td>
-    <p class="Labelcella">Durata legale</p>
+    <p class="Labelcella">Durata legale (anni)</p>
   </td>
   <td>
     <p class="Labelcella">Voto di</p>
@@ -860,13 +928,13 @@ tipo_mime="application/pdf,image/jpeg"/>
     <input class="inputNormal" id="Parametri_ClasseLS" name="Parametri_ClasseLS" style="width: 100%;" label="Classe di laurea LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_DurataLS" name="Parametri_DurataLS" size="3" format="number" style="width: 100%;" label="Durata legale del corso LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="inputNormal" id="Parametri_DurataLS" name="Parametri_DurataLS" maxlength="1" format="number" style="width: 100%;" label="Durata legale del corso LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoLS" name="Parametri_VotoLS" size="3" format="number" style="width: 100%;" label="Voto LS conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="inputNormal" id="Parametri_VotoLS" name="Parametri_VotoLS" maxlength="3" format="number" style="width: 100%;" label="Voto LS conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuLS" name="Parametri_SuLS" size="3" format="number" style="width: 100%;" label="Indicare per il voto di LS se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="inputNormal" id="Parametri_SuLS" name="Parametri_SuLS" maxlength="3" format="number" style="width: 100%;" label="Indicare per il voto di LS se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
     <input id="Parametri_LodeLS" name="Parametri_LodeLS" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LS" enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
@@ -924,7 +992,7 @@ tipo_mime="application/pdf,image/jpeg"/>
     <p class="Labelcella">Classe di laurea</p>
   </td>
   <td>
-    <p class="Labelcella">Durata legale</p>
+    <p class="Labelcella">Durata legale (anni)</p>
   </td>
   <td>
     <p class="Labelcella">Voto di</p>
@@ -941,13 +1009,13 @@ tipo_mime="application/pdf,image/jpeg"/>
     <input class="inputNormal" id="Parametri_ClasseV" name="Parametri_ClasseV" style="width: 100%;" label="Classe di laurea vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_DurataV" name="Parametri_DurataV" size="3" format="number" style="width: 100%;" label="Durata legale del corso vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="inputNormal" id="Parametri_DurataV" name="Parametri_DurataV" maxlength="1" format="number" style="width: 100%;" label="Durata legale del corso vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoV" name="Parametri_VotoV" size="3" format="number" style="width: 100%;" label="Voto vecchio ordinamento conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="inputNormal" id="Parametri_VotoV" name="Parametri_VotoV" maxlength="3" format="number" style="width: 100%;" label="Voto vecchio ordinamento conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuV" name="Parametri_SuV" size="3" format="number" style="width: 100%;" label="Indicare per il voto di vecchio ordinamento se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="inputNormal" id="Parametri_SuV" name="Parametri_SuV" maxlength="3" format="number" style="width: 100%;" label="Indicare per il voto di vecchio ordinamento se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
     <input id="Parametri_LodeV" name="Parametri_LodeV" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LAUREA CON vecchio ordinamento" enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
@@ -1006,7 +1074,7 @@ tipo_mime="application/pdf,image/jpeg"/>
     <p class="Labelcella">Classe di laurea</p>
   </td>
   <td>
-    <p class="Labelcella">Durata legale</p>
+    <p class="Labelcella">Durata legale (anni)</p>
   </td>
   <td>
     <p class="Labelcella">Voto di</p>
@@ -1023,13 +1091,13 @@ tipo_mime="application/pdf,image/jpeg"/>
     <input class="inputNormal" id="Parametri_ClasseT" name="Parametri_ClasseT" style="width: 100%;" label="Classe di laurea triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_DurataT" name="Parametri_DurataT" size="3" format="number" style="width: 100%;" label="Durata legale del corso triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="inputNormal" id="Parametri_DurataT" name="Parametri_DurataT" maxlength="1" format="number" style="width: 100%;" label="Durata legale del corso triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoT" name="Parametri_VotoT" size="3" format="number" style="width: 100%;" label="Voto triennale conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="inputNormal" id="Parametri_VotoT" name="Parametri_VotoT" maxlength="3" format="number" style="width: 100%;" label="Voto triennale conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuT" name="Parametri_SuT" size="3" format="number" style="width: 1030%;" label="Indicare per il voto di triennale se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="inputNormal" id="Parametri_SuT" name="Parametri_SuT" maxlength="3" format="number" style="width: 100%;" label="Indicare per il voto di triennale se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
     <input id="Parametri_LodeT" name="Parametri_LodeT" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la triennale" enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
@@ -1038,6 +1106,17 @@ tipo_mime="application/pdf,image/jpeg"/>
 
 </tbody>
 </table>
+
+<!-- calcoli voto -->
+<!-- <input id="Voto_Massimo" name="Voto_Massimo"/> -->
+
+<!-- <input id="Voto_massimo" name="Voto_massimo"  label="Voto più alto" style="width:8%;" value="0" dynamic_value="#Tassonomia_ConseguimentoTitoloStudio1.checked() ? '0': #Parametri_Domanda_EntiPubblici.checked() ? '0': #Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64"/>
+
+<input id="Totale_importo_shadow" name="Totale_importo shadow"  label="Importo diritti di segreteria ombra" style="width:8%;" value="0" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? '0': #Parametri_Domanda_EntiPubblici.checked() ? '0': #Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" type="hidden"/>
+
+                <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? parseFloat(#Totale_importo_shadow.value()/2) : parseFloat(#Totale_importo_shadow.value())" readonly/>
+                <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> -->
+
 
 <br>
 <!-- titolo conseguito all'estero -->
@@ -1102,7 +1181,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
         <input group="Tassonomia_AllTitoloEstero" id="Tassonomia_AllTitoloEstero2" name="Tassonomia_AllTitoloEstero" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height: 1.6;">che ci si impegna ad inviare all’indirizzo PEC <a href="mailto:servizio.risorseumane@pec.comune.trento.it">servizio.risorseumane@pec.comune.trento.it</a></p>
+        <p style="line-height: 1.6;">che ci si impegna ad inviare tempestivamente all’indirizzo PEC <a href="mailto:servizio.risorseumane@pec.comune.trento.it">servizio.risorseumane@pec.comune.trento.it</a></p>
       </td>
     </tr>
   </tbody>
@@ -1119,7 +1198,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
           <input id="Dichiara1" name="Dichiara1" type="checkbox" value="SI"/>
         </td>
         <td colspan="2" style="border:0px;">
-          <p>di aver diritto alla riserva di posto, prevista dall'avviso di indizione della presente selezione: ovvero ai sensi dell'art. 1014 comma 1, lettera b del D.Lgs 15.03.2010 n.66 e ss. m. e i., di appartenere o aver appartenutoalla seguente categoria:</p>
+          <p>di aver diritto alla riserva di posto, prevista dall'avviso di indizione della presente selezione: ovvero ai sensi dell'art. 1014 comma 1, lettera b del D.Lgs 15.03.2010 n.66 e ss. m. e i., di appartenere o aver appartenuto alla seguente categoria:</p>
         </td>
       </tr>
       <tr style="border:0px;">
@@ -1371,7 +1450,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
           </p>
         </td>
       </tr>
-      <tr style="border:0px;">
+      <!-- <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
           <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref21" name="Tassonomia_RequisitiPrecPref21" type="checkbox" value="SI"/>
         </td>
@@ -1400,33 +1479,13 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
             di avere completato, con esito positivo, il tirocinio formativo presso gli uffici giudiziari ai sensi dell’articolo 37, comma 11 del Decreto Legge 06/07/2011, n. 98, convertito, con modificazioni, dalla Legge 15/07/2011, n. 111, pur non facendo parte dell’ufficio per il processo, così come indicato dall’articolo 16-octies, comma 1-quinques del Decreto Legge 18/10/2012, n. 179 convertito, con modificazioni, dalla Legge 17/12/2012, n. 221, come modificato dall’articolo 50 del Decreto Legge 24/06/2014, n. 90, convertito, con modificazioni, dalla Legge 11/08/2014, n. 114
           </p>
         </td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
 {% endblock sezione_preferenza %} 
 
 <globo_salto_pagina></globo_salto_pagina>
-
-<br>
-<br>
-<table class="Modulo" style="border:1px solid grey">
-    <tbody>
-     <tr class="Rigaintestazioneridotta">
-      <td colspan="2">
-       <p class="Labelcella">
-        Eventuali annotazioni
-       </p>
-      </td>
-     </tr>
-     <tr>
-      <td colspan="2">
-       <textarea class="inputNormal" id="Parametri_AnnotazioniDomanda" name="Parametri_AnnotazioniDomanda" style="width:100%;height:5cm;">
-       </textarea>
-      </td>
-     </tr>
-    </tbody>
-   </table>
-   
+  
    <br>
    <br>
 
@@ -1438,7 +1497,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
     <tbody>
       <tr>
         <td style="width: 4%; vertical-align: center; text-align: center;">
-          <div id="Presa_atto" name="Presa_atto" label="Dichiarazione presa atto elenco graduatoria di merito" mandatory_enabled="true"> </div>
+          <div id="Presa_atto" name="Presa_atto" label="Dichiarazione di presa atto dell'elenco graduatoria di merito" mandatory_enabled="true"> </div>
           <input group="Presa_atto" id="Presa_atto_check" name="Presa_atto_check" type="checkbox" value="SI" />
         </td>
         <td colspan="2" style="background-color: #eeeeee;">
@@ -1446,7 +1505,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
             <br>- sul sito internet del Comune di Trento nella sezione concorsi, 
             <br>- sull'albo del Servizio Personale al primo piano della sede municipale di Torre Mirana, in Trento, via Belenzani n. 3 (tel. 0461/884272 – 884282)
             <br>- presso l'Ufficio Relazioni con il Pubblico, in Trento, via Belenzani n. 3 (tel. 0461/884453; numero verde: 800/017615) 
-            <br>nel rispetto del preavviso di almeno 15 giorni entro il giorno 30 aprile 2021 
+            <br><b>nel rispetto del preavviso di almeno 15 giorni entro il giorno 30 aprile 2021</b> 
             e che tali forme di pubblicità hanno valore di notifica a tutti gli effetti senza ulteriori avvisi circa lo svolgimento della prova stessa
             </span></p>
         </td>
@@ -1474,11 +1533,11 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
     <tbody>
       <tr>
         <td style="width: 4%; vertical-align: center; text-align: center;">
-          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione di presa visione dell'informativa" mandatory_enabled="true"> </div>
           <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
         </td>
         <td colspan="2" style="background-color: #eeeeee;">
-          <p style="line-height:1.4;"><b>di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-risorseumane" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679) anche con riferimento alle disposizioni in materia di sicurezza legate all'emergenza sanitaria Covid-19</i></span></p>
+          <p style="line-height:1.4;"><b>di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-risorseumane" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><b>(artt. 13 e 14 Regolamento UE n. 2016/679) anche con riferimento alle disposizioni in materia di sicurezza legate all'emergenza sanitaria Covid-19</b></span></p>
         </td>
       </tr>
     </tbody>
@@ -1489,7 +1548,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
     <tbody>
       <tr>
         <td style="width: 4%; vertical-align: center; text-align: center;">
-          <div id="Presa_conoscenza_Covid" name="Presa_conoscenza_Covid" label="Dichiarazione presa conoscenza avviso emergenza Covid" mandatory_enabled="true"> </div>
+          <div id="Presa_conoscenza_Covid" name="Presa_conoscenza_Covid" label="Dichiarazione di presa conoscenza avviso emergenza Covid" mandatory_enabled="true"> </div>
           <input group="Presa_conoscenza_Covid" id="Presa_conoscenza_Covid_check" name="Presa_conoscenza_Covid_check" type="checkbox" value="SI" />
         </td>
         <td colspan="2" style="background-color: #eeeeee;">
@@ -1541,7 +1600,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
         <input group="recapito_scelto" id="recapito_scelto3" name="recapito_scelto" type="radio" value="3" />
       </td>
       <td colspan="4">
-        <p style="line-height: 1.6;">OPPURE al seguente indirizzo</p>
+        <p style="line-height: 1.6;">al seguente diverso indirizzo</p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -1568,6 +1627,26 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
     </tr>
   </tbody>
 </table>
+
+<br>
+<br>
+<table class="Modulo" style="border:1px solid grey">
+    <tbody>
+     <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+       <p class="Labelcella">
+        Eventuali annotazioni
+       </p>
+      </td>
+     </tr>
+     <tr>
+      <td colspan="2">
+       <textarea class="inputNormal" id="Parametri_AnnotazioniDomanda" name="Parametri_AnnotazioniDomanda" style="width:100%;height:5cm;">
+       </textarea>
+      </td>
+     </tr>
+    </tbody>
+   </table>
   <br>
   <br>
 
@@ -1664,4 +1743,25 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
+
+<!-- <script>
+  function CalcoliMassimo(){
+    var voto = 0;
+    if (document.getElementById("Parametri_VotoLM").length > 1) {      
+      var voto = document.getElementById("Parametri_VotoLM").value;
+    }
+    if (document.getElementById("Parametri_VotoLS").length > 1) { 
+      if (document.getElementById("Parametri_VotoLS").value>voto) voto=document.getElementById("Parametri_VotoLS").value;     
+    }
+    if (document.getElementById("Parametri_VotoV").value.length > 1) { 
+      if (document.getElementById("Parametri_VotoV").value>voto) voto=document.getElementById("Parametri_VotoV").value;     
+    }
+    if (document.getElementById("Parametri_VotoT").value.length > 1) { 
+      if (document.getElementById("Parametri_VotoT").value>voto) voto=document.getElementById("Parametri_VotoT").value;     
+    }
+    document.getElementById("Voto_Massimo").value = voto; 
+  }
+
+</script>
+ -->
 {% endblock content %}
