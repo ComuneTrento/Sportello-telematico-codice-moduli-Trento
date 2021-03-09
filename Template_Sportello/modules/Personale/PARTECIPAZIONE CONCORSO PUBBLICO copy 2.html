@@ -4,7 +4,7 @@
 {% block meta %}
 
 <meta campi_firma="Titolare_CodiceFiscale"
-campi_firma_label="il dichiarante"
+campi_firma_label="il/la dichiarante"
 classi_modulo="Occupazione concorsi e assunzione"
 codice_modulo="{% block codice %}{{ CodiceModulo }}{% endblock codice %}"
 urn="{% block urn %}{{ Urn }}{% endblock urn %}"
@@ -16,7 +16,7 @@ destinatario_ufficio="AMK73K"
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
-filigrana="NO"
+filigrana="SI"
 firmare="AUTENTICATO"
 istruzioni_compilazione=""
 istruzioni_invio="mail_pec"
@@ -73,9 +73,6 @@ tipo_mime="application/pdf"/>
 
 {% block content %}
 
-<globo_fondo_pagina areaheight="150" scope="5">
-{{ utils.firma() }}
-</globo_fondo_pagina>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden"/>
 
@@ -93,10 +90,10 @@ tipo_mime="application/pdf"/>
 <input dynamic_check="true" id="Titolare_DatiPersonaObbligatori" name="Titolare_DatiPersonaObbligatori" type="hidden"/>
 <input id="Titolare_Titolo" name="Titolare_Titolo" type="hidden" value="Richiedente"/>
 <input id="Titolare_Ruolo" name="Titolare_Ruolo" type="hidden" value="Richiedente"/>
-{{ anagrafica_trento_uniformata.persona_fisica("Titolare", "Il sottoscritto", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria", "", "true", "false", "false", " ", "true", "true", "display:none", "visibility:visibility" ) }}
+{{ anagrafica_trento_uniformata.persona_fisica("Titolare", "Il sottoscritto/La sottoscritta (Clicca sull'icona omino per recuperare i tuoi dati anagrafici)", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria", "", "true", "false", "false", " ", "true", "true", "display:none", "visibility:visibility" ) }}
 
 <br>
-<p class="Modulo" style="text-align: center;">presa visione dell’Avviso della selezione prot. n. C_L378/RFS007/____________ pubblicato il ____________:</p>
+<p class="Modulo" style="text-align: center;">presa visione dell’Avviso in oggetto:</p>
 <br>
 <h3 class="Modulo">
   CHIEDE
@@ -104,14 +101,13 @@ tipo_mime="application/pdf"/>
 
 <p class="Modulo">di essere ammesso/a alla selezione pubblica per la formazione di una graduatoria per assunzioni a tempo determinato nella figura professionale di funzionario amministrativo/contabile, categoria D base.
   <br>
-  A tal fine, sotto la propria responsabilità, ai sensi degli artt. 46 e 47 del D.P.R. n. 445 del 28 dicembre 2020 e consapevole della decadenza dagli eventuali benefici ottenuti e delle sanzioni penali previste dagli artt. 75 e 76 del citato decreto e dalla normativa provinciale vigente in materia, per le ipotesi di dichiarazioni non veritiere, di formazione o uso di atti falsi: della responsabilità cui può andare incontro in caso di dichiarazioni false o comunque non corrispondenti al vero:
+  A tal fine, sotto la propria responsabilità, ai sensi degli artt. 46 e 47 del D.P.R. n. 445 del 28 dicembre 2020 e consapevole della decadenza dagli eventuali benefici ottenuti e delle sanzioni penali previste dagli artt. 75 e 76 del citato decreto e dalla normativa provinciale vigente in materia, per le ipotesi di dichiarazioni non veritiere, di formazione o uso di atti falsi:
 </p>
 <br>
 
 <h3 class="Modulo">
   DICHIARA
 </h3>
-<br>
 
 {% block dichiarazioni_cittadinanza %} 
 <div id="Tassonomia_Cittadinanza" name="Tassonomia_Cittadinanza" label="Cittadinanza" mandatory="true"></div>
@@ -131,7 +127,7 @@ tipo_mime="application/pdf"/>
         <input id="Tassonomia_Cittadinanza1" name="Tassonomia_Cittadinanza" dynamic_check="#Titolare_Cittadinanza.value().toUpperCase()=='ITALIA'" enabled="#Titolare_Cittadinanza.value().toUpperCase()=='ITALIA'" type="radio" value="1" />
       </td>
       <td colspan="2">
-        <p>di essere cittadino/a italiano</p>
+        <p>di essere cittadino/a italiano/a</p>
       </td>
     </tr>
 
@@ -228,7 +224,7 @@ tipo_mime="application/pdf"/>
   
       <tr class="Rigaintestazioneridotta" colspan="2">
         <td colspan="3">
-          <p class="Labelcella">Godimento dei diritti civili e politici e padronanza lingua italiana</p>
+          <p class="Labelcella">Godimento dei diritti civili e politici e padronanza lingua italiana (riservato ai cittadini stranieri)</p>
         </td>
       </tr>
       <tr>
@@ -253,7 +249,7 @@ tipo_mime="application/pdf"/>
           <input class="" label="Indicare le motivazioni di non godimento dei diritti civili e politici" id="Parametri_Godimento" name="Parametri_Godimento" style="width: 100%;" mandatory_enabled="#Tassonomia_GodimentoDiritti2.checked()"/>
         </td>
       </tr>
-      <div id="Tassonomia_Requisiti" name="Tassonomia_Requisiti" label="Selezionare di godere dei requisiti previsti per i cittadini della Repubblica e conoscenza lingua italiana" mandatory_enabled="!#Tassonomia_Cittadinanza1.checked()"> </div>
+      <div id="Tassonomia_Requisiti" name="Tassonomia_Requisiti" label="Selezionare di godere dei requisiti previsti per i cittadini della Repubblica" mandatory_enabled="!#Tassonomia_Cittadinanza1.checked()"> </div>
       <tr>
         <td style="vertical-align: top; width: 4%;">
           <input group="Tassonomia_Requisiti" id="Tassonomia_RequisitiRepubblica" name="Tassonomia_RequisitiRepubblica" type="checkbox" value="SI" enabled="!#Tassonomia_Cittadinanza1.checked()"/>
@@ -264,9 +260,10 @@ tipo_mime="application/pdf"/>
           </p>
         </td>
       </tr>
+      <div id="Tassonomia_Conoscenza" name="Tassonomia_Conoscenza" label="Selezionare di avere una adeguata conoscenza lingua italiana" mandatory_enabled="!#Tassonomia_Cittadinanza1.checked()"> </div>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input group="Tassonomia_Requisiti" id="Tassonomia_ConoscenzaItaliano" name="Tassonomia_ConoscenzaItaliano" type="checkbox" value="SI" enabled="!#Tassonomia_Cittadinanza1.checked()"/>
+          <input group="Tassonomia_Conoscenza" id="Tassonomia_ConoscenzaItaliano" name="Tassonomia_ConoscenzaItaliano" type="checkbox" value="SI" enabled="!#Tassonomia_Cittadinanza1.checked()"/>
         </td>
         <td colspan="2">
           <p>
@@ -508,6 +505,7 @@ tipo_mime="application/pdf"/>
 {% endblock dichiarazioni_procedimentiPenali %}
 
 <br>
+<globo_salto_pagina></globo_salto_pagina>
 
 {% block dichiarazioni_servizioPressoPA %} 
 <table class="Modulo" style="border: 1px solid grey">
@@ -590,7 +588,7 @@ tipo_mime="application/pdf"/>
         <input group="Tassonomia_Decadimento" id="Tassonomia_Decadimento1" name="Tassonomia_Decadimento" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di <b>non</b> essere stato dichiarato decaduto dall'impiego per aver conseguito l'impiego mediante produzione di documenti falsi o per lo svolgimento di attività incompatibile con il rapporto di lavoro alle dipendenze della pubblica amministrazione<p>
+        <p style="line-height: 1.6;">di <b>non</b> essere stato dichiarato decaduto/a dall'impiego per aver conseguito l'impiego mediante produzione di documenti falsi o per lo svolgimento di attività incompatibile con il rapporto di lavoro alle dipendenze della pubblica amministrazione<p>
       </td>
     </tr>
     <tr>
@@ -598,7 +596,7 @@ tipo_mime="application/pdf"/>
         <input group="Tassonomia_Decadimento" id="Tassonomia_Decadimento2" name="Tassonomia_Decadimento" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di essere stato dichiarato decaduto dall'impiego per aver conseguito l'impiego mediante produzione di documenti falsi o per lo svolgimento di attività incompatibile con il rapporto di lavoro alle dipendenze della pubblica amministrazione</p>
+        <p style="line-height: 1.6;">di essere stato dichiarato decaduto/a dall'impiego per aver conseguito l'impiego mediante produzione di documenti falsi o per lo svolgimento di attività incompatibile con il rapporto di lavoro alle dipendenze della pubblica amministrazione</p>
       </td>
     </tr>
  
@@ -706,6 +704,8 @@ tipo_mime="application/pdf"/>
 {% endblock dichiarazioni_categoriaProtetta %}
 
 <br>
+<globo_salto_pagina></globo_salto_pagina>
+
 {% block dichiarazioni_ausili %}
 <table class="Modulo" name="Dichiarazione_Ausili" style="border: 1px solid grey">
     <tbody>
@@ -767,6 +767,7 @@ tipo_mime="application/pdf"/>
 {% endblock dichiarazioni_ausili %}
 
 <br>
+
 {% block dichiarazioni_titoloStudio %}
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -836,7 +837,7 @@ tipo_mime="application/pdf"/>
     <p class="Labelcella">Voto di</p>
   </td>
   <td>
-    <p class="Labelcella">Su</p>
+    <p class="Labelcella">Su punteggio massimo</p>
   </td>
   <td>
     <p class="Labelcella">Lode</p>
@@ -850,10 +851,10 @@ tipo_mime="application/pdf"/>
     <input class="inputNormal" id="Parametri_DurataLM" name="Parametri_DurataLM" maxlength="1" format="number" style="width: 100%;" label="Durata legale del corso LM" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoLM" name="Parametri_VotoLM" maxlength="3" format="number" style="width: 100%;" label="Voto LM conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+    <input class="form-control" id="Parametri_VotoLM" name="Parametri_VotoLM" maxlength="3" type="number" max="110" min="0" value="0" style="width: 100%;" label="Voto LM conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuLM" name="Parametri_SuLM" maxlength="3" format="number" style="width: 100%;" label="Indicare per il voto di LM se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
+    <input class="form-control" id="Parametri_SuLM" name="Parametri_SuLM" maxlength="3" type="number" max="110" min="0" value="0" style="width: 100%;" label="Indicare per il voto di LM se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
   </td>
   <td>
     <input id="Parametri_LodeLM" name="Parametri_LodeLM" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LM" enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()"/>
@@ -917,7 +918,7 @@ tipo_mime="application/pdf"/>
     <p class="Labelcella">Voto di</p>
   </td>
   <td>
-    <p class="Labelcella">Su</p>
+    <p class="Labelcella">Su punteggio massimo</p>
   </td>
   <td>
     <p class="Labelcella">Lode</p>
@@ -931,10 +932,10 @@ tipo_mime="application/pdf"/>
     <input class="inputNormal" id="Parametri_DurataLS" name="Parametri_DurataLS" maxlength="1" format="number" style="width: 100%;" label="Durata legale del corso LS" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoLS" name="Parametri_VotoLS" maxlength="3" format="number" style="width: 100%;" label="Voto LS conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="form-control" id="Parametri_VotoLS" name="Parametri_VotoLS" maxlength="3" type="number" max="110" min="0" value="0" style="width: 100%;" label="Voto LS conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuLS" name="Parametri_SuLS" maxlength="3" format="number" style="width: 100%;" label="Indicare per il voto di LS se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
+    <input class="form-control" id="Parametri_SuLS" name="Parametri_SuLS" maxlength="3" type="number" max="110" min="0" value="0" style="width: 100%;" label="Indicare per il voto di LS se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
   </td>
   <td>
     <input id="Parametri_LodeLS" name="Parametri_LodeLS" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LS" enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()"/>
@@ -998,7 +999,7 @@ tipo_mime="application/pdf"/>
     <p class="Labelcella">Voto di</p>
   </td>
   <td>
-    <p class="Labelcella">Su</p>
+    <p class="Labelcella">Su punteggio massimo</p>
   </td>
   <td>
     <p class="Labelcella">Lode</p>
@@ -1012,10 +1013,10 @@ tipo_mime="application/pdf"/>
     <input class="inputNormal" id="Parametri_DurataV" name="Parametri_DurataV" maxlength="1" format="number" style="width: 100%;" label="Durata legale del corso vecchio ordinamento" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoV" name="Parametri_VotoV" maxlength="3" format="number" style="width: 100%;" label="Voto vecchio ordinamento conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="form-control" id="Parametri_VotoV" name="Parametri_VotoV" maxlength="3" type="number" max="110" min="0" value="0" style="width: 100%;" label="Voto vecchio ordinamento conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuV" name="Parametri_SuV" maxlength="3" format="number" style="width: 100%;" label="Indicare per il voto di vecchio ordinamento se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
+    <input class="form-control" id="Parametri_SuV" name="Parametri_SuV" maxlength="3" type="number" max="110" min="0" value="0" style="width: 100%;" label="Indicare per il voto di vecchio ordinamento se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
   </td>
   <td>
     <input id="Parametri_LodeV" name="Parametri_LodeV" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la LAUREA CON vecchio ordinamento" enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()"/>
@@ -1080,7 +1081,7 @@ tipo_mime="application/pdf"/>
     <p class="Labelcella">Voto di</p>
   </td>
   <td>
-    <p class="Labelcella">Su</p>
+    <p class="Labelcella">Su punteggio massimo</p>
   </td>
   <td>
     <p class="Labelcella">Lode</p>
@@ -1094,10 +1095,10 @@ tipo_mime="application/pdf"/>
     <input class="inputNormal" id="Parametri_DurataT" name="Parametri_DurataT" maxlength="1" format="number" style="width: 100%;" label="Durata legale del corso triennale" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_VotoT" name="Parametri_VotoT" maxlength="3" format="number" style="width: 100%;" label="Voto triennale conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="form-control" id="Parametri_VotoT" name="Parametri_VotoT" maxlength="3" type="number" max="110" min="0" value="0" style="width: 100%;" label="Voto triennale conseguito" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
-    <input class="inputNormal" id="Parametri_SuT" name="Parametri_SuT" maxlength="3" format="number" style="width: 100%;" label="Indicare per il voto di triennale se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
+    <input class="form-control" id="Parametri_SuT" name="Parametri_SuT" maxlength="3" type="number" max="110" min="0" value="0" style="width: 100%;" label="Indicare per il voto di triennale se su 110 oppure 100" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
   </td>
   <td>
     <input id="Parametri_LodeT" name="Parametri_LodeT" type="checkbox" value="SI" style="width: 100%;" label="Indicare se ottenuta la lode per la triennale" enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()"/>
@@ -1107,18 +1108,34 @@ tipo_mime="application/pdf"/>
 </tbody>
 </table>
 
-<!-- calcoli voto -->
-<!-- <input id="Voto_Massimo" name="Voto_Massimo"/> -->
+<!-- *********** controlli sul voto *********** -->
+<div id="controllo_votoLM" type="hidden" style="display:none; pd4ml-display:none;" >
+  <input id="Parametri_Verifica_LM" name="Parametri_Verifica_LM" type="checkbox" dynamic_check="parseFloat(#Parametri_VotoLM.value()) <= parseFloat(#Parametri_SuLM.value()) ? true:false"> 
+  <input id="Esito_Verifica_LM" name="Esito_Verifica_LM" dynamic_value="#Parametri_Verifica_LM.checked() ? 'OK':''" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()" label="Il voto di laurea magistrale è superiore al punteggio massimo">
+</div>
+<div id="controllo_votoLS" type="hidden" style="display:none; pd4ml-display:none;" >
+  <input id="Parametri_Verifica_LS" name="Parametri_Verifica_LS" type="checkbox" dynamic_check="parseFloat(#Parametri_VotoLS.value()) <= parseFloat(#Parametri_SuLS.value()) ? true:false"> 
+  <input id="Esito_Verifica_LS" name="Esito_Verifica_LS" dynamic_value="#Parametri_Verifica_LS.checked() ? 'OK':''" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio2.checked()" label="Il voto di laurea specialistica è superiore al punteggio massimo">
+</div>
+<div id="controllo_votoV" type="hidden" style="display:none; pd4ml-display:none;" >
+  <input id="Parametri_Verifica_V" name="Parametri_Verifica_V" type="checkbox" dynamic_check="parseFloat(#Parametri_VotoV.value()) <= parseFloat(#Parametri_SuV.value()) ? true:false"> 
+  <input id="Esito_Verifica_V" name="Esito_Verifica_V" dynamic_value="#Parametri_Verifica_V.checked() ? 'OK':''" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio3.checked()" label="Il voto di laurea vecchio ordinamento è superiore al punteggio massimo">
+</div>
+<div id="controllo_votoT" type="hidden" style="display:none; pd4ml-display:none;" >
+  <input id="Parametri_Verifica_T" name="Parametri_Verifica_T" type="checkbox" dynamic_check="parseFloat(#Parametri_VotoT.value()) <= parseFloat(#Parametri_SuT.value()) ? true:false"> 
+  <input id="Esito_Verifica_T" name="Esito_Verifica_T" dynamic_value="#Parametri_Verifica_T.checked() ? 'OK':''" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio4.checked()" label="Il voto di laurea triennale è superiore al punteggio massimo">
+</div>
 
-<!-- <input id="Voto_massimo" name="Voto_massimo"  label="Voto più alto" style="width:8%;" value="0" dynamic_value="#Tassonomia_ConseguimentoTitoloStudio1.checked() ? '0': #Parametri_Domanda_EntiPubblici.checked() ? '0': #Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64"/>
+<input id="VotoLM" name="VotoLM" label="VotoLM parametrizzato" style="width:8%;" dynamic_value="#Tassonomia_ConseguimentoTitoloStudio1.checked() ? parseFloat((#Parametri_VotoLM.value() / #Parametri_SuLM.value()) * 110 ) : 0"/>
+<input id="VotoLS" name="VotoLS" label="VotoLS parametrizzato" style="width:8%;" dynamic_value="#Tassonomia_ConseguimentoTitoloStudio2.checked() ? parseFloat((#Parametri_VotoLS.value() / #Parametri_SuLS.value()) * 110) : 0"/>
+<input id="VotoV" name="VotoV" label="Voto vecchio ordinamento parametrizzato" style="width:8%;" dynamic_value="#Tassonomia_ConseguimentoTitoloStudio3.checked() ? parseFloat((#Parametri_VotoV.value() / #Parametri_SuV.value()) * 110) : 0"/>
+<input id="VotoT" name="VotoT" label="Voto triennale parametrizzato" style="width:8%;" dynamic_value="#Tassonomia_ConseguimentoTitoloStudio4.checked() ? parseFloat((#Parametri_VotoT.value() / #Parametri_SuT.value()) * 110) : 0"/>
 
-<input id="Totale_importo_shadow" name="Totale_importo shadow"  label="Importo diritti di segreteria ombra" style="width:8%;" value="0" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? '0': #Parametri_Domanda_EntiPubblici.checked() ? '0': #Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" type="hidden"/>
-
-                <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? parseFloat(#Totale_importo_shadow.value()/2) : parseFloat(#Totale_importo_shadow.value())" readonly/>
-                <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> -->
-
+Voto massimo <input id="Voto_massimo" name="Voto_massimo" value="0" label="Voto più alto" style="width:8%;" dynamic_value="parseFloat(#VotoLM.value()) &gt; (parseFloat(#VotoLS.value()) || parseFloat(#VotoV.value()) || parseFloat(#VotoT.value())) ? #Parametri_VotoLM.value() : parseFloat(#VotoLS.value()) &gt; (parseFloat(#VotoV.value()) || parseFloat(#VotoT.value())) ? #Parametri_VotoLS.value() : parseFloat(#VotoV.value()) &gt; (parseFloat(#VotoT.value())) ? #Parametri_VotoV.value() : parseFloat(#VotoT.value())"/>
 
 <br>
+<globo_salto_pagina></globo_salto_pagina>
+
 <!-- titolo conseguito all'estero -->
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -1138,8 +1155,10 @@ tipo_mime="application/pdf"/>
         <input group="Tassonomia_TitoloEstero" id="Tassonomia_TitoloEstero1" name="Tassonomia_TitoloEstero" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di essere in possesso della dichiarazione di equipollenza del proprio titolo di studio straniero rilasciata in data <input type="date" name="Parametri_DataEquipollenza" id="Parametri_DataEquipollenza" mandatory_enabled="#Tassonomia_TitoloEstero1.checked()" label="Data rilascio equipollenza"> dalla competente autorità italiana<p>
-        <input id="Parametri_AutEquipollenza" name="Parametri_AutEquipollenza" label="Indicare l'autorità italiana che ha rilasciato l'equipollenza" mandatory_enabled="#Tassonomia_TitoloEstero1.checked()" style="width: 100%;">  
+        <p style="line-height: 1.6;">di essere in possesso della dichiarazione di equipollenza del proprio titolo di studio straniero rilasciata in data <input class="" id="Parametri_DataEquipollenza" name="Parametri_DataEquipollenza" style="width:40%;" format="date" label="Data rilascio equipollenza" maxlength="10" mandatory_enabled="#Tassonomia_TitoloEstero1.checked()"/> dalla competente autorità italiana<p>
+        <input id="Parametri_AutEquipollenza" name="Parametri_AutEquipollenza" label="Indicare l'autorità italiana che ha rilasciato l'equipollenza" mandatory_enabled="#Tassonomia_TitoloEstero1.checked()" style="width: 100%;"> 
+        
+        <!-- <input type="date" name="Parametri_DataEquipollenza" id="Parametri_DataEquipollenza" mandatory_enabled="#Tassonomia_TitoloEstero1.checked()" label="Data rilascio equipollenza"> -->
       </td>
     </tr>
     <tr>
@@ -1147,7 +1166,7 @@ tipo_mime="application/pdf"/>
         <input group="Tassonomia_TitoloEstero" id="Tassonomia_TitoloEstero2" name="Tassonomia_TitoloEstero" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di essere in possesso della dichiarazione di equivalenza del proprio titolo di studio straniero ai sensi dell'art. 38 del D.Lgs. 165/2001 rilasciata in data <input type="date" name="Parametri_DataEquivalenza" id="Parametri_DataEquivalenza" mandatory_enabled="#Tassonomia_TitoloEstero2.checked()" label="Data rilascio equivalenza"> dalla competente autorità italiana<p>
+        <p style="line-height: 1.6;">di essere in possesso della dichiarazione di equivalenza del proprio titolo di studio straniero ai sensi dell'art. 38 del D.Lgs. 165/2001 rilasciata in data <input class="" id="Parametri_DataEquivalenza" name="Parametri_DataEquivalenza" style="width:40%;" format="date" label="Data rilascio equivalenza" maxlength="10" mandatory_enabled="#Tassonomia_TitoloEstero2.checked()"/><p>
           <input id="Parametri_AutEquivalenza" name="Parametri_AutEquivalenza" label="Indicare l'autorità italiana che ha rilasciato l'equipollenza" mandatory_enabled="#Tassonomia_TitoloEstero2.checked()" style="width: 100%;">  
       </td>
     </tr>
@@ -1156,13 +1175,13 @@ tipo_mime="application/pdf"/>
         <input group="Tassonomia_TitoloEstero" id="Tassonomia_TitoloEstero3" name="Tassonomia_TitoloEstero" type="radio" value="3" />
       </td>
       <td>
-        <p style="line-height: 1.6;">di aver avviato la procedura di richiesta di equivalenza del proprio titolo di studio straniero ai sensi dell'art. 38 del D.Lgs. 165/2001 in data <input type="date" name="Parametri_DataRichEquivalenza" id="Parametri_DataRichEquivalenza" mandatory_enabled="#Tassonomia_TitoloEstero3.checked()" label="Data avvio procedura di richiesta equivalenza"><p>
+        <p style="line-height: 1.6;">di aver avviato la procedura di richiesta di equivalenza del proprio titolo di studio straniero ai sensi dell'art. 38 del D.Lgs. 165/2001 in data <input class="" id="Parametri_DataRichEquivalenza" name="Parametri_DataRichEquivalenza" style="width:40%;" format="date" label="Data avvio procedura di richiesta equivalenza" maxlength="10" mandatory_enabled="#Tassonomia_TitoloEstero3.checked()"/><p>
       </td>
     </tr>
     <tr>
         <td colspan="2">
           <p style="line-height:1.6;"><span style="font-size:85%;"><i>L'amministrazione provvede all'ammissione con riserva del candidato che ha avviato la procedura di richiesta di equivalenza del proprio titolo di studio straniero ai sensi dell'art. 38 del D.Lgs 165/2001, fermo restando che l'equivalenza del titolo di studio straniero a quello richiesto dal presente avviso dovrà comunque essere ottenuta dal candidato per l'assunzione. <br>
-E'onere del candidato produrre tempestivamente la documentazione relativa all'avvenuto ottenimento dell'equivalenza del proprio titolo di studio
+E' onere del candidato produrre tempestivamente la documentazione relativa all'avvenuto ottenimento dell'equivalenza del proprio titolo di studio
             </i></span></p>
       </td>
     </tr>
@@ -1224,6 +1243,8 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
 {% endblock sezione_riserve_graduatoria_merito %} 
 
 <br>
+<globo_salto_pagina></globo_salto_pagina>
+
 {% block sezione_preferenza %}
 <table class="Modulo" style="border: 0px; margin-top:0px">
     <tbody>
@@ -1484,35 +1505,9 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
   </table>
 {% endblock sezione_preferenza %} 
 
-<globo_salto_pagina></globo_salto_pagina>
-  
-   <br>
-   <br>
-
-<globo_salto_pagina></globo_salto_pagina>
-
 <br>
- <br>
-  <table class="Modulo" name="Presa_atto_elenco_merito" style="border: 1px solid grey">
-    <tbody>
-      <tr>
-        <td style="width: 4%; vertical-align: center; text-align: center;">
-          <div id="Presa_atto" name="Presa_atto" label="Dichiarazione di presa atto dell'elenco graduatoria di merito" mandatory_enabled="true"> </div>
-          <input group="Presa_atto" id="Presa_atto_check" name="Presa_atto_check" type="checkbox" value="SI" />
-        </td>
-        <td colspan="2" style="background-color: #eeeeee;">
-          <p style="line-height:1.4;"><b>di prendere atto che l'elenco di merito dei candidati ammessi alla selezione, l'elenco dei candidati convocati alla prova orale con attribuzione del punteggio al titolo di laurea magistrale/specialistica/vecchio ordinamento, la data, l'ora e il luogo di effettuazione della prova orale, verranno comunicati tramite apposito avviso</b> che verrà pubblicato:
-            <br>- sul sito internet del Comune di Trento nella sezione concorsi, 
-            <br>- sull'albo del Servizio Personale al primo piano della sede municipale di Torre Mirana, in Trento, via Belenzani n. 3 (tel. 0461/884272 – 884282)
-            <br>- presso l'Ufficio Relazioni con il Pubblico, in Trento, via Belenzani n. 3 (tel. 0461/884453; numero verde: 800/017615) 
-            <br><b>nel rispetto del preavviso di almeno 15 giorni entro il giorno 30 aprile 2021</b> 
-            e che tali forme di pubblicità hanno valore di notifica a tutti gli effetti senza ulteriori avvisi circa lo svolgimento della prova stessa
-            </span></p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  
+<globo_salto_pagina></globo_salto_pagina>
+
 <br>
 <table class="Modulo" name="Comunicazione_altre_PA" style="border: 1px solid grey">
   <tbody>
@@ -1527,6 +1522,28 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
     </tr>
   </tbody>
 </table>
+
+<br>
+  <table class="Modulo" name="Presa_atto_elenco_merito" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: center; text-align: center;">
+          <div id="Presa_atto" name="Presa_atto" label="Dichiarazione di presa atto dell'elenco graduatoria di merito" mandatory_enabled="true"> </div>
+          <input group="Presa_atto" id="Presa_atto_check" name="Presa_atto_check" type="checkbox" value="SI" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>di prendere atto che l'elenco di merito dei candidati ammessi alla selezione, l'elenco dei candidati convocati alla prova orale con attribuzione del punteggio al titolo di laurea magistrale/specialistica/vecchio ordinamento, la data, l'ora e il luogo di effettuazione della prova orale, verranno comunicati tramite apposito avviso</b> che verrà pubblicato:
+            <br>- sul sito internet del Comune di Trento nella sezione concorsi, 
+            <br>- sull'albo del Servizio Personale al primo piano della sede municipale di Torre Mirana, in Trento, via Belenzani n. 3 (tel. 0461/884272 – 884282)
+            <br>- presso l'Ufficio Relazioni con il Pubblico, in Trento, via Belenzani n. 3 (tel. 0461/884453; numero verde: 800/017615) 
+            <br><b>nel rispetto del preavviso di almeno 15 giorni entro il giorno 30 aprile 2021</b> 
+            e che tali forme di pubblicità hanno valore di notifica a tutti gli effetti senza ulteriori avvisi circa lo svolgimento della prova stessa.<br>
+            Per chi ha scaricato l'APP IO si precisa che eventuali messaggi inerenti la selezione inviati tramite l’APP IO costituiranno mere comunicazioni di cortesia, senza valore di notifica.
+            </span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table> 
 
 <br>
   <table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
@@ -1552,7 +1569,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
           <input group="Presa_conoscenza_Covid" id="Presa_conoscenza_Covid_check" name="Presa_conoscenza_Covid_check" type="checkbox" value="SI" />
         </td>
         <td colspan="2" style="background-color: #eeeeee;">
-          <p style="line-height:1.4;"><b>di aver aver preso conoscenza di quanto previsto nell'avviso di indizione della presente selezione pubblica al paragrafo intitolato <a href="https://sportello.comune.trento.it/document/inform-tratt-dati-risorseumane" target="_blank">EMERGENZA COVID - INFORMAZIONI</a></b></p>
+          <p style="line-height:1.4;"><b>di aver preso conoscenza di quanto previsto <a href="https://sportello.comune.trento.it/document/misure-covid19-prova-orale" target="_blank">nell'avviso</a> di indizione della presente selezione pubblica al paragrafo intitolato EMERGENZA COVID - INFORMAZIONI</b></p>
         </td>
       </tr>
     </tbody>
@@ -1563,7 +1580,6 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
 <h3 class="Modulo">
   CHIEDE
 </h3>
-<br>
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -1578,7 +1594,8 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
         <input group="recapito_scelto" id="recapito_scelto1" name="recapito_scelto" type="radio" value="1" />
       </td>
       <td colspan="4">
-        <p style="line-height: 1.6;">all'indirizzo di residenza</p>
+        <p style="line-height: 1.6;">all'indirizzo di residenza. Eventuale altro nome presente sul campanello:</p>
+        <input name="campanello_diverso" id="campanello_diverso" style="width:100%;" label="Eventuale altro nome presente sul campanello"/>
       </td>
     </tr>
     <tr>
@@ -1641,7 +1658,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
      </tr>
      <tr>
       <td colspan="2">
-       <textarea class="inputNormal" id="Parametri_AnnotazioniDomanda" name="Parametri_AnnotazioniDomanda" style="width:100%;height:5cm;">
+       <textarea class="inputNormal" id="Parametri_AnnotazioniDomanda" name="Parametri_AnnotazioniDomanda" style="width:100%;height:3cm;">
        </textarea>
       </td>
      </tr>
@@ -1720,7 +1737,7 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
           <p class="Labelcella" style="text-align: center">Data</p>
         </td>
         <td>
-          <p class="Labelcella" style="text-align: center">Il titolare <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+          <p class="Labelcella" style="text-align: center">Il/la titolare <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
         </td>
       </tr>
     </tbody>
@@ -1743,25 +1760,4 @@ E'onere del candidato produrre tempestivamente la documentazione relativa all'av
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
-
-<!-- <script>
-  function CalcoliMassimo(){
-    var voto = 0;
-    if (document.getElementById("Parametri_VotoLM").length > 1) {      
-      var voto = document.getElementById("Parametri_VotoLM").value;
-    }
-    if (document.getElementById("Parametri_VotoLS").length > 1) { 
-      if (document.getElementById("Parametri_VotoLS").value>voto) voto=document.getElementById("Parametri_VotoLS").value;     
-    }
-    if (document.getElementById("Parametri_VotoV").value.length > 1) { 
-      if (document.getElementById("Parametri_VotoV").value>voto) voto=document.getElementById("Parametri_VotoV").value;     
-    }
-    if (document.getElementById("Parametri_VotoT").value.length > 1) { 
-      if (document.getElementById("Parametri_VotoT").value>voto) voto=document.getElementById("Parametri_VotoT").value;     
-    }
-    document.getElementById("Voto_Massimo").value = voto; 
-  }
-
-</script>
- -->
 {% endblock content %}
