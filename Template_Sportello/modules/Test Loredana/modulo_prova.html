@@ -1,0 +1,260 @@
+{% set CodiceModulo = "M1234-TEST-ANDREA" %}
+{% set Urn = "document:c_l378:test.modulo.andrea;servizio.test.andrea;modulo.test.andrea" %}
+{% extends "base_trento_OK.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante per prova"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Descrizione modulo"
+destinatario_amministrazione=""
+destinatario_ufficio="AMK73K"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="AUTENTICATO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|01/01/2019"/>
+
+<meta codice_allegato="DAE-CDI"
+urn_allegato="document:s_italia:generale;documento.identita;documentazione"
+descrizione_estesa="Documento di identità"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/DAE-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+{% block title %}
+  Descrizione DI PROVA
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' - Descrizione modulo'"/>
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+    Descrizione del modulo
+  </h1>
+
+<input id="AventeTitolo_DatiPersonaObbligatori" name="AventeTitolo_DatiPersonaObbligatori" type="hidden" dynamic_check="true"/>
+<input id="AventeTitolo_Titolo" name="AventeTitolo_Titolo" type="hidden" value="Richiedente"/>
+<input id="AventeTitolo_Ruolo" name="AventeTitolo_Ruolo" type="hidden" value="Richiedente"/>
+
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.richiedente("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<table class="Modulo" style="border: 1px solid grey;">
+  <tbody>
+   
+<div id="Cittadinanza_Codice" name="Cittadinanza_Codice" label="Inserire la cittadinanza" mandatory="true"></div>
+
+    <tr>
+      <td style="width: 4%;">
+        <p>
+            <input id="Cittadinanza_Codice1" name="Cittadinanza_Codice" type="radio" value="SI" />
+        </p>
+      </td>
+      <td style="width: 50%;">
+        <p>
+          DESCRIZIONE BUTTON1
+        </p>
+      </td>
+    </tr>
+    <tr>
+        <td style="width: 4%;">
+          <p>
+              <input id="Cittadinanza_Codice2" name="Cittadinanza_Codice" type="radio" value="NO" />
+          </p>
+        </td>
+        <td style="width: 50%;">
+          <p>
+            DESCRIZIONE BUTTON2
+          </p>
+        </td>
+      </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+<table class="Modulo" style="border: 1px solid grey;">
+  <tbody>
+    
+    <tr class="Rigaintestazione">
+      <td style="width: 33%;">
+        <b>
+          TITOLO 1
+        </b>
+      </td>
+      <td style="width: 33%;">
+        <p>
+          TITOLO 2
+        </p>
+      </td>
+      <td style="width: 34%;">
+        <p>
+          TITOLO 3
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="Parametri_TreCampiVal1" name="Parametri_TreCampiVal1" style="width: 100%;" label="Esempio 22" mandatory="#Parametri_TreCampiVal2.value() == '' and #Parametri_TreCampiVal3.value() == '' " />
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_TreCampiVal2" name="Parametri_TreCampiVal2" style="width: 100%;" label="Esempio 22" mandatory="#Parametri_TreCampiVal1.value() == '' and #Parametri_TreCampiVal3.value() == '' " />
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_TreCampiVal3" name="Parametri_TreCampiVal3" style="width: 100%;" label="Esempio 22" mandatory="#Parametri_TreCampiVal1.value() == '' and #Parametri_TreCampiVal2.value() == '' " />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<div id="Tassonomia_Codice" name="Tassonomia_Codice" label="Label" mandatory="true"></div>
+<input id="Tassonomia_Codice1" name="Tassonomia_Codice" type="radio" value="1" />
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+      <tr class="Rigaintestazione" >
+          <td colspan="2">
+              <p style="line-height: 1.6;"><b>Esito verifiche premilimari di ammissibilità della domanda</b></p>
+          </td>
+      </tr>
+      <tr>
+          <td style="text-align:center; width: 4%;">
+              <input
+                  id="Modulo_Compilabile7"
+                  name="Modulo_Compilabile7"
+                  dynamic_check="#AventeTitolo_ComuneResidenza.value() != 'TRENTO' and #AventeTitolo_ComuneResidenza.value() != 'Trento' and #AventeTitolo_ComuneResidenza.value() != 'trento'"
+                  enabled="#AventeTitolo_ComuneResidenza.value() != 'TRENTO' and #AventeTitolo_ComuneResidenza.value() != 'Trento' and #AventeTitolo_ComuneResidenza.value() != 'trento' and #AventeTitolo_ComuneResidenza.value() != ''"
+                  type="checkbox"
+                  value="1"/>
+          </td>
+          <td>
+              <p style="line-height: 1.6;">ATTENZIONE! Il bambino indicato NON risiede a Trento</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td colspan="2">
+              <input id="Blocca_domanda" name="Blocca_domanda" label="CONTROLLO PRESENTABILITÀ DELLE DOMANDE" style="width: 100%;" dynamic_value="(#Cittadinanza_Codice2.checked() || #Modulo_Compilabile7.checked()) ? 'IMPOSSIBILE PRESENTARE UNA NUOVA DOMANDA!' : 'PROSEGUIRE LA COMPILAZIONE'" readonly>
+          </td>
+      </tr>
+  </tbody>
+</table>
+
+<br/>
+  {{ utils.firma_hidden() }}
+<br/>
+
+
+
+<meta codice_allegato="ALTRI-ALLEGATI"
+urn_allegato="document:s_italia:altri.allegati"
+descrizione_estesa="Altri allegati"
+filename="Altri allegati.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/ALTRI-ALLEGATI"
+name="GLOBO_allegato"
+numero="0"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="text-align: center;">
+          <b>
+            Elenco degli allegati
+          </b>
+          <br/>
+          <span style="font-size:70%">
+            <i>(barrare tutti gli allegati richiesti in fase di presentazione della pratica ed elencati sul portale)</i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="DAE-CDI" name="DAE-CDI" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>
+          copia del documento d'identità
+          <br/>
+          <span style="font-size:70%">
+            <i>(da non allegare se l’istanza è presentata in modalità telematica o se la firma autografa è apposta di fronte a un pubblico ufficiale)</i>
+          </span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="ALTRI-ALLEGATI" name="ALTRI-ALLEGATI" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p>
+          altri allegati
+          <span style="font-size:70%">(specificare)</span>
+          <input class="" label="Altri allegati" id="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" name="AltriAllegati" style="width:79%;"/>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<input id="GLOBO_allegato_cDAE-CDI" name="GLOBO_allegato_cDAE-CDI" obbligatorio="#DAE_CDI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+{% endblock content %}
