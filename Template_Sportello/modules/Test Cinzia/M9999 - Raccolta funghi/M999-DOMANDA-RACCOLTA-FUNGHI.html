@@ -14,7 +14,7 @@ uo_globo_list=""
 contesto_procedurale="Turismo"
 descrizione="Domanda raccolta funghi"
 destinatario_amministrazione=""
-destinatario_ufficio="codiceIPA"
+destinatario_ufficio="DICLGP"
 dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
@@ -49,8 +49,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 </globo_fondo_pagina>
 
 <input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
-<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' - Descrizione modulo'"/>
-
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' - Raccolta funghi'"/>
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -58,16 +57,18 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
   Modulo per la domanda di raccolta funghi spontanei nel Comune di Trento</i>
 </h1>
 
-<input id="AventeTItolo_DatiPersonaObbligatori" name="AventeTItolo_DatiPersonaObbligatori" type="hidden" dynamic_check="true"/>
-<input id="AventeTItolo_Titolo" name="AventeTItolo_Titolo" type="hidden" value="Richiedente"/>
-<input id="AventeTItolo_Ruolo" name="AventeTItolo_Ruolo" type="hidden" value="Richiedente"/>
+<input id="AventeTitolo_DatiPersonaObbligatori" name="AventeTitolo_DatiPersonaObbligatori" type="hidden" dynamic_check="true"/>
+<input id="AventeTitolo_Titolo" name="AventeTitolo_Titolo" type="hidden" value="Richiedente"/>
+<input id="AventeTitolo_Ruolo" name="AventeTitolo_Ruolo" type="hidden" value="Richiedente"/>
 
 
 <!-- *********** INIZIO MODULO ANAGRAFICA *********** -->
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-{{ anagrafica.persona_fisica("AventeTItolo", "Il/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria") }}
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.richiedente("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <div id="rappresentante_tipo_scelto" name="Rappresentante_Tipo" label="Rappresentanza" mandatory="true"></div>
 <table class="Modulo" style="border: 1px solid grey;">
@@ -89,10 +90,10 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
       <td><p class="Labelcella" style="line-height: 1.6;">Numero civico</p></td>
     </tr>
     <tr>
-      <td mandatory_enabled="#recapito_scelto2.checked()">{{ utils.provincie( 'prov_recapito_diverso', 'Provincia per il recapito comunicazioni' )}}</td>
-      <td><select name="comune_recapito_diverso" id="comune_recapito_diverso" style="width:100%;" label="Comune per il recapito comunicazioni" dynamic_value="getComuniFromProvincia( #prov_recapito_diverso.value(), 'comune_recapito_diverso')" mandatory_enabled="#recapito_scelto2.checked()"></select></td>
-      <td><input name="indirizzo_recapito_diverso" id="indirizzo_recapito_diverso" style="width:100%;" label="Indirizzo per il recapito comunicazioni" mandatory_enabled="#recapito_scelto2.checked()"/></td>
-      <td><input name="num_civ_recapito_diverso" id="num_civ_recapito_diverso" style="width:100%;" label="Numero civico per il recapito comunicazioni" mandatory_enabled="#recapito_scelto2.checked()"/></td>
+      <td mandatory_enabled="#rappresentante_scelto1.checked()">{{ utils.provincie( 'prov_recapito_diverso', 'Provincia per il recapito comunicazioni' )}}</td>
+      <td><select name="comune_recapito_diverso" id="comune_recapito_diverso" style="width:100%;" label="Comune per il recapito comunicazioni" dynamic_value="getComuniFromProvincia( #prov_recapito_diverso.value(), 'comune_recapito_diverso')" mandatory_enabled="#rappresentante_scelto1.checked()"></select></td>
+      <td><input name="indirizzo_recapito_diverso" id="indirizzo_recapito_diverso" style="width:100%;" label="Indirizzo per il recapito comunicazioni" mandatory_enabled="#rappresentante_scelto1.checked()"/></td>
+      <td><input name="num_civ_recapito_diverso" id="num_civ_recapito_diverso" style="width:100%;" label="Numero civico per il recapito comunicazioni" mandatory_enabled="#rappresentante_scelto1.checked()"/></td>
     </tr> 
 
     <!-- gruppo micologico -->
@@ -106,7 +107,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
     </tr>
     <tr>
       <td colspan="4">
-        <input name="EMailPEC_recapito" id="EMailPEC_recapito" style="width:100%;" label="PEC per il recapito comunicazioni" mandatory_enabled="#recapito_scelto1.checked()"/>
+        <input name="EMailPEC_recapito" id="EMailPEC_recapito" style="width:100%;" label="PEC per il recapito comunicazioni" mandatory_enabled="#recapito_scelto2.checked()"/>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -139,7 +140,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 
 
 <!-- *********** INIZIO MODULO UTILIZZO SALE ***********-->
-<div class="simpatico-block simpatico-query-and-answer">
+<div>
   <h3 class="Modulo">
     <b>CHIEDE</b>
   </h3>
@@ -158,12 +159,12 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
           <b>Anno di raccolta:</b>
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_AnnoLM" name="Parametri_AnnoLM" label="Anno di raccolta" mandatory_enabled="#Tassonomia_ConseguimentoTitoloStudio1.checked()" format="number" maxlength="4" size="4" dynamic_value="current_year()" />
+          <input class="inputNormal" id="Parametri_Anno" name="Parametri_Anno" label="Anno di raccolta" mandatory_enabled="true" format="number" maxlength="4" size="4" />
         </td>
       </tr>
       <tr class="Rigaintestazione">
         <td colspan="2">
-          <div id="periodo_scelto" name="Periodo" label="Periodo" mandatory="true"></div>
+          <div id="periodo_scelto" name="Periodo" label="Periodo di raccolta USATO PER ERRORI" mandatory="true"></div>
           <b>Periodo di raccolta:</b>
         </td>
       </tr>
@@ -219,130 +220,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 <!-- *********** FINE MODULO UTILIZZO SALE *********** -->
 
 <br>
-<br>
 
-  <br>  
-  <h1 class="Modulo">*******************************************************************************************</h1>
-  <br>
-
-<br>
-
-<!-- *********** INZIO PRESENTAZIONE MATERIALE SALA ESPOSITIVI *********** -->
-
-----------------------------------
-<br>
-PAGAMENTO DA DEFINIRE
-<br>
-----------------------------------
-
-
-<!-- *********** INIZIO FORNITURA DATI *********** -->
-
-<div class="simpatico-block simpatico-query-and-answer">
-  <h1 class="Modulo">
-    Fornisce i seguenti dati necessari per l'intestazione della fattura laddove richiesto
-  </h1>
-  
-  <br>
-
-  <table class="Modulo" style="border: 1px solid grey">
-    <tbody> 
-      <tr class="Rigaintestazione">
-        <td colspan="2">
-          <b>Cognome e nome (in caso di persona fisica)</b>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input id="cognome_persona_fisica" name="cognome_persona_fisica" label="Cognone e nome persona fisica"  style="width: 100%;"/> 
-        </td>
-      </tr> 
-      <tr class="Rigaintestazione">
-        <td colspan="2">
-          <b>Ragione sociale (negli altri casi)</b>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input id="ragione_sociale" name="ragione_sociale" label="Ragione sociale"  style="width: 100%;"/> 
-        </td>
-      </tr> 
-      <tr class="Rigaintestazione">
-        <td colspan="2">
-          <b>Indirizzo o sede legale</b>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input id="indirizzo_legale" name="indirizzo_legale" label="Indirizzo o sede legale"  style="width: 100%;"/> 
-        </td>
-      </tr> 
-      <tr class="Rigaintestazione">
-        <td style="width: 50%;">
-          <b>codice fiscale</b>
-        </td>
-        <td style="width: 50%;">
-          <b>Partita IVA</b>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input id="codice_fiscale" name="codice_fiscale" label="Codice fiscale"  style="width: 100%;"/> 
-        </td>
-        <td>
-          <input id="partita_IVA" name="partita_IVA" label="Partita IVA" style="width: 100%;"/> 
-        </td>
-      </tr> 
-      <tr class="Rigaintestazione">
-          <td style="width: 50%;">
-            <b>codice destinatario</b>
-          </td>
-          <td style="width: 50%;">
-            <b>indirizzo PEC</b>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input id="codice_destinatario" name="codice_destinatario" label="Codice destinatario" placeholder="fornito dall'Agenzia delle entrate"  style="width: 100%;"/> 
-          </td>
-          <td>
-            <input id="indirizzo_PEC" name="indirizzo_PEC" label="Indirizzo PEC" format="mail_pec" placeholder="comunicato all'Agenzia delle entrate" style="width: 100%;"/> 
-          </td>
-        </tr> 
-        <tr class="Rigaintestazione">
-          <td style="width: 50%;">
-            <b>codice IPA</b>
-          </td>
-          <td style="width: 50%;">
-            <b>split payment</b>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input id="codice_IPA" name="codice_IPA" label="Codice IPA" placeholder="solo per PPAA e ordini professionali"  style="width: 100%;"/> 
-          </td>
-          <td>
-            <div id="Split_payment" name="Split_payment" label="Split payment"></div>
-            <input id="Split_payment_SI" name="Split_payment" type="radio" value="0"  /> Si
-            <input id="Split_payment_NO" name="Split_payment" type="radio" value="1"  /> No
-          </td>
-        </tr> 
-        <tr>
-          <td colspan="2">
-            <p>
-              <b>NB:</b> I dati sopra indicati verranno trasmessi all’Amministrazione finanziaria in relazione agli obblighi di cui al D.L. 223/2006
-              (elenco clienti) e pertanto il richiedente se ne assume la responsabilità circa la correttezza e la veridicità.
-            </p>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-  
-</div>
-
-<!-- *********** FINE FORNITURA DATI *********** -->
-
-<br>
 
 <!-- *********** INIZIO PAGAMENTO MARCA DA BOLLO *********** -->
 <h3 class="Modulo">
@@ -354,16 +232,15 @@ PAGAMENTO DA DEFINIRE
 <table class="Modulo" name="Dic_minore" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="width: 4%; vertical-align: top;"  rowspan="4">
+      <td style="width: 4%; vertical-align: top;" >
         <div id="Minore" name="Minore" label="Indicare se minore"> </div>
-        <input group="Minore" id="Minore_check" name="Minore_check" type="checkbox" value="SI" />
+        <input id="Minore_check" name="Minore_check" type="checkbox" value="SI" />
       </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.4;">In quanto minore, di essere accompagnato da un adulto in possesso dei documenti necessari.RACCOGLIERE DATI DELL'ADULTO?
-          </p>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height:1.4;">di accompagnare il minore</p>
+        <input class="inputNormal" id="Dic_minore_nomecognome" name="Dic_minore_nomecognome" style="width: 100%;" label="" mandatory_enabled="#Minore_check.checked()" />
       </td>
     </tr>
-    {{ anagrafica.persona_fisica("Accompagnatore", "", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "") }}
   </tbody>
 </table>
 {% endblock dichiarazioni_minore %}
@@ -477,7 +354,7 @@ PAGAMENTO DA DEFINIRE
 
 <!-- *********** INIZIO MODULO ALLEGATI *********** -->
 
-<div class="simpatico-block simpatico-query-and-answer">
+<div>
   <h3 class="Modulo">ALLEGA</h3>
   <table class="Modulo" name="Allegati" style="border: 1px solid grey">
     <tbody >
@@ -513,8 +390,6 @@ PAGAMENTO DA DEFINIRE
 
 <!-- *********** INIZIO MODULO PRESA VISIONE *********** -->
 
-<div class="simpatico-block simpatico-query-and-answer">
-
 <table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
       <tr>
@@ -528,7 +403,6 @@ PAGAMENTO DA DEFINIRE
       </tr>
     </tbody>
   </table>
-</div>
   
 <!-- *********** FINE MODULO PRESA VISIONE *********** -->
 
