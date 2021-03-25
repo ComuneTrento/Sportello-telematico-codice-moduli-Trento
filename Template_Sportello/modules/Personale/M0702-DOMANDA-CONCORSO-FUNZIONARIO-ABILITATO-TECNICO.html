@@ -29,34 +29,34 @@ urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
 verifica_pagamento="NO"
 versione="2.0|29/05/2020"/>
 
-<meta codice_allegato="M0701-A01-CERT-PROT"
-urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.amm-contabile-det;a01.M0701.verbale.commissione.medica"
+<meta codice_allegato="M0702-A01-CERT-PROT"
+urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.abilitato.tecnico;a01.M0702.verbale.commissione.medica"
 descrizione_estesa="Copia del verbale della commissione medica"
 filename="Verbale commissione.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/M0701-A01-CERT-PROT"
+istruzioni="/modulistica/moduli/M0702-A01-CERT-PROT"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="M0701-A02-CERT-MED"
-urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.amm-contabile-det;a02.M0701.certificato.medico"
+<meta codice_allegato="M0702-A02-CERT-MED"
+urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.abilitato.tecnico;a02.M0702.certificato.medico"
 descrizione_estesa="Copia del certificato medico"
 filename="Certificato medico.pdf"
 firmato="SI"
-istruzioni="/modulistica/moduli/M0701-A02-CERT-MED"
+istruzioni="/modulistica/moduli/M0702-A02-CERT-MED"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="M0701-A03-TITOLO-EQUIV"
-urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.amm-contabile-det;a03.M0701.provvedimento.equipollenza.equivalenza.titolo"
+<meta codice_allegato="M0702-A03-TITOLO-EQUIV"
+urn_allegato="document:c_l378:concorso.pubblico;selezione.funzionario.abilitato.tecnico;a03.M0702.provvedimento.equipollenza.equivalenza.titolo"
 descrizione_estesa="Copia del provvedimento di equipollenza o di equivalenza del titolo di studio"
 filename="Provvedimento equipollenza.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/M0701-A03-TITOLO-EQUIV"
+istruzioni="/modulistica/moduli/M0702-A03-TITOLO-EQUIV"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -1782,135 +1782,16 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
 
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
 
-<input id="GLOBO_allegato_cM0701-A01-CERT-PROT" name="GLOBO_allegato_cM0701-A01-CERT-PROT" type="hidden" value="" obbligatorio="#CERT_PROT.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM0702-A01-CERT-PROT" name="GLOBO_allegato_cM0702-A01-CERT-PROT" type="hidden" value="" obbligatorio="#CERT_PROT.checked() ? 'OBBLIGATORIO' : ''"/>
 
-<input id="GLOBO_allegato_cM0701-A02-CERT-MED" name="GLOBO_allegato_cM0701-A02-CERT-MED" type="hidden" value="" obbligatorio="#CERT_MED.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM0702-A02-CERT-MED" name="GLOBO_allegato_cM0702-A02-CERT-MED" type="hidden" value="" obbligatorio="#CERT_MED.checked() ? 'OBBLIGATORIO' : ''"/>
 
-<input id="GLOBO_allegato_cM0701-A03-TITOLO-EQUIV" name="GLOBO_allegato_cM0701-A03-TITOLO-EQUIV" type="hidden" value="" obbligatorio="#TITOLO_EQUIV.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM0702-A03-TITOLO-EQUIV" name="GLOBO_allegato_cM0702-A03-TITOLO-EQUIV" type="hidden" value="" obbligatorio="#TITOLO_EQUIV.checked() ? 'OBBLIGATORIO' : ''"/>
 
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
-<script>
-  function CalcoloVoto() {
 
-    var LM;
-    var LS;
-    var V;
-    var T;
-    var punteggioCONV = 0;
-    var punteggioASS = 0;
-    var tipo = "";
-
-    var vtLMpar = 0;
-    var vtLSpar = 0;
-    var vtVpar = 0;
-    var vtTpar = 0;
-
-    document.getElementById("Punteggio_aggiuntivo").value = parseFloat(0);
-
-    // PARAMETRIZZO A 110
-    if (parseFloat(document.getElementById("Parametri_VotoLM").value) > 0 && parseFloat(document.getElementById("Parametri_SuLM").value) > 0) {
-    document.getElementById("VotoLM").value =  (parseFloat(document.getElementById("Parametri_VotoLM").value) / parseFloat(document.getElementById("Parametri_SuLM").value)) * 110;
-     } else {
-    document.getElementById("VotoLM").value = parseFloat(0);
-    }
-    if (parseFloat(document.getElementById("Parametri_VotoLS").value) > 0 && parseFloat(document.getElementById("Parametri_SuLS").value) > 0) {
-    document.getElementById("VotoLS").value =  (parseFloat(document.getElementById("Parametri_VotoLS").value) / parseFloat(document.getElementById("Parametri_SuLS").value)) * 110;
-     } else {
-    document.getElementById("VotoLS").value = parseFloat(0);
-    }
-    if (parseFloat(document.getElementById("Parametri_VotoV").value) > 0 && parseFloat(document.getElementById("Parametri_SuV").value) > 0) {
-    document.getElementById("VotoV").value =  (parseFloat(document.getElementById("Parametri_VotoV").value) / parseFloat(document.getElementById("Parametri_SuV").value)) * 110;
-     } else {
-    document.getElementById("VotoV").value = parseFloat(0);
-    }
-    if (parseFloat(document.getElementById("Parametri_VotoT").value) > 0 && parseFloat(document.getElementById("Parametri_SuT").value) > 0) {
-    document.getElementById("VotoT").value =  (parseFloat(document.getElementById("Parametri_VotoT").value) / parseFloat(document.getElementById("Parametri_SuT").value)) * 110;
-     } else {
-    document.getElementById("VotoT").value = parseFloat(0);
-    }
-
-    // SALVO IN VARIABILI
-    if (isNaN(document.getElementById("VotoLM").value)) {
-      //document.getElementById("VotoLM").value = parseFloat(0);
-      LM=0; 
-    } else {
-      LM = parseFloat(document.getElementById("VotoLM").value);
-    }
-
-    if (isNaN(document.getElementById("VotoLS").value)) {
-      //document.getElementById("VotoLS").value = parseFloat(0); 
-      LS=0; 
-    } else {
-      LS = parseFloat(document.getElementById("VotoLS").value);
-    }
-
-    if (isNaN(document.getElementById("VotoV").value)) {
-      //document.getElementById("VotoV").value = parseFloat(0); 
-      V=0; 
-    } else {
-      V = parseFloat(document.getElementById("VotoV").value);
-    }
-
-    if (isNaN(document.getElementById("VotoT").value)) {
-      //document.getElementById("VotoT").value = parseFloat(0); 
-      T=0; 
-    } else {
-      T = parseFloat(document.getElementById("VotoT").value);
-    }
-
-    document.getElementById("VotoLM1").value = LM;
-    document.getElementById("VotoLS1").value = LS;
-    document.getElementById("VotoV1").value = V;
-    document.getElementById("VotoT1").value = T; 
-
-    punteggioCONV = Math.max(LM, LS, V, T);
-
-    vtLMpar = parseFloat(document.getElementById("Parametri_VotoLM").value)/parseFloat(document.getElementById("Parametri_SuLM").value);
-    vtLSpar = parseFloat(document.getElementById("Parametri_VotoLS").value)/parseFloat(document.getElementById("Parametri_SuLS").value);
-    vtVpar = parseFloat(document.getElementById("Parametri_VotoV").value)/parseFloat(document.getElementById("Parametri_SuV").value);
-    //vtTpar = parseFloat(document.getElementById("Parametri_VotoT").value)/parseFloat(document.getElementById("Parametri_SuT").value);
-    if (isNaN(vtLMpar)) {
-      vtLMpar=0; 
-    } 
-    if (isNaN(vtLSpar)) {
-      vtLSpar=0; 
-    } 
-    if (isNaN(vtVpar)) {
-      vtVpar=0; 
-    } 
-    if (isNaN(vtTpar)) {
-      vtTpar=0; 
-    } 
-    document.getElementById("LM1").value = vtLMpar;
-    document.getElementById("LS1").value = vtLSpar;
-    document.getElementById("V1").value = vtVpar;
-    document.getElementById("T1").value = vtTpar;
-
-    punteggioASS = Math.max(vtLMpar, vtLSpar, vtVpar, vtTpar);
-    
-    document.getElementById("Voto_massimo").value = punteggioCONV;
-    document.getElementById("Voto_massimo_par").value = punteggioASS;
-
-    if (punteggioASS >=parseFloat(1)) {
-          document.getElementById("Punteggio_aggiuntivo").value = 5;   
-        } 
-    if (punteggioASS >=parseFloat(0.99) && punteggioASS < parseFloat(1)) {
-          document.getElementById("Punteggio_aggiuntivo").value = 4;
-        } 
-    if (punteggioASS >=parseFloat(0.98) && punteggioASS < parseFloat(0.99)) {
-          document.getElementById("Punteggio_aggiuntivo").value = 3;
-        } 
-    if (punteggioASS >=parseFloat(0.97) && punteggioASS < parseFloat(0.98)) {
-          document.getElementById("Punteggio_aggiuntivo").value = 2 
-        }
-    if (punteggioASS >=parseFloat(0.96) && punteggioASS < parseFloat(0.97)) {
-        document.getElementById("Punteggio_aggiuntivo").value = 1;
-        }    
-    
-  }
-</script>
 {% endblock content %}
