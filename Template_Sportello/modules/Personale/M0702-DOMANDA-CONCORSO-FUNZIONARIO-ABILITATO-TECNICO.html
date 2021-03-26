@@ -113,22 +113,15 @@ urn_report="report:CSP_SESSION_REPORT"
   DICHIARA
 </h3>
 
+
+
 {% block dichiarazioni_cittadinanza %} 
-<div id="Tassonomia_Cittadinanza" name="Tassonomia_Cittadinanza" label="Cittadinanza" mandatory="true"></div>
 <table class="Modulo" style="border: 1px solid grey;">
   <tbody>
-    
-    <!-- <tr class="Rigaintestazione">
-      <td colspan="4">
-        <p class="Labeltabella">
-          Cittadinanza
-        </p>
-      </td>
-    </tr> -->
-    
+   
     <tr>
       <td style="vertical-align: top; width: 4%;">
-        <input id="Tassonomia_Cittadinanza1" name="Tassonomia_Cittadinanza" dynamic_check="#Titolare_Cittadinanza.value().toUpperCase()=='ITALIA'" enabled="#Titolare_Cittadinanza.value().toUpperCase()=='ITALIA'" type="radio" value="1" />
+        <input id="Cittadino_Italiano" name="Cittadino_Italiano" type="checkbox" value="SI" dynamic_check="#Titolare_Cittadinanza.value().toUpperCase()=='ITALIA'" enabled="#Titolare_Cittadinanza.value().toUpperCase()=='ITALIA'"/>
       </td>
       <td colspan="2">
         <p>di essere cittadino/a italiano/a</p>
@@ -136,8 +129,9 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
 
     <tr>
+      <div id="Cittadino_NonItaliano" name="Cittadino_NonItaliano" label="Cittadinanza" mandatory_enabled="#Titolare_Cittadinanza.value().toUpperCase()!='' and #Titolare_Cittadinanza.value().toUpperCase()!='ITALIA'"></div>
       <td rowspan="2" style="vertical-align: top; width: 4%;">
-        <input id="Tassonomia_Cittadinanza2" name="Tassonomia_Cittadinanza" type="radio" value="2" />
+        <input group="Cittadino_NonItaliano" id="Cittadino_NonItaliano1" name="Cittadino_NonItaliano" type="radio" value="1" />
       </td>
       <td colspan="2">
         <p>di essere cittadino/a di uno degli Stati membri dell’Unione Europea</p>
@@ -145,17 +139,17 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr> 
       <td colspan="2">
-          <!-- {{ utils.nazionalita( 'Parametri_Cittadinanza', 'Cittadinanza' )}} -->
-          <input class="inputNormal" id="Parametri_Cittadinanza" name="Parametri_Cittadinanza" style="width: 100%;" mandatory_enabled="#Tassonomia_Cittadinanza2.checked()" dynamic_value="#Titolare_Cittadinanza.value()"/>
+          <!-- {{ utils.nazionalita( 'Cittadino_StatoMembro', 'Cittadinanza' )}} -->
+          <input class="inputNormal" id="Cittadino_StatoMembro" name="Cittadino_StatoMembro" style="width: 100%;" mandatory_enabled="#Cittadino_NonItaliano1.checked()" dynamic_value="#Titolare_Cittadinanza.value()"/>
       </td>
     </tr>
     
     <tr>
       <td rowspan="4" style="vertical-align: top; width: 4%;">
-        <input id="Tassonomia_Cittadinanza3" name="Tassonomia_Cittadinanza" type="radio" value="3" />
+        <input group="Cittadino_NonItaliano" id="Cittadino_NonItaliano2" name="Cittadino_NonItaliano" type="radio" value="2" />
       </td>
       <td colspan="2">
-        <p>di essere familiare di cittadino/a dell'Unione Europea, anche se cittadino/a di stato terzo. Specificare la relazione di parentela con il cittadino/a dell'unione europea <input class="" label="Indicare la relazione di parentela con familiare cittadino UE" id="Parametri_RelazioneFamUE" mandatory_enabled="#Tassonomia_Cittadinanza3.checked()" name="Parametri_RelazioneFamUE"/>
+        <p>di essere familiare di cittadino/a dell'Unione Europea, anche se cittadino/a di stato terzo. Specificare la relazione di parentela con il cittadino/a dell'unione europea <input class="" label="Indicare la relazione di parentela con familiare cittadino UE" id="Parametri_RelazioneFamUE" mandatory_enabled="#Cittadino_NonItaliano2.checked()" name="Parametri_RelazioneFamUE"/>
         </p>
       </td>
     </tr>
@@ -168,8 +162,8 @@ urn_report="report:CSP_SESSION_REPORT"
 
     <tr>
         <td style="vertical-align: center; text-align: center; width: 4%;">
-          <div id="Tassonomia_FamiliareDiritto" name="Tassonomia_FamiliareDiritto" label="Tipo diritto di soggiorno del familiare" mandatory_enabled="#Tassonomia_Cittadinanza3.checked()"> </div>
-          <input group="Tassonomia_FamiliareDiritto" id="Tassonomia_FamiliareDiritto1" name="Tassonomia_FamiliareDiritto" type="radio" value="1" />
+          <div id="CittadinoExtra_FamiliareDiritto" name="CittadinoExtra_FamiliareDiritto" label="Tipo diritto di soggiorno del familiare" mandatory_enabled="#Cittadino_NonItaliano2.checked()"> </div>
+          <input group="CittadinoExtra_FamiliareDiritto" id="CittadinoExtra_FamiliareDiritto1" name="CittadinoExtra_FamiliareDiritto" type="radio" value="1" />
         </td>
         <td>
           <p style="line-height: 1.6;">diritto di soggiorno</p>
@@ -177,7 +171,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
         <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input group="Tassonomia_FamiliareDiritto" id="Tassonomia_FamiliareDiritto2" name="Tassonomia_FamiliareDiritto" type="radio" value="2" />
+          <input group="CittadinoExtra_FamiliareDiritto" id="CittadinoExtra_FamiliareDiritto2" name="CittadinoExtra_FamiliareDiritto" type="radio" value="2" />
         </td>
         <td>
           <p style="line-height: 1.6;">diritto di soggiorno permanente</p>
@@ -186,7 +180,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
     <tr>
     <td rowspan="5" style="vertical-align: top; width: 4%;">
-      <input id="Tassonomia_Cittadinanza4" name="Tassonomia_Cittadinanza" type="radio" value="4" />
+      <input group="Cittadino_NonItaliano" id="Cittadino_NonItaliano3" name="Cittadino_NonItaliano" type="radio" value="3" />
     </td>
     <td colspan="2">
       <p>
@@ -202,8 +196,8 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
       <tr>
         <td style="vertical-align: center; text-align: center; width: 4%;">
-          <div id="Tassonomia_CittadinoDiritto" name="Tassonomia_CittadinoDiritto" label="Tipo diritto di soggiorno del cittadino paesi terzi" mandatory_enabled="#Tassonomia_Cittadinanza4.checked()"> </div>
-          <input group="Tassonomia_CittadinoDiritto" id="Tassonomia_CittadinoDiritto1" name="Tassonomia_CittadinoDiritto" type="radio" value="1" />
+          <div id="CittadinoExtra_Permesso" name="CittadinoExtra_Permesso" label="Tipo diritto di soggiorno del cittadino paesi terzi" mandatory_enabled="#Cittadino_NonItaliano3.checked()"> </div>
+          <input group="CittadinoExtra_Permesso" id="CittadinoExtra_Permesso1" name="CittadinoExtra_Permesso" type="radio" value="1" />
         </td>
         <td>
           <p style="line-height: 1.6;">permesso di soggiorno CE per soggiornanti di lungo periodo</p>
@@ -211,7 +205,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
         <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input group="Tassonomia_CittadinoDiritto" id="Tassonomia_CittadinoDiritto2" name="Tassonomia_CittadinoDiritto" type="radio" value="2" />
+          <input group="CittadinoExtra_Permesso" id="CittadinoExtra_Permesso2" name="CittadinoExtra_Permesso" type="radio" value="2" />
         </td>
         <td>
           <p style="line-height: 1.6;">status di rifugiato</p>
@@ -219,7 +213,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
         <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input group="Tassonomia_CittadinoDiritto" id="Tassonomia_CittadinoDiritto3" name="Tassonomia_CittadinoDiritto" type="radio" value="3" />
+          <input group="CittadinoExtra_Permesso" id="CittadinoExtra_Permesso3" name="CittadinoExtra_Permesso" type="radio" value="3" />
         </td>
         <td>
           <p style="line-height: 1.6;">status di protezione sussidiaria</p>
@@ -233,8 +227,8 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <div id="Tassonomia_GodimentoDiritti" name="Tassonomia_GodimentoDiritti" label="Indicare il godimento dei diritti civili e politici" mandatory_enabled="!#Tassonomia_Cittadinanza1.checked()"> </div>
-          <input group="Tassonomia_GodimentoDiritti" id="Tassonomia_GodimentoDiritti1" name="Tassonomia_GodimentoDiritti" type="radio" value="1" />
+          <div id="CittadinoExtra_Diritti" name="CittadinoExtra_Diritti" label="Indicare il godimento dei diritti civili e politici" mandatory_enabled="#Cittadino_NonItaliano.checked()"> </div>
+          <input group="CittadinoExtra_Diritti" id="CittadinoExtra_Diritti1" name="CittadinoExtra_Diritti" type="radio" value="1" />
         </td>
         <td colspan="2">
           <p>
@@ -244,19 +238,19 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input group="Tassonomia_GodimentoDiritti" id="Tassonomia_GodimentoDiritti2" name="Tassonomia_GodimentoDiritti" type="radio" value="2" />
+          <input group="CittadinoExtra_Diritti" id="CittadinoExtra_Diritti2" name="CittadinoExtra_Diritti" type="radio" value="2" />
         </td>
         <td colspan="2">
           <p>
             di <b>non</b> godere dei diritti civili e politici nello stato di appartenenza o di provenienza (indicare la motivazione)
           </p>
-          <input class="" label="Indicare le motivazioni di non godimento dei diritti civili e politici" id="Parametri_Godimento" name="Parametri_Godimento" style="width: 100%;" mandatory_enabled="#Tassonomia_GodimentoDiritti2.checked()"/>
+          <input class="" label="Indicare le motivazioni di non godimento dei diritti civili e politici" id="Parametri_Godimento" name="Parametri_Godimento" style="width: 100%;" mandatory_enabled="#CittadinoExtra_Diritti2.checked()"/>
         </td>
       </tr>
-      <div id="Tassonomia_Requisiti" name="Tassonomia_Requisiti" label="Selezionare di godere dei requisiti previsti per i cittadini della Repubblica" mandatory_enabled="!#Tassonomia_Cittadinanza1.checked()"> </div>
+      <div id="CittadinoExtra_Requisiti" name="CittadinoExtra_Requisiti" label="Selezionare di godere dei requisiti previsti per i cittadini della Repubblica" mandatory_enabled="#Cittadino_NonItaliano.checked()"> </div>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input group="Tassonomia_Requisiti" id="Tassonomia_RequisitiRepubblica" name="Tassonomia_RequisitiRepubblica" type="checkbox" value="SI" enabled="!#Tassonomia_Cittadinanza1.checked()"/>
+          <input group="CittadinoExtra_Requisiti" id="CittadinoExtra_RequisitiRepubblica" name="CittadinoExtra_RequisitiRepubblica" type="checkbox" value="SI"/>
         </td>
         <td colspan="2">
           <p>
@@ -264,10 +258,10 @@ urn_report="report:CSP_SESSION_REPORT"
           </p>
         </td>
       </tr>
-      <div id="Tassonomia_Conoscenza" name="Tassonomia_Conoscenza" label="Selezionare di avere una adeguata conoscenza lingua italiana" mandatory_enabled="!#Tassonomia_Cittadinanza1.checked()"> </div>
+      <div id="CittadinoExtra_Conoscenza" name="CittadinoExtra_Conoscenza" label="Selezionare di avere una adeguata conoscenza lingua italiana" mandatory_enabled="#Cittadino_NonItaliano.checked()"> </div>
       <tr>
         <td style="vertical-align: top; width: 4%;">
-          <input group="Tassonomia_Conoscenza" id="Tassonomia_ConoscenzaItaliano" name="Tassonomia_ConoscenzaItaliano" type="checkbox" value="SI" enabled="!#Tassonomia_Cittadinanza1.checked()"/>
+          <input group="CittadinoExtra_Conoscenza" id="CittadinoExtra_ConoscenzaItaliano" name="CittadinoExtra_ConoscenzaItaliano" type="checkbox" value="SI"/>
         </td>
         <td colspan="2">
           <p>
@@ -1077,7 +1071,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
     <tr style="border:0px;">
       <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="5">
         
-        <div id="Abilitazione" name="Abilitazione" label="Indicare Abilitazione alla professione"> </div>
+        <div id="Abilitazione" name="Abilitazione" label="Indicare abilitazione alla professione"> </div>
         
         <input group="Abilitazione" id="Abilitazione_check" name="Abilitazione_check" type="checkbox" value="SI" />
       </td>
@@ -1118,7 +1112,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
          <input class="inputNormal" id="Abilitazione_Anno" name="Abilitazione_Anno" style="width: 100%;" label="Anno di conseguimento abilitazione professionale" mandatory_enabled="#Abilitazione_check.checked()" format="number" maxlength="4"/>
       </td>
       <td>
-        <input id="Abilitazione_Data" name="Abilitazione_Data" style="width:100%;" format="date" enabled="#Abilitazione_check.checked()" label="Data conseguimento abilitazione professine" maxlength="10"/> 
+        <input id="Abilitazione_Data" name="Abilitazione_Data" style="width:100%;" format="date" enabled="#Abilitazione_check.checked()" label="Data conseguimento abilitazione professionale" maxlength="10"/> 
       </td>
       <td colspan="2">
         <input class="inputNormal" id="Abilitazione_Sessione" name="Abilitazione_Sessione" enabled="#Abilitazione_check.checked()" style="width: 100%;" label="Sessione di conseguimento abilitazione professionale"/>
@@ -1145,8 +1139,8 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <div id="Tassonomia_RequisitiRiserve" mandatory_enabled="#Dichiara1.checked()" label="Requisiti che danno diritto a precedenze o preferenze nella graduatoria di merito"/>
-          <input group="Tassonomia_RequisitiRiserve" id="Tassonomia_RequisitiRiserve1" name="Tassonomia_RequisitiRiserve1" type="checkbox" value="SI"/>
+          <div id="CittadinoExtra_RequisitiRiserve" mandatory_enabled="#Dichiara1.checked()" label="Requisiti che danno diritto a precedenze o preferenze nella graduatoria di merito"/>
+          <input group="CittadinoExtra_RequisitiRiserve" id="CittadinoExtra_RequisitiRiserve1" name="CittadinoExtra_RequisitiRiserve1" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>militari volontari in ferma breve o in ferma prefissata delle Forze Armate, congedati senza demerito dalle ferme contratte (VFP1 – VFP4 – VFB in ferma triennale)</p>
@@ -1154,7 +1148,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiRiserve" id="Tassonomia_RequisitiRiserve2" name="Tassonomia_RequisitiRiserve2" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiRiserve" id="CittadinoExtra_RequisitiRiserve2" name="CittadinoExtra_RequisitiRiserve2" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>ufficiali di complemento in ferma biennale o ufficiali in ferma prefissata che hanno completato senza
@@ -1183,8 +1177,8 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <div id="Tassonomia_RequisitiPrecPref" mandatory_enabled="#Dichiara2.checked()" label="Requisiti che danno diritto a precedenze o preferenze nella graduatoria di merito"/>
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref1" name="Tassonomia_RequisitiPrecPref1" type="checkbox" value="SI"/>
+          <div id="CittadinoExtra_RequisitiPrecPref" mandatory_enabled="#Dichiara2.checked()" label="Requisiti che danno diritto a precedenze o preferenze nella graduatoria di merito"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref1" name="CittadinoExtra_RequisitiPrecPref1" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1194,7 +1188,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref2" name="Tassonomia_RequisitiPrecPref2" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref2" name="CittadinoExtra_RequisitiPrecPref2" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1204,7 +1198,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref3" name="Tassonomia_RequisitiPrecPref3" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref3" name="CittadinoExtra_RequisitiPrecPref3" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1214,7 +1208,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref4" name="Tassonomia_RequisitiPrecPref4" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref4" name="CittadinoExtra_RequisitiPrecPref4" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1224,7 +1218,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref5" name="Tassonomia_RequisitiPrecPref5" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref5" name="CittadinoExtra_RequisitiPrecPref5" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1234,7 +1228,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref6" name="Tassonomia_RequisitiPrecPref6" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref6" name="CittadinoExtra_RequisitiPrecPref6" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1244,7 +1238,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref7" name="Tassonomia_RequisitiPrecPref7" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref7" name="CittadinoExtra_RequisitiPrecPref7" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1254,7 +1248,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref8" name="Tassonomia_RequisitiPrecPref8" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref8" name="CittadinoExtra_RequisitiPrecPref8" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1264,7 +1258,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref9" name="Tassonomia_RequisitiPrecPref9" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref9" name="CittadinoExtra_RequisitiPrecPref9" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1274,7 +1268,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref10" name="Tassonomia_RequisitiPrecPref10" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref10" name="CittadinoExtra_RequisitiPrecPref10" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1284,7 +1278,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref11" name="Tassonomia_RequisitiPrecPref11" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref11" name="CittadinoExtra_RequisitiPrecPref11" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1294,7 +1288,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref12" name="Tassonomia_RequisitiPrecPref12" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref12" name="CittadinoExtra_RequisitiPrecPref12" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1304,7 +1298,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref13" name="Tassonomia_RequisitiPrecPref13" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref13" name="CittadinoExtra_RequisitiPrecPref13" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1314,7 +1308,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref14" name="Tassonomia_RequisitiPrecPref14" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref14" name="CittadinoExtra_RequisitiPrecPref14" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1324,7 +1318,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref15" name="Tassonomia_RequisitiPrecPref15" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref15" name="CittadinoExtra_RequisitiPrecPref15" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1334,7 +1328,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref16" name="Tassonomia_RequisitiPrecPref16" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref16" name="CittadinoExtra_RequisitiPrecPref16" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1344,7 +1338,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref17" name="Tassonomia_RequisitiPrecPref17" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref17" name="CittadinoExtra_RequisitiPrecPref17" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1354,7 +1348,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td rowspan="3" style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref18" name="Tassonomia_RequisitiPrecPref18" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref18" name="CittadinoExtra_RequisitiPrecPref18" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1371,12 +1365,12 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td colspan="1">
-          <input class="inputNormal" id="Parametri_NumeroFigliCarico" name="Parametri_NumeroFigliCarico" style="width: 100%;" label="Numero di figli a carico" mandatory_enabled="#Tassonomia_RequisitiPrecPref18.checked()" format="number"/>
+          <input class="inputNormal" id="Parametri_NumeroFigliCarico" name="Parametri_NumeroFigliCarico" style="width: 100%;" label="Numero di figli a carico" mandatory_enabled="#CittadinoExtra_RequisitiPrecPref18.checked()" format="number"/>
         </td>
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref19" name="Tassonomia_RequisitiPrecPref19" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref19" name="CittadinoExtra_RequisitiPrecPref19" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1386,7 +1380,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref20" name="Tassonomia_RequisitiPrecPref20" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref20" name="CittadinoExtra_RequisitiPrecPref20" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1396,7 +1390,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <!-- <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref21" name="Tassonomia_RequisitiPrecPref21" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref21" name="CittadinoExtra_RequisitiPrecPref21" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1406,7 +1400,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref22" name="Tassonomia_RequisitiPrecPref22" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref22" name="CittadinoExtra_RequisitiPrecPref22" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
@@ -1416,7 +1410,7 @@ E' onere del candidato produrre tempestivamente la documentazione relativa all'a
       </tr>
       <tr style="border:0px;">
         <td style="vertical-align: top; width: 4%; background-color: white;">
-          <input group="Tassonomia_RequisitiPrecPref" id="Tassonomia_RequisitiPrecPref23" name="Tassonomia_RequisitiPrecPref23" type="checkbox" value="SI"/>
+          <input group="CittadinoExtra_RequisitiPrecPref" id="CittadinoExtra_RequisitiPrecPref23" name="CittadinoExtra_RequisitiPrecPref23" type="checkbox" value="SI"/>
         </td>
         <td>
           <p>
