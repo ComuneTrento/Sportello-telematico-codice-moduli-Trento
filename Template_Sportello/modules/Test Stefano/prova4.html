@@ -1,0 +1,88 @@
+{% set CodiceModulo = "CODICE_MODULO" %}
+{% set Urn = "urn" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Descrizione modulo"
+destinatario_amministrazione=""
+destinatario_ufficio="UO..."
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_ELETTRONICA"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AVENTE_TITOLO"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|01/01/2019"/>
+
+<meta codice_modulo_figlio="INCARICO_PROCURA"
+urn_modulo_figlio="document:s_italia:generale;incarico.procura"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+{% endblock meta %}
+
+{% block title %}
+  Descrizione modulo intestazione di provazza
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' - Descrizione modulo'"/>
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+  Descrizione modulo
+</h1>
+
+<input id="Titolare_DatiPersonaObbligatori" name="Titolare_DatiPersonaObbligatori" type="hidden" dynamic_check="true"/>
+<input id="Titolare_Titolo" name="Titolare_Titolo" type="hidden" value="Richiedente"/>
+<input id="Titolare_Ruolo" name="Titolare_Ruolo" type="hidden" value="Richiedente"/>
+{{ anagrafica.persona_fisica("Titolare", "Il sottoscritto", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria") }}
+
+Corpo del testo
+{{ anagrafica.cognome_nome("Titolare", "Il sottoscritto", "Richiedente", "visibility:visibility", "cursor:pointer", "visibility:visibility") }}
+
+<br/>
+  {{ utils.firma_hidden() }}
+<br/>
+
+
+<br>
+
+</br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_modulofiglio_cINCARICO_PROCURA" name="GLOBO_modulofiglio_cINCARICO_PROCURA" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+{% endblock content %}

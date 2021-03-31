@@ -1,0 +1,302 @@
+{% set CodiceModulo = "M4099-COMUNICAZIONE-DATI-ASSOCIAZIONE" %}
+{% set Urn = "document:c_l378:comunicazione.associazione;comunicazione.dati.associazione;m4099.comunicazione.dati.associazione" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Comunicazione dei dati delle associazioni"
+destinatario_amministrazione=""
+destinatario_ufficio="AFM9MQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|01/01/2019"/>
+
+<meta codice_allegato="M4099-A01-LOGO-ASSOCIAZIONE"
+urn_allegato="document:c_l378:comunicazione.associazione;comunicazione.dati.associazione;a01.a01.m4099.comunicazione.dati.associazione"
+descrizione_estesa="Logo dell'associazione"
+filename="LogoAssociazione.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M4099-A01-LOGO-ASSOCIAZIONE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+{% block title %}
+COMUNICAZIONE DATI ASSOCIAZIONE
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' - Descrizione modulo'"/>
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<br>
+
+<h1 class="Modulo" style="line-height:1.6;">
+    COMUNICAZIONE DATI ASSOCIAZIONE di prova Stefano
+  </h1>
+
+<br>
+
+{{anagrafica_trento_uniformata.richiedente_nomail("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+
+<h1 class="Modulo">
+  in qualità di legale rappresentante dell'Associazione
+</h1>
+
+<table class="Modulo" style="margin-top:-1px; border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Denominazione associazione</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="NomeAssociazione" name="NomeAssociazione" label="Denominazione dell'associazione" style="width:100%;" mandatory="true"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h1 class="Modulo">
+  CHIEDE
+</h1>
+
+<p class="Modulo" style="line-height:1.6;">
+  la pubblicazione sul sito www.comune.trento.it (sezione riservata alle associazioni) dei dati relativi alla suddetta Associazione.
+</p>
+ 
+<h1 class="Modulo">
+  SI IMPEGNA A
+</h1>
+
+<p class="Modulo" style="line-height:1.6;">
+  comunicare tempestivamente eventuali variazioni nei dati comunicati.
+</p>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+	<tbody>
+		<tr class="Rigaintestazione" >
+			<td colspan="2">
+				<p><b>Dati da pubblicare</b></p>
+			</td>
+		</tr>
+		<tr class="Rigaintestazioneridotta">
+			<td colspan="2">
+				<p class="Labelcella">Denominazione associazione</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input class="inputNormal" id="NomeAssociazionePubblicazione" name="NomeAssociazionePubblicazione" style="width: 100%;" label="Denominazione dell'associazione per la pubblicazione" mandatory_enabled="true">
+			</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+			<td colspan="2">
+				<p class="Labelcella">Sede legale</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input class="inputNormal" id="SedeLegalePubblicazione" name="SedeLegalePubblicazione" style="width: 100%;" label="Sede legale dell'associazione per la pubblicazione" mandatory_enabled="true">
+			</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+			<td>
+				<p class="Labelcella">Codice fiscale</p>
+      </td>
+      <td>
+				<p class="Labelcella">Partita IVA</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input class="inputNormal" id="CodiceFiscalePubblicazione" name="CodiceFiscalePubblicazione" style="width: 100%;" label="Codice fiscale dell'associazione per la pubblicazione" mandatory_enabled="true">
+      </td>
+   		<td>
+				<input class="inputNormal" id="PartitaIVAPubblicazione" name="PartitaIVAPubblicazione" style="width: 100%;" label="Partita IVA dell'associazione per la pubblicazione">
+			</td> 
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Telefono fisso</p>
+      </td>
+      <td>
+        <p class="Labelcella">Cellulare</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="TelefonoFissoPubblicazione" name="TelefonoFissoPubblicazione" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="TelefonoCellPubblicazione" name="TelefonoCellPubblicazione" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" mandatory_enabled="true"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">E-mail</p>
+      </td>
+    </tr>
+    <tr>
+			<td colspan="2">
+				<input class="inputNormal" id="MailPubblicazione" name="MailPubblicazione" style="width: 100%;" label="Mail dell'associazione per la pubblicazione" mandatory_enabled="true">
+			</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Sito internet</p>
+      </td>
+    </tr>
+    <tr>
+			<td colspan="2">
+				<input class="inputNormal" id="SitoPubblicazione" name="SitoPubblicazione" style="width: 100%;" label="Indirizzo sito internet dell'associazione per la pubblicazione" mandatory_enabled="true">
+			</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Altri contatti (facebook, twitter, ...)</p>
+      </td>
+    </tr>
+    <tr>
+			<td colspan="2">
+				<input class="inputNormal" id="AltriContattiPubblicazione" name="AltriContattiPubblicazione" style="width: 100%;" label="Altri contatti dell'associazione per la pubblicazione">
+			</td>
+    </tr>
+    <tr  class="Rigaintestazioneridotta">
+        <td  colspan="2">
+            <p class="Labelcella">Ambito di attività</p>
+          </td>
+        </tr>
+        <tr>
+      <td  colspan="2">
+        <select class="inputNormal" id="AmbitoAttivitaAssociazione" name="AmbitoAttivitaAssociazione" style="width:100%;" label="Ambito di attività dell'associazione" mandatory_enabled="true">
+          <option value=""></option>
+          <option value="Sociale">Sociale</option>
+          <option value="Sportiva">Sportiva</option>
+        </select>
+      </td>
+    </tr>
+		</tr>
+    <tr class="Rigaintestazioneridotta">
+			<td  colspan="2">
+				<p class="Labelcella">Breve descrizione dell'attività svolta</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<textarea class="inputNormal" id="DescrizioneAttivita" name="DescrizioneAttivita" label="Descrizione dell'attività dell'associazione per la pubblicazione" mandatory_enabled="true" style="width:100%;height:4cm;"></textarea>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <tbody >
+        <tr class="Rigaintestazione">
+            <td colspan="3">
+              <p style="text-align: center;">
+                <b>Elenco degli allegati</b>
+                <br>
+                <span style="font-size:70%">
+                  <i>(barrare gli eventuali allegati)</i>
+                </span>
+              </p>
+            </td>
+          </tr>  
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="LOGO_ASSOCIAZIONE" name="LOGO_ASSOCIAZIONE" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>Logo dell'associazione in formto PDF</b></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>Dichiara di aver ricevuto e preso visione dell'<a href="https://sportellotest.comune.trento.it/document/inform-tratt-dati-benicomuni" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> 
+
+<br>
+<br>
+
+ 
+
+
+<br>
+<br/>
+  {{ utils.firma_hidden() }}
+<br/>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<input id="data_comunicazione_datiAssociazione" name="data_comunicazione_datiAssociazione" dynamic_value="#Data.value()" format="date" type="hidden">
+
+<input id="GLOBO_allegato_cM4099-A01-LOGO-ASSOCIAZIONE" name="GLOBO_allegato_cM4099-A01-LOGO-ASSOCIAZIONE" obbligatorio="#LOGO_ASSOCIAZIONE.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+{% endblock content %}
