@@ -149,7 +149,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
         <input id="Minore_check" name="Minore_check" type="checkbox" value="SI" style="margin-top: 0.2rem;" />
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height:1.4;">di accompagnare il minore</p>
+        <p style="line-height:1.4;">di accompagnare il minore di 10 anni</p>
         <input class="inputNormal" id="Dic_minore_nomecognome" name="Dic_minore_nomecognome" style="width: 100%;" label="" mandatory_enabled="#Minore_check.checked()" placeholder="Inserire nome e cognome del minore" />
       </td>
     </tr>
@@ -216,7 +216,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
       
         <tr>
           <td class="tabled-cb">
-            <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni1" name="Tassonomia_Esenzioni1" type="checkbox" value="SI" onchange="updateImporto()"/>
+            <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni1" name="Tassonomia_Esenzioni1" type="checkbox" value="SI" onchange="updateImporto()" onclick="showHidePagamento()"/>
           </td>
           <td>
             <p style="line-height: 1.6;">di essere residente o comunque nato/a in uno dei comuni della Provincia di Trento, salvo zone interdette</p>
@@ -225,7 +225,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 
         <tr>
           <td class="tabled-cb">
-              <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni2" name="Tassonomia_Esenzioni2" type="checkbox" value="SI" onchange="updateImporto()" />
+              <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni2" name="Tassonomia_Esenzioni2" type="checkbox" value="SI" onchange="updateImporto()" onclick="showHidePagamento()"/>
             </td>
             <td>
               <p style="line-height: 1.6;">di essere proprietario/a o possessore di boschi ricadenti in territorio provinciale, ancorché non residente in un comune della Provincia di Trento, nell'ambito del territorio di loro proprietà</p>
@@ -234,7 +234,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 
         <tr>
           <td class="tabled-cb">
-              <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni3" name="Tassonomia_Esenzioni3" type="checkbox" value="SI" onchange="updateImporto()" />
+              <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni3" name="Tassonomia_Esenzioni3" type="checkbox" value="SI" onchange="updateImporto()" onclick="showHidePagamento()" />
             </td>
             <td>
               <p style="line-height: 1.6;">di essere iscritto/a all'anagrafe degli italiani residenti all'estero (AIRE) di un comune della Provincia di Trento</p>
@@ -243,7 +243,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 
         <tr>
           <td class="tabled-cb">
-              <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni4" name="Tassonomia_Esenzioni4" type="checkbox" value="SI" onchange="updateImporto()" />
+              <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni4" name="Tassonomia_Esenzioni4" type="checkbox" value="SI" onchange="updateImporto()" onclick="showHidePagamento()" />
             </td>
             <td>
               <p style="line-height: 1.6;">di godere di diritto di uso civico, nel territorio di proprietà o gravato dal diritto di uso civico</p>
@@ -252,7 +252,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 
         <tr>
           <td class="tabled-cb">
-              <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni5" name="Tassonomia_Esenzioni5" type="checkbox" value="SI" onchange="updateImporto()" />
+              <input group="Tassonomia_Esenzioni" id="Tassonomia_Esenzioni5" name="Tassonomia_Esenzioni5" type="checkbox" value="SI" onchange="updateImporto()" onclick="showHidePagamento()" />
             </td>
             <td>
               <p style="line-height: 1.6;">di essere in possesso di permessi speciali rilasciati dal Comune di Trento, come gruppi micologici in occasione di mostre, corsi, congressi nazionali ed internazionali, aventi carattere culturale, scientifico, didattico e cittadini residenti per i quali la raccolta costituisce fonte di lavoro e sussistenza.</p>
@@ -264,6 +264,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 
 <input id="Tassonomia_Esenzioni_Totale" name="Tassonomia_Esenzioni_Totale" type="checkbox" value="SI" 
   dynamic_check="#Tassonomia_Esenzioni1.checked() ||  #Tassonomia_Esenzioni2.checked() || #Tassonomia_Esenzioni3.checked() || #Tassonomia_Esenzioni4.checked() || #Tassonomia_Esenzioni5.checked()"
+  
   />
 <input id="Tassonomia_Riduzioni_Totale" name="Tassonomia_Riduzioni_Totale" type="checkbox" value="SI" 
   dynamic_check="#Tassonomia_Riduzioni1.checked() ||  #Tassonomia_Riduzioni2.checked() || #Tassonomia_Riduzioni3.checked()"
@@ -272,7 +273,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 
 <!-- *********** INIZIO MODULO ALLEGATI *********** -->
 
-<div>
+<div id="allegati" >
   <h3 class="Modulo">ALLEGA</h3>
   <table class="Modulo" name="Allegati" style="border: 1px solid grey">
     <tbody >
@@ -387,13 +388,17 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
     width: 4%; 
     padding-top: 0.5em; 
     text-align: center;
-
   }
+
+    .hidden {
+      display: none;
+    }
+
 </style>
 <script>
   let importo = 10;
   let importoLabel = document.getElementById("importoLabel");
-  let importiCB = document.getElementsByName("Periodo_raccolta");
+  let importiRB = document.getElementsByName("Periodo_raccolta");
   let esenzioniCB = document.getElementById("Tassonomia_Esenzioni_Totale");
   let riduzioniCB = document.getElementById("Tassonomia_Riduzioni_Totale");
   // inizializza label
@@ -408,8 +413,8 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
         console.log("Esenzione totale", importo);
       } else {
         // calcolo importo
-        if (!!importiCB)
-          importiCB.forEach(x => {
+        if (!!importiRB)
+          importiRB.forEach(x => {
             console.log(x);
             if (x.checked) {
               // aggiorna importo
@@ -420,7 +425,7 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
 
         // applico riduzioni
         if (!!riduzioniCB && riduzioniCB.checked) {
-          console.log("Diritto ad esenzione su importo di ", importo);
+          console.log("Diritto a riduzione su importo di ", importo);
           // riduzione presente
           importo -= importo * 20 / 100;
         } 
@@ -435,6 +440,14 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
       if (!!importoLabel)
         // due cifre decimali e sostituisce il char per decimali da . a ,
         importoLabel.innerHTML = importo ? importo.toFixed(2).replace('.', ',') : 0;
+  }
+
+  function showHidePagamento() {
+    let allegatiElement = document.getElementById("allegati");
+    if (!!esenzioniCB && esenzioniCB.checked) {
+      allegatiElement.classList.remove('hidden');
+    } else 
+      allegatiElement.classList.add('hidden');
   }
 </script>
 
