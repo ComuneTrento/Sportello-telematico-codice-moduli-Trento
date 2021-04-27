@@ -95,31 +95,31 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
       </tr>
       <tr>
         <td>
-            <input group="Periodo_raccolta" id="Periodo_raccolta1" type="radio" name="Periodo_raccolta" value="10" onchange="updateImporto()"/> 
+            <input group="Periodo_raccolta" id="Periodo_raccolta1" type="radio" name="Periodo_raccolta" value="10" onblur="updateImporto()" onchange="updateImporto()"/> 
             1 giorno
         </td> 
       </tr> 
       <tr>
         <td>
-            <input group="Periodo_raccolta" id="Periodo_raccolta2" type="radio" name="Periodo_raccolta" value="18" onchange="updateImporto()"/> 
+            <input group="Periodo_raccolta" id="Periodo_raccolta2" type="radio" name="Periodo_raccolta" value="18" onblur="updateImporto()" onchange="updateImporto()"/> 
             3 giorni
         </td> 
       </tr> 
       <tr>
         <td>
-          <input group="Periodo_raccolta" id="Periodo_raccolta3" type="radio" name="Periodo_raccolta" value="24" onchange="updateImporto()"/> 
+          <input group="Periodo_raccolta" id="Periodo_raccolta3" type="radio" name="Periodo_raccolta" value="24" onblur="updateImporto()" onchange="updateImporto()"/> 
           1 settimana
         </td> 
       </tr> 
       <tr>
         <td>
-          <input group="Periodo_raccolta" id="Periodo_raccolta4" type="radio" name="Periodo_raccolta" value="40" onchange="updateImporto()"/> 
+          <input group="Periodo_raccolta" id="Periodo_raccolta4" type="radio" name="Periodo_raccolta" value="40" onblur="updateImporto()" onchange="updateImporto()"/> 
           2 settimane
         </td> 
       </tr> 
       <tr>
         <td>
-          <input group="Periodo_raccolta" id="Periodo_raccolta5" type="radio" name="Periodo_raccolta" value="60" onchange="updateImporto()"/> 
+          <input group="Periodo_raccolta" id="Periodo_raccolta5" type="radio" name="Periodo_raccolta" value="60" onblur="updateImporto()" onchange="updateImporto()"/> 
           1 mese
         </td> 
       </tr> 
@@ -300,7 +300,9 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
         </p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input class="" type="text" id="importo" name="importo" label="Importo da versare" style="width: 90%; text-align: center;" mandatory_enabled="false"/>€</p>
+        <p style="line-height: 1.6; text-align: center;">
+        <input class="inputNormal" id="Parametri_Importo" name="Parametri_Importo" style="width: 90%; text-align: center;" label="Importo da versare"  mandatory_enabled="true"/>€
+        </p>
       </td>
     </tr>
     </tbody>
@@ -397,15 +399,13 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
   }
 </style>
 <script>
-  var importiRB = document.getElementsByName("Periodo_raccolta");
-  var esenzioniCB = document.getElementById("Tassonomia_Esenzioni_Totale");
-  var riduzioniCB = document.getElementById("Tassonomia_Riduzioni_Totale");
-  var importo = 0;
-  // inizializza field
-  updateImporto();
   
   /** Aggiorna la variabile dell'importo con quanto deve pagare il cittadino */
   function updateImporto() {
+      var importo = 0;
+      var importiRB = document.getElementsByName("Periodo_raccolta");
+      var esenzioniCB = document.getElementById("Tassonomia_Esenzioni_Totale");
+      var riduzioniCB = document.getElementById("Tassonomia_Riduzioni_Totale");
       // esenzioni
       if (!!esenzioniCB && esenzioniCB.checked) {
         // esenzione TOTALE
@@ -431,16 +431,15 @@ M9999-DOMANDA-RACCOLTA-FUNGHI
         } 
       }
 
-      // aggiorna label che mostra importo
-      updateImportoField();
+      console.log("Update importo", importo);
+
+      /* aggiorna label che mostra importo */
+      // due cifre decimali e sostituisce il char per decimali da . a ,
+      document.getElementById("Parametri_Importo").value = importo ? importo.toFixed(2).replace('.', ',') : 0;
   }
 
-  /* aggiorna label che mostra importo */
-  function updateImportoField() {
-      
-        // due cifre decimali e sostituisce il char per decimali da . a ,
-        document.getElementById("importo").value = importo ? importo.toFixed(2).replace('.', ',') : 0;
-  }
+  updateImporto();
+
 </script>
 
 {% endblock content %}
