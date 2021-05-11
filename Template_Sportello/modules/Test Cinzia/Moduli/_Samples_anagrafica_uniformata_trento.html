@@ -1,0 +1,279 @@
+{% set CodiceModulo = "CODICE_MODULO" %}
+{% set Urn = "document:s_italia:prova.urn" %}
+{% extends "base_trento_OK.html" %}
+
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Descrizione modulo"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_ELETTRONICA"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|01/01/2019"/>
+
+{% endblock meta %}
+
+{% block title %}
+  Tipi anagrafiche
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' - Descrizione modulo'"/>
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo">
+  Formazione modulistica
+</h1>
+
+<!--  ESEMPI DI BASE -->
+<br>
+<p class="Modulo">
+  <b>Esempio 1:</b> anagrafica_trento_uniformata.titolare_segnatura_guidata
+  <!-- INIZIO BLOCCO ANAGRAFICA -->
+
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
+
+{{anagrafica_trento_uniformata.titolare_segnatura_guidata("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio","Procuratore","Amministratore di sostegno"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<!-- FINE BLOCCO ANAGRAFICA -->
+</p>
+
+<br>
+<hr>
+<p class="Modulo">
+  <b>Esempio 2:</b> anagrafica_trento_uniformata.titolare
+  {{anagrafica_trento_uniformata.titolare("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+</p>
+
+<br>
+<hr>
+<p class="Modulo">
+  <b>Esempio 3:</b> titolare_segnatura
+  {{anagrafica_trento_uniformata.titolare_segnatura("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br>
+<hr>
+<p class="Modulo">
+  <b>Esempio 4:</b> richiedente
+  {{anagrafica_trento_uniformata.richiedente("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 5:</b> richiedente_email_obbligatoria <br>
+  {{anagrafica_trento_uniformata.richiedente_email_obbligatoria("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 6:</b>richiedente_elettorale<br/>
+  {{anagrafica_trento_uniformata.richiedente_elettorale("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 7:</b>richiedente_nomail<br/>
+  {{anagrafica_trento_uniformata.richiedente_nomail("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 8:</b>richiedente_nomail_CDU<br/>
+  {{anagrafica_trento_uniformata.richiedente_nomail_CDU("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 9:</b>richiedente_cambio_res<br/>
+  {{anagrafica_trento_uniformata.richiedente_cambio_res("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 10:</b>professionista<br/>
+  {{anagrafica_trento_uniformata.professionista("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 11:</b>progettista<br/>
+  {{anagrafica_trento_uniformata.progettista("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 12:</b>richiedente_nomail_CDU<br/>
+  {{anagrafica_trento_uniformata.richiedente_nomail_CDU("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 13:</b>richiedente_cambio_res<br/>
+  {{anagrafica_trento_uniformata.richiedente_cambio_res("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 14:</b>professionista<br/>
+  {{anagrafica_trento_uniformata.professionista("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 15:</b>progettista<br/>
+  {{anagrafica_trento_uniformata.progettista("AventeTitolo","Il titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 16:</b>professionista_direttore_lavori<br/>
+  {{anagrafica_trento.professionista_direttore_lavori("Titolare2","che incarica quale <b>DIRETTORE DEI LAVORI</b>:","Direttore dei lavori") }}
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 17:</b>professionista_dirlav<br/>
+  {{anagrafica_trento.professionista_dirlav("Titolare2","che incarica quale <b>DIRETTORE DEI LAVORI</b>:","Direttore dei lavori") }}
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 18:</b>professionista_nomail<br/>
+  {{anagrafica_trento_uniformata.professionista_nomail("Altro_Progettista") }}
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 19:</b>titolare_conf_edifici<br/>
+ {{anagrafica_trento_uniformata.titolare_conf_edifici("Progettista","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}}
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 20:</b>solo_nominativo<br/>
+  {{anagrafica_trento_uniformata.solo_nominativo("Legale_ImpreseCoinvolte","indica quale <b>LEGALE RAPPRESENTANTE</b>:") }}
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 21:</b>solo_nominativo_elettorale<br/>
+  {{anagrafica_trento_uniformata.solo_nominativo_elettorale("AventeTitolo","Il/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 22:</b>domicilio_digitale<br/>
+  {{anagrafica.domicilio_digitale(id_pec_personale="Titolare_EMailPEC",id_cognome_professionista="Titolare1_Cognome",id_nome_professionista="Titolare1_Nome",id_pec_professionista="Titolare1_EMailPEC",id_pec_societa="Titolare_APEC")}}
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 23:</b>delega_comunicazioni<br/>
+ {{anagrafica_trento_uniformata.delega_comunicazioni()}}
+</p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 24:</b>anagrafica_bambino<br/>
+ {{ anagrafica_trento_uniformata.anagrafica_bambino('Bambino', 'Anagrafica del/la bambino/a') }}
+ </p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 25:</b>richiedente_tscw<br/>
+  {{anagrafica_trento_uniformata.richiedente_tscw("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+ </p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 26:</b>societa<br/>
+  
+{{anagrafica_trento_uniformata.societa("AventeTitolo","Il titolare del permesso di costruire",["Persona fisica","Legale rappresentante","Amministratore di condominio"], "Titolare", "visibility:hidden", "cursor:default", "mail_ordinaria","false")}}
+ </p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 27:</b>persona_fisica<br/>
+  {{ anagrafica_trento_uniformata.persona_fisica("AventeTitolo", "Il sottoscritto/La sottoscritta (Clicca sull'icona omino per recuperare i tuoi dati anagrafici)", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria", "", "true", "false", "false", " ", "true", "true", "display:none", "visibility:visibility" ) }}
+ </p>
+
+<br/>
+<hr>
+<p class="Modulo">
+  <b>Esempio 28:</b>titoli_tecnici<br/>
+  <select>
+  {{anagrafica_trento_uniformata.titoli_tecnici()}} 
+  </select>
+ </p>
+
+
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<input firmare="'P7M_ELETTRONICA'" id="GLOBO_modulofiglio_cIncarico_procura" name="GLOBO_modulofiglio_cIncarico_procura" type="hidden" value=""/>
+
+<input id="GLOBO_modulofiglio_cMODULO_SECONDARIO" name="GLOBO_modulofiglio_cMODULO_SECONDARIO" type="hidden" value="" obbligatorio="#MODULO_SECONDARIO.checked() ? 'OBBLIGATORIO' : ''"/>
+
+<input id="GLOBO_allegato_cALTRI-ALLEGATI" name="GLOBO_allegato_cALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+{% endblock content %}
