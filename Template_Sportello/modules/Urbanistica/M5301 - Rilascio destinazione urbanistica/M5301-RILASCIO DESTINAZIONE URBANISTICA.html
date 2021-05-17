@@ -815,7 +815,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
           
           di non essere soggetto al pagamento della marca da bollo, <a href="https://sportello.comune.trento.it/faq%3As_italia%3Acdu.casistiche.esenzione.bollo" target="_blank">ricadendo nel caso di:</a> 
           <input class="" id="EsenzioneBollo" name="EsenzioneBollo" label="Motivo esenzione bollo" enabled="#Parametri_Assoggettabilita2.checked()" mandatory_enabled="#Parametri_Assoggettabilita2.checked()" style="width:100%;" type="text">
-        <br><span style="font-size:85%;"><i><b> (l'esenzione dall'imposta di bollo comporta anche la riduzione dei diritti di segreteria del 50%)</b></i>)</span>
+        <!-- <br><span style="font-size:85%;"><i><b> (l'esenzione dall'imposta di bollo comporta anche la riduzione dei diritti di segreteria del 50%)</b></i>)</span> -->
         </td>
       </tr>
     </tbody>
@@ -827,20 +827,34 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
       <tr class="Rigaintestazione" >
-          <td colspan="4">
+          <td colspan="2">
               <b>Per il rilascio del certificato è necessario il pagamento di: </b>
-              <ul>
-                <input id="Totale_importo_shadow" name="Totale_importo shadow"  label="Importo diritti di segreteria ombra" style="width:8%;" value="0" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? '0': #Parametri_Domanda_EntiPubblici.checked() ? '0': #Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" type="hidden"/>
-                <li>euro <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? parseFloat(#Totale_importo_shadow.value()/2) : parseFloat(#Totale_importo_shadow.value())" readonly/> per diritti sugli atti in materia urbanistico-edilizia <b>(importo dei Diritti di segreteria da indicare sulla distinta di pagamento)</b></li>
-                <li>euro <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:8%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16.00'" readonly/> per l'eventuale marca da bollo sull' emissione del certificato <b>(importo dell'Imposta di bollo da indicare sulla distinta di pagamento)</b></li>
-              </ul>
-        
-              <b>Per un totale di euro: 
-              <input id="Totale_spesa" name="Totale_spesa" dynamic_value="parseFloat(#Totale_importo.value()) + parseFloat(#Totale_MarcaBollo.value())" label="Totale" style="width:10%;"  value="" readonly/></b>
-              <!-- <br>Che sarà effettuato con la seguente modalità: -->
           </td>
       </tr>
-
+      <tr>
+           <td style="vertical-align: center; width: 20%;">
+                euro <input id="Totale_MarcaBollo" name="Totale_MarcaBollo"  label="Importo marca da bollo" style="width:100%;" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? '0':'16'" readonly/> 
+          </td>
+          <td>
+            per l'eventuale marca da bollo sull' emissione del certificato <b> <br> sulla distinta di pagamento indicare <input id="DescrizioneDistinta_MarcaBollo" name="DescrizioneDistinta_MarcaBollo"  label="Importo marca da bollo" style="width:100%;" dynamic_value="#Parametri_Assoggettabilita2.checked() ? 'Esente da imposta di bollo (per il rilascio del provvedimento)':'Imposta di bollo (per il rilascio del provvedimento)'" readonly/></b>
+          </td>
+      </tr>
+       <tr>
+           <td style="vertical-align: center; width: 20%;">
+                <input id="Totale_importo_shadow" name="Totale_importo shadow"  label="Importo diritti di segreteria ombra" style="width:8%;" value="0" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? '0': #Parametri_Domanda_EntiPubblici.checked() ? '0': #Parametri_Storici_Post.checked() ? 51.64 : #Totale_particelle.value() &lt; 4 ?  14 : #Totale_particelle.value() &lt; 5 ? 18 : #Totale_particelle.value() &lt; 6? 22 : #Totale_particelle.value() &lt; 7 ? 26 : #Totale_particelle.value() &lt; 8 ? 30 : #Totale_particelle.value() &lt; 9 ? 34 : #Totale_particelle.value() &lt; 10 ? 38 : #Totale_particelle.value() &lt; 11 ? 42 : #Totale_particelle.value() &lt; 12 ? 46 : #Totale_particelle.value() &lt; 13 ? 50 : 51.64" type="hidden"/>
+                euro <input id="Totale_importo" name="Totale_importo"  label="Importo diritti di segreteria" value="0" dynamic_value="#Parametri_Assoggettabilita2.checked() ? parseFloat(#Totale_importo_shadow.value()/2) : parseFloat(#Totale_importo_shadow.value())" step=".01" style="width:100%;" readonly/> 
+            </td>
+            <td>
+                per diritti sugli atti in materia urbanistico-edilizia <b> <br> sulla distinta di pagamento indicare <br>
+               <input id="DescrizioneDistinta_Diritti" name="DescrizioneDistinta_Diritti"  label="Importo diritti di segreteria" style="width:55%;" dynamic_value="#Parametri_Domanda_DelegaConsulente.checked() ? 'Esente da diritti di segreteria (Enti pubblici, CTU, ...)': #Parametri_Domanda_EntiPubblici.checked() ? 'Esente da diritti di segreteria (Enti pubblici, CTU, ...)': #Parametri_Storici_Post.checked() ? 'Diritti di segreteria per certifcato storico' : #Totale_particelle.value() &lt; 4 ?  'Diritti di segreteria fino a 3 particelle' : #Totale_particelle.value() &lt; 5 ? 'Diritti di segreteria fino a 4 particelle' : #Totale_particelle.value() &lt; 6? 'Diritti di segreteria fino a 5 particelle' : #Totale_particelle.value() &lt; 7 ? 'Diritti di segreteria fino a 6 particelle' : #Totale_particelle.value() &lt; 8 ? 'Diritti di segreteria fino a 7 particelle' : #Totale_particelle.value() &lt; 9 ? 'Diritti di segreteria fino a 8 particelle' : #Totale_particelle.value() &lt; 10 ? 'Diritti di segreteria fino a 9 particelle' : #Totale_particelle.value() &lt; 11 ? 'Diritti di segreteria fino a 10 particelle' : #Totale_particelle.value() &lt; 12 ? 'Diritti di segreteria fino a 11 particelle' : #Totale_particelle.value() &lt; 13 ? 'Diritti di segreteria fino a 12 particelle' : 'Diritti di segreteria fino a 13 particelle e oltre'"/>
+               <input id="DescrizioneDistinta_Esenzione" name="DescrizioneDistinta_Esenzione"  label="Importo diritti di segreteria" dynamic_value="#Parametri_Assoggettabilita2.checked() ? 'se esente da imposta di bollo' : ''" style="width:40%;" readonly/> </b>
+          </td>
+      </tr>
+      <tr class="Rigaintestazione" >
+          <td colspan="2">
+            <b>Per un totale di euro: 
+              <input id="Totale_spesa" name="Totale_spesa" dynamic_value="parseFloat(#Totale_importo.value()) + parseFloat(#Totale_MarcaBollo.value())" step=".01"label="Totale" style="width:10%;"  value="0" readonly/></b>
+          </td>
       <tr>
         <!--
         <td style="vertical-align: center; width: 4%;">
