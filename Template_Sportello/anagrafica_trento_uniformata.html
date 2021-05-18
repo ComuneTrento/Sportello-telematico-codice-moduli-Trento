@@ -5620,3 +5620,110 @@
             <option value="Geol.">Geol.</option>
 {%- endmacro %}
 
+<!----------------------------------------------------------------- PERSONA FISICA ----------------------------------------------------------------->
+{% macro persona_fisica_editabile( prefix='AventeTitolo', intestazione="Il sottoscritto", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", visibility_residenza="visibility:visibility", visibility_mail="mail_ordinaria", carica_campi="", cf_obbligatorio="true", format_telefono_numerico="false", pec_obbligatoria ="false", campi_readonly="", mailordinaria_obbligatoria="false", residenza_obbligatoria="true", visibility_domicilio="display:none",visibility_datanascita="visibility:visibility"  ) -%}
+  
+  {% do all_prefix.append( prefix ) %}
+  {% set Temp = prefix|replace("NonImportare", "NI") %}
+  {% if prefix != Temp %}
+      {% do TitolareNonImportarePresente.append('0') %}
+  {% endif %}
+
+  <!-- Creare i seguenti hidden: ---------------------------------------------------------------------------
+  <input id="{{ prefix }}_DatiPersonaObbligatori" name="{{ prefix }}_DatiPersonaObbligatori" type="hidden"/> 
+  <input id="{{ prefix }}_Titolo" name="{{ prefix }}_Titolo" type="hidden" value="{{Solo1}}"/>
+  <input id="{{ prefix }}_Ruolo" name="{{ prefix }}_Ruolo" type="hidden" value="{{Solo1}}"/> 
+  --------------------------------------------------------------------------------------------------------->
+
+  <div type="Anagrafica_persona_fisica">
+    <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td style="border-right:0px">
+            <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}</p>
+          </td>
+		  {% if carica_campi != '' %}
+          <td style="width:38%; border-left:0px; border-right:0px">
+            <p class="Labeltabella">{{ carica_campi|safe }}</p>
+          </td>
+		  {% endif %}
+          <td style="width:3%; {{ pointer_carica_dati }}; border-left:0px; border-right:0px">
+            <span style="pd4ml-visibility: hidden; pd4ml-display: none;"> {{ utils.recupero_dati( prefix, visibility_carica_dati ) }} </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+      <tbody>
+        <tr class="Rigaintestazioneridotta">
+          <td>
+            <p class="Labelcella">Cognome</p>
+          </td>
+           <td  style="width:30%">
+            <p class="Labelcella">Nome</p>
+          </td>
+          <td style="width:34%">
+            <p class="Labelcella">Codice Fiscale</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
+          </td>
+          {% if cf_obbligatorio == 'true' %}
+            <td>
+                <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%; " format="cf" label="Il codice fiscale" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
+            </td>
+          {% endif %}
+          {% if cf_obbligatorio == 'false' %}
+            <td>
+              <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%; " format="cf" label="Il codice fiscale" mandatory="false" />
+            </td>
+          {% endif %}
+        </tr>
+      </tbody>
+    </table>
+    {% if visibility_datanascita == 'visibility:visibility' %}
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+      <tbody>		
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:18%;">
+            <p class="Labelcella">Data di nascita</p>
+          </td>
+          <td style="width:8%;">
+            <p class="Labelcella">Sesso</p>
+          </td>
+          <td>
+            <p class="Labelcella">Luogo di nascita</p>
+          </td>				
+          <td  style="width: 34%;">
+            <p class="Labelcella">Cittadinanza</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
+          </td>
+          <td>
+            <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%; " label="Sesso" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+              <option value=""></option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+            </select>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita" mandatory_enabled="#{{ prefix }}_DatiPersonaObbligatori.checked()"/>
+          </td>				
+          <td>
+		  
+            {{ utils.nazionalita( prefix + '_Cittadinanza', 'Cittadinanza' )}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    {% endif %}
+{%- endmacro %}    
