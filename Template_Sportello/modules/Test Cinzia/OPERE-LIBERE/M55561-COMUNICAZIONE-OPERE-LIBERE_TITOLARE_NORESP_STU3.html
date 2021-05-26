@@ -441,15 +441,14 @@ pertinenze nel rispetto dei criteri e dei limiti stabiliti dal regolamento urban
         <input group="Tipo_opere" id="Tipo_opere12" name="Tipo_opere" type="checkbox" value="12" />
       </td>
       <td>
-        <!-- TODO verificare i 10 giorni!!! -->
         <p style="line-height:1.6;"><b>opere precarie</b> facilmente rimovibili e destinate a soddisfare esigenze improrogabili e temporanee
         <small>(articolo 78, comma 3, lettera k) della legge provinciale 4 agosto 2015, n. 15 . Si ricorda che la comunicazione deve essere presentata al
 comune <b>almeno 10 giorni prima dell’inizio lavori</b> ai sensi dell’art. 32, comma 5, del regolamento urbanistico-edilizio provinciale )</small></p>
           <!-- CONTROLLO CHE LA DATA DI INIZIO LAVORI SIA 10 GIORNI PRIMA DELLA DATA ODIERNA -->
-          <input id="controllo_10gg" type="checkbox"  name="controllo_10gg" dynamic_check="#Tipo_opere12.checked() and (#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) < 10))" hidden/>
+          <!-- il campo 'controllo_10gg' deve essere nascosto con 'display:none' in modo che sia raggiungibile dal validator quando il controllo è invalido  -->
+          <input id="controllo_10gg" type="checkbox" label="Opere precarie: non rispettati i comunicazione tardiva o successiva ai lavori" style="display:none; pd4ml-display:none;" name="controllo_10gg" dynamic_check="#Tipo_opere12.checked() and (#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) < 10))" />
           <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" style="width: 100%;" type="hidden"/>
           <input id="check_controllo_10gg" name="data_lavori" label="ATTENZIONE: comunicazione tardiva o successiva ai lavori" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="hidden"/></p>
-     
       </td>
     </tr>
     <tr>
