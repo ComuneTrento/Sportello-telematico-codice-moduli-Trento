@@ -1,7 +1,53 @@
 {% import 'utils.html' as utils %}
 {% import 'build_service.html' as service %}
 
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- Elenco campi nascosti utili per l'import in applicazioni di backend -->
+<!---param: select_comuni -> true se nella form il campo di input dei comuni è una select, false se è presente un campo di input------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
+
+
+{% macro attributi_hidden( prefix='AventeTitolo', suffix_residenza="Residenza", cciaa_visible="true", select_comuni="true") -%}
+  {% set Type = "hidden" %}
+
+
+  {% if cciaa_visible == 'true' %}
+    <input id="{{ prefix }}_Attributi_CCIAAProv_categoria" 		name="{{ prefix }}_Attributi_CCIAAProv_categoria" 		type="{{Type}}" value="Altri dati"/>
+    <input id="{{ prefix }}_Attributi_CCIAAProv_nome" 			name="{{ prefix }}_Attributi_CCIAAProv_nome" 			type="{{Type}}" value="Provincia registro imprese Camera Commercio"/>
+    <input id="{{ prefix }}_Attributi_CCIAANumero_categoria" 	name="{{ prefix }}_Attributi_CCIAANumero_categoria" 	type="{{Type}}" value="Altri dati"/>
+    <input id="{{ prefix }}_Attributi_CCIAANumero_nome" 		name="{{ prefix }}_Attributi_CCIAANumero_nome" 			type="{{Type}}" value="Numero iscrizione registro imprese Camera Commerci"/>
+    <input id="{{ prefix }}_Attributi_IscrittoCCIAA_categoria" 	name="{{ prefix }}_Attributi_IscrittoCCIAA_categoria" 	type="{{Type}}" value="Altri dati"/>
+    <input id="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		name="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		type="{{Type}}" value="Iscrizione registro imprese Camera Commercio"/>
+  {% endif %}
+  
+  <!-- Codice famiglia -->
+  <input id="{{ prefix }}_CodiceFamiglia" name="{{ prefix }}_CodiceFamiglia" type="{{Type}}" />
+  <!-- Matricola -->
+  <input id="{{ prefix }}_MatricolaAnagrafe" name="{{ prefix }}_MatricolaAnagrafe" type="{{Type}}"/>
+  <!-- Residenza -->
+  <input id="{{ prefix }}_CodiceVia{{suffix_residenza}}" name="{{ prefix }}_CodiceVia{{suffix_residenza}}" type="{{Type}}"/>
+  
+  <!-- se nella form i comuni vengono popolati mediante select, allora il case del valore del comune è già corretto per poter chiamare Belfiore -->
+  {% if select_comuni == 'true' %}
+  <input id="{{ prefix }}_BelfioreComuneResidenza" name="{{ prefix }}_BelfioreComuneResidenza" type="{{Type}}" 
+            dynamic_value="#{{ prefix }}_ComuneResidenza.value() != null && #{{ prefix }}_ComuneResidenza.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ComuneResidenza.value()) :''"> 
+  {% else  %}
+  <!-- se nella form i comuni vengono popolati mediante input, allora il case del valore del comune deve essere adeguato per poter chiamare Belfiore (capitalize per comuni ita, uppercase per stato estero)-->
+  <input id="{{ prefix }}_BelfioreComuneResidenza" name="{{ prefix }}_BelfioreComuneResidenza" type="{{Type}}" 
+            dynamic_value="#{{ prefix }}_ComuneResidenza.value() != null && #{{ prefix }}_ComuneResidenza.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ProvinciaResidenza.value() == 'EE' ? #{{ prefix }}_ComuneResidenza.value().toUpperCase() : #{{ prefix }}_ComuneResidenza.value().toLowerCase().replace(/(^\w|\s\w)/g, m => m.toUpperCase())) :''"> 
+  {% endif %}
+  <input id="{{ prefix }}_BelfioreComuneSede" name="{{ prefix }}_BelfioreComuneSede" type="{{Type}}" 
+            dynamic_value="#{{ prefix }}_ComuneSede.value() != null && #{{ prefix }}_ComuneSede.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ComuneSede.value()) : ''">
+  
+  <!-- Nascita -->
+  <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="{{Type}}"/>
+  <!-- Sede -->
+
+
+{%- endmacro %}
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -378,7 +424,8 @@
 	<input id="{{ prefix }}_Attributi_CCIAANumero_categoria" 	name="{{ prefix }}_Attributi_CCIAANumero_categoria" 	type="hidden" value="Altri dati"/>
 	<input id="{{ prefix }}_Attributi_CCIAANumero_nome" 		name="{{ prefix }}_Attributi_CCIAANumero_nome" 			type="hidden" value="Numero iscrizione registro imprese Camera Commerci"/>
 	<input id="{{ prefix }}_Attributi_IscrittoCCIAA_categoria" 	name="{{ prefix }}_Attributi_IscrittoCCIAA_categoria" 	type="hidden" value="Altri dati"/>
-	<input id="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		name="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		type="hidden" value="Iscrizione registro imprese Camera Commercio"/>
+	<input id="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		name="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		type="hidden" value="Iscrizione registro imprese Camera Commercio"/> 
+
 </div>
 {%- endmacro %}
 
@@ -541,9 +588,7 @@
             {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza", mandatory="true") }}
           </td>
           <td>
-            <!-- <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')"  mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'"></select> -->
- <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')">
-          </select>
+            <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')" mandatory_enabled="true"/>
           </td>
           <td>
             <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true" format="regular_expression" expression="^(.+)\s(.+)$"/>
@@ -666,8 +711,7 @@
           {{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia della sede legale") }}
         </td>
         <td>
-          <select class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaSede.value(), '{{ prefix }}_ComuneSede')">
-          </select>
+          <select class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaSede.value(), '{{ prefix }}_ComuneSede')" />
         </td>
         <td>
           <input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
@@ -751,7 +795,7 @@
     </tbody>
   </table>
 
-	<input id="{{ prefix }}_Attributi_CCIAAProv_categoria" 		name="{{ prefix }}_Attributi_CCIAAProv_categoria" 		type="hidden" value="Altri dati"/>
+	<!-- <input id="{{ prefix }}_Attributi_CCIAAProv_categoria" 		name="{{ prefix }}_Attributi_CCIAAProv_categoria" 		type="hidden" value="Altri dati"/>
 	<input id="{{ prefix }}_Attributi_CCIAAProv_nome" 			name="{{ prefix }}_Attributi_CCIAAProv_nome" 			type="hidden" value="Provincia registro imprese Camera Commercio"/>
 	<input id="{{ prefix }}_Attributi_CCIAANumero_categoria" 	name="{{ prefix }}_Attributi_CCIAANumero_categoria" 	type="hidden" value="Altri dati"/>
 	<input id="{{ prefix }}_Attributi_CCIAANumero_nome" 		name="{{ prefix }}_Attributi_CCIAANumero_nome" 			type="hidden" value="Numero iscrizione registro imprese Camera Commerci"/>
@@ -760,7 +804,8 @@
   <input id="{{ prefix }}_CodiceFamiglia" name="{{ prefix }}_CodiceFamiglia" type="hidden" />
   <input id="{{ prefix }}_CodiceViaResidenza" name="{{ prefix }}_CodiceViaResidenza" type="hidden"/>
   <input id="{{ prefix }}_MatricolaAnagrafe" name="{{ prefix }}_MatricolaAnagrafe" type="hidden"/>
-  <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="hidden"/>
+  <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="hidden"/> -->
+  {{ attributi_hidden(prefix) }}
 
 </div>
 {%- endmacro %}
@@ -1135,17 +1180,7 @@
     </tbody>
   </table>
 
-	<input id="{{ prefix }}_Attributi_CCIAAProv_categoria" 		name="{{ prefix }}_Attributi_CCIAAProv_categoria" 		type="hidden" value="Altri dati"/>
-	<input id="{{ prefix }}_Attributi_CCIAAProv_nome" 			name="{{ prefix }}_Attributi_CCIAAProv_nome" 			type="hidden" value="Provincia registro imprese Camera Commercio"/>
-	<input id="{{ prefix }}_Attributi_CCIAANumero_categoria" 	name="{{ prefix }}_Attributi_CCIAANumero_categoria" 	type="hidden" value="Altri dati"/>
-	<input id="{{ prefix }}_Attributi_CCIAANumero_nome" 		name="{{ prefix }}_Attributi_CCIAANumero_nome" 			type="hidden" value="Numero iscrizione registro imprese Camera Commerci"/>
-	<input id="{{ prefix }}_Attributi_IscrittoCCIAA_categoria" 	name="{{ prefix }}_Attributi_IscrittoCCIAA_categoria" 	type="hidden" value="Altri dati"/>
-	<input id="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		name="{{ prefix }}_Attributi_IscrittoCCIAA_nome" 		type="hidden" value="Iscrizione registro imprese Camera Commercio"/>
-  <input id="{{ prefix }}_CodiceFamiglia" name="{{ prefix }}_CodiceFamiglia" type="hidden" />
-  <input id="{{ prefix }}_CodiceViaResidenza" name="{{ prefix }}_CodiceViaResidenza" type="hidden"/>
-  <input id="{{ prefix }}_MatricolaAnagrafe" name="{{ prefix }}_MatricolaAnagrafe" type="hidden"/>
-  <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="hidden"/>
-
+  {{attributi_hidden(prefix, select_comuni="false")}}
 
 </div>
 {%- endmacro %}
@@ -2752,6 +2787,7 @@
             <option value="Comm.">Comm.</option>
             <option value="Avv.">Avv.</option>
             <option value="Geom.">Geom.</option>
+            <option value="Geol.">Geol.</option>
           </select>
         </td>
         <td>
@@ -3638,7 +3674,7 @@
         {{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
       </td>
       <td>
-        <input class="" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello Studio" mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'" />
+       	<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"  mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'"></select>
       </td>
       <td>
         <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" maxlength="40" style="width:100%;" label="Via dello Studio" mandatory_enabled="true" />
@@ -3678,7 +3714,7 @@
   </tbody>
 </table>
 </div>
-
+  {{ attributi_hidden(prefix, suffix_residenza='') }}
 {%- endmacro %}
 
 
