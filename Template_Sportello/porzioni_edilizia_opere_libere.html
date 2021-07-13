@@ -12,7 +12,11 @@
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
+{% if solo_titolare == 'true' %}
+<input dynamic_value="'Comunicazione opere libere - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ') - Particella Edificale: Comune ' + #Immobile_ComuneCatastale_esteso.value() + '/' + #Immobile_CatNumero.value()" id="Oggetto" name="Oggetto" type="hidden" />
+{% else %}
 <input dynamic_value="'Comunicazione opere libere - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ') - Particella Edificale: Comune ' + #Immobile_ComuneCatastale_esteso.value() + '/' + #Immobile_CatNumero.value() + ' - Delegato ' + #AventeTitolo_CodiceFiscale.value().toUpperCase()" id="Oggetto" name="Oggetto" type="hidden" />
+{% endif %}
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
@@ -1097,8 +1101,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
       <input id="SANZIONE_RITARDO" name="SANZIONE_RITARDO" dynamic_check="#inizio_lavori2.checked()" enabled="#inizio_lavori2.checked() " type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p>Modulo secondario - <b>Distinta di pagamento della sanzione</b> per la mancata presentazione della comunicazione o effettuata quando l'intervento è in corso di esecuzione
-        </p>
+        <p>Modulo secondario - <b>Distinta di pagamento della sanzione</b> per la mancata presentazione della comunicazione</p>
       </td>
        <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" id="Sanzione_Importo" name="Sanzione_Importo" label="Importo sanzione" value="0" mandatory_enabled="true" dynamic_value="#inizio_lavori2.checked() ? 1 : 0" style="width: 90%; text-align: center;" enabled="#inizio_lavori2.checked()"/></p>
@@ -1175,16 +1178,6 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
 <p class="Modulo">
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
 </p>
-
-<!-- FINE BLOCCO FIRMA -->
-
-<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
-
-<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
-<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
-<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
-
-<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
 
 {%- endmacro %}

@@ -1,5 +1,5 @@
-{% set CodiceModulo = "M55561-COMUNICAZIONE-OPERE-LIBERE-TITOLARE" %}
-{% set Urn =  "document:c_l378:opere.libere;comunicazione.opere.libere;comunicazione.opere.libere.titolare" %}
+{% set CodiceModulo = "M55562-COMUNICAZIONE-OPERE-LIBERE" %}
+{% set Urn =  "document:c_l378:comunicazione.opere.libere.senza.progettista;m55562.comunicazione.opere.libere.senza.progettista" %}
 {% extends "base_trento_ok.html" %}
 
 {% block meta %}
@@ -11,8 +11,8 @@ codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
 sub_urn_list=""
 uo_globo_list=""
-contesto_procedurale="Comunicazione opere libere - soli titolari"
-descrizione="Comunicazione opere libere - soli titolari"
+contesto_procedurale="Comunicazione opere libere senza progettista"
+descrizione="Comunicazione opere libere senza progettista"
 destinatario_amministrazione=""
 destinatario_ufficio="OE7NEF"
 dinamico="SI"
@@ -27,7 +27,7 @@ name="GLOBO_modulo"
 procura="NO,,"
 segnatura="AventeTitolo"
 tipo_modulo="principale"
-urlhelp="/modulistica/moduli/M55561-COMUNICAZIONE-OPERE-LIBERE-TITOLARE"
+urlhelp="/modulistica/moduli/M55562-COMUNICAZIONE-OPERE-LIBERE"
 verifica_pagamento="NO"
 versione="1.0|09/02/2018" />
 
@@ -124,9 +124,7 @@ tipo_mime="application/pdf,image/jpeg"/>
 urn_allegato="document:c_l378:allegato.documentazione.fotografica.area.intervento"
 descrizione_estesa="Allegato - Documentazione fotografica"
 filename="GEN-DOCUMENTAZIONE-FOTOGRAFICA.jpeg,GEN-DOCUMENTAZIONE-FOTOGRAFICA.pdf"
-firmato="SI"
-firmatari="AventeTitolo_CodiceFiscale"
-firmatari_label="Progettista incaricato"
+firmato="NO"
 istruzioni="/modulistica/moduli/GEN-DOCUMENTAZIONE-FOTOGRAFICA"
 name="GLOBO_allegato"
 numero="1"
@@ -149,16 +147,25 @@ tipo_mime="application/pdf"/>
 {% endblock meta %}
 
 
-{% block title %}Comunicazione opere libere - solo titolare{% endblock title %}
+{% block title %}Comunicazione opere libere{% endblock title %}
 
 
 {% block content %}
 
 
 {{ porzioni_opere_libere.operelibere(solo_titolare="true") }}
-<script>
-  console.log(getComuniFromProvincia( "TN", 'TN'));
-</script>
+
+<!-- FINE BLOCCO FIRMA -->
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+
 
 {% endblock content %}
 
