@@ -29,18 +29,23 @@
   <input id="{{ prefix }}_MatricolaAnagrafe" name="{{ prefix }}_MatricolaAnagrafe" type="{{Type}}"/>
   <!-- Residenza -->
   <input id="{{ prefix }}_CodiceVia{{suffix_residenza}}" name="{{ prefix }}_CodiceVia{{suffix_residenza}}" type="{{Type}}"/>
-  
   <!-- se nella form i comuni vengono popolati mediante select, allora il case del valore del comune è già corretto per poter chiamare Belfiore -->
   {% if select_comuni == 'true' %}
-  <input id="{{ prefix }}_BelfioreComuneResidenza" name="{{ prefix }}_BelfioreComuneResidenza" type="{{Type}}" 
-            dynamic_value="#{{ prefix }}_ComuneResidenza.value() != null && #{{ prefix }}_ComuneResidenza.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ComuneResidenza.value()) :''"> 
+  <input id="{{ prefix }}_BelfioreResidenza_tmp" name="{{ prefix }}_BelfioreResidenza_tmp" type="{{Type}}" 
+            dynamic_value="#{{ prefix }}_ComuneResidenza.value() != null && #{{ prefix }}_ComuneResidenza.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ComuneResidenza.value()) :''"
+            onchange="(function(value){ if (!value || 'false'==value) return; document.getElementById('{{ prefix }}_BelfioreComuneResidenza').value=value;})(this.value)">
+  <input id="{{ prefix }}_BelfioreComuneResidenza" name="{{ prefix }}_BelfioreComuneResidenza" type="{{Type}}" > 
   {% else  %}
   <!-- se nella form i comuni vengono popolati mediante input, allora il case del valore del comune deve essere adeguato per poter chiamare Belfiore (capitalize per comuni ita, uppercase per stato estero)-->
-  <input id="{{ prefix }}_BelfioreComuneResidenza" name="{{ prefix }}_BelfioreComuneResidenza" type="{{Type}}" 
-            dynamic_value="#{{ prefix }}_ComuneResidenza.value() != null && #{{ prefix }}_ComuneResidenza.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ProvinciaResidenza.value() == 'EE' ? #{{ prefix }}_ComuneResidenza.value().toUpperCase() : #{{ prefix }}_ComuneResidenza.value().toLowerCase().replace(/(^\w|\s\w)/g, m => m.toUpperCase())) :''"> 
+    <input id="{{ prefix }}_BelfioreResidenza_tmp" name="{{ prefix }}_BelfioreResidenza_tmp" type="{{Type}}" 
+            dynamic_value="#{{ prefix }}_ComuneResidenza.value() != null && #{{ prefix }}_ComuneResidenza.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ProvinciaResidenza.value() == 'EE' ? #{{ prefix }}_ComuneResidenza.value().toUpperCase() : #{{ prefix }}_ComuneResidenza.value().toLowerCase().replace(/(^\w|\s\w)/g, m => m.toUpperCase())) :''"
+            onchange="(function(value){ if (!value || 'false'==value) return; document.getElementById('{{ prefix }}_BelfioreComuneResidenza').value=value;})(this.value)" />
+    <input id="{{ prefix }}_BelfioreComuneResidenza" name="{{ prefix }}_BelfioreComuneResidenza" type="{{Type}}" > 
   {% endif %}
-  <input id="{{ prefix }}_BelfioreComuneSede" name="{{ prefix }}_BelfioreComuneSede" type="{{Type}}" 
-            dynamic_value="#{{ prefix }}_ComuneSede.value() != null && #{{ prefix }}_ComuneSede.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ComuneSede.value()) : ''">
+  <input id="{{ prefix }}_BelfioreSede_tmp" name="{{ prefix }}_BelfioreSede_tmp" type="{{Type}}" 
+            dynamic_value="#{{ prefix }}_ComuneSede.value() != null && #{{ prefix }}_ComuneSede.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ComuneSede.value()) : ''"
+            onchange="(function(value){ if (!value || 'false'==value) return; document.getElementById('{{ prefix }}_BelfioreComuneSede').value=value;})(this.value)">
+  <input id="{{ prefix }}_BelfioreComuneSede" name="{{ prefix }}_BelfioreComuneSede" type="{{Type}}" > 
   
   <!-- Nascita -->
   <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="{{Type}}"/>
@@ -3671,7 +3676,7 @@
     </tr>
     <tr>
       <td>
-        {{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
+         {{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
       </td>
       <td>
        	<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"  mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'"></select>
@@ -4096,7 +4101,7 @@
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-{% macro solo_nominativo( prefix='Referente1', intestazione="L'interessato") -%}
+{% macro solo_nominativo( prefix='Referente1', intestazione="L'interessato", mandatory="false") -%}
 {% do all_prefix.append( prefix ) %}
 {% set Temp = prefix|replace("NonImportare", "NI") %}
 {% if prefix != Temp %}
@@ -4129,7 +4134,7 @@
       </tr>
       <tr>
         <td>
-          <select class="inputNormal" id="{{ prefix }}_TitoloPersona" name="{{ prefix }}_TitoloPersona" style="width:100%;" label="Titolo del {{ prefix }}" mandatory="#{{ prefix }}_Cognome.value() != '' || #{{ prefix }}_Nome.value() != '' || #{{ prefix }}_CodiceFiscale.value()">
+          <select class="inputNormal" id="{{ prefix }}_TitoloPersona" name="{{ prefix }}_TitoloPersona" style="width:100%;" label="Titolo del {{ prefix }}" mandatory="{{ mandatory }} || #{{ prefix }}_Cognome.value() != '' || #{{ prefix }}_Nome.value() != '' || #{{ prefix }}_CodiceFiscale.value()">
             <option value=""></option>
             <option value="Sig.">Sig.</option>
             <option value="Sig.ra">Sig.ra</option>
@@ -4140,16 +4145,17 @@
             <option value="Ing.">Ing.</option>
             <option value="P.ind.">Perito</option>
             <option value="Geom.">Geom.</option>
+            <option value="Geol.">Geol.</option>
           </select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del soggetto interessato" mandatory="#{{ prefix }}_TitoloPersona.value() != '' || #{{ prefix }}_Nome.value() != '' || #{{ prefix }}_CodiceFiscale.value()"/>
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome del soggetto interessato" mandatory="{{ mandatory }} || #{{ prefix }}_TitoloPersona.value() != '' || #{{ prefix }}_Nome.value() != '' || #{{ prefix }}_CodiceFiscale.value()"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del soggetto interessato" mandatory="#{{ prefix }}_TitoloPersona.value() != '' || #{{ prefix }}_Cognome.value() != '' || #{{ prefix }}_CodiceFiscale.value()"/>
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome del soggetto interessato" mandatory="{{ mandatory }} || #{{ prefix }}_TitoloPersona.value() != '' || #{{ prefix }}_Cognome.value() != '' || #{{ prefix }}_CodiceFiscale.value()"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Codice fiscale del soggetto interessato" mandatory="#{{ prefix }}_TitoloPersona.value() != '' || #{{ prefix }}_Cognome.value() != '' || #{{ prefix }}_Nome.value() != ''"/>
+          <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Codice fiscale del soggetto interessato" mandatory="{{ mandatory }} || #{{ prefix }}_TitoloPersona.value() != '' || #{{ prefix }}_Cognome.value() != '' || #{{ prefix }}_Nome.value() != ''"/>
         </td>
       </tr>
     </tbody>

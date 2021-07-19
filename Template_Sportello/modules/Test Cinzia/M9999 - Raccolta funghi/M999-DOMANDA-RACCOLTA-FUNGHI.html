@@ -1,5 +1,5 @@
-{% set CodiceModulo = "M2811-DOMANDA-PERMESSO-RACCOLTA-FUNGHI" %}
-{% set Urn = "document:document:c_l378:raccolta.funghi;richiesta.permesso.raccolta.funghi;domanda" %}
+{% set CodiceModulo = "M9999-TEST-CINZIA" %}
+{% set Urn = "document:document:c_l378:test.cinzia;document" %}
 {% extends "base_trento_ok.html" %}
 
 {% block meta %}
@@ -12,7 +12,7 @@ urn="{{ Urn }}"
 sub_urn_list=""
 uo_globo_list=""
 contesto_procedurale="Turismo"
-descrizione="Domanda raccolta funghi"
+descrizione="Test Cinzia"
 destinatario_amministrazione=""
 destinatario_ufficio="DICLGP"
 dinamico="SI"
@@ -61,11 +61,12 @@ M2811-DOMANDA-PERMESSO-RACCOLTA-FUNGHI
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-<input dynamic_check="true" id="AventeTitolo_DatiPersonaObbligatori" name="AventeTitolo_DatiPersonaObbligatori" type="hidden"/>
-<input id="AventeTitolo_Titolo" name="AventeTitolo_Titolo" type="hidden" value="Richiedente"/>
-<input id="AventeTitolo_Ruolo" name="AventeTitolo_Ruolo" type="hidden" value="Richiedente"/>
-{{ anagrafica_trento_uniformata.persona_fisica("AventeTitolo", "Il sottoscritto/La sottoscritta (Clicca sull'icona omino per recuperare i tuoi dati anagrafici)", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:visibility", "mail_ordinaria", "", "true", "false", "false", " ", "true", "true", "display:none", "visibility:visibility" ) }}
+<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="#AventeTitolo_Telefono.value() == ''" type="hidden" />
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="#AventeTitolo_Fisso.value() == ''" type="hidden" />
+<!--<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="#Tipo_richiedente1.checked()" type="hidden" />-->
+<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
 
+{{anagrafica_trento_uniformata.titolare_segnatura_guidata("AventeTitolo","Il/La titolare, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio","Procuratore","Amministratore di sostegno"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <!-- *********** FINE MODULO ANAGRAFICA *********** -->
 
