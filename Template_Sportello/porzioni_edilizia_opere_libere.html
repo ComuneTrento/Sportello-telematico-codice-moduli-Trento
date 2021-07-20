@@ -118,7 +118,7 @@
 
 <!-- INIZIO BLOCCO COMUNICA: DATA INTERVENTO -->
 
-<h6>Ciò premesso, il <b>titolare</b></h6>
+<h5>Ciò premesso, il <b>titolare</b></h5>
 <h1 class="Modulo">COMUNICA</h1>
 
 <table class="Modulo" style="border: 1px solid grey">
@@ -286,8 +286,8 @@ comune <b>almeno 10 giorni prima dell’inizio lavori</b> ai sensi dell’art. 3
           <!-- CONTROLLO CHE LA DATA DI INIZIO LAVORI SIA 10 GIORNI PRIMA DELLA DATA ODIERNA -->
           <!-- il campo 'controllo_10gg' deve essere nascosto con 'display:none' in modo che sia raggiungibile dal validator quando il controllo è invalido  -->
           <input id="controllo_10gg" type="checkbox" label="Opere precarie: non rispettati i comunicazione tardiva o successiva ai lavori" style="display:none; pd4ml-display:none;" name="controllo_10gg" dynamic_check="#Tipo_opere12.checked() and (#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) < 10))" />
-          <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" style="width: 100%;" type="hidden"/>
-          <input id="check_controllo_10gg" name="data_lavori" label="ATTENZIONE: comunicazione tardiva o successiva ai lavori" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="hidden"/></p>
+          <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" type="hidden"/>
+          <input id="check_controllo_10gg" name="check_controllo_10gg" label="Opere precarie: la comunicazione deve essere presentata almeno 10 giorni prima dell'inizio lavori" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="checkbox" style="pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/></p>
       </td>
     </tr>
     <tr>
@@ -516,10 +516,10 @@ assenso dei terzi titolari di altri diritti reali o obbligatori, allegando quind
       <td colspan="3">
         <p style="line-height:1.6;">che l'intervento non comporta alcuna modifica dei seguenti aspetti:
         <ul style="text-align: justify;font-size: 10pt; margin: 1pt;">
-          <li>destinazione d'uso</li>
-          <li>carico urbanistico ai fini del pagamento del contributo di costruzione</li>
-          <li>standard urbanistici (ad esempio spazi di parcheggio)</li>
-          <li>non interessa parti strutturali dell’edificio</li>
+          <li>- destinazione d'uso</li>
+          <li>- carico urbanistico ai fini del pagamento del contributo di costruzione</li>
+          <li>- standard urbanistici (ad esempio spazi di parcheggio)</li>
+          <li>- non interessa parti strutturali dell’edificio</li>
         </ul>
         </p>
       </td>
@@ -547,7 +547,7 @@ assenso dei terzi titolari di altri diritti reali o obbligatori, allegando quind
     </tr>
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <div id="pres_iniz_lav" name="pres_iniz_lav" label="presentazione comunicazione inizio lavori" mandatory_enabled="true"> </div>
+        <div id="pres_iniz_lav" name="pres_iniz_lav" label="Atti di assenso" mandatory_enabled="true"> </div>
         <input group="pres_iniz_lav" id="pres_iniz_lav1" name="pres_iniz_lav" type="radio" value="1" />
       </td>
       <td colspan="5">
@@ -679,7 +679,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
   <tbody>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Referente_direttorelavori" name="Referente_direttorelavori" mandatory_enabled="#progetto_richiesto2.checked()"> </div>
+        <div id="Referente_direttorelavori" name="Referente_direttorelavori" enabled="#progetto_richiesto2.checked()"> </div>
         <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="checkbox" value="1" />
       </td>
       <td>
@@ -697,7 +697,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
   <tbody>
     <tr>
       <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Altri_progettisti" name="Altri_progettisti" mandatory_enabled="#progetto_richiesto2.checked()"> </div>
+        <div id="Altri_progettisti" name="Altri_progettisti" enabled="#progetto_richiesto2.checked()"> </div>
         <input group="Altri_progettisti" id="Altri_progettisti_check" name="Altri_progettisti_check" type="checkbox" value="1" />
       </td>
       <td>
@@ -717,7 +717,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
 
 <!-- INIZIO BLOCCO DATI DIR LAVORI -->
 
-<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio" type="hidden" />
+<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio"  dynamic_check="#progetto_richiesto2.checked() && !#Referente_direttorelavori_check.checked()" type="hidden" />
 <input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="!#Referente_direttorelavori_check.checked()" type="hidden" />
 {{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente1","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
 
@@ -742,13 +742,13 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
       <td>
         <p style="line-height:1.6;">l'intervento deve essere realizzato nel rispetto degli strumenti di pianificazione e di ogni altra disciplina e normativa relativa alla loro realizzazione, in particolare delle norme:</p>
           <ul><b>
-            <li style="line-height:1.6;">in materia antisismica</li>
-            <li style="line-height:1.6;">in materia di sicurezza</li>
-            <li style="line-height:1.6;">in materia di paesaggio e qualità architettonica</li>
-            <li style="line-height:1.6;">in materia igienico-sanitaria, in particolare in osservanza dei criteri fissati dal regolamento edilizio comunale (ad esempio la dimensione minima dei locali, fori, servizi igienici etc.)</li>
-            <li style="line-height:1.6;">in materia di efficienza energetica</li>
-            <li style="line-height:1.6;">in materia di impianti e di barriere architettoniche</li>
-            <li style="line-height:1.6;">in materia di altezze e distanze</li>
+            <li style="line-height:1.6;">- in materia antisismica</li>
+            <li style="line-height:1.6;">- in materia di sicurezza</li>
+            <li style="line-height:1.6;">- in materia di paesaggio e qualità architettonica</li>
+            <li style="line-height:1.6;">- in materia igienico-sanitaria, in particolare in osservanza dei criteri fissati dal regolamento edilizio comunale (ad esempio la dimensione minima dei locali, fori, servizi igienici etc.)</li>
+            <li style="line-height:1.6;">- in materia di efficienza energetica</li>
+            <li style="line-height:1.6;">- in materia di impianti e di barriere architettoniche</li>
+            <li style="line-height:1.6;">- in materia di altezze e distanze</li>
           </b></ul>
       </td>
     </tr>
@@ -778,10 +778,10 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     <tr>
       <td>
         <ul>
-          <li style="line-height:1.6;">qualora le opere comportino modificazioni catastali andrà presentata denuncia di variazione catastale ai competenti uffici ai sensi della normativa vigente, trasmettendo a questo Comune le planimetrie e visure catastali o le planimetrie catastali firmate dal tecnico abilitato unitamente alla ricevuta di deposito della richiesta di accatastamento dell'immobile</li><br>
-          <li style="line-height:1.6;">al termine dei lavori l'impresa installatrice dovrà rilasciare al committente la dichiarazione di conformità degli impianti realizzati nel rispetto delle norme di cui all'art. 6 del D.M. 37/2008 e che, ai sensi del medesimo decreto, la dichiarazione di conformità o il certificato di collaudo degli impianti, ove previsto, andrà depositato in Comune</li><br>
-          <li style="line-height:1.6;">nel caso in cui l'intervento riguardi la copertura dell'edificio va osservato il D. P . P . 25 febbraio 2008, n. 7- 1 17/Leg.: <i>"Regolamento tecnico per la prevenzione dei rischi di infortunio a seguito di cadute dall'alto nei lavori di manutenzione ordinaria sulle coperture"</i></li><br>
-          <li style="line-height:1.6;">la presente comunicazione non è soggetta a vincoli temporali e per la stessa <u>non è previsto il deposito della comunicazione di fine lavori</u></li>
+          <li style="line-height:1.6;">- qualora le opere comportino modificazioni catastali andrà presentata denuncia di variazione catastale ai competenti uffici ai sensi della normativa vigente, trasmettendo a questo Comune le planimetrie e visure catastali o le planimetrie catastali firmate dal tecnico abilitato unitamente alla ricevuta di deposito della richiesta di accatastamento dell'immobile;</li><br>
+          <li style="line-height:1.6;">- al termine dei lavori l'impresa installatrice dovrà rilasciare al committente la dichiarazione di conformità degli impianti realizzati nel rispetto delle norme di cui all'art. 6 del D.M. 37/2008 e che, ai sensi del medesimo decreto, la dichiarazione di conformità o il certificato di collaudo degli impianti, ove previsto, andrà depositato in Comune;</li><br>
+          <li style="line-height:1.6;">- nel caso in cui l'intervento riguardi la copertura dell'edificio va osservato il D. P . P . 25 febbraio 2008, n. 7- 1 17/Leg.: <i>"Regolamento tecnico per la prevenzione dei rischi di infortunio a seguito di cadute dall'alto nei lavori di manutenzione ordinaria sulle coperture".</i></li><br>
+          <li style="line-height:1.6;">- la presente comunicazione non è soggetta a vincoli temporali e per la stessa <u>non è previsto il deposito della comunicazione di fine lavori.</u></li>
         </ul>
       </td>
     </tr>
