@@ -38,6 +38,36 @@
 {{anagrafica_trento_uniformata.titolare_segnatura_guidata("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio","Procuratore","Amministratore di sostegno"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <!-- FINE BLOCCO ANAGRAFICA -->
+<!-- INIZIO BLOCCO TITOLARE -->
+{% if solo_titolare == 'false' %}
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Il/La titolare:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="tit_firma_digit" name="tit_firma_digit" label="Il titolare possiede dispositivo di firma digitale?" mandatory_enabled="true"> </div>
+        <input group="tit_firma_digit" id="tit_firma_digit1" name="tit_firma_digit" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.8;">non possiede alcun dispositivo di firma digitale</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="tit_firma_digit" id="tit_firma_digit2" name="tit_firma_digit" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.8;">possiede dispositivo di firma digitale</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" style="width:30%;" type="hidden" readonly/>
+{% endif %}
 
 <br>
 <!-- INIZIO BLOCCO IMPRESA ESECUTRICE -->
@@ -134,6 +164,11 @@
            <!-- GESTIONE FORMATO DATA COMPATIBILE CON IL JAVASCRIPT DI VERIFICA DATE -->
           <input id="Trasforma_data" name="Trasforma_data" dynamic_value="#data_lavori.value().replace(/-/g, '/');" type="hidden">
           <input id="sposta_data" name="sposta_data" dynamic_value="#Trasforma_data.value().substring(8, 10) + '/' + #Trasforma_data.value().substring(5, 8) + #Trasforma_data.value().substring(0, 4)" type="hidden">
+          <!-- CONTROLLO CHE LA DATA DI INIZIO LAVORI SIA 10 GIORNI PRIMA DELLA DATA ODIERNA -->
+          <!-- il campo 'controllo_10gg' deve essere nascosto con 'display:none' in modo che sia raggiungibile dal validator quando il controllo è invalido  -->
+          <input id="controllo_10gg" type="checkbox" label="Opere precarie: non rispettati i comunicazione tardiva o successiva ai lavori" style="display:none; pd4ml-display:none;" name="controllo_10gg" dynamic_check="#Tipo_opere12.checked() and (#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) < 10))" />
+          <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" type="hidden"/>
+          <input id="check_controllo_10gg" name="check_controllo_10gg" label="Opere precarie: la comunicazione deve essere presentata almeno 10 giorni prima dell'inizio lavori. Si consiglia di posticipare la data di inizio lavori" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="checkbox" style="pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/></p>
       </td>
     </tr>
     <tr>
@@ -283,11 +318,6 @@ pertinenze nel rispetto dei criteri e dei limiti stabiliti dal regolamento urban
         <p style="line-height:1.6;"><b>opere precarie</b> facilmente rimovibili e destinate a soddisfare esigenze improrogabili e temporanee
         <small>(articolo 78, comma 3, lettera k) della legge provinciale 4 agosto 2015, n. 15 . Si ricorda che la comunicazione deve essere presentata al
 comune <b>almeno 10 giorni prima dell’inizio lavori</b> ai sensi dell’art. 32, comma 5, del regolamento urbanistico-edilizio provinciale )</small></p>
-          <!-- CONTROLLO CHE LA DATA DI INIZIO LAVORI SIA 10 GIORNI PRIMA DELLA DATA ODIERNA -->
-          <!-- il campo 'controllo_10gg' deve essere nascosto con 'display:none' in modo che sia raggiungibile dal validator quando il controllo è invalido  -->
-          <input id="controllo_10gg" type="checkbox" label="Opere precarie: non rispettati i comunicazione tardiva o successiva ai lavori" style="display:none; pd4ml-display:none;" name="controllo_10gg" dynamic_check="#Tipo_opere12.checked() and (#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) < 10))" />
-          <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" type="hidden"/>
-          <input id="check_controllo_10gg" name="check_controllo_10gg" label="Opere precarie: la comunicazione deve essere presentata almeno 10 giorni prima dell'inizio lavori" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="checkbox" style="pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/></p>
       </td>
     </tr>
     <tr>
@@ -369,7 +399,7 @@ assenso dei terzi titolari di altri diritti reali o obbligatori, allegando quind
   <tbody>
      <tr class="Rigaintestazione">
         <td colspan="3">
-          <p style="line-height:1.6;"><b>1 - OPERE SU PARTI COMUNI O MODIFICHE ESTERNE</b></p>
+          <p style="line-height:1.6;"><b>OPERE SU PARTI COMUNI O MODIFICHE ESTERNE</b></p>
         </td>
       </tr>
     <tr class="Rigaintestazione">
@@ -446,74 +476,26 @@ assenso dei terzi titolari di altri diritti reali o obbligatori, allegando quind
 
 <!-- INIZIO BLOCCO LIBRO FONDIARIO -->
 
+<h1 class="Modulo" style="line-height:1.4;">DICHIARA inoltre</h1>
+
+
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>2 - RELATIVAMENTE AL LIBRO FONDIARIO</b></p>
-      </td>
-    </tr>
     <tr>
-      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <div id="Vincoli_fondiari" name="Vincoli_fondiari" label="Esistenza vincoli libro fondiario" mandatory_enabled="true"> </div>
-        <input group="Vincoli_fondiari" id="Vincoli_fondiari_no" name="Vincoli_fondiari" type="checkbox" value="1" />
-      </td>
       <td>
         <p style="line-height:1.6;">che <b>non sussistono vincoli iscritti al Libro Fondiario</b> che creano impedimento alla realizzazione dell'intervento richiesto</p>
       </td>
     </tr>
-  </tbody>
-</table>
-
-<!-- FINE BLOCCO LIBRO FONDIARIO -->
-
-<br>
-<br>
-
-<!-- INIZIO BLOCCO OBBLIGHI IN MATERIA DI SALUTE -->
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="4">
-        <p style="line-height:1.6;"><b>3 - OBBLIGHI IN MATERIA DI SALUTE E SICUREZZA NEI LUOGHI DI LAVORO</b></p>
-      </td>
-    </tr>
     <tr>
-      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <div id="Obblighi_sicurezza" name="Obblighi_sicurezza" label="Obblighi in materia di sicurezza" mandatory_enabled="true"> </div>
-        <input group="Obblighi_sicurezza" id="Obblighi_sicurezza1" name="Obblighi_sicurezza" type="checkbox" value="1" />
-      </td>
-      <td colspan="3">
+      <td >
         <p style="line-height:1.6;">di essere a conoscenza che, per l'esecuzione delle opere precarie di cui all'art. 78, comma 3, lettera k) della legge
         provinciale 4 agosto 2015, n. 15, l'Amministrazione comunale ha la facoltà di richiedere la presentazione di idonee
         garanzie, anche di carattere finanziario, ai fini del rispetto dei termini e delle modalità di rimessa in pristino dei
         luoghi.</p>
       </td>
     </tr>
-  </tbody>
-</table>
-
-<!-- FINE BLOCCO OBBLIGHI IN MATERIA DI SALUTE -->
-
-<br>
-<br>
-
-<!-- INIZIO BLOCCO MODIFICHE  -->
-
-<table class="Modulo" style="border: 1px solid grey">
-  <tbody>
-    <tr class="Rigaintestazione">
-      <td colspan="4">
-        <p style="line-height:1.6;"><b>4 - ASSENZA DI MODIFICHE URBANISTICHE</b></p>
-      </td>
-    </tr>
     <tr>
-      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <div id="Modifiche_Urbanistiche" name="Modifiche_Urbanistiche" label="Assenza di modifiche urbanistiche" mandatory_enabled="true"> </div>
-        <input group="Modifiche_Urbanistiche" id="Modifiche_Urbanistiche1" name="Modifiche_Urbanistiche" type="checkbox" value="1" />
-      </td>
-      <td colspan="3">
+      <td>
         <p style="line-height:1.6;">che l'intervento non comporta alcuna modifica dei seguenti aspetti:
         <ul style="text-align: justify;font-size: 10pt; margin: 1pt;">
           <li>- destinazione d'uso</li>
@@ -527,6 +509,10 @@ assenso dei terzi titolari di altri diritti reali o obbligatori, allegando quind
   </tbody>
 </table>
 
+<!-- FINE BLOCCO LIBRO FONDIARIO -->
+
+
+
 <!-- FINE BLOCCO OBBLIGHI IN MATERIA DI SALUTE -->
 <br>
 <br>
@@ -537,7 +523,7 @@ assenso dei terzi titolari di altri diritti reali o obbligatori, allegando quind
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="6">
-        <p style="line-height:1.6;"><b>5 - ATTI DI ASSENSO</b></p>
+        <p style="line-height:1.6;"><b>ATTI DI ASSENSO</b></p>
       </td>
     </tr>
     <tr class="Rigaintestazione">
@@ -625,7 +611,7 @@ assenso dei terzi titolari di altri diritti reali o obbligatori, allegando quind
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
-        <p style="line-height:1.6;"><b>6 - REDAZIONE DI ELABORATI PROGETTUALI</b></p>
+        <p style="line-height:1.6;"><b>REDAZIONE DI ELABORATI PROGETTUALI</b></p>
       </td>
     </tr>
     <tr class="Rigaintestazione">
@@ -672,24 +658,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
 <!------PREDISPONGO MAIL PER LA SEGNATURA------>
 <input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
 
-
-<br>
-
-<table class="Modulo" style="border:1px solid grey;">
-  <tbody>
-    <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
-        <div id="Referente_direttorelavori" name="Referente_direttorelavori" enabled="#progetto_richiesto2.checked()"> </div>
-        <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="checkbox" value="1" />
-      </td>
-      <td>
-        <p style="line-height:1.6;"><b>Il progettista è incaricato anche della Direzione Lavori dell'opera</b></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="#Referente_direttorelavori_check.checked() ? 'Progettista e direttore lavori' : 'Progettista'" type="hidden" />
+<input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="#Incarico_direttore_lavori3.checked() ? 'Progettista e direttore lavori' : 'Progettista'" type="hidden" />
 
 <br>
 
@@ -706,26 +675,188 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     </tr>
   </tbody>
 </table>
-
+ 
 <!-- FINE BLOCCO REFERENTE TECNICO INCARICATO -->
+ <br>
+ <br>
 
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>DIRETTORE DEI LAVORI: i lavori verranno eseguiti</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
+        <div id="Incarico_direttore_lavori" name="Incarico_direttore_lavori" label="Incarico di un direttore lavori" mandatory_enabled="true"> </div>
+        <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori1" name="Incarico_direttore_lavori" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>senza la nomina</b> di un direttore dei lavori</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
+        <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori2" name="Incarico_direttore_lavori" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>con la nomina</b> di un direttore dei lavori, i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
+        <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori3" name="Incarico_direttore_lavori" type="radio" value="3" enabled="#progetto_richiesto2.checked()" />
+        <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="hidden" value="1" dynamic_check="#Incarico_direttore_lavori3.checked()"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>con la nomina</b> di un progettista che è incaricato anche della Direzione Lavori dell'opera</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-<!-- FINE BLOCCO REDAZIONE PROGETTO -->
-
-<br>
 <br>
 
 <!-- INIZIO BLOCCO DATI DIR LAVORI -->
 
-<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio"  dynamic_check="#progetto_richiesto2.checked() && !#Referente_direttorelavori_check.checked()" type="hidden" />
-<input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="!#Referente_direttorelavori_check.checked()" type="hidden" />
-{{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente1","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso dal progettista):") }}
+<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio"  dynamic_check="#Incarico_direttore_lavori2.checked()" type="hidden" />
+<input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="#Incarico_direttore_lavori2.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente1","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso da progettista):") }}
 
 <input id="Referente1_Ruolo" name="Referente1_Ruolo" dynamic_value="'Direttore lavori'" type="hidden" />
 
 <!-- FINE BLOCCO DATI DIR LAVORI -->
+
+<!-- SOLO CON PROGETTISTA -->
+
+{% if solo_titolare == 'false' %}
+
+ <br>
+ <br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+     <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>REDAZIONE DI ATTESTAZIONE CHE DIMOSTRI L’IRRILEVANZA STRUTTURALE</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;">che per le opere da realizzare:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
+        <div id="Allegato_irrilevanza_strutturale" name="Allegato_irrilevanza_strutturale" label="Attestazione di irrilevanza strutturale" mandatory_enabled="true"> </div>
+        <input group="Allegato_irrilevanza_strutturale" id="Allegato_irrilevanza_strutturale1" name="Allegato_irrilevanza_strutturale" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">viene allegata l'attestazione di un tecnico abilitato che dimostri l’irrilevanza strutturale, i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario presente</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
+        <input group="Allegato_irrilevanza_strutturale" id="Allegato_irrilevanza_strutturale2" name="Allegato_irrilevanza_strutturale" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">non viene allegata</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- INIZIO BLOCCO DATI TECNICO IRRILEVANZA -->
+<br>
+<input id="Referente5_checkobbligatorio" name="Referente5_checkobbligatorio"  dynamic_check="#Allegato_irrilevanza_strutturale1.checked()" type="hidden" />
+<input id="Referente5_checkabilitato" name="Referente5_checkabilitato" dynamic_check="#Allegato_irrilevanza_strutturale1.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente5","<b>DATI DEL TECNICO ABILITATO</b>:") }}
+
+<!-- FINE BLOCCO DATI TECNICO IRRILEVANZA -->
+
+{% endif %}
+
 <br>
 <br>
+
+<!-- INIZIO BLOCCO ELABORATO IMPIANTI -->
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+     <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>REDAZIONE DI ELABORATO PROGETTUALE RELATIVO AGLI IMPIANTI</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;">che per le opere da realizzare:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
+        <div id="Allegato_progetto_impianti" name="Allegato_progetto_impianti" label="Elaborato progettuale relativi agli impianti" mandatory_enabled="true"> </div>
+        <input group="Allegato_progetto_impianti" id="Allegato_progetto_impianti1" name="Allegato_progetto_impianti" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">viene/vengono allegato/i l'elaborato/i progettuale/i relativo/i agli impianti di cui al D.M. 37/2008, come predisposta da progettista i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario presente</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
+        <input group="Allegato_progetto_impianti" id="Allegato_progetto_impianti2" name="Allegato_progetto_impianti" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">non viene/vengono allegato/i</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<input id="Referente3_checkobbligatorio" name="Referente3_checkobbligatorio"  dynamic_check="#Allegato_progetto_impianti1.checked()" type="hidden" />
+<input id="Referente3_checkabilitato" name="Referente3_checkabilitato" dynamic_check="#Allegato_progetto_impianti1.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente3","<b>DATI DEL PROGETTISTA ABILITATO</b>:") }}
+
+<!-- FINE BLOCCO ELABORATO IMPIANTI -->
+
+<br>
+<br>
+
+<!-- INIZIO BLOCCO ELABORATO IMPIANTI -->
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+     <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>RELAZIONE TECNICA DESCRITTIVA DELLE OPERE</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;">Nel caso in cui la comunicazione riguardi la posa di opere o manufatti precari ammessi dall’art. 78, comma 3, lettera k)
+della legge provinciale 4 agosto 2015, n. 15, la comunicazione deve essere presentata al comune allegando l’ulteriore
+documentazione sotto elencata, secondo le prescrizioni contenute nell'art. 32 del regolamento urbanistico-edilizio
+provinciale: </p>
+<p><b>relazione tecnica descrittiva delle opere</b>, della loro funzione temporanea e improrogabile, dei tempi previsti di
+utilizzazione e delle modalità di rimozione e rimessa in pristino dei luoghi ed elaborati cartografici relativi al
+manufatto o alle opere. </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<input id="Referente4_checkobbligatorio" name="Referente4_checkobbligatorio"  dynamic_check="#Tipo_opere12.checked()" type="hidden" />
+<input id="Referente4_checkabilitato" name="Referente4_checkabilitato" dynamic_check="#Tipo_opere12.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente4","<b>DATI DEL PROGETTISTA DELLA RELAZIONE TECNICA DESCRITTIVA DELLE OPERE</b>:") }}
+
+<!-- FINE BLOCCO ELABORATO IMPIANTI -->
+
+
+<br>
+<br>
+
+
 
 <!-- INIZIO BLOCCO CONSERVA ORIGINALE -->
 
@@ -736,9 +867,6 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
   <tbody>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Info_obblighi1" name="Info_obblighi1" type="checkbox" value="1" dynamic_check="true"/>
-      </td>
       <td>
         <p style="line-height:1.6;">l'intervento deve essere realizzato nel rispetto degli strumenti di pianificazione e di ogni altra disciplina e normativa relativa alla loro realizzazione, in particolare delle norme:</p>
           <ul><b>
@@ -753,9 +881,6 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;">
-        <input id="Info_obblighi2" name="Info_obblighi2" type="checkbox" value="2" dynamic_check="true"/>
-      </td>
       <td>
         <p style="line-height:1.6;">le opere di progetto non possono avere inizio <b>prima della data</b> di presentazione della presente comunicazione e che <b>l'omissione della presente comunicazione comporta il pagamento della sanzione pecuniaria prevista dall'art. 78, comma 4, della legge provinciale 4 agosto 2015, n. 15</b></p>
       </td>
@@ -828,6 +953,35 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     {% else %}
     <!-- allegati richiesti solo in presenza di progettista -->
     <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.8;">Modulo secondario - <b>Delega al progettista/tecnico incaricato</b> firmato:
+          <br>- dal progettista/tecnico incaricato con firma digitale
+          <br>- dal titolare con
+          <input class="" id="Tipo_Firma_delega" name="Tipo_Firma_delega" style="width: 40%;" label="Tipo firma modulo di delega" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" readonly />
+        </p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" obbligatorio="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #Tipo_Firma_delega.value() == 'firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" />
+        <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-EL" obbligatorio="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #Tipo_Firma_delega.value() == 'firma digitale' ? 'OBBLIGATORIO' : ''" type="hidden" />
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input id="Modulo_compilato_firmato" name="Modulo_compilato_firmato" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit2.checked()" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #tit_firma_digit2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>Copia del modulo principale</b> firmata dal titolare con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="#Modulo_compilato_firmato.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO" dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" />
       </td>
@@ -866,18 +1020,6 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input dynamic_check="#Referente1_CodiceFiscale.value() != '' and !#Referente_direttorelavori_check.checked()" enabled="#Referente1_CodiceFiscale.value() != '' and !#Referente_direttorelavori_check.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b>, firmato con <b>firma digitale</b></p>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_dirlav" name="numero_anag_dirlav" dynamic_value="#GEN_DIR_LAV.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        <input id="GLOBO_modulofiglio_cGEN-DIRETT-LAV-OPERE-LIBERE" name="GLOBO_modulofiglio_cGEN-DIRETT-LAV-OPERE-LIBERE" obbligatorio="#GEN_DIR_LAV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>
-    <tr>
-      <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="Elaborati_progettuali" name="Elaborati_progettuali" type="checkbox" value="OBBLIGATORIO" dynamic_check="#progetto_richiesto2.checked()"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
@@ -890,19 +1032,19 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="Irrilevanza_strutturale" name="Irrilevanza_strutturale" type="checkbox" value="OBBLIGATORIO"/>
+        <input id="Irrilevanza_strutturale" name="Irrilevanza_strutturale" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Allegato_irrilevanza_strutturale1.checked()" enabled="#Allegato_irrilevanza_strutturale1.checked()" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Attestazione di un tecnico abilitato che dimostri l’irrilevanza strutturale</b></p>
       </td>
-      <td style="background-color: #eeeeee;">
+      <td style="background-color: #eeeeee;"> 
         <p style="line-height: 1.6; text-align: center;"><input id="num_att_tecnico" name="num_att_tecnico" mandatory_enabled="#Irrilevanza_strutturale.checked()" style="width: 90%; text-align: center;" type="number" /></p>
         <input id="GLOBO_allegato_cM47561-A01-ATT-IRRILEV-STRUTT" name="GLOBO_allegato_cM47561-A01-ATT-IRRILEV-STRUTT" obbligatorio="#Irrilevanza_strutturale.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="elaborato_progettuale_impianti" name="elaborato_progettuale_impianti" type="checkbox" value="OBBLIGATORIO"/>
+        <input id="elaborato_progettuale_impianti" name="elaborato_progettuale_impianti" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Allegato_progetto_impianti1.checked()"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Elaborato/i progettuale/i relativo/i agli impianti</b> di cui al D.M. 37/2008</p>
@@ -950,7 +1092,18 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     </tr>
     
     {% endif %}
-
+    <tr>
+      <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
+        <input dynamic_check="#Incarico_direttore_lavori2.checked()" enabled="#Incarico_direttore_lavori2.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b>, firmato con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_dirlav" name="numero_anag_dirlav" dynamic_value="#GEN_DIR_LAV.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-DIRETT-LAV-OPERE-LIBERE" name="GLOBO_modulofiglio_cGEN-DIRETT-LAV-OPERE-LIBERE" obbligatorio="#GEN_DIR_LAV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="Anagrafica_imprese" name="Anagrafica_imprese" dynamic_check="#Esecuzione_lavori1.checked()" enabled="#Esecuzione_lavori1.checked()" type="checkbox" value="OBBLIGATORIO"/>   
@@ -1096,17 +1249,6 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
         <p style="line-height: 1.6; text-align: center;"><input id="numero_ric_dir_istr" name="numero_ric_dir_istr" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
       </td>
     </tr>
-    <tr>
-      <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-      <input id="SANZIONE_RITARDO" name="SANZIONE_RITARDO" dynamic_check="#inizio_lavori2.checked()" enabled="#inizio_lavori2.checked() " type="checkbox" value="OBBLIGATORIO" />
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p>Modulo secondario - <b>Distinta di pagamento della sanzione</b> per la mancata presentazione della comunicazione</p>
-      </td>
-       <td style="background-color: #eeeeee; vertical-align: center;">
-        <p style="line-height: 1.6; text-align: center;"><input class="" id="Sanzione_Importo" name="Sanzione_Importo" label="Importo sanzione" value="0" mandatory_enabled="true" dynamic_value="#inizio_lavori2.checked() ? 1 : 0" style="width: 90%; text-align: center;" enabled="#inizio_lavori2.checked()"/></p>
-      </td>
-    </tr>
   </tbody>
 </table> 
 <!-- FINE BLOCCO ALLEGATI -->
@@ -1154,6 +1296,13 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
           <input class="" id="firmat_titol" name="firmat_titol" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:99%; text-align: center;"/>
         </p>
       </td>
+      {% if solo_titolare == 'false' %}
+      <td style="width: 35%; text-align: center;">
+        <p style="line-height:1.8;">
+          <input class="" id="firmat_prog" name="firmat_prog" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value() + ' ' + #Referente_Cognome.value()" style="width:99%; text-align: center;"/>
+        </p>
+      </td>
+      {% endif %}
     </tr>
     <tr class="Rigaintestazioneridotta">
       <td>
@@ -1165,6 +1314,11 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
       <td>
         <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il/la titolare<br><span style="font-size:95%"><i><input id="tipo_firma_tit" name="tipo_firma_tit" dynamic_value="''" style="width: 80%; text-align: center;"/></i></span></p>
       </td>
+      {% if solo_titolare == 'false' %}
+      <td>
+        <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il progettista/tecnico incaricato delegato<br><span style="font-size:95%"><i>(firma digitale)</i></span></p>
+      </td>
+      {% endif %}
     </tr>
   </tbody>
 </table>
