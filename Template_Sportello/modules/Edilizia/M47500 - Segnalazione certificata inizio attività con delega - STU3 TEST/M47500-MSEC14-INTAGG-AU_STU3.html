@@ -36,24 +36,24 @@ obbligatorio="DINAMICO"/>
 <meta codice_allegato="GEN-CDI"
 urn_allegato="document:c_l378:allegato.copia.documento.identita"
 descrizione_estesa="Allegato - Documento di identità"
-filename="Documento identita.pdf"
+filename="Documento identita.jpeg,Documento identita.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-CDI"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
+tipo_mime="application/pdf,image/jpeg"/>
 
 <meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
 urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
 descrizione_estesa="Allegato - Copia del modulo ulteriore intestatario compilato e firmato con firma autografa"
-filename="modulo-ult-int.pdf"
+filename="modulo-ult-int.jpeg,modulo-ult-int.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-AU"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
+tipo_mime="application/pdf,image/jpeg"/>
 
 <meta codice_allegato="GEN-DOC-DIRITTO-CONTRATTUALE"
 urn_allegato="document:c_l378:allegato.doc.diritto.contrattuale"
@@ -159,7 +159,7 @@ tipo_mime="application/pdf"/>
   <table class="Modulo" style="border:1px solid grey" mandatory="true">
     <tbody>
       <tr class="Rigaintestazioneridotta">
-        <td colspan="5">
+        <td colspan="6">
           <p class="Labelcella"><b>Residenza</b></p>
         </td>
       </tr>
@@ -173,8 +173,11 @@ tipo_mime="application/pdf"/>
         <td style="width:33%;">
           <p class="Labelcella">Indirizzo</p>
         </td>
-        <td style="width:12%;">
+        <td style="width:8%;">
           <p class="Labelcella">Civico</p>
+        </td>
+        <td style="width:6%;">
+          <p class="Labelcella">Barra</p>
         </td>
         <td style="width:12%;">
           <p class="Labelcella">CAP</p>
@@ -182,7 +185,7 @@ tipo_mime="application/pdf"/>
       </tr>
       <tr>
         <td style="width:10%;">
-          {{ utils.provincie("Referente7_ProvinciaResidenza", "Provincia di residenza")}}
+          {{ utils.provincie("Referente7_ProvinciaResidenza", "Provincia di residenza", mandatory="true")}}
         </td>
         <td style="width:33%;">
           <select class="inputNormal" id="Referente7_ComuneResidenza" name="Referente7_ComuneResidenza" style="width:100%" label="Comune di residenza del firmatario" dynamic_value="getComuniFromProvincia( #Referente7_ProvinciaResidenza.value(), 'Referente7_ComuneResidenza')">
@@ -191,8 +194,11 @@ tipo_mime="application/pdf"/>
         <td style="width:33%;">
           <input class="" id="Referente7_ViaResidenza" name="Referente7_ViaResidenza" style="width:100%;" label="Via di residenza del firmatario"/>
         </td>
-        <td style="width:12%;">
-          <input class="" id="Referente7_CivicoResidenza" name="Referente7_CivicoResidenza" style="width:100%;" label="Civico di residenza del firmatario" maxlength="10"/>
+        <td style="width:8%;">
+          <input class="" id="Referente7_CivicoResidenza" name="Referente7_CivicoResidenza" style="width:100%;" label="Civico di residenza del firmatario" maxlength="10" format="number"/>
+        </td>
+        <td style="width:6%;">
+          <input class="" id="Referente7_BarraResidenza" name="Referente7_BarraResidenza" style="width:100%;" label="Barra di residenza del firmatario" maxlength="3" mandatory="false"/>
         </td>
         <td style="width:12%;">
           <input class="" id="Referente7_CAPResidenza" name="Referente7_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del firmatario" mandatory="#Referente7_ProvinciaResidenza.value() != 'EE'"/>
@@ -307,8 +313,11 @@ tipo_mime="application/pdf"/>
         <td style="width:33%;">
           <p class="Labelcella">Indirizzo</p>
         </td>
-        <td style="width:12%;">
+        <td style="width:8%;">
           <p class="Labelcella">Civico</p>
+        </td>
+        <td style="width:6%;">
+          <p class="Labelcella">Barra</p>
         </td>
         <td style="width:12%;">
           <p class="Labelcella">CAP</p>
@@ -316,7 +325,7 @@ tipo_mime="application/pdf"/>
       </tr>
       <tr mandatory_enabled="#Referente7_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])">
         <td>
-          {{utils.provincie( 'Referente7_ProvinciaSede', label="Provincia della sede legale")}}
+          {{utils.provincie( 'Referente7_ProvinciaSede', label="Provincia della sede legale", mandatory="#Referente7_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])")}}
         </td>
         <td>
           <select class="inputNormal" id="Referente7_ComuneSede" name="Referente7_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #Referente7_ProvinciaSede.value(), 'Referente7_ComuneSede')">
@@ -326,7 +335,10 @@ tipo_mime="application/pdf"/>
           <input class="" id="Referente7_ViaSede" name="Referente7_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
         </td>
         <td>
-          <input class="" id="Referente7_CivicoSede" name="Referente7_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
+          <input class="" id="Referente7_CivicoSede" name="Referente7_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10" format="number"/>
+        </td>
+        <td>
+          <input class="" id="Referente7_BarraSede" name="Referente7_BarraSede" style="width:100%;" label="Barra del civico della sede legale" maxlength="3" mandatory="false"/>
         </td>
         <td>
           <input class="" id="Referente7_CAPSede" name="Referente7_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" enabled="#Referente7_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])" mandatory="#Referente7_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio']) and #Referente7_ProvinciaSede.value() != 'EE'"/>
@@ -399,7 +411,7 @@ tipo_mime="application/pdf"/>
     </tbody>
   </table>
 </div>
-
+  {{ anagrafica_trento_uniformata.attributi_hidden(prefix = "Referente7") }}
 <br>
 
 
@@ -415,71 +427,21 @@ tipo_mime="application/pdf"/>
   </table>
 
   <h1 class="Modulo">DICHIARA</h1>
+{{ immobili_trento_uniformata.immobile_titolarita(prefix="Referente7",
+      intestazione="di essere soggetto abilitato alla presentazione dell'istanza in quanto",
+      descrizione_proprietario_esclusivo="Proprietario", 
+      descrizione_altro_diritto_reale="Titolare di altro diritto reale:",
+      descrizione_diritto_contrattuale="Titolare di diritto contrattuale (locatario, titolare di leasing, etc.), si allega pertanto copia della documentazione comprovante il titolo",
+      allegati="false" ) }}
 
-
-  <table class="Modulo" style="border:1px solid grey;">
+  <table class="Modulo" style="border:1px solid grey; border-top: none; margin-top: 0em;">
     <tbody>
-      <tr class="Rigaintestazione">
-        <td colspan="3">
-          <p style="line-height: 1.6;"><b>di essere soggetto abilitato alla presentazione dell'istanza in quanto</b></p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
-          <div id="Titolo_ult_int" name="Titolo_ult_int" label="Titolo ulteriore sottoscrivente" mandatory_enabled="true"></div>
-          <input group="Titolo_ult_int" id="Titolo_ult_int1" name="Titolo_ult_int" type="radio" value="1" />
-        </td>
-        <td colspan="2">
-          <p style="line-height: 1.6;">Proprietario</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="4">
-          <input group="Titolo_ult_int" id="Titolo_ult_int2" name="Titolo_ult_int" type="radio" value="2" />
-        </td>
-        <td colspan="2">
-          <p style="line-height: 1.6;">Titolare di altro diritto reale:</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
-          <div id="Altro_titolo_reale" name="Altro_titolo_reale" label="Altro titolo reale sottoscrivente" mandatory_enabled="#Titolo_ult_int2.checked()"></div>
-          <input group="Altro_titolo_reale" id="Altro_titolo_reale1" name="Altro_titolo_reale" type="radio" value="1" />
-        </td>
-        <td>
-          <p style="line-height: 1.6;">Comproprietario</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input group="Altro_titolo_reale" id="Altro_titolo_reale2" name="Altro_titolo_reale" type="radio" value="2" />
-        </td>
-        <td>
-          <p style="line-height: 1.6;">Usufruttuario</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input group="Altro_titolo_reale" id="Altro_titolo_reale3" name="Altro_titolo_reale" type="radio" value="3" />
-        </td>
-        <td>
-          <p style="line-height: 1.6;">Altro: <input class="" id="Spec_Altro_titolo_reale" name="Spec_Altro_titolo_reale" label="Altro titolo reale" mandatory_enabled="#Altro_titolo_reale3.checked()" style="width:94%;"/></p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input group="Titolo_ult_int" id="Titolo_ult_int3" name="Titolo_ult_int" type="radio" value="3" />
-        </td>
-        <td colspan="2">
-          <p style="line-height: 1.6;">Titolare di diritto contrattuale (locatario, titolare di leasing, etc.), si allega pertanto copia della documentazione comprovante il titolo</p>
-        </td>
-      </tr>
       <tr class="Rigaintestazioneridotta">
         <td colspan="3">
         </td>
       </tr>
       <tr>
-        <td style="width: 4%; vertical-align: center; text-align: center;">
+        <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
           <div id="Presa_visione_condivis" name="Presa_visione_condivis" label="Dichiarazione presa visione e condivisione con dichiarazioni del titolare" mandatory_enabled="true"> </div>
           <input group="Presa_visione_condivis" id="Presa_visione_condivis_check" name="Presa_visione_condivis_check" type="checkbox" dynamic_check="true" value="1" />
         </td>
@@ -488,7 +450,7 @@ tipo_mime="application/pdf"/>
         </td>
       </tr>
       <tr>
-        <td style="width: 4%; vertical-align: top; text-align: center;">
+        <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
           <div id="Accett_comunicaz" name="Accett_comunicaz" label="Dichiarazione presa visione e accettazione delega" mandatory_enabled="true"> </div>
           <input group="Accett_comunicaz" id="Accett_comunicaz_check" name="Accett_comunicaz_check" type="checkbox" dynamic_check="true" value="1" />
         </td>      
@@ -520,7 +482,7 @@ tipo_mime="application/pdf"/>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%; text-align: center;" rowspan="5">
+      <td style="vertical-align: top; width: 4%; text-align: center;" rowspan="2">
         <input group="richiesto_contributo" id="richiesto_contributo_si" name="richiesto_contributo" type="radio" value="2" />
       </td>
       <td colspan="2">
@@ -586,7 +548,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center; width:4%;">
-        <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Titolo_ult_int3.checked()" enabled="#Titolo_ult_int3.checked()" value="OBBLIGATORIO"/>
+        <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Referente7_Titolo3.checked()" enabled="#Referente7_Titolo3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height: 1.6;">Documentazione comprovante il diritto contrattuale</p>
