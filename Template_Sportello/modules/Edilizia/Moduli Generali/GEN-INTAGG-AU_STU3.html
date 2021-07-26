@@ -1,6 +1,6 @@
 {% set CodiceModulo =  "GEN-INTAGG-AU" %}
 {% set Urn =  "document:c_l378:modulo.secondario.ulteriori.intestatari.firma.autografa" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 <meta campi_firma="AltroIntestatario_CodiceFiscale"
@@ -150,7 +150,7 @@ tipo_mime="application/pdf"/>
  <table class="Modulo" style="border:1px solid grey" mandatory="true">
    <tbody>
      <tr class="Rigaintestazioneridotta">
-       <td colspan="5">
+       <td colspan="6">
          <p class="Labelcella"><b>Residenza</b></p>
        </td>
      </tr>
@@ -164,8 +164,11 @@ tipo_mime="application/pdf"/>
        <td style="width:33%;">
          <p class="Labelcella">Indirizzo</p>
        </td>
-       <td style="width:12%;">
+       <td style="width:8%;">
          <p class="Labelcella">Civico</p>
+       </td>
+       <td style="width:6%;">
+         <p class="Labelcella">Barra</p>
        </td>
        <td style="width:12%;">
          <p class="Labelcella">CAP</p>
@@ -173,7 +176,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td style="width:10%;">
-       {{ utils.provincie("AltroIntestatario_ProvinciaResidenza", "Provincia di residenza")}}
+       {{ utils.provincie("AltroIntestatario_ProvinciaResidenza", "Provincia di residenza", mandatory="true")}}
       </td>
       <td style="width:33%;">
         <select class="inputNormal" id="AltroIntestatario_ComuneResidenza" name="AltroIntestatario_ComuneResidenza" style="width:100%" label="Comune di residenza del firmatario"
@@ -183,8 +186,11 @@ tipo_mime="application/pdf"/>
       <td style="width:33%;">
        <input class="" id="AltroIntestatario_ViaResidenza" name="AltroIntestatario_ViaResidenza" style="width:100%;" label="Via di residenza del firmatario"/>
       </td>
-      <td style="width:12%;">
-       <input class="" id="AltroIntestatario_CivicoResidenza" name="AltroIntestatario_CivicoResidenza" style="width:100%;" label="Civico di residenza del firmatario" maxlength="10"/>
+      <td style="width:8%;">
+       <input class="" id="AltroIntestatario_CivicoResidenza" name="AltroIntestatario_CivicoResidenza" style="width:100%;" label="Civico di residenza del firmatario" maxlength="10" format="number" />
+      </td>
+      <td style="width:6%;">
+        <input class="" id="AltroIntestatario_BarraResidenza" name="AltroIntestatario_BarraResidenza" style="width:100%;" label="Barra di residenza del firmatario" maxlength="3" mandatory="false"/>
       </td>
       <td style="width:12%;">
        <input class="" id="AltroIntestatario_CAPResidenza" name="AltroIntestatario_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del firmatario" mandatory="#AltroIntestatario_ProvinciaResidenza.value() != 'EE'"/>
@@ -300,8 +306,11 @@ tipo_mime="application/pdf"/>
       <td style="width:33%;">
         <p class="Labelcella">Indirizzo</p>
       </td>
-      <td style="width:12%;">
+      <td style="width:8%;">
         <p class="Labelcella">Civico</p>
+      </td>
+      <td style="width:6%;">
+        <p class="Labelcella">Barra</p>
       </td>
       <td style="width:12%;">
         <p class="Labelcella">CAP</p>
@@ -309,7 +318,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr mandatory_enabled="#AltroIntestatario_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])">
       <td>
-        {{utils.provincie( 'AltroIntestatario_ProvinciaSede', label="Provincia della sede legale")}}
+        {{utils.provincie( 'AltroIntestatario_ProvinciaSede', label="Provincia della sede legale", mandatory="#AltroIntestatario_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])")}}
       </td>
       <td>
         <select class="inputNormal" id="AltroIntestatario_ComuneSede" name="AltroIntestatario_ComuneSede" style="width:100%" label="Comune della sede legale" dynamic_value="getComuniFromProvincia( #AltroIntestatario_ProvinciaSede.value(), 'AltroIntestatario_ComuneSede')">
@@ -319,7 +328,10 @@ tipo_mime="application/pdf"/>
         <input class="" id="AltroIntestatario_ViaSede" name="AltroIntestatario_ViaSede" style="width:100%;" label="Indirizzo della sede legale"/>
       </td>
       <td>
-        <input class="" id="AltroIntestatario_CivicoSede" name="AltroIntestatario_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10"/>
+        <input class="" id="AltroIntestatario_CivicoSede" name="AltroIntestatario_CivicoSede" style="width:100%;" label="Civico della sede legale" maxlength="10" format="number" />
+      </td>
+      <td>
+        <input class="" id="AltroIntestatario_BarraSede" name="AltroIntestatario_BarraSede" style="width:100%;" label="Barra del civico della sede legale" maxlength="3" mandatory="false" />
       </td>
       <td>
         <input class="" id="AltroIntestatario_CAPSede" name="AltroIntestatario_CAPSede" style="width:100%;" format="cap" label="CAP della sede legale" enabled="#AltroIntestatario_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio'])" mandatory="#AltroIntestatario_Ruolo.check_value(['Legale rappresentante', 'Amministratore di condominio']) and #AltroIntestatario_ProvinciaSede.value() != 'EE'"/>
@@ -391,7 +403,7 @@ tipo_mime="application/pdf"/>
     </tr>
   </tbody>
 </table>
-
+  {{ anagrafica_trento_uniformata.attributi_hidden(prefix = "AltroIntestatario") }}
 <br>
 
 <table class="Modulo" style="border: 1px solid grey">
