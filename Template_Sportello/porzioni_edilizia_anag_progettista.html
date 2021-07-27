@@ -1,63 +1,33 @@
-{% set CodiceModulo =  "GEN-PROGETTISTA-ALTRO-OPERE-LIBERE" %}
-{% set Urn =  "document:c_l378:modulo.secondario.anagrafica.opere.libere.progettista.altro" %}
-{% extends "base_trento_ok.html" %}
+{% import 'utils.html' as utils %}
+{% import 'build_service.html' as service %}
 
-{% block meta %}
-<meta campi_firma="Referente2_CodiceFiscale"
-classi_modulo="Generale"
-codice_modulo="{{ CodiceModulo }}"
-urn="{{ Urn }}"
-descrizione="Modulo secondario - Anagrafica di ulteriore progettista (firma digitale)"
-destinatario_amministrazione=""
-destinatario_ufficio=""
-dinamico="SI"
-email_a=""
-ente_abilitato="TUTTI"
-filigrana="SI"
-firmare="P7M_ELETTRONICA"
-istruzioni_compilazione=""
-istruzioni_invio=""
-metodo_invio=""
-name="GLOBO_modulo"
-procura="NO,,"
-tipo_modulo="secondario"
-segnatura="Referente2"
-ufficio=""
-urlhelp="/modulistica/moduli/GEN-PROGETTISTA-ALTRO-OPERE-LIBERE"
-verifica_pagamento="NO"
-versione="1.0|01/01/2015"/>
-
-<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
-urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
-descrizione_estesa="Informativa trattamento dati EDILIZIA"
-filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-{% endblock meta %}
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!--  ANAGRAFICHE PROGETTISTI / TECNICI AGGIUNTIVI -->
+<!-- compare in: OPERE LIBERE
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
-{% block title %}
-   Anagrafica di ulteriore progettista
-{% endblock title %}
+{% macro anagrafica_progettista(prefix="AltroIntestatario", oggetto_suffix="anagrafica ulteriore progettista", title="Anagrafica ulteriore progettista") -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
 
-{% block content %}
 
-{{intestazioni.intestazione_modulosecondario_senzabollo()}}
-<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Referente2_Cognome.value().toUpperCase() + ' - anagrafica ulteriore progettista'"/>
+ {{intestazioni.intestazione_modulosecondario_senzabollo()}}
+<input id="Oggetto" name="Oggetto" type="text" value="" dynamic_value="#{{ prefix }}_Cognome.value().toUpperCase() + ' - {{ oggetto_suffix }}'"/>
 
 <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
 <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-<h1 class="Modulo">Anagrafica di ulteriore progettista (firma digitale)</h1>
+<h1 class="Modulo">{{title}}</h1>
 
 <input id="recapito_obbligatorio" name="recapito_obbligatorio" dynamic_check="true" type="hidden" />
 <input id="pec_tecnico_obbligatoria" name="pec_tecnico_obbligatoria" dynamic_check="true" type="hidden" />
-{{anagrafica_trento_uniformata.professionista_dirlav("Referente2","Il progettista, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+{{anagrafica_trento_uniformata.professionista_dirlav(prefix, "Il progettista, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
 <br>
 <br>
@@ -89,7 +59,7 @@ tipo_mime="application/pdf"/>
        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
      </td>
      <td style="width: 50%; text-align: center; height: 1.5cm;">
-       <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente2_TitoloPersona.value() + ' ' + #Referente2_Nome.value().toUpperCase() + ' ' + #Referente2_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+       <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#{{prefix}}_TitoloPersona.value() + ' ' + #{{prefix}}_Nome.value().toUpperCase() + ' ' + #{{prefix}}_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
      </td>
    </tr>
    <tr class="Rigaintestazioneridotta">
@@ -121,9 +91,6 @@ tipo_mime="application/pdf"/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
-<!--
-{{ utils.passaggio_metadati() }}
-<input id="Metadati_check_delega" name="Metadati_check_delega" type="hidden"/>
--->
 
-{% endblock content %}
+
+{%- endmacro %}

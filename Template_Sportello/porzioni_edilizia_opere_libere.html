@@ -168,7 +168,7 @@
           <!-- il campo 'controllo_10gg' deve essere nascosto con 'display:none' in modo che sia raggiungibile dal validator quando il controllo è invalido  -->
           <input id="controllo_10gg" type="checkbox" label="Opere precarie: non rispettati i comunicazione tardiva o successiva ai lavori" style="display:none; pd4ml-display:none;" name="controllo_10gg" dynamic_check="#Tipo_opere12.checked() and (#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) < 10))" />
           <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" type="hidden"/>
-          <input id="check_controllo_10gg" name="check_controllo_10gg" label="Opere precarie: la comunicazione deve essere presentata almeno 10 giorni prima dell'inizio lavori. Si consiglia di posticipare la data di inizio lavori" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="checkbox" style="pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/></p>
+          <input id="check_controllo_10gg" name="check_controllo_10gg" label="Opere precarie: la comunicazione deve essere presentata almeno 10 giorni prima dell'inizio lavori. Occorre posticipare la data di inizio lavori" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="checkbox" style="pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/></p>
       </td>
     </tr>
     <tr>
@@ -658,7 +658,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
 <!------PREDISPONGO MAIL PER LA SEGNATURA------>
 <input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
 
-<input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="#Incarico_direttore_lavori3.checked() ? 'Progettista e direttore lavori' : 'Progettista'" type="hidden" />
+<input id="Referente_Ruolo" name="Referente_Ruolo" dynamic_value="#Incarico_direttore_lavori2.checked() ? 'Progettista e direttore lavori' : 'Progettista'" type="hidden" />
 
 <br>
 
@@ -698,19 +698,19 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     </tr>
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori2" name="Incarico_direttore_lavori" type="radio" value="2" />
+        <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori2" name="Incarico_direttore_lavori" type="radio" value="2" enabled="#progetto_richiesto2.checked()" />
       </td>
       <td>
-        <p style="line-height:1.6;"><b>con la nomina</b> di un direttore dei lavori, i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario</p>
+        <p style="line-height:1.6;"><b>con la nomina</b> di un progettista che è incaricato anche della Direzione Lavori dell'opera</p>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori3" name="Incarico_direttore_lavori" type="radio" value="3" enabled="#progetto_richiesto2.checked()" />
+        <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori3" name="Incarico_direttore_lavori" type="radio" value="3"  />
         <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="hidden" value="1" dynamic_check="#Incarico_direttore_lavori3.checked()"/>
       </td>
       <td>
-        <p style="line-height:1.6;"><b>con la nomina</b> di un progettista che è incaricato anche della Direzione Lavori dell'opera</p>
+        <p style="line-height:1.6;"><b>con la nomina</b> di un direttore dei lavori, i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario</p>
       </td>
     </tr>
   </tbody>
@@ -720,8 +720,8 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
 
 <!-- INIZIO BLOCCO DATI DIR LAVORI -->
 
-<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio"  dynamic_check="#Incarico_direttore_lavori2.checked()" type="hidden" />
-<input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="#Incarico_direttore_lavori2.checked()" type="hidden" />
+<input id="Referente1_checkobbligatorio" name="Referente1_checkobbligatorio"  dynamic_check="#Incarico_direttore_lavori3.checked()" type="hidden" />
+<input id="Referente1_checkabilitato" name="Referente1_checkabilitato" dynamic_check="#Incarico_direttore_lavori3.checked()" type="hidden" />
 {{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente1","<b>DATI DEL DIRETTORE DEI LAVORI</b> (se presente e diverso da progettista):") }}
 
 <input id="Referente1_Ruolo" name="Referente1_Ruolo" dynamic_value="'Direttore lavori'" type="hidden" />
@@ -753,7 +753,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
         <input group="Allegato_irrilevanza_strutturale" id="Allegato_irrilevanza_strutturale1" name="Allegato_irrilevanza_strutturale" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;">viene allegata l'attestazione di un tecnico abilitato che dimostri l’irrilevanza strutturale, i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario presente</p>
+        <p style="line-height:1.6;"><b>non</b> viene allegata</p>
       </td>
     </tr>
     <tr>
@@ -761,7 +761,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
         <input group="Allegato_irrilevanza_strutturale" id="Allegato_irrilevanza_strutturale2" name="Allegato_irrilevanza_strutturale" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height:1.6;">non viene allegata</p>
+        <p style="line-height:1.6;">viene allegata l'attestazione di un tecnico abilitato che dimostri l’irrilevanza strutturale, i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario presente</p>
       </td>
     </tr>
   </tbody>
@@ -769,8 +769,8 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
 
 <!-- INIZIO BLOCCO DATI TECNICO IRRILEVANZA -->
 <br>
-<input id="Referente5_checkobbligatorio" name="Referente5_checkobbligatorio"  dynamic_check="#Allegato_irrilevanza_strutturale1.checked()" type="hidden" />
-<input id="Referente5_checkabilitato" name="Referente5_checkabilitato" dynamic_check="#Allegato_irrilevanza_strutturale1.checked()" type="hidden" />
+<input id="Referente5_checkobbligatorio" name="Referente5_checkobbligatorio"  dynamic_check="#Allegato_irrilevanza_strutturale2.checked()" type="hidden" />
+<input id="Referente5_checkabilitato" name="Referente5_checkabilitato" dynamic_check="#Allegato_irrilevanza_strutturale2.checked()" type="hidden" />
 {{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente5","<b>DATI DEL TECNICO ABILITATO</b>:") }}
 
 <!-- FINE BLOCCO DATI TECNICO IRRILEVANZA -->
@@ -799,7 +799,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
         <input group="Allegato_progetto_impianti" id="Allegato_progetto_impianti1" name="Allegato_progetto_impianti" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;">viene/vengono allegato/i l'elaborato/i progettuale/i relativo/i agli impianti di cui al D.M. 37/2008, come predisposta da progettista i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario presente</p>
+        <p style="line-height:1.6;"><b>non</b> viene/vengono allegato/i</p>
       </td>
     </tr>
     <tr>
@@ -807,15 +807,15 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
         <input group="Allegato_progetto_impianti" id="Allegato_progetto_impianti2" name="Allegato_progetto_impianti" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height:1.6;">non viene/vengono allegato/i</p>
+        <p style="line-height:1.6;">viene/vengono allegato/i l'elaborato/i progettuale/i relativo/i agli impianti di cui al D.M. 37/2008, come predisposta da progettista i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario presente</p>
       </td>
     </tr>
   </tbody>
 </table>
 
 <br>
-<input id="Referente3_checkobbligatorio" name="Referente3_checkobbligatorio"  dynamic_check="#Allegato_progetto_impianti1.checked()" type="hidden" />
-<input id="Referente3_checkabilitato" name="Referente3_checkabilitato" dynamic_check="#Allegato_progetto_impianti1.checked()" type="hidden" />
+<input id="Referente3_checkobbligatorio" name="Referente3_checkobbligatorio"  dynamic_check="#Allegato_progetto_impianti2.checked()" type="hidden" />
+<input id="Referente3_checkabilitato" name="Referente3_checkabilitato" dynamic_check="#Allegato_progetto_impianti2.checked()" type="hidden" />
 {{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente3","<b>DATI DEL PROGETTISTA ABILITATO</b>:") }}
 
 <!-- FINE BLOCCO ELABORATO IMPIANTI -->
@@ -823,7 +823,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
 <br>
 <br>
 
-<!-- INIZIO BLOCCO ELABORATO IMPIANTI -->
+<!-- INIZIO BLOCCO ELABORATO OPERE PRECARIE -->
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
      <tr class="Rigaintestazione">
@@ -846,11 +846,11 @@ manufatto o alle opere. </p>
 </table>
 
 <br>
-<input id="Referente4_checkobbligatorio" name="Referente4_checkobbligatorio"  dynamic_check="#Tipo_opere12.checked()" type="hidden" />
 <input id="Referente4_checkabilitato" name="Referente4_checkabilitato" dynamic_check="#Tipo_opere12.checked()" type="hidden" />
+<input id="Referente4_checkobbligatorio" name="Referente4_checkobbligatorio" dynamic_check="#Tipo_opere12.checked()" type="hidden" />
 {{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente4","<b>DATI DEL PROGETTISTA DELLA RELAZIONE TECNICA DESCRITTIVA DELLE OPERE</b>:") }}
 
-<!-- FINE BLOCCO ELABORATO IMPIANTI -->
+<!-- FINE BLOCCO ELABORATO OPERE PRECARIE -->
 
 
 <br>
@@ -1020,6 +1020,30 @@ manufatto o alle opere. </p>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
+        <input dynamic_check="#Allegato_irrilevanza_strutturale2.checked()" enabled="#Allegato_irrilevanza_strutturale2.checked()" id="GEN_TECNICO_IRRILEVANZA" name="GEN_TECNICO_IRRILEVANZA" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del tecnico abilitato che dimostri l’irrilevanza strutturale</b>, firmato con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_tecnico_irrilevanza" name="numero_anag_tecnico_irrilevanza" dynamic_value="#GEN_TECNICO_IRRILEVANZA.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-TECNICO-IRRILEVANZA-STRUTTURALE-OPERE-LIBERE" name="GLOBO_modulofiglio_cGEN-TECNICO-IRRILEVANZA-STRUTTURALE-OPERE-LIBERE" obbligatorio="#GEN_TECNICO_IRRILEVANZA.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <input dynamic_check="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" enabled="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" id="GEN_CERT_ENERG" name="GEN_CERT_ENERG" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica soggetto abilitato alla certificazione energetica</b> firmato con <b>firma digitale</b>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_CERT_ENERG" name="numero_GEN_CERT_ENERG" style="width: 90%; text-align: center;" dynamic_value="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked() ? '1' : 'Non richiesto'"/></p>
+        <input id="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" obbligatorio="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="Elaborati_progettuali" name="Elaborati_progettuali" type="checkbox" value="OBBLIGATORIO" dynamic_check="#progetto_richiesto2.checked()"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
@@ -1032,7 +1056,7 @@ manufatto o alle opere. </p>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="Irrilevanza_strutturale" name="Irrilevanza_strutturale" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Allegato_irrilevanza_strutturale1.checked()" enabled="#Allegato_irrilevanza_strutturale1.checked()" />
+        <input id="Irrilevanza_strutturale" name="Irrilevanza_strutturale" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Allegato_irrilevanza_strutturale2.checked()" enabled="#Allegato_irrilevanza_strutturale2.checked()" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Attestazione di un tecnico abilitato che dimostri l’irrilevanza strutturale</b></p>
@@ -1040,18 +1064,6 @@ manufatto o alle opere. </p>
       <td style="background-color: #eeeeee;"> 
         <p style="line-height: 1.6; text-align: center;"><input id="num_att_tecnico" name="num_att_tecnico" mandatory_enabled="#Irrilevanza_strutturale.checked()" style="width: 90%; text-align: center;" type="number" /></p>
         <input id="GLOBO_allegato_cM47561-A01-ATT-IRRILEV-STRUTT" name="GLOBO_allegato_cM47561-A01-ATT-IRRILEV-STRUTT" obbligatorio="#Irrilevanza_strutturale.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>
-    <tr>
-      <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="elaborato_progettuale_impianti" name="elaborato_progettuale_impianti" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Allegato_progetto_impianti1.checked()"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Elaborato/i progettuale/i relativo/i agli impianti</b> di cui al D.M. 37/2008</p>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="num_elab_progett" name="num_elab_progett" mandatory_enabled="#elaborato_progettuale_impianti.checked()" style="width: 90%; text-align: center;" type="number" /></p>
-        <input id="GLOBO_allegato_cGEN-ELAB-PROG-IMPIANTI" name="GLOBO_allegato_cGEN-ELAB-PROG-IMPIANTI" obbligatorio="#elaborato_progettuale_impianti.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1078,23 +1090,12 @@ manufatto o alle opere. </p>
         <input id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="#relazione_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: center;">
-        <input dynamic_check="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" enabled="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" id="GEN_CERT_ENERG" name="GEN_CERT_ENERG" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica soggetto abilitato alla certificazione energetica</b> firmato con <b>firma digitale</b>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_CERT_ENERG" name="numero_GEN_CERT_ENERG" style="width: 90%; text-align: center;" dynamic_value="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked() ? '1' : 'Non richiesto'"/></p>
-        <input id="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" obbligatorio="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>
-    
+    <!-- fine solo progettista -->
     {% endif %}
+    <!-- ALLEGATI IN COMUNE -->
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input dynamic_check="#Incarico_direttore_lavori2.checked()" enabled="#Incarico_direttore_lavori2.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
+        <input dynamic_check="#Incarico_direttore_lavori3.checked()" enabled="#Incarico_direttore_lavori3.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore dei lavori</b>, firmato con <b>firma digitale</b></p>
@@ -1114,6 +1115,31 @@ manufatto o alle opere. </p>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" id="Nanag_imprese_allegateEl" name="Nanag_imprese_allegateEl" dynamic_value="#Anagrafica_imprese.checked() ? #numero_imprese.value() : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
         <input id="GLOBO_modulofiglio_cGEN-IMPRESE-CILA-EL" name="GLOBO_modulofiglio_cGEN-IMPRESE-CILA-EL" numero="#Nanag_imprese_allegateEl.value()" obbligatorio="#Nanag_imprese_allegateEl.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center;">
+        <input dynamic_check="#Allegato_progetto_impianti2.checked()" enabled="#Allegato_progetto_impianti2.checked()" id="GEN_PROG_IMPIANTI" name="GEN_PROG_IMPIANTI" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista di elaborato progettuale relativo agli impianti</b>, firmate con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog_impianti" name="numero_anag_prog_impianti" dynamic_value="#GEN_PROG_IMPIANTI.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-IMPIANTI-OPERE-LIBERE" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-IMPIANTI-OPERE-LIBERE" numero="#numero_anag_prog_impianti.value()" obbligatorio="#numero_anag_prog_impianti.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
+        <input id="anag_prog_opere_precarie" name="anag_prog_opere_precarie" type="checkbox" dynamic_check="#Tipo_opere12.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+      <!-- PIPPO -->
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista della relazione tecnica descrittiva delle opere</b>, firmato con <b>firma digitale</b></p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_anag_prog_opere_precarie" name="num_anag_prog_opere_precarie" dynamic_value="#anag_prog_opere_precarie.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly /></p>
+        <input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-OPERE-PRECARIE-OPERE-LIBERE" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-OPERE-PRECARIE-OPERE-LIBERE" numero="#num_anag_prog_opere_precarie.value()" obbligatorio="#num_anag_prog_opere_precarie.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden"value=""/>
       </td>
     </tr>
      <tr>
@@ -1211,6 +1237,18 @@ manufatto o alle opere. </p>
         <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-DOCUMENTAZIONE-FOTOGRAFICA" name="GLOBO_allegato_cGEN-DOCUMENTAZIONE-FOTOGRAFICA" obbligatorio="'OBBLIGATORIO'" type="hidden" value="" numero="#numero_doc_fotogr.value()"/>
       </td>
     </tr> 
+     <tr>
+      <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
+        <input id="elaborato_progettuale_impianti" name="elaborato_progettuale_impianti" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Allegato_progetto_impianti2.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>Elaborato/i progettuale/i relativo/i agli impianti</b> di cui al D.M. 37/2008</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_elab_progett" name="num_elab_progett" mandatory_enabled="#elaborato_progettuale_impianti.checked()" style="width: 90%; text-align: center;" type="number" /></p>
+        <input id="GLOBO_allegato_cGEN-ELAB-PROG-IMPIANTI" name="GLOBO_allegato_cGEN-ELAB-PROG-IMPIANTI" obbligatorio="#elaborato_progettuale_impianti.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="relaz_descr_opere" name="relaz_descr_opere" type="checkbox" dynamic_check="#Tipo_opere12.checked()" value="OBBLIGATORIO"/>
@@ -1224,18 +1262,6 @@ manufatto o alle opere. </p>
         <input id="GLOBO_allegato_cGEN-RELAZIONE_TECNICA-OPERE" name="GLOBO_allegato_cGEN-RELAZIONE_TECNICA-OPERE" obbligatorio="#relaz_descr_opere.checked() ? 'OBBLIGATORIO' : ''" numero="#num_relaz_tecn_descr.value()" type="hidden" value=""/>
       </td>
     </tr>
-    <!-- <tr>
-      <td class="checks">
-        <input id="Doc_notifica" name="Doc_notifica" type="checkbox" dynamic_check="#Scelta_alleg_o_estr_not1.checked()" enabled="#Scelta_alleg_o_estr_not1.checked()" value="OBBLIGATORIO" />
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Documentazione necessaria per la notifica</b>, il cui contenuto sarà riprodotto su apposita tabella esposta in cantiere per tutta la durata dei lavori, in luogo visibile dall'esterno</p>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="num_Doc_notifica" name="num_Doc_notifica" type="number" min="1" max="100" mandatory_enabled="#Doc_notifica.checked()" style="width: 90%; text-align: center;"/></p>
-        <input id="GLOBO_allegato_cGEN-DOC-NOTIFICA" name="GLOBO_allegato_cGEN-DOC-NOTIFICA" numero="#num_Doc_notifica.value()" obbligatorio="#Doc_notifica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>   -->
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" />
@@ -1322,6 +1348,11 @@ manufatto o alle opere. </p>
     </tr>
   </tbody>
 </table>
+<!-- PLUTO -->
+direttore lavori <input type="text" id="Pluto_1" name="Pluto_1" dynamic_value="#Referente1_CodiceFiscale.value()" readonly/><br>
+opere precarie <input type="text" id="Pluto_2" name="Pluto_2" dynamic_value="#Referente4_CodiceFiscale.value()" readonly/><br>
+impianti <input type="text" id="Pluto_3" name="Pluto_3" dynamic_value="#Referente3_CodiceFiscale.value()" readonly/><br>
+irrilevanza <input type="text" id="Pluto_4" name="Pluto_4" dynamic_value="#Referente5_CodiceFiscale.value()" readonly/><br>
 
 <!-- FINE BLOCCO FIRMA -->
 
