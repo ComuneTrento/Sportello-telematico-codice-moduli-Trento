@@ -1,0 +1,255 @@
+{% set CodiceModulo = "M1130-INTEGRAZIONE-CONTATTI-SCRUTATORI" %}
+{% set Urn =  "document:c_l378:elettorale.scrutatori;integrare.contatto;integrazione;m1130.integrazione.contatti" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1130-INTEGRAZIONE-CONTATTI-SCRUTATORI_vSTU3" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Integrazione informazioni di contatto scrutatore"
+descrizione="Integrazione informazioni di contatto scrutatore"
+destinatario_amministrazione=""
+destinatario_ufficio="B6PZ17" 
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/CellulareM1130-INTEGRAZIONE-CONTATTI-SCRUTATORI"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_allegato="INFORM-TRATT-DATI-ELETTORALE"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.elettorale"
+descrizione_estesa="Informativa trattamento dati ELETTORALE"
+filename="INFORM-TRATT-DATI-ELETTORALE.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-ELETTORALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!--<meta codice_allegato="GEN-CDI"
+urn="document:c_l378:copia.documento.identita"
+descrizione_estesa="Documento di identità"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>-->
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="19" %}
+  {% set simpaticoEserviceName="M1130 INTEGRAZIONE CONTATTI SCRUTATORI" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1130-INTEGRAZIONE-CONTATTI-SCRUTATORI" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Elettorale" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale","AventeTitolo_Telefono","AventeTitolo_EMail"] %}
+  {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
+                          ('block2', 'Inserire telefono e mail'),
+                          ('block3', 'Confermare presa visione informativa')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
+
+{% block title %}INTEGRAZIONE-CONTATTO-SCRUTATORE{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#nominativo_oggetto.value() + ' - Integrazione informazioni di contatto albo scrutatori'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo" style="line-height:1.6;">
+   Aggiornamento albo degli scrutatori di seggio elettorale
+   <br>Integrazione informazioni di contatto 
+</h1>
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<div class="simpatico-block simpatico-query-and-answer">
+<input id="AventeTitolo_checkobbligatorio" name="AventeTitolo_checkobbligatorio" dynamic_check="true" type="hidden" />
+<input id="AventeTitolo_checkabilitato" name="AventeTitolo_checkabilitato" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo_elettorale("AventeTitolo","Il/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility")}}  
+ 
+<input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; font-size: 95%; text-align: center;"><b>Già iscritto all'albo unico delle persone idonee all'Ufficio di scrutatore di seggio elettorale</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h2 class="Modulo">
+  COMUNICA
+</h2>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+      <tr class="Rigaintestazione" >
+        <td colspan="2">
+          <p>il seguente numero di cellulare e indirizzo di posta elettronica per comunicazioni in ordine all'incarico di scrutatore:</p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width: 40%;">
+          <p style="line-height: 1.6; font-size: 85%;"><b>Cellulare</b></p>  
+        </td>
+        <td style="width: 60%;">
+          <p style="line-height: 1.6; font-size: 85%;"><b>E-mail</b></p>  
+        </td>
+      </tr> 
+      <tr>
+        <td>
+            <input id="Cell_contatto" name="Cell_contatto" mandatory_enabled="true" label="Indicare un numero di cellulare" style="width:100%;"/>
+        </td>
+        <td>
+            <input id="Mail_contatto" name="Mail_contatto" mandatory_enabled="true" label="Indicare una mail valida" format="email" style="width:100%;"/>
+        </td>
+      </tr>  
+  </tbody>
+</table>
+
+<!------PREDISPONGO MAIL PER LA SEGNATURA------>
+<input id="AventeTitolo_EMail" name="AventeTitolo_EMail" dynamic_value="#Mail_contatto.value()" type="hidden"/> 
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; font-size: 95%; text-align: center;"><b>N.B.: I contatti forniti saranno utilizzati <u>esclusivamente a fini istituzionali</u></b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td>
+        <p style="line-height:1.8;">di essere in possesso del seguente titolo di studio:
+          <select class="inputNormal" id="titolo_studio_ottenuto" name="titolo_studio_ottenuto" style="width:57%" label="Titolo di studio" mandatory_enabled="true">
+            <option value=""></option>
+            <option value="Diploma">Diploma</option>
+            <option value="Laurea_triennale">Laurea triennale</option>
+            <option value="Laurea">Laurea</option>
+            <option value="Dottorato">Dottorato</option>
+          </select>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td>
+        <p style="line-height:1.8;">di esercitare la professione / essere nella condizione di: <input class="inputNormal" id="tipo_lavoro" name="tipo_lavoro" style="width:52%" mandatory_enabled="true"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-elettorale" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    
+<br>
+<br>
+
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 20%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 65%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" name="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}

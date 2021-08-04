@@ -1,0 +1,198 @@
+{% set CodiceModulo = "M1128-CANCELLAZIONE-ALBO-SCRUTATORI" %}
+{% set Urn =  "document:c_l378:elettorale.scrutatori;cancellarsi.albo.scrutatori;cancellazione;m1128.cancellazione.scrutatore" %}
+{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M1128-CANCELLAZIONE-ALBO-SCRUTATORI_vSTU3" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Cancellazione dall'albo degli scrutatori"
+descrizione="Cancellazione dall'albo degli scrutatori"
+destinatario_amministrazione=""
+destinatario_ufficio="B6PZ17" 
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M1128-CANCELLAZIONE-ALBO-SCRUTATORI"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_allegato="INFORM-TRATT-DATI-ELETTORALE"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.elettorale"
+descrizione_estesa="Informativa trattamento dati ELETTORALE"
+filename="INFORM-TRATT-DATI-ELETTORALE.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-ELETTORALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<!--<meta codice_allegato="GEN-CDI"
+urn="document:c_l378:copia.documento.identita"
+descrizione_estesa="Documento di identità"
+filename="Documento identita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-CDI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>-->
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+{% block simpaticoconfig %}
+  {% set simpaticoEservice="17" %}
+  {% set simpaticoEserviceName="M1128 CANCELLAZIONE ALBO SCRUTATORI" %}
+  {% set simpaticoEserviceURL="https://sportello.comune.trento.it/modulistica/moduli/M1128-CANCELLAZIONE-ALBO-SCRUTATORI" %}
+  {% set simpaticoForm="main" %}
+  {% set simpaticoCategory="Elettorale" %}
+  {% set simpaticoMapping=["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale"] %}
+  {% set ERROR_LABELS=[   ('block1', 'Inserire il codice fiscale'),
+                          ('block2', 'Comunicare la rinuncia'),
+                          ('block3', 'Confermare presa visione informativa')] %}
+  {{ utilsSimpatico.ScriptSimpatico(simpaticoEservice, simpaticoEserviceName, simpaticoEserviceURL, simpaticoForm, simpaticoCategory, simpaticoMapping, ERROR_LABELS ) }}
+{% endblock simpaticoconfig %}
+
+{% block title %}CANCELLAZIONE-ALBO-SCRUTATORI{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<input dynamic_value="#nominativo_oggetto.value() + ' - Cancellazione dall’albo degli scrutatori di seggio elettorale'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<h1 class="Modulo" style="line-height:1.6;">
+  Richiesta cancellazione dall'albo unico degli scrutatori di seggio elettorale
+</h1>
+
+<br>
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<div class="simpatico-block simpatico-query-and-answer">
+<input id="AventeTitolo_checkobbligatorio" name="AventeTitolo_checkobbligatorio" dynamic_check="true" type="hidden" />
+<input id="AventeTitolo_checkabilitato" name="AventeTitolo_checkabilitato" dynamic_check="true" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo_elettorale("AventeTitolo","Il/La sottoscritto/a", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+  
+<input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; font-size: 95%; text-align: center;"><b>Già iscritto all'albo unico delle persone idonee all'Ufficio di scrutatore di seggio elettorale</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<h3 class="Modulo">RINUNCIA</h3>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="tipo_rinuncia" name="tipo_rinuncia" label="Tipo rinuncia" mandatory_enabled="true"> </div>
+        <input group="tipo_rinuncia" id="tipo_rinuncia1" name="tipo_rinuncia1" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="LINE-HEIGHT: 1.6;"><b>DEFINITIVAMENTE</b> a far parte dell’albo degli scrutatori 
+          <br>per il seguente motivo: <input class="inputNormal" id="motivazioni_rinuncia_def" name="motivazioni_rinuncia_def" enabled="#tipo_rinuncia1.checked()" style="width:79%;" label="motivazioni rinuncia definitiva"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-elettorale" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    
+<br>
+<br>
+
+<table class="Modulo simpatico-block" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 20%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 65%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" name="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
