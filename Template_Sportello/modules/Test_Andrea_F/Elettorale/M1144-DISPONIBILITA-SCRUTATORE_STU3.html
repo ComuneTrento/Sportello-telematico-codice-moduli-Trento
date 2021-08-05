@@ -1,9 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html>
-
 <head>
-
     <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
 
 	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
@@ -87,11 +84,21 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/M1144-DISPONIBILITA-SCRUTATORE_vSTU3" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
 
-        
-
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#nominativo_oggetto.value() + ' - Elezioni comunali - Disponibilità scrutatore'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value='' id="Sostituzione" name="Sostituzione" style="width: 100%;" type="hidden" />
+
+<!-- 
+<input dynamic_value="#nominativo_oggetto.value() + ' - Elezioni comunali - Disponibilità scrutatore' + " id="Oggetto" name="Oggetto" type="hidden" />
+Aggiungere "per sostituzioni" - "" nell'oggetto-->
+{% block oggetto %}
+<input dynamic_value="'Disponibilità svolgimento incarico di scrutatore -' + #Sostituzione.value() + ' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'" id="Oggetto" name="Oggetto" type="hidden"/>
+{% endblock oggetto %}
+
+
+
+
+
 
 <div type="intestazione_moduloprincipale_senzabollo">
 	<script>
@@ -698,8 +705,10 @@ function get_ufficio_dest() {
       </td>
       <td>
         <p style="line-height: 1.6;">che l'iscrizione è stata perfezionata <b>dopo il 30 novembre 2020</b><br>
-        <input id="contatto_telefonico1" name="contatto_telefonico1" dynamic_value="#Data_iscrizione_albo2.checked() ? 'Chiama il 0461-884084 (Lun-Gio, 8-12/14-16; Ven 8-12) per dare disponibilità a sostituzioni in caso di necessità' : ''" style="width: 100%;" enabled="#Data_iscrizione_albo2.checked()" label="contatti per manifestazione interesse" readonly/></p>
-      </td>
+        e che quindi la propria disponibilità sarà relativa a sostituzioni in caso di necessità.</p>
+        <!-- " PER SOSTITUZIONI" cambiare il dynamic_value con #sostituzioni-->
+        </td>   
+        
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; text-align: center;">
@@ -707,7 +716,8 @@ function get_ufficio_dest() {
       </td>
       <td colspan="2">
         <p style="line-height:1.8;">di NON essere iscritto all'albo degli scrutatori<br>
-        <input id="contatto_telefonico" name="contatto_telefonico" dynamic_value="#Iscrizione_albo2.checked() ? 'Chiama il 0461-884084 (Lun-Gio, 8-12/14-16; Ven 8-12) per dare disponibilità a sostituzioni in caso di necessità' : ''" style="width: 100%;" enabled="#Iscrizione_albo2.checked()" label="contatti per manifestazione interesse" readonly/></p>
+          E quindi procedo con la presentazione dell'iscrizione all'a <a href="https://sportello.comune.trento.it/procedure%3Ac_l378%3Aelettorale.scrutatori%3Biscriversi.albo.scrutatori%3Biscrizione?source=252" target="_blank">albo sctutatori</a>
+        </p>
       </td>
     </tr>
   </tbody>
