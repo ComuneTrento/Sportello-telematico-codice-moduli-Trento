@@ -746,7 +746,7 @@ M1876-ISCRIZIONE-NIDO
         </tr>
         <tr>
             <td>
-                {{ utils.provincie( 'Parametri_ProvinciaResidenzaAltroFam' + prefix, label="Provincia di residenza_extnucleo") }}
+                {{ utils.provincie( 'Parametri_ProvinciaResidenzaAltroFam' + prefix, label="Provincia di residenza_extnucleo", mandatory="false") }}
             </td>
             <td>
                 <select class="inputNormal" id="Parametri_ComuneResidenzaAltroFam{{ prefix }}" name="Parametri_ComuneResidenzaAltroFam{{ prefix }}" style="width:100%" label="Comune di residenza_extnucleo" mandatory_enabled="(#Parametri_CognomeAltroFam{{ prefix }}.value() != '' || #Parametri_NomeAltroFam{{ prefix }}.value() != '' || #Parametri_CFAltroFam{{ prefix }}.value() != '') and !#Modulo_Compilabile2.checked() and !#Controllo_iterFP.checked()" dynamic_value="getComuniFromProvincia( #Parametri_ProvinciaResidenzaAltroFam{{ prefix }}.value(), 'Parametri_ComuneResidenzaAltroFam{{ prefix }}')"></select>
@@ -1163,7 +1163,10 @@ M1876-ISCRIZIONE-NIDO
                 <input class="inputNormal" id="Nome_nido_FT1" name="Nome_nido_FT1" style="width: 100%;" label="Nome nido FT1" enabled="#Tassonomia_FullTime.checked()" dynamic_value="switch(#Tassonomia_NidoInfanziaFT1.value()) { case '': 'Nessun nido selezionato'; break; case '3': 'Clarina'; break; case '5': 'La Nuvola'; break; case '6': 'Il Piccolo Girasole'; break; case '7': 'Orsetto Pandi'; break; case '8': 'Europa'; break; case '9': 'Aquilone'; break; case '13': 'La Mongolfiera'; break; case '14': 'Oltrecastello'; break; case '17': 'S. Giuseppe'; break; case '18': 'La Trottola'; break; case '21': 'Padre Vittorio Tonini'; break; case '23': 'G. Rodari'; break; case '24': 'Il Trenino'; break; case '25': 'Il Magicocastello'; break; case '26': 'Torrione'; break; case '27': 'Villazzano Gabbiolo'; break; case '28': 'Villazzano Tre'; break; case '29': 'Meano'; break; case '30': 'Gardolo'; break; case '37': 'NIDO ESTIVO'; break; case '39': 'LAVIS'; break; case '43': 'Roncafort'; break; case '44': 'Ravina'; break; case '45': 'Martignano'; break; case '47': 'contributo tages'; break;}" readonly>
             </td>
         </tr>
-        <tr class="Rigaintestazione" >
+
+        <!-- TOLTO blocco scelta servizi opzionali tempo pieno per la prima scelta -->
+        <!-- Campi eliminati: Tassonomia_TipoSceltaServizioAsilo1FT0 - Tassonomia_TipoSceltaServizioAsilo1FT* - Parametri_CodiceServizioNido1FT* - Parametri_Ascolto_1FT* - check_serv_aggFT1 -->
+        <!-- <tr class="Rigaintestazione" >
             <td colspan="3">
                 <p class="Labelcella">Indicando se intende o meno utilizzare i servizi opzionali ove previsto</p>
             </td>
@@ -1173,7 +1176,7 @@ M1876-ISCRIZIONE-NIDO
         </tr>
         <tr>
             <td style="vertical-align: center; text-align: center; width: 4%;">
-                <!-- <div id="Tassonomia_ServiziPrimoNidoFT" name="Tassonomia_ServiziPrimoNidoFT" label="Servizi primo nido scelto FT" mandatory="#Nome_nido_FT1.value() != '' && !#Tassonomia_TipoDomandaFT3.checked()"> </div> -->
+                
                 <div id="Tassonomia_ServiziPrimoNidoFT" name="Tassonomia_ServiziPrimoNidoFT" label="Servizi primo nido scelto FT" mandatory="#Nome_nido_FT1.value() != '' || #Tassonomia_TipoDomandaFT3.checked()"> </div>
                 <input group="Tassonomia_ServiziPrimoNidoFT" id="Tassonomia_TipoSceltaServizioAsilo1FT0" name="Tassonomia_TipoSceltaServizioAsilo1FT0" type="checkbox" value="0" />
             </td>
@@ -1215,7 +1218,9 @@ M1876-ISCRIZIONE-NIDO
             <td colspan="4">
                 <input class="inputNormal" id="check_serv_aggFT1" name="check_serv_aggFT1" style="width: 100%;" label="Controllo validità scelte per servizi aggiuntivi" dynamic_value="#Tassonomia_TipoSceltaServizioAsilo1FT0.checked() and (#Tassonomia_TipoSceltaServizioAsilo1FT1.checked() || #Tassonomia_TipoSceltaServizioAsilo1FT2.checked()) ? 'ATTENZIONE: Non è possibile selezionare entrambe le opzioni!' : (#Tassonomia_FullTime.checked() and !#Tassonomia_TipoSceltaServizioAsilo1FT0.checked() and !#Tassonomia_TipoSceltaServizioAsilo1FT1.checked() and !#Tassonomia_TipoSceltaServizioAsilo1FT2.checked() and !#Tassonomia_TipoDomandaFT3.checked()? 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte (se presenti)' : '')">
             </td>
-        </tr>
+        </tr> -->
+        
+        <!-- seconda scelta non obbligatoria -->
         <tr class="Rigaintestazione" >
             <td colspan="4">
                 <p class="Labelcella">Indicare la seconda scelta (non obbligatoria)</p>
@@ -1265,7 +1270,10 @@ M1876-ISCRIZIONE-NIDO
                 <input class="inputNormal" id="Nome_nido_FT2" name="Nome_nido_FT2" style="width: 100%;" label="Nome nido FT2" enabled="#Tassonomia_SceltaSecondoFT2.checked()" dynamic_value="switch(#Tassonomia_NidoInfanziaFT2.value()) { case '3': 'Clarina'; break; case '5': 'La Nuvola'; break; case '6': 'Il Piccolo Girasole'; break; case '7': 'Orsetto Pandi'; break; case '8': 'Europa'; break; case '9': 'Aquilone'; break; case '13': 'La Mongolfiera'; break; case '14': 'Oltrecastello'; break; case '17': 'S. Giuseppe'; break; case '18': 'La Trottola'; break; case '21': 'Padre Vittorio Tonini'; break; case '23': 'G. Rodari'; break; case '24': 'Il Trenino'; break; case '25': 'Il Magicocastello'; break; case '26': 'Torrione'; break; case '27': 'Villazzano Gabbiolo'; break; case '28': 'Villazzano Tre'; break; case '29': 'Meano'; break; case '30': 'Gardolo'; break; case '37': 'NIDO ESTIVO'; break; case '39': 'LAVIS'; break; case '43': 'Roncafort'; break; case '44': 'Ravina'; break; case '45': 'Martignano'; break; case '47': 'contributo tages'; break;}" readonly>
             </td>
         </tr>
-        <tr class="Rigaintestazioneridotta">
+
+        <!-- TOLTO blocco scelta servizi opzionali tempo pieno per la seconda scelta -->
+        <!-- Campi eliminati: Tassonomia_TipoSceltaServizioAsilo2FT0 - Tassonomia_TipoSceltaServizioAsilo2FT* - Parametri_CodiceServizioNido2FT* - Parametri_Ascolto_2FT* - check_serv_aggFT2 -->
+        <!-- <tr class="Rigaintestazioneridotta">
             <td colspan="3">
                 <p class="Labelcella">Indicando se intende o meno utilizzare i servizi opzionali per il secondo nido d'infanzia ove previsto</p>
             </td>
@@ -1315,9 +1323,10 @@ M1876-ISCRIZIONE-NIDO
             <td colspan="4">
                 <input class="inputNormal" id="check_serv_aggFT2" name="check_serv_aggFT2" style="width: 100%;" label="Controllo validità scelte per servizi aggiuntivi" dynamic_value="#Tassonomia_TipoSceltaServizioAsilo2FT0.checked() and (#Tassonomia_TipoSceltaServizioAsilo2FT1.checked() || #Tassonomia_TipoSceltaServizioAsilo2FT2.checked()) ? 'ATTENZIONE: Non è possibile selezionare entrambe le opzioni!' : (#Tassonomia_SceltaSecondoFT2.checked() and !#Tassonomia_TipoSceltaServizioAsilo2FT0.checked() and !#Tassonomia_TipoSceltaServizioAsilo2FT1.checked() and !#Tassonomia_TipoSceltaServizioAsilo2FT2.checked() ? 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte (se presenti)' : '')">
             </td>
-        </tr>
-        <tr class="Rigaintestazioneridotta"><td colspan="5"></td></tr>
-        <!--
+        </tr> -->
+
+        <!-- blocco già commentato prima di modifiche 2022-23 -->
+        <!--<tr class="Rigaintestazioneridotta"><td colspan="5"></td></tr>
         <tr>
             <td colspan="5">
                 <input id="check_trenino" name="check_trenino" style="width:100%; height: 60px;" dynamic_value="(#Tassonomia_NidoInfanziaFT1.value() == '24' || #Tassonomia_NidoInfanziaFT2.value() == '24') ? 'ATTENZIONE: si ricorda che il nido “Il Trenino” sarà chiuso per ristrutturazione dal 01/09/2021 al 31/12/2021' : ''"/>
@@ -1327,8 +1336,8 @@ M1876-ISCRIZIONE-NIDO
     </tbody>
 </table>
 
-<input type="hidden" class="Modulo" id="serv_aggFT1_ok" name="serv_aggFT1_ok" dynamic_value="#check_serv_aggFT1.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del primo nido a tempo pieno">
-<input type="hidden" class="Modulo" id="serv_aggFT2_ok" name="serv_aggFT2_ok" dynamic_value="#check_serv_aggFT2.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del secondo nido a tempo pieno">
+<!-- <input type="hidden" class="Modulo" id="serv_aggFT1_ok" name="serv_aggFT1_ok" dynamic_value="#check_serv_aggFT1.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del primo nido a tempo pieno">
+<input type="hidden" class="Modulo" id="serv_aggFT2_ok" name="serv_aggFT2_ok" dynamic_value="#check_serv_aggFT2.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del secondo nido a tempo pieno"> -->
 <input type="hidden" class="" id="check_cod_nidoFT1" name="check_cod_nidoFT1" dynamic_value="#Tassonomia_NidoInfanziaFT1.value()" enabled="true"/>
 <input type="hidden" class="" id="check_cod_nidoFT2" name="check_cod_nidoFT2" dynamic_value="#Tassonomia_NidoInfanziaFT2.value()" enabled="true"/>
 
@@ -1449,16 +1458,29 @@ M1876-ISCRIZIONE-NIDO
                 <input class="inputNormal" id="Nome_nido_PT1" name="Nome_nido_PT1" style="width: 100%;" label="Nome nido PT1" enabled="#Tassonomia_PartTime.checked()" dynamic_value="switch(#Tassonomia_NidoInfanziaPT1.value()) { case '31': 'Madonna Bianca Part Time MATTINO'; break; case '32': 'Madonna Bianca Part Time POMERIGGIO'; break; case '33': 'Roncafort Part Time'; break; case '34': 'Viale dei Tigli'; break; case '40': 'Il Magicocastello Part Time POMERIGGIO'; break; case '41': 'Il Magicocastello Part Time MATTINO'; break; case '42': 'La Nuvola Part Time'; break;}" readonly>      </td>
         </tr>
         <tr class="Rigaintestazione" >
-            <td colspan="3">
-                <p class="Labelcella">Indicando se intende o meno utilizzare i servizi opzionali ove previsto</p>
+            <td colspan="4">
+                <p class="Labelcella">Servizi aggiuntivi previsti</p>
             </td>
-            <td>
+           <!--  <td>
                 <p class="Labelcella">Codice del servizio opzionale</p>
+            </td> -->
+        </tr>
+        <tr>
+          <td colspan="4">
+                <p style="line-height: 1.6;">Posticipo fino alle 15: da richiedere in sede di accettazione</p>
             </td>
         </tr>
         <tr>
+          <td colspan="4">
+                <p style="line-height: 1.6;">Sabato mattina: da richiedere in sede di accettazione</p>
+            </td>
+        </tr>
+
+        <!-- TOLTO blocco scelta servizi opzionali tempo parziale per la prima scelta-->
+        <!-- Campi eliminati: Tassonomia_TipoSceltaServizioAsilo1PT0 - Tassonomia_TipoSceltaServizioAsilo1PT* - Parametri_CodiceServizioNido1PT* - Parametri_Ascolto_2FT* - check_serv_aggPT1 -->
+
+        <!-- <tr>
 	        <td style="vertical-align: center; text-align: center; width: 4%;">
-                <!-- <div id="Tassonomia_ServiziPrimoNidoPT" name="Tassonomia_ServiziPrimoNidoPT" label="Servizi primo nido scelto PT" mandatory="#Nome_nido_PT1.value() != '' && !#Tassonomia_TipoDomandaPT3.checked()"> </div> -->
                 <div id="Tassonomia_ServiziPrimoNidoPT" name="Tassonomia_ServiziPrimoNidoPT" label="Servizi primo nido scelto PT" mandatory="#Nome_nido_PT1.value() != '' || #Tassonomia_TipoDomandaPT3.checked()"> </div>
                 <input group="Tassonomia_ServiziPrimoNidoPT" id="Tassonomia_TipoSceltaServizioAsilo1PT0" name="Tassonomia_TipoSceltaServizioAsilo1PT0" type="checkbox" value="0" />
 	        </td>
@@ -1500,7 +1522,8 @@ M1876-ISCRIZIONE-NIDO
             <td colspan="4">
                 <input class="inputNormal" id="check_serv_aggPT1" name="check_serv_aggPT1" style="width: 100%;" label="Controllo validità scelte per servizi aggiuntivi" dynamic_value="#Tassonomia_TipoSceltaServizioAsilo1PT0.checked() and (#Tassonomia_TipoSceltaServizioAsilo1PT1.checked() || #Tassonomia_TipoSceltaServizioAsilo1PT2.checked()) ? 'ATTENZIONE: Non è possibile selezionare entrambe le opzioni!' : (#Tassonomia_PartTime.checked() and !#Tassonomia_TipoSceltaServizioAsilo1PT0.checked() and !#Tassonomia_TipoSceltaServizioAsilo1PT1.checked() and !#Tassonomia_TipoSceltaServizioAsilo1PT2.checked() and !#Tassonomia_TipoDomandaPT3.checked() ? 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte (se presenti)' : '')">
             </td>
-        </tr>
+        </tr> -->
+
         <tr class="Rigaintestazione" >
             <td colspan="4">
                 <p class="Labelcella">Indicare la seconda scelta (non obbligatoria)</p>
@@ -1550,7 +1573,10 @@ M1876-ISCRIZIONE-NIDO
                 <input class="inputNormal" id="Nome_nido_PT2" name="Nome_nido_PT2" style="width: 100%;" label="Nome nido PT2" enabled="#Tassonomia_SceltaSecondoPT2.checked()" dynamic_value="switch(#Tassonomia_NidoInfanziaPT2.value()) { case '31': 'Madonna Bianca Part Time MATTINO'; break; case '32': 'Madonna Bianca Part Time POMERIGGIO'; break; case '33': 'Roncafort Part Time'; break; case '34': 'Viale dei Tigli'; break; case '40': 'Il Magicocastello Part Time POMERIGGIO'; break; case '41': 'Il Magicocastello Part Time MATTINO'; break; case '42': 'La Nuvola Part Time'; break;}" readonly>
             </td>
         </tr>
-        <tr class="Rigaintestazioneridotta">
+
+        <!-- TOLTO blocco scelta servizi opzionali tempo parziale per la seconda scelta -->
+        <!-- Campi eliminati: Tassonomia_TipoSceltaServizioAsilo2PT0 - Tassonomia_TipoSceltaServizioAsilo2PT* - Parametri_CodiceServizioNido2PT* - Parametri_Ascolto_2PT* - check_serv_aggPT2 -->
+       <!--  <tr class="Rigaintestazioneridotta">
             <td colspan="3">
                 <p class="Labelcella">Indicando se intende o meno utilizzare i servizi opzionali per il secondo nido d'infanzia ove previsto</p>
             </td>
@@ -1600,12 +1626,12 @@ M1876-ISCRIZIONE-NIDO
             <td colspan="4">
                 <input class="inputNormal" id="check_serv_aggPT2" name="check_serv_aggPT2" style="width: 100%;" label="Controllo validità scelte per servizi aggiuntivi" dynamic_value="#Tassonomia_TipoSceltaServizioAsilo2PT0.checked() and (#Tassonomia_TipoSceltaServizioAsilo2PT1.checked() || #Tassonomia_TipoSceltaServizioAsilo2PT2.checked()) ? 'ATTENZIONE: Non è possibile selezionare entrambe le opzioni!' : (#Tassonomia_SceltaSecondoPT2.checked() and !#Tassonomia_TipoSceltaServizioAsilo2PT0.checked() and !#Tassonomia_TipoSceltaServizioAsilo2PT1.checked() and !#Tassonomia_TipoSceltaServizioAsilo2PT2.checked() ? 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte (se presenti)' : '')">
             </td>
-        </tr>
+        </tr> -->
     </tbody>
 </table>
 
-<input type="hidden" class="Modulo" id="serv_aggPT1_ok" name="serv_aggPT1_ok" dynamic_value="#check_serv_aggPT1.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del primo nido a tempo parziale">
-<input type="hidden" class="Modulo" id="serv_aggPT2_ok" name="serv_aggPT2_ok" dynamic_value="#check_serv_aggPT2.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del secondo nido a tempo parziale">
+<!-- <input type="hidden" class="Modulo" id="serv_aggPT1_ok" name="serv_aggPT1_ok" dynamic_value="#check_serv_aggPT1.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del primo nido a tempo parziale">
+<input type="hidden" class="Modulo" id="serv_aggPT2_ok" name="serv_aggPT2_ok" dynamic_value="#check_serv_aggPT2.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del secondo nido a tempo parziale"> -->
 <input type="hidden" class="" id="check_cod_nidoPT1" name="check_cod_nidoPT1" dynamic_value="#Tassonomia_NidoInfanziaPT1.value()" enabled="true" />
 <input type="hidden" class="" id="check_cod_nidoPT2" name="check_cod_nidoPT2" dynamic_value="#Tassonomia_NidoInfanziaPT2.value()" enabled="true" />
 
@@ -2111,7 +2137,7 @@ M1876-ISCRIZIONE-NIDO
         </tr>
         <tr class="Rigaintestazioneridotta">
             <td style="width: 20%;">
-                <p class="Labelcella">Percentuale di invalidità</p>
+                <p class="Labelcella">% di invalidità/codice per minore</p>
             </td>
             <td style="width: 30%;">
                 <p class="Labelcella">Codice fiscale del familiare</p>
@@ -2483,7 +2509,7 @@ M1876-ISCRIZIONE-NIDO
         </tr>
         <tr>
             <td>
-                {{ utils.provincie( 'Parametri_ProvAziendaLavoroPadre', label="Provincia dell'azienda ove lavora il padre") }}
+                {{ utils.provincie( 'Parametri_ProvAziendaLavoroPadre', label="Provincia dell'azienda ove lavora il padre", mandatory="false") }}
             </td>
             <td>
                 <select class="inputNormal" id="Parametri_ComuneAziendaLavoroPadre" name="Parametri_ComuneAziendaLavoroPadre" style="width: 100%;" mandatory_enabled="#Tassonomia_LavoroPadre1.checked()" label="Comune dell'azienda ove lavora il padre" dynamic_value="getComuniFromProvincia( #Parametri_ProvAziendaLavoroPadre.value(), 'Parametri_ComuneAziendaLavoroPadre')"></select>
@@ -2602,8 +2628,8 @@ M1876-ISCRIZIONE-NIDO
                     <input group="Tassonomia_DisagiLavoroPadre" id="Tassonomia_DisagiLavoroPadre1" name="Tassonomia_DisagiLavoroPadre1" type="checkbox" value="1"/>
             </td>
             <td colspan="5">
-                <p style="line-height: 1.6;">assente per un periodo di almeno 180 giorni all'anno, continuativi o cumulabili, per motivi di lavoro. <br> 
-                Per assenza si intende la permanenza DIURNA E NOTTURNA in località che distano da Trento più di 110 km stradali per località lungo le direttrici Verona-Bolzano e Trento-Bassano e più di 50 km stradali per le altre località.</p>
+                <p style="line-height: 1.6;">assente per un periodo di almeno 180 giorni all'anno, continuativi o cumulabili, per motivi di lavoro </p> 
+                <p style="font-size:92%"><i>(per assenza si intende la permanenza DIURNA E NOTTURNA in località che distano da Trento più di 110 km stradali lungo le direttrici Verona-Bolzano/Trento-Bassano e più di 50 km stradali per altre località)</i></p>
             </td>
         </tr>
     </tbody>
@@ -2634,13 +2660,13 @@ M1876-ISCRIZIONE-NIDO
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top; text-align: center; width: 4%;">
+            <td style="vertical-align: center; text-align: center; width: 4%;">
                 <div id="Tassonomia_DisagiStudioPadre" name="Tassonomia_DisagiStudioPadre" enabled="#Tassonomia_TipoLavoroPadre2.checked()" label="Disagi legati al tipo di studio del padre"> </div>
                 <input group="Tassonomia_DisagiStudioPadre" id="Tassonomia_DisagiStudioPadre1" name="Tassonomia_DisagiStudioPadre1" type="checkbox" value="1"/>
             </td>
             <td>
-                <p style="line-height: 1.6;">assente per un periodo di almeno 180 giorni all'anno, continuativi o cumulabili, per motivi di studio con obbligo di presenza. <br>
-                Per assenza si intende la permanenza DIURNA E NOTTURNA in località che distano da Trento più di 110 km stradali per località lungo le direttrici Verona-Bolzano e Trento-Bassano e più di 50 km stradali per le altre località.</p>
+                <p style="line-height: 1.6;">assente per un periodo di almeno 180 giorni all'anno, continuativi o cumulabili, per motivi di studio con obbligo di presenza </p>
+                <p style="font-size:92%"><i>(per assenza si intende la permanenza DIURNA E NOTTURNA in località che distano da Trento più di 110 km stradali per località lungo le direttrici Verona-Bolzano e Trento-Bassano e più di 50 km stradali per le altre località)</i></p>
             </td>
         </tr>
     </tbody>
@@ -2827,7 +2853,7 @@ M1876-ISCRIZIONE-NIDO
         </tr>
         <tr>
             <td>
-                {{ utils.provincie( 'Parametri_ProvAziendaLavoroMadre', label="Provincia dell'azienda ove lavora la madre") }}
+                {{ utils.provincie( 'Parametri_ProvAziendaLavoroMadre', label="Provincia dell'azienda ove lavora la madre", mandatory="false") }}
             </td>
             <td>
                 <select class="inputNormal" id="Parametri_ComuneAziendaLavoroMadre" name="Parametri_ComuneAziendaLavoroMadre" style="width: 100%;" mandatory_enabled="#Tassonomia_LavoroMadre1.checked()" label="Comune dell'azienda ove lavora la madre" dynamic_value="getComuniFromProvincia( #Parametri_ProvAziendaLavoroMadre.value(), 'Parametri_ComuneAziendaLavoroMadre')"></select>
@@ -2946,8 +2972,8 @@ M1876-ISCRIZIONE-NIDO
                     <input group="Tassonomia_DisagiLavoroMadre" id="Tassonomia_DisagiLavoroMadre1" name="Tassonomia_DisagiLavoroMadre1" type="checkbox" value="1"/>
             </td>
             <td colspan="5">
-                <p style="line-height: 1.6;">assente per un periodo di almeno 180 giorni all'anno, continuativi o cumulabili, per motivi di lavoro. <br>
-                Per assenza si intende la permanenza DIURNA E NOTTURNA in località che distano da Trento più di 110 km stradali per località lungo le direttrici Verona-Bolzano e Trento-Bassano e più di 50 km stradali per le altre località.</p>
+                <p style="line-height: 1.6;">assente per un periodo di almeno 180 giorni all'anno, continuativi o cumulabili, per motivi di lavoro </p>
+                <p style="font-size:92%"><i>(per assenza si intende la permanenza DIURNA E NOTTURNA in località che distano da Trento più di 110 km stradali per località lungo le direttrici Verona-Bolzano e Trento-Bassano e più di 50 km stradali per le altre località)</i></p>
             </td>
         </tr>
     </tbody>
@@ -2978,13 +3004,13 @@ M1876-ISCRIZIONE-NIDO
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top; text-align: center; width: 4%;">
+            <td style="vertical-align: center; text-align: center; width: 4%;">
                 <div id="Tassonomia_DisagiStudioMadre" name="Tassonomia_DisagiStudioMadre" enabled="#Tassonomia_TipoLavoroMadre2.checked()" label="Disagi legati al tipo di studio della madre"> </div>
                 <input group="Tassonomia_DisagiStudioMadre" id="Tassonomia_DisagiStudioMadre1" name="Tassonomia_DisagiStudioMadre1" type="checkbox" value="1"/>
             </td>
             <td>
-                <p style="line-height: 1.6;">assente per un periodo di almeno 180 giorni all'anno, continuativi o cumulabili, per motivi di studio con obbligo di presenza. <br>
-                Per assenza si intende la permanenza DIURNA E NOTTURNA in località che distano da Trento più di 110 km stradali per località lungo le direttrici Verona-Bolzano e Trento-Bassano e più di 50 km stradali per le altre località.</p>
+                <p style="line-height: 1.6;">assente per un periodo di almeno 180 giorni all'anno, continuativi o cumulabili, per motivi di studio con obbligo di presenza</p>
+                <p style="font-size:92%"><i>(per assenza si intende la permanenza DIURNA E NOTTURNA in località che distano da Trento più di 110 km stradali per località lungo le direttrici Verona-Bolzano e Trento-Bassano e più di 50 km stradali per le altre località)</i></p>
             </td>
         </tr>
     </tbody>
