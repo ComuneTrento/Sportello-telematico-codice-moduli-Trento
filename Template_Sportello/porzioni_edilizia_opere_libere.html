@@ -848,6 +848,16 @@ manufatto o alle opere. </p>
 <br>
 <br>
 
+{% if solo_titolare == 'true' %}
+{{ porzioni_scia.interventi_energetici(num_titolo1="11 - ", num_titolo2="12 - ")}}
+{% else %}
+{{ porzioni_scia.interventi_energetici(num_titolo1="12 - ", num_titolo2="13 - ")}}
+{% endif %}
+
+
+<br>
+<br>
+
 
 
 <!-- INIZIO BLOCCO CONSERVA ORIGINALE -->
@@ -1024,18 +1034,6 @@ manufatto o alle opere. </p>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center;">
-        <input dynamic_check="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" enabled="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" id="GEN_CERT_ENERG" name="GEN_CERT_ENERG" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica soggetto abilitato alla certificazione energetica</b> firmato con <b>firma digitale</b>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_CERT_ENERG" name="numero_GEN_CERT_ENERG" style="width: 90%; text-align: center;" dynamic_value="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked() ? '1' : 'Non richiesto'"/></p>
-        <input id="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" obbligatorio="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>
-    <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="Elaborati_progettuali" name="Elaborati_progettuali" type="checkbox" value="OBBLIGATORIO" dynamic_check="#progetto_richiesto2.checked()"/>
       </td>
@@ -1059,6 +1057,9 @@ manufatto o alle opere. </p>
         <input id="GLOBO_allegato_cM47561-A01-ATT-IRRILEV-STRUTT" name="GLOBO_allegato_cM47561-A01-ATT-IRRILEV-STRUTT" obbligatorio="#Irrilevanza_strutturale.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+    <!-- fine solo progettista -->
+    {% endif %}
+    <!-- ALLEGATI IN COMUNE -->
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="relazione_ditta_tecnico" name="relazione_ditta_tecnico" type="checkbox" value="OBBLIGATORIO"/>
@@ -1072,20 +1073,19 @@ manufatto o alle opere. </p>
       </td>
     </tr>
     <tr>
-      <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="relazione_energetica" name="relazione_energetica" type="checkbox" value="OBBLIGATORIO"/>
+      <td style="vertical-align: top; text-align: center;">
+        <input dynamic_check="#Incarico_soggetto_certificatore2.checked()" enabled="#Incarico_soggetto_certificatore2.checked()" id="GEN_CERT_ENERG" name="GEN_CERT_ENERG" type="checkbox" value="OBBLIGATORIO"/>
+
+        <!-- <input dynamic_check="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" enabled="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" id="GEN_CERT_ENERG" name="GEN_CERT_ENERG" type="checkbox" value="OBBLIGATORIO"/> -->
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Relazione energetica</b> (Allegati dm. 26 giugno 2009 <i>Schemi e modalità di riferimento per la compilazione della relazione tecnica di progetto ai fini dell’applicazione delle prescrizioni e dei requisiti minimi di prestazione energetica negli edifici</i>) nel caso in cui gli interventi ricadano nell'articolo 4, commi 3, 4 o 5 del d. P. P. 13 luglio 2009, n. 1 1-13/Leg. e s.m.i</p>
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica soggetto abilitato alla certificazione energetica</b> firmato con <b>firma digitale</b>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="num_relaz_energ" name="num_relaz_energ" mandatory_enabled="#relazione_energetica.checked()" style="width: 90%; text-align: center;" type="number"/></p>
-        <input id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="#relazione_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_CERT_ENERG" name="numero_GEN_CERT_ENERG" style="width: 90%; text-align: center;" dynamic_value="#GEN_CERT_ENERG.checked() ? '1' : 'Non richiesto'"/></p>
+        <input id="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" obbligatorio="#GEN_CERT_ENERG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
-    <!-- fine solo progettista -->
-    {% endif %}
-    <!-- ALLEGATI IN COMUNE -->
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input dynamic_check="#Incarico_direttore_lavori3.checked()" enabled="#Incarico_direttore_lavori3.checked()" id="GEN_DIR_LAV" name="GEN_DIR_LAV" type="checkbox" value="OBBLIGATORIO"/>
@@ -1205,6 +1205,19 @@ manufatto o alle opere. </p>
       </td>
     </tr>
     <tr>
+      <td style="vertical-align: center; text-align: center;">
+        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#ricad_aspetti_energetici2.checked()" enabled="#ricad_aspetti_energetici2.checked()" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>Relazione energetica</b> (Allegati dm. 26 giugno 2009 <i>Schemi e modalità di riferimento per la compilazione della relazione tecnica di progetto ai fini dell’applicazione delle prescrizioni e dei requisiti minimi di prestazione energetica negli edifici</i>) nel caso in cui gli interventi ricadano nell'articolo 4, commi 3, 4 o 5 del d. P. P. 13 luglio 2009, n. 1 1-13/Leg. e s.m.i</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_relaz_energetica" name="numero_relaz_energetica" style="width: 90%; text-align: center;" mandatory_enabled="#relaz_energetica.checked()" type="number" min="1" max="100"/></p>
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="!#Incarico_soggetto_certificatore2.checked() and #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" obbligatorio="#Incarico_soggetto_certificatore2.checked() and #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
         <input id="Contr_locaz" name="Contr_locaz" type="checkbox" dynamic_check="#Parametri_Titolo3.checked()" enabled="#Parametri_Titolo3.checked()" value="OBBLIGATORIO"/>
       </td>
@@ -1282,9 +1295,8 @@ manufatto o alle opere. </p>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Nel caso in cui la comunicazione riguardi la posa di opere o manufatti precari ammessi dall’art. 78, comma 3, lettera k)
-della legge provinciale 4 agosto 2015, n. 15, la comunicazione deve essere presentata al comune allegando l’ulteriore
-documentazione sotto elencata, secondo le prescrizioni contenute nell'art. 32 del regolamento urbanistico-edilizio
-provinciale: <b>relazione tecnica descrittiva delle opere</b>, della loro funzione temporanea e improrogabile, dei tempi previsti di utilizzazione e delle modalità di rimozione e rimessa in pristino dei luoghi ed elaborati cartografici relativi al manufatto o alle opere<br>
+della legge provinciale 4 agosto 2015, n. 15, secondo le prescrizioni contenute nell'art. 32 del regolamento urbanistico-edilizio
+provinciale: <br><b>Relazione tecnica descrittiva delle opere</b>, della loro funzione temporanea e improrogabile, dei tempi previsti di utilizzazione e delle modalità di rimozione e rimessa in pristino dei luoghi ed elaborati cartografici relativi al manufatto o alle opere<br>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="num_relaz_tecn_descr" name="num_relaz_tecn_descr" mandatory_enabled="#relaz_descr_opere.checked()" style="width: 90%; text-align: center;" type="number"/></p>
