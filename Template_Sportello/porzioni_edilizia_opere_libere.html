@@ -851,9 +851,9 @@ manufatto o alle opere. </p>
 <br>
 
 {% if solo_titolare == 'true' %}
-{{ porzioni_scia.interventi_energetici(num_titolo1="11 - ", num_titolo2="12 - ")}}
+{{ interventi_energetici(num_titolo1="11 - ", num_titolo2="12 - ")}}
 {% else %}
-{{ porzioni_scia.interventi_energetici(num_titolo1="12 - ", num_titolo2="13 - ")}}
+{{ interventi_energetici(num_titolo1="12 - ", num_titolo2="13 - ")}}
 {% endif %}
 
 
@@ -1063,22 +1063,8 @@ manufatto o alle opere. </p>
     {% endif %}
     <!-- ALLEGATI IN COMUNE -->
     <tr>
-      <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="relazione_ditta_tecnico" name="relazione_ditta_tecnico" type="checkbox" value="OBBLIGATORIO"/>
-      </td>
-      <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Relazione della ditta/tecnico attestante i requisiti di prestazione energetica</b> (nel caso in cui gli interventi ricadano nell'articolo 4, del D. P. P. 13 luglio 2009, n. 1 1-13/Leg. e ss.mm)</p>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="num_relaz_ditta" name="num_relaz_ditta" mandatory_enabled="#relazione_ditta_tecnico.checked()" style="width: 90%; text-align: center;" type="number" /></p>
-        <input id="GLOBO_allegato_cGEN-RELAZ-REQ-PREST-ENERG" name="GLOBO_allegato_cGEN-RELAZ-REQ-PREST-ENERG" obbligatorio="#relazione_ditta_tecnico.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>
-    <tr>
       <td style="vertical-align: top; text-align: center;">
         <input dynamic_check="#Incarico_soggetto_certificatore2.checked()" enabled="#Incarico_soggetto_certificatore2.checked()" id="GEN_CERT_ENERG" name="GEN_CERT_ENERG" type="checkbox" value="OBBLIGATORIO"/>
-
-        <!-- <input dynamic_check="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" enabled="#relazione_energetica.checked() || #relazione_ditta_tecnico.checked()" id="GEN_CERT_ENERG" name="GEN_CERT_ENERG" type="checkbox" value="OBBLIGATORIO"/> -->
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica soggetto abilitato alla certificazione energetica</b> firmato con <b>firma digitale</b>
@@ -1086,6 +1072,39 @@ manufatto o alle opere. </p>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_CERT_ENERG" name="numero_GEN_CERT_ENERG" style="width: 90%; text-align: center;" dynamic_value="#GEN_CERT_ENERG.checked() ? '1' : 'Non richiesto'"/></p>
         <input id="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" obbligatorio="#GEN_CERT_ENERG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <input dynamic_check="#ricad_aspetti_energetici2.checked() && #Referente9_CodiceFiscale.value().length > 0" enabled="#ricad_aspetti_energetici2.checked() && #Referente9_CodiceFiscale.value().length > 0" id="GEN_CERT_REQ_ENERG" name="GEN_CERT_REQ_ENERG" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica soggetto che attesta i requisiti di prestazione energetica</b> firmato con <b>firma digitale</b>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_GEN_CERT_REQ_ENERG" name="numero_GEN_CERT_REQ_ENERG" style="width: 90%; text-align: center;" dynamic_value="#GEN_CERT_REQ_ENERG.checked() ? '1' : 'Non richiesto'"/></p>
+        <input id="GLOBO_modulofiglio_cGEN-CERTIFIC-REQ-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERTIFIC-REQ-ENERG-EL" obbligatorio="#GEN_CERT_REQ_ENERG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
+        <input id="relazione_ditta_tecnico" name="relazione_ditta_tecnico" type="checkbox" value="OBBLIGATORIO"  dynamic_check="#ricad_aspetti_energetici2.checked()" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>Relazione della ditta/tecnico attestante i requisiti di prestazione energetica</b> (nel caso in cui gli interventi ricadano nell'articolo 4, del D. P. P. 13 luglio 2009, n. 1 1-13/Leg. e ss.mm)</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_relaz_ditta" name="num_relaz_ditta" mandatory_enabled="#ricad_aspetti_energetici2.checked()" style="width: 90%; text-align: center;" type="number" min="1" max="100" /></p>
+        <input class="inputNormal" id="Referente9_presente" name="Referente9_presente" type="hidden" style="width: 100%;" dynamic_check="#Referente9_CodiceFiscale.value().length > 0" />
+
+        <input id="GLOBO_allegato_cGEN-RELAZ-REQ-PREST-ENERG" name="GLOBO_allegato_cGEN-RELAZ-REQ-PREST-ENERG" 
+          numero="!#Referente9_presente.checked() ? #num_relaz_ditta.value() : 0" 
+          obbligatorio="!#Referente9_presente.checked() && #ricad_aspetti_energetici2.checked() ? 'OBBLIGATORIO' : ''"  type="hidden" value="" />
+
+        <input id="GLOBO_allegato_cGEN-RELAZ-REQ-PREST-ENERG-FIRMATA" name="GLOBO_allegato_cGEN-RELAZ-REQ-PREST-ENERG-FIRMATA" 
+          numero="#Referente9_presente.checked() ? #num_relaz_ditta.value() : 0" 
+          obbligatorio="#Referente9_presente.checked() && #ricad_aspetti_energetici2.checked() ? 'OBBLIGATORIO' : ''"  type="hidden" value=""/>
+
       </td>
     </tr>
     <tr>
@@ -1207,15 +1226,14 @@ manufatto o alle opere. </p>
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center;">
-        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#ricad_aspetti_energetici2.checked()" enabled="#ricad_aspetti_energetici2.checked()" value="OBBLIGATORIO" />
+        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#Incarico_soggetto_certificatore2.checked()" enabled="#Incarico_soggetto_certificatore2.checked()" value="OBBLIGATORIO" />
       </td>
       <td colspan="2">
         <p style="line-height:1.6;"><b>Relazione energetica</b> (Allegati dm. 26 giugno 2009 <i>Schemi e modalità di riferimento per la compilazione della relazione tecnica di progetto ai fini dell’applicazione delle prescrizioni e dei requisiti minimi di prestazione energetica negli edifici</i>) nel caso in cui gli interventi ricadano nell'articolo 4, commi 3, 4 o 5 del d. P. P. 13 luglio 2009, n. 1 1-13/Leg. e s.m.i</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_relaz_energetica" name="numero_relaz_energetica" style="width: 90%; text-align: center;" mandatory_enabled="#relaz_energetica.checked()" type="number" min="1" max="100"/></p>
-        <input numero="!#Incarico_soggetto_certificatore2.checked() ? #numero_relaz_energetica.value() : 0" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="!#Incarico_soggetto_certificatore2.checked() and #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-        <input numero="#Incarico_soggetto_certificatore2.checked() ? #numero_relaz_energetica.value() : 0" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" obbligatorio="#Incarico_soggetto_certificatore2.checked() and #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="#Incarico_soggetto_certificatore2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1315,6 +1333,20 @@ provinciale: <br><b>Relazione tecnica descrittiva delle opere</b>, della loro fu
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="num_relaz_tecn_descr" name="num_relaz_tecn_descr" mandatory_enabled="#relaz_descr_opere.checked()" style="width: 90%; text-align: center;" type="number"/></p>
         <input id="GLOBO_allegato_cGEN-RELAZIONE_TECNICA-OPERE" name="GLOBO_allegato_cGEN-RELAZIONE_TECNICA-OPERE" obbligatorio="#relaz_descr_opere.checked() ? 'OBBLIGATORIO' : ''" numero="#num_relaz_tecn_descr.value()" type="hidden" value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;">
+        <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO" enabled="true"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>Altri allegati</b>
+          <br><textarea class="inputNormal" id="AltriAllegati" name="AltriAllegati" label="Altri allegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" style="width:99%; height:3cm"></textarea>
+        </p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="num_altri_all" name="num_altri_all" label="Numero altri allegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" style="width: 90%; text-align: center;"/> </p>
+        <input id="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" name="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" numero="#num_altri_all.value()" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1427,4 +1459,115 @@ provinciale: <br><b>Relazione tecnica descrittiva delle opere</b>, della loro fu
 </p>
 
 
+{%- endmacro %}
+
+
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- compare in:  porzioni_edilizia_opere_libere -->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!--TODO unire con porzioni_scia.interventi_energetici(...)----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+{% macro interventi_energetici(num_titolo1="", num_titolo2="") -%}
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>{{ num_titolo1 }}</b> Con riferimento agli <b>aspetti energetici</b> e agli articoli del D.P.P. 13 luglio 2009, n. 11-13/Leg. e s.m.i., gli interventi eseguiti:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="ricad_aspetti_energetici" name="ricad_aspetti_energetici" label="Aspetti energetici degli interventi" mandatory_enabled="true"> </div>
+        <input id="ricad_aspetti_energetici1" group="ricad_aspetti_energetici" name="ricad_aspetti_energetici" type="radio" value="1" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;">non ricadono in tale ambito di applicazione</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="5">
+        <input id="ricad_aspetti_energetici2" group="ricad_aspetti_energetici" name="ricad_aspetti_energetici" type="radio" value="2" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;">ricadono nell’ambito di applicazione dei seguenti articoli:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <div id="aspetti_energetici" name="aspetti_energetici" label="Aspetti energetici degli interventi" mandatory_enabled="#ricad_aspetti_energetici2.checked()"> </div>
+        <input id="aspetti_energetici1" group="aspetti_energetici" name="aspetti_energetici" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">art. 4, comma 3 (nuova costruzione, demolizione e ricostruzione, ristrutturazione importante di primo livello, ampliamento superiore al  15% del volume lordo riscaldato o superiore a 500 m3 costituente una nuova unità)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input id="aspetti_energetici2" group="aspetti_energetici" name="aspetti_energetici" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">art. 4, comma 4 (ristrutturazione importante di secondo livello, ampliamento superiore al  15% del volume lordo riscaldato o superiore a 500 m3 costituente una porzione funzionalmente connessa ad un’unità preesistente)</p>            
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input id="aspetti_energetici3" group="aspetti_energetici" name="aspetti_energetici" type="radio" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">art. 4, comma 5 (riqualificazione energetica, ampliamento inferiore o uguale al  15% del volume lordo riscaldato)</p>            
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;">e pertanto deposita la <b>relazione energetica</b></p>            
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<input id="Referente9_checkobbligatorio" name="Referente9_checkobbligatorio" type="hidden" />
+<input id="Referente9_checkabilitato" name="Referente9_checkabilitato" dynamic_check="#ricad_aspetti_energetici2.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo("Referente9","<b>SOGGETTO CHE ATTESTA I REQUISITI DI PRESTAZIONE ENERGETICA</b>") }}
+  
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>{{ num_titolo2}} Ai sensi del D.P.P. n. 11-13/Leg. del 13 luglio 2009:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Incarico_soggetto_certificatore" name="Incarico_soggetto_certificatore" label="Incarico di un soggetto certificatore" mandatory_enabled="true"> </div>
+        <input group="Incarico_soggetto_certificatore" id="Incarico_soggetto_certificatore1" name="Incarico_soggetto_certificatore" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>non è necessario</b> incaricare un soggetto certificatore</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Incarico_soggetto_certificatore" id="Incarico_soggetto_certificatore2" name="Incarico_soggetto_certificatore" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>è necessario</b> indicare un <b>soggetto abilitato alla certificazione energetica</b>, i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<input id="Referente8_checkobbligatorio" name="Referente8_checkobbligatorio" dynamic_check="#Incarico_soggetto_certificatore2.checked()" type="hidden" />
+<input id="Referente8_checkabilitato" name="Referente8_checkabilitato" dynamic_check="#Incarico_soggetto_certificatore2.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo("Referente8","<b>SOGGETTO ABILITATO ALLA CERTIFICAZIONE ENERGETICA</b>") }}
+  
+<br>
+<br>
 {%- endmacro %}
