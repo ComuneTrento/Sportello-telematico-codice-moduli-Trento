@@ -120,6 +120,8 @@
 
 <!-- FINE BLOCCO IMPRESA ESECUTRICE -->
 
+{{ immobili_trento_uniformata.cila_superbonus(prefix="AventeTitolo", document_href="https://sportello.comune.trento.it/sites/default/files/2021-09/Modulo_CILA_Superbonus.pdf")}}
+
 <br>
 <br>
 
@@ -178,6 +180,7 @@
           <input id="controllo_10gg" type="checkbox" label="Opere precarie: non rispettati i comunicazione tardiva o successiva ai lavori" style="display:none; pd4ml-display:none;" name="controllo_10gg" dynamic_check="#Tipo_opere12.checked() and (#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) < 10))" />
           <input id="correttezza_10gg" name="correttezza_10gg" enabled="#Tipo_opere12.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_10gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 10 giorni di preavviso necessari'" type="hidden"/>
           <input id="check_controllo_10gg" name="check_controllo_10gg" label="Opere precarie: la comunicazione deve essere presentata almeno 10 giorni prima dell'inizio lavori. Occorre posticipare la data di inizio lavori" dynamic_value="#controllo_10gg.checked() ? '' : 'OK'" mandatory="true" type="checkbox" style="pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/></p>
+          <input id="check_controllo_inizio" name="check_controllo_inizio" label="La data di inizio lavori deve essere successiva alla data di comunicazione" dynamic_value="(#inizio_lavori2.checked() || (#inizio_lavori1.checked() and (DaysBetweenDate(#Data_PDF.value(), #sposta_data.value())) >= 0)) ? 'OK' : ''" mandatory="true" type="checkbox" style="pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/>
       </td>
     </tr>
     <tr>
@@ -752,7 +755,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
         <input group="Allegato_irrilevanza_strutturale" id="Allegato_irrilevanza_strutturale1" name="Allegato_irrilevanza_strutturale" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;"><b>non</b> viene allegata</p>
+        <p style="line-height:1.6;"><b>non</b> viene allegata l'attestazione di un tecnico abilitato che dimostri l’irrilevanza strutturale</p>
       </td>
     </tr>
     <tr>
@@ -790,7 +793,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
         <input group="Allegato_progetto_impianti" id="Allegato_progetto_impianti1" name="Allegato_progetto_impianti" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.6;"><b>non</b> viene/vengono allegato/i</p>
+        <p style="line-height:1.6;"><b>non</b> viene/vengono allegato/i l'elaborato/i progettuale/i relativo/i agli impianti di cui al D.M. 37/2008</p>
       </td>
     </tr>
     <tr>
@@ -1075,7 +1078,7 @@ manufatto o alle opere. </p>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="relazione_ditta_tecnico" name="relazione_ditta_tecnico" type="checkbox" value="OBBLIGATORIO"  dynamic_check="#ricad_aspetti_energetici2.checked()" />
+        <input id="relazione_ditta_tecnico" name="relazione_ditta_tecnico" type="checkbox" value="OBBLIGATORIO"  dynamic_check="#ricad_aspetti_energetici2.checked()" enabled="#ricad_aspetti_energetici2.checked()"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;"><b>Relazione della ditta/tecnico attestante i requisiti di prestazione energetica</b> (nel caso in cui gli interventi ricadano nell'articolo 4, del D. P. P. 13 luglio 2009, n. 1 1-13/Leg. e ss.mm)</p>
@@ -1091,7 +1094,18 @@ manufatto o alle opere. </p>
         <input id="GLOBO_allegato_cGEN-RELAZ-REQ-PREST-ENERG-FIRMATA" name="GLOBO_allegato_cGEN-RELAZ-REQ-PREST-ENERG-FIRMATA" 
           numero="#Referente9_presente.checked() ? #num_relaz_ditta.value() : 0" 
           obbligatorio="#Referente9_presente.checked() && #ricad_aspetti_energetici2.checked() ? 'OBBLIGATORIO' : ''"  type="hidden" value=""/>
-
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center;">
+        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#Incarico_soggetto_certificatore2.checked()" enabled="#Incarico_soggetto_certificatore2.checked()" value="OBBLIGATORIO" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Relazione energetica</b> (Allegati dm. 26 giugno 2009 <i>Schemi e modalità di riferimento per la compilazione della relazione tecnica di progetto ai fini dell’applicazione delle prescrizioni e dei requisiti minimi di prestazione energetica negli edifici</i>) nel caso in cui gli interventi ricadano nell'articolo 4, commi 3, 4 o 5 del d. P. P. 13 luglio 2009, n. 1 1-13/Leg. e s.m.i</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_relaz_energetica" name="numero_relaz_energetica" style="width: 90%; text-align: center;" mandatory_enabled="#relaz_energetica.checked()" type="number" min="1" max="100"/></p>
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="#Incarico_soggetto_certificatore2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1166,7 +1180,7 @@ manufatto o alle opere. </p>
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="anag_prog_opere_precarie" name="anag_prog_opere_precarie" type="checkbox" dynamic_check="#Tipo_opere12.checked()" value="OBBLIGATORIO"/>
+        <input id="anag_prog_opere_precarie" name="anag_prog_opere_precarie" type="checkbox" dynamic_check="#Tipo_opere12.checked()" enabled="#Tipo_opere12.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista della relazione tecnica descrittiva delle opere</b>, firmato con <b>firma digitale</b></p>
@@ -1209,18 +1223,6 @@ manufatto o alle opere. </p>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="NschedeAllegateEl" name="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG_EL.checked()" style="width: 90%; text-align: center;"/></p>
         <input id="GLOBO_modulofiglio_cGEN-INTAGG-EL-OPERE-LIBERE" name="GLOBO_modulofiglio_cGEN-INTAGG-EL-OPERE-LIBERE" numero="#NschedeAllegateEl.value()" obbligatorio="#NschedeAllegateEl.value() != 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: center; text-align: center;">
-        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#Incarico_soggetto_certificatore2.checked()" enabled="#Incarico_soggetto_certificatore2.checked()" value="OBBLIGATORIO" />
-      </td>
-      <td colspan="2">
-        <p style="line-height:1.6;"><b>Relazione energetica</b> (Allegati dm. 26 giugno 2009 <i>Schemi e modalità di riferimento per la compilazione della relazione tecnica di progetto ai fini dell’applicazione delle prescrizioni e dei requisiti minimi di prestazione energetica negli edifici</i>) nel caso in cui gli interventi ricadano nell'articolo 4, commi 3, 4 o 5 del d. P. P. 13 luglio 2009, n. 1 1-13/Leg. e s.m.i</p>
-      </td>
-      <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_relaz_energetica" name="numero_relaz_energetica" style="width: 90%; text-align: center;" mandatory_enabled="#relaz_energetica.checked()" type="number" min="1" max="100"/></p>
-        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="#Incarico_soggetto_certificatore2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1295,9 +1297,21 @@ manufatto o alle opere. </p>
         <input id="GLOBO_allegato_cGEN-ELAB-PROG-IMPIANTI" name="GLOBO_allegato_cGEN-ELAB-PROG-IMPIANTI" obbligatorio="#elaborato_progettuale_impianti.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+        <!-- GEN-SUPERBONUS-CILA -->
+    <td style="width:4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
+        <input id="superbonus_cila" name="superbonus_cila" type="checkbox" value="OBBLIGATORIO" dynamic_check="#AventeTitolo_Superbonus1.checked()"  mandatory_enabled="#AventeTitolo_Superbonus1.checked()" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>CILA Superbonus: si allega il <a href="https://sportello.comune.trento.it/sites/default/files/2021-09/Modulo_CILA_Superbonus.pdf" target="_blank">seguente documento</a> compilato e firmato in forma autografa</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="num_superbonus_cila" name="num_superbonus_cila" dynamic_value="#AventeTitolo_Superbonus1.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly /></p>
+        <input id="GLOBO_allegato_cGEN-SUPERBONUS-CILA" name="GLOBO_allegato_cGEN-SUPERBONUS-CILA" obbligatorio="#AventeTitolo_Superbonus1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+      </td>
+    </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="relaz_descr_opere" name="relaz_descr_opere" type="checkbox" dynamic_check="#Tipo_opere12.checked()" value="OBBLIGATORIO"/>
+        <input id="relaz_descr_opere" name="relaz_descr_opere" type="checkbox" dynamic_check="#Tipo_opere12.checked()" enabled="#Tipo_opere12.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Nel caso in cui la comunicazione riguardi la posa di opere o manufatti precari ammessi dall’art. 78, comma 3, lettera k)
