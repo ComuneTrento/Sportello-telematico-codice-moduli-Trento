@@ -2310,3 +2310,21 @@ function get_ufficio_dest() {
     <option value="EE">EE</option>
 </select>
 {%- endmacro %}
+
+<!----------------------------------------------------------------- BLOCCO ALTRI ALLEGATI ----------------------------------------------------------------->
+<!-- Questa macro deve essere chiamata all'interno di una table                            ---------------------------------------------------------------->
+{% macro altri_allegati(descr_allegato_bold="Altri allegati", descr_allegato=", per i quali non è richiesta firma digitale", codice_allegato="GEN-ALTRI-ALLEGATI") -%}
+    <tr>
+      <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
+        <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO" enabled="true"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;"><b>{{ descr_allegato_bold }}</b>{{descr_allegato}}
+          <br><textarea class="inputNormal" id="AltriAllegati" name="AltriAllegati" label="Altri allegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" style="width:99%; height:3cm"></textarea>
+        </p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" type="number" min="1" max="100" id="num_altri_all" name="num_altri_all" label="Numero altri allegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()" style="width: 90%; text-align: center;"/> </p>
+        <input id="GLOBO_allegato_c{{ codice_allegato }}" name="GLOBO_allegato_c{{ codice_allegato }}" numero="#num_altri_all.value()" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+    </tr>
+{%- endmacro %}  
