@@ -123,9 +123,170 @@ urn_report="report:CSP_SESSION_REPORT"
 <h3 class="Modulo">
   DICHIARA
 </h3>
+<input id="verifica_UE" name="verifica_UE" dynamic_value="#Titolare_Cittadinanza.value() != '' and #Titolare_Cittadinanza.check_value([ 'Italia', 'Austria', 'Belgio', 'Bulgaria', 'Cipro', 'Danimarca', 'Eire', 'Estonia', 'Finlandia', 'Francia', 'Germania', 'Grecia', 'Lettonia', 'Lituania', 'Lussemburgo', 'Malta', 'Paesi Bassi', 'Polonia', 'Portogallo', 'Repubblica Ceca', 'Romania', 'Slovacchia', 'Slovenia', 'Spagna', 'Svezia', 'Ungheria']) ? 'UE' : 'nonUE'" type="hidden"/>
 
 {% block dichiarazioni_cittadinanza %} 
-<div id="Tassonomia_Cittadinanza" name="Tassonomia_Cittadinanza" label="Cittadinanza" mandatory="true"></div>
+<table class="Modulo" style="border: 1px solid grey;">
+  <tbody>
+   
+    <tr>
+      <td style="vertical-align: top; width: 4%;">
+        <input id="Cittadino_Italiano" name="Cittadino_Italiano" type="checkbox" value="SI" dynamic_check="#Titolare_Cittadinanza.value().toUpperCase()=='ITALIA'" enabled="#Titolare_Cittadinanza.value().toUpperCase()=='ITALIA'"/>
+      </td>
+      <td colspan="2">
+        <p>di essere cittadino/a italiano/a</p>
+      </td>
+    </tr>
+
+    <tr>
+      <div id="Cittadino_NonItaliano" name="Cittadino_NonItaliano" label="Cittadinanza" mandatory_enabled="#Titolare_Cittadinanza.value().toUpperCase()!='' and #Titolare_Cittadinanza.value().toUpperCase()!='ITALIA'"></div>
+      <td rowspan="2" style="vertical-align: top; width: 4%;">
+        <input group="Cittadino_NonItaliano" id="Cittadino_NonItaliano1" name="Cittadino_NonItaliano" type="radio" value="1" dynamic_check="#Titolare_Cittadinanza.value().toUpperCase()!='ITALIA' and #verifica_UE.value()=='UE'" mandatory_enabled="#Titolare_Cittadinanza.value().toUpperCase()!='ITALIA' and #verifica_UE.value()=='UE'"/>
+      </td>
+      <td colspan="2">
+        <p>di essere cittadino/a di uno degli Stati membri dell’Unione Europea</p>
+      </td>
+    </tr>
+    <tr> 
+      <td colspan="2">
+          <!-- {{ utils.nazionalita( 'Cittadino_StatoMembro', 'Cittadinanza' )}} -->
+          <input class="inputNormal" id="Cittadino_StatoMembro" name="Cittadino_StatoMembro" style="width: 100%;" mandatory_enabled="#Cittadino_NonItaliano1.checked()" dynamic_value="#Titolare_Cittadinanza.value()"/>
+      </td>
+    </tr>
+    
+    <tr>
+      <td rowspan="4" style="vertical-align: top; width: 4%;">
+        <input group="Cittadino_NonItaliano" id="Cittadino_NonItaliano2" name="Cittadino_NonItaliano" type="radio" value="2" mandatory_enabled="#verifica_UE.value()=='nonUE'"/>
+      </td>
+      <td colspan="2">
+        <p>di essere familiare di cittadino/a dell'Unione Europea, anche se cittadino/a di stato terzo. Specificare la relazione di parentela con il cittadino/a dell'unione europea <input class="" label="Indicare la relazione di parentela con familiare cittadino UE" id="Parametri_RelazioneFamUE" mandatory_enabled="#Cittadino_NonItaliano2.checked()" name="Parametri_RelazioneFamUE"/>
+        </p>
+      </td>
+    </tr>
+
+    <tr class="Rigaintestazioneridotta" colspan="2">
+      <td colspan="2">
+        <p class="Labelcella">Il familiare è titolare di</p>
+      </td>
+    </tr>
+
+    <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="Cittadino_ExtraFamiliareDiritto" name="Cittadino_ExtraFamiliareDiritto" label="Tipo diritto di soggiorno del familiare" mandatory_enabled="#Cittadino_NonItaliano2.checked()"> </div>
+          <input group="Cittadino_ExtraFamiliareDiritto" id="Cittadino_ExtraFamiliareDiritto1" name="Cittadino_ExtraFamiliareDiritto" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height: 1.6;">diritto di soggiorno</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Cittadino_ExtraFamiliareDiritto" id="Cittadino_ExtraFamiliareDiritto2" name="Cittadino_ExtraFamiliareDiritto" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height: 1.6;">diritto di soggiorno permanente</p>
+        </td>
+      </tr>
+
+    <tr>
+    <td rowspan="5" style="vertical-align: top; width: 4%;">
+      <input group="Cittadino_NonItaliano" id="Cittadino_NonItaliano3" name="Cittadino_NonItaliano" type="radio" value="3" mandatory_enabled="#verifica_UE.value()=='nonUE'"/>
+    </td>
+    <td colspan="2">
+      <p>
+        di essere cittadino/a di Paesi Terzi
+      </p>
+    </td>
+  </tr>
+
+    <tr class="Rigaintestazioneridotta" colspan="2">
+      <td colspan="2">
+        <p class="Labelcella">Titolare di</p>
+      </td>
+    </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="Cittadino_ExtraPermesso" name="Cittadino_ExtraPermesso" label="Tipo diritto di soggiorno del cittadino paesi terzi" mandatory_enabled="#Cittadino_NonItaliano3.checked()"> </div>
+          <input group="Cittadino_ExtraPermesso" id="Cittadino_ExtraPermesso1" name="Cittadino_ExtraPermesso" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height: 1.6;">permesso di soggiorno CE per soggiornanti di lungo periodo</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Cittadino_ExtraPermesso" id="Cittadino_ExtraPermesso2" name="Cittadino_ExtraPermesso" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height: 1.6;">status di rifugiato</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Cittadino_ExtraPermesso" id="Cittadino_ExtraPermesso3" name="Cittadino_ExtraPermesso" type="radio" value="3" />
+        </td>
+        <td>
+          <p style="line-height: 1.6;">status di protezione sussidiaria</p>
+        </td>
+      </tr>
+  
+      <tr class="Rigaintestazioneridotta" colspan="2">
+        <td colspan="3">
+          <p class="Labelcella">Godimento dei diritti civili e politici e padronanza lingua italiana (riservato ai cittadini stranieri)</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <div id="Cittadino_ExtraDiritti" name="Cittadino_ExtraDiritti" label="Indicare il godimento dei diritti civili e politici" mandatory_enabled="#Cittadino_NonItaliano.checked()"> </div>
+          <input group="Cittadino_ExtraDiritti" id="Cittadino_ExtraDiritti1" name="Cittadino_ExtraDiritti" type="radio" value="1" />
+        </td>
+        <td colspan="2">
+          <p>
+            di godere dei diritti civili e politici anche nello stato di appartenenza o di provenienza
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Cittadino_ExtraDiritti" id="Cittadino_ExtraDiritti2" name="Cittadino_ExtraDiritti" type="radio" value="2" />
+        </td>
+        <td colspan="2">
+          <p>
+            di <b>non</b> godere dei diritti civili e politici nello stato di appartenenza o di provenienza (indicare la motivazione)
+          </p>
+          <input class="" label="Indicare le motivazioni di non godimento dei diritti civili e politici" id="Parametri_Godimento" name="Parametri_Godimento" style="width: 100%;" mandatory_enabled="#Cittadino_ExtraDiritti2.checked()"/>
+        </td>
+      </tr>
+      <div id="Cittadino_ExtraRequisiti" name="Cittadino_ExtraRequisiti" label="Selezionare di godere dei requisiti previsti per i cittadini della Repubblica" mandatory_enabled="#Cittadino_NonItaliano.checked()"> </div>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Cittadino_ExtraRequisiti" id="Cittadino_ExtraRequisitiRepubblica" name="Cittadino_ExtraRequisitiRepubblica" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2">
+          <p>
+            di godere di tutti gli altri requisiti previsti per i cittadini della Repubblica
+          </p>
+        </td>
+      </tr>
+      <div id="Cittadino_ExtraConoscenzaLingua" name="Cittadino_ExtraConoscenzaLingua" label="Selezionare di avere una adeguata conoscenza della lingua italiana" mandatory_enabled="#Cittadino_NonItaliano.checked()"> </div>
+      <tr>
+        <td style="vertical-align: top; width: 4%;">
+          <input group="Cittadino_ExtraConoscenzaLingua" id="Cittadino_ExtraConoscenzaItaliano" name="CittadinoExtra_ConoscenzaItaliano" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2">
+          <p>
+            di avere adeguata conoscenza della lingua italiana
+          </p>
+        </td>
+      </tr>
+
+  <tbody>
+</table>
+
+
+
+
+<!-- <div id="Tassonomia_Cittadinanza" name="Tassonomia_Cittadinanza" label="Cittadinanza" mandatory="true"></div>
 <table class="Modulo" style="border: 1px solid grey;">
   <tbody>
     <tr>
@@ -261,7 +422,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </tr>
 
   <tbody>
-</table>
+</table> -->
 {% endblock dichiarazioni_cittadinanza %} 
 
 <br>
