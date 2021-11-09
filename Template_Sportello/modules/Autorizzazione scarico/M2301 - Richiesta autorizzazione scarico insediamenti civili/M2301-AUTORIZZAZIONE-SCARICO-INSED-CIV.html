@@ -1,6 +1,7 @@
 {% set CodiceModulo = "M2301-AUTORIZZAZIONE-SCARICO-INSED-CIV" %}
 {% set Urn =  "document:c_l378:aut.scarico.insed.civ;richiedere.autorizzazione;domanda.autorizzazione.scarico.civ;m2301.autorizzazione.scarico.insed.civili" %}
 {% extends "base_trento_new.html" %}
+{%- import 'porzioni_bollo.html' as bollo with context %}
 
 {% block meta %}
 
@@ -178,7 +179,7 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_allegato="GEN-RICEVUTA-PAGAMENTO"
+<!-- <meta codice_allegato="GEN-RICEVUTA-PAGAMENTO"
 urn_allegato="document:c_l378:allegato.ricevuta.pagamento"
 descrizione_estesa="Ricevuta pagamenti: marca da bollo e rilascio autorizzazione"
 filename="GEN-RICEVUTA-PAGAMENTO.pdf"
@@ -187,7 +188,7 @@ istruzioni="/modulistica/moduli/GEN-RICEVUTA-PAGAMENTO"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
+tipo_mime="application/pdf"/> -->
 
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
@@ -204,7 +205,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Domanda di autorizzazione allo scarico degli insediamenti civili'" id="Oggetto" name="Oggetto" type="hidden" />
 
-{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+{{ intestazioni.intestazione_moduloprincipale_conbollo() }}
 
 <br>
 
@@ -346,13 +347,21 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <input group="Tipo_richiesta" id="Tipo_richiesta3" name="Tipo_richiesta" type="radio" value="3" />
         </td>
         <td>
+          <p style="line-height:1.6;">Il rilascio di <b>nuova autorizzazione</b> e la <b>modifica</b>/<b>sostituzione</b> di autorizzazione/i preesistente/i</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Tipo_richiesta" id="Tipo_richiesta4" name="Tipo_richiesta" type="radio" value="4" />
+        </td>
+        <td>
           <p style="line-height:1.6;">Il <b>rinnovo</b> dell'autorizzazione</p>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <input id="Referente99_Tipo_richiesta_autorizz" name="Referente99_Tipo_richiesta_autorizz" dynamic_value="#Tipo_richiesta1.checked() ? 'NUOVA AUTORIZZAZIONE' : (#Tipo_richiesta2.checked() ? 'SOSTITUZIONE' : (#Tipo_richiesta3.checked() ? 'RINNOVO' : ''))" type="hidden"/>
+  <input id="Referente99_Tipo_richiesta_autorizz" name="Referente99_Tipo_richiesta_autorizz" dynamic_value="#Tipo_richiesta1.checked() ? 'NUOVA AUTORIZZAZIONE' : (#Tipo_richiesta2.checked() ? 'SOSTITUZIONE' : (#Tipo_richiesta3.checked() ? 'NUOVA/SOSTITUZIONE' : (#Tipo_richiesta4.checked() ? 'RINNOVO' : '')))" type="hidden"/>
 
   <br>
 
@@ -365,17 +374,17 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
       <tr>
         <td colspan="2">
-          <p style="line-height: 1.6;">Autorizzazione n.: <input class="" label="Numero autorizzazione" id="Num_autorizzazione" name="Num_autorizzazione" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" style="width:15%; text-align: center;"/>  di data: <input class="" label="Data autorizzazione" id="Data_autorizzazione" name="Data_autorizzazione" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" style="width:20%; text-align: center;" type="date"/> rilasciata da: <input class="" label="Rilascio autorizzazione" id="Rilascio_autorizzazione" name="Rilascio_autorizzazione" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" style="width:28.5%; text-align: center;"/><br>
-            Rilasciata a nome: <input class="" label="Nome rilascio" id="Nome_rilascio" name="Nome_rilascio" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" style="width:82%;"/> <br>
-            per il recapito in: <input class="" label="Recapito rilascio" id="Recapito_rilascio" name="Recapito_rilascio" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" style="width:84%;"/><br><br>
-            <div id="validita_autorizz_pregr" name="validita_autorizz_pregr" label="Validità autorizzazione pregressa" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()"> </div>
+          <p style="line-height: 1.6;">Autorizzazione n.: <input class="" label="Numero autorizzazione" id="Num_autorizzazione" name="Num_autorizzazione" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked() || #Tipo_richiesta4.checked()" style="width:15%; text-align: center;"/>  di data: <input class="" label="Data autorizzazione" id="Data_autorizzazione" name="Data_autorizzazione" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked() || #Tipo_richiesta4.checked()" style="width:20%; text-align: center;" type="date"/> rilasciata da: <input class="" label="Rilascio autorizzazione" id="Rilascio_autorizzazione" name="Rilascio_autorizzazione" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" style="width:28.5%; text-align: center;"/><br>
+            Rilasciata a nome: <input class="" label="Nome rilascio" id="Nome_rilascio" name="Nome_rilascio" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked() || #Tipo_richiesta4.checked()" style="width:82%;"/> <br>
+            per il recapito in: <input class="" label="Recapito rilascio" id="Recapito_rilascio" name="Recapito_rilascio" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked() || #Tipo_richiesta4.checked()" style="width:84%;"/><br><br>
+            <div id="validita_autorizz_pregr" name="validita_autorizz_pregr" label="Validità autorizzazione pregressa" mandatory_enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked() || #Tipo_richiesta4.checked()"> </div>
             Valida per: &nbsp; &nbsp; <input group="validita_autorizz_pregr" id="validita_autorizz_pregr1" name="validita_autorizz_pregr1" type="checkbox" value="1" /> <b>Acque bianche</b> &nbsp; &nbsp; &nbsp; &nbsp;<input group="validita_autorizz_pregr" id="validita_autorizz_pregr2" name="validita_autorizz_pregr2" type="checkbox" value="2"/> <b>Acque nere</b> &nbsp; &nbsp; &nbsp; &nbsp;<input group="validita_autorizz_pregr" id="validita_autorizz_pregr3" name="validita_autorizz_pregr3" type="checkbox" value="3"/> <b>Acque miste</b><br><br>
           </p>
         </td>
       </tr>
       <tr class="Rigaintestazione">
         <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input id="Ulteriori_autorizzazioni" name="Ulteriori_autorizzazioni" type="checkbox" enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" value="OBBLIGATORIO"/>
+          <input id="Ulteriori_autorizzazioni" name="Ulteriori_autorizzazioni" type="checkbox" enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked() || #Tipo_richiesta4.checked()" value="OBBLIGATORIO"/>
         </td>
         <td>
           <p style="line-height: 1.8;">Esistono n. <input class="" label="Numero autorizzazioni pregresse" id="Num_ult_autorizz" name="Num_ult_autorizz" mandatory_enabled="#Ulteriori_autorizzazioni.checked()" style="width:10%; text-align: center;"/> ulteriori autorizzazioni pregresse, i cui estremi verranno indicati in un apposito modulo secondario</p>
@@ -540,11 +549,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!--------------------INIZIO BLOCCO PAGAMENTO NECESSARIO--------------------->
 
 <br>
-<br>
 
-<!--------------------INIZIO BLOCCO MARCA DA BOLLO--------------------->
+<!-- ------------------INIZIO BLOCCO MARCA DA BOLLO--------------------->
 
-<div class="simpatico-block simpatico-query-and-answer">
+<!--<div class="simpatico-block simpatico-query-and-answer">
   
   <table class="Modulo" style="border: 1px solid grey;">
     <tbody>
@@ -592,16 +600,18 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </tr>
     </tbody>
   </table>  
-</div>
+</div> -->
 
-<!--------------------FINE BLOCCO MARCA DA BOLLO--------------------->
+<!--------------------FINE BLOCCO MARCA DA BOLLO---------------------> 
 
-<br>
+<br/>
+  {{ bollo.bolloNORESP("display:none","display_none","false") }}
+<br/>
 <br>
 
 <!--------------------INIZIO BLOCCO PAGAMENTO NECESSARIO--------------------->
 
-<div class="simpatico-block simpatico-query-and-answer">
+<!-- <div class="simpatico-block simpatico-query-and-answer">
   <table class="Modulo" style="border: 1px solid grey;">
     <tr class="Rigaintestazione" >
       <td>
@@ -628,12 +638,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </td>
     </tr>
   </table>
-</div>
+</div> -->
   
-  <!--------------------INIZIO BLOCCO PAGAMENTO NECESSARIO--------------------->
-
-  <br>
-  <br>
+<!--------------------INIZIO BLOCCO PAGAMENTO NECESSARIO--------------------->
 
 <!--------------------INIZIO BLOCCO TUBAZIONI--------------------->
 
@@ -773,7 +780,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <input group="Richiesta_delega" id="Richiesta_delega2" name="Richiesta_delega" type="radio" value="2" />
       </td>
       <td colspan="2">
-        <p style="line-height:1.6;"><b>CHIEDE di ricevere</b> le comunicazioni relative al presente procedimento <b>al proprio indirizzo PEC</b> (Posta Elettronica Certificata), indicato nei dati personali e qui riportato <input class="inputNormal" id="pec_personale_per_comunicazioni" name="pec_personale_per_comunicazioni"  style="width: 42%;" label="PEC personale del titolare per comunicazioni" format="pec" dynamic_value="#AventeTitolo_EMailPEC.value()" enabled="#Richiesta_delega2.checked()" readonly></p>
+        <p style="line-height:1.6;"><b>CHIEDE di ricevere</b> le comunicazioni relative al presente procedimento <b>al proprio indirizzo PEC</b> (Posta Elettronica Certificata), indicato nei dati personali e qui riportato <input class="inputNormal" id="pec_personale_per_comunicazioni" name="pec_personale_per_comunicazioni"  style="width: 42%;" label="PEC personale del titolare per comunicazioni" format="pec" dynamic_value="#AventeTitolo_EMailPEC.value()" mandatory_enabled="#Richiesta_delega2.checked()" readonly></p>
       </td>
     </tr>
   </tbody>
@@ -911,7 +918,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="rich_dati_tecnici" name="rich_dati_tecnici" type="checkbox" dynamic_check="#Tipo_richiesta1.checked() || #Tipo_richiesta2.checked()" enabled="#Tipo_richiesta1.checked() || #Tipo_richiesta2.checked()" value="OBBLIGATORIO"/>
+        <input id="rich_dati_tecnici" name="rich_dati_tecnici" type="checkbox" dynamic_check="#Tipo_richiesta1.checked() || #Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" enabled="#Tipo_richiesta1.checked() || #Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Dati tecnici</b>, firmato dal proprietario, comproprietario o richiedente in possesso di titolo idoneo con firma digitale.
@@ -924,7 +931,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </tr>
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
-        <input id="rich_atto_notorio" name="rich_atto_notorio" type="checkbox" dynamic_check="#Tipo_richiesta2.checked()" enabled="#Tipo_richiesta2.checked()" value="OBBLIGATORIO"/>
+        <input id="rich_atto_notorio" name="rich_atto_notorio" type="checkbox" dynamic_check="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Dichiarazione sostitutiva atto notorio</b>, firmata dal proprietario, comproprietario o richiedente in possesso di titolo idoneo con firma digitale.
@@ -1034,7 +1041,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <p style="line-height: 1.8; text-align: center;"><input class="" type="number" id="num_bonifico_comune_tn" name="num_bonifico_comune_tn" label="Numero bonifici per pagamento bollo al comune di trento" value="1" readonly style="width: 90%; text-align: center;"/></p>
       </td>
     </tr>
-    <tr>
+    <!-- <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
         <input id="BonificoTesoreriaComune" name="BonificoTesoreriaComune" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
       </td>
@@ -1045,7 +1052,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       <td style="background-color: #eeeeee; vertical-align: left;" >
         <p style="line-height: 1.8; text-align: center;"><input class="" type="number" id="num_bonifico_dol_energia" name="num_bonifico_dol_energia" label="Numero bonifici per pagamento bollo a dolomiti energia" value="1" readonly style="width: 90%; text-align: center;"/></p>
       </td>
-    </tr>
+    </tr> -->
     <tr>
       <td style="width:4%; vertical-align: center; text-align: center;">
         <input id="cb_ControlloTecnico" name="cb_ControlloTecnico" type="checkbox" dynamic_check="true" value="OBBLIGATORIO"/>
@@ -1061,6 +1068,21 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <p style="line-height: 1.8; text-align: center;"><input class="" type="number" id="num_ControlloTecnico" name="num_ControlloTecnico" label="Numero bonifici per pagamento bollo a dolomiti energia" value="1" readonly style="width: 90%; text-align: center;"/></p>
       </td>
     </tr>
+    <!-- BOLLO SU RILASCIO -->
+    <tr>
+				<td style="width: 4%; vertical-align: center; text-align: center;">
+				<input id="GEN-RICEVUTA-PAGAMENTO" name="GEN-RICEVUTA-PAGAMENTO" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" />
+			</td>
+			<td style="background-color: #eeeeee;" colspan="2">
+				<p>Modulo secondario - <b>Distinta di pagamento: versamento di 16,00 € per bollo rilascio autorizzazione</b><br><u>(completare la distinta con i dati di chi effettua il pagamento e procedere al versamento direttamente da Sportello tramite i bottoni Paga online oppure Paga con Avviso di pagamento)</u></a>                                                                        
+				</p>
+        <input id="GLOBO_modulofiglio_cM2301-MSEC01-GEN-RICEVUTA-PAGAMENTO" name="GLOBO_modulofiglio_cM2301-MSEC01-GEN-RICEVUTA-PAGAMENTO" numero="1" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+			</td>
+      <td style="background-color: #eeeeee; vertical-align: left;" >
+        <p style="line-height: 1.8; text-align: center;"><input class="" type="number" id="num_Distinta" name="num_Distinta" label="Numero distinta pagamenti" value="1" readonly style="width: 90%; text-align: center;"/></p>
+      </td>
+		</tr>
+    <!-- FINE BOLLO SU RILASCIO -->
     <tr>
 			<td style="vertical-align: center; text-align: center; width:4%;">
 			 <input id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" enabled="true" value="OBBLIGATORIO"/>
