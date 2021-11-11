@@ -1,4 +1,4 @@
-{% macro bolloNORESP(visibility_esente="display:none",visibility_motivazione="display:none",motivazione_obbligatoria="false") -%}
+{% macro bolloNORESP(visibility_virtuale="display:none",visibility_esente="display:none",visibility_elencoEsenzioni="display:none",visibility_motivazione="display:none",motivazione_obbligatoria="false") -%}
 
 <div class="bollo_solo">
 <table class="Modulo" style="border: 1px solid grey">
@@ -31,10 +31,10 @@
         <input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory_enabled="#Tipo_Bollo1.checked()" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
       </td>
       <td>
-        <input class="" id="Parametri_DataBollo" label="Data marca da bollo" mandatory_enabled="#Tipo_Bollo1.checked()" name="Parametri_DataBollo" style="width:100%;" format="date" mandatory_enabled="#Tipo_Bollo1.checked()"  label="Data di emissione marca da bollo"/>
+        <input class="" id="Parametri_MarcaBolloValoreUtente_Data" label="Data marca da bollo" mandatory_enabled="#Tipo_Bollo1.checked()" name="Parametri_MarcaBolloValoreUtente_Data" style="width:100%;" format="date" mandatory_enabled="#Tipo_Bollo1.checked()"  label="Data di emissione marca da bollo"/>
       </td>
       <td>
-        <input class="" id="Parametri_OraBollo" label="Ora marca da bollo" mandatory_enabled="#Tipo_Bollo1.checked()" name="Parametri_OraBollo" style="width:100%;" format="time" mandatory_enabled="#Tipo_Bollo1.checked()"  label="Ora di emissione marca da bollo"/>
+        <input class="" id="Parametri_MarcaBolloValoreUtente_Ora" label="Ora marca da bollo" mandatory_enabled="#Tipo_Bollo1.checked()" name="Parametri_MarcaBolloValoreUtente_Ora" style="width:100%;" format="time" mandatory_enabled="#Tipo_Bollo1.checked()"  label="Ora di emissione marca da bollo"/>
       </td>
     </tr>
     <tr>
@@ -42,13 +42,50 @@
         <p><b>Il richiedente si impegna a conservare l'originale della marca da bollo annullata</b></p>
       </td>
     </tr>
+    <!-- BLOCCO BOLLO VIRTUALE -->
+    {% if visibility_virtuale == 'visibility:visibility' %}
+    <tr>
+        <td rowspan="3" style="vertical-align: top; width: 4%; background-color:white">
+          <input group="Tipo_Bollo" id="Tipo_Bollo2" name="Tipo_Bollo" type="radio" value="2" /> 
+        </td>
+        <td colspan="3">
+          <p>che l'imposta di bollo è stata assolta in modo virtuale</p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella">Autorizzazione dell'Agenzia delle Entrate di</p>
+        </td>
+        <td style="width:16%">
+          <p class="Labelcella">Numero</p>
+        </td>
+        <td style="width:16%">
+          <p class="Labelcella">Data</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="text" style="width:100%" mandatory_enabled="#Tipo_Bollo2.checked()" name="MarcaBollo_ProvinciaConvenzione" id="MarcaBollo_ProvinciaConvenzione" label="Indicare la provincia dell'Agenzia delle Entrate">
+        </td>
+        <td>
+          <input type="text" style="width:100%" mandatory_enabled="#Tipo_Bollo2.checked()" name="MarcaBollo_NumeroConvenzione" id="MarcaBollo_NumeroConvenzione" label="Indicare il numero della convenzione">
+        </td>
+        <td>
+          <input style="width:100%" mandatory_enabled="#Tipo_Bollo2.checked()" name="MarcaBollo_DataConvenzione" id="MarcaBollo_DataConvenzione" format="date" label="Indicare il numero della convenzione">
+        </td>
+      </tr>
+    {% endif %}
+    <!-- BLOCCO ESENZIONE BOLLO -->
     {% if visibility_esente == 'visibility:visibility' %}
     <tr>
 				<td style="vertical-align: top; width: 4%;" rowspan="3">
-					<input group="Tipo_Bollo" id="Tipo_Bollo2" name="Tipo_Bollo" type="radio" value="2" /> 
+					<input group="Tipo_Bollo" id="Tipo_Bollo3" name="Tipo_Bollo" type="radio" value="3" /> 
 				</td>
 				<td colspan="3">
-					<p st	yle="line-height:1.6;">che non è necessario annullare marca da bollo in quanto soggetto esente</p>
+					<p style="line-height:1.6;">che non è necessario annullare marca da bollo in quanto soggetto esente {% if visibility_elencoEsenzioni == 'visibility:visibility' %}<a href="https://sportello.comune.trento.it/faq%3As_italia%3Acdu.casistiche.esenzione.bollo" target="_blank">ricadendo nel caso di</a>{% endif %}
+          <span style="font-size: 85%;"><br><i>
+              (valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti, dichiara di essere esente dal pagamento dell'imposta di bollo, rientrando in uno dei casi previsti dall'Allegato B del Decreto del Presidente della Repubblica 26/10/1972, n. 642, dall'articolo 82 Decreto Legislativo 03/07/2017, n. 117 o dal Decreto Legge 19/05/2020, n. 34)
+            </i></span></p>
 				</td>
 		</tr>
      <!-- Motivazione esenzione -->
@@ -59,10 +96,10 @@
       <tr>
             <td colspan="3">
               {% if motivazione_obbligatoria == 'true'%}
-                <input class="inputNormal" id="Motivazione_Esente" label="Motivazione esenzione" name="Motivazione_Esente" style="width:100%" mandatory_enabled="#Tipo_Bollo2.checked()"/>
+                <input class="inputNormal" id="Motivazione_EsenzioneBollo" label="Motivazione esenzione bollo" name="Motivazione_EsenzioneBollo" style="width:100%" mandatory_enabled="#Tipo_Bollo3.checked()"/>
               {% endif %}
               {% if motivazione_obbligatoria == 'false'%}
-                <input class="inputNormal" id="Motivazione_Esente" label="Motivazione esenzione" name="Motivazione_Esente" style="width:100%" mandatory="false"/>
+                <input class="inputNormal" id="Motivazione_EsenzioneBollo" label="Motivazione esenzione bollo" name="Motivazione_EsenzioneBollo" style="width:100%" mandatory="false"/>
               {% endif %}	
             </td>
       </tr>
@@ -75,7 +112,7 @@
 
 
 <!-- INIZIO BLOCCO MARCA DA BOLLO  DATA ORA RESPONSIVE-->
-{% macro bolloRESP(visibility_esente="display:none",visibility_motivazione="display:none",motivazione_obbligatoria="false") -%}
+{% macro bolloRESP(visibility_virtuale="display:none",visibility_esente="display:none",visibility_elencoEsenzioni="display:none",visibility_motivazione="display:none",motivazione_obbligatoria="false") -%}
 <div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
@@ -98,12 +135,12 @@
               <input class="inputNormal" id="Parametri_NumeroBollo" name="Parametri_NumeroBollo" style="width: 100%; text-align: right;" mandatory_enabled="#Tipo_Bollo1.checked()" label="Numero seriale marca da bollo" format="regular_expression" expression="^[0-9]{14}$" maxlength="14">
             </div>
           <div class="form-group col-lg-3">
-            <label for="Parametri_DataBollo">Data di emissione</label>
-              <input class="inputNormal" id="Parametri_DataBollo" name="Parametri_DataBollo" style="width: 100%; text-align: right;" format="date" mandatory_enabled="#Tipo_Bollo1.checked()"  label="Data di emissione marca da bollo">
+            <label for="Parametri_MarcaBolloValoreUtente_Data">Data di emissione</label>
+              <input class="inputNormal" id="Parametri_MarcaBolloValoreUtente_Data" name="Parametri_MarcaBolloValoreUtente_Data" style="width: 100%; text-align: right;" format="date" mandatory_enabled="#Tipo_Bollo1.checked()"  label="Data di emissione marca da bollo">
           </div>
           <div class="form-group col-lg-3">
-            <label for="Parametri_OraBollo">Ora di emissione</label>
-              <input class="inputNormal" id="Parametri_OraBollo" name="Parametri_OraBollo" style="width: 100%; text-align: right;" format="time" mandatory_enabled="#Tipo_Bollo1.checked()"  label="Ora di emissione marca da bollo">
+            <label for="Parametri_MarcaBolloValoreUtente_Ora">Ora di emissione</label>
+              <input class="inputNormal" id="Parametri_MarcaBolloValoreUtente_Ora" name="Parametri_MarcaBolloValoreUtente_Ora" style="width: 100%; text-align: right;" format="time" mandatory_enabled="#Tipo_Bollo1.checked()"  label="Ora di emissione marca da bollo">
           </div>
       </div>
       <div class="form-row border-bottom">
@@ -111,20 +148,48 @@
              (per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare?</a> ).</i>
           </label>
       </div>
-          {% if visibility_esente == 'visibility:visibility' %}
-          <div class="form-check indent-1">
+       <!-- BLOCCO BOLLO VIRTUALE -->
+    {% if visibility_virtuale == 'visibility:visibility' %}
+     <div class="form-check indent-1 border-bottom">
             <input class="form-check-input" id="Tipo_Bollo2" name="Tipo_Bollo" type="radio" value="2">
              <label class="form-check-label" for="Tipo_Bollo2"> 
-             che non è necessario annullare marca da bollo in quanto soggetto esente
+             che l'imposta di bollo è stata assolta in modo virtuale
+            </label>
+          </div>
+         <div class="form-row">
+            <div class="form-group col-lg-6">
+              <label for="MarcaBollo_ProvinciaConvenzione">Autorizzazione dell'Agenzia delle Entrate di</label>
+             <input class="inputNormal" id="MarcaBollo_ProvinciaConvenzione" name="MarcaBollo_ProvinciaConvenzione" style="width: 100%; text-align: left;" mandatory_enabled="#Tipo_Bollo2.checked()" label="Indicare la provincia dell'Agenzia delle Entrate">
+            </div>
+            <div class="form-group col-lg-3">
+              <label for="MarcaBollo_NumeroConvenzione">Numero</label>
+             <input class="inputNormal" id="MarcaBollo_NumeroConvenzione" name="MarcaBollo_NumeroConvenzione" style="width: 100%; text-align: right;" mandatory_enabled="#Tipo_Bollo2.checked()" label="Indicare il numero di convenzione">
+            </div>
+            <div class="form-group col-lg-3">
+              <label for="MarcaBollo_DataConvenzione">Data</label>
+             <input class="inputNormal" id="MarcaBollo_DataConvenzione" name="MarcaBollo_DataConvenzione" format="date" style="width: 100%; text-align: right;" mandatory_enabled="#Tipo_Bollo2.checked()" label="Indicare la data della convenzione">
+            </div>
+        </div>
+        <div class="form-row border-bottom"><label class="title-1"></label></div>
+    {% endif %}
+    <!-- BLOCCO ESENZIONE BOLLO -->
+      {% if visibility_esente == 'visibility:visibility' %}
+          <div class="form-check indent1 border-bottom">
+            <input class="form-check-input" id="Tipo_Bollo3" name="Tipo_Bollo" type="radio" value="3">
+             <label class="form-check-label" for="Tipo_Bollo3"> 
+             che non è necessario annullare marca da bollo in quanto soggetto esente {% if visibility_elencoEsenzioni == 'visibility:visibility' %}<a href="https://sportello.comune.trento.it/faq%3As_italia%3Acdu.casistiche.esenzione.bollo" target="_blank">ricadendo nel caso di</a>{% endif %}
+             <span style="font-size: 85%;"><br><i>
+              (valendosi della facoltà prevista dall'articolo 47 del Decreto del Presidente della Repubblica 28/12/2000, n. 445, consapevole delle sanzioni penali previste dall'articolo 76 del Decreto del Presidente della Repubblica 28/12/2000, n. 445 e dall'articolo 483 del Codice Penale nel caso di dichiarazioni non veritiere e di falsità in atti, dichiara di essere esente dal pagamento dell'imposta di bollo, rientrando in uno dei casi previsti dall'Allegato B del Decreto del Presidente della Repubblica 26/10/1972, n. 642, dall'articolo 82 Decreto Legislativo 03/07/2017, n. 117 o dal Decreto Legge 19/05/2020, n. 34)
+            </i></span>
             </label>
           </div>
         <!-- Motivazione esenzione -->
         {% if visibility_motivazione == 'visibility:visibility' %}
         {% if motivazione_obbligatoria == 'true'%}
-        <div class="form-row">
+        <div class="form-row border-bottom">
           <div class="form-group col-lg-12">
           <label for="Motivazione_Esente">Motivazione esenzione</label>
-          <input class="inputNormal" id="Motivazione_Esente" name="Motivazione_Esente" style="width: 100%; text-align: right;" mandatory_enabled="#Tipo_Bollo2.checked()" label="Motivazione esenzione">
+          <input class="inputNormal" id="Motivazione_EsenzioneBollo" name="Motivazione_EsenzioneBollo" style="width: 100%; text-align: left;" mandatory_enabled="#Tipo_Bollo3.checked()" label="Motivazione esenzione bollo">
           </div>
         </div>
         {% endif %}
@@ -132,7 +197,7 @@
         <div class="form-row">
           <div class="form-group col-lg-12">
           <label for="Motivazione_Esente">Motivazione esenzione</label>
-          <input class="inputNormal" id="Motivazione_Esente" name="Motivazione_Esente" label="Motivazione esenzione" style="width: 100%; text-align: right;" mandatory="false">
+          <input class="inputNormal" id="Motivazione_EsenzioneBollo" name="Motivazione_EsenzioneBollo" label="Motivazione esenzione bollo" style="width: 100%; text-align: left;" mandatory="false">
           </div>
         </div>
         {% endif %}
@@ -142,108 +207,3 @@
 </div>
  {%- endmacro %}
 <!-- FINE BLOCCO MARCA DA BOLLO DATA ORA RESPONSIVE -->
-
-
-<!-- {% macro bollosolo1() -%}
-<table class="Modulo" style="border: 1px solid grey">
-		<tbody>
-			<tr>
-				<td style="vertical-align: top; text-align: center; width: 4%;" rowspan="3">
-					<div id="esenz_bollo" name="esenz_bollo" label="Esenzione bollo" mandatory_enabled="true"> </div>
-					<input group="esenz_bollo" id="esenz_bollo1" name="esenz_bollo" type="radio" value="1" /> 
-				</td>
-				<td>
-					<p style="line-height:1.6;">che la seguente <b>marca da bollo</b> è stata annullata per la presentazione della documentazione sopra indicata: <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </i></a>)</span></p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input class="" id="Parametri_NumeroBollo" label="Numero seriale marca da bollo" mandatory_enabled="#esenz_bollo1.checked()" name="Parametri_NumeroBollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" maxlength="14"/>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<p><b>Il richiedente si impegna a conservare l'originale della marca da bollo annullata</b></p>
-				</td>
-			</tr>
-		<tr>
-				<td style="vertical-align: center; text-align: center; width: 4%;">
-					<input group="esenz_bollo" id="esenz_bollo2" name="esenz_bollo" type="radio" value="2" /> 
-				</td>
-				<td colspan="9">
-					<p st	yle="line-height:1.6;">che non è necessario annullare marca da bollo in quanto soggetto esente</p>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-  {%- endmacro %}
-
-
-{% macro bollosolo2() -%}
-  <table class="Modulo" style="border: 1px solid grey;">
-    <tbody>
-        <tr class="Rigaintestazione">
-            <td colspan="4">
-              <b>In merito ai pagamenti relativi alla marca da bollo per la presentazione della richiesta del certificato </b>
-            </td>
-        </tr>
-      <tr>
-        <td rowspan="5" style="width:4%;vertical-align:top;background-color:white">
-          <div id="Parametri_Assoggettabilita" label="Assoggettabilità al pagamento dell'imposta di bollo" mandatory="true"></div>
-          <input id="Parametri_Assoggettabilita1" name="Parametri_Assoggettabilita" type="radio" value="1" placeholder="" enabled="#Parametri_Domanda_DelegaConsulente.checked() ? false:#Parametri_Domanda_EntiPubblici.checked() ? false:true">
-        </td>
-        <td colspan="3" style="border:0px;">
-          <p>
-          di essere soggetto al pagamento della marca da bollo, pertanto     
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td rowspan="3" style="width:4%;vertical-align:top;background-color:white">
-          <div id="Parametri_MarcaBollo" name="Parametri_MarcaBollo" label="Soggetto al pagamento della marca da bollo" mandatory_enabled="#Parametri_Assoggettabilita1.checked()"></div>   
-          <input id="Parametri_BolloDichiara1" name="Parametri_MarcaBollo" type="radio" value="1" placeholder="" disabled>
-        </td>
-        <td>
-          <p>
-          che la seguente marca da bollo è stata annullata per la presentazione della documentazione sopra indicata
-          <br><span style="font-size:85%;"><i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: <a href="https://sportello.comune.trento.it/action%3As_italia%3Apagare%3Bimposta.bollo" target="_blank">Come pagare? </a></i>)</span>
-        </p>
-        </td>
-      </tr>
-      <tr class="Rigaintestazioneridotta" style="border:0px;">
-        <td>
-          <p class="Labelcella">
-          Numero seriale marca da bollo
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input class="" id="Parametri_NumeroBollo" name="Parametri_NumeroBollo" label="Numero seriale marca da bollo" style="width:100%;" type="text" format="regular_expression" expression="^[0-9]{14}$" mandatory="#Parametri_BolloDichiara1.checked()" enabled="#Parametri_BolloDichiara1.checked()" placeholder="" disabled maxlength="14">
-          <br> di impegnarsi a conservare l'originale della marca da bollo annullata 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input id="Parametri_BolloDichiara2" name="Parametri_MarcaBollo" type="radio" value="2">
-        </td>
-        <td>
-          <p>
-            di provvedere al pagamento con assolvimento virtuale dell'imposta di bollo mediante autorizzazione rilasciata dall'Agenzia delle Entrate Codice identificativo n./anno: </p>  
-            <input class="" id="Parametri_NumeroBolloElettronico" name="Parametri_NumeroBolloElettronico" label="Numero marca da bollo virtuale" style="width:100%;" mandatory="#Parametri_BolloDichiara2.checked()" enabled="#Parametri_BolloDichiara2.checked()">       
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align:top">
-          <input id="Parametri_Assoggettabilita2" name="Parametri_Assoggettabilita" type="radio" value="2" placeholder="" class="" dynamic_check="#Parametri_Domanda_DelegaConsulente.checked() || #Parametri_Domanda_EntiPubblici.checked()">
-        </td>
-        <td colspan="2">
-          
-          di non essere soggetto al pagamento della marca da bollo, <a href="https://sportello.comune.trento.it/faq%3As_italia%3Acdu.casistiche.esenzione.bollo" target="_blank">ricadendo nel caso di:</a> 
-          <input class="" id="EsenzioneBollo" name="EsenzioneBollo" label="Motivo esenzione bollo" enabled="#Parametri_Assoggettabilita2.checked()" mandatory_enabled="#Parametri_Assoggettabilita2.checked()" style="width:100%;" type="text">
-        
-        </td>
-      </tr>
-    </tbody>
-  </table>  
-{%- endmacro %} -->
