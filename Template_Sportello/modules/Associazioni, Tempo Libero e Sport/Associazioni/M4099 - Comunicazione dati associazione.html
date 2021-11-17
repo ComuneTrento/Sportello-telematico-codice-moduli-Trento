@@ -1,0 +1,1329 @@
+{% set CodiceModulo = "M1-COMUNICAZIONE-DATI-ASSOCIAZIONE" %}
+{% set Urn = "document:document:c_l378:test.andrea_1;document" %}
+{% extends "base_trento_new.html" %}
+ 
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Comunicazione dei dati delle associazioni"
+destinatario_amministrazione=""
+destinatario_ufficio="AFM9MQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|01/01/2019"/>
+
+<meta codice_allegato="M4099-A01-LOGO-ASSOCIAZIONE"
+urn_allegato="document:c_l378:comunicazione.associazione;comunicazione.dati.associazione;a01.a01.m4099.comunicazione.dati.associazione"
+descrizione_estesa="Logo dell'associazione"
+filename="LogoAssociazione.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M4099-A01-LOGO-ASSOCIAZIONE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+{% block title %}
+COMUNICAZIONE DATI ASSOCIAZIONE
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' - Descrizione modulo'"/>
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<br>
+
+<h1 class="Modulo" style="line-height:1.6;">
+    COMUNICAZIONE DATI ASSOCIAZIONE
+  </h1>
+
+<br>
+
+{{anagrafica_trento_uniformata.richiedente_nomail("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<br>
+
+<h1 class="Modulo">
+  in qualità di legale rappresentante dell'Associazione
+</h1>
+
+<table class="Modulo" style="margin-top:-1px; border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Denominazione associazione</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="NomeAssociazione" name="NomeAssociazione" label="Denominazione dell'associazione" style="width:100%;" mandatory="true"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h1 class="Modulo">
+  CHIEDE
+</h1>
+
+<p class="Modulo" style="line-height:1.6;">
+  la pubblicazione sul sito www.comune.trento.it (sezione riservata alle associazioni) dei dati relativi alla suddetta Associazione.
+</p>
+ 
+<h1 class="Modulo">
+  SI IMPEGNA A
+</h1>
+
+<p class="Modulo" style="line-height:1.6;">
+  comunicare tempestivamente eventuali variazioni nei dati comunicati.
+</p>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+	<tbody>
+		<tr class="Rigaintestazione" >
+			<td colspan="2">
+				<p><b>Dati da pubblicare</b></p>
+			</td>
+		</tr>
+		<tr class="Rigaintestazioneridotta">
+			<td colspan="2">
+				<p class="Labelcella">Denominazione associazione</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input class="inputNormal" id="NomeAssociazionePubblicazione" name="NomeAssociazionePubblicazione" style="width: 100%;" label="Denominazione dell'associazione per la pubblicazione" mandatory_enabled="true">
+			</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+			<td colspan="2">
+				<p class="Labelcella">Sede legale</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input class="inputNormal" id="SedeLegalePubblicazione" name="SedeLegalePubblicazione" style="width: 100%;" label="Sede legale dell'associazione per la pubblicazione" mandatory_enabled="true">
+			</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+			<td>
+				<p class="Labelcella">Codice fiscale</p>
+      </td>
+      <td>
+				<p class="Labelcella">Partita IVA</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input class="inputNormal" id="CodiceFiscalePubblicazione" name="CodiceFiscalePubblicazione" style="width: 100%;" label="Codice fiscale dell'associazione per la pubblicazione" mandatory_enabled="true">
+      </td>
+   		<td>
+				<input class="inputNormal" id="PartitaIVAPubblicazione" name="PartitaIVAPubblicazione" style="width: 100%;" label="Partita IVA dell'associazione per la pubblicazione">
+			</td> 
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella">Telefono fisso</p>
+      </td>
+      <td>
+        <p class="Labelcella">Cellulare</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="inputNormal" id="TelefonoFissoPubblicazione" name="TelefonoFissoPubblicazione" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" mandatory_enabled="true"/>
+      </td>
+      <td>
+        <input class="inputNormal" id="TelefonoCellPubblicazione" name="TelefonoCellPubblicazione" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" mandatory_enabled="true"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">E-mail</p>
+      </td>
+    </tr>
+    <tr>
+			<td colspan="2">
+				<input class="inputNormal" id="MailPubblicazione" name="MailPubblicazione" style="width: 100%;" label="Mail dell'associazione per la pubblicazione" mandatory_enabled="true">
+			</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Sito internet</p>
+      </td>
+    </tr>
+    <tr>
+			<td colspan="2">
+				<input class="inputNormal" id="SitoPubblicazione" name="SitoPubblicazione" style="width: 100%;" label="Indirizzo sito internet dell'associazione per la pubblicazione" mandatory_enabled="true">
+			</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p class="Labelcella">Altri contatti (facebook, twitter, ...)</p>
+      </td>
+    </tr>
+    <tr>
+			<td colspan="2">
+				<input class="inputNormal" id="AltriContattiPubblicazione" name="AltriContattiPubblicazione" style="width: 100%;" label="Altri contatti dell'associazione per la pubblicazione">
+			</td>
+    </tr>
+    <tr  class="Rigaintestazioneridotta">
+        <td  colspan="2">
+            <p class="Labelcella">Ambito di attività</p>
+          </td>
+        </tr>
+        <tr>
+      <td  colspan="2">
+        <select class="inputNormal" id="AmbitoAttivitaAssociazione" name="AmbitoAttivitaAssociazione" style="width:100%;" label="Ambito di attività dell'associazione" mandatory_enabled="true">
+          <option value=""></option>
+          <option value="Sociale">Sociale</option>
+          <option value="Sportiva">Sportiva</option>
+        </select>
+      </td>
+    </tr>
+
+<!--******************************************************************************-->
+    
+{% block ambito_ambienteterritorio %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="3" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoAmbienteTerritorio" name="AmbitoAmbienteTerritorio" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Ambiente e territorio</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoAmbienteTerritorioDisciplina" mandatory_enabled="#AmbitoAmbienteTerritorio.checked()" label="Discipline ambiente e territorio"/>
+          <input group="AmbitoAmbienteTerritorioDisciplina" id="AmbitoAmbienteTerritorio_Architettura" name="AmbitoAmbienteTerritorio_Architettura" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Architettura
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoAmbienteTerritorioDisciplina" id="AmbitoAmbienteTerritorio_Urbanistica" name="AmbitoAmbienteTerritorio_Urbanistica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Urbanistica
+          </p>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+{% endblock ambito_ambienteterritorio %} 
+<!--******************************************************************************-->
+
+
+<!--******************************************************************************-->
+    
+{% block ambito_arte %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="9" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoArte" name="AmbitoArte" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Arte</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoArteDisciplina" mandatory_enabled="#AmbitoArte.checked()" label="Discipline arte"/>
+          <input group="AmbitoArteDisciplina" id="AmbitoArte_ArtiMinoriArtigianato" name="AmbitoArte_ArtiMinoriArtigianato" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Arti minori ed artigianato
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoArteDisciplina" id="AmbitoArte_Digitale" name="AmbitoArte_Digitale" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Digitale
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoArteDisciplina" id="AmbitoArte_Disegno" name="AmbitoArte_Disegno" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Disegno
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoArteDisciplina" id="AmbitoArte_Fotografia" name="AmbitoArte_Fotografia" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Fotografia
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoArteDisciplina" id="AmbitoArte_Fumetti" name="AmbitoArte_Fumetti" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Fumetti
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoArteDisciplina" id="AmbitoArte_Pittura" name="AmbitoArte_Pittura" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Pittura
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoArteDisciplina" id="AmbitoArte_Scultura" name="AmbitoArte_Scultura" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Scultura
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoArteDisciplina" id="AmbitoArte_Videoarte" name="AmbitoArte_Videoarte" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Videoarte
+          </p>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+{% endblock ambito_arte %} 
+<!--******************************************************************************-->
+
+<!--******************************************************************************-->
+    
+{% block ambito_cinema %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="1" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoCinema" name="AmbitoCinema" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Cinema</b>
+          </p>
+        </td>
+      </tr>
+     
+
+
+    </tbody>
+  </table>
+{% endblock ambito_cinema %} 
+<!--******************************************************************************-->
+
+<!--******************************************************************************-->
+    
+{% block ambito_danza %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="3" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoDanza_check" name="AmbitoDanza_check" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Danza</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoDanza1" mandatory_enabled="#AmbitoDanza_check.checked()" label="Danza"/>
+          <input group="AmbitoDanza1" id="AmbitoDanza_classica" name="AmbitoDanza_classica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Classica
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+            <input group="AmbitoDanza1" id="AmbitoDanza_Moderna" name="AmbitoDanza_Moderna" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Moderna
+          </p>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+{% endblock ambito_danza %} 
+<!--******************************************************************************-->
+<!---------------------------------------------------------------------------------->
+{% block sezione_riserve_graduatoria_merito %} 
+  <table class="Modulo" style="border: 0px; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="4" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="DichiaraRiserva" name="DichiaraRiserva" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>di aver diritto alla riserva di posto, prevista dall'avviso di indizione del presente concorso pubblico, ovvero ai sensi dell'art. 1014 comma 1, lettera b del D.Lgs 15.03.2010 n.66 e ss. m. e i., di appartenere o aver appartenuto alla seguente categoria:</p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="DichiaraRiserva_Requisiti" mandatory_enabled="#DichiaraRiserva.checked()" label="Requisiti che danno diritto a riserva di posto"/>
+          <input group="DichiaraRiserva_Requisiti" id="DichiaraRiserva_Requisiti1" name="DichiaraRiserva_Requisiti1" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>militari volontari in ferma breve o in ferma prefissata delle Forze Armate, congedati senza demerito dalle ferme contratte (VFP1 – VFP4 – VFB in ferma triennale)</p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="DichiaraRiserva_Requisiti" id="DichiaraRiserva_Requisiti2" name="DichiaraRiserva_Requisiti2" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>ufficiali di complemento in ferma biennale o ufficiali in ferma prefissata che hanno completato senza
+            demerito la ferma contratta ex art. 678, comma 9 del D.Lgs n. 66/2010</p>
+        </td>
+      </tr>
+    </tbody>
+  </table> 
+{% endblock sezione_riserve_graduatoria_merito %} 
+<!---------------------------------------------------------------------------------->
+<!--******************************************************************************-->
+    
+{% block ambito_intrattenimento_tempo_libero %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="4" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoIntrattenimentoTempoLibero" name="AmbitoIntrattenimentoTempoLibero" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Intrattenimento - tempo libero</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoIntrattenimentoTempoLibero" mandatory_enabled="#AmbitoIntrattenimentoTempoLibero.checked()" label="Intrattenimento e tempo libero"/>
+          <input group="AmbitoIntrattenimentoTempoLibero" id="AmbitoIntrattenimentoTempoLibero_enogastronomia" name="AmbitoIntrattenimentoTempoLibero_enogastronomia" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Enogastronomia
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoIntrattenimentoTempoLibero" id="AmbitoIntrattenimentoTempoLibero_folklore" name="AmbitoIntrattenimentoTempoLibero_folklore" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Folklore
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoIntrattenimentoTempoLibero" id="AmbitoIntrattenimentoTempoLibero_hobbistica" name="AmbitoIntrattenimentoTempoLibero_hobbistica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Hobbistica
+          </p>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+{% endblock ambito_intrattenimento_tempo_libero %} 
+<!--******************************************************************************-->
+
+<!--******************************************************************************-->
+    
+{% block ambito_letteraturapoesia %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="1" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoLetteraturaPoesia" name="AmbitoLetteraturaPoesia" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Letteratura e poesia</b>
+          </p>
+        </td>
+      </tr>
+     
+
+
+    </tbody>
+  </table>
+{% endblock ambito_letteraturapoesia %} 
+<!--******************************************************************************-->
+
+
+
+<!--******************************************************************************-->
+    
+{% block ambito_musica %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="8" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoMusica" name="AmbitoMusica" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Musica</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoMusica" mandatory_enabled="#AmbitoMusica.checked()" label="Musica"/>
+          <input group="AmbitoMusica" id="AmbitoMusica_antica" name="AmbitoMusica_antica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Antica
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoMusica" mandatory_enabled="#AmbitoMusica.checked()" label="Musica"/>
+          <input group="AmbitoMusica" id="AmbitoMusica_classica" name="AmbitoMusica_classica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Classica
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoMusica" mandatory_enabled="#AmbitoMusica.checked()" label="Musica"/>
+          <input group="AmbitoMusica" id="AmbitoMusica_corale" name="AmbitoMusica_corale" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Corale
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoMusica" mandatory_enabled="#AmbitoMusica.checked()" label="Musica"/>
+          <input group="AmbitoMusica" id="AmbitoMusica_folk" name="AmbitoMusica_folk" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Folk
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoMusica" mandatory_enabled="#AmbitoMusica.checked()" label="Musica"/>
+          <input group="AmbitoMusica" id="AmbitoMusica_jazz" name="AmbitoMusica_jazz" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Jazz
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoMusica" mandatory_enabled="#AmbitoMusica.checked()" label="Musica"/>
+          <input group="AmbitoMusica" id="AmbitoMusica_leggera" name="AmbitoMusica_leggera" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Leggera
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoMusica" mandatory_enabled="#AmbitoMusica.checked()" label="Musica"/>
+          <input group="AmbitoMusica" id="AmbitoMusica_sacra" name="AmbitoMusica_sacra" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Sacra
+          </p>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+{% endblock ambito_musica %} 
+<!--******************************************************************************-->
+
+<!--******************************************************************************-->
+    
+{% block ambito_scienza_tecnologie %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="4" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoScienzaTecnologia" name="AmbitoScienzaTecnologia" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Scienza e tecnologie</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzaTecnologia" mandatory_enabled="#AmbitoScienzaTecnologia.checked()" label="Scienza e tecnologie"/>
+          <input group="AmbitoScienzaTecnologia" id="AmbitoScienzaTecnologia_informatica" name="AmbitoScienzaTecnologia_informatica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Informatica
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzaTecnologia" mandatory_enabled="#AmbitoScienzaTecnologia.checked()" label="Scienza e tecnologie"/>
+          <input group="AmbitoScienzaTecnologia" id="AmbitoScienzaTecnologia_matematicaFisicaScienze" name="AmbitoScienzaTecnologia_matematicaFisicaScienze" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Matematica, fisica e scienze naturali
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzaTecnologia" mandatory_enabled="#AmbitoScienzaTecnologia.checked()" label="Scienza e tecnologie"/>
+          <input group="AmbitoScienzaTecnologia" id="AmbitoScienzaTecnologia_medicina" name="AmbitoScienzaTecnologia_medicina" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Medicina
+          </p>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+{% endblock ambito_scienza_tecnologie %} 
+<!--******************************************************************************-->
+
+<!--******************************************************************************-->
+    
+{% block ambito_scienze_sociali %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="11" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoScienzeSociali" name="AmbitoScienzeSociali" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Scienze sociali</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_archeologia" name="AmbitoScienzeSociali_archeologia" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Archeologia
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_comunicazione" name="AmbitoScienzeSociali_comunicazione" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Comunicazione
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_culturaPopoli" name="AmbitoScienzeSociali_culturaPopoli" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Cultura dei popoli
+          </p>
+        </td>
+      </tr>
+
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_economiaDiritto" name="AmbitoScienzeSociali_economiaDiritto" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Economia e diritto
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_formazioneEducazione" name="AmbitoScienzeSociali_formazioneEducazione" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Formazione ed educazione
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_lingue" name="AmbitoScienzeSociali_lingue" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Lingue
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_politica" name="AmbitoScienzeSociali_politica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Politica
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_psicologiaPedagogia" name="AmbitoScienzeSociali_psicologiaPedagogia" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Psicologia e pedagogia
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_sociologia" name="AmbitoScienzeSociali_sociologia" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Sociologia
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoScienzeSociali" mandatory_enabled="#AmbitoScienzeSociali.checked()" label="Scienze sociali"/>
+          <input group="AmbitoScienzeSociali" id="AmbitoScienzeSociali_storiaFilosofiaReligione" name="AmbitoScienzeSociali_storiaFilosofiaReligione" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Storia, filosofia e religione
+          </p>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+{% endblock ambito_scienze_sociali %} 
+<!--******************************************************************************-->
+
+
+
+<!--******************************************************************************-->
+    
+{% block ambito_sport %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="31" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoSport" name="AmbitoSport" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Sport</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoSportDisciplina" mandatory_enabled="#AmbitoSport.checked()" label="Discipline sportive"/>
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_ArtiMarziali" name="AmbitoSport_ArtiMarziali" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Arti marziali
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_AtleticaLeggera" name="AmbitoSport_AtleticaLeggera" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Atletica leggera
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Badminton" name="AmbitoSport_Badminton" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Badminton
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport" name="AmbitoSport_BaseballSoftball" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Baseball e softball
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Bocce" name="AmbitoSport_Bocce" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Bocce
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Calcio" name="AmbitoSport_Calcio" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Calcio
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_CamminataNordica" name="AmbitoSport_CamminataNordica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Camminata nordica
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Ciclismo" name="AmbitoSport_Ciclismo" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Ciclismo
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Cricket" name="AmbitoSport_Cricket" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Cricket
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Danza" name="AmbitoSport_Danza" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Danza
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_DisciplineAlpine" name="AmbitoSport_DisciplineAlpine" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Discipline alpine
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_DisciplineNautiche" name="AmbitoSport_DisciplineNautiche" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Discipline nautiche
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_DisciplineOrientali" name="AmbitoSport_DisciplineOrientali" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Discipline orientali
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Equitazione" name="AmbitoSport_Equitazione" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Equitazione
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Ginnastica" name="AmbitoSport_Ginnastica" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Ginnastica
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_HockeyPattinaggio" name="AmbitoSport_HockeyPattinaggio" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Hockey e pattinaggio
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_HockeyPrato" name="AmbitoSport_HockeyPrato" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Hockey su prato
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Nuoto" name="AmbitoSport_Nuoto" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Nuoto
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Orienteering" name="AmbitoSport_Orienteering" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Orienteering
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Palacanestro" name="AmbitoSport_Palacanestro" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Pallacanestro
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Pallamano" name="AmbitoSport_Pallamano" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Pallamano
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Pallavolo" name="AmbitoSport_Pallavolo" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Pallavolo
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_PescaSportiva" name="AmbitoSport_PescaSportiva" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Pesca sportiva
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Rugby" name="AmbitoSport_Rugby" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Rugby
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_ScacchiDama" name="AmbitoSport_ScacchiDama" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Scacchi e dama
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Scherma" name="AmbitoSport_Scherma" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Scherma
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_Subbuteo" name="AmbitoSport_Subbuteo" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Subbuteo
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_TennisTennisTavolo" name="AmbitoSport_TennisTennisTavolo" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Tennis e tennis tavolo
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_TiroSegno" name="AmbitoSport_TiroSegno" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Tiro a segno
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <input group="AmbitoSportDisciplina" id="AmbitoSport_TiroArco" name="AmbitoSport_TiroArco" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Tiro con l'arco
+          </p>
+        </td>
+      </tr>
+
+
+
+    </tbody>
+  </table>
+{% endblock ambito_sport %} 
+<!--******************************************************************************-->
+
+<!--******************************************************************************-->
+    
+{% block ambito_teatro %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="1" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoTeatro" name="AmbitoTeatro" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Teatro</b>
+          </p>
+        </td>
+      </tr>
+     
+
+
+    </tbody>
+  </table>
+{% endblock ambito_teatro %} 
+<!--******************************************************************************-->
+
+<!--******************************************************************************-->
+    
+{% block ambito_volontariato_solidarieta %}
+<table class="Modulo" style="border: 1px solid grey; margin-top:0px">
+    <tbody>
+      <tr style="border:0px;">
+        <td rowspan="5" style="vertical-align: top; width: 4%; border:0px; background-color: white;">
+          <input id="AmbitoVolontariatoSolidarieta" name="AmbitoVolontariatoSolidarieta" type="checkbox" value="SI"/>
+        </td>
+        <td colspan="2" style="border:0px;">
+          <p>
+            <b>Volontariato e solidarietà</b>
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoVolontariatoSolidarieta" mandatory_enabled="#AmbitoVolontariatoSolidarieta.checked()" label="Volontariato e solidarietà"/>
+          <input group="AmbitoVolontariatoSolidarieta" id="AmbitoVolontariatoSolidarieta_assistenza" name="AmbitoVolontariatoSolidarieta_assistenza" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Assistenza
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoVolontariatoSolidarieta" mandatory_enabled="#AmbitoVolontariatoSolidarieta.checked()" label="Volontariato e solidarietà"/>
+          <input group="AmbitoVolontariatoSolidarieta" id="AmbitoVolontariatoSolidarieta_cooperazione" name="AmbitoVolontariatoSolidarieta_cooperazione" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Cooperazione
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoVolontariatoSolidarieta" mandatory_enabled="#AmbitoVolontariatoSolidarieta.checked()" label="Volontariato e solidarietà"/>
+          <input group="AmbitoVolontariatoSolidarieta" id="AmbitoVolontariatoSolidarieta_formazionePersonale" name="AmbitoVolontariatoSolidarieta_formazionePersonale" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Formazione personale
+          </p>
+        </td>
+      </tr>
+      <tr style="border:0px;">
+        <td style="vertical-align: top; width: 4%; background-color: white;">
+          <div id="AmbitoVolontariatoSolidarieta" mandatory_enabled="#AmbitoVolontariatoSolidarieta.checked()" label="Volontariato e solidarietà"/>
+          <input group="AmbitoVolontariatoSolidarieta" id="AmbitoVolontariatoSolidarieta_integrazione" name="AmbitoVolontariatoSolidarieta_integrazione" type="checkbox" value="SI"/>
+        </td>
+        <td>
+          <p>
+            Integrazione
+          </p>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+{% endblock ambito_volontariato_solidarieta %} 
+<!--******************************************************************************-->
+
+		</tr>
+    <tr class="Rigaintestazioneridotta">
+			<td  colspan="2">
+				<p class="Labelcella">Breve descrizione dell'attività svolta</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<textarea class="inputNormal" id="DescrizioneAttivita" name="DescrizioneAttivita" label="Descrizione dell'attività dell'associazione per la pubblicazione" mandatory_enabled="true" style="width:100%;height:4cm;"></textarea>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <tbody >
+        <tr class="Rigaintestazione">
+            <td colspan="3">
+              <p style="text-align: center;">
+                <b>Elenco degli allegati</b>
+                <br>
+                <span style="font-size:70%">
+                  <i>(barrare gli eventuali allegati)</i>
+                </span>
+              </p>
+            </td>
+          </tr>  
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <input id="LOGO_ASSOCIAZIONE" name="LOGO_ASSOCIAZIONE" type="checkbox" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>Logo dell'associazione in formto PDF</b></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 4%; vertical-align: top;">
+          <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+          <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+        </td>
+        <td colspan="2" style="background-color: #eeeeee;">
+          <p style="line-height:1.4;"><b>Dichiara di aver ricevuto e preso visione dell'<a href="https://sportellotest.comune.trento.it/document/inform-tratt-dati-benicomuni" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> 
+
+<br>
+<br>
+
+ 
+
+
+<br>
+<br/>
+  {{ utils.firma_hidden() }}
+<br/>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<input id="data_comunicazione_datiAssociazione" name="data_comunicazione_datiAssociazione" dynamic_value="#Data.value()" format="date" type="hidden">
+
+<input id="GLOBO_allegato_cM4099-A01-LOGO-ASSOCIAZIONE" name="GLOBO_allegato_cM4099-A01-LOGO-ASSOCIAZIONE" obbligatorio="#LOGO_ASSOCIAZIONE.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+{% endblock content %}
