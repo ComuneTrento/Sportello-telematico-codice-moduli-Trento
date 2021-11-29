@@ -10,7 +10,7 @@
 
 
 
-{% macro attributi_hidden( prefix='AventeTitolo', suffix_residenza="Residenza", cciaa_visible="true", select_comuni="true") -%}
+{% macro attributi_hidden( prefix='AventeTitolo', suffix_residenza="Residenza", cciaa_visible="true", select_comuni="true", studio="false") -%}
   {% set Type = "hidden" %}
 
 
@@ -42,14 +42,21 @@
             onchange="(function(value){ if (!value || 'false'==value) return; document.getElementById('{{ prefix }}_BelfioreComuneResidenza').value=value;})(this.value)" />
     <input id="{{ prefix }}_BelfioreComuneResidenza" name="{{ prefix }}_BelfioreComuneResidenza" type="{{Type}}" > 
   {% endif %}
+  <!-- Sede / Studio -->
+    {% if studio == 'false' %}
   <input id="{{ prefix }}_BelfioreSede_tmp" name="{{ prefix }}_BelfioreSede_tmp" type="{{Type}}" 
             dynamic_value="#{{ prefix }}_ComuneSede.value() != null && #{{ prefix }}_ComuneSede.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ComuneSede.value()) : ''"
             onchange="(function(value){ if (!value || 'false'==value) return; document.getElementById('{{ prefix }}_BelfioreComuneSede').value=value;})(this.value)">
   <input id="{{ prefix }}_BelfioreComuneSede" name="{{ prefix }}_BelfioreComuneSede" type="{{Type}}" > 
+  {% else  %}
+  <input id="{{ prefix }}_BelfioreSede_tmp" name="{{ prefix }}_BelfioreSede_tmp" type="{{Type}}" 
+            dynamic_value="#{{ prefix }}_ComuneStudio.value() != null && #{{ prefix }}_ComuneStudio.value().length > 1 ? getBelFioreFromComune(#{{ prefix }}_ComuneStudio.value()) : ''"
+            onchange="(function(value){ if (!value || 'false'==value) return; document.getElementById('{{ prefix }}_BelfioreComuneSede').value=value;})(this.value)">
+  <input id="{{ prefix }}_BelfioreComuneSede" name="{{ prefix }}_BelfioreComuneSede" type="{{Type}}" > 
+  {% endif %}
   
   <!-- Nascita -->
   <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="{{Type}}"/>
-  <!-- Sede -->
 
 
 {%- endmacro %}
@@ -2942,19 +2949,19 @@
       </tr>
       <tr>
         <td>
-		    	{{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
+		    	{{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia dello studio") }}
         </td>
         <td>
-					<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"></select>
+					<select class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaSede.value(), '{{ prefix }}_ComuneSede')"></select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" style="width:100%;" label="Indirizzo dello studio del professionista"/>
+          <input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" style="width:100%;" label="Indirizzo dello studio del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
+          <input class="" id="{{ prefix }}_CivicoSede" name="{{ prefix }}_CivicoSede" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="#{{ prefix }}_ProvinciaStudio.value() != 'EE'"/>
+          <input class="" id="{{ prefix }}_CAPSede" name="{{ prefix }}_CAPSede" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="#{{ prefix }}_ProvinciaSede.value() != 'EE'"/>
         </td>
       </tr>
     </tbody>
@@ -2988,19 +2995,19 @@
       </tr>
       <tr>
         <td>
-  				{{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
+  				{{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia dello studio") }}
         </td>
         <td>
-					<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"></select>
+					<select class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaSede.value(), '{{ prefix }}_ComuneSede')"></select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" style="width:100%;" label="Indirizzo dello studio del professionista"/>
+          <input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" style="width:100%;" label="Indirizzo dello studio del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
+          <input class="" id="{{ prefix }}_CivicoSede" name="{{ prefix }}_CivicoSede" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="true"/>
+          <input class="" id="{{ prefix }}_CAPSede" name="{{ prefix }}_CAPSede" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="true"/>
         </td>
       </tr>
     </tbody>
@@ -3025,16 +3032,16 @@
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_Tel_FissoStudio" name="{{ prefix }}_Tel_FissoStudio" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
+          <input class="inputNormal" id="{{ prefix }}_Tel_FissoSede" name="{{ prefix }}_Tel_FissoSede" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_TelefonoStudio" name="{{ prefix }}_TelefonoStudio" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
+          <input class="inputNormal" id="{{ prefix }}_TelefonoSede" name="{{ prefix }}_TelefonoSede" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_EMailStudio" name="{{ prefix }}_EMailStudio" label="E-mail del professionista" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
+          <input class="inputNormal" id="{{ prefix }}_EMailSede" name="{{ prefix }}_EMailSede" label="E-mail del professionista" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_EMailPECStudio" name="{{ prefix }}_EMailPECStudio" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_tecnico_obbligatoria.checked()"/>
+          <input class="inputNormal" id="{{ prefix }}_EMailPECSede" name="{{ prefix }}_EMailPECSede" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_tecnico_obbligatoria.checked()"/>
         </td>
       </tr>
     </tbody>
@@ -3046,7 +3053,8 @@
 	<input id="{{ prefix }}_Attributi_AlNumero_nome" 			name="{{ prefix }}_Attributi_AlNumero_nome" 		   type="hidden" value="Numero iscrizione Albo professionale"/>
 	<input id="{{ prefix }}_Attributi_DellaProvincia_categoria" name="{{ prefix }}_Attributi_DellaProvincia_categoria" type="hidden" value="Altri dati"/>
   <input id="{{ prefix }}_Attributi_DellaProvincia_nome" 		name="{{ prefix }}_Attributi_DellaProvincia_nome" 	   type="hidden" value="Provincia Albo professionale"/>
-   
+
+  {{ attributi_hidden(prefix, suffix_residenza='') }}   
 </div>
 
 {%- endmacro %}
@@ -3244,19 +3252,19 @@
       </tr>
       <tr>
         <td>
-		    	{{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
+		    	{{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia dello studio") }}
         </td>
         <td>
-					<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"></select>
+					<select class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaSede.value(), '{{ prefix }}_ComuneSede')"></select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" style="width:100%;" label="Indirizzo dello studio del professionista"/>
+          <input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" style="width:100%;" label="Indirizzo dello studio del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
+          <input class="" id="{{ prefix }}_CivicoSede" name="{{ prefix }}_CivicoSede" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="#{{ prefix }}_ProvinciaStudio.value() != 'EE'"/>
+          <input class="" id="{{ prefix }}_CAPSede" name="{{ prefix }}_CAPSede" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="#{{ prefix }}_ProvinciaSede.value() != 'EE'"/>
         </td>
       </tr>
     </tbody>
@@ -3290,19 +3298,19 @@
       </tr>
       <tr>
         <td>
-  				{{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
+  				{{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia dello studio") }}
         </td>
         <td>
-					<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"></select>
+					<select class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune dello studio del professionista" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaSede.value(), '{{ prefix }}_ComuneSede')"></select>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" style="width:100%;" label="Indirizzo dello studio del professionista"/>
+          <input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" style="width:100%;" label="Indirizzo dello studio del professionista"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
+          <input class="" id="{{ prefix }}_CivicoSede" name="{{ prefix }}_CivicoSede" style="width:100%;" label="Civico dello studio del professionista" maxlength="10"/>
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="true"/>
+          <input class="" id="{{ prefix }}_CAPSede" name="{{ prefix }}_CAPSede" style="width:100%;" format="cap" label="CAP dello studio del professionista" enabled="true"/>
         </td>
       </tr>
     </tbody>
@@ -3327,16 +3335,16 @@
       </tr>
       <tr>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_Tel_FissoStudio" name="{{ prefix }}_Tel_FissoStudio" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
+          <input class="inputNormal" id="{{ prefix }}_Tel_FissoSede" name="{{ prefix }}_Tel_FissoSede" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_TelefonoStudio" name="{{ prefix }}_TelefonoStudio" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
+          <input class="inputNormal" id="{{ prefix }}_TelefonoSede" name="{{ prefix }}_TelefonoSede" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_EMailStudio" name="{{ prefix }}_EMailStudio" label="E-mail del professionista" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
+          <input class="inputNormal" id="{{ prefix }}_EMailSede" name="{{ prefix }}_EMailSede" label="E-mail del professionista" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
         </td>
         <td>
-          <input class="inputNormal" id="{{ prefix }}_EMailPECStudio" name="{{ prefix }}_EMailPECStudio" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_tecnico_obbligatoria.checked()"/>
+          <input class="inputNormal" id="{{ prefix }}_EMailPECSede" name="{{ prefix }}_EMailPECSede" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_tecnico_obbligatoria.checked()"/>
         </td>
       </tr>
     </tbody>
@@ -3676,22 +3684,22 @@
     </tr>
     <tr>
       <td>
-         {{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio", mandatory="true") }}
+         {{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia dello studio", mandatory="true") }}
       </td>
       <td>
-       	<select class="inputNormal" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello studio" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaStudio.value(), '{{ prefix }}_ComuneStudio')"  mandatory="true"></select>
+       	<select class="inputNormal" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune dello studio" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaSede.value(), '{{ prefix }}_ComuneSede')"  mandatory="true"></select>
       </td>
       <td>
-        <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" maxlength="40" style="width:100%;" label="Via dello Studio" mandatory_enabled="true" />
+        <input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" maxlength="40" style="width:100%;" label="Via dello Studio" mandatory_enabled="true" />
       </td>
       <td>
-        <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" format="number" label="Civico dello Studio" maxlength="10" mandatory_enabled="true" />
+        <input class="" id="{{ prefix }}_CivicoSede" name="{{ prefix }}_CivicoSede" style="width:100%;" format="number" label="Civico dello Studio" maxlength="10" mandatory_enabled="true" />
       </td>
       <td>
-        <input class="" id="{{ prefix }}_BarraStudio" name="{{ prefix }}_BarraStudio" style="width:100%;" label="Barra dello Studio" maxlength="3" enabled="true" />
+        <input class="" id="{{ prefix }}_BarraSede" name="{{ prefix }}_BarraSede" style="width:100%;" label="Barra dello Studio" maxlength="3" enabled="true" />
       </td>
       <td>
-        <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello Studio" enabled="#{{ prefix }}_ProvinciaStudio.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'" />
+        <input class="" id="{{ prefix }}_CAPSede" name="{{ prefix }}_CAPSede" style="width:100%;" format="cap" label="CAP dello Studio" enabled="#{{ prefix }}_ProvinciaSede.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaSede.value() != 'EE'" />
       </td>
     </tr>
   </tbody>
@@ -4042,22 +4050,22 @@
       </tr>
       <tr>
         <td>
-          {{ utils.provincie( prefix + '_ProvinciaStudio', label="Provincia dello studio") }}
+          {{ utils.provincie( prefix + '_ProvinciaSede', label="Provincia dello studio") }}
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ComuneStudio" name="{{ prefix }}_ComuneStudio" style="width:100%" label="Comune dello Studio" mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'" />
+          <input class="" id="{{ prefix }}_ComuneSede" name="{{ prefix }}_ComuneSede" style="width:100%" label="Comune dello Studio" mandatory="#{{ prefix }}_ProvinciaSede.value() != 'EE'" />
         </td>
         <td>
-          <input class="" id="{{ prefix }}_ViaStudio" name="{{ prefix }}_ViaStudio" maxlength="40" style="width:100%;" label="Via dello Studio" mandatory_enabled="true" />
+          <input class="" id="{{ prefix }}_ViaSede" name="{{ prefix }}_ViaSede" maxlength="40" style="width:100%;" label="Via dello Studio" mandatory_enabled="true" />
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CivicoStudio" name="{{ prefix }}_CivicoStudio" style="width:100%;" format="number" label="Civico dello Studio" maxlength="10" mandatory_enabled="true" />
+          <input class="" id="{{ prefix }}_CivicoSede" name="{{ prefix }}_CivicoSede" style="width:100%;" format="number" label="Civico dello Studio" maxlength="10" mandatory_enabled="true" />
         </td>
     		<td>
-          <input class="" id="{{ prefix }}_BarraStudio" name="{{ prefix }}_BarraStudio" style="width:100%;" label="Barra dello Studio" maxlength="3" enabled="true" />
+          <input class="" id="{{ prefix }}_BarraSede" name="{{ prefix }}_BarraSede" style="width:100%;" label="Barra dello Studio" maxlength="3" enabled="true" />
         </td>
         <td>
-          <input class="" id="{{ prefix }}_CAPStudio" name="{{ prefix }}_CAPStudio" style="width:100%;" format="cap" label="CAP dello Studio" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaStudio.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaStudio.value() != 'EE'" />
+          <input class="" id="{{ prefix }}_CAPSede" name="{{ prefix }}_CAPSede" style="width:100%;" format="cap" label="CAP dello Studio" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaSede.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaSede.value() != 'EE'" />
         </td>
       </tr>
     </tbody>
