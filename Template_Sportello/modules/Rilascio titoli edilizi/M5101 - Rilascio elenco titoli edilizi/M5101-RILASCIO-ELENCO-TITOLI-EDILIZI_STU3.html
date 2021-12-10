@@ -1,7 +1,7 @@
 {% set CodiceModulo = "M5101-RILASCIO-ELENCO-TITOLI-EDILIZI" %}
 {% set Urn =  "document:c_l378:titoli.edilizi;richiesta.rilascio.elenco.titoli;m5101.richiesta.rilascio.elenco.titoli.edilizi" %}
 <!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/M5101-RILASCIO-ELENCO-TITOLI-EDILIZI_vSTU3" %}-->
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 
@@ -138,7 +138,8 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="'Richiesta rilascio elenchi di titoli edilizi - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ') - Particelle ' + #Immobile_ComuneCatastale_esteso.value() + '/' + #Immobile_CatNumero.value()" id="Oggetto" name="Oggetto" type="hidden" />
+<input 
+dynamic_value="'Richiesta rilascio elenchi di titoli edilizi - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ') - '+ ((( #Immobile_TipoImmobile.value() == 'F' ? 'p.f. ' : 'p.ed. ') + #Immobile_CatNumero.value() + (#Immobile_CatBarra.value() != '' ? '/'+ #Immobile_CatBarra.value() : '') + ' CC ' +  #Immobile_ComuneCatastale_esteso.value()) + (#Immobile2_TipoImmobile.value() == '' ? '' : (( #Immobile2_TipoImmobile.value() == 'F' ? ' | p.f. ' : ' | p.ed. ') + #Immobile2_CatNumero.value() + (#Immobile2_CatBarra.value() != '' ? '/'+ #Immobile2_CatBarra.value() : '' ) + ' CC ' +  #Immobile2_ComuneCatastale_esteso.value() )) + (#Immobile3_TipoImmobile.value() == '' ? '' : (( #Immobile3_TipoImmobile.value() == 'F' ? ' | p.f. ' : ' | p.ed. ') + #Immobile3_CatNumero.value() + (#Immobile3_CatBarra.value() != '' ? '/'+ #Immobile3_CatBarra.value() : '' ) + ' CC '+ #Immobile3_ComuneCatastale_esteso.value())))" id="Oggetto" name="Oggetto" type="text" style="width: 100%;" />
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
