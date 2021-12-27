@@ -4,7 +4,8 @@
 
 {% block meta %}
 
-<meta campi_firma="AventeTitolo_CodiceFiscale"
+<meta
+campi_firma="Titolare_CodiceFiscale" 
 campi_firma_label="il dichiarante"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
@@ -58,6 +59,9 @@ urn_report="report:CSP_SESSION_REPORT"
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 <input dynamic_value="#nominativo_oggetto.value() + ' - Targa la tua Bici'" id="Oggetto" name="Oggetto" type="hidden" />
 
+<input dynamic_value="#Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' - trasmissione di segnalazione, reclamo, suggerimento o apprezzamento'" id="Oggetto" name="Oggetto" type="hidden">
+
+
 <!-- INIZIO BLOCCO INTESTAZIONE -->
 <div type="intestazione_moduloprincipale_senzabollo">
   <div class="container border-bottom" style="border-radius: unset;z-index: -1;">
@@ -108,26 +112,9 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden">
 <input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden">
 <br>
-<!-- 
 
-<h1 class="Modulo" style="line-height:1.6;">Dichiarazione di Proprietà</h1>
-<h2 class="Modulo" style="line-height:1.6;">Targare la propria bicicletta</h2>
 
-<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
-<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
-<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />
-<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
-<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
-<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />
-{{anagrafica_trento_uniformata.richiedente_elettorale("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
-
-  <input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
-  
-  <input type="hidden" id="chek_residenza" name="chek_residenza" dynamic_value="(#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai residenti a Trento'" style="width: 100%;" readonly/>
-  <input type="hidden" id="chek_cittadinanza" name="chek_cittadinanza" dynamic_value="(#AventeTitolo_Cittadinanza.check_value('ITALIANA') || #AventeTitolo_Cittadinanza.check_value('Italiana') || #AventeTitolo_Cittadinanza.check_value('italiana')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai cittadini Italiani'" style="width: 100%;" readonly/>
-
-<br> -->
 
 <!-- INIZIO BLOCCO ANAGRAFICA RESPONSIVE-->
 
@@ -291,9 +278,10 @@ urn_report="report:CSP_SESSION_REPORT"
 <!-- FINE BLOCCO DATA RESIDENZA -->
 
 <div class="container border bg-light">
-  <span>
-    Che il telaio della propria bicicletta <b>NON</b> è in carbonio
-  </span>
+  <div class="form-row">
+    <input class="form-check-input" id="Carbonio" name="Carbonio" type="checkbox" mandatory_enabled="true">
+    <label class="form-check-label" for="Carbonio">Che il telaio della propria bicicletta <b>NON</b> è in carbonio<br></label> 
+  </div>
 </div>
 <div class="container border bg-light">
   <span>
@@ -303,14 +291,12 @@ e/o obsoleta.
 </div>
 
 
-
-
 <div class="container border bg-light">
   <div class="form-row">
     <div class="form-check indent-1">
       <div id="Minore" name="Minore" label="Carta d'Identità Minire"></div>
       <input group="Minore" class="form-check-input" id="LOGO_MINORE" name="LOGO_MINORE" type="checkbox" value="SI">
-      <label class="form-check-label" for="Presa_visione_check_2"><b>La bicicletta è in uso a un minore</b> <br></label> 
+      <label class="form-check-label" for="Presa_visione_check_2"><b>Si richiede che la punzonatura riporti i dati del familiare minorenne</b> <br></label> 
     </div>
   </div>
 
