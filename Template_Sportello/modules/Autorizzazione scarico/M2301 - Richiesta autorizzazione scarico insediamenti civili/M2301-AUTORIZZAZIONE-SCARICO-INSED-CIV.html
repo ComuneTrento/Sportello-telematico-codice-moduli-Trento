@@ -44,7 +44,7 @@ numero="1"
 obbligatorio="DINAMICO"/>
 
 <meta codice_allegato="GEN-COPIA-MODULO-FIRMA-EL"
-urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.elettronica"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.digitale"
 descrizione_estesa="Allegato - Copia del modulo principale firmata dal titolare con firma digitale"
 filename="Modulo_compilato_firma_digitale.jpeg,Modulo_compilato_firma_digitale.pdf"
 firmato="SI"
@@ -80,8 +80,8 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<meta codice_modulo_figlio="GEN-INTAGG-EL"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.intestatari.firma.elettronica"
+<meta codice_modulo_figlio="GEN-INTAGG-EL-NUOVO"
+urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.intestatari.firma.elettronica.nuovo"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -179,16 +179,16 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
-<!-- <meta codice_allegato="GEN-RICEVUTA-PAGAMENTO"
-urn_allegato="document:c_l378:allegato.ricevuta.pagamento"
-descrizione_estesa="Ricevuta pagamenti: marca da bollo e rilascio autorizzazione"
-filename="GEN-RICEVUTA-PAGAMENTO.pdf"
+<meta codice_allegato="GEN-RICEVUTA-PAGAMENTO-FATTURA"
+urn_allegato="document:c_l378:allegato.ricevuta.pagamento.fattura"
+descrizione_estesa="Allegato - Ricevuta pagamento fattura Ente Gestore"
+filename="GEN-RICEVUTA-PAGAMENTO_FATTURA.jpeg,GEN-RICEVUTA-PAGAMENTO_FATTURA.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/GEN-RICEVUTA-PAGAMENTO"
+istruzioni="/modulistica/moduli/GEN-RICEVUTA-PAGAMENTO_FATTURA"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/> -->
+tipo_mime="application/pdf,image/jpeg"/>
 
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
@@ -203,7 +203,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
-<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Domanda di autorizzazione allo scarico degli insediamenti civili'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')' + ' - Domanda di autorizzazione allo scarico degli insediamenti civili'" id="Oggetto" name="Oggetto" type="hidden" />
 
 {{ intestazioni.intestazione_moduloprincipale_conbollo() }}
 
@@ -484,7 +484,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
   </tbody>
 </table>
 
-<input id="Referente99_Destinazione_acque_nere_fogna" name="Referente99_Referente99_Destinazione_acque_nere_fogna" dynamic_value="#Destinaz_immissione_acque_nere1.checked() ? 'vero' : ''" type="hidden"/>
+<input id="Referente99_Destinazione_acque_nere_fogna" name="Referente99_Destinazione_acque_nere_fogna" dynamic_value="#Destinaz_immissione_acque_nere1.checked() ? 'vero' : ''" type="hidden"/>
 <input id="Referente99_Destinazione_acque_nere_corso_sup" name="Referente99_Destinazione_acque_nere_corso_sup" dynamic_value="#Destinaz_immissione_acque_nere2.checked() ? 'vero' : ''" type="hidden"/>
 <input id="Referente99_Destinazione_acque_nere_suolo" name="Referente99_Destinazione_acque_nere_suolo" dynamic_value="#Destinaz_immissione_acque_nere3.checked() ? 'vero' : ''" type="hidden"/>
 
@@ -773,7 +773,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </td>
       <td colspan="2">
         <p style="line-height:1.6;"><b>DELEGA</b> il professionista, <input enabled="#Richiesta_delega1.checked()" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Cognome.value() + ' ' + #Referente_Nome.value()" id="Nominativo_progettista" name="Nominativo_progettista" style="width:68%;"/>
-          <br><b>a ricevere</b> per proprio nome e conto le comunicazioni relative al presente procedimento per il tramite del proprio indirizzo PEC (posta elettronica certificata):  <input mandatory_enabled="#Richiesta_delega1.checked()" id="Progettista_EMailPEC" name="Progettista_EMailPEC" dynamic_value="#Referente_EMailPEC.value()" format="pec" style="width:50%;"/>
+          <br><b>a ricevere</b> per proprio nome e conto le comunicazioni relative al presente procedimento per il tramite del proprio indirizzo PEC (posta digitale certificata):  <input mandatory_enabled="#Richiesta_delega1.checked()" id="Progettista_EMailPEC" name="Progettista_EMailPEC" dynamic_value="#Referente_EMailPEC.value()" format="pec" style="width:50%;"/>
             <br><i>L'accettazione del progettista è presente nel modulo secondario "Anagrafica del progettista"</i></span>
         </p>
       </td>
@@ -912,7 +912,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <input group="check_altri_sogg_coinv" id="GEN_INTAGG_EL" name="GEN_INTAGG_EL" type="checkbox" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
-        <p style="line-height:1.6;">Indicare il numero degli ulteriori soggetti coinvolti che firmano con <b>firma elettronica</b></p>
+        <p style="line-height:1.6;">Indicare il numero degli ulteriori soggetti coinvolti che firmano con <b>firma digitale</b></p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.8; text-align: center;"><input class="" type="number" min="1" max="100" id="NschedeAllegateEl" name="NschedeAllegateEl" label="Numero ulteriori intestatari" mandatory_enabled="#GEN_INTAGG_EL.checked()" style="width: 90%; text-align: center;"/></p>
@@ -932,7 +932,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <input id="GLOBO_modulofiglio_cM2301-MSEC02-DATI-TECNICI-EL" name="GLOBO_modulofiglio_cM2301-MSEC02-DATI-TECNICI-EL" numero="#numero_rich_dati_tecnici.value()" obbligatorio="#rich_dati_tecnici.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
-    <tr>
+    <tr style="display:none">
       <td style="width:4%; vertical-align: center; text-align: center;">
       <!-- tolta richiesta atto notorio perchè legata al solo rinnovo, mentre prima era per tutto -->
         <!-- <input id="rich_atto_notorio" name="rich_atto_notorio" type="checkbox" dynamic_check="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" enabled="#Tipo_richiesta2.checked() || #Tipo_richiesta3.checked()" value="OBBLIGATORIO"/> -->
@@ -1044,6 +1044,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       </td>
       <td style="background-color: #eeeeee; vertical-align: left;" >
         <p style="line-height: 1.8; text-align: center;"><input class="" type="number" id="num_bonifico_comune_tn" name="num_bonifico_comune_tn" label="Numero bonifici per pagamento bollo al comune di trento" value="1" readonly style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO-FATTURA" name="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO-FATTURA" obbligatorio="#BonificoEnteGestore.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_bonifico_comune_tn.value()"/>
       </td>
     </tr>
     <!-- <tr>
@@ -1208,6 +1209,5 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
-<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
 {% endblock content %}
