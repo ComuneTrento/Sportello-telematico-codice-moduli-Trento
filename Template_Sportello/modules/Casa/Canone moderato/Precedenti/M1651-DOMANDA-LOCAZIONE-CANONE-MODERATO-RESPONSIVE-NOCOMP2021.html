@@ -52,17 +52,6 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf,image/jpeg">
 
-<meta codice_allegato="M1651-A03-DICHIARAZIONE-ICEF-EDILIZIA-PUBBLICA-CANONE-MODERATO"
-urn_allegato="document:c_l378:edilizia.abitativa.pubblica;domanda.locazione.canone.moderato;m1651.a03.dichiarazione.icef.ediliziapubblicacanone"
-descrizione_estesa="Dichiarazione ICEF edilizia pubblica canone moderato"
-filename="dichiarazioneICEF.jpg,dichiarazioneICEF.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/M1651-A03-DICHIARAZIONE-ICEF-EDILIZIA-PUBBLICA-CANONE-MODERATO"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/>
-
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
@@ -597,165 +586,6 @@ DOMANDA LOCAZIONE A CANONE MODERATO
 
 <div class="space-1"></div>
 
-<!-- INIZIO BLOCCO FAMILIARI -->
-  
-  <div class="container border bg-light">
-    <div class="form-row">
-      <div class="col-lg-12">
-        <span class="title mr-3">Che il proprio nucleo familiare è così composto (se residente nel Comune di Trento clicca sul bottone "Recupera dati famiglia"): </span>
-        <br>
-          <span>
-            <i>indicare tutti i componenti, <b><u>compreso il richiedente</u></b>. Il nucleo di appartenenza deve coincidere con quello risultante all’anagrafe, salvi i casi di esenzione previsti per la locazione di alloggio (si veda la II parte):</i>
-          </span>
-        <div>
-          <button type="button" class="btn btn-secondary pull-left" id="RecuperaListaFam">Recupera dati famiglia</button> 
-        </div>      
-      </div>   
-    </div>
-
-    <div class="container border bg-light">
-      <span>
-        Come <u>stato civile</u> indicare: coniugato/non coniugato/separato/vedovo
-        <br>
-        Come <u>grado di parentela</u> indicare: coniuge/convivente/figlio/genitore/altro
-      </span>
-    </div>
-    <!-- <div class="container border bg-light">
-      <span>
-        <b>Altri dati</b>, indicare uno dei seguenti valori:
-        <br>
-        1. Persona che è stata per almeno 6 mesi consecutivi in strutture, enti, aziende residenziali di cura, assistenza, accoglienza o recupero e che è rientrata in famiglia da non piu di due anni;
-        <br>
-        2. Persona per la quale è stato disposto l’avvio di cancellazione dall’anagrafe;
-        <br>
-        3. Coniuge / convivente che lavora in presenza di figli minori;
-        <br>
-        4. Richiedente separato/divorziato tenuto all’assegnazione della casa familiare o alla corresponsione dell’assegno di mantenimento;
-        <br>
-        5. Giovane coppia (soggetti di età non superiore a 35 anni, sposati o conviventi di fatto da non più di 5 anni);
-        <br>
-        6. Nessuno dei casi precedenti.
-      </span>
-    </div> -->
-  
-  <div class="container border bg-light"> 
-        <div id="Tassonomia_Familiari" name="Tassonomia_Familiari" label="Composizione della famiglia"> </div>
-        {{ service.getListaFamigliaCodiceFiscaleREST('AventeTitolo_CodiceFiscale', 'Parametri_CFFam*', '#RecuperaListaFam:click', 'listaFamiglia1') }}
-        
-        {% macro Tassonomia_Familiare(prefix) %}
-            {% set prefix = prefix|string %}
-
-            {{ service.getPersonaREST('Parametri_CFFam' + prefix, 'TipoContesto', 'TipoLista',{
-                'Parametri_CognomeFam' + prefix: 'cognome',
-                'Parametri_NomeFam' + prefix: 'nome',
-                'Parametri_DataNas' + prefix: 'datanascita',
-                'Parametri_SessoFam' + prefix: 'sesso',
-                'Parametri_MatricolaAnagrafeFam' + prefix: 'matricola',
-                'Parametri_CodiceFamigliaFam' + prefix: 'codiceFamiglia',
-                'Parametri_CodiceComuneNascitaFam' + prefix: 'codiceComuneNascita',
-                'Parametri_CodiceViaResidenzaFam' + prefix: 'codiceVia',
-                'Parametri_NumeroCivicoResidenzaFam' + prefix: 'numeroCivico',
-                'Parametri_BarraResidenzaFam' + prefix: 'barra',
-                'Parametri_NazioneFam' + prefix: 'nazione',
-            }, '#Parametri_CFFam' + prefix + ':change' )}} 
-
-      
-        <div class="form-row border-bottom">
-
-          <div class="form-group col-lg-3">
-            <label for="Parametri_CognomeFam{{ prefix }}"> Cognome </label>
-            <input class="form-control" id="Parametri_CognomeFam{{ prefix }}" name="Parametri_CognomeFam{{ prefix }}">
-          </div>
-          <div class="form-group col-lg-2">
-            <label for="Parametri_NomeFam{{ prefix }}"> Nome </label>
-            <input class="form-control" id="Parametri_NomeFam{{ prefix }}" name="Parametri_NomeFam{{ prefix }}">
-          </div>
-          <div class="form-group col-lg-3">
-            <label for="Parametri_CFFam{{ prefix }}"> Codice fiscale </label>
-            <input class="form-control" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" >
-          </div>
-
-          <!--
-          </div>
-
-          <div class="form-row border-bottom">
-          -->
-
-          <div class="form-group col-lg-2" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
-            <label for="ParametriStatoCivile{{ prefix }}">Stato civile</label>
-            <select class="form-control custom-select" id="ParametriStatoCivile{{ prefix }}" name="ParametriStatoCivile{{ prefix }}">
-              <option value=""></option>
-              <option value="CG">Coniugato/a</option>
-              <option value="NC">Non coniugato/a</option>
-              <option value="SE">Separato/a</option>
-              <option value="VD">Vedovo/a</option>
-            </select>
-          </div>
-          <div class="form-group col-lg-2" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
-            <label for="Parametri_GradoParFam{{ prefix }}">Grado parentela</label>
-            <select class="form-control custom-select" id="Parametri_GradoParFam{{ prefix }}" name="Parametri_GradoParFam{{ prefix }}">
-              <option value=""></option>
-              <option value="Richiedente">Richiedente</option>
-              <option value="Coniuge">Coniuge</option>
-              <option value="Convivente">Convivente</option>
-              <option value="Figlio">Figlio</option>
-              <option value="Genitore">Genitore</option>
-              <option value="Altro">Altro</option>
-            </select>
-          </div>
-         <!--  <div class="form-group col-lg-1" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
-            <label for="Parametri_Tipo_Invalidita{{ prefix }}">Invalidità</label>
-            <select class="form-control custom-select" id="Parametri_Tipo_Invalidita{{ prefix }}" name="Parametri_Tipo_Invalidita{{ prefix }}">
-              <option value=""></option>
-              <option value="S">Si</option>
-              <option value="N">No</option>
-            </select>
-          </div> -->
-          <!--
-          <div class="form-group col-lg-2" mandatory_enabled="#Parametri_Tipo_Invalidita{{ prefix }}.value() != 'N' && #Parametri_CognomeFam{{ prefix }}.value() != ''">
-            <label for="Parametri_Invalidita{{ prefix }}">Valore invalidità</label>
-            <input class="form-control" id="Parametri_Invalidita{{ prefix }}" maxlength="3" pattern="^[0-9]([.][0-9]{1,4})?$" name="Parametri_Invalidita{{ prefix }}">
-          </div>
-          -->
-         <!--  <div class="form-group col-lg-1" mandatory="#Parametri_CognomeFam{{ prefix }}.value() != ''" enabled="#Parametri_CognomeFam{{ prefix }}.value() != '' || #Parametri_Altri{{ prefix }}.value() != ''">
-            <label for="Parametri_Altri{{ prefix }}">Altri dati</label>
-            <input class="form-control" id="Parametri_Altri{{ prefix }}" type="number" min="1" max="6" name="Parametri_Altri{{ prefix }}">
-            <select class="form-control custom-select" id="Parametri_Altri{{ prefix }}" type="text" maxlength="3" pattern="^[0-9]([.][0-9]{1,4})?$" name="Parametri_Altri{{ prefix }}">
-              <option value=""></option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-            </select>
-          </div>
- -->
-          <div class="space-1"></div>
-      </div>
-      {%- endmacro %}
-      
-      {% for i in range(1, 10) %}
-      {{ Tassonomia_Familiare(i) }}
-      <input type="hidden" id="Parametri_MatricolaAnagrafeFam{{ i }}" name="Parametri_MatricolaAnagrafeFam{{ i }}">
-      <input type="hidden" id="Parametri_CodiceFamigliaFam{{ i }}" name="Parametri_CodiceFamigliaFam{{ i }}">
-      <input type="hidden" id="Parametri_CodiceComuneNascitaFam{{ i }}" name="Parametri_CodiceComuneNascitaFam{{ i }}">
-      <input type="hidden" id="Parametri_CodiceViaResidenzaFam{{ i }}" name="Parametri_CodiceViaResidenzaFam{{ i }}">
-      <input type="hidden" id="Parametri_NumeroCivicoResidenzaFam{{ i }}" name="Parametri_NumeroCivicoResidenzaFam{{ i }}" format="number">
-      <input type="hidden" id="Parametri_BarraResidenzaFam{{ i }}" name="Parametri_BarraResidenzaFam{{ i }}" maxlength="3">
-      <input type="hidden" id="Parametri_NazioneFam{{ i }}" name="Parametri_NazioneFam{{ i }}"/>
-      {% endfor %}
-    </div> 
-  </div>
-
-  <!-- *********** verifica che almeno un familiare sia caricato *********** -->
-  <input type="hidden" id="Esito_controllo_famiglia" name="Esito_controllo_famiglia" mandatory="#Parametri_CognomeFam1.value() == ''" label="ATTENZINE! Non hai compilato i dati relativi allo stato famiglia, se sei residente usa il bottone Recupera dati famiglia, altrimenti inserisci i dati dei componenti">
-
-  
-  <!-- FINE BLOCCO FAMILIARI -->
-
-<div class="space-1"></div>
-
 <div class="space-1"></div>
 
 <!-- INIZIO BLOCCO SUBITO -->
@@ -1008,7 +838,7 @@ DOMANDA LOCAZIONE A CANONE MODERATO
 
 <!-- INIZIO BLOCCO PRESENTAZIONE DOMANDA PER SCADENZA TERMINI -->
 
-<!-- <input id="Salva_Modulo_Termini" mandatory="true" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi."> -->
+<input id="Salva_Modulo_Termini" mandatory="true" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">
 
 <!-- FINE BLOCCO PRESENTAZIONE DOMANDA PER SCADENZA TERMINI -->
 
@@ -1226,17 +1056,16 @@ DOMANDA LOCAZIONE A CANONE MODERATO
 
 <div class="space-1"></div>
 
-<globo_salto_pagina></globo_salto_pagina>
 
-<!-- <div class="container">
+<div class="container">
   <div class="title-2"> Ai fini dell'acquisizione d'ufficio del dato relativo alla residenza , comunico quanto segue:</div>
 </div>
 
-<div class="space-1"></div> -->
+<div class="space-1"></div>
 
 <!-- INIZIO BLOCCO RESIDENZA IN PROVINCIA -->
 
-<!--<div class="container border bg-light">
+<div class="container border bg-light">
   <input class="inputNormal" type="hidden" id="ProvinciaTN" name="ProvinciaTN" label="Provincia di Trento" dynamic_value="'TN'">
   <div class="form-row">
     <div class="col-lg-12">
@@ -1272,7 +1101,7 @@ DOMANDA LOCAZIONE A CANONE MODERATO
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 <!-- FINE BLOCCO RESIDENZA IN PROVINCIA -->
 
@@ -1282,7 +1111,7 @@ DOMANDA LOCAZIONE A CANONE MODERATO
 
 <!-- INIZIO BLOCCO RESIDENZA IN COMUNE -->
 
-<!--<div class="container border bg-light">
+<div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
       <label class="title"><b>Residenza nel Comune di Trento</b></label>
@@ -1309,19 +1138,19 @@ DOMANDA LOCAZIONE A CANONE MODERATO
     </div>
     
   </div>
-</div> -->
+</div>  
 
 <!-- FINE BLOCCO RESIDENZA IN COMUNE -->
 
-<!-- <div class="space-1"></div>
+<div class="space-1"></div>
 
 <div class="space-1"></div>
 
-<globo_salto_pagina></globo_salto_pagina> -->
+<globo_salto_pagina></globo_salto_pagina>
 
 <!-- INIZIO BLOCCO CIRCOSCRIZIONI -->
 
-<!--<div class="container border bg-light">
+<div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
       <label class="title"><b>Residenza nella Circoscrizione di </b>
@@ -1414,54 +1243,19 @@ DOMANDA LOCAZIONE A CANONE MODERATO
       </label>
     </div>
   </div>
-</div>  -->
+</div>  
 
-<!-- FINE BLOCCO CIRCOSCRIZIONI --> 
-
-
-
-<!-- INIZIO BLOCCO ACQUISIZIONE DIRETTA DEL DATO -->
-  
-  <div class="container">
-    <div class="title-2">AI FINI DELL’ACQUISIZIONE DIRETTA DEL DATO, COMUNICA QUANTO SEGUE</div>
-  </div>
-  <!-- <div class="container">
-    <div class="title-3">(requisiti generali comuni ad entrambe le domande)</div>
-  </div> -->
-  
-  <div class="container border bg-light">
-    <div class="form-row">
-      <div class="col-lg-12">
-        <label class="title">
-          <b>Anni di residenza del richiedente in Provincia di Trento:</b>
-        </label>
-      </div>
-    </div>
-    <div class="container border bg-light">
-      <div class="form-row">
-          <input id="ResidenzaProvinciaAnni" name="ResidenzaProvinciaAnni" mandatory_enabled="true" label="Inserire il n. di anni di residenza in provincia" type="number" expression="^[0-9]{1}$" maxlength="1" style="width: 10%" min="0" >
-      </div>
-    <div class="form-row">
-        <div class="col-lg-12">
-          <label class="title">
-              <b>Comune/comuni in cui il richiedente risiede o ha risieduto in passato:</b>
-            </label>
-          </div>
-        </div>
-        <div class="form-row">
-          <textarea class="inputNormal" id="ResidenzaProvinciaComuni" name="ResidenzaProvinciaComuni" label="Inserire i comuni di residenza in provincia" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
-      </div>
-    </div>
-
-</div>
-  
-  <!-- FINE BLOCCO ACQUISIZIONE DIRETTA DEL DATO -->
+<!-- FINE BLOCCO CIRCOSCRIZIONI -->
 
 <div class="space-1"></div>
 
 <div class="space-1"></div>
 
-<!-- INIZIO BLOCCO INFORMATIVA PRIVACY -->
+<div class="space-1"></div>
+
+<div class="space-1"></div>
+
+<!-- INIZIO BLOCCO INFORMATICA PRIVACY -->
 
 <div class="container border bg-light">
   <div class="form-row">
@@ -1473,13 +1267,13 @@ DOMANDA LOCAZIONE A CANONE MODERATO
   </div>
 </div>  
 
-<!-- FINE BLOCCO INFORMATIVA PRIVACY -->
+<!-- FINE BLOCCO INFORMATICA PRIVACY -->
 
 <div class="space-1"></div>
 
 <!-- INIZIO BLOCCO MARCA DA BOLLO -->
 
-<!-- <div class="container border bg-light">
+<div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
       <label class="title">
@@ -1490,6 +1284,9 @@ DOMANDA LOCAZIONE A CANONE MODERATO
   <div class="form-row">
     <div class="col-lg-12">
       <label class="title-1">La seguente <b>marca da bollo</b> è stata annullata per la presentazione della domanda:</label>
+     <!--  <label class="title-2">
+        <i>(per informazioni sulle modalità di pagamento dell'imposta di bollo consultare la pagina: Come pagare? )</i>
+      </label> -->
     </div>
   </div>
   <div class="form-row">
@@ -1499,11 +1296,7 @@ DOMANDA LOCAZIONE A CANONE MODERATO
   <div class="form-row">
       <label class="title-1"><b>Il richiedente si impegna a conservare l'originale della marca da bollo annullata e la stessa potrà essere richiesta al momento della concessione del beneficio</b> </label>
   </div>
-</div> -->
-
-
-{{ bollo.bolloRESP("display:none","display:none","display:none","display:none","false") }}
-
+</div>
  
 <!-- FINE BLOCCO MARCA DA BOLLO -->
 
@@ -1541,12 +1334,6 @@ DOMANDA LOCAZIONE A CANONE MODERATO
         <label class="form-check-label" for="CERTIFICATO_INVALIDITA"><b>Certificato/i di invalidità</b></label> 
     </div>
   </div>
-   <div class="form-row">
-      <div class="form-check indent-1">
-          <input class="form-check-input" id="DICHIARAZIONE_ICEF" name="DICHIARAZIONE_ICEF" type="checkbox" dynamic_check="true" value="OBBLIGATORIO">
-          <label class="form-check-label" for="DICHIARAZIONE_ICEF"><b>Dichiarazione ICEF per edilizia pubblica</b></label>
-        </div>
-    </div>
 </div>
 
 <!-- FINE BLOCCO ALLEGATI -->
@@ -1594,7 +1381,6 @@ DOMANDA LOCAZIONE A CANONE MODERATO
 
 <input id="GLOBO_allegato_cM1651-A02-CERTIFICATO-INVALIDITA" name="GLOBO_allegato_cM1651-A02-CERTIFICATO-INVALIDITA" type="hidden" value="" obbligatorio="#CERTIFICATO_INVALIDITA.checked() ? 'OBBLIGATORIO' : ''">
 
-<input id="GLOBO_allegato_cM1651-A03-DICHIARAZIONE-ICEF-EDILIZIA-PUBBLICA-CANONE-MODERATO" name="GLOBO_allegato_cM1651-A03-DICHIARAZIONE-ICEF-EDILIZIA-PUBBLICA-CANONE-MODERATO" numero="1" obbligatorio="#DICHIARAZIONE_ICEF.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" /> 
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden">
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden">
