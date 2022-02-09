@@ -1,6 +1,6 @@
 {% set CodiceModulo =  "M47500-MSEC12-CONTR-NUOVA-COSTR" %}
 {% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec12.m47500.calcolo.contr.nuova.costr" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 <meta campi_firma="Referente_CodiceFiscale"
@@ -46,7 +46,6 @@ tipo_mime="application/pdf"/>
 
 
 {% endblock meta %}
-
 
 {% block title %}
   Schema di calcolo del contributo di costruzione
@@ -573,7 +572,7 @@ tipo_mime="application/pdf"/>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%; text-align: center;">
+      <td style="vertical-align: top; padding-top: 0.4rem; width: 4%; text-align: center;">
         <input id="verifica_Rich_rateizz1" name="verifica_Rich_rateizz1" dynamic_value="#Totale_da_pagare.value() &gt; 5000 ? 'OK' : 'KO'" type="hidden" readonly/>
         <input id="Rich_rateizz1" name="Rich_rateizz1" type="checkbox" enabled="#verifica_Rich_rateizz1.value() == 'OK'"/>
       </td>
@@ -582,11 +581,19 @@ tipo_mime="application/pdf"/>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%; text-align: center;">     
-        <input id="Rich_rateizz2" name="Rich_rateizz2" type="checkbox" dynamic_check="#verifica_Rich_rateizz1.value() == 'KO' || !#Rich_rateizz1.checked()" enabled="#verifica_Rich_rateizz1.value() == 'KO' || !#Rich_rateizz1.checked()" value="2" />      
+      <td style="vertical-align: top; padding-top: 0.4rem; width: 4%; text-align: center;">     
+        <input id="Rich_rateizz2" name="Rich_rateizz2" type="checkbox" dynamic_check="(#verifica_Rich_rateizz1.value() == 'KO' || !#Rich_rateizz1.checked()) && (#Descrizione_Pratica_Edilizia.value().length == 0 || #Descrizione_Pratica_Edilizia.value().indexOf('SCIA')!=-1)" enabled="(#verifica_Rich_rateizz1.value() == 'KO' || !#Rich_rateizz1.checked()) && (#Descrizione_Pratica_Edilizia.value().length == 0 || #Descrizione_Pratica_Edilizia.value().indexOf('SCIA')!=-1)" value="2" />      
       </td>
       <td>
-        <p style="line-height:1.6;">si allega ricevuta del pagamento</p>
+      <p style="line-height:1.6;">si allega ricevuta del pagamento </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.4rem; width: 4%; text-align: center;">     
+        <input id="Rich_rateizz3" name="Rich_rateizz3" type="checkbox" dynamic_check="(#verifica_Rich_rateizz1.value() == 'KO' || !#Rich_rateizz1.checked()) && #Descrizione_Pratica_Edilizia.value().length > 0 && #Descrizione_Pratica_Edilizia.value().indexOf('SCIA')==-1" enabled="(#verifica_Rich_rateizz1.value() == 'KO' || !#Rich_rateizz1.checked()) && #Descrizione_Pratica_Edilizia.value().length > 0 && #Descrizione_Pratica_Edilizia.value().indexOf('SCIA')==-1" value="3" />      
+      </td>
+      <td>
+      <p style="line-height:1.6;">si procederà al pagamento mediante <a href="https://sportello.comune.trento.it/spontaneous-payments?group=S55_53" target="_blank">Pagamento Spontaneo</a> (previsto solo per Permesso di costruire)</p>
       </td>
     </tr>
   </tbody>
@@ -705,6 +712,9 @@ tipo_mime="application/pdf"/>
 <input id="AventeTitolo_rich_ha_firma_digit" name="AventeTitolo_rich_ha_firma_digit" type="hidden" readonly/>
 <input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" type="hidden" readonly/>
 
-<input id="Prova_passaggio_dati" name="Prova_passaggio_dati" readonly type="hidden"/>
+<input id="Prova_passaggio_dati" name="Prova_passaggio_dati" readonly type="hidden" />
+<input id="Descrizione_Pratica_Edilizia" name="Descrizione_Pratica_Edilizia" type="hidden" readonly />
 
 {% endblock content %}
+
+
