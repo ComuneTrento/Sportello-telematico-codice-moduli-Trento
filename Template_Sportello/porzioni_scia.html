@@ -1624,7 +1624,7 @@ return parti.join("/");
 <!-- compare in:  M47500-MSEC01-DICH-PROG -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-{% macro interventi_energetici(num_titolo1="", num_titolo2="") -%}
+{% macro interventi_energetici(num_titolo1="", num_titolo2="", relazione_energetica_opzionale=false) -%}
 
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
@@ -1643,7 +1643,11 @@ return parti.join("/");
       </td>
     </tr>
     <tr>
+        {% if relazione_energetica_opzionale == false %}
       <td style="vertical-align: top; padding-top:0.4rem; text-align: center; width: 4%;" rowspan="5">
+        {% else %}
+      <td style="vertical-align: top; padding-top:0.4rem; text-align: center; width: 4%;" rowspan="7">
+        {% endif %}
         <input id="ricad_aspetti_energetici2" group="ricad_aspetti_energetici" name="ricad_aspetti_energetici" type="radio" value="2" />
       </td>
       <td colspan="2">
@@ -1675,11 +1679,37 @@ return parti.join("/");
         <p style="line-height:1.6;">art. 4, comma 5 (riqualificazione energetica, ampliamento inferiore o uguale al  15% del volume lordo riscaldato)</p>            
       </td>
     </tr>
-    <tr class="Rigaintestazione">
+    {% if relazione_energetica_opzionale == false %}
+		<tr class="Rigaintestazione">
       <td colspan="2">
         <p style="line-height:1.6;">e pertanto deposita la <b>relazione energetica</b></p>            
       </td>
     </tr>
+		{% else %}
+		<tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;">e pertanto</p>            
+      </td>
+    </tr>
+		<tr>
+      <td style="vertical-align: top; padding-top:0.4rem; text-align: center; width: 4%;">
+        <div id="allega_relazione_energetica" name="allega_relazione_energetica" label="Allega relazione energetica" mandatory_enabled="#ricad_aspetti_energetici2.checked()"> </div>
+        <input id="allega_relazione_energetica1" group="allega_relazione_energetica" name="allega_relazione_energetica" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">deposita la <b>relazione energetica</b> (con bonus volumetrico)</p>            
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top:0.4rem; text-align: center; width: 4%;">
+        <div id="allega_relazione_energetica" name="allega_relazione_energetica" label="Allega relazione energetica" mandatory_enabled="#ricad_aspetti_energetici2.checked()"> </div>
+        <input id="allega_relazione_energetica2" group="allega_relazione_energetica" name="allega_relazione_energetica" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">non deposita la <b>relazione energetica</b></p>            
+      </td>
+    </tr>
+		{% endif %}
   </tbody>
 </table>
 
