@@ -1,6 +1,6 @@
 {% set CodiceModulo =  "M47500-MSEC11-IMPEGNO-RATEIZZ-EL" %}
 {% set Urn =  "document:c_l378:segnalazione.certificata.inizio.attivita;scia;msec11.m47500.impegno.rateizzazione.firma.elettronica" %}
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_ok.html" %}
 
 {% block meta %}
 <meta campi_firma="Referente_CodiceFiscale"
@@ -14,7 +14,7 @@ dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="P7M_ELETTRONICA"
+firmare="P7M_DIGITALE"
 istruzioni_compilazione=""
 istruzioni_invio=""
 metodo_invio=""
@@ -130,7 +130,7 @@ tipo_mime="application/pdf"/>
     </tr>
     <tr>
       <td>
-        <input class="" label="Istanza originale" id="Tipo_istanza" name="Tipo_istanza" dynamic_value="'Segnalazione certificata di inizio attività (SCIA)'" style="width:100%"/>
+         <input class="" label="Istanza originale" id="Tipo_istanza" name="Tipo_istanza" dynamic_value="#Descrizione_Pratica_Edilizia.value().length > 0 ? #Descrizione_Pratica_Edilizia.value() : 'Segnalazione certificata di inizio attività (SCIA)'" style="width:100%"/>
       </td>
       <td>
         <input class="" id="Codice_istanza" label="Codice univoco istanza" name="Codice_istanza" style="width:100%"/>
@@ -349,7 +349,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;"><b>Copia del modulo</b> firmata dal titolare con <b>firma digitale</b></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-EL" obbligatorio="#Modulo_compilato_firmato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="#Modulo_compilato_firmato.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
@@ -376,7 +376,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_orig_polizza" name="numero_orig_polizza" style="width: 90%; text-align: center;" mandatory_enabled="true" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-ORIGINALE-POLIZZA" name="GLOBO_allegato_cGEN-ORIGINALE-POLIZZA" numero="#numero_orig_polizza.value()" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-ORIGINALE-POLIZZA" name="GLOBO_allegato_cGEN-ORIGINALE-POLIZZA" numero="#numero_orig_polizza.value()" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
     </tr>
   </tbody>
@@ -498,4 +498,7 @@ tipo_mime="application/pdf"/>
 
 <input id="Totale_da_pagare_arr" name="Totale_da_pagare_arr" type="hidden" readonly/></p>
 <input id="Prova_passaggio_dati" name="Prova_passaggio_dati"  readonly type="hidden"/>
+
+<input id="Descrizione_Pratica_Edilizia" name="Descrizione_Pratica_Edilizia" type="hidden" readonly />
+
 {% endblock content %}

@@ -102,9 +102,11 @@ urn_report="report:CSP_SESSION_REPORT"
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
 
 <!-- GESTIONE DINAMICA DEL TESTO DI OGGETTO -->
-<input dynamic_value="#Tipo_professionista2.checked() ? #Oggetto_Delegato.value() : #Oggetto_No_Delegato.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/>
-<input dynamic_value="'Domanda di accesso/consultazione - Richiedente: ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ') Particella Edificiale ' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value()" id="Oggetto_No_Delegato" name="Oggetto_No_Delegato" type="hidden" />
-<input dynamic_value="'Domanda di accesso/consultazione - Richiedente: ' + #AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value() + ' (' + #AventeTitolo_CodiceFiscale.value() + ') Particella Edificiale ' + #num_part_oggetto.value() + ' - Comune: ' + #com_part_oggetto.value() + ' - Delegato ' + #Referente_CodiceFiscale.value() " id="Oggetto_Delegato" name="Oggetto_Delegato" type="hidden" />
+<input dynamic_value="'Domanda di accesso/consultazione - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ') - '
++ ((( #immobile1_tipo.value() == 'F' ? 'p.f. ' : 'p.ed. ') + #immobile1_cat_numero.value() + (#immobile1_cat_barra.value() != '' ? '/'+ #immobile1_cat_barra.value() : '') + ' CC ' +  #immobile1_cc.value()) 
++ (#immobile2_tipo.value() == '' ? '' : (( #immobile2_tipo.value() == 'F' ? ' | p.f. ' : ' | p.ed. ') + #immobile2_cat_numero.value() + (#immobile2_cat_barra.value() != '' ? '/'+ #immobile2_cat_barra.value() : '' ) + ' CC ' +  #immobile2_cc.value() )) 
++ (#immobile3_tipo.value() == '' ? '' : (( #immobile3_tipo.value() == 'F' ? ' | p.f. ' : ' | p.ed. ') + #immobile3_cat_numero.value() + (#immobile3_cat_barra.value() != '' ? '/'+ #immobile3_cat_barra.value() : '' ) + ' CC '+ #immobile3_cc.value()))) + ((#Tipo_professionista2.checked() && #Referente_CodiceFiscale.value()!= '') ? ' - Delegato da '+ #Referente_CodiceFiscale.value().toUpperCase() : '')" id="Oggetto" name="Oggetto" type="hidden" />
+
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -407,9 +409,20 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="Referente99_Tipologia_Accesso" name="Referente99_Tipologia_Accesso" type="hidden" dynamic_value="#Tipo_accesso1.checked() ? 'Presa visione' : #Tipo_accesso3.checked() ? 'Estrazione copia in carta semplice' : #Tipo_accesso4.checked() ? 'Estrazione copia conforme all\'originale' : '' ">
 
 <!-------------- GESTIONE DINAMICA CONTROLLO NUM PARTICELLE -------------->
-<input class="" id="num_part_oggetto" name="num_part_oggetto" style="width:100%;" dynamic_value="#Immobile1_CatNumero.value() != '' ? #Immobile1_CatNumero.value() : #Immobile5_CatNumero.value()" type="hidden"/>
-<input class="" id="com_part_oggetto" name="com_part_oggetto" style="width:100%;" dynamic_value="#Immobile1_ComuneCatastale_esteso.value() != '' ? #Immobile1_ComuneCatastale_esteso.value() : #Immobile5_ComuneCatastale_esteso.value()" type="hidden"/>
+<input class="" id="immobile1_tipo" name="immobile1_tipo" dynamic_value="#Immobile1_TipoImmobile.value() != '' ? #Immobile1_TipoImmobile.value() : #Immobile5_TipoImmobile.value()" type="hidden"/>
+<input class="" id="immobile1_cat_numero" name="immobile1_cat_numero" dynamic_value="#Immobile1_TipoImmobile.value() != '' ? #Immobile1_CatNumero.value() : #Immobile5_CatNumero.value()" type="hidden"/>
+<input class="" id="immobile1_cat_barra" name="immobile1_cat_barra" dynamic_value="#Immobile1_TipoImmobile.value() != '' ? #Immobile1_CatBarra.value() : #Immobile5_CatBarra.value()" type="hidden"/>
+<input class="" id="immobile1_cc" name="immobile1_cc" dynamic_value="#Immobile1_TipoImmobile.value() != '' ? #Immobile1_ComuneCatastale_esteso.value() : #Immobile5_ComuneCatastale_esteso.value()" type="hidden"/>
 
+<input class="" id="immobile2_tipo" name="immobile2_tipo" dynamic_value="#Immobile2_TipoImmobile.value() != '' ? #Immobile2_TipoImmobile.value() : #Immobile6_TipoImmobile.value()" type="hidden"/>
+<input class="" id="immobile2_cat_numero" name="immobile2_cat_numero" dynamic_value="#Immobile2_TipoImmobile.value() != '' ? #Immobile2_CatNumero.value() : #Immobile6_CatNumero.value()" type="hidden"/>
+<input class="" id="immobile2_cat_barra" name="immobile2_cat_barra" dynamic_value="#Immobile2_TipoImmobile.value() != '' ? #Immobile2_CatBarra.value() : #Immobile6_CatBarra.value()" type="hidden"/>
+<input class="" id="immobile2_cc" name="immobile2_cc" dynamic_value="#Immobile2_TipoImmobile.value() != '' ? #Immobile2_ComuneCatastale_esteso.value() : #Immobile6_ComuneCatastale_esteso.value()" type="hidden"/>
+
+<input class="" id="immobile3_tipo" name="immobile3_tipo" dynamic_value="#Immobile3_TipoImmobile.value() != '' ? #Immobile3_TipoImmobile.value() : #Immobile7_TipoImmobile.value()" type="hidden"/>
+<input class="" id="immobile3_cat_numero" name="immobile3_cat_numero" dynamic_value="#Immobile3_TipoImmobile.value() != '' ? #Immobile3_CatNumero.value() : #Immobile7_CatNumero.value()" type="hidden"/>
+<input class="" id="immobile3_cat_barra" name="immobile3_cat_barra" dynamic_value="#Immobile3_TipoImmobile.value() != '' ? #Immobile3_CatBarra.value() : #Immobile7_CatBarra.value()" type="hidden"/>
+<input class="" id="immobile3_cc" name="immobile3_cc" dynamic_value="#Immobile3_TipoImmobile.value() != '' ? #Immobile3_ComuneCatastale_esteso.value() : #Immobile7_ComuneCatastale_esteso.value()" type="hidden"/>
 <!-------------- FINE BLOCCO GESTIONE PARTICELLE PER CONSULTAZIONE -------------->
 
 <br>

@@ -14,7 +14,7 @@ dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="SI"
-firmare="P7M_ELETTRONICA"
+firmare="P7M_DIGITALE"
 istruzioni_compilazione=""
 istruzioni_invio=""
 metodo_invio=""
@@ -71,7 +71,9 @@ tipo_mime="application/pdf"/>
 urn_allegato="document:c_l378:barriere.architettoniche"
 descrizione_estesa="Allegato - Elaborati relativi al superamento delle barriere architettoniche"
 filename="Barriere_architettoniche.pdf"
-firmato="NO"
+firmato="SI"
+firmatari="Referente_CodiceFiscale"
+firmatari_label="Professionista incaricato"
 istruzioni="/modulistica/moduli/M55500-ALLEGATO-BARRIERE-ARCHITETTONICHE"
 name="GLOBO_allegato"
 numero="1"
@@ -613,14 +615,14 @@ tipo_mime="application/pdf"/>
         <p style="line-height:1.6;"><b>sono soggette</b> alla redazione di relazione dello studio di compatibilità</p>
       </td>
     </tr>
-    <tr>
+    {# <tr>
       <td style="vertical-align: top; padding-top: 0.4rem; text-align: center; width: 4%;">
         <input id="sintesi_pericol3" group="sintesi_pericol" name="sintesi_pericol" type="radio" value="3" />
       </td>
       <td>
         <p style="line-height:1.6;"><b>superata</b> </p>
       </td>
-    </tr>
+    </tr> #}
     <!-- geologica -->
     <tr class="Rigaintestazione">
       <td colspan="2">
@@ -644,14 +646,14 @@ tipo_mime="application/pdf"/>
         <p style="line-height:1.6;"><b>sono soggette</b> alla redazione di relazione geologica e/o geotecnica</p>
       </td>
     </tr>
-        <tr>
+        {# <tr>
       <td style="vertical-align: top; padding-top: 0.4rem; text-align: center; width: 4%;">
         <input id="risorse_geologiche3" group="risorse_geologiche" name="risorse_geologiche" type="radio" value="3" />
       </td>
       <td>
         <p style="line-height:1.6;"><b>superata</b> </p>
       </td>
-    </tr>
+    </tr> #}
     <!-- acque pubbliche -->
       <tr class="Rigaintestazione">
       <td colspan="2">
@@ -680,7 +682,7 @@ tipo_mime="application/pdf"/>
         <input id="risorse_acquepubbliche3" group="risorse_acquepubbliche" name="risorse_acquepubbliche" type="radio" value="3" />
       </td>
       <td>
-        <p style="line-height:1.6;"><b>superata</b> </p>
+        <p style="line-height:1.6;"><b>superato</b> </p>
       </td>
     </tr>
     <!-- idrica -->
@@ -759,7 +761,7 @@ tipo_mime="application/pdf"/>
 <br>
 <br>
 
-{{ porzioni_scia.interventi_energetici(num_titolo1="9 - ", num_titolo2="10 - ")}}
+{{ porzioni_scia.interventi_energetici(num_titolo1="9 - ", num_titolo2="10 - ", relazione_energetica_opzionale=true)}}
 
 
 
@@ -1212,7 +1214,7 @@ controfirmati dal progettista</u> per presa visione.</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_relaz_idrogeolog" name="numero_relaz_idrogeolog" style="width: 90%; text-align: center;" mandatory_enabled="#relaz_idrogeolog.checked()" type="number" min="1" max="100"/></p>
-        <input numero="#numero_relaz_idrogeolog.value()" id="GLOBO_allegato_cM47500-A04-RELAZIONE-IDROGEOLOGICA" name="GLOBO_allegato_cM47500-A04-RELAZIONE-IDROGEOLOGICA" obbligatorio="#risorse_idriche2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input numero="#numero_relaz_idrogeolog.value()" id="GLOBO_allegato_cM47500-A04-RELAZIONE-IDROGEOLOGICA" name="GLOBO_allegato_cM47500-A04-RELAZIONE-IDROGEOLOGICA" obbligatorio="#relaz_idrogeolog.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
@@ -1227,12 +1229,12 @@ controfirmati dal progettista</u> per presa visione.</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_studio_compat" name="numero_studio_compat" style="width: 90%; text-align: center;" mandatory_enabled="#studio_compat.checked()" type="number" min="1" max="100"/></p>
-        <input numero="#numero_studio_compat.value()" id="GLOBO_allegato_cM47500-A03-STUDIO-COMPATIBILITA" name="GLOBO_allegato_cM47500-A03-STUDIO-COMPATIBILITA" obbligatorio="#sintesi_pericol2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input numero="#numero_studio_compat.value()" id="GLOBO_allegato_cM47500-A03-STUDIO-COMPATIBILITA" name="GLOBO_allegato_cM47500-A03-STUDIO-COMPATIBILITA" obbligatorio="#studio_compat.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
     <tr>
       <td style="vertical-align: top; padding-top: 0.4rem; text-align: center;">
-        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#ricad_aspetti_energetici2.checked()" enabled="#ricad_aspetti_energetici2.checked()" value="OBBLIGATORIO" />
+        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#allega_relazione_energetica1.checked()" enabled="#allega_relazione_energetica1.checked()" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">elaborati/relazione energetica relativi ai requisiti di
@@ -1287,7 +1289,7 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_energ_elettr" name="numero_energ_elettr" style="width: 90%; text-align: center;" mandatory_enabled="#energ_elettr.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-PROD-ELETTR" name="GLOBO_allegato_cGEN-IMP-PROD-ELETTR" obbligatorio="#Schema_prog_impianti1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_energ_elettr.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-PROD-ELETTR" name="GLOBO_allegato_cGEN-IMP-PROD-ELETTR" obbligatorio="#Schema_prog_impianti1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_energ_elettr.value()"/>
       </td>
     </tr>    
     <tr>
@@ -1299,7 +1301,7 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_prot_scar_elettr" name="numero_prot_scar_elettr" style="width: 90%; text-align: center;" mandatory_enabled="#prot_scar_elettr.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-PROT-ATMOSF" name="GLOBO_allegato_cGEN-IMP-PROT-ATMOSF" obbligatorio="#Schema_prog_impianti2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_prot_scar_elettr.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-PROT-ATMOSF" name="GLOBO_allegato_cGEN-IMP-PROT-ATMOSF" obbligatorio="#Schema_prog_impianti2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_prot_scar_elettr.value()"/>
       </td>
     </tr>
     <tr>
@@ -1311,7 +1313,7 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_radiotel" name="numero_imp_radiotel" style="width: 90%; text-align: center;" mandatory_enabled="#imp_radiotel.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-TV" name="GLOBO_allegato_cGEN-IMP-TV" obbligatorio="#Schema_prog_impianti3.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_radiotel.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-TV" name="GLOBO_allegato_cGEN-IMP-TV" obbligatorio="#Schema_prog_impianti3.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_radiotel.value()"/>
       </td>
     </tr>    
     <tr>
@@ -1323,7 +1325,7 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_riscald" name="numero_imp_riscald" style="width: 90%; text-align: center;" mandatory_enabled="#imp_riscald.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-RISCALD" name="GLOBO_allegato_cGEN-IMP-RISCALD" obbligatorio="#Schema_prog_impianti4.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_riscald.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-RISCALD" name="GLOBO_allegato_cGEN-IMP-RISCALD" obbligatorio="#Schema_prog_impianti4.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_riscald.value()"/>
       </td>
     </tr>
     <tr>
@@ -1335,7 +1337,7 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_sanit" name="numero_imp_sanit" style="width: 90%; text-align: center;" mandatory_enabled="#imp_sanit.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-SANITARI" name="GLOBO_allegato_cGEN-IMP-SANITARI" obbligatorio="#Schema_prog_impianti5.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_sanit.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-SANITARI" name="GLOBO_allegato_cGEN-IMP-SANITARI" obbligatorio="#Schema_prog_impianti5.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_sanit.value()"/>
       </td>
     </tr>
     <tr>
@@ -1347,7 +1349,7 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_gas" name="numero_imp_gas" style="width: 90%; text-align: center;" mandatory_enabled="#imp_gas.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-GAS" name="GLOBO_allegato_cGEN-IMP-GAS" obbligatorio="#Schema_prog_impianti6.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_gas.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-GAS" name="GLOBO_allegato_cGEN-IMP-GAS" obbligatorio="#Schema_prog_impianti6.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_gas.value()"/>
       </td>
     </tr>
     <tr>
@@ -1359,7 +1361,7 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_sollev" name="numero_imp_sollev" style="width: 90%; text-align: center;" mandatory_enabled="#imp_sollev.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-SOLLEV" name="GLOBO_allegato_cGEN-IMP-SOLLEV" obbligatorio="#Schema_prog_impianti7.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_sollev.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-SOLLEV" name="GLOBO_allegato_cGEN-IMP-SOLLEV" obbligatorio="#Schema_prog_impianti7.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_sollev.value()"/>
       </td>
     </tr>
     <tr>
@@ -1371,7 +1373,7 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_prot_antinc" name="numero_imp_prot_antinc" style="width: 90%; text-align: center;" mandatory_enabled="#imp_prot_antinc.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-ANTINC" name="GLOBO_allegato_cGEN-IMP-ANTINC" obbligatorio="#Schema_prog_impianti8.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_prot_antinc.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-ANTINC" name="GLOBO_allegato_cGEN-IMP-ANTINC" obbligatorio="#Schema_prog_impianti8.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_prot_antinc.value()"/>
       </td>
     </tr>  
     <tr>
@@ -1382,62 +1384,62 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
     </tr>   
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.4rem; text-align: center;">
-        <input id="scar_acque" name="scar_acque" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Planimetria_reti1.checked()" enabled="#Planimetria_reti1.checked()"/>
+        <input id="scar_acque" name="scar_acque" type="checkbox" value="OBBLIGATORIO" enabled="#Planimetria_reti1.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">scarichi acque nere e bianche</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_scar_acque" name="numero_scar_acque" style="width: 90%; text-align: center;" mandatory_enabled="#scar_acque.checked()" type="number" min="1" max="100"/></p>
-        <input id="GLOBO_allegato_cGEN-SCARICHI-ACQUE" name="GLOBO_allegato_cGEN-SCARICHI-ACQUE" obbligatorio="#Planimetria_reti1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_scar_acque.value()"/>
+        <input id="GLOBO_allegato_cGEN-SCARICHI-ACQUE" name="GLOBO_allegato_cGEN-SCARICHI-ACQUE" obbligatorio="#scar_acque.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_scar_acque.value()"/>
       </td>
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.4rem; text-align: center;">
-        <input id="spazi_raccolta" name="spazi_raccolta" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Planimetria_reti2.checked()" enabled="#Planimetria_reti2.checked()"/>
+        <input id="spazi_raccolta" name="spazi_raccolta" type="checkbox" value="OBBLIGATORIO" enabled="#Planimetria_reti2.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">spazi di raccolta dei rifiuti solidi urbani</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_spazi_raccolta" name="numero_spazi_raccolta" style="width: 90%; text-align: center;" mandatory_enabled="#spazi_raccolta.checked()" type="number" min="1" max="100"/></p>
-        <input id="GLOBO_allegato_cGEN-SPAZI-RACCOLTA" name="GLOBO_allegato_cGEN-SPAZI-RACCOLTA" obbligatorio="#Planimetria_reti2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_spazi_raccolta.value()"/>
+        <input id="GLOBO_allegato_cGEN-SPAZI-RACCOLTA" name="GLOBO_allegato_cGEN-SPAZI-RACCOLTA" obbligatorio="#spazi_raccolta.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_spazi_raccolta.value()"/>
       </td>
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.4rem; text-align: center;">
-        <input id="fornit_acqua" name="fornit_acqua" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Planimetria_reti3.checked()" enabled="#Planimetria_reti3.checked()"/>
+        <input id="fornit_acqua" name="fornit_acqua" type="checkbox" value="OBBLIGATORIO" enabled="#Planimetria_reti3.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">fornitura di acqua</p>
     </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_fornit_acqua" name="numero_fornit_acqua" style="width: 90%; text-align: center;" mandatory_enabled="#fornit_acqua.checked()" type="number" min="1" max="100"/></p>
-        <input id="GLOBO_allegato_cGEN-FORNITURA-ACQUA" name="GLOBO_allegato_cGEN-FORNITURA-ACQUA" obbligatorio="#Planimetria_reti3.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_fornit_acqua.value()"/>
+        <input id="GLOBO_allegato_cGEN-FORNITURA-ACQUA" name="GLOBO_allegato_cGEN-FORNITURA-ACQUA" obbligatorio="#fornit_acqua.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_fornit_acqua.value()"/>
       </td>
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.4rem; text-align: center;">
-        <input id="forn_energ_elett" name="forn_energ_elett" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Planimetria_reti4.checked()" enabled="#Planimetria_reti4.checked()"/>
+        <input id="forn_energ_elett" name="forn_energ_elett" type="checkbox" value="OBBLIGATORIO" enabled="#Planimetria_reti4.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">fornitura di energia elettrica</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_forn_energ_elett" name="numero_forn_energ_elett" style="width: 90%; text-align: center;" mandatory_enabled="#forn_energ_elett.checked()" type="number" min="1" max="100"/></p>
-        <input id="GLOBO_allegato_cGEN-FORNITURA-ELETTRICA" name="GLOBO_allegato_cGEN-FORNITURA-ELETTRICA" obbligatorio="#Planimetria_reti4.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_forn_energ_elett.value()"/>
+        <input id="GLOBO_allegato_cGEN-FORNITURA-ELETTRICA" name="GLOBO_allegato_cGEN-FORNITURA-ELETTRICA" obbligatorio="#forn_energ_elett.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_forn_energ_elett.value()"/>
       </td>
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.4rem; text-align: center;">
-        <input id="fornit_gas" name="fornit_gas" type="checkbox" value="OBBLIGATORIO" dynamic_check="#Planimetria_reti5.checked()" enabled="#Planimetria_reti5.checked()"/>
+        <input id="fornit_gas" name="fornit_gas" type="checkbox" value="OBBLIGATORIO" enabled="#Planimetria_reti5.checked()"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height:1.6;">fornitura di calore, gas, ecc.</p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_fornit_gas" name="numero_fornit_gas" style="width: 90%; text-align: center;" mandatory_enabled="#fornit_gas.checked()" type="number" min="1" max="100"/></p>
-        <input id="GLOBO_allegato_cGEN-FORNITURA-GAS" name="GLOBO_allegato_cGEN-FORNITURA-GAS" obbligatorio="#Planimetria_reti5.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_fornit_gas.value()"/>
+        <input id="GLOBO_allegato_cGEN-FORNITURA-GAS" name="GLOBO_allegato_cGEN-FORNITURA-GAS" obbligatorio="#fornit_gas.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_fornit_gas.value()"/>
       </td>
     </tr>
   </tbody>

@@ -120,12 +120,12 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="GEN-RICEVUTA-PAGAMENTO"
+<meta codice_allegato="GEN-RICEVUTA-PAGAMENTO-CONTR"
 urn_allegato="document:c_l378:allegato.ricevuta.pagamento"
 descrizione_estesa="Ricevuta del pagamento del contributo di costruzione"
 filename="Ricevuta_pagamento_contributo_costruzione.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/GEN-RICEVUTA-PAGAMENTO"
+istruzioni="/modulistica/moduli/GEN-RICEVUTA-PAGAMENTO-CONTR"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -361,14 +361,12 @@ urn_report="report:CSP_SESSION_REPORT"/>
 {% block content %}
 
 <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
 <!--
 <input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Comunicazione inizio lavori'" id="Oggetto" name="Oggetto" type="hidden" />
 -->
 <!--------------- INIZIO IMPOSTAZIONE 'OGGETTO' OVVERO NOME DEL MODULO MOSTRATO ALL'UTENTE ------------------>
-<input class="Modulo" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + '(' + #AventeTitolo_CodiceFiscale.value() + ')' + ' -  Comunicazione inizio lavori'" id="Oggetto_parte1" name="Oggetto_parte1" style="width:100%;" type="hidden"/>
-<input class="Modulo" dynamic_value="#Immobile_TipoImmobile.value() == 'F' ? 'P.f.:' + ' ' + #Immobile_CatNumero.value() : (#Immobile_TipoImmobile.value() == 'S' || #Immobile_TipoImmobile.value() == 'E' ? 'P.ed.:' + ' ' + #Immobile_CatNumero.value() : '')" id="Oggetto_parte2" name="Oggetto_parte2" style="width:100%;" type="hidden"/> 
-<input class="Modulo" dynamic_value="#Immobile_CatPM.value() == '' ? '' : '- P.M.: ' + #Immobile_CatPM.value()" id="Oggetto_parte3" name="Oggetto_parte3" style="width:100%;" type="hidden"/>
-<input class="Modulo" dynamic_value="#Oggetto_parte1.value() + ' - ' + #Oggetto_parte2.value() + #Oggetto_parte3.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/> 
+{{ immobili_trento_uniformata.oggetto(titolo = "Comunicazione inizio lavori") }}
 <!--------------- FINE IMPOSTAZIONE 'OGGETTO' OVVERO NOME DEL MODULO MOSTRATO ALL'UTENTE ------------------>
 
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
@@ -1508,7 +1506,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <input id="GLOBO_allegato_cGEN-DOC_NOTIFICA" name="GLOBO_allegato_cGEN-DOC_NOTIFICA" obbligatorio="#Doc_notifica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
-<input id="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO" name="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO" obbligatorio="#ric_sil_ass.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO-CONTR" name="GLOBO_allegato_cGEN-RICEVUTA-PAGAMENTO-CONTR" obbligatorio="#ric_sil_ass.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
 <input id="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" name="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI_mod_principale.checked() ? 'OBBLIGATORIO' : ''" numero="#NumAltriAllegatiInizioLavori.value()" type="hidden" value=""/>
 

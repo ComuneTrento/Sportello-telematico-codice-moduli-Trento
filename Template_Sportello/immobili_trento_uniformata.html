@@ -8,7 +8,7 @@
                  M47005-COMUNICAZIONE-INIZIO-LAVORI
                  M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA
                  M47561-COMUNICAZIONE-OPERE-LIBERE
-                 M47675-DICHIARAZIONE-CONFORMITA-IMPIANTI -->
+                 M55675-DICHIARAZIONE-CONFORMITA-IMPIANTI -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 {% macro immobile_solo_trento( prefix='Immobile', intestazione="immobile", sottotitolo="immobile", visibilty_carica_dati="visibility:hidden", pointer_carica_dati="cursor:default", visibility_intestazione="display:visibility", visibility_sottotitolo="display:visibility", carica_campi="") -%}
@@ -21,7 +21,7 @@
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: center; text-align: center; width: 4%;">
+      <td style="vertical-align: top; padding-top: 0.4rem; text-align: center; width: 4%;">
         <div id="altre_particelle" name="altre_particelle" label="particelle coinvolte" mandatory_enabled="#{{ prefix }}_DatiCatastaliObbligatori.value() == 'vero'"> </div>
         <input group="altre_particelle" id="altre_particelle1" name="altre_particelle" type="radio" value="1" />
       </td>
@@ -30,7 +30,7 @@
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; text-align: center; width: 4%;">
+      <td style="vertical-align: top; padding-top: 0.4rem; text-align: center; width: 4%;">
         <input group="altre_particelle" id="altre_particelle2" name="altre_particelle" type="radio" value="2" />
       </td>
       <td>
@@ -11165,6 +11165,20 @@
     </tr>
   </tbody>
 </table>
+{%- endmacro %}  
+
+<!----------------------------------------------------------------- BLOCCO OGGETTO PITRE CON PARTICELLE EDILIZIE----------------------------------------------------------------->
+{% macro oggetto(titolo="Titolo", prefix_avente_titolo="AventeTitolo", prefix_delegato="Referente") -%}
+
+<input class="Modulo" dynamic_value="'{{titolo}}'+' - Richiedente '+#{{prefix_avente_titolo}}_Cognome.value().toUpperCase() + ' ' + #{{prefix_avente_titolo}}_Nome.value().toUpperCase() + ' (' + #{{prefix_avente_titolo}}_CodiceFiscale.value().toUpperCase() + ')'" id="Oggetto_parte1" name="Oggetto_parte1" style="width:100%;" type="hidden"/>
+<input class="Modulo" dynamic_value="(#Immobile_TipoImmobile.value() == 'F' ? 'p.f. ' : 'p.ed. ') + #Immobile_CatNumero.value() + (#Immobile_CatBarra.value() != '' ? '/'+ #Immobile_CatBarra.value() : '') + ' CC ' +  #Immobile_ComuneCatastale_esteso.value() " id="Oggetto_parte2" name="Oggetto_parte2" style="width:100%;" type="hidden"/> 
+<input class="Modulo" dynamic_value="#altre_particelle2.checked() ? ' | altre ' : ''" id="Oggetto_parte3" name="Oggetto_parte3" style="width:100%;" type="hidden"/>
+{% if prefix_delegato != '' %}
+<input class="Modulo" dynamic_value="'Delegato ' + #{{prefix_delegato}}_CodiceFiscale.value().toUpperCase()" id="Oggetto_parte4" name="Oggetto_parte4" style="width:100%;" type="hidden"/>
+<input class="Modulo" dynamic_value="#Oggetto_parte1.value() + ' - ' + #Oggetto_parte2.value() + #Oggetto_parte3.value() + ' - ' + #Oggetto_parte4.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/> 
+{% else  %}
+<input class="Modulo" dynamic_value="#Oggetto_parte1.value() + ' - ' + #Oggetto_parte2.value() + #Oggetto_parte3.value()" id="Oggetto" name="Oggetto" style="width:100%;" type="hidden"/> 
+{% endif  %}
 {%- endmacro %}  
 
 
