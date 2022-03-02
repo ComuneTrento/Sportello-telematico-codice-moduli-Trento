@@ -1424,6 +1424,158 @@
 
 {%- endmacro %}
 
+{% macro richiedente_base( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
+
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; {{ visibility_intestazione }}">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td style="width: 40%; border-left:0px; border-right:0px">
+        <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}</p>
+      </td>
+      <td style="width:3%; border-left:0px; border-right:0px">
+        <p class="Labeltabella">{{ carica_campi|safe }}</p>
+      </td>
+      <td style="width: 3%; {{ pointer_carica_dati }}; border-left:0px; border-right:0px">
+        <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+          {{ utils.recupero_dati( prefix, visibility_carica_dati ) }}
+        </span>
+      </td>
+      <td style="width:27%; border-left:0px; border-right:0px">
+        <input class="" id="{{ prefix }}_CodiceFiscale" name="{{ prefix }}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true"/>
+      </td>
+      <td style="width:25%; border-left:0px; border-right:0px">
+        <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
+      </td>
+    </tr>
+  </tbody>
+
+  {{ service.getPersonaREST( prefix + '_CodiceFiscale','TipoContesto', 'TipoLista',  {
+    prefix + '_DataNascita':  'datanascita',
+    prefix + '_Nome':  'nome',
+    prefix + '_Cognome':  'cognome',
+    prefix + '_Sesso':  'sesso',
+    prefix + '_Nazionalita':  'stato',
+    prefix + '_Cittadinanza':  'nazionalita',
+    prefix + '_CodiceFamiglia':  'codiceFamiglia',
+    prefix + '_CodiceVia':  'codiceVia',
+    prefix + '_ProvinciaResidenza' : 'provincia',
+    prefix + '_ComuneResidenza' : 'citta',
+    prefix + '_ViaResidenza' : 'indirizzo',
+    prefix + '_CivicoResidenza' : 'numeroCivico',
+    prefix + '_BarraResidenza' : 'barra',
+    prefix + '_CAPResidenza' : 'cap',
+    prefix + '_Nazione' : 'nazione',
+    prefix + '_LuogoNascita' : 'comuneNascita',
+    prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
+    prefix + '_MatricolaAnagrafe' : 'matricola',
+  },
+  '#RecuperaDatiAnagr:click','true') }}
+</table>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p style="line-height: 1.6;"><b>Dati anagrafici:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="line-height:1.6;width:42%;">Cognome</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="line-height:1.6;width:42%;">Nome</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="line-height:1.6;width:10%;">Data di nascita</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="line-height:1.6;width:6%;">Sesso</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome"/>
+      </td>
+      <td>
+        <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome"/>
+      </td>
+       <td>
+        <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita"/>
+      </td>
+      <td>
+        <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso">
+          <option value=""></option>
+          <option value="M">M</option>
+          <option value="F">F</option>
+        </select>
+      </td>
+    </tr>
+ </tbody>
+</table> 
+
+
+<input id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita" type="hidden"/>
+<input id="{{ prefix }}_ProvinciaNascita" name="{{ prefix }}_ProvinciaNascita" style="width:100%" label="Provincia di nascita" type="hidden"/>
+<input id="{{ prefix }}_ProvinciaResidenza" name="{{ prefix }}_ProvinciaResidenza" style="width:100%" label="Provincia di residenza" type="hidden"/>
+<input id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" type="hidden"/>
+<input id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" type="hidden" />
+<input id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" type="hidden" />
+<input id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" type="hidden" />
+<input id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" type="hidden" />
+
+
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+		<tbody>
+			<tr class="Rigaintestazioneridotta">
+ 				<td style="width:16.5%;">
+ 					<p class="Labelcella" style="line-height:1.6;">Telefono fisso</p>
+ 				</td>
+ 				<td style="width:16.5%;">
+ 					<p class="Labelcella" style="line-height:1.6;">Cellulare</p>
+ 				</td>
+ 				<td style="width:33%;">
+ 					<p class="Labelcella" style="line-height:1.6;">E-mail<i> (posta elettronica ordinaria)</i></p>
+ 				</td>
+ 				<td>
+ 					<p class="Labelcella" style="line-height:1.6;">E-mail PEC<i> (domicilio digitale)</i></p>
+ 				</td>
+ 			</tr>
+ 			<tr>
+        <td>
+          <input class="inputNormal" id="{{ prefix }}_Fisso" name="{{ prefix }}_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()"/>
+        </td>
+        <td>
+          <input class="inputNormal" id="{{ prefix }}_Telefono" name="{{ prefix }}_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()"/>
+        </td>
+        <td>
+          <input class="inputNormal" id="{{ prefix }}_EMail" name="{{ prefix }}_EMail" label="E-mail ordinaria" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()"/>
+        </td>
+        <td>
+          <input class="inputNormal" id="{{ prefix }}_EMailPEC" name="{{ prefix }}_EMailPEC" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()"/>
+        </td>
+ 			</tr>
+ 		</tbody>
+  </table>
+
+</div>
+
+<input type="hidden" id="AventeTitolo_CodiceFamiglia" name="AventeTitolo_CodiceFamiglia"/>
+<input type="hidden" id="AventeTitolo_CodiceVia" name="AventeTitolo_CodiceVia"/>
+<input type="hidden" id="AventeTitolo_MatricolaAnagrafe" name="AventeTitolo_MatricolaAnagrafe"/>
+<input type="hidden" id="AventeTitolo_CodiceComuneNascita" name="AventeTitolo_CodiceComuneNascita"/>
+
+{%- endmacro %}
+
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!-- compare in: M0403-RICHIESTA-UTILIZZO-SALE-PALAZZO-GEREMIA
@@ -2524,9 +2676,9 @@
         <div id="{{ prefix }}_blocco_occupazione" name="{{ prefix }}_blocco_occupazione" mandatory_enabled="#{{ prefix }}_TipoLavoro1.checked()">
           <p style="line-height: 1.6;">Occupato/a: <select class="inputNormal" id="{{ prefix }}_Posizionelavorativa" name="{{ prefix }}_Posizionelavorativa" style="width:100%" label="Posizione lavorativa" enabled="#{{ prefix }}_TipoLavoro1.checked()">
                           <option value=""></option>
-                          <option value="Imprenditore">Imprenditore / Libero professionista</option>
-                          <option value="Dirigente">Dirigente / Impiegato</option>
-                          <option value="Lavoratore">Lavoratore in proprio</option>
+                          <option value="Imprenditore/Libero professionista">Imprenditore / Libero professionista</option>
+                          <option value="Dirigente/impiegato">Dirigente / Impiegato</option>
+                          <option value="Lavoratore in proprio">Lavoratore in proprio</option>
                           <option value="Operaio">Operaio e assimilati</option>
                           <option value="Coadiuvante">Coadiuvante</option>
                         </select>
