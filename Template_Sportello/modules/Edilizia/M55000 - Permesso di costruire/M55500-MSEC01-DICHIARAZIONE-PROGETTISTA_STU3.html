@@ -66,6 +66,19 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
+<meta codice_allegato="GEN-RELAZ-ENERGETICA-FIRMATA"
+urn_allegato="document:c_l378:allegato.relaz.energetica"
+descrizione_estesa="Relazione energetica"
+filename="Relazione energetica.pdf"
+firmato="SI"
+firmatari="Referente9_CodiceFiscale"
+firmatari_label="Il soggetto abilitato"
+istruzioni="/modulistica/moduli/GEN-RELAZ-ENERGETICA-FIRMATA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
 <!-- Barriere architettoniche  -->
 <meta codice_allegato="M55500-ALLEGATO-BARRIERE-ARCHITETTONICHE"
 urn_allegato="document:c_l378:barriere.architettoniche"
@@ -1243,7 +1256,16 @@ dPP 11-13/2009<br><b>Relazione energetica</b></p>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_relaz_energetica" name="numero_relaz_energetica" style="width: 90%; text-align: center;" mandatory_enabled="#relaz_energetica.checked()" type="number" min="1" max="100"/></p>
-        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="#relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+        <input class="inputNormal" id="Referente9_presente" name="Referente9_presente" type="hidden" style="width: 100%;" dynamic_check="#Referente9_CodiceFiscale.value().length > 0" />
+                {# se presente Referente9 deve essere firmata da lui #}
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" 
+        obbligatorio="!#Referente9_presente.checked() && #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""
+        />
+        {# se non presente Referente9 la firma non è richiesta #}
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" 
+        obbligatorio="#Referente9_presente.checked() && #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""
+        />
       </td>
     </tr>
     <tr>
