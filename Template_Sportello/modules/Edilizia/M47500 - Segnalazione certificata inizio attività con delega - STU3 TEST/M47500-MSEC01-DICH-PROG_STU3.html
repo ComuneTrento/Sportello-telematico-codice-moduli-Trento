@@ -14,7 +14,7 @@ dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="P7M_ELETTRONICA"
+firmare="P7M_DIGITALE"
 istruzioni_compilazione=""
 istruzioni_invio=""
 metodo_invio=""
@@ -51,6 +51,19 @@ descrizione_estesa="Allegato - Elaborati/relazione energetica relativi ai requis
 filename="GEN-RELAZIONE_ENERGETICA.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-RELAZ-ENERGETICA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-RELAZ-ENERGETICA-FIRMATA"
+urn_allegato="document:c_l378:allegato.relaz.energetica"
+descrizione_estesa="Relazione energetica"
+filename="Relazione energetica.pdf"
+firmato="SI"
+firmatari="Referente9_CodiceFiscale"
+firmatari_label="Il soggetto abilitato"
+istruzioni="/modulistica/moduli/GEN-RELAZ-ENERGETICA-FIRMATA"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
@@ -1023,7 +1036,15 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_relaz_energetica" name="numero_relaz_energetica" style="width: 90%; text-align: center;" mandatory_enabled="#relaz_energetica.checked()" type="number" min="1" max="100"/></p>
-        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="#relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        <input class="inputNormal" id="Referente9_presente" name="Referente9_presente" type="hidden" style="width: 100%;" dynamic_check="#Referente9_CodiceFiscale.value().length > 0" />
+         {# se presente Referente9 deve essere firmata da lui #}
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" 
+        obbligatorio="!#Referente9_presente.checked() && #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""
+        />
+        {# se non presente Referente9 la firma non è richiesta #}
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" 
+        obbligatorio="#Referente9_presente.checked() && #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""
+        />
       </td>
     </tr>
     <tr>
@@ -1089,7 +1110,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_energ_elettr" name="numero_energ_elettr" style="width: 90%; text-align: center;" mandatory_enabled="#energ_elettr.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-PROD-ELETTR" name="GLOBO_allegato_cGEN-IMP-PROD-ELETTR" obbligatorio="#Schema_prog_impianti1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_energ_elettr.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-PROD-ELETTR" name="GLOBO_allegato_cGEN-IMP-PROD-ELETTR" obbligatorio="#Schema_prog_impianti1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_energ_elettr.value()"/>
       </td>
     </tr>    
     <tr>
@@ -1101,7 +1122,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_prot_scar_elettr" name="numero_prot_scar_elettr" style="width: 90%; text-align: center;" mandatory_enabled="#prot_scar_elettr.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-PROT-ATMOSF" name="GLOBO_allegato_cGEN-IMP-PROT-ATMOSF" obbligatorio="#Schema_prog_impianti2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_prot_scar_elettr.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-PROT-ATMOSF" name="GLOBO_allegato_cGEN-IMP-PROT-ATMOSF" obbligatorio="#Schema_prog_impianti2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_prot_scar_elettr.value()"/>
       </td>
     </tr>
     <tr>
@@ -1113,7 +1134,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_radiotel" name="numero_imp_radiotel" style="width: 90%; text-align: center;" mandatory_enabled="#imp_radiotel.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-TV" name="GLOBO_allegato_cGEN-IMP-TV" obbligatorio="#Schema_prog_impianti3.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_radiotel.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-TV" name="GLOBO_allegato_cGEN-IMP-TV" obbligatorio="#Schema_prog_impianti3.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_radiotel.value()"/>
       </td>
     </tr>    
     <tr>
@@ -1125,7 +1146,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_riscald" name="numero_imp_riscald" style="width: 90%; text-align: center;" mandatory_enabled="#imp_riscald.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-RISCALD" name="GLOBO_allegato_cGEN-IMP-RISCALD" obbligatorio="#Schema_prog_impianti4.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_riscald.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-RISCALD" name="GLOBO_allegato_cGEN-IMP-RISCALD" obbligatorio="#Schema_prog_impianti4.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_riscald.value()"/>
       </td>
     </tr>
     <tr>
@@ -1137,7 +1158,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_sanit" name="numero_imp_sanit" style="width: 90%; text-align: center;" mandatory_enabled="#imp_sanit.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-SANITARI" name="GLOBO_allegato_cGEN-IMP-SANITARI" obbligatorio="#Schema_prog_impianti5.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_sanit.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-SANITARI" name="GLOBO_allegato_cGEN-IMP-SANITARI" obbligatorio="#Schema_prog_impianti5.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_sanit.value()"/>
       </td>
     </tr>
     <tr>
@@ -1149,7 +1170,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_gas" name="numero_imp_gas" style="width: 90%; text-align: center;" mandatory_enabled="#imp_gas.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-GAS" name="GLOBO_allegato_cGEN-IMP-GAS" obbligatorio="#Schema_prog_impianti6.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_gas.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-GAS" name="GLOBO_allegato_cGEN-IMP-GAS" obbligatorio="#Schema_prog_impianti6.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_gas.value()"/>
       </td>
     </tr>
     <tr>
@@ -1161,7 +1182,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_sollev" name="numero_imp_sollev" style="width: 90%; text-align: center;" mandatory_enabled="#imp_sollev.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-SOLLEV" name="GLOBO_allegato_cGEN-IMP-SOLLEV" obbligatorio="#Schema_prog_impianti7.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_sollev.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-SOLLEV" name="GLOBO_allegato_cGEN-IMP-SOLLEV" obbligatorio="#Schema_prog_impianti7.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_sollev.value()"/>
       </td>
     </tr>
     <tr>
@@ -1173,7 +1194,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee;">
         <p style="line-height: 1.6; text-align: center;"><input id="numero_imp_prot_antinc" name="numero_imp_prot_antinc" style="width: 90%; text-align: center;" mandatory_enabled="#imp_prot_antinc.checked()" type="number" min="1" max="100"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cGEN-IMP-ANTINC" name="GLOBO_allegato_cGEN-IMP-ANTINC" obbligatorio="#Schema_prog_impianti8.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_prot_antinc.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cGEN-IMP-ANTINC" name="GLOBO_allegato_cGEN-IMP-ANTINC" obbligatorio="#Schema_prog_impianti8.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_imp_prot_antinc.value()"/>
       </td>
     </tr>  
     <tr>

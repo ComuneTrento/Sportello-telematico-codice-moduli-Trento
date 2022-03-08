@@ -70,7 +70,7 @@ tipo_mime="application/pdf,image/jpeg"/>
 <meta codice_allegato="GEN-ELABORATI-PROGETTUALI"
 urn_allegato="document:c_l378:allegato.elaborati.progettuali"
 descrizione_estesa="Elaborati progettuali per interventi di manutenzione straordinaria"
-filename="Elaborati progettuali.jpeg,Elaborati progettuali.pdf"
+filename="Elaborati progettuali.pdf"
 firmato="SI"
 firmatari="Referente_CodiceFiscale"
 firmatari_label="Progettista incaricato"
@@ -78,29 +78,29 @@ istruzioni="/modulistica/moduli/GEN-ELABORATI-PROGETTUALI"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/>
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-ELAB-PROG-IMPIANTI"
 urn_allegato="document:c_l378:allegato.elab.prog.impianti"
 descrizione_estesa="Elaborato/i progettuale/i relativo/i agli impianti"
-filename="Elaborato progettuale impianti.jpeg,Elaborato progettuale impianti.pdf"
+filename="Elaborato progettuale impianti.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-ELAB-PROG-IMPIANTI"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/>
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-RELAZ-REQ-PREST-ENERG"
 urn_allegato="document:c_l378:allegato.requisiti.prestaz.energ"
 descrizione_estesa="Relazione requisiti prestazione energetica"
-filename="Relazione requisiti prestazione energetica.jpeg,Relazione requisiti prestazione energetica.pdf"
+filename="Relazione requisiti prestazione energetica.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-RELAZ-REQ-PREST-ENERG"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/>
+tipo_mime="application/pdf"/>
 
 
 <meta codice_allegato="GEN-RELAZ-REQ-PREST-ENERG-FIRMATA"
@@ -119,15 +119,28 @@ tipo_mime="application/pdf"/>
 <meta codice_allegato="GEN-RELAZ-ENERGETICA"
 urn_allegato="document:c_l378:allegato.relaz.energetica"
 descrizione_estesa="Relazione energetica"
-filename="Relazione energetica.jpeg,Relazione energetica.pdf"
-firmato="SI"
-firmatari="Referente8_CodiceFiscale"
+filename="Relazione energetica.pdf"
+firmato="NO"
+firmatari="Referente9_CodiceFiscale"
 firmatari_label="Soggetto abilitato"
 istruzioni="/modulistica/moduli/GEN-RELAZ-ENERGETICA"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/>
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-RELAZ-ENERGETICA-FIRMATA"
+urn_allegato="document:c_l378:allegato.relaz.energetica"
+descrizione_estesa="Relazione energetica"
+filename="Relazione energetica.pdf"
+firmato="SI"
+firmatari="Referente9_CodiceFiscale"
+firmatari_label="Il soggetto abilitato"
+istruzioni="/modulistica/moduli/GEN-RELAZ-ENERGETICA-FIRMATA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
 
 <meta codice_allegato="GEN-ALTRI-ALLEGATI"
 urn_allegato="document:c_l378:allegato.altri.allegati"
@@ -342,7 +355,7 @@ tipo_mime="application/pdf,image/jpeg"/>
 <br>
 <br>
 
-{{ porzioni_opere_libere.interventi_energetici(num_titolo1="", num_titolo2="", relazione_energetica="relazione energetica", soggetto_relazione_energetica="SOGGETTO CHE ATTESTA I REQUISITI DI PRESTAZIONE ENERGETICA (se presente)") }}
+{{ porzioni_scia.interventi_energetici(num_titolo1="", num_titolo2="", relazione_energetica="relazione energetica", soggetto_relazione_energetica="SOGGETTO CHE ATTESTA I REQUISITI DI PRESTAZIONE ENERGETICA (se presente)") }}
 
 <br>
 <br>
@@ -652,14 +665,21 @@ tipo_mime="application/pdf,image/jpeg"/>
     </tr>
     <tr>
       <td style="vertical-align: center; text-align: center;">
-        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#Incarico_soggetto_certificatore2.checked()" enabled="#Incarico_soggetto_certificatore2.checked()" value="OBBLIGATORIO" />
+        <input id="relaz_energetica" name="relaz_energetica" type="checkbox" dynamic_check="#ricad_aspetti_energetici2.checked()" enabled="#ricad_aspetti_energetici2.checked()" value="OBBLIGATORIO" />
       </td>
       <td colspan="2">
         <p style="line-height:1.6;"><b>Relazione energetica</b> (Allegati dm. 26 giugno 2009 <i>Schemi e modalità di riferimento per la compilazione della relazione tecnica di progetto ai fini dell’applicazione delle prescrizioni e dei requisiti minimi di prestazione energetica negli edifici</i>) nel caso in cui gli interventi ricadano nell'articolo 4, commi 3, 4 o 5 del d. P. P. 13 luglio 2009, n. 1 1-13/Leg. e s.m.i</p>
       </td>
       <td>
         <p style="line-height: 1.6; text-align: center;"><input id="numero_relaz_energetica" name="numero_relaz_energetica" style="width: 90%; text-align: center;" mandatory_enabled="#relaz_energetica.checked()" type="number" min="1" max="100"/></p>
-        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" obbligatorio="#Incarico_soggetto_certificatore2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        {# se presente Referente9 deve essere firmata da lui #}
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA" 
+        obbligatorio="!#Referente9_presente.checked() && #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""
+        />
+        {# se non presente Referente9 la firma non è richiesta #}
+        <input numero="#numero_relaz_energetica.value()" id="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" name="GLOBO_allegato_cGEN-RELAZ-ENERGETICA-FIRMATA" 
+        obbligatorio="#Referente9_presente.checked() && #relaz_energetica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""
+        />
       </td>
     </tr>
     <tr>
