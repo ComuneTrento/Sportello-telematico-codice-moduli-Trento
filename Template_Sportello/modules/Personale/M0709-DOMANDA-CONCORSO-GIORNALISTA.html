@@ -1,0 +1,825 @@
+{% set CodiceModulo = "M0709-DOMANDA-CONCORSO-GIORNALISTA" %}
+{% set Urn = "document:c_l378:concorso.pubblico;concorso.giornalista;domanda" %}
+{% extends "base_trento_OK.html" %}
+{% block meta %}
+
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il/la dichiarante"
+classi_modulo="Occupazione concorsi e assunzione"
+codice_modulo="{% block codice %}{{ CodiceModulo }}{% endblock codice %}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Domanda di partecipazione a concorso giornalista"
+destinatario_amministrazione=""
+destinatario_ufficio="AMK73K"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="SI"
+firmare="AUTENTICATO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="Titolare"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="2.0|29/05/2020"/>
+
+<meta codice_allegato="M0709-A01-CERT-PROT"
+urn_allegato="document:c_l378:concorso.pubblico;giornalista;a01.M0709.verbale.commissione.medica"
+descrizione_estesa="Copia del verbale della commissione medica"
+filename="Verbale commissione.jpeg,Verbale commissione.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M0709-A01-CERT-PROT"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M0709-A02-CERT-MED"
+urn_allegato="document:c_l378:concorso.pubblico;giornalista;a02.M0709.certificato.medico"
+descrizione_estesa="Copia del certificato medico"
+filename="Certificato medico.jpeg,Certificato medico.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M0709-A02-CERT-MED"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M0709-A03-TITOLO-EQUIV"
+urn_allegato="document:c_l378:concorso.pubblico;giornalista;a03.M0709.provvedimento.equipollenza.equivalenza.titolo"
+descrizione_estesa="Copia del provvedimento di equipollenza o di equivalenza del titolo di studio"
+filename="Provvedimento equipollenza.jpeg,Provvedimento equipollenza.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M0709-A03-TITOLO-EQUIV"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M0709-A04-ESONERO-TEST-PRESELETTIVO"
+urn_allegato="document:c_l378:concorso.pubblico;giornalista;a04.M0709.esonero.test.preselettivo"
+descrizione_estesa="Certificato esonero test preselettivo"
+filename="EsoneroTestPreselettivo.jpeg,EsoneroTestPreselettivo.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M0709-A04-ESONERO-TEST-PRESELETTIVO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+
+{% block ulteriori_allegati %}{% endblock ulteriori_allegati %}
+{% endblock meta %}
+{% block title %}Domanda di partecipazione a concorso giornalista{% endblock title %}
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+<input dynamic_value="#nominativo_oggetto.value() + ' - Rilascio Copia Atti'" id="Oggetto" name="Oggetto" type="hidden" />
+
+
+
+<!-- INIZIO BLOCCO INTESTAZIONE -->
+<div type="intestazione_moduloprincipale_senzabollo">
+  <div class="container border-bottom" style="border-radius: unset;z-index: -1;">
+    <div class="form-row">
+      <div class="form-group col-lg-3 text-center">
+        <img alt="Ente" src="./appoggio/img/StemmaComune.png">
+      </div>
+      <div class="form-group col-lg-6 text-center mb-0">
+        <div class="heading">
+          <label for="Ente"> Al comune di </label>
+          <div class="space-0"></div>
+          <input class="form-control" style="background-color: white;" id="Ente" name="Ente" readonly disabled>
+        </div>
+        <div class="heading">
+          <label for="CodiceISTAT"> Codice ISTAT </label>
+          <div class="space-0"></div>
+          <input class="form-control" style="background-color: white;" id="CodiceISTAT" name="CodiceISTAT" readonly disabled>
+        </div>
+        <div class="heading">
+          <label for="UfficioDestinatario"> Ufficio destinatario </label>
+          <div class="space-0"></div>
+          <input class="form-control" style="background-color: white;" id="UfficioDestinatario" name="UfficioDestinatario" dynamic_value="#Parametri_UfficioDestinatario.value() ? get_ufficio_dest() : get_ufficio_dest()" readonly disabled>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- FINE BLOCCO INTESTAZIONE -->
+
+
+<div class="space-1"></div>
+
+<div class="container">
+  <div class="title-1">DOMANDA DI AMMISSIONE AL CONCORSO PUBBLICO PER TITOLI ED ESAMI PER LA COPERTURA
+     DI N.1 POSTO A TEMPO INDETERMINATO E A TEMPO PIENO (36 ORE SETTIMANALI) NELLA FIGURA PROFESSIONALE
+     DI FUNZIONARIO ESPERTO (GIORNALISTA), CATEGORIA D EVOLUTO
+  </div>
+</div>
+
+<div class="space-1"></div>
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden">
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden">
+<br>
+
+<!-- INIZIO BLOCCO ANAGRAFICA RESPONSIVE-->
+
+<div class="space-1"></div>
+
+  <div class="container border bg-light">
+    <!-- titoletto -->
+    <div class="form-row border-bottom">
+      <div class="col-lg-11">
+        <span class="title"> il sottoscritto </span>
+      </div>
+      <div class="col-lg-1 text-right">
+        <span style="pd4ml-visibility: hidden; pd4ml-display: none;" style="margin-top: 5pt;">
+          <img class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility" title="Carica i tuoi dati" src="./appoggio/img/carica_campi.png" onclick="recuperaAnagrafica( 'Titolare' )">
+        </span>
+      </div>
+    </div>
+
+    <!-- dati principali -->
+    <div class="form-row" mandatory="true">
+      <div class="form-group col-lg-4">
+        <label for="Titolare_Cognome"> Cognome </label>
+        <input class="form-control" type="text" id="Titolare_Cognome" name="Titolare_Cognome"> 
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="Titolare_Nome"> Nome </label>
+        <input class="form-control" type="text" id="Titolare_Nome" name="Titolare_Nome">
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="Titolare_CodiceFiscale"> Codice Fiscale </label>
+        <input class="form-control" type="text" id="Titolare_CodiceFiscale" name="Titolare_CodiceFiscale" onkeyup="this.value = this.value.toUpperCase();" format="cf"; readonly;>
+      </div>
+    </div>
+
+    <!-- dati generali -->
+    <div class="form-row" mandatory="true">
+      <div class="form-group col-lg-2">
+        <label for="Titolare_DataNascita"> Data Nascita </label>
+        <input class="form-control" type="text" format="date" id="Titolare_DataNascita" name="Titolare_DataNascita" readonly>
+      </div>
+      <div class="form-group col-lg-2">
+        <label for="Titolare_Sesso"> Sesso </label>
+        <input class="form-control" type="text" id="Titolare_Sesso" name="Titolare_Sesso" readonly>
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="Titolare_LuogoNascita"> Luogo Nascita </label>
+        <input class="form-control"  id="Titolare_LuogoNascita" name="Titolare_LuogoNascita" readonly>
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="Titolare_Cittadinanza"> Cittadinanza </label>
+        <select class="form-control custom-select" id="Titolare_Cittadinanza" name="Titolare_Cittadinanza">
+          <option value=""></option> 
+          <optgroup label="Unione Europea">
+            <option value="Italia">Italia</option> <option value="Austria">Austria</option> <option value="Belgio">Belgio</option> <option value="Bulgaria">Bulgaria</option> <option value="Cipro">Cipro</option> <option value="Danimarca">Danimarca</option> <option value="Eire">Eire</option> <option value="Estonia">Estonia</option> <option value="Finlandia">Finlandia</option> <option value="Francia">Francia</option> <option value="Germania">Germania</option> <option value="Grecia">Grecia</option> <option value="Lettonia">Lettonia</option> <option value="Lituania">Lituania</option> <option value="Lussemburgo">Lussemburgo</option> <option value="Malta">Malta</option> <option value="Paesi Bassi">Paesi Bassi</option> <option value="Polonia">Polonia</option> <option value="Portogallo">Portogallo</option> <option value="Regno Unito">Regno Unito</option> <option value="Repubblica Ceca">Repubblica Ceca</option> <option value="Romania">Romania</option> <option value="Slovacchia">Slovacchia</option> <option value="Slovenia">Slovenia</option> <option value="Spagna">Spagna</option> <option value="Svezia">Svezia</option> <option value="Ungheria">Ungheria</option> </optgroup>
+          <optgroup label="NON Unione Europea">
+            <option value="Afghanistan">Afghanistan</option> <option value="Albania">Albania</option> <option value="Algeria">Algeria</option> <option value="Andorra">Andorra</option> <option value="Angola">Angola</option> <option value="Anguilla">Anguilla</option> <option value="Antartide">Antartide</option> <option value="Antigua e Barbuda">Antigua e Barbuda</option> <option value="Antille Olandesi">Antille Olandesi</option> <option value="Arabia Saudita">Arabia Saudita</option> <option value="Argentina">Argentina</option> <option value="Armenia">Armenia</option> <option value="Aruba">Aruba</option> <option value="Australia">Australia</option> <option value="Azerbaijan">Azerbaijan</option> <option value="Bahamas">Bahamas</option> <option value="Bahrain">Bahrain</option> <option value="Bangladesh">Bangladesh</option> <option value="Barbados">Barbados</option> <option value="Belize">Belize</option> <option value="Benin">Benin</option> <option value="Bermuda">Bermuda</option> <option value="Bhutan">Bhutan</option> <option value="Bielorussia">Bielorussia</option> <option value="Bolivia">Bolivia</option> <option value="Bosnia Erzegovina">Bosnia Erzegovina</option> <option value="Botswana">Botswana</option> <option value="Brasile">Brasile</option> <option value="Brunei Darussalam">Brunei Darussalam</option> <option value="Burkina Faso">Burkina Faso</option> <option value="Burundi">Burundi</option> <option value="Cambogia">Cambogia</option> <option value="Camerun">Camerun</option> <option value="Canada">Canada</option> <option value="Capo Verde">Capo Verde</option> <option value="Ciad">Ciad</option> <option value="Cile">Cile</option> <option value="Cina">Cina</option> <option value="Città  del Vaticano">Città  del Vaticano</option> <option value="Colombia">Colombia</option> <option value="Comore">Comore</option> <option value="Corea del Nord">Corea del Nord</option> <option value="Corea del Sud">Corea del Sud</option> <option value="Costa d'Avorio">Costa d'Avorio</option> <option value="Costa Rica">Costa Rica</option> <option value="Croazia">Croazia</option> <option value="Cuba">Cuba</option> <option value="Dominica">Dominica</option> <option value="Ecuador">Ecuador</option> <option value="Egitto">Egitto</option> <option value="El Salvador">El Salvador</option> <option value="Emirati Arabi Uniti">Emirati Arabi Uniti</option> <option value="Eritrea">Eritrea</option> <option value="Etiopia">Etiopia</option> <option value="Federazione Russa">Federazione Russa</option> <option value="Fiji">Fiji</option> <option value="Filippine">Filippine</option> <option value="Gabon">Gabon</option> <option value="Gambia">Gambia</option> <option value="Georgia">Georgia</option> <option value="Ghana">Ghana</option> <option value="Giamaica">Giamaica</option> <option value="Giappone">Giappone</option> <option value="Gibilterra">Gibilterra</option> <option value="Gibuti">Gibuti</option> <option value="Giordania">Giordania</option> <option value="Grenada">Grenada</option> <option value="Groenlandia">Groenlandia</option> <option value="Guadalupa">Guadalupa</option> <option value="Guam">Guam</option> <option value="Guatemala">Guatemala</option> <option value="Guinea Equatoriale">Guinea Equatoriale</option> <option value="Guinea">Guinea</option> <option value="Guinea-Bissau">Guinea-Bissau</option> <option value="Guyana Francese">Guyana Francese</option> <option value="Guyana">Guyana</option> <option value="Haiti">Haiti</option> <option value="Honduras">Honduras</option> <option value="Hong Kong">Hong Kong</option> <option value="India">India</option> <option value="Indonesia">Indonesia</option> <option value="Iran">Iran</option> <option value="Iraq">Iraq</option> <option value="Islanda">Islanda</option> <option value="Isola Bouvet">Isola Bouvet</option> <option value="Isola di Natale">Isola di Natale</option> <option value="Isola Heard e Isole McDonald">Isola Heard e Isole McDonald</option> <option value="Isola Norfolk">Isola Norfolk</option> <option value="Isole Cayman">Isole Cayman</option> <option value="Isole Cocos">Isole Cocos</option> <option value="Isole Cook">Isole Cook</option> <option value="Isole Falkland">Isole Falkland</option> <option value="Isole Faroe">Isole Faroe</option> <option value="Isole Marianne Settentrionali">Isole Marianne Settentrionali</option> <option value="Isole Marshall">Isole Marshall</option> <option value="Isole Minori degli Stati Uniti d'America">Isole Minori degli Stati Uniti d'America</option> <option value="Isole Solomon">Isole Solomon</option> <option value="Isole Turks e Caicos">Isole Turks e Caicos</option> <option value="Isole Vergini Americane">Isole Vergini Americane</option> <option value="Isole Vergini Britanniche">Isole Vergini Britanniche</option> <option value="Israele">Israele</option> <option value="Kazakhistan">Kazakhistan</option> <option value="Kenya">Kenya</option> <option value="Kirghizistan">Kirghizistan</option> <option value="Kiribati">Kiribati</option> <option value="Kosovo">Kosovo</option> <option value="Kuwait">Kuwait</option> <option value="Laos">Laos</option> <option value="Lesotho">Lesotho</option> <option value="Libano">Libano</option> <option value="Liberia">Liberia</option> <option value="Libia">Libia</option> <option value="Liechtenstein">Liechtenstein</option> <option value="Macao">Macao</option> <option value="Macedonia">Macedonia</option> <option value="Madagascar">Madagascar</option> <option value="Malawi">Malawi</option> <option value="Maldive">Maldive</option> <option value="Malesia">Malesia</option> <option value="Mali">Mali</option> <option value="Marocco">Marocco</option> <option value="Martinica">Martinica</option> <option value="Mauritania">Mauritania</option> <option value="Maurizius">Maurizius</option> <option value="Mayotte">Mayotte</option> <option value="Messico">Messico</option> <option value="Moldavia">Moldavia</option> <option value="Monaco">Monaco</option> <option value="Mongolia">Mongolia</option> <option value="Montenegro">Montenegro</option> <option value="Montserrat">Montserrat</option> <option value="Mozambico">Mozambico</option> <option value="Myanmar">Myanmar</option> <option value="Namibia">Namibia</option> <option value="Nauru">Nauru</option> <option value="Nepal">Nepal</option> <option value="Nicaragua">Nicaragua</option> <option value="Niger">Niger</option> <option value="Nigeria">Nigeria</option> <option value="Niue">Niue</option> <option value="Norvegia">Norvegia</option> <option value="Nuova Caledonia">Nuova Caledonia</option> <option value="Nuova Zelanda">Nuova Zelanda</option> <option value="Oman">Oman</option> <option value="Pakistan">Pakistan</option> <option value="Palau">Palau</option> <option value="Panamà¡">Panamà¡</option> <option value="Papua Nuova Guinea">Papua Nuova Guinea</option> <option value="Paraguay">Paraguay</option> <option value="Perù">Perù</option> <option value="Pitcairn">Pitcairn</option> <option value="Polinesia Francese">Polinesia Francese</option> <option value="Porto Rico">Porto Rico</option> <option value="Qatar">Qatar</option> <option value="Repubblica Centroafricana">Repubblica Centroafricana</option> <option value="Repubblica del Congo">Repubblica del Congo</option> <option value="Repubblica Democratica del Congo">Repubblica Democratica del Congo</option> <option value="Repubblica Dominicana">Repubblica Dominicana</option> <option value="Reunion">Reunion</option> <option value="Ruanda">Ruanda</option> <option value="Sahara Occidentale">Sahara Occidentale</option> <option value="Saint Kitts e Nevis">Saint Kitts e Nevis</option> <option value="Saint Pierre e Miquelon">Saint Pierre e Miquelon</option> <option value="Saint Vincent e Grenadine">Saint Vincent e Grenadine</option> <option value="Samoa Americane">Samoa Americane</option> <option value="Samoa">Samoa</option> <option value="San Marino">San Marino</option> <option value="Santa Lucia">Santa Lucia</option> <option value="Sant'Elena">Sant'Elena</option> <option value="Sao Tome e Principe">Sao Tome e Principe</option> <option value="Senegal">Senegal</option> <option value="Serbia">Serbia</option> <option value="Seychelles">Seychelles</option> <option value="Sierra Leone">Sierra Leone</option> <option value="Singapore">Singapore</option> <option value="Siria">Siria</option> <option value="Somalia">Somalia</option> <option value="Sri Lanka">Sri Lanka</option> <option value="Stati Federati della Micronesia">Stati Federati della Micronesia</option> <option value="Stati Uniti d'America">Stati Uniti d'America</option> <option value="Sud Africa">Sud Africa</option> <option value="Sud Georgia e Isole Sandwich">Sud Georgia e Isole Sandwich</option> <option value="Sudan">Sudan</option> <option value="Suriname">Suriname</option> <option value="Svalbard e Jan Mayen">Svalbard e Jan Mayen</option> <option value="Svizzera">Svizzera</option> <option value="Swaziland">Swaziland</option> <option value="Tagikistan">Tagikistan</option> <option value="Tailandia">Tailandia</option> <option value="Taiwan">Taiwan</option> <option value="Tanzania">Tanzania</option> <option value="Territori Britannici dell'Oceano Indiano">Territori Britannici dell'Oceano Indiano</option> <option value="Territori Francesi del Sud">Territori Francesi del Sud</option> <option value="Territori Palestinesi Occupati">Territori Palestinesi Occupati</option> <option value="Timor Est">Timor Est</option> <option value="Togo">Togo</option> <option value="Tokelau">Tokelau</option> <option value="Tonga">Tonga</option> <option value="Trinidad e Tobago">Trinidad e Tobago</option> <option value="Tunisia">Tunisia</option> <option value="Turchia">Turchia</option> <option value="Turkmenistan">Turkmenistan</option> <option value="Tuvalu">Tuvalu</option> <option value="Ucraina">Ucraina</option> <option value="Uganda">Uganda</option> <option value="Uruguay">Uruguay</option> <option value="Uzbekistan">Uzbekistan</option> <option value="Vanuatu">Vanuatu</option> <option value="Venezuela">Venezuela</option> <option value="Vietnam">Vietnam</option> <option value="Wallis e Futuna">Wallis e Futuna</option> <option value="Yemen">Yemen</option> <option value="Zambia">Zambia</option> <option value="Zimbabwe">Zimbabwe</option> <option value="Apolide">Apolide</option> </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <!-- Residenza -->
+    <div class="form-row">
+      <div class="form-group col-lg-12">
+        <label for=""> Residenza </label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-lg-1" mandatory="true">
+        <label for="Titolare_ProvinciaResidenza"> Provincia </label>
+        <select class="form-control custom-select" id="Titolare_ProvinciaResidenza" name="Titolare_ProvinciaResidenza">
+          <option value=""></option> 
+          <optgroup label="Italia">
+            <option value="AG">AG</option> <option value="AL">AL</option> <option value="AN">AN</option> <option value="AO">AO</option> <option value="AP">AP</option> <option value="AQ">AQ</option> <option value="AR">AR</option> <option value="AT">AT</option> <option value="AV">AV</option> <option value="BA">BA</option> <option value="BG">BG</option> <option value="BI">BI</option> <option value="BL">BL</option> <option value="BN">BN</option> <option value="BO">BO</option> <option value="BR">BR</option> <option value="BS">BS</option> <option value="BT">BT</option> <option value="BZ">BZ</option> <option value="CA">CA</option> <option value="CB">CB</option> <option value="CE">CE</option> <option value="CH">CH</option> <option value="CI">CI</option> <option value="CL">CL</option> <option value="CN">CN</option> <option value="CO">CO</option> <option value="CR">CR</option> <option value="CS">CS</option> <option value="CT">CT</option> <option value="CZ">CZ</option> <option value="EN">EN</option> <option value="FC">FC</option> <option value="FE">FE</option> <option value="FG">FG</option> <option value="FI">FI</option> <option value="FM">FM</option> <option value="FR">FR</option> <option value="GE">GE</option> <option value="GO">GO</option> <option value="GR">GR</option> <option value="IM">IM</option> <option value="IS">IS</option> <option value="KR">KR</option> <option value="LC">LC</option> <option value="LE">LE</option> <option value="LI">LI</option> <option value="LO">LO</option> <option value="LT">LT</option> <option value="LU">LU</option> <option value="MB">MB</option> <option value="MC">MC</option> <option value="ME">ME</option> <option value="MI">MI</option> <option value="MN">MN</option> <option value="MO">MO</option> <option value="MS">MS</option> <option value="MT">MT</option> <option value="NA">NA</option> <option value="NO">NO</option> <option value="NU">NU</option> <option value="OG">OG</option> <option value="OR">OR</option> <option value="OT">OT</option> <option value="PA">PA</option> <option value="PC">PC</option> <option value="PD">PD</option> <option value="PE">PE</option> <option value="PG">PG</option> <option value="PI">PI</option> <option value="PN">PN</option> <option value="PO">PO</option> <option value="PR">PR</option> <option value="PT">PT</option> <option value="PU">PU</option> <option value="PV">PV</option> <option value="PZ">PZ</option> <option value="RA">RA</option> <option value="RC">RC</option> <option value="RE">RE</option> <option value="RG">RG</option> <option value="RI">RI</option> <option value="RM">RM</option> <option value="RN">RN</option> <option value="RO">RO</option> <option value="SA">SA</option> <option value="SI">SI</option> <option value="SO">SO</option> <option value="SP">SP</option> <option value="SR">SR</option> <option value="SS">SS</option> <option value="SV">SV</option> <option value="TA">TA</option> <option value="TE">TE</option> <option value="TN">TN</option> <option value="TO">TO</option> <option value="TP">TP</option> <option value="TR">TR</option> <option value="TS">TS</option> <option value="TV">TV</option> <option value="UD">UD</option> <option value="VA">VA</option> <option value="VB">VB</option> <option value="VC">VC</option> <option value="VE">VE</option> <option value="VI">VI</option> <option value="VR">VR</option> <option value="VS">VS</option> <option value="VT">VT</option> <option value="VV">VV</option> 
+            <optgroup label="NON Italia"> 
+              <option value="EE">EE</option> 
+            </optgroup>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group col-lg-3" mandatory="true">
+        <label for="Titolare_ComuneResidenza"> Comune </label>
+        <select class="form-control custom-select" id="Titolare_ComuneResidenza" name="Titolare_ComuneResidenza" dynamic_value="getComuniFromProvincia( #Titolare_ProvinciaResidenza.value(), 'Titolare_ComuneResidenza')"></select>
+      </div>
+      <div class="form-group col-lg-4" mandatory="true">
+        <label for="Titolare_ViaResidenza"> Indirizzo </label>
+        <input class="form-control" type="text" id="Titolare_ViaResidenza" name="Titolare_ViaResidenza" maxlength="60">
+      </div>
+      <div class="form-group col-lg-2" mandatory="true">
+        <label for="Titolare_CivicoResidenza"> Civico </label>
+        <input class="form-control" type="text" id="Titolare_CivicoResidenza" name="Titolare_CivicoResidenza" maxlength="10">
+      </div>
+      <div class="form-group col-lg-2">
+        <label for="Titolare_CAPResidenza"> CAP </label>
+        <input class="form-control" type="text" id="Titolare_CAPResidenza" name="Titolare_CAPResidenza" format="cap" mandatory="#Titolare_ProvinciaResidenza.value() != 'EE'">
+      </div>
+    </div>
+
+    <!-- Contatti -->
+    <div class="form-row">
+      <div class="form-group col-lg-2">
+        <label for="Titolare_Telefono"> Telefono casa </label>
+        <input class="form-control" id="Titolare_Telefono" name="Titolare_Telefono" mandatory="#Titolare_TelefonoCellulare.value() == ''" format="regular_expression" expression="(^[0|3]{1}[0-9]{5,10}$)" />
+      </div>
+      <div class="form-group col-lg-2">
+        <label for="Titolare_TelefonoCellulare"> Telefono cellulare </label>
+        <input class="form-control" id="Titolare_TelefonoCellulare" name="Titolare_TelefonoCellulare" mandatory="#Titolare_Telefono.value() == ''" />
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="Titolare_EMail"> Posta elettronica ordinaria </label>
+        <input class="form-control" id="Titolare_EMail" name="Titolare_EMail" format="email" mandatory="false" />          
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="Titolare_EMailPEC"> Posta elettronica certificata (domicilio digitale) </label>
+        <input class="form-control" id="Titolare_EMailPEC" name="Titolare_EMailPEC" format="pec" mandatory="!#Titolare_TipologiaImpresa.check_value(['associazione']) and !#Titolare_TipologiaImpresa.check_value(['ente religioso']) and !#Titolare_TipologiaImpresa.check_value([''])">
+      </div>
+    </div>
+
+</div>
+
+<div class="space-1"></div>
+<!-- FINE BLOCCO ANAGRAFICA RESPONSIVE-->
+<div class="container">
+  <div class="title-3">presa visione dell'Avviso in oggetto:</div>
+  <div class="space-1"></div>
+  <div class="space-1"></div>
+  <div class="title-2" style="font-style: normal;">CHIEDE</div>
+  <div class="space-1"></div>
+  <div class="space-1"></div>
+  <div class="form-row">
+    di essere ammesso/a al concorso pubblico per esami per la copertura 
+    di n. 12 posti a tempo indeterminato e a tempo pieno (36 ore settimanali) nella 
+    figura professionale di  funzionario amministrativo contabile – categoria D, base, di cui n.3 posti riservati ai dipendenti del Comune di Trento in possesso
+    dei requisiti previsti dall'Art.16 dell'Ordinamento professionale del personale dell'area non dirigenziale del comparto Autonomie Locali del 20.04.2007
+    <br>
+    A tal fine, sotto la propria personale responsabilità, ai sensi degli art. 46 e 47 
+    del d.P.R. n. 445 del 28 dicembre 2000, consapevole delle sanzioni penali, nel caso 
+    di dichiarazioni non veritiere, di formazione o uso di atti falsi, richiamate 
+    dall’articolo 76 del d.P.R. 28 dicembre 2000 n. 445, come modificato dalla legge 
+    n. 77/2020 di conversione del decreto legge n. 34/2020, nonché della decadenza 
+    dai benefici eventualmente conseguenti alla dichiarazione non veritiera, e consapevole 
+    altresì che l’accertata non veridicità della dichiarazione comporta il divieto di 
+    accesso a contributi, finanziamenti e agevolazioni per un periodo di due anni 
+    decorrenti dall’adozione del provvedimento di decadenza (art. 75 d.P.R. 28 dicembre 2000 n. 445):
+  </div>
+  <div class="space-1"></div>
+  <div class="space-1"></div>
+</div>
+
+
+
+
+
+
+
+<!-- INIZIO BLOCCO Titolere_Rapporto -->
+
+  <div class="container border bg-light">
+    <div class="form-row">
+      <div class="col-lg-12">
+        <div class="title-2" style="font-style: normal;">DICHIARA:</div>
+        <div class="space-1"></div>
+        <div class="title-3">(Barrare tutte le caselle interessate)</div>
+      </div>
+    </div>
+    <div class="container border bg-light">
+      <div class="form-row">
+        <div class="col-lg-12">
+
+          <div id="Cittadinanza_Tipo" name="Cittadinanza_Tipo" label="Specificare la cittadinanza" mandatory="true"> </div>
+          <div class="form-check indent-1 border-bottom">
+            <input class="form-check-input" id="Cittadinanza_IT" name="Cittadinanza_Tipo" type="radio" value="1">
+            <label class="form-check-label" for="Cittadinanza_IT"> 
+              di essere cittadino/a italiano/a
+            </label>
+          </div>
+          <div class="form-check indent-1">
+            <input class="form-check-input" id="Cittadinanza_non_EU" name="Cittadinanza_Tipo" type="radio" value="2">
+            <label class="form-check-label" for="Cittadinanza_non_EU"> 
+              di essere....
+            </label>
+          </div> 
+
+        </div>
+      </div>
+
+
+
+      
+    </div>
+
+
+
+
+  
+    <div class="container border bg-light">
+      <div class="form-row">
+        <div class="form-check indent-1 border-bottom">
+          <div id="Titolere_Rapporto" name="Titolere_Rapporto" label="Indicare chi è il titolare" mandatory="true"></div>
+          <input class="form-check-input" id="Titolere_Rapporto_1" name="Titolere_Rapporto" type="radio" value="NO">
+          <label class="form-check-label" for="Titolere_Rapporto_1"> 
+          Quale diretto coinvolto nel sinistro stradale e/o proprietario di veicolo coinvolto
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-check indent-1 border-bottom">
+          <div id="Titolere_Rapporto" name="Titolere_Rapporto" label="Indicare chi è il titolare" mandatory="true"></div>
+          <input class="form-check-input" id="Titolere_Rapporto_1" name="Titolere_Rapporto" type="radio" value="NO">
+          <label class="form-check-label" for="Titolere_Rapporto_1"> 
+            Compagnia assicurativa
+          </label>
+        </div>
+      </div>
+        <div class="form-row">
+        <div class="form-check indent-1 border-bottom">
+          <input class="form-check-input" id="Titolere_Rapporto_2" name="Titolere_Rapporto" type="radio" value="SI">
+          <label class="form-check-label" for="Titolere_Rapporto_2"> 
+          In nome e per conto di
+          </label>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group col-lg-12">
+            <input class="form-control" id="Titolere_Rapporto_asw" name="Titolere_Rapporto" mandatory_enabled="#Titolere_Rapporto_2.checked()" label="Cognome della persona rientrata da struttura">
+            <div class="form-row">
+              <div class="col-lg-12">
+                <label><b>pertanto allega documento di delega (non necessario per compagnie assicurative)</b> </label>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- FINE BLOCCO Titolere_Rapporto -->
+
+
+<!-- INIZIO BLOCCO Relazione al sinistro -->
+
+<!-- <div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title"><b> In relazione al sinistro stradale</b> </span>
+      <p style="font-size: x-small;">
+        <b>Classificazione sinistro stradale</b>
+      </p>
+    </div>
+  </div>
+  <div class="container border bg-light">
+    <div class="form-row">
+      <div class="form-check indent-1 border-bottom">
+        <div id="Relazione" name="Relazione" label="Indicare chi è il titolare" mandatory="true"></div>
+        <input class="form-check-input" id="Relazione_1" name="Relazione" type="radio" value="NO">
+        <label class="form-check-label" for="Relazione_1"> 
+          solo danni alle cose
+        </label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-check indent-1 border-bottom">
+        <input class="form-check-input" id="Relazione_b" name="Relazione" type="radio" value="NO">
+        <label class="form-check-label" for="Relazione_2"> 
+        Con feriti e lesioni alle persone
+        </label>
+      </div>
+    </div> 
+    <div class="form-row">
+      <div class="form-check indent-1 border-bottom">
+        <input class="form-check-input" id="Relazione_c" name="Relazione" type="radio" value="SI">
+        <label class="form-check-label" for="Relazione_3"> 
+        Con esito mortale, pertanto
+        </label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-lg-12">
+          <label for="Titolere_Rapporto_asw"> Allega copia dell'autorizzazione rilasciata dall'Autorità Giudiziaria</label>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- FINE BLOCCO Relazione al sinistro -->
+
+
+<!-- INIZIO BLOCCO Verificatosi -->
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title"><b> In relazione al sinistro stradale verificatosi in</b> </span>
+    </div>
+  </div>
+
+  <div class="container border bg-light">
+    <div class="form-row">
+      <div class="form-row">
+        <div class="form-group col-lg-3">
+            <label for="Provincia"> Provincia</label>
+            <input class="form-control" id="Provincia" name="Provincia" label="Provincia obbligatoria" mandatory="true">
+        </div>
+        <div class="form-group col-lg-3">
+          <label for="Comune"> Comune</label>
+          <input class="form-control" id="Comune" name="Comune" label="Comune obbligatorio" mandatory="true">
+        </div> 
+        <div class="form-group col-lg-4">
+          <label for="Indirizzo">Indirizzo</label>
+          <input class="form-control" id="Indirizzo" name="Indirizzo" label="Indirizzo obbligatorio" mandatory="true">
+        </div>
+        <div class="form-group col-lg-1">
+          <label for="Civico">Civico</label>
+          <input class="form-control" id="Civico" name="Civico" label="Civico obbligatorio" mandatory="true">
+        </div>
+        <div class="form-group col-lg-1">
+          <label for="Battato">Battato</label>
+          <input class="form-control" id="Battato" name="Battato" label="Battato">
+        </div>
+      </div>
+  </div>
+  <div class="form-row">
+    <div class="form-row">
+      <div class="form-group col-lg-6">
+          <label for="CondizioneNucleo_CognomeAnniLavoro"> Data del sinistro</label>
+          <input class="form-control" type="text" format="date" id="CondizioneNucleo_CognomeAnniLavoro" name="CondizioneNucleo_CognomeAnniLavoro" label="Cognome della persona con più anni di lavoro" mandatory="true">
+      </div>
+      <div class="form-group col-lg-6">
+        <label for="CondizioneNucleo_NomeAnniLavoro"> Ora del sinistro</label>
+        <input class="form-control"  id="CondizioneNucleo_NomeAnniLavoro" name="CondizioneNucleo_NomeAnniLavoro" label="Nome della persona con più anni di lavoro" mandatory="true">
+      </div> 
+    </div>
+</div>
+</div>
+<!-- FINE BLOCCO Verificatosi -->
+
+
+<!-- INIZIO BLOCCO Veicoli -->
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title"><b> Che ha riguardato i seguenti veicoli</b> </span>
+    </div>
+  </div>
+
+  <div class="container border bg-light">
+    <div class="form-row">
+      <div class="form-row">
+        <div class="form-group col-lg-4">
+            <label for="Marca"> Marca e Modello</label>
+            <input class="form-control" id="Marca" name="Marca" label="Marca obbligatoria" mandatory="true">
+            <input class="form-control" id="Marca_1" name="Marca" label="Marca ">
+            <input class="form-control" id="Marca_1" name="Marca" label="Marca ">
+            <input class="form-control" id="Marca_1" name="Marca" label="Marca ">
+            <input class="form-control" id="Marca_1" name="Marca" label="Marca ">
+        </div>
+        <div class="form-group col-lg-2">
+          <label for="Targa"> Numero di targa</label>
+          <input class="form-control" id="Targa" name="Targa" label="Targa obbligatorio" mandatory="true">
+          <input class="form-control" id="Targa_1" name="Targa_1" label="Targa">
+          <input class="form-control" id="Targa_1" name="Targa_1" label="Targa">
+          <input class="form-control" id="Targa_1" name="Targa_1" label="Targa">
+          <input class="form-control" id="Targa_1" name="Targa_1" label="Targa">
+        </div> 
+        <div class="form-group col-lg-3">
+          <label for="Conducente">Nome conducente</label>
+          <input class="form-control" id="Conducente" name="Conducente" label="Conducente obbligatorio" mandatory="true">
+          <input class="form-control" id="Conducente_1" name="Conducente_1" label="Conducente">
+          <input class="form-control" id="Conducente_1" name="Conducente_1" label="Conducente">
+          <input class="form-control" id="Conducente_1" name="Conducente_1" label="Conducente">
+          <input class="form-control" id="Conducente_1" name="Conducente_1" label="Conducente">
+        </div>
+        <div class="form-group col-lg-3">
+          <label for="Conducente_c">Cognome conducente</label>
+          <input class="form-control" id="Conducente_c" name="Conducente_c" label="Conducente_cognome obbligatorio" mandatory="true">
+          <input class="form-control" id="Conducente_c_1" name="Conducente_c" label="Conducente_cognome obbligatorio">
+          <input class="form-control" id="Conducente_c_1" name="Conducente_c" label="Conducente_cognome obbligatorio">
+          <input class="form-control" id="Conducente_c_1" name="Conducente_c" label="Conducente_cognome obbligatorio">
+          <input class="form-control" id="Conducente_c_1" name="Conducente_c" label="Conducente_cognome obbligatorio">
+
+
+        </div>
+      </div>
+  </div>
+</div>
+<!-- FINE BLOCCO Veicoli -->
+
+
+<div class="container">
+  <div class="title-2">CHIEDE</div>
+</div>
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-12">
+        <label for="rilascio_rapporto">Il rilascio di copia del rapporto di incidente stradale</label>
+      </div>
+  </div>
+
+  <div class="container border bg-light">
+      <div class="form-row">
+        <div class="form-group col-lg-6">
+            <label for="Numero_pol"> Numero (se conosciuto)</label>
+            <input class="form-control" id="Numero_pol" name="Numero_pol" label="Numero obbligatoria">
+        </div>
+        <div class="form-group col-lg-4">
+          <label for="Data_2"> Data</label>
+          <input class="form-control" type="text" format="date" id="Data_2" name="Data_2" label="Cognome della persona con più anni di lavoro">
+      </div>
+      </div>
+</div>
+</div>
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="form-group col-lg-12">
+      <span class="title"><b> Tramite</b> </span>
+        <p style="font-size: x-small;">
+          <b>Modalità di rilascio</b>
+        </p>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <div id="Presa" name="Relazione" label="Presa Visione"></div>
+      <input class="form-check-input" id="Presa_1" name="Presa" type="radio" value="NO">
+      <label class="form-check-label" for="Presa_1"> 
+        Presa Visione
+      </label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <div id="Presa_a" name="Relazione" label="Copia Informatizzata"></div>
+      <input class="form-check-input" id="Presa_2" name="Presa" type="radio" value="NO">
+      <label class="form-check-label" for="Presa_2"> 
+        Copia informatizzata
+      </label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <div id="Presa_b" name="Relazione" label="Copia in carta semplice"></div>
+      <input class="form-check-input" id="Presa_3" name="Presa" type="radio" value="NO">
+      <label class="form-check-label" for="Presa_3"> 
+        Copia in carta semplice
+      </label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <div id="Presa_c" name="Relazione" label="Copia conforme all'originale"></div>
+      <input class="form-check-input" id="Presa_4" name="Presa" type="radio" value="NO">
+      <label class="form-check-label" for="Presa_4"> 
+        Copia conforme all'originale
+      </label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <div id="Presa_d" name="Relazione" label="Altro (specificare)"></div>
+      <input class="form-check-input" id="Presa_5" name="Presa" type="radio" value="NO">
+      <label class="form-check-label" for="Presa_5"> 
+        Altro (specificare)
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="form-group col-lg-12">
+      <span class="title"><b> Per il seguente motivo</b> </span>
+        <p style="font-size: x-small;">
+          <b>Motivazione alla base della domanda</b>
+        </p>
+    </div>
+  </div>
+  <div class="form-row">
+    <textarea class="inputNormal" id="Motivo" name="Motivo" label="Inserire il Motivo" style="width:100%;height:3cm" mandatory_enabled="#Presa_5.checked()" ></textarea>
+</div>
+
+</div>
+</div>
+
+<div class="container">
+  <div class="title-2">CHIEDE</div>
+</div>
+
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <div id="Ritiro" name="Ritiro" label="Ritiro"></div>
+      <input class="form-check-input" id="Ritiro_1" name="Presa" type="radio" value="NO">
+      <label class="form-check-label" for="Ritiro_1"> 
+        Di poterli ritirare presso l'ufficio competente
+      </label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <div id="Ritiro_a" name="Relazione" label="Copia Informatizzata"></div>
+      <input class="form-check-input" id="Ritiro_2" name="Presa" type="radio" value="NO">
+      <label class="form-check-label" for="Ritiro_2"> 
+        Di riceverli all'indirizzo sopra indicato come domiciliazione delle comunicazioni relative al procedimento
+      </label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <div id="Ritiro_b" name="Relazione" label="Copia in carta semplice"></div>
+      <input class="form-check-input" id="Ritiro_3" name="Presa" type="radio" value="NO">
+      <label class="form-check-label" for="Ritiro_3"> 
+        Di riceverli a mezzo posta all'indirizzo di residenza sopra indicato
+      </label>
+      <p style="font-size: x-small;">
+        se previsto dall'Amministrazione
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="space-1"></div>
+
+<div class="container border bg-light">
+    <div class="form-row">
+      <p style="font-size: x-small;">
+        <b>Eventuali Annotazioni</b>
+      </p>
+      <textarea class="inputNormal" id="Motivo" name="Motivo_2" label="Inserire il Motivo_2" style="width:100%;height:3cm"></textarea>
+  </div>
+</div>
+
+
+
+<div class="space-1"></div>
+
+
+{% block allegati %}
+<div class="container border bg-light">
+  <div class="form-row">
+    <label class="title"><b>Elenco degli allegati:</b></label>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <input class="form-check-input" id="Allegato_100" name="Allegato_100"  dynamic_check="true" type="checkbox" value="OBBLIGATORIO">
+      <label class="form-check-label" for="Allegato_100"><b>Modulo secondario</b> - Distinta di pagamento: versamento di 53,40 € per spese di procedimento</label>
+      <p style="font-size: x-small;">
+        (completare la distinta con i dati di chi effettua il pagamento e procedere al versamento direttamente da Sportello tramite i bottoni Paga online oppure Paga con Avviso di pagamento)
+      </p> 
+    </div>
+  </div>
+
+
+
+
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="Allegato_2_div" name="Allegato_2_div" label="Allegato_delega"></div>
+      <input class="form-check-input" id="Allegato_2" name="Allegato_2" enabled="#Titolere_Rapporto_2.checked()" dynamic_check="#Titolere_Rapporto_2.checked()" type="checkbox" value="SI">
+      <label class="form-check-label" for="Allegato_2"><b>Documento di Delega</b> <br></label> 
+    </div>
+  </div>
+  <!-- <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="Allegato_3_div" name="Allegato_3_div" label="Allegato_delega"></div>
+      <input class="form-check-input" id="Allegato_3" name="Allegato_3" enabled="#Relazione_c.checked()" dynamic_check="#Relazione_c.checked()" type="checkbox" value="SI">
+      <label class="form-check-label" for="Allegato_3"><b>Copia dell'autorizzazione rilasciata dall'Autorità Giudiziaria</b> <br></label> 
+    </div>
+  </div>   -->
+</div>
+
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="Presa_Visione" name="Presa_Visione" label="Presa visione è obbligatorio" mandatory="true"></div>
+      <input group="Presa_Visione" class="form-check-input" id="Presa_visione_check" name="Presa_Visione" type="checkbox" value="1">
+      <label class="form-check-label" for="Presa_visione_check"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-polizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></label> 
+    </div>
+  </div>
+</div> 
+{% endblock allegati %}
+
+
+
+
+
+
+
+
+
+<!-- INIZIO BLOCCO FIRMA -->
+
+<div type="firma" class="simpatico-block simpatico-query-and-answer">
+  <div class="container border bg-light" name="Firme">
+    <div class="form-row">
+      <div class="form-group col-lg-4 firma-custom">
+        <input class="form-control" style="text-align: center;" id="Luogo_PDF" name="Luogo_PDF">
+        <label for="Luogo_PDF"> Luogo </label>
+      </div>
+      <div class="form-group col-lg-4 firma-custom">
+        <input class="form-control" style="text-align: center;" id="Data_PDF" name="Data_PDF">
+        <label for="Data_PDF"> Data </label>
+      </div>
+      <div class="form-group col-lg-4 firma-custom">
+        <input class="form-control" style="text-align: center;" id="Firma_PDF" name="Firma_PDF" dynamic_value="#Titolare_Nome.value().toUpperCase() + ' ' + #Titolare_Cognome.value().toUpperCase()">
+        <label for="Firma_PDF"> Il richiedente<br><span><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></label>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<!-- FINE BLOCCO FIRMA -->
+
+<br>
+
+<!-- INIZIO BLOCCO SALVA -->
+
+<div class="container">
+  <button type="submit" class="btn btn-success btn-lg btn-block" id="SalvaModulo" name="SalvaModulo" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza."> Salva modulo </button>
+</div>
+  
+<!-- FINE BLOCCO SALVA -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cM0709-A01-CERT-PROT" name="GLOBO_allegato_cM0709-A01-CERT-PROT" type="hidden" value="" obbligatorio="#CERT_PROT.checked() ? 'OBBLIGATORIO' : ''"/>
+
+<input id="GLOBO_allegato_cM0709-A02-CERT-MED" name="GLOBO_allegato_cM0709-A02-CERT-MED" type="hidden" value="" obbligatorio="#CERT_MED.checked() ? 'OBBLIGATORIO' : ''"/>
+
+<input id="GLOBO_allegato_cM0709-A03-TITOLO-EQUIV" name="GLOBO_allegato_cM0709-A03-TITOLO-EQUIV" type="hidden" value="" obbligatorio="#TITOLO_EQUIV.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM0709-A04-ESONERO-TEST-PRESELETTIVO" name="GLOBO_allegato_cM0707-A04-ESONERO-TEST-PRESELETTIVO" type="hidden" value="" obbligatorio="#NO_TEST_PRESELETTIVO.checked() ? 'OBBLIGATORIO' : ''"/>
+
+<!--<input id="GLOBO_allegato_cM0707-A04-ESONERO-TEST-PRESELETTIVO" name="GLOBO_allegato_cM0706-A04-ESONERO-TEST-PRESELETTIVO" type="hidden" value="" obbligatorio="#NO_TEST_PRESELETTIVO.checked() ? 'OBBLIGATORIO' : ''"/> -->
+
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+
+
+<!-- INIZIO BLOCCO PRESENTAZIONE DOMANDA PER SCADENZA TERMINI -->
+
+<!--<input id="Salva_Modulo_Termini" mandatory="true" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">-->
+<!--<input id="Salva_Modulo_Termini" mandatory="moment() > moment('2021-12-01')" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">-->
+
+
+<!-- FINE BLOCCO PRESENTAZIONE DOMANDA PER SCADENZA TERMINI -->
+
+
+
+
+{% endblock content %}
