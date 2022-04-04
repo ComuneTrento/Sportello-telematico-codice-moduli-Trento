@@ -168,7 +168,6 @@ urn_report="report:CSP_SESSION_REPORT"
         'Parametri_PrimaSecondaSceltaFT': 'primaSecondaScelta',
         'Parametri_AccettazioneFT': 'permessoAccettazione',
         'Parametri_MessaggioFT': 'messaggio',
-        'Parametri_ScadenzaAccettazioneFT': 'dataScadenzaAccettazione',
         },
         '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
 
@@ -188,7 +187,6 @@ urn_report="report:CSP_SESSION_REPORT"
         'Parametri_PrimaSecondaSceltaPT': 'primaSecondaScelta',
         'Parametri_AccettazionePT': 'permessoAccettazione',
         'Parametri_MessaggioPT': 'messaggio',
-        'Parametri_ScadenzaAccettazionePT': 'dataScadenzaAccettazione',
         },
         '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
     
@@ -209,8 +207,10 @@ urn_report="report:CSP_SESSION_REPORT"
     <input type="hidden" id="Parametri_PrimaSecondaSceltaFT" name="Parametri_PrimaSecondaSceltaFT"/>
     <input type="hidden" id="Parametri_AccettazioneFT" name="Parametri_AccettazioneFT"/>
     <input type="hidden" id="Parametri_MessaggioFT" name="Parametri_MessaggioFT"/>
-    <input type="hidden" id="Parametri_ScadenzaAccettazioneFT" name="Parametri_ScadenzaAccettazioneFT"/>
 
+    <input name="SvTipoDomandaFT" id="SvTipoDomandaFT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_TipoDomandaFT.value() : 0)" type="hidden">
+
+    <input name="Parametri_Ascolto_WS_SvTipoDomandaFT" id="Parametri_Ascolto_WS_SvTipoDomandaFT" dynamic_value="#SvTipoDomandaFT.value() != '' ? #SvTipoDomandaFT.value() : #Parametri_Ascolto_WS_SvTipoDomandaFT.value()" type="hidden">
 
     <input name="SvAccettazioneFT" id="SvAccettazioneFT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_AccettazioneFT.value() : 0)" type="hidden">
 
@@ -234,8 +234,10 @@ urn_report="report:CSP_SESSION_REPORT"
     <input type="hidden" id="Parametri_PrimaSecondaSceltaPT" name="Parametri_PrimaSecondaSceltaPT"/>
     <input type="hidden" id="Parametri_AccettazionePT" name="Parametri_AccettazionePT"/>
     <input type="hidden" id="Parametri_MessaggioPT" name="Parametri_MessaggioPT"/>
-    <input type="hidden" id="Parametri_ScadenzaAccettazionePT" name="Parametri_ScadenzaAccettazionePT"/>
 
+    <input name="SvTipoDomandaPT" id="SvTipoDomandaPT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_TipoDomandaPT.value() : 0)" type="hidden">
+
+    <input name="Parametri_Ascolto_WS_SvTipoDomandaPT" id="Parametri_Ascolto_WS_SvTipoDomandaPT" dynamic_value="#SvTipoDomandaPT.value() != '' ? #SvTipoDomandaPT.value() : #Parametri_Ascolto_WS_SvTipoDomandaPT.value()" type="hidden">
 
     <input name="SvAccettazionePT" id="SvAccettazionePT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_AccettazionePT.value() : 0)" type="hidden">
 
@@ -298,7 +300,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <!-- FINE BLOCCO SCELTA TEMPO PIENO -->
 
-<!-- INIZIO BLOCCO SCELTA PART TIME -->
+<!-- INIZIO BLOCCO SCELTA PART PIENO -->
 
         <!-- SCELTA PART TIME -->
         <tr class="Rigaintestazione">
@@ -348,28 +350,12 @@ urn_report="report:CSP_SESSION_REPORT"
     </tbody>
 </table>
 
-<input class="Modulo" id="chk_scelta_ok" name="chk_scelta_ok" dynamic_value="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) ? 'OK' : ''" mandatory="true" label="ATTENZIONE: devi effettuare una scelta per il/i nido/i proposto/i" type="hidden">
-
-<p>
-  scadenza
-</p>
-<!-- <input id="ScadenzaAccettazione" name="ScadenzaAccettazione" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #Parametri_ScadenzaAccettazioneFT.value() : #Tassonomia_TipoFrequenza2.checked() ? #Parametri_ScadenzaAccettazionePT.value() : ''" type="hidden"/> -->
-<input id="ScadenzaAccettazione" name="ScadenzaAccettazione" dynamic_value="'2022-04-03 12:00:00'"/>
-<p>
-  termini
-</p>
-<!-- controllo data scadenza accettazione per il salvataggio -->
-
-<input id="Salva_Modulo_Termini" mandatory="moment() > moment('2022-04-30')" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">
+<input type="hidden" class="Modulo" id="chk_scelta_ok" name="chk_scelta_ok" dynamic_value="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) ? 'OK' : ''" mandatory="true" label="ATTENZIONE: devi effettuare una scelta per il/i nido/i proposto/i">
 
 
-<p>
-  scelta servizio
-</p>
-<input id="Parametri_SceltaServizio" name="Parametri_SceltaServizio" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #Tassonomia_TipoFrequenza1.value() : #Tassonomia_TipoFrequenza2.value()"/>
-<p>scelta asilo</p>
-<input id="IdAsiloScelto" name="IdAsiloScelto" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #IdAsiloFT.value() : #Tassonomia_TipoFrequenza2.checked() ? #IdAsiloPT.value() : ''"/>
+<input id="Parametri_SceltaServizio" name="Parametri_SceltaServizio" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #Tassonomia_TipoFrequenza1.value() : #Tassonomia_TipoFrequenza2.value()" type="hidden"/>
 
+<input id="IdAsiloScelto" name="IdAsiloScelto" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #IdAsiloFT.value() : #Tassonomia_TipoFrequenza2.checked() ? #IdAsiloPT.value() : ''" type="hidden"/>
 
 
 <!-- FINE BLOCCO SCELTA PART PIENO -->
@@ -380,58 +366,56 @@ urn_report="report:CSP_SESSION_REPORT"
 <table class="Modulo" style="border: 1px solid grey;">
   <tbody>
     <!-- servizi opzionali -->
-        <tr class="Rigaintestazione" >
+        <tr class="Rigaintestazione">
             <td colspan="3">
-                <p class="Labelcella">Indicando se intende o meno utilizzare i servizi opzionali ove previsto</p>
+                <p style="line-height: 1.6;">Indicando se intende o meno utilizzare i servizi opzionali ove previsto</p>
             </td>
-            <td>
-                <p class="Labelcella">Codice del servizio opzionale</p>
+            <td style="width: 20%;">
+                <p style="line-height: 1.6;">Codice del servizio opzionale</p>
             </td>
         </tr>
+
         <tr>
             <td style="vertical-align: center; text-align: center; width: 4%;">
-                
-                <div id="Tassonomia_ServiziNido" name="Tassonomia_ServiziNido" label="Servizi nido scelto" mandatory="true"> </div>
-                <input group="Tassonomia_ServiziNido" id="Tassonomia_TipoSceltaServizioAsilo0" name="Tassonomia_TipoSceltaServizioAsilo0" type="checkbox" value="0" />
+                <div id="TipoServizio" name="TipoServizio" label="Scelta del servizio opzionale" mandatory_enabled="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked())"> </div>
+                <input group="TipoServizio" id="TipoSceltaServizioAsilo0" name="TipoSceltaServizioAsilo0" type="checkbox" value="0" />
             </td>
             <td colspan="3">
                 <p style="line-height: 1.6;">nessun servizio</p>
             </td>
         </tr>
 
-        {{ service.getServiziNido('IdAsiloScelto', 'Parametri_CodiceServizioNido*', '#IdAsiloScelto:change', 'listaServizi11') }}
-
-        {% macro Tassonomia_ServizioAsilo(codice_nido, prefix) %}
-
-        {% set prefix = prefix|string %}
-
-        {{ service.getDettaglioServizioNido(codice_nido, 'Parametri_CodiceServizioNido' + prefix, {
-            'Parametri_DettaglioServizio' + prefix: 'descrizione'
-        }, '#Parametri_Ascolto_' + prefix + ':change' )}}
-
+        <!-- <td>
+            <button class="real-button" type="button" enabled="#Immobile1_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile1_CatComune').value; num = document.getElementById('Immobile1_CatNumero').value; barra = document.getElementById('Immobile1_CatBarra').value; tipo = document.getElementById('Immobile1_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"></button>
+          </td> -->
+        
         <tr>
             <td style="vertical-align: center; text-align: center; width: 4%;">
-                <input group="Tassonomia_ServiziNido" id="Tassonomia_TipoSceltaServizioAsilo{{ prefix }}" name="Tassonomia_TipoSceltaServizioAsilo{{ prefix }}" enabled="#Parametri_CodiceServizioNido{{ prefix }}.value() != ''" type="checkbox" value="{{ prefix }}" />
+                <input group="TipoServizio" id="TipoSceltaServizioAsilo1" name="TipoSceltaServizioAsilo1" enabled="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) and #Parametri_CodiceServizioNido1.value() != ''" type="checkbox" value="1"/>
             </td>
             <td colspan="2">
-                <!-- <input class="inputNormal" id="Parametri_DettaglioServizio{{ prefix }}" name="Parametri_DettaglioServizio{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" enabled="#Parametri_CodiceServizioNido{{ prefix }}.value() != ''" readonly> -->
-                <input class="inputNormal" id="Parametri_DettaglioServizio{{ prefix }}" name="Parametri_DettaglioServizio{{ prefix }}" style="width: 100%;" label="Tipo di servizio offerto" readonly>
+                <input class="inputNormal" name="Parametri_DettaglioServizio1" id="Parametri_DettaglioServizio1" style="width:100%;" label="Descrizione servizio opzionale offerto" dynamic_value="switch(#IdAsiloScelto.value()) { case '31': 'è previsto il sabato mattina con orario 07.30-13.30'; break; case '32': 'è previsto il sabato pomeriggio con orario 12.30-18.30'; break; case '33': 'è previsto il posticipo fino alle 15'; break; case '34': 'è previsto il posticipo fino alle 15'; break; case '40': 'è previsto anticipo a partire dalle ore 12.30'; break; case '': ''; break; default:'';}" readonly>
             </td>
-            <td style="vertical-align: center; text-align: center; width: 20%;">
-                <input id="Parametri_Ascolto_{{ prefix }}" name="Parametri_Ascolto_{{ prefix }}" dynamic_value="#Parametri_CodiceServizioNido{{ prefix }}.value() != '' ? #Parametri_CodiceServizioNido{{ prefix }}.value() : #Parametri_Ascolto_{{ prefix }}.value()" type="hidden">
-                <input id="Parametri_CodiceServizioNido{{ prefix }}" name="Parametri_CodiceServizioNido{{ prefix }}" style="width: 100%;" label="Codice servizio opzionale offerto" readonly>
+            <td style="width: 20%;">
+                <input class="inputNormal" name="Parametri_CodiceServizioNido1" id="Parametri_CodiceServizioNido1" style="width:100%;" label="Codice servizio opzionale offerto" dynamic_value="switch(#IdAsiloScelto.value()) { case '31': '1'; break; case '32': '28'; break; case '33': '8'; break; case '34': '9'; break; case '40': '24'; break;case '': ''; break; default:'';}" readonly>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: center; text-align: center; width: 4%;">
+                <input group="TipoServizio" id="TipoSceltaServizioAsilo2" name="TipoSceltaServizioAsilo2" enabled="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) and #Parametri_CodiceServizioNido2.value() != ''" type="checkbox" value="2"/>
+            </td>
+            <td colspan="2">
+                <input class="inputNormal" name="Parametri_DettaglioServizio2" id="Parametri_DettaglioServizio2" style="width:100%;" label="Descrizione servizio opzionale offerto" dynamic_value="switch(#IdAsiloScelto.value()) { case '31': 'è previsto il posticipo fino alle 15'; break; case '32': 'è previsto il posticipo fino alle 19.30'; break; case '33': 'è previsto il sabato mattina con orario 07.30-13.30'; break; case '34': 'è previsto il sabato mattina con orario 07.30-13.30'; break;case '': ''; break; default:'';}" readonly>
+            </td>
+            <td style="width: 20%;">
+                <input class="inputNormal" name="Parametri_CodiceServizioNido2" id="Parametri_CodiceServizioNido2" style="width:100%;" label="Codice servizio opzionale offerto" dynamic_value="switch(#IdAsiloScelto.value()) { case '31': '2'; break; case '32': '36'; break; case '33': '29'; break; case '34': '30'; break;case '': ''; break; default:'';}" readonly>
             </td>
         </tr>
 
-        {%- endmacro %}
-
-        {% for i in range(1, 3) %}
-        {{ Tassonomia_ServizioAsilo('IdAsiloScelto', i) }}
-        {% endfor %}
 
         <tr>
-            <td colspan="4">
-                <input class="inputNormal" id="check_serv_agg" name="check_serv_agg" style="width: 100%;" label="Controllo validità scelte per servizi aggiuntivi" dynamic_value="#Tassonomia_TipoSceltaServizioAsilo0.checked() and (#Tassonomia_TipoSceltaServizioAsilo1.checked() || #Tassonomia_TipoSceltaServizioAsilo2.checked()) ? 'ATTENZIONE: Non è possibile selezionare entrambe le opzioni!' : (!#Tassonomia_TipoSceltaServizioAsilo0.checked() and !#Tassonomia_TipoSceltaServizioAsilo1.checked() and !#Tassonomia_TipoSceltaServizioAsilo2.checked()? 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte (se presenti)' : '')">
+            <td colspan="5">
+                <input class="inputNormal" id="check_serv_agg" name="check_serv_agg" style="width: 100%;" label="Controllo validità scelte per servizi aggiuntivi" dynamic_value="#TipoSceltaServizioAsilo0.checked() and (#TipoSceltaServizioAsilo1.checked() || #TipoSceltaServizioAsilo2.checked()) ? 'ATTENZIONE: Non è possibile selezionare entrambe le opzioni!' : ((#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) and !#TipoSceltaServizioAsilo0.checked() and !#TipoSceltaServizioAsilo1.checked() and !#TipoSceltaServizioAsilo2.checked() ? 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte (se presenti)' : '')">
             </td>
         </tr>
   </tbody>
