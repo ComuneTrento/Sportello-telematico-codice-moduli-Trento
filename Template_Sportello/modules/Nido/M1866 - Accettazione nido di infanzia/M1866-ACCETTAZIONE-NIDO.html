@@ -386,9 +386,6 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input id="ScadenzaAccettazione" name="ScadenzaAccettazione" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #ScadenzaAccettazioneFT.value() : #ScadenzaAccettazionePT.value()"  type="hidden"/>
 
-<!-- controllo data scadenza accettazione per il salvataggio -->
-<input id="Salva_Modulo_Termini" mandatory="moment() > moment('2022-04-30')" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">
-
 <input id="Parametri_SceltaServizio" name="Parametri_SceltaServizio" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #Tassonomia_TipoFrequenza1.value() : #Tassonomia_TipoFrequenza2.value()"  type="hidden"/>
 
 <input id="IdAsiloScelto" name="IdAsiloScelto" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #IdAsiloFT.value() : #Tassonomia_TipoFrequenza2.checked() ? #IdAsiloPT.value() : '0'" type="hidden"/>
@@ -767,6 +764,14 @@ urn_report="report:CSP_SESSION_REPORT"
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
 </p>
 
+<!-- CONTROLLO DATA INVIO CON DATA SCADENZA -->
+<div style="display:none">
+<div id="Modulo_scadenza" name="Modulo_scadenza" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione." mandatory="true"> </div>
+<input group="Modulo_scadenza" id="Modulo_Inviabile1" name="Modulo_Inviabile1" dynamic_check="controlloScadenza(#ScadenzaAccettazione.value())" enabled="controlloScadenza(#ScadenzaAccettazione.value())" type="checkbox" label="Modulo inviabile" value="1">
+<input group="Modulo_scadenza" id="Modulo_Inviabile2" name="Modulo_Inviabile2" dynamic_check="!controlloScadenza(#ScadenzaAccettazione.value())" enabled="!controlloScadenza(#ScadenzaAccettazione.value())" type="checkbox" label="Modulo NON inviabile" value="2">
+<input id="Salva_Modulo" mandatory="#Modulo_Inviabile2.checked()" type="hidden" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione.">
+</div>
+
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
 
 <input id="GLOBO_allegato_cM1866-A01-RICEVUTA-PAGAMENTO-ANTICIPO" name="GLOBO_allegato_cM1866-A01-RICEVUTA-PAGAMENTO-ANTICIPO" type="hidden" value="" obbligatorio="#PAG_ANTICIPO.checked() ? 'OBBLIGATORIO' : ''"/>
@@ -776,24 +781,24 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
 <script>
- function valorizza() { 
 
-      document.getElementById("IAsiloScelto").value = "asilo";
-      document.getElementById("ScadenzaAccettazione").value = "scad";
-      document.getElementById("Parametri_SceltaServizio").value = "scelta";
+function controlloScadenza(dataScadenza) {
+    if (dataScadenza.length >= 10) {   
 
-    if(document.getElementById("Tassonomia_TipoFrequenza1").checked == true){
-      document.getElementById("IAsiloScelto").value = document.getElementById("Parametri_IdAsiloFT").value;
-      document.getElementById("ScadenzaAccettazione").value = document.getElementById("Parametri_ScadenzaAccettazioneFT").value;
-      document.getElementById("Parametri_SceltaServizio").value = document.getElementById("Parametri_TipoDomandaFT").value;
-    } 
-    if(document.getElementById("Tassonomia_TipoFrequenza2").checked == true){
-     document.getElementById("IAsiloScelto").value = document.getElementById("Parametri_IdAsiloPT").value;
-      document.getElementById("ScadenzaAccettazione").value = document.getElementById("Parametri_ScadenzaAccettazionePT").value;
-      document.getElementById("Parametri_SceltaServizio").value = document.getElementById("Parametri_TipoDomandaPT").value;
-    } 
-    
+      var oggi = new Date();
+      var dataScad = new Date(dataScadenza);    
+       
+    if (oggi < dataScad) {
+      return true;
+    } else {
+    return false;
+    }
+
+  } else {
+    return false;
   }
+  
+}
 
 </script>
 
