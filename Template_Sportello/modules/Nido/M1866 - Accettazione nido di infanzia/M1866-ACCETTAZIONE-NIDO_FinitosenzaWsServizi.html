@@ -31,6 +31,17 @@ urlhelp="/modulistica/moduli/M1866-ACCETTAZIONE-NIDO"
 verifica_pagamento="NO"
 versione="2.0|01/09/2019" />
 
+<meta codice_allegato="M1866-A01-RICEVUTA-PAGAMENTO-ANTICIPO"
+urn_allegato="document:c_l378:asilo.nido;accettare.posto;accettazione.nido;a01.M1866.ricevuta.pagamento.anticipo"
+descrizione_estesa="Ricevuta pagamento anticipo tariffario"
+filename="RicevutaPagamentoAnticipo.jpeg,RicevutaPagamentoAnticipo.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1866-A01-RICEVUTA-PAGAMENTO-ANTICIPO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
 <meta codice_report="CSP_SESSION_REPORT"
 generate_on="sending"
 name="GLOBO_report"
@@ -168,6 +179,7 @@ urn_report="report:CSP_SESSION_REPORT"
         'Parametri_PrimaSecondaSceltaFT': 'primaSecondaScelta',
         'Parametri_AccettazioneFT': 'permessoAccettazione',
         'Parametri_MessaggioFT': 'messaggio',
+        'Parametri_ScadenzaAccettazioneFT': 'dataScadenzaAccettazione',
         },
         '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
 
@@ -187,6 +199,7 @@ urn_report="report:CSP_SESSION_REPORT"
         'Parametri_PrimaSecondaSceltaPT': 'primaSecondaScelta',
         'Parametri_AccettazionePT': 'permessoAccettazione',
         'Parametri_MessaggioPT': 'messaggio',
+        'Parametri_ScadenzaAccettazionePT': 'dataScadenzaAccettazione',
         },
         '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
     
@@ -208,13 +221,16 @@ urn_report="report:CSP_SESSION_REPORT"
     <input type="hidden" id="Parametri_AccettazioneFT" name="Parametri_AccettazioneFT"/>
     <input type="hidden" id="Parametri_MessaggioFT" name="Parametri_MessaggioFT"/>
 
-    <input name="SvTipoDomandaFT" id="SvTipoDomandaFT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_TipoDomandaFT.value() : 0)" type="hidden">
+    <input type="hidden" id="Parametri_ScadenzaAccettazioneFT" name="Parametri_ScadenzaAccettazioneFT"/>
 
-    <input name="Parametri_Ascolto_WS_SvTipoDomandaFT" id="Parametri_Ascolto_WS_SvTipoDomandaFT" dynamic_value="#SvTipoDomandaFT.value() != '' ? #SvTipoDomandaFT.value() : #Parametri_Ascolto_WS_SvTipoDomandaFT.value()" type="hidden">
 
     <input name="SvAccettazioneFT" id="SvAccettazioneFT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_AccettazioneFT.value() : 0)" type="hidden">
 
     <input name="Parametri_Ascolto_WS_AccettazioneFT" id="Parametri_Ascolto_WS_AccettazioneFT" dynamic_value="#SvAccettazioneFT.value() != '' ? #SvAccettazioneFT.value() : #Parametri_Ascolto_WS_AccettazioneFT.value()" type="hidden">
+
+    <input name="SvTipoDomandaFT" id="SvTipoDomandaFT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_TipoDomandaFT.value() : 0)" type="hidden">
+
+    <input name="Parametri_Ascolto_WS_SvTipoDomandaFT" id="Parametri_Ascolto_WS_SvTipoDomandaFT" dynamic_value="#SvTipoDomandaFT.value() != '' ? #SvTipoDomandaFT.value() : #Parametri_Ascolto_WS_SvTipoDomandaFT.value()" type="hidden">
 
 
 <br>
@@ -234,14 +250,17 @@ urn_report="report:CSP_SESSION_REPORT"
     <input type="hidden" id="Parametri_PrimaSecondaSceltaPT" name="Parametri_PrimaSecondaSceltaPT"/>
     <input type="hidden" id="Parametri_AccettazionePT" name="Parametri_AccettazionePT"/>
     <input type="hidden" id="Parametri_MessaggioPT" name="Parametri_MessaggioPT"/>
+    <input type="hidden" id="Parametri_ScadenzaAccettazionePT" name="Parametri_ScadenzaAccettazionePT"/>
+
+
+    <input name="SvAccettazionePT" id="SvAccettazionePT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_AccettazionePT.value() : 0)" type="hidden">
+
+    <input name="Parametri_Ascolto_WS_AccettazionePT" id="Parametri_Ascolto_WS_AccettazionePT" dynamic_value="#SvAccettazionePT.value() != '' ? #SvAccettazionePT.value() : #Parametri_Ascolto_WS_AccettazionePT.value()" type="hidden">
 
     <input name="SvTipoDomandaPT" id="SvTipoDomandaPT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_TipoDomandaPT.value() : 0)" type="hidden">
 
     <input name="Parametri_Ascolto_WS_SvTipoDomandaPT" id="Parametri_Ascolto_WS_SvTipoDomandaPT" dynamic_value="#SvTipoDomandaPT.value() != '' ? #SvTipoDomandaPT.value() : #Parametri_Ascolto_WS_SvTipoDomandaPT.value()" type="hidden">
 
-    <input name="SvAccettazionePT" id="SvAccettazionePT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_AccettazionePT.value() : 0)" type="hidden">
-
-    <input name="Parametri_Ascolto_WS_AccettazionePT" id="Parametri_Ascolto_WS_AccettazionePT" dynamic_value="#SvAccettazionePT.value() != '' ? #SvAccettazionePT.value() : #Parametri_Ascolto_WS_AccettazionePT.value()" type="hidden">
 
 <globo_salto_pagina></globo_salto_pagina>
 
@@ -282,22 +301,16 @@ urn_report="report:CSP_SESSION_REPORT"
             </td>
         </tr>
         <tr>
-            <td colspan="3">
-                <p class="Labelcella">Richiedente</p>
-            </td>
-            <td style="width: 20%;">
-                <p class="Labelcella">Data domanda</p>
+            <td colspan="4">
+                <p class="Labelcella">Scadenza accettazione</p>
             </td>
         </tr>
         <tr>
-            <td colspan="3">
-                <input class="inputNormal" id="RichiedenteFT" name="RichiedenteFT" style="width: 100%;" label="Richiedente della domanda" dynamic_value="#Parametri_RichDomValFT.value()" readonly>
-            </td>
-            <td style="width: 20%;">
-                <input class="inputNormal" id="DataFT" name="DataFT" style="width:100%;" label="Data della domanda" dynamic_value="#Parametri_DataDomValFT.value()" readonly>
+            <td colspan="4">
+                <input class="inputNormal" id="ScadenzaAccettazioneFT" name="ScadenzaAccettazioneFT" style="width: 100%;" label="Termine entro cui svolgere il pagamento ed accettare la domanda" dynamic_value="#Parametri_ScadenzaAccettazioneFT.value()" readonly>
             </td>
         </tr>
-
+        
 <!-- FINE BLOCCO SCELTA TEMPO PIENO -->
 
 <!-- INIZIO BLOCCO SCELTA PART PIENO -->
@@ -331,31 +344,29 @@ urn_report="report:CSP_SESSION_REPORT"
             </td>
         </tr>
         <tr>
-            <td  colspan="3">
-                <p class="Labelcella">Richiedente</p>
-            </td>
-            <td style="width: 20%;">
-                <p class="Labelcella">Data domanda</p>
+            <td colspan="4">
+                <p class="Labelcella">Scadenza accettazione</p>
             </td>
         </tr>
         <tr>
-            <td colspan="3">
-                <input class="inputNormal" id="RichiedentePT" name="RichiedentePT" style="width: 100%;" label="Richiedente della domanda" dynamic_value="#Parametri_RichDomValPT.value()" readonly>
-            </td>
-            <td style="width: 20%;">
-                <input class="inputNormal" id="DataPT" name="DataPT" style="width:100%;" label="Data della domanda" dynamic_value="#Parametri_DataDomValPT.value()" readonly>
+            <td colspan="4">
+                <input class="inputNormal" id="ScadenzaAccettazionePT" name="ScadenzaAccettazionePT" style="width: 100%;" label="Termine entro cui svolgere il pagamento ed accettare la domanda" dynamic_value="#Parametri_ScadenzaAccettazionePT.value()" readonly>
             </td>
         </tr>
-
     </tbody>
 </table>
 
-<input type="hidden" class="Modulo" id="chk_scelta_ok" name="chk_scelta_ok" dynamic_value="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) ? 'OK' : ''" mandatory="true" label="ATTENZIONE: devi effettuare una scelta per il/i nido/i proposto/i">
+<input class="Modulo" id="chk_scelta_ok" name="chk_scelta_ok" dynamic_value="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) ? 'OK' : ''" mandatory="true" label="ATTENZIONE: devi effettuare una scelta per il/i nido/i proposto/i" type="hidden">
 
+<input id="ScadenzaAccettazione" name="ScadenzaAccettazione" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #ScadenzaAccettazioneFT.value() : #ScadenzaAccettazionePT.value()"  type="hidden"/>
 
-<input id="Parametri_SceltaServizio" name="Parametri_SceltaServizio" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #Tassonomia_TipoFrequenza1.value() : #Tassonomia_TipoFrequenza2.value()" type="hidden"/>
+<input id="Parametri_SceltaServizio" name="Parametri_SceltaServizio" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #Tassonomia_TipoFrequenza1.value() : #Tassonomia_TipoFrequenza2.value()"  type="hidden"/>
 
-<input id="IdAsiloScelto" name="IdAsiloScelto" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #IdAsiloFT.value() : #Tassonomia_TipoFrequenza2.checked() ? #IdAsiloPT.value() : ''" type="hidden"/>
+<input id="IdAsiloScelto" name="IdAsiloScelto" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #IdAsiloFT.value() : #Tassonomia_TipoFrequenza2.checked() ? #IdAsiloPT.value() : '0'" type="hidden"/>
+
+<input name="SvSceltaServizio" id="SvSceltaServizio" dynamic_value="(#Tassonomia_TipoFrequenza1.checked() ? #Parametri_TipoDomandaFT.value() : 0) || (#Tassonomia_TipoFrequenza2.checked() ? #Parametri_TipoDomandaPT.value() : 0)" type="hidden">
+
+<input name="Parametri_Ascolto_WS_SvSceltaAsilo" id="Parametri_Ascolto_WS_SvSceltaAsilo" dynamic_value="(#Tassonomia_TipoFrequenza1.checked() ? #IdAsiloFT.value() : 0) || (#Tassonomia_TipoFrequenza2.checked() ? #IdAsiloPT.value() : 0)" type="hidden">
 
 
 <!-- FINE BLOCCO SCELTA PART PIENO -->
@@ -385,10 +396,6 @@ urn_report="report:CSP_SESSION_REPORT"
             </td>
         </tr>
 
-        <!-- <td>
-            <button class="real-button" type="button" enabled="#Immobile1_RisultatoVerificaCatastale.value()=='SI'" onclick="com = document.getElementById('Immobile1_CatComune').value; num = document.getElementById('Immobile1_CatNumero').value; barra = document.getElementById('Immobile1_CatBarra').value; tipo = document.getElementById('Immobile1_TipoImmobile').value; window.open('http://webapps.comune.trento.it/mobile/sportello-online/?num='+num+'&amp;barra='+barra+'&amp;com='+com+'&amp;tipo='+tipo);"><img src="./appoggio/img/mappa.png"></button>
-          </td> -->
-        
         <tr>
             <td style="vertical-align: center; text-align: center; width: 4%;">
                 <input group="TipoServizio" id="TipoSceltaServizioAsilo1" name="TipoSceltaServizioAsilo1" enabled="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) and #Parametri_CodiceServizioNido1.value() != ''" type="checkbox" value="1"/>
@@ -667,6 +674,33 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="2">
+          <p style="text-align: center;">
+            <b>
+              Elenco degli allegati
+            </b>
+          </p>
+        </td>
+      </tr>
+      <tr>
+          <td style="width: 4%; vertical-align: top;">
+              <input id="PAG_ANTICIPO" name="PAG_ANTICIPO" type="checkbox" value="OBBLIGATORIO" dynamic_check="true" value="OBBLIGATORIO"/>
+          </td>
+          <td style="background-color: #eeeeee;">
+              <p>
+                  Ricevuta del pagamento dell'anticipo tariffario
+              </p>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+
 <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
@@ -701,12 +735,42 @@ urn_report="report:CSP_SESSION_REPORT"
   <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
 </p>
 
+<!-- CONTROLLO DATA INVIO CON DATA SCADENZA -->
+<div style="display:none">
+<div id="Modulo_scadenza" name="Modulo_scadenza" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione." mandatory="true"> </div>
+<input group="Modulo_scadenza" id="Modulo_Inviabile1" name="Modulo_Inviabile1" dynamic_check="controlloScadenza(#ScadenzaAccettazione.value())" enabled="controlloScadenza(#ScadenzaAccettazione.value())" type="checkbox" label="Modulo inviabile" value="1">
+<input group="Modulo_scadenza" id="Modulo_Inviabile2" name="Modulo_Inviabile2" dynamic_check="!controlloScadenza(#ScadenzaAccettazione.value())" enabled="!controlloScadenza(#ScadenzaAccettazione.value())" type="checkbox" label="Modulo NON inviabile" value="2">
+<input id="Salva_Modulo" mandatory="#Modulo_Inviabile2.checked()" type="hidden" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione.">
+</div>
+
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_allegato_cM1866-A01-RICEVUTA-PAGAMENTO-ANTICIPO" name="GLOBO_allegato_cM1866-A01-RICEVUTA-PAGAMENTO-ANTICIPO" type="hidden" value="" obbligatorio="#PAG_ANTICIPO.checked() ? 'OBBLIGATORIO' : ''"/>
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
+<script>
 
+function controlloScadenza(dataScadenza) {
+    if (dataScadenza.length >= 10) {   
+
+      var oggi = new Date();
+      var dataScad = new Date(dataScadenza);    
+       
+    if (oggi < dataScad) {
+      return true;
+    } else {
+    return false;
+    }
+
+  } else {
+    return false;
+  }
+  
+}
+
+</script>
 
 {% endblock content %}
