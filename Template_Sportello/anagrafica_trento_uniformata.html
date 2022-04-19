@@ -58,6 +58,8 @@
   <!-- Nascita -->
   <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="{{Type}}"/>
 
+  
+
 
 {%- endmacro %}
 
@@ -563,60 +565,7 @@
     </tbody>
   </table>
 </div>
-
 <br>
-
-<div class="simpatico-block simpatico-query-and-answer">
-  <div type="Residenza_persona_fisica">
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
-      <tbody>
-        <tr class="Rigaintestazione">
-          <td colspan="6">
-            <p style="line-height: 1.6;"><b>Residente a:</b></p>
-          </td>
-        </tr>
-        <tr class="Rigaintestazioneridotta">
-          <td style="width:9%;">
-            <p class="Labelcella" style="line-height:1.6;">Provincia</p>
-          </td>
-          <td style="width:33%;">
-            <p class="Labelcella" style="line-height:1.6;">Comune</p>
-          </td>
-          <td style="width:33%;">
-            <p class="Labelcella" style="line-height:1.6;">Indirizzo</p>
-          </td>
-          <td style="width:9%;">
-            <p class="Labelcella" style="line-height:1.6;">Civico</p>
-          </td>
-          <td style="width:9%;">
-            <p class="Labelcella" style="line-height:1.6;">Barra</p>
-          </td>
-          <td style="width:16%;">
-            <p class="Labelcella" style="line-height:1.6;">CAP</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza", mandatory="true") }}
-          </td>
-          <td>
-            <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')" mandatory_enabled="true"/>
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true" format="regular_expression" expression="^(.+)\s(.+)$"/>
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" />
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" enabled="true" label="Barra di residenza" maxlength="3" />
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
 
     <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
       <tbody>
@@ -650,6 +599,98 @@
         </tr>
       </tbody>
     </table>
+
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <div type="Residenza_persona_fisica">
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="4">
+            <p style="line-height: 1.6;"><b>Residente a:</b></p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Provincia</p>
+          </td>
+          <td style="width:33%;" colspan="5">
+            <p class="Labelcella" style="line-height:1.6;">Comune</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza", mandatory="true") }}
+          </td>
+          <td colspan="3">
+            <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')" 
+            mandatory_enabled="true"/>
+            <input id="{{ prefix }}_ResidenzaTN" name="{{ prefix }}_ResidenzaTN" type="hidden" dynamic_value="#{{ prefix }}_ComuneResidenza.value() == 'Trento' || #{{ prefix }}_ComuneResidenza.value() == 'TRENTO' ? 'RESIDENTE' : ''"/>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input id="{{ prefix }}_ResidenzaTN_alert" name="{{ prefix }}_ResidenzaTN_alert" type="text"  style="width:100%; border:none; line-height:1.6; font-weight:700;" dynamic_value="#{{ prefix }}_ResidenzaTN.value().length > 0 ? 'INDIRIZZO NON RICHIESTO, GI&Agrave; IN POSSESSO DELL\'AMMINISTRAZIONE' : '' "/>
+          </td>
+        </tr>
+         <tr>
+          <td style="width:33%;">
+            <p class="Labelcella" style="line-height:1.6; ">Indirizzo</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Civico</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Barra</p>
+          </td>
+          <td style="width:16%;">
+            <p class="Labelcella" style="line-height:1.6;">CAP</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" 
+            mandatory_enabled="#{{ prefix }}_ResidenzaTN.value().length == 0" format="regular_expression" expression="^(.+)\s(.+)$"
+             onchange="(
+               function(value){ 
+                 console.log(value); 
+                 if (!value) return; 
+                 document.getElementById('{{ prefix }}_ViaResidenza2').value = ''; 
+                 var list = document.getElementById('{{ prefix }}_ViaResidenza').list;
+                 if (list.options.length == 0) return;  
+                 document.getElementById('{{ prefix }}_ViaResidenza2').value = 'ATTENZIONE: Verificare la via indicata, non è tra quelle proposte'; 
+                 var datalist = list; 
+                 for (var j = 0; j < datalist.options.length; j++) {
+if (value == datalist.options[j].value) {
+  document.getElementById('{{ prefix }}_ViaResidenza2').value = '';
+break;
+}
+}
+})(this.value)"/>
+            <input type="text" id="{{ prefix }}_ViaResidenza2" name="{{ prefix }}_ViaResidenza2"   style="width:100%;"/>
+        {# <input type="text" id="{{ prefix }}_ViaResidenza_ale" name="{{ prefix }}_ViaResidenza_ale"  style="width:100%;" dynamic_value="#{{ prefix }}_ViaResidenza2.value() == 'false'? 'ATTENZIONE: Verifica la via, non è tra quelle proposte':''"/>  #}
+            {# #Immobile_TipoImmobile.element.selectedIndex #}
+            {# for (var j = 0; j < datalist.options.length; j++) {
+if (this.value == datalist.options[j].value) {
+optionFound = true;
+break;
+} #}
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="#{{ prefix }}_ResidenzaTN.value().length == 0" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" enabled="!#{{ prefix }}_ResidenzaTN.value().length == 0" label="Barra di residenza" maxlength="3" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE' and #{{ prefix }}_ResidenzaTN.value().length == 0" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE' && !#{{ prefix }}_ResidenzaTN.value().length > 0" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  
   </div>
 </div>
 
@@ -821,6 +862,44 @@
 
 </div>
 {%- endmacro %}
+
+
+{% macro indirizzo( prefix='AventeTitolo', visibility="true") -%}
+
+    {% if visibility == 'true' %}
+
+        <tr style="border:1px solid grey; {{ visibility }}">
+          <td style="width:33%;">
+            <p class="Labelcella" style="line-height:1.6;">Indirizzo</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Civico</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Barra</p>
+          </td>
+          <td style="width:16%;">
+            <p class="Labelcella" style="line-height:1.6;">CAP</p>
+          </td>
+        </tr>
+          <tr style="border:1px solid grey; {{ visibility }}">
+          <td>
+            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true" format="regular_expression" expression="^(.+)\s(.+)$"/>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" enabled="true" label="Barra di residenza" maxlength="3" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" />
+          </td>
+        </tr>
+         {% endif %}
+{%- endmacro %}
+
+
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
