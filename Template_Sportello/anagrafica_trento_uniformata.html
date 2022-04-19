@@ -4871,6 +4871,154 @@
 </div>
 {%- endmacro %}
 
+{% macro anagrafica_bambino_noresidenza( prefix='AventeTitolo', intestazione="Il sottoscritto", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", visibility_residenza="visibility:visibility", visibility_mail="no_mail", carica_campi="", cf_obbligatorio="true", format_telefono_numerico="false", pec_obbligatoria ="false"  ) -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
+
+<div type="Anagrafica_bambino">
+
+  <table class="Modulo" style="border:1px solid grey; {{ visibility_intestazione }}">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td style="border-right:0px">
+          <p class="Labeltabella"  style="vertical-align:middle">{{ intestazione|safe }}
+          </p>
+        </td>
+        <td style="width:38%; border-left:0px; border-right:0px">
+          <p class="Labeltabella">{{ carica_campi|safe }}</p>
+        </td>
+        <td style="width:3%; {{ pointer_carica_dati }}; border-left:0px; border-right:0px">
+          <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+            {{ service.getFiglioREST('Parametri_CFBambino','TipoContesto', 'TipoLista', {
+              prefix + '_DataNascita':  'datanascita',
+              prefix + '_Nome':  'nome',
+              prefix + '_Cognome':  'cognome',
+              prefix + '_Sesso':  'sesso',
+              prefix + '_Nazionalita':  'nazione',
+              prefix + '_Cittadinanza':  'nazionalita',
+              prefix + '_CFBambino':  'codiceFiscale',
+              prefix + '_CodiceFamiglia':  'codiceFamiglia',
+              prefix + '_CodiceVia':  'codiceVia',
+              prefix + '_ProvinciaResidenza' : 'provincia',
+              prefix + '_ComuneResidenza' : 'citta',
+              prefix + '_ViaResidenza' : 'indirizzo',
+              prefix + '_CivicoResidenza' : 'numeroCivico',
+              prefix + '_BarraResidenza' : 'barra',
+              prefix + '_CAPResidenza' : 'cap',
+              prefix + '_Nazione' : 'nazione',
+              prefix + '_LuogoNascita' : 'comuneNascita',
+              prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
+              prefix + '_MatricolaAnagrafe' : 'matricola',
+              prefix + '_Paternita' : 'padre',
+              prefix + '_Maternita' : 'madre',
+            },
+            '#Parametri_CFBambino:change', '#Tassonomia_ListaFam1_allowEdit' ) }}
+
+            {{ service.getPersonaREST('Tassonomia_ListaFam1','TipoContesto', 'TipoLista', {
+              prefix + '_DataNascita':  'datanascita',
+              prefix + '_Nome':  'nome',
+              prefix + '_Cognome':  'cognome',
+              prefix + '_Sesso':  'sesso',
+              prefix + '_Nazionalita':  'nazione',
+              prefix + '_Cittadinanza':  'nazionalita',
+              prefix + '_CFBambino':  'codiceFiscale',
+              prefix + '_CodiceFamiglia':  'codiceFamiglia',
+              prefix + '_CodiceVia':  'codiceVia',
+              prefix + '_ProvinciaResidenza' : 'provincia',
+              prefix + '_ComuneResidenza' : 'citta',
+              prefix + '_ViaResidenza' : 'indirizzo',
+              prefix + '_CivicoResidenza' : 'numeroCivico',
+              prefix + '_BarraResidenza' : 'barra',
+              prefix + '_CAPResidenza' : 'cap',
+              prefix + '_Nazione' : 'nazione',
+              prefix + '_LuogoNascita' : 'comuneNascita',
+              prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
+              prefix + '_MatricolaAnagrafe' : 'matricola',
+              prefix + '_Paternita' : 'padre',
+              prefix + '_Maternita' : 'madre',
+            },
+            '#Tassonomia_ListaFam1:change', '#Tassonomia_ListaFam1_allowEdit' ) }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="hidden" dynamic_value="#Tassonomia_CF.check_value(['3']) ? 'true' : 'false' " name="Tassonomia_ListaFam1_allowEdit" id="Tassonomia_ListaFam1_allowEdit" />
+
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory="#{{ prefix }}_DatiPersonaObbligatori.checked()">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="2">
+          <p class="Labelcella" style="line-height:1.6;">Cognome</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella" style="line-height:1.6;">Nome</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input class="" id="{{ prefix }}_Cognome" name="{{ prefix }}_Cognome" style="width:100%" label="Cognome"/>
+        </td>
+        <td colspan="2">
+          <input class="" id="{{ prefix }}_Nome" name="{{ prefix }}_Nome" style="width:100%" label="Nome"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:24%;">
+          <p class="Labelcella" style="line-height:1.6;">Data di nascita</p>
+        </td>
+        <td style="width:9%;">
+          <p class="Labelcella" style="line-height:1.6;">Sesso (M/F)</p>
+        </td>
+        <td style="width: 33%;">
+          <p class="Labelcella" style="line-height:1.6;">Cittadinanza</p>
+        </td>
+        <td style="width: 34%;">
+          <p class="Labelcella" style="line-height:1.6;">Luogo di nascita</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="{{ prefix }}_DataNascita" name="{{ prefix }}_DataNascita" style="width:100%;" format="date" label="Data di nascita"/>
+        </td>
+        <td>
+          <select class="inputNormal" id="{{ prefix }}_Sesso" name="{{ prefix }}_Sesso" style="width:100%;" label="Sesso">
+            <option value=""></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </td>
+        <td>
+          {{ utils.cittadinanza( prefix + '_Cittadinanza', 'Cittadinanza' )}}
+        </td>
+        <td>
+          <input class="" id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" style="width:100%;" label="Luogo di nascita" />
+        </td>
+      </tr>
+    </tbody>
+  </table> 
+
+  <input id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" dynamic_check="true" type="hidden" />
+  <input id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" dynamic_check="true" type="hidden" />
+  <input id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" dynamic_check="true" type="hidden" />
+  <input id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" dynamic_check="true" type="hidden" />
+  <input id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" dynamic_check="true" type="hidden" />
+  <input id="{{ prefix }}_DatiPersonaObbligatori" name="{{ prefix }}_DatiPersonaObbligatori" dynamic_check="true" type="hidden" />
+  <input id="{{ prefix }}_CodiceFamiglia" name="{{ prefix }}_CodiceFamiglia" type="hidden"/>
+  <input id="{{ prefix }}_CodiceVia" name="{{ prefix }}_CodiceVia" type="hidden"/>
+  <input id="{{ prefix }}_CFBambino" name="{{ prefix }}_CFBambino" type="hidden"/>
+  <input id="{{ prefix }}_MatricolaAnagrafe" name="{{ prefix }}_MatricolaAnagrafe" type="hidden"/>
+  <input id="{{ prefix }}_Nazionalita" name="{{ prefix }}_Nazionalita" type="hidden"/>
+  <input id="{{ prefix }}_Nazione" name="{{ prefix }}_Nazione" type="hidden"/>
+  <input id="{{ prefix }}_CodiceComuneNascita" name="{{ prefix }}_CodiceComuneNascita" type="hidden"/>
+  <input id="{{ prefix }}_Paternita" name="{{ prefix }}_Paternita" type="hidden"/>
+  <input id="{{ prefix }}_Maternita" name="{{ prefix }}_Maternita" type="hidden"/>
+</div>
+{%- endmacro %}
+
 
 
 
