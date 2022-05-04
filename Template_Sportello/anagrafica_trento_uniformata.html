@@ -626,13 +626,14 @@
           <td colspan="4">
             <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')" 
             mandatory_enabled="true"/>
-            <input id="{{ prefix }}_ResidenzaTN" name="{{ prefix }}_ResidenzaTN" type="hidden" dynamic_value="#{{ prefix }}_ComuneResidenza.value() == 'Trento' || #{{ prefix }}_ComuneResidenza.value() == 'TRENTO' ? 'RESIDENTE' : ''"/>
+            <input id="{{ prefix }}_ResidenzaTN" name="{{ prefix }}_ResidenzaTN" type="hidden" 
+            dynamic_value="#{{ prefix }}_MatricolaAnagrafe.value() == '' && #{{ prefix }}_ComuneResidenza.value() == 'Trento' || #{{ prefix }}_ComuneResidenza.value() == 'TRENTO' ? 'RESIDENTE' : ''"/>
           </td>
         </tr>
         <tr>
           <td colspan="5">
-            <input id="{{ prefix }}_ResidenzaTN_alert" name="{{ prefix }}_ResidenzaTN_alert" type="text"  style="width:100%; border:none; line-height:1.6; font-weight:700;" 
-            dynamic_value="#{{ prefix }}_ResidenzaTN.value().length > 0 ? 'INDIRIZZO NON RICHIESTO, GI&Agrave; IN POSSESSO DELL\'AMMINISTRAZIONE' : '' "/>
+            <input id="{{ prefix }}_ResidenzaTN_alert" name="{{ prefix }}_ResidenzaTN_alert" type="text"  style="width:100%; border:none!important; line-height:1.6; font-weight:700;" readonly disabled
+            dynamic_value="#{{ prefix }}_ResidenzaTN.value().length > 0 ? 'RESIDENZA NEL COMUNE DI TRENTO: DATI ACQUISITI AUTOMATICAMENTE DALL\'ANAGRAFE' : '' "/>
           </td>
         </tr>
          <tr>
@@ -664,12 +665,6 @@
           <td>
             <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE' and #{{ prefix }}_ResidenzaTN.value().length == 0" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE' && !#{{ prefix }}_ResidenzaTN.value().length > 0" />
           </td>
-        </tr>
-        <tr>
-        <td colspan="5">
-          {# mostra alert se la via non è presente tra quelle proposte #}
-            <input id="{{ prefix }}_ViaResidenza2" name="{{ prefix }}_ViaResidenza2" style="width:100%; border:none; line-height:1.6; font-weight:700;" type="text"/>
-        </td>
         </tr>
       </tbody>
     </table>
