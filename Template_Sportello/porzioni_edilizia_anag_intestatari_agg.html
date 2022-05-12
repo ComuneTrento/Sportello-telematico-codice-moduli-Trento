@@ -7,24 +7,17 @@
 <!-- compare in: ANAGRAFICHE_INTESTATARI_AGGIUNTIVI -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-
-{% macro anagrafica_intestatario_aggiuntivo(prefix="AltroIntestatario", title="ULTERIORI INTESTATARI (firma autografa)", delega ="true") -%}
+{% macro sezione_anagrafica(prefix="AltroIntestatario") -%}
 {% do all_prefix.append( prefix ) %}
 {% set Temp = prefix|replace("NonImportare", "NI") %}
 {% if prefix != Temp %}
     {% do TitolareNonImportarePresente.append('0') %}
 {% endif %}
-
-{{intestazioni.intestazione_modulosecondario_senzabollo()}}
-
-<h1 class="Modulo">{{title}}</h1>
-
 <table class="Modulo" style="border:1px solid grey" mandatory="true">
    <tbody>
      <tr class="Rigaintestazione">
        <td colspan="6">
-         <p><b>Il sottoscritto</b></p>
+         <p><b>Il/La sottoscritto/a</b></p>
        </td>
      </tr>
      <tr class="Rigaintestazioneridotta">
@@ -176,7 +169,7 @@
 
 <br>
 
-<input dynamic_value="#{{ prefix }}_Cognome.value().toUpperCase() + ' - ulteriore intestatario firma autografa'" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="#{{ prefix }}_Cognome.value().toUpperCase() + ' ' +#{{ prefix }}_Nome.value().toUpperCase() +' - ulteriore intestatario'" id="Oggetto" name="Oggetto" type="hidden"/>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
   <tbody>
@@ -339,8 +332,22 @@
       </td>
     </tr>
   </tbody>
-</table>
   {{ anagrafica_trento_uniformata.attributi_hidden(prefix) }}
+</table>
+{% endmacro %}
+
+{% macro anagrafica_intestatario_aggiuntivo(prefix="AltroIntestatario", title="ULTERIORI INTESTATARI (firma autografa)", delega ="true") -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+
+<h1 class="Modulo">{{title}}</h1>
+
+{{ sezione_anagrafica(prefix) }}
 
 <br>
 
