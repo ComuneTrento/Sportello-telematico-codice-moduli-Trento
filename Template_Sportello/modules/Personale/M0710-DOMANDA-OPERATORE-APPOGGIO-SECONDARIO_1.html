@@ -1,6 +1,5 @@
 {% set CodiceModulo =  "M0710-DOMANDA-OPERATORE-APPOGGIO-SECONDARIO_1" %}
 {% set Urn =  "document:c_l378:modulo.secondario.operatore.1" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG_vSTU3" %}-->
 {% extends "base_trento_new.html" %}
 
 {% block meta %}
@@ -38,8 +37,11 @@ versione="1.0|01/01/2015"/>
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
  <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - ulteriori particelle'"/>
- <input dynamic_value="#nominativo_oggetto.value() + ' - Domanda di partecipazione a concorso operatore appoggio'" id="Oggetto" name="Oggetto" type="hidden" />
+ <!-- <input dynamic_value="#nominativo_oggetto.value() + ' - Domanda di partecipazione a concorso operatore appoggio'" id="Oggetto" name="Oggetto" type="hidden" />
 
+ <input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+<input dynamic_value="#nominativo_oggetto.value() + ' - Modulo secondario - Contratto collettivo provinciale'" id="Oggetto" name="Oggetto" type="hidden" />
+ -->
 
 
 <div class="space-1"></div>
@@ -1279,7 +1281,9 @@ versione="1.0|01/01/2015"/>
 
 </div>
 </div>
+<div class="space-1"></div>
 
+<!-- INIZIO BLOCCO FIRMA -->
 
 <div type="firma" class="simpatico-block simpatico-query-and-answer">
   <div class="container border bg-light" name="Firme">
@@ -1293,25 +1297,35 @@ versione="1.0|01/01/2015"/>
         <label for="Data_PDF"> Data </label>
       </div>
       <div class="form-group col-lg-4 firma-custom">
+        <!-- <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase()" style="width:90%;"/> -->
         <input class="form-control" style="text-align: center;" id="Firma_PDF" name="Firma_PDF" dynamic_value="#Titolare_Nome.value().toUpperCase() + ' ' + #Titolare_Cognome.value().toUpperCase()">
+
         <label for="Firma_PDF"> Il richiedente<br><span><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></label>
       </div>
     </div>
   </div>
 </div>
 
+  
+<!-- FINE BLOCCO FIRMA -->
+
+<br>
+
+<!-- INIZIO BLOCCO SALVA -->
+
 <div class="container">
   <button type="submit" class="btn btn-success btn-lg btn-block" id="SalvaModulo" name="SalvaModulo" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza."> Salva modulo </button>
 </div>
 
 
-<!--PRENDO I META DATI-->
-<!-- <input id="Metadati_Totale_particelle" name="Metadati_Totale_particelle" dynamic_value="#Referente99_Totale_particelle.value()" style="width: 100%;" type="hidden"/>
-{{ utils.passaggio_metadati() }}
-{{ utils.recupero_dati_meta( 'Referente99_Totale_particelle' ) }}
-<input id="Referente99_Totale_particelle" name="Referente99_Totale_particelle" type="hidden"/>
-<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden"/>
-<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden"/> -->
+
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
 
 
 {% endblock content %}
