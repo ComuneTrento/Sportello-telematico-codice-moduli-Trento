@@ -1,7 +1,6 @@
 {% set CodiceModulo =  "M0710-DOMANDA-OPERATORE-APPOGGIO-SECONDARIO_1" %}
 {% set Urn =  "document:c_l378:modulo.secondario.operatore.1" %}
-<!--{% set modulo_workflow_model =  "https://sportello.comune.trento.it/modulistica/moduli/GEN-IMMAGG_vSTU3" %}-->
-{% extends "base_trento_new.html" %}
+{% extends "base_trento_OK.html" %}
 
 {% block meta %}
 <meta campi_firma="Titolare_CodiceFiscale"
@@ -37,12 +36,9 @@ versione="1.0|01/01/2015"/>
 
 
 {{intestazioni.intestazione_modulosecondario_senzabollo()}}
- <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - ulteriori particelle'"/>
- <input dynamic_value="#nominativo_oggetto.value() + ' - Domanda di partecipazione a concorso operatore appoggio'" id="Oggetto" name="Oggetto" type="hidden" />
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+<input dynamic_value="#nominativo_oggetto.value() + ' - Domanda di partecipazione a concorso operatore appoggio'" id="Oggetto" name="Oggetto" type="hidden" />
 
-
-
-<div class="space-1"></div>
 
 <div class="container">
   <div class="title-1">Modulo secondario - Ulteriori Esperienze - Contratto collettivo provinciale
@@ -73,8 +69,9 @@ versione="1.0|01/01/2015"/>
 <div class="space-1"></div>
 <div class="space-1"></div>
 
-<div class="space-1"></div>
 
+{{anagrafica_macro.richiedente_resp("Titolare","Il/La sottoscritto/a, avente codice fiscale:", "visibility:hidden", "cursor:pointer", "visibility:hidden")}} 
+<div class="space-1"></div>
 
 
 <div class="form-row">
@@ -1279,7 +1276,14 @@ versione="1.0|01/01/2015"/>
 
 </div>
 </div>
+<div class="space-1"></div>
 
+<!-- INIZIO BLOCCO FIRMA -->
+
+
+<div class="space-1"></div>
+
+<!-- INIZIO BLOCCO FIRMA -->
 
 <div type="firma" class="simpatico-block simpatico-query-and-answer">
   <div class="container border bg-light" name="Firme">
@@ -1300,18 +1304,48 @@ versione="1.0|01/01/2015"/>
   </div>
 </div>
 
+  
+<!-- FINE BLOCCO FIRMA -->
+
+<br>
+
+<!-- INIZIO BLOCCO SALVA -->
+
 <div class="container">
   <button type="submit" class="btn btn-success btn-lg btn-block" id="SalvaModulo" name="SalvaModulo" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza."> Salva modulo </button>
 </div>
 
 
-<!--PRENDO I META DATI-->
-<!-- <input id="Metadati_Totale_particelle" name="Metadati_Totale_particelle" dynamic_value="#Referente99_Totale_particelle.value()" style="width: 100%;" type="hidden"/>
-{{ utils.passaggio_metadati() }}
-{{ utils.recupero_dati_meta( 'Referente99_Totale_particelle' ) }}
-<input id="Referente99_Totale_particelle" name="Referente99_Totale_particelle" type="hidden"/>
-<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden"/>
-<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden"/> -->
 
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_allegato_cM0709-A01-CERT-PROT" name="GLOBO_allegato_cM0709-A01-CERT-PROT" type="hidden" value="" obbligatorio="#CERT_PROT.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM0709-A02-CERT-MED" name="GLOBO_allegato_cM0709-A02-CERT-MED" type="hidden" value="" obbligatorio="#CERT_MED.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM0709-A03-TITOLO-EQUIV" name="GLOBO_allegato_cM0709-A03-TITOLO-EQUIV" type="hidden" value="" obbligatorio="#TITOLO_EQUIV.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM0709-A04-NO_TEST_PRESELETTIVO" name="GLOBO_allegato_cM0709-A04-NO_TEST_PRESELETTIVO" type="hidden" value="" obbligatorio="#NO_TEST_PRESELETTIVO.checked() ? 'OBBLIGATORIO' : ''"/>
+
+<!--<input id="GLOBO_allegato_cM0707-A04-ESONERO-TEST-PRESELETTIVO" name="GLOBO_allegato_cM0706-A04-ESONERO-TEST-PRESELETTIVO" type="hidden" value="" obbligatorio="#NO_TEST_PRESELETTIVO.checked() ? 'OBBLIGATORIO' : ''"/> -->
+
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+
+<input id="GLOBO_modulofiglio_cM0710-DOMANDA-OPERATORE-APPOGGIO-SECONDARIO_1" name="GLOBO_modulofiglio_cM0710-DOMANDA-OPERATORE-APPOGGIO-SECONDARIO_1" numero="1" obbligatorio="#Parametri_Particelle1.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+<input id="GLOBO_modulofiglio_cM0710-DOMANDA-OPERATORE-APPOGGIO-SECONDARIO_2" name="GLOBO_modulofiglio_cM0710-DOMANDA-OPERATORE-APPOGGIO-SECONDARIO_2" numero="1" obbligatorio="#Parametri_Particelle10.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
+
+
+
+
+<!-- INIZIO BLOCCO PRESENTAZIONE DOMANDA PER SCADENZA TERMINI -->
+
+<!--<input id="Salva_Modulo_Termini" mandatory="true" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">-->
+<!--<input id="Salva_Modulo_Termini" mandatory="moment() > moment('2021-12-01')" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">-->
+
+
+<!-- FINE BLOCCO PRESENTAZIONE DOMANDA PER SCADENZA TERMINI -->
 
 {% endblock content %}
