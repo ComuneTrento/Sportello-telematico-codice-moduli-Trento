@@ -602,77 +602,8 @@
 
 <br>
 
-<div class="simpatico-block simpatico-query-and-answer">
-  <div type="Residenza_persona_fisica">
-    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
-      <tbody>
-        <tr class="Rigaintestazione">
-          <td colspan="5">
-            <p style="line-height: 1.6;"><b>Residente a:</b></p>
-          </td>
-        </tr>
-        <tr class="Rigaintestazioneridotta">
-          <td style="width:9%;">
-            <p class="Labelcella" style="line-height:1.6;">Provincia</p>
-          </td>
-          <td style="width:33%;" colspan="4">
-            <p class="Labelcella" style="line-height:1.6;">Comune</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza", mandatory="true") }}
-          </td>
-          <td colspan="4">
-            <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')" 
-            mandatory_enabled="true"/>
-            <input id="{{ prefix }}_ResidenzaTN" name="{{ prefix }}_ResidenzaTN" type="hidden" 
-            dynamic_value="#{{ prefix }}_MatricolaAnagrafe.value() == '' && #{{ prefix }}_ComuneResidenza.value() == 'Trento' || #{{ prefix }}_ComuneResidenza.value() == 'TRENTO' ? 'RESIDENTE' : ''"/>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="5">
-            <input id="{{ prefix }}_ResidenzaTN_alert" name="{{ prefix }}_ResidenzaTN_alert" type="text"  style="width:100%; border:none!important; line-height:1.6; font-weight:700;" readonly disabled
-            dynamic_value="#{{ prefix }}_ResidenzaTN.value().length > 0 ? 'RESIDENZA NEL COMUNE DI TRENTO: DATI ACQUISITI AUTOMATICAMENTE DALL\'ANAGRAFE' : '' "/>
-          </td>
-        </tr>
-         <tr>
-          <td style="width:33%;" colspan="2">
-            <p class="Labelcella" style="line-height:1.6; ">Indirizzo</p>
-          </td>
-          <td style="width:9%;">
-            <p class="Labelcella" style="line-height:1.6;">Civico</p>
-          </td>
-          <td style="width:9%;">
-            <p class="Labelcella" style="line-height:1.6;">Barra</p>
-          </td>
-          <td style="width:16%;">
-            <p class="Labelcella" style="line-height:1.6;">CAP</p>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" 
-            mandatory_enabled="#{{ prefix }}_ResidenzaTN.value().length == 0" format="regular_expression" expression="^(.+)\s(.+)$"
-            />
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="#{{ prefix }}_ResidenzaTN.value().length == 0" />
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" enabled="!#{{ prefix }}_ResidenzaTN.value().length == 0" label="Barra di residenza" maxlength="3" />
-          </td>
-          <td>
-            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE' and #{{ prefix }}_ResidenzaTN.value().length == 0" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE' && !#{{ prefix }}_ResidenzaTN.value().length > 0" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
 
-  
-  </div>
-</div>
-
+  {{ residenza_skipTN(prefix, "Residente a:") }} 
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
@@ -6186,3 +6117,82 @@
     {% endif %}
 {%- endmacro %}    
 
+<!----------------------------------------------------------------- PERSONA FISICA ----------------------------------------------------------------->
+{% macro residenza_skipTN( prefix='AventeTitolo', intestazione="Residente a:") -%}
+  
+  {% do all_prefix.append( prefix ) %}
+  {% set Temp = prefix|replace("NonImportare", "NI") %}
+  {% if prefix != Temp %}
+      {% do TitolareNonImportarePresente.append('0') %}
+  {% endif %}
+<div class="simpatico-block simpatico-query-and-answer">
+  <div type="Residenza_persona_fisica">
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="5">
+            <p style="line-height: 1.6;"><b>{{intestazione}}</b></p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Provincia</p>
+          </td>
+          <td style="width:33%;" colspan="4">
+            <p class="Labelcella" style="line-height:1.6;">Comune</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza", mandatory="true") }}
+          </td>
+          <td colspan="4">
+            <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')" 
+            mandatory_enabled="true" />
+            <input id="{{ prefix }}_ResidenzaTN" name="{{ prefix }}_ResidenzaTN" type="hidden" 
+            dynamic_value="#{{ prefix }}_MatricolaAnagrafe.value() == '' && #{{ prefix }}_ComuneResidenza.value() == 'Trento' || #{{ prefix }}_ComuneResidenza.value() == 'TRENTO' ? 'RESIDENTE' : ''"/>
+          </td>
+        </tr>
+        <tr class="Rigaintestazione">
+          <td colspan="5">
+            <input id="{{ prefix }}_ResidenzaTN_alert" name="{{ prefix }}_ResidenzaTN_alert" type="text" style="width:100%; border:none!important; line-height:1.6; font-weight:700; color:#004080; background-color: rgb(238, 238, 238);" tabindex="-1" readonly disabled
+            dynamic_value="#{{ prefix }}_ResidenzaTN.value().length > 0 ? 'RESIDENZA NEL COMUNE DI TRENTO: DATI ACQUISITI AUTOMATICAMENTE DALL\'ANAGRAFE' : '' "/>
+          </td>
+        </tr>
+         <tr class="Rigaintestazione">
+          <td style="width:33%;" colspan="2">
+            <p class="Labelcella" style="line-height:1.6; ">Indirizzo</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Civico</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Barra</p>
+          </td>
+          <td style="width:16%;">
+            <p class="Labelcella" style="line-height:1.6;">CAP</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" 
+            mandatory_enabled="#{{ prefix }}_ResidenzaTN.value().length == 0" format="regular_expression" expression="^(.+)\s(.+)$"
+            />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="#{{ prefix }}_ResidenzaTN.value().length == 0" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" enabled="!#{{ prefix }}_ResidenzaTN.value().length == 0" label="Barra di residenza" maxlength="3" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE' and #{{ prefix }}_ResidenzaTN.value().length == 0" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE' && !#{{ prefix }}_ResidenzaTN.value().length > 0" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  
+  </div>
+</div>
+{%- endmacro %}    
