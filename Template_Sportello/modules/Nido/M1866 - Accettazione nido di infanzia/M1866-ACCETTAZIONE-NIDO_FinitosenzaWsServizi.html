@@ -349,7 +349,7 @@ urn_report="report:CSP_SESSION_REPORT"
 
 <input class="Modulo" id="chk_scelta_ok" name="chk_scelta_ok" dynamic_value="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) ? 'OK' : ''" mandatory="true" label="ATTENZIONE: devi effettuare una scelta per il/i nido/i proposto/i" type="hidden">
 
-<input id="ScadenzaAccettazione" name="ScadenzaAccettazione" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #ScadenzaAccettazioneFT.value() : #ScadenzaAccettazionePT.value()"  type="hidden"/>
+<input id="ScadenzaAccettazione" name="ScadenzaAccettazione" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #ScadenzaAccettazioneFT.value().substring(8,10) + '/' + #ScadenzaAccettazioneFT.value().substring(5,7) + '/' + #ScadenzaAccettazioneFT.value().substring(0,4) : #ScadenzaAccettazionePT.value().substring(8,10) + '/' + #ScadenzaAccettazionePT.value().substring(5,7) + '/' + #ScadenzaAccettazionePT.value().substring(0,4)" type="hidden"/>
 
 <input id="Parametri_SceltaServizio" name="Parametri_SceltaServizio" dynamic_value="#Tassonomia_TipoFrequenza1.checked() ? #Tassonomia_TipoFrequenza1.value() : #Tassonomia_TipoFrequenza2.value()"  type="hidden"/>
 
@@ -423,7 +423,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <br>
 <br>
 
-<table class="Modulo" style="border: 1px solid grey">
+{# <table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td style="vertical-align: top; width: 4%;" rowspan="7">
@@ -482,10 +482,10 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
   </tbody>
-</table>
+</table> 
 
 <br>
-<br>
+<br>#}
 
 <globo_salto_pagina></globo_salto_pagina>
 
@@ -609,7 +609,7 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; width: 4%;" rowspan="10">
+      <td style="vertical-align: top; width: 4%;" rowspan="4">
           <input id="Agevolazioni2" name="Agevolazioni" type="radio" value="2"/>
       </td>
       <td style="width:60%;" colspan="2">
@@ -732,7 +732,8 @@ urn_report="report:CSP_SESSION_REPORT"
 <input group="Modulo_scadenza" id="Modulo_Inviabile1" name="Modulo_Inviabile1" dynamic_check="controlloScadenza(#ScadenzaAccettazione.value())" enabled="controlloScadenza(#ScadenzaAccettazione.value())" type="checkbox" label="Modulo inviabile" value="1">
 <input group="Modulo_scadenza" id="Modulo_Inviabile2" name="Modulo_Inviabile2" dynamic_check="!controlloScadenza(#ScadenzaAccettazione.value())" enabled="!controlloScadenza(#ScadenzaAccettazione.value())" type="checkbox" label="Modulo NON inviabile" value="2">
 <!-- <input id="Salva_Modulo" mandatory="#Modulo_Inviabile2.checked()" type="hidden" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione."> -->
-<input id="Salva_Modulo" mandatory="false" type="hidden" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione.">
+<input id="Salva_Modulo" mandatory="moment(#Data_PDF.value(), 'DD/MM/YYYY') > moment(#ScadenzaAccettazione.value(), 'DD/MM/YYYY')" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">
+<!-- <input id="Salva_Modulo" mandatory="false" type="hidden" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione."> -->
 </div>
 
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
