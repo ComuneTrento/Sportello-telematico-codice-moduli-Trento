@@ -1,0 +1,516 @@
+{% set CodiceModulo = "M1149-DISPONIBILITA-PRESIDENTE-SEGGIO" %}
+{% set Urn =  "document:c_l378:elettorale.presidenti;disponibilita.presidenti;disponibilita;m1149.disponibilita.presidente" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Disponibilità svolgimento incarico di presidente di seggio"
+descrizione="Disponibilità svolgimento incarico di presidente di seggio"
+destinatario_amministrazione=""
+destinatario_ufficio="B6PZ17" 
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M1145-DISPONIBILITA-PRESIDENTE-SEGGIO"
+verifica_pagamento="NO"
+versione="1.0|23/02/2018" />
+
+<meta codice_allegato="INFORM-TRATT-DATI-ELETTORALE"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.elettorale"
+descrizione_estesa="Informativa trattamento dati ELETTORALE"
+filename="INFORM-TRATT-DATI-ELETTORALE.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-ELETTORALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+ <!-- *********** INIZIO ATTIVAZIONE STRUMENTI SIMPATICO *********** -->
+
+ <!--
+ <script type="text/javascript">
+  var simpaticoEservice = "19"; //  the id corresponding to the e-service
+  var simpaticoEserviceName = "M1145-DISPONIBILITA-PRESIDENTE-SEGGIO"; //  the name corresponding to the e-service
+  var simpaticoEserviceURL = "https://sportello.comune.trento.it/modulistica/moduli/M1145-DISPONIBILITA-PRESIDENTE-SEGGIO_vSTU3" ; //  the url corresponding to the e-service
+  var simpaticoForm = "main";
+  var simpaticoCategory = "Elettorale"; // the general category of the e-service
+  var simpaticoMapping= ["AventeTitolo_Cognome","AventeTitolo_Nome","AventeTitolo_CodiceFiscale","AventeTitolo_DataNascita","AventeTitolo_Sesso","AventeTitolo_Cittadinanza","AventeTitolo_LuogoNascita","AventeTitolo_ProvinciaResidenza","AventeTitolo_ComuneResidenza","AventeTitolo_ViaResidenza","AventeTitolo_CivicoResidenza","AventeTitolo_CAPResidenza","AventeTitolo_Fisso","AventeTitolo_Telefono","AventeTitolo_EMail","AventeTitolo_EMailPEC"];
+  var ERROR_LABELS = { 
+      'block1': 'Manca il codice fiscale',
+      'block2' : 'Il richiedente deve essere cittadino Italiano',
+      'block3' : 'Il richiedente deve risiedere a Trento',
+      'block4' : 'Seleziona una delle opzioni',
+      'block5' : 'Nessuna opzione selezionata, oppure iscrizione non effettuata o oltre i termini',
+      'block7' : 'Per ogni coppia di opzioni indicare una scelta',
+      'block10' : 'Confermare presa visione informativa' 
+  }
+</script>
+
+<form data-simpatico-workflow="https://sportello.comune.trento.it/modulistica/moduli/M1145-DISPONIBILITA-PRESIDENTE-SEGGIO_vSTU3" id="modulo" accept-charset="utf-8" method="post" onsubmit="return sendForm()" autocomplete="off">
+
+-->
+
+
+{% block title %}DISPONIBILITA-PRESIDENTE-SEGGIO{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+
+<!-- <input dynamic_value="#nominativo_oggetto.value() + ' - Elezioni comunali - Disponibilità presidente'" id="Oggetto" name="Oggetto" type="hidden" /> -->
+{% block oggetto %}
+<input dynamic_value="'Disponibilità svolgimento incarico di presidente di seggio ' + #sostituzione.value() + ' - ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'" id="Oggetto" name="Oggetto" type="hidden"/>
+{% endblock oggetto %}
+
+
+{{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
+
+<br>
+
+<h1 class="Modulo" style="line-height:1.6;">REFERENDUM POPOLARI DEL 12 GIUGNO 2022</h1>
+
+<br>
+
+<h2 class="Modulo" style="line-height:1.6;">
+    DICHIARAZIONE DI DISPONIBILITA' A SVOLGERE L'INCARICO DI<br> PRESIDENTE DI SEGGIO
+</h2>
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<!--<input id="fisso_obbligatorio" name="fisso_obbligatorio" dynamic_check="true" type="hidden" />-->
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<!--<input id="pec_obbligatoria" name="pec_obbligatoria" dynamic_check="true" type="hidden" />-->
+
+{{anagrafica_trento_uniformata.richiedente_elettorale("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+  <input class="Modulo" type="hidden" id="nominativo_oggetto" name="nominativo_oggetto" dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
+
+  <input type="hidden" id="chek_residenza" name="chek_residenza" dynamic_value="(#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai residenti a Trento'" style="width: 100%;" readonly/>
+  <input type="hidden" id="chek_cittadinanza" name="chek_cittadinanza" dynamic_value="(#AventeTitolo_Cittadinanza.check_value('ITALIANA') || #AventeTitolo_Cittadinanza.check_value('Italiana') || #AventeTitolo_Cittadinanza.check_value('italiana')) ? 'Proseguire la compilazione' : 'ATTENZIONE: Modulo compilabile solo dai cittadini Italiani'" style="width: 100%;" readonly/>
+
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey" enabled="true">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p style="line-height: 1.6;"><b>Avente la seguente occupazione:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Lavoro_richiedente" name="Lavoro_richiedente"  mandatory="true" label="Condizione di lavoro del richiedente"> </div>
+        <input id="Lavoro_richiedente1" name="Lavoro_richiedente" type="radio" value="Lavoratore"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;">lavoratore</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="Lavoro_richiedente2" name="Lavoro_richiedente" type="radio" value="Studente"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;">studente regolarmente iscritto</p>
+        <p style="font-size:70%"><i>(se all'Università, in regola con gli esami o al massimo due anni fuori corso, sempreché non vi sia stato di occupazione o iscrizione al Centro per l'Impiego)</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="Lavoro_richiedente3" name="Lavoro_richiedente" type="radio" value="Studente/Lavoratore"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;">studente lavoratore</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="Lavoro_richiedente4" name="Lavoro_richiedente" type="radio" value="Non occupato/Pensionato"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;">non occupato/pensionato</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h3 class="Modulo">DICHIARA</h3>
+
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="3">
+        <p style="line-height: 1.6;"><b>relativamente all'iscrizione all'albo dei Presidenti di seggio</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top; text-align: center;" rowspan="3">
+        <div id="Iscrizione_albo" name="Iscrizione_albo"  mandatory_enabled="true" label="Dichiarazione iscrizione albo"> </div>
+        <input id="Iscrizione_albo1" name="Iscrizione_albo" type="radio" value="Iscritto albo"/>
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6;">di essere iscritto all'albo dei Presidenti di seggio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Data_iscrizione_albo" name="Data_iscrizione_albo"  mandatory_enabled="#Iscrizione_albo1.checked()" label="Data iscrizione albo"> </div>
+        <input id="Data_iscrizione_albo1" name="Data_iscrizione_albo" type="radio" value="Iscritto entro termine ultimo"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;">che l'iscrizione è stata perfezionata <b>entro il 31 ottobre 2021</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="Data_iscrizione_albo2" name="Data_iscrizione_albo" type="radio" value="Iscritto oltre termine ultimo"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;">che l'iscrizione è stata perfezionata <b>dopo il 31 ottobre 2021</b>
+          <br>
+          e che quindi la propria disponibilità sarà relativa a sostituzioni in caso di necessità.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top; text-align: center;" >
+        <input id="Iscrizione_albo2" name="Iscrizione_albo" type="radio" value="Non iscritto albo"/>
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.8;">di NON essere iscritto all'albo dei Presidenti di seggio<br>
+          E quindi procedo con la presentazione dell'iscrizione all'<a href="https://sportello.comune.trento.it/procedure%3Ac_l378%3Aelettorale.presidenti%3Biscriversi.albo.presidenti%3Biscrizione?source=255" target="_blank">albo dei Presidenti di seggio</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+  
+<!--       <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="Data_iscrizione_albo2" name="Data_iscrizione_albo" type="radio" value="Iscritto oltre termine ultimo"/>
+      </td> -->
+ <!--      <tr>
+      <tr>
+        <td style="width: 4%; vertical-align: center; text-align: center;">
+          <input id="Data_iscrizione_albo2" name="Data_iscrizione_albo" type="radio" value="Iscritto oltre termine ultimo"/>
+        </td>
+        <td>
+          <p style="line-height: 1.6;">che l'iscrizione è stata perfezionata <b>dopo il 30 novembre 2020</b><br>
+          e che quindi la propria disponibilità sarà relativa a sostituzioni in caso di necessità.</p>
+          " PER SOSTITUZIONI" cambiare il dynamic_value con #sostituzione
+          </td>   
+          
+      </tr>
+
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top; text-align: center;" >
+        <input id="Iscrizione_albo2" name="Iscrizione_albo" type="radio" value="Non iscritto albo"/>
+      </td>
+
+      <td colspan="2">
+        <p style="line-height:1.8;">di NON essere iscritto all'albo dei Presidenti di seggio<br>
+          E quindi procedo con la presentazione dell'iscrizione all'<a href="https://sportello.comune.trento.it/procedure%3Ac_l378%3Aelettorale.presidenti%3Biscriversi.albo.presidenti%3Biscrizione?source=255" target="_blank">albo dei Presidenti di seggio</a>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table> -->
+
+<br>
+
+<table class="Modulo" name="Note" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height: 1.6;"><b>NOTA BENE: Non è possibile presentare contestualmente la richiesta di iscrizione all'albo e la domanda di disponibilità per le elezioni.</b><br>Per ulteriori informazioni si prega di contattare l'Ufficio Elettorale del Comune di Trento al numero 0461-884298/99 dal lunedì al venerdì 8.00/12.00 e il giovedì dalle 8.00 alle 16.00</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<h3 class="Modulo">DICHIARA INOLTRE LA PROPRIA DISPONIBILITA'</h3>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height: 1.6; text-align: center;"><b>REFERENDUM POPOLARI DEL 12 GIUGNO 2022</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width: 4%; vertical-align: top; text-align: center;" rowspan="5">
+        <div id="Disponibilita_presidente" name="Disponibilita_presidente" label="Dichiarazione di disponibilità" mandatory_enabled="true"> </div>
+        <input group="Disponibilita_presidente" id="Disponibilita_presidente_elez" name="Disponibilita_presidente_elez" type="checkbox" value="Elezioni" />
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6;"><b>a svolgere l'incarico di Presidente di seggio</b> per i <b>referendum popolari</b> del 12 giugno 2022 che comporta l'impegno nelle seguenti giornate:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="elez_Dichiarazioni1" name="elez_Dichiarazioni1" dynamic_check="#Disponibilita_presidente_elez.checked()" type="checkbox" value="1" enabled="#Disponibilita_presidente_elez.checked()"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;">sabato 11 giugno alle ore 11.00 consegna del materiale e alle ore 16.00 costituzione del seggio, firma e timbratura schede.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="elez_Dichiarazioni2" name="elez_Dichiarazioni2" dynamic_check="#Disponibilita_presidente_elez.checked()" type="checkbox" value="2" enabled="#Disponibilita_presidente_elez.checked()"/>
+      </td>
+      <td>
+        <p style="line-height: 1.6;">domenica 12 giugno operazioni di votazione dalle ore 7.00 alle  ore 23.00 e a seguire le operazioni di scrutinio.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="elez_Dichiarazioni4" name="elez_Dichiarazioni4" dynamic_check="#Disponibilita_presidente_elez.checked()" type="checkbox" value="4" enabled="#Disponibilita_presidente_elez.checked()"/>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6;"><b>NOTA BENE:</b> I Presidenti nominati nei <b>SEGGI SPECIALI</b>  presteranno servizio come segue: ore 16.00 di sabato 11 giugno costituzione del seggio e domenica 12 raccolta del voto nella struttura assegnata. Non partecipano alle operazioni di scrutinio né alle operazioni di firma e timbratura schede.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione" >
+        <td colspan="2">
+          <b>Verifica requisiti presentabilità della domanda</b>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: center; text-align: center;">
+          <input
+            id="check_presentabilità1"
+            name="check_presentabilità1"
+            dynamic_check="#AventeTitolo_Cittadinanza.value() != '' and (#AventeTitolo_Cittadinanza.check_value('ITALIANA') || #AventeTitolo_Cittadinanza.check_value('Italiana') || #AventeTitolo_Cittadinanza.check_value('italiana'))"
+            enabled="#AventeTitolo_Cittadinanza.value() != '' and (#AventeTitolo_Cittadinanza.check_value('ITALIANA') || #AventeTitolo_Cittadinanza.check_value('Italiana') || #AventeTitolo_Cittadinanza.check_value('italiana'))"
+            type="checkbox"
+            value="Cittadinanza italiana"/>
+        </td>
+        <td>
+          <p style="line-height: 1.6;">Il richiedente è cittadino Italiano</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: center; text-align: center;">
+          <input
+            id="check_presentabilità2"
+            name="check_presentabilità2"
+            dynamic_check="#AventeTitolo_ComuneResidenza.value() != '' and (#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento'))"
+            enabled="#AventeTitolo_ComuneResidenza.value() != '' and (#AventeTitolo_ComuneResidenza.check_value('TRENTO') || #AventeTitolo_ComuneResidenza.check_value('Trento') || #AventeTitolo_ComuneResidenza.check_value('trento'))"
+            type="checkbox"
+            value="Residente a Trento"/>
+        </td>
+        <td>
+          <p style="line-height: 1.6;">Il richiedente è residente a Trento</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: center; text-align: center;">
+          <input
+            id="check_presentabilità3"
+            name="check_presentabilità3"
+            dynamic_check="#Data_iscrizione_albo1.checked()"
+            enabled="#Data_iscrizione_albo1.checked()"
+            type="checkbox"
+            value="Iscrizione albo entro termini"/>
+        </td>
+        <td>
+          <p style="line-height: 1.6;">L'iscrizione all'albo è avvenuta entro il 31 ottobre 2021</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 4%; vertical-align: center; text-align: center;">
+          <input
+            id="check_presentabilità4"
+            name="check_presentabilità4"
+            dynamic_check="#Data_iscrizione_albo2.checked()"
+            enabled="#Data_iscrizione_albo2.checked()"
+            type="checkbox"
+            value="Iscrizione Albo dopo i termini"/>
+        </td>
+        <td>
+          <p style="line-height: 1.6;">L'iscrizione all'albo è avvenuta dopo il 31 ottobre 2021 - Disponibilità per sostituzione</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input id="Blocca_domanda" name="Blocca_domanda" label="CONTROLLO PRESENTABILITÀ DELLE DOMANDE" style="width: 100%;" dynamic_value="#Iscrizione_albo1.checked() and #chek_residenza.check_value('Proseguire la compilazione') and #chek_cittadinanza.check_value('Proseguire la compilazione') ? 'REQUISITI VERIFICATI! è possibile presentare la domanda' : 'ATTENZIONE! Non sono soddisfatti i requisiti necessari per presentare la domanda'" readonly>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+
+<input type="hidden" id="permesso_salvare_domanda" name="permesso_salvare_domanda" dynamic_value="#Blocca_domanda.check_value('ATTENZIONE! Non sono soddisfatti i requisiti necessari per presentare la domanda') ? '' : 'OK'" style="width: 100%;" mandatory="true" label="La domanda non è completa o non soddisfa i requisiti di validità e non può pertanto essere inviata" readonly/>
+<input type="hidden" id="sostituzione" name="sostituzione" dynamic_value="#Data_iscrizione_albo2.checked() ? 'per sostituzione' : ''" label="completamento oggetto" readonly/>
+
+  <h3 class="Modulo">NOTE</h3>
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6;"><b>Le disponibilità verranno successivamente inviate al Presidente della Corte d'Appello di Trento che provvederà alla nomina dei Presidenti di seggio.</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h3 class="Modulo">Il richiedente</h3>
+<h3 class="Modulo">nel caso di nomina a presidente di seggio</h3>
+<h3 class="Modulo">e se intestatario o cointestatario di un conto corrente,</h3>
+<h3 class="Modulo">CHIEDE</h3>
+<br>
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione" >
+      <td>
+        <b>l’accredito del compenso</b> per l’incarico di presidente sul conto corrente:
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height: 1.6;">Intestato o cointestato a: <input id="intestatario_conto" name="intestatario_conto" style="width:78%;" dynamic_value="' ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase()" label="Intestatario o cointestatario del conto" readonly/></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height: 1.6;">Nome della Banca: <input id="nome_banca" name="nome_banca" style="width: 83%;" mandatory="#nome_agenzia.value() != '' || #codice_IBAN.value() != ''" enabled="true" label="Nome Banca per accredito compenso"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height: 1.6;">Agenzia o filiale: <input id="nome_agenzia" name="nome_agenzia" style="width: 85%;" mandatory="#nome_banca.value() != '' || #codice_IBAN.value() != ''" enabled="true" label="Nome agenzia per accredito compenso"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="line-height: 1.6;">Codice IBAN: <input class="" id="codice_IBAN" name="codice_IBAN" style="width:87.5%;" mandatory="#nome_banca.value() != '' || #nome_agenzia.value() != ''" enabled="true" maxlength="27" label="IBAN per accredito compenso"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-elettorale" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 20%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 15%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:90%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 65%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="' ' + #AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width: 90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il richiedente <span style="font-size:95%"><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+</div>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" name="GLOBO_allegato_cINFORM-TRATT-DATI-ELETTORALE" obbligatorio="''" type="hidden" value=""/>
+
+{% endblock content %}
