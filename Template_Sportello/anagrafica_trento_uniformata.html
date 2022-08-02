@@ -448,8 +448,10 @@
 <!-- compare in: M47563-COMUNICAZIONE-INIZIO-LAVORI-ASSEVERATA_STU3 -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- Parametro residenza_skipTN: se true allora l'indirizzo di residenza non viene chiesto se il soggetto è diverso da chi compila e se il soggetto è residente a Trento ------------------>
+{% macro titolare_segnatura_guidata( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", ruoli=["Persona fisica", "Titolare", "Legale rappresentante", "Amministratore di condominio", "Responsabile unico del procedimento", "Procuratore legale"], visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", residente_skipTN="false", carica_campi="") -%}
 
-{% macro titolare_segnatura_guidata( prefix='AventeTitolo', intestazione="Il/La sottoscritto/a", ruoli=["Persona fisica", "Titolare", "Legale rappresentante", "Amministratore di condominio", "Responsabile unico del procedimento", "Procuratore legale"], visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
 {% do all_prefix.append( prefix ) %}
 {% set Temp = prefix|replace("NonImportare", "NI") %}
 {% if prefix != Temp %}
@@ -602,8 +604,12 @@
 
 <br>
 
-
-  {{ residenza_skipTN(prefix, "Residente a:") }} 
+    {% if residente_skipTN == "true" %}
+      {{ residenza_skipTN(prefix, "Residente a:") }} 
+    {% else %}
+      {{ residenza(prefix, "Residente a:") }} 
+    {% endif %}
+      
 <br>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
@@ -6191,9 +6197,79 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+{%- endmacro %}   
+
+{% macro residenza( prefix='AventeTitolo', intestazione="Residente a:") -%}
+  
+  {% do all_prefix.append( prefix ) %}
+  {% set Temp = prefix|replace("NonImportare", "NI") %}
+  {% if prefix != Temp %}
+      {% do TitolareNonImportarePresente.append('0') %}
+  {% endif %}
+<div class="simpatico-block simpatico-query-and-answer">
+  <div type="Residenza_persona_fisica">
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="5">
+            <p style="line-height: 1.6;"><b>{{intestazione}}</b></p>
+          </td>
+        </tr>
+        <tr class="Rigaintestazioneridotta">
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Provincia</p>
+          </td>
+          <td style="width:33%;" colspan="4">
+            <p class="Labelcella" style="line-height:1.6;">Comune</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ utils.provincie( prefix + '_ProvinciaResidenza', label="Provincia di residenza", mandatory="true") }}
+          </td>
+          <td colspan="4">
+            <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza" dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')" 
+            mandatory_enabled="true" />
+             </td>
+        </tr>
+         <tr class="Rigaintestazione">
+          <td style="width:33%;" colspan="2">
+            <p class="Labelcella" style="line-height:1.6; ">Indirizzo</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Civico</p>
+          </td>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Barra</p>
+          </td>
+          <td style="width:16%;">
+            <p class="Labelcella" style="line-height:1.6;">CAP</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" 
+            mandatory_enabled="true" format="regular_expression" expression="^(.+)\s(.+)$"/>
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" enabled="true" label="Barra di residenza" maxlength="3" />
+          </td>
+          <td>
+            <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#{{ prefix }}_CodiceFiscale.value() != '' and #{{ prefix }}_ProvinciaResidenza.value() != 'EE'" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
   
   </div>
 </div>
 
 {%- endmacro %}    
+
