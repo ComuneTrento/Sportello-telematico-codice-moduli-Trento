@@ -1,0 +1,568 @@
+{% set CodiceModulo = "M1866-ACCETTAZIONE-NIDO" %}
+{% set Urn =  "document:c_l378:asilo.nido;accettare.posto;accettazione.nido;m1866.accettazione.nido" %}
+{% extends "base_trento_ok.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il dichiarante"
+classi_modulo="Tributi"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Accettazione del posto al nido d'infanzia"
+descrizione="Accettazione del posto al nido d'infanzia"
+destinatario_amministrazione=""
+destinatario_ufficio="EBPGCM"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="SI"
+firmare="AUTENTICATO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M1866-ACCETTAZIONE-NIDO"
+verifica_pagamento="NO"
+versione="2.0|01/09/2019" />
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"
+/>
+
+{% endblock meta %}
+
+{% block title %}  
+M1866-ACCETTAZIONE-NIDO
+{% endblock title %}
+
+{% block content %}
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input dynamic_value="'Accettazione posto nido di infanzia ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')' + ' Beneficiario ' + #Bambino_Cognome.value() + ' ' + #Bambino_Nome.value() + ' (' + #Bambino_CFBambino.value().toUpperCase() + ')'" id="Oggetto" name="Oggetto" type="hidden"/>
+
+<!-- INIZIO BLOCCO INTESTAZIONE -->
+<div type="intestazione_moduloprincipale_senzabollo">
+    <div class="container border-bottom" style="border-radius: unset;z-index: -1;">
+      <div class="form-row">
+        <div class="form-group col-lg-3 text-center">
+          <img alt="Ente" src="./appoggio/img/StemmaComune.png">
+        </div>
+        <div class="form-group col-lg-6 text-center mb-0">
+          <div class="heading">
+            <label for="Ente"> Al comune di </label>
+            <div class="space-0"></div>
+            <input class="form-control" style="background-color: white;" id="Ente" name="Ente" readonly disabled>
+          </div>
+          <div class="heading">
+            <label for="CodiceISTAT"> Codice ISTAT </label>
+            <div class="space-0"></div>
+            <input class="form-control" style="background-color: white;" id="CodiceISTAT" name="CodiceISTAT" readonly disabled>
+          </div>
+          <div class="heading">
+            <label for="UfficioDestinatario"> Ufficio destinatario </label>
+            <div class="space-0"></div>
+            <input class="form-control" style="background-color: white;" id="UfficioDestinatario" name="UfficioDestinatario" dynamic_value="#Parametri_UfficioDestinatario.value() ? get_ufficio_dest() : get_ufficio_dest()" readonly disabled>
+          </div>
+        </div>
+        <div class="form-group col-lg-3 text-center">
+          <!-- <img alt="Marca da bollo" src="./appoggio/img/MarcaDaBollo.jpg"> -->
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <!-- FINE BLOCCO INTESTAZIONE -->
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<div class="container">
+    <div class="title-1">Accesso al nido d'infanzia: accettazione</div>
+</div>
+
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+
+{{anagrafica_macro.richiedente_base_resp("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title mr-3"> In qualità di </span>
+    </div>
+  </div>
+  <div class="form-row" mandatory_enabled="true">
+    <div class="form-group col-lg-12">
+      <input class="form-control" id="AventeTitolo_RuoloRichiedente" name="AventeTitolo_RuoloRichiedente" style="width:100%;" dynamic_value="#AventeTitolo_Sesso.check_value(['M']) ? 'padre' : (#AventeTitolo_Sesso.check_value(['F']) ? 'madre' :'')" label="Ruolo del genitore/affidatario" readonly />
+    </div>
+  </div>
+</div>
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title mr-3"> Del bambino </span>
+    </div>
+  </div>
+  <div class="container border bg-light">
+    <div id="Tassonomia_CF" name="Tassonomia_CF" label="Codice fiscale bambino" mandatory="true"> </div>
+    <div class="form-check indent-1 border-bottom">
+      <input class="form-check-input" id="Tassonomia_CF1" name="Tassonomia_CF" type="radio" value="1">
+      <label class="form-check-label" for="Tassonomia_CF1"> 
+        <b>appartenente</b> al mio nucleo familiare
+      </label>
+      <label class="form-check-label" for="Tassonomia_ListaFam1"> 
+        {{ service.getListaFamigliaCodiceFiscaleREST(
+          'AventeTitolo_CodiceFiscale',
+          'Tassonomia_ListaFam1',
+          '#Tassonomia_CF1:change'
+        )}}
+        <select class="form-control custom-select"
+          enabled="#Tassonomia_CF1.checked()"
+          id="Tassonomia_ListaFam1"
+          name="Tassonomia_ListaFam1"
+          label="Scelta da lista familiari">
+        </select>
+      </label>
+    </div>
+    <div class="form-check indent-1">
+      <input class="form-check-input" id="Tassonomia_CF2" name="Tassonomia_CF" type="radio" value="2">
+      <label class="form-check-label" for="Tassonomia_CF2"> 
+        <b>NON appartenente</b> al mio nucleo familiare e avente codice fiscale:
+        <input class="form-control" type="cf" id="Parametri_CFBambino" name="Parametri_CFBambino" label="Codice fiscale del bambino" mandatory_enabled="#Tassonomia_CF2.checked()"> 
+      </label>
+    </div> 
+</div>
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+{{ anagrafica_macro.anagrafica_bambino_noresidenza_resp('Bambino', 'Anagrafica del/la bambino/a') }}
+
+<div class="container border bg-light" style="display:none">
+    <input name="SvCodiceFiscaleFamiglia" id="SvCodiceFiscaleFamiglia" type="hidden" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" />
+    <input name="SvCodiceVia" id="SvCodiceVia" type="hidden" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CodiceVia.value() : 0 )" />
+    <input name="SvCivicoResidenza" id="SvCivicoResidenza" type="hidden" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CivicoResidenza.value() : 0 )" format="number" />
+    <input id="SvBambino_Paternita" name="SvBambino_Paternita" dynamic_value="#Bambino_Paternita.value()" type="hidden"/>
+    <input id="SvBambino_Maternita" name="SvBambino_Maternita" dynamic_value="#Bambino_Maternita.value()" type="hidden"/>
+    <input name="SvCFBambino" id="SvCFBambino" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Bambino_CFBambino.value() : 0)" type="hidden">
+    <input name="Parametri_Ascolto_WS_SvCFBambino" id="Parametri_Ascolto_WS_SvCFBambino" dynamic_value="#SvCFBambino.value() != '' ? #SvCFBambino.value() : #Parametri_Ascolto_WS_SvCFBambino.value()" type="hidden">
+</div>
+
+
+<input name="TipoDomandaPartTime" id="TipoDomandaPartTime" value="PT" type="hidden">
+<input name="TipoDomandaFullTime" id="TipoDomandaFullTime" value="FT" type="hidden">
+
+
+{{ service.getAssegnazione('SvCFBambino','TipoDomandaFullTime', {
+        'Parametri_TipoDomandaFT': 'tipoServizio',
+        'Parametri_NumeroDomandaValFT': 'idDomanda',
+        'Parametri_DataDomValFT': 'dtDomanda',
+        'Parametri_TipoOperazioneFT': 'tipoOperazione',
+        'Parametri_RichDomValFT': 'richiedente',
+        'Parametri_PaternitaFT': 'paternita',
+        'Parametri_MaternitaFT': 'maternita',
+        'Parametri_IdAsiloFT': 'idAsilo',
+        'Parametri_IdBambinoFT': 'idBambino',
+        'Parametri_IdGraduatoriaFT': 'idGraduatoria',
+        'Parametri_IdAssegnazioneFT': 'idAssegnazione',
+        'Parametri_AsiloFT': 'descrizioneAsilo',
+        'Parametri_PrimaSecondaSceltaFT': 'primaSecondaScelta',
+        'Parametri_AccettazioneFT': 'permessoAccettazione',
+        'Parametri_MessaggioFT': 'messaggio',
+        'Parametri_ScadenzaAccettazioneFT': 'dataScadenzaAccettazione',
+        },
+        '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
+
+      {{ service.getAssegnazione('SvCFBambino','TipoDomandaPartTime', {
+        'Parametri_TipoDomandaPT': 'tipoServizio',
+        'Parametri_NumeroDomandaValPT': 'idDomanda',
+        'Parametri_DataDomValPT': 'dtDomanda',
+        'Parametri_TipoOperazionePT': 'tipoOperazione',
+        'Parametri_RichDomValPT': 'richiedente',
+        'Parametri_PaternitaPT': 'paternita',
+        'Parametri_MaternitaPT': 'maternita',
+        'Parametri_IdAsiloPT': 'idAsilo',
+        'Parametri_IdBambinoPT': 'idBambino',
+        'Parametri_IdGraduatoriaPT': 'idGraduatoria',
+        'Parametri_IdAssegnazionePT': 'idAssegnazione',
+        'Parametri_AsiloPT': 'descrizioneAsilo',
+        'Parametri_PrimaSecondaSceltaPT': 'primaSecondaScelta',
+        'Parametri_AccettazionePT': 'permessoAccettazione',
+        'Parametri_MessaggioPT': 'messaggio',
+        'Parametri_ScadenzaAccettazionePT': 'dataScadenzaAccettazione',
+        },
+        '#Parametri_Ascolto_WS_SvCFBambino:change' ) }}
+    
+
+
+    <input type="hidden" id="Parametri_TipoDomandaFT" name="Parametri_TipoDomandaFT"/>
+    <input type="hidden" id="Parametri_NumeroDomandaValFT" name="Parametri_NumeroDomandaValFT"/>
+    <input type="hidden" id="Parametri_RichDomValFT" name="Parametri_RichDomValFT"/>
+    <input type="hidden" id="Parametri_DataDomValFT" name="Parametri_DataDomValFT"/>
+    <input type="hidden" id="Parametri_TipoOperazioneFT" name="Parametri_TipoOperazioneFT"/>
+    <input type="hidden" id="Parametri_PaternitaFT" name="Parametri_PaternitaFT"/>
+    <input type="hidden" id="Parametri_MaternitaFT" name="Parametri_MaternitaFT"/>
+    <input type="hidden" id="Parametri_IdAsiloFT" name="Parametri_IdAsiloFT"/>
+    <input type="hidden" id="Parametri_IdBambinoFT" name="Parametri_IdBambinoFT"/>
+    <input type="hidden" id="Parametri_IdGraduatoriaFT" name="Parametri_IdGraduatoriaFT"/>
+    <input type="hidden" id="Parametri_IdAssegnazioneFT" name="Parametri_IdAssegnazioneFT"/>
+    <input type="hidden" id="Parametri_AsiloFT" name="Parametri_AsiloFT"/>
+    <input type="hidden" id="Parametri_PrimaSecondaSceltaFT" name="Parametri_PrimaSecondaSceltaFT"/>
+    <input type="hidden" id="Parametri_AccettazioneFT" name="Parametri_AccettazioneFT"/>
+    <input type="hidden" id="Parametri_MessaggioFT" name="Parametri_MessaggioFT"/>
+
+    <input type="hidden" id="Parametri_ScadenzaAccettazioneFT" name="Parametri_ScadenzaAccettazioneFT"/>
+
+    <input name="SvAccettazioneFT" id="SvAccettazioneFT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_AccettazioneFT.value() : 0)" type="hidden">
+
+    <input name="Parametri_Ascolto_WS_AccettazioneFT" id="Parametri_Ascolto_WS_AccettazioneFT" dynamic_value="#SvAccettazioneFT.value() != '' ? #SvAccettazioneFT.value() : #Parametri_Ascolto_WS_AccettazioneFT.value()" type="hidden">
+
+    <input name="SvTipoDomandaFT" id="SvTipoDomandaFT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_TipoDomandaFT.value() : 0)" type="hidden">
+
+    <input name="Parametri_Ascolto_WS_SvTipoDomandaFT" id="Parametri_Ascolto_WS_SvTipoDomandaFT" dynamic_value="#SvTipoDomandaFT.value() != '' ? #SvTipoDomandaFT.value() : #Parametri_Ascolto_WS_SvTipoDomandaFT.value()" type="hidden">
+
+
+    <input type="hidden" id="Parametri_TipoDomandaPT" name="Parametri_TipoDomandaPT"/>
+    <input type="hidden" id="Parametri_NumeroDomandaValPT" name="Parametri_NumeroDomandaValPT"/>
+    <input type="hidden" id="Parametri_RichDomValPT" name="Parametri_RichDomValPT"/>
+    <input type="hidden" id="Parametri_DataDomValPT" name="Parametri_DataDomValPT"/>
+    <input type="hidden" id="Parametri_TipoOperazionePT" name="Parametri_TipoOperazionePT"/>
+    <input type="hidden" id="Parametri_PaternitaPT" name="Parametri_PaternitaPT"/>
+    <input type="hidden" id="Parametri_MaternitaPT" name="Parametri_MaternitaPT"/>
+    <input type="hidden" id="Parametri_IdAsiloPT" name="Parametri_IdAsiloPT"/>
+    <input type="hidden" id="Parametri_IdBambinoPT" name="Parametri_IdBambinoPT"/>
+    <input type="hidden" id="Parametri_IdGraduatoriaPT" name="Parametri_IdGraduatoriaPT"/>
+    <input type="hidden" id="Parametri_IdAssegnazionePT" name="Parametri_IdAssegnazionePT"/>
+    <input type="hidden" id="Parametri_AsiloPT" name="Parametri_AsiloPT"/>
+    <input type="hidden" id="Parametri_PrimaSecondaSceltaPT" name="Parametri_PrimaSecondaSceltaPT"/>
+    <input type="hidden" id="Parametri_AccettazionePT" name="Parametri_AccettazionePT"/>
+    <input type="hidden" id="Parametri_MessaggioPT" name="Parametri_MessaggioPT"/>
+    <input type="hidden" id="Parametri_ScadenzaAccettazionePT" name="Parametri_ScadenzaAccettazionePT"/>
+
+    <input name="SvAccettazionePT" id="SvAccettazionePT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_AccettazionePT.value() : 0)" type="hidden">
+
+    <input name="Parametri_Ascolto_WS_AccettazionePT" id="Parametri_Ascolto_WS_AccettazionePT" dynamic_value="#SvAccettazionePT.value() != '' ? #SvAccettazionePT.value() : #Parametri_Ascolto_WS_AccettazionePT.value()" type="hidden">
+
+    <input name="SvTipoDomandaPT" id="SvTipoDomandaPT" dynamic_value="((#Tassonomia_CF1.checked() || #Tassonomia_CF2.checked()) ? #Parametri_TipoDomandaPT.value() : 0)" type="hidden">
+
+    <input name="Parametri_Ascolto_WS_SvTipoDomandaPT" id="Parametri_Ascolto_WS_SvTipoDomandaPT" dynamic_value="#SvTipoDomandaPT.value() != '' ? #SvTipoDomandaPT.value() : #Parametri_Ascolto_WS_SvTipoDomandaPT.value()" type="hidden">
+
+<globo_salto_pagina></globo_salto_pagina>
+
+<!-- INIZIO BLOCCO SCELTA TEMPO PIENO -->
+<div class="container border bg-light">
+  <div class="form-check indent-1">
+    <input class="form-check-input" id="Tassonomia_TipoFrequenza1" name="Tassonomia_TipoFrequenza1" type="checkbox" value="FT" enabled="#Parametri_AccettazioneFT.value() == 'true' and !#Tassonomia_TipoFrequenza2.checked()"/>
+    <label class="form-check-label" for="Tassonomia_TipoFrequenza1">Per la domanda a tempo pieno</label>
+  </div>
+    <div class="form-row">
+      <div class="form-group col-lg-10">
+        <label for="Parametri2_Protocollo"> Asilo </label>
+        <input class="form-control" name="AsiloFT" id="AsiloFT" readonly/>
+        <input id="IdAsiloFT" name="IdAsiloFT" label="Asilo indicato sulla domanda" dynamic_value="#Parametri_IdAsiloFT.value()" type="hidden">
+      </div>
+      <div class="form-group col-lg-2">
+        <label for="PrimaSecondaSceltaFT"> Indicato come scelta </label>
+        <input class="form-control" name="PrimaSecondaSceltaFT" id="PrimaSecondaSceltaFT" readonly/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-lg-12">
+        <label for="ScadenzaAccettazioneFT"> Scadenza accettazione </label>
+        <input class="form-control" name="ScadenzaAccettazioneFT" id="ScadenzaAccettazioneFT" readonly/>
+      </div>
+    </div>
+</div>
+<!-- FINE BLOCCO SCELTA TEMPO PIENO -->
+
+<!-- INIZIO BLOCCO SCELTA PART TIME -->
+
+<div class="container border bg-light">
+  <div class="form-check indent-1">
+    <input class="form-check-input" id="Tassonomia_TipoFrequenza2" name="Tassonomia_TipoFrequenza2" type="checkbox" value="PT" enabled="#Parametri_AccettazionePT.value() == 'true' and !#Tassonomia_TipoFrequenza1.checked()"/>
+    <label class="form-check-label" for="Tassonomia_TipoFrequenza2">Per la domanda a tempo parziale</label>
+  </div>
+  <div class="form-row">
+      <div class="form-group col-lg-10">
+        <label for="Parametri2_Protocollo"> Asilo </label>
+        <input class="form-control" name="AsiloPT" id="AsiloPT" readonly/>
+        <input id="IdAsiloPT" name="IdAsiloPT" label="Asilo indicato sulla domanda" dynamic_value="#Parametri_IdAsiloPT.value()" type="hidden">
+      </div>
+      <div class="form-group col-lg-2">
+        <label for="PrimaSecondaSceltaPT"> Indicato come scelta </label>
+        <input class="form-control" name="PrimaSecondaSceltaPT" id="PrimaSecondaSceltaPT" readonly/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-lg-12">
+        <label for="ScadenzaAccettazionePT"> Scadenza accettazione </label>
+        <input class="form-control" name="ScadenzaAccettazionePT" id="ScadenzaAccettazionePT" readonly/>
+      </div>
+    </div>
+</div>
+<!-- FINE BLOCCO SCELTA PART TIME -->
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<!-- INIZIO SERVIZI OPZIONALI -->
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-10">
+      <span class="title-1"> Indicando se intende o meno utilizzare i servizi opzionali ove previsto </span>
+    </div>
+    <div class="col-lg-2">
+      <span class="title-1"> Codice del servizio opzionale </span>
+    </div>
+  </div>
+  <div class="form-row">
+    <div id="TipoServizio" name="TipoServizio" label="Scelta del servizio opzionale" mandatory_enabled="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked())"> </div>
+    <div class="form-check indent-1 border-bottom">
+      <input group="TipoServizio" class="form-check-input" id="TipoSceltaServizioAsilo0" name="TipoSceltaServizioAsilo0" type="checkbox" value="0">
+      <label class="form-check-label" for="TipoSceltaServizioAsilo0"> 
+        nessun servizio
+      </label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <input group="TipoServizio" class="form-check-input" id="TipoSceltaServizioAsilo1" name="TipoSceltaServizioAsilo1" enabled="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) and #Parametri_CodiceServizioNido1.value() != ''" type="checkbox" value="1">
+    </div>
+    
+      <div class="col-lg-9">
+        <input class="form-control"  name="Parametri_DettaglioServizio1" id="Parametri_DettaglioServizio1" label="Descrizione servizio opzionale offerto" dynamic_value="switch(#IdAsiloScelto.value()) { case '3': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '6': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '8': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '13': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '14': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '21': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '23': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '25': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '28': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '29': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '30': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '31': 'è previsto il sabato mattina con orario 07.30-13.30'; break; case '32': 'è previsto il sabato pomeriggio con orario 12.30-18.30'; break; case '33': 'è previsto il posticipo fino alle 15'; break; case '34': 'è previsto il posticipo fino alle 15'; break; case '40': 'è previsto anticipo a partire dalle ore 12.30'; break; case '43': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '44': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '45': 'è previsto il prolungamento orario dalle 17.30 alle 19.30'; break; case '': ''; break; default:'';}" readonly>
+      </div> 
+      <div class="col-lg-2">
+        <input class="form-control" name="Parametri_CodiceServizioNido1" id="Parametri_CodiceServizioNido1" style="width:100%;" label="Codice servizio opzionale offerto" dynamic_value="switch(#IdAsiloScelto.value()) { case '3': '17'; break; case '6': '32'; break; case '8': '18'; break; case '13': '19'; break; case '14': '20'; break; case '21': '16'; break; case '23': '15'; break; case '25': '14'; break; case '28': '34'; break; case '29': '13'; break; case '30': '12'; break; case '31': '1'; break; case '32': '28'; break; case '33': '8'; break; case '34': '9'; break; case '40': '24'; case '43': '22'; break; case '44': '23'; break; case '45': '33'; break; case '': ''; break; default:'';}" readonly>
+      </div>
+    
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <input group="TipoServizio" class="form-check-input" id="TipoSceltaServizioAsilo2" name="TipoSceltaServizioAsilo2" enabled="(#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) and #Parametri_CodiceServizioNido1.value() != ''" type="checkbox" value="1">
+    </div>
+    
+      <div class="col-lg-9">
+        <input class="form-control" name="Parametri_DettaglioServizio2" id="Parametri_DettaglioServizio2" style="width:100%;" label="Descrizione servizio opzionale offerto" dynamic_value="switch(#IdAsiloScelto.value()) { case '31': 'è previsto il posticipo fino alle 15'; break; case '32': 'è previsto il posticipo fino alle 19.30'; break; case '33': 'è previsto il sabato mattina con orario 07.30-13.30'; break; case '34': 'è previsto il sabato mattina con orario 07.30-13.30'; break;case '': ''; break; default:'';}" readonly>
+      </div> 
+      <div class="col-lg-2">
+        <input class="form-control" name="Parametri_CodiceServizioNido2" id="Parametri_CodiceServizioNido2" style="width:100%;" label="Codice servizio opzionale offerto" dynamic_value="switch(#IdAsiloScelto.value()) { case '31': '2'; break; case '32': '36'; break; case '33': '29'; break; case '34': '30'; break;case '': ''; break; default:'';}" readonly>
+      </div>
+    
+  </div>
+</div>
+<!-- FINE SERVIZI OPZIONALI -->
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<div class="container">
+    <div class="title-2"> DICHIARA </div>
+    <div class="title-3"> di accettare </div>
+</div>
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="CancellazioneGraduatoria" name="CancellazioneGraduatoria" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="CancellazioneGraduatoria" class="form-check-input" id="CancellazioneGraduatoria1" name="CancellazioneGraduatoria" type="checkbox" value="SI">
+      <label class="form-check-label" for="CancellazioneGraduatoria1">di essere a conoscenza che l'accettazione del posto assegnato determina la cancellazione definitiva del nominativo del/la bambino/a dalla graduatoria per le altre scelte di servizio effettuate</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="AnticipoTariffario" name="AnticipoTariffario" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="AnticipoTariffario" class="form-check-input" id="AnticipoTariffario1" name="AnticipoTariffario" type="checkbox" value="SI">
+      <label class="form-check-label" for="AnticipoTariffario1">di provvedere al versamento della quota di anticipo tariffario pari a € 50,00 come risulta dalla ricevuta di versamento</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="QuotaTrattenuta" name="QuotaTrattenuta" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="QuotaTrattenuta" class="form-check-input" id="QuotaTrattenuta1" name="QuotaTrattenuta" type="checkbox" value="SI">
+      <label class="form-check-label" for="QuotaTrattenuta1">di essere a conoscenza che nel caso di rinuncia del posto accettato la quota sopra citata sarà trattenuta dall’Amministrazione</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="PerditaResidenza" name="PerditaResidenza" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="PerditaResidenza" class="form-check-input" id="PerditaResidenza1" name="PerditaResidenza" type="checkbox" value="SI">
+      <label class="form-check-label" for="PerditaResidenza1">di essere a conoscenza che in caso di perdita del requisito della residenza nel Comune di Trento dopo l'accettazione ma prima dell'ambientamento, il/la bambino/a non può più essere ammesso al nido</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="ObblighiVaccini" name="ObblighiVaccini" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="ObblighiVaccini" class="form-check-input" id="ObblighiVaccini1" name="ObblighiVaccini" type="checkbox" value="SI">
+      <label class="form-check-label" for="ObblighiVaccini1">di aver adempiuto agli obblighi previsti in tema di vaccinazioni <i>(lo stato di conformità vaccinale è condizione per l'ammissione alla frequenza del servizio di nido d'infanzia. La verifica della regolarità vaccinale dei bambini è effettuata dall'Amministrazione; per le iscrizioni di bambini risultanti non in regola con gli adempimenti vaccinali le famiglie saranno invitate a depositare, <b>entro il 10 luglio 2022</b>, la documentazione comprovante lo stato di conformità vaccinale, pena la decadenza dall'iscrizione)</i></label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="VisioneRegolamento" name="VisioneRegolamento" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="VisioneRegolamento" class="form-check-input" id="VisioneRegolamento1" name="VisioneRegolamento" type="checkbox" value="SI">
+      <label class="form-check-label" for="VisioneRegolamento1">di aver preso visione del "Regolamento per la disciplina dei servizi socio educativi per la prima infanzia", di cui alla <i>Delibera del Consiglio n. 70 dd 28/06/2007 e s.m.</i> e dei "Criteri e modalità di presentazione delle domande, formazione delle graduatorie, assegnazione e accettazione del posto nei nidi d’infanzia comunali", di cui al testo coordinato da ultimo approvato con <i>Deliberazione della Giunta comunale n. 192 dd 09/08/2021</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="VisioneCarta" name="VisioneCarta" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="VisioneCarta" class="form-check-input" id="VisioneCarta1" name="VisioneCarta" type="checkbox" value="SI">
+      <label class="form-check-label" for="VisioneCarta1">di aver preso visione della “Carta della qualità del servizio di nido d’infanzia” e delle relative schede annuali disponibili nel sito del Comune di Trento www.comune.trento.it, area tematica servizi all’infanzia e istruzione</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="RettaStabilita" name="RettaStabilita" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="RettaStabilita" class="form-check-input" id="RettaStabilita1" name="RettaStabilita" type="checkbox" value="SI">
+      <label class="form-check-label" for="RettaStabilita1">di dare atto che la retta di frequenza mensile per il servizio di nido d'infanzia è stabilita in base al valore dell'indicatore ICEF da richiedere a un CAF abilitato a partire da luglio 2022 ed <b>entro il mese di ammissione</b>, che tale valore verrà acquisito direttamente dall'Amministrazione dagli archivi provinciali e che <b>la mancata determinazione del valore ICEF entro i termini stabiliti, comporta l'applicazione della retta mensile massima</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="BollettiniPagamento" name="BollettiniPagamento" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="BollettiniPagamento" class="form-check-input" id="BollettiniPagamento1" name="BollettiniPagamento" type="checkbox" value="SI">
+      <label class="form-check-label" for="BollettiniPagamento1">di prendere atto che, salvo diversa comunicazione, i bollettini di pagamento della retta verranno emessi a nome del genitore che ha sottoscritto l'accettazione del posto al nido e che in caso di mancato pagamento l'altro genitore sarà chiamato a corrispondere il dovuto in quanto coobbligato</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="Patto" name="Patto" label="Completare il blocco Dichiara inoltre" mandatory="true"></div>
+      <input group="Patto" class="form-check-input" id="Patto1" name="Patto" type="checkbox" value="SI">
+      <label class="form-check-label" for="Patto1">di prendere atto che prima dell'avvio della frequenza sarà inoltre chiesto di sottoscrivere un "patto di corresponsabilità", che poggia sul cardine di "ognuno protegge tutti", ovvero sull'adozione di comportamenti, stili di vita, prassi coerenti con la tutela della salute di tutti e che richiama le indicazioni presenti nelle linee guida sanitarie dedicate ai nidi d'infanzia</label> 
+    </div>
+  </div>
+</div>  
+
+<div id="Agevolazioni" name="Agevolazioni" label="Scegli se dichiari di fruire SI oppure NO di agevolazioni sulla retta" mandatory="true"></div>
+<div id="RichiesteAgevolazioniRetta" name="RichiesteAgevolazioniRetta" label="Indicare le agevolazioni per la retta" mandatory_enabled="#Agevolazioni2.checked()"></div>
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title mr-3"> Di chiedere l'applicazione di agevolazioni sulla retta: </span>
+    </div>
+  </div>
+      <div class="form-check indent-1">
+        <input class="form-check-input" id="Agevolazioni1" name="Agevolazioni" type="radio" value="1"> 
+        <label class="form-check-label" for="Agevolazioni1"> <b>NO </b> </label>
+      </div>
+      <div class="form-check indent-1">
+        <input class="form-check-input" id="Agevolazioni2" name="Agevolazioni" type="radio" value="2"> 
+        <label class="form-check-label" for="Agevolazioni2">  <b> SI </b> </label>
+      </div>
+      <div class="form-check indent-2">
+        <input class="form-check-input" id="RichiesteAgevolazioniRetta1" name="RichiesteAgevolazioniRetta" type="radio" value="1"> 
+        <label class="form-check-label" for="RichiesteAgevolazioniRetta1"> riduzione della retta in presenza di fratelli che fruiscono contemporaneamente del nido </label>
+      </div>
+      <div class="form-check indent-2">
+        <input class="form-check-input" id="RichiesteAgevolazioniRetta2" name="RichiesteAgevolazioniRetta" type="radio" value="2"> 
+        <label class="form-check-label" for="RichiesteAgevolazioniRetta2"> riduzione della retta in presenza di gemelli che fruiscono contemporaneamente del nido </label>
+      </div>
+      <div class="form-check indent-2">
+        <input class="form-check-input" id="RichiesteAgevolazioniRetta3" name="RichiesteAgevolazioniRetta" type="radio" value="3"> 
+        <label class="form-check-label" for="RichiesteAgevolazioniRetta3"> retta di frequenza mensile minima in qualità di famiglia affidataria </label>
+      </div>
+</div>
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<!-- INIZIO BLOCCO INFORMATIVA PRIVACY -->
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="Presa_Visione" name="Presa_Visione" label="Presa visione è obbligatorio" mandatory="true"></div>
+      <input group="Presa_Visione" class="form-check-input" id="Presa_visione_check" name="Presa_Visione" type="checkbox" value="1">
+      <label class="form-check-label" for="Presa_visione_check"><b>Di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-nido" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></label> 
+    </div>
+  </div>
+</div> 
+
+<!-- FINE BLOCCO INFORMATIVA PRIVACY -->
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<!-- INIZIO BLOCCO ALLEGATI -->
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <label class="title">
+      <b>ELENCO DEGLI ALLEGATI</b>
+    </label>  
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1 border-bottom">
+      <input class="form-check-input" id="PAG_ANTICIPO" name="PAG_ANTICIPO" type="checkbox" dynamic_check="true" value="OBBLIGATORIO">
+      <label class="form-check-label" for="PAG_ANTICIPO">Distinta di pagamento dell'anticipo tariffario</b></label> 
+    </div>
+  </div>
+</div>
+
+<!-- FINE BLOCCO ALLEGATI -->
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo"/>
+</p>
+
+<!-- CONTROLLO DATA INVIO CON DATA SCADENZA -->
+<div style="display:none">
+<div id="Modulo_scadenza" name="Modulo_scadenza" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione." mandatory="true"> </div>
+<input group="Modulo_scadenza" id="Modulo_Inviabile1" name="Modulo_Inviabile1" dynamic_check="controlloScadenza(#ScadenzaAccettazione.value())" enabled="controlloScadenza(#ScadenzaAccettazione.value())" type="checkbox" label="Modulo inviabile" value="1">
+<input group="Modulo_scadenza" id="Modulo_Inviabile2" name="Modulo_Inviabile2" dynamic_check="!controlloScadenza(#ScadenzaAccettazione.value())" enabled="!controlloScadenza(#ScadenzaAccettazione.value())" type="checkbox" label="Modulo NON inviabile" value="2">
+<!-- <input id="Salva_Modulo" mandatory="#Modulo_Inviabile2.checked()" type="hidden" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione."> -->
+<input id="Salva_Modulo" mandatory="moment(#Data_PDF.value(), 'DD/MM/YYYY') > moment(#ScadenzaAccettazione.value(), 'DD/MM/YYYY')" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della domanda sono conclusi.">
+<!-- <input id="Salva_Modulo" mandatory="false" type="hidden" label="Impossibile salvare il modulo perchè è stata superata la data di scadenza pevista per l'invio dell'accettazione."> -->
+</div>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+
+{% endblock content %}
+
+<script>
+
+function controlloScadenza(dataScadenza) {
+    if (dataScadenza.length >= 10) {   
+
+      var oggi = new Date();
+      var dataScad = new Date(dataScadenza);    
+       
+    if (oggi < dataScad) {
+      return true;
+    } else {
+    return false;
+    }
+
+  } else {
+    return false;
+  }
+  
+}
+
+</script>
