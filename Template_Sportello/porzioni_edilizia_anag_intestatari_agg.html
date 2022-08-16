@@ -7,24 +7,17 @@
 <!-- compare in: ANAGRAFICHE_INTESTATARI_AGGIUNTIVI -->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-
-{% macro anagrafica_intestatario_aggiuntivo(prefix="AltroIntestatario", title="ULTERIORI INTESTATARI (firma autografa)", delega ="true") -%}
+{% macro sezione_anagrafica(prefix="AltroIntestatario") -%}
 {% do all_prefix.append( prefix ) %}
 {% set Temp = prefix|replace("NonImportare", "NI") %}
 {% if prefix != Temp %}
     {% do TitolareNonImportarePresente.append('0') %}
 {% endif %}
-
-{{intestazioni.intestazione_modulosecondario_senzabollo()}}
-
-<h1 class="Modulo">{{title}}</h1>
-
 <table class="Modulo" style="border:1px solid grey" mandatory="true">
    <tbody>
      <tr class="Rigaintestazione">
        <td colspan="6">
-         <p><b>Il sottoscritto</b></p>
+         <p><b>Il/La sottoscritto/a</b></p>
        </td>
      </tr>
      <tr class="Rigaintestazioneridotta">
@@ -83,64 +76,11 @@
      </tr>
    </tbody>
  </table>
-
- <table class="Modulo" style="border:1px solid grey" mandatory="true">
-   <tbody>
-     <tr class="Rigaintestazioneridotta">
-       <td colspan="5">
-         <p class="Labelcella"><b>Residenza</b></p>
-       </td>
-     </tr>
-     <tr class="Rigaintestazioneridotta">
-       <td style="width:10%;">
-         <p class="Labelcella">Provincia</p>
-       </td>
-       <td style="width:33%;">
-         <p class="Labelcella">Comune</p>
-       </td>
-       <td style="width:33%;">
-         <p class="Labelcella">Indirizzo</p>
-       </td>
-       <td style="width:8%;">
-         <p class="Labelcella">Civico</p>
-       </td>
-       <td style="width:6%;">
-         <p class="Labelcella">Barra</p>
-       </td>
-       <td style="width:12%;">
-         <p class="Labelcella">CAP</p>
-       </td>
-    </tr>
-    <tr>
-      <td style="width:10%;">
-       {{ utils.provincie(prefix +"_ProvinciaResidenza", "Provincia di residenza", mandatory="true")}}
-      </td>
-      <td style="width:33%;">
-        <select class="inputNormal" id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" style="width:100%" label="Comune di residenza del firmatario"
-        dynamic_value="getComuniFromProvincia( #{{ prefix }}_ProvinciaResidenza.value(), '{{ prefix }}_ComuneResidenza')">
-        </select>
-      </td>
-      <td style="width:33%;">
-       <input class="" id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" style="width:100%;" label="Via di residenza del firmatario"/>
-      </td>
-      <td style="width:8%;">
-       <input class="" id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" style="width:100%;" label="Civico di residenza del firmatario" maxlength="10" format="number" />
-      </td>
-      <td style="width:6%;">
-       <input class="" id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" style="width:100%;" label="Barra del civico di residenza del firmatario" maxlength="3" mandatory="false" />
-      </td>
-      <td style="width:12%;">
-       <input class="" id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del firmatario" mandatory="#{{ prefix }}_ProvinciaResidenza.value() != 'EE'"/>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 <table class="Modulo" style="border:1px solid grey" mandatory="true">
   <tbody>
-    <tr class="Rigaintestazioneridotta">
+    <tr class="Rigaintestazione">
       <td colspan="4">
-        <p class="Labelcella"><b>Recapito</b></p>
+        <p><b>Recapito</b></p>
       </td>
     </tr>
     <tr class="Rigaintestazioneridotta">
@@ -175,8 +115,11 @@
 </table>
 
 <br>
+  {{ anagrafica_trento_uniformata.residenza_skipTN(prefix, "Residenza") }}
+<br>
+  
 
-<input dynamic_value="#{{ prefix }}_Cognome.value().toUpperCase() + ' - ulteriore intestatario firma autografa'" id="Oggetto" name="Oggetto" type="hidden"/>
+<input dynamic_value="#{{ prefix }}_Cognome.value().toUpperCase() + ' ' +#{{ prefix }}_Nome.value().toUpperCase() +' - ulteriore intestatario'" id="Oggetto" name="Oggetto" type="hidden"/>
 
 <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey">
   <tbody>
@@ -341,6 +284,20 @@
   </tbody>
 </table>
   {{ anagrafica_trento_uniformata.attributi_hidden(prefix) }}
+{% endmacro %}
+
+{% macro anagrafica_intestatario_aggiuntivo(prefix="AltroIntestatario", title="ULTERIORI INTESTATARI (firma autografa)", delega ="true") -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+
+<h1 class="Modulo">{{title}}</h1>
+
+{{ sezione_anagrafica(prefix) }}
 
 <br>
 

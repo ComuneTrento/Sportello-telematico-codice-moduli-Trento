@@ -714,6 +714,7 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
         <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori2" name="Incarico_direttore_lavori" type="radio" value="2" enabled="#progetto_richiesto2.checked()" />
+        <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="hidden" value="1" dynamic_check="#Incarico_direttore_lavori2.checked()"/>
       </td>
       <td>
         <p style="line-height:1.6;"><b>con la nomina</b> di un progettista che è incaricato anche della Direzione Lavori dell'opera</p>
@@ -722,7 +723,6 @@ costruzione di manufatti, la modifica ai parametri edilizi o igienico-sanitari e
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
         <input group="Incarico_direttore_lavori" id="Incarico_direttore_lavori3" name="Incarico_direttore_lavori" type="radio" value="3"  />
-        <input group="Referente_direttorelavori" id="Referente_direttorelavori_check" name="Referente_direttorelavori_check" type="hidden" value="1" dynamic_check="#Incarico_direttore_lavori3.checked()"/>
       </td>
       <td>
         <p style="line-height:1.6;"><b>con la nomina</b> di un direttore dei lavori, i cui estremi sono di seguito riportati e la cui anagrafica completa verrà riportata nell'apposito modulo secondario</p>
@@ -1338,27 +1338,34 @@ provinciale: <br><b>Relazione tecnica descrittiva delle opere</b>, della loro fu
     {{ immobili_trento_uniformata.altri_allegati() }}
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="true" type="checkbox" value="OBBLIGATORIO" />
+        <input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="!#inizio_lavori2.checked()" enabled="!#inizio_lavori2.checked()" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p>Modulo secondario - <b>Distinta di pagamento dei diritti di segreteria</b>: S51 Edilizia - Diritti di presentazione pratica
-        <br/><u>(completare la distinta con i dati di chi effettua il pagamento e procedere al versamento direttamente da Sportello tramite i bottoni Paga online oppure Paga con Avviso di pagamento)</u>
+        <p><b>Ricevuta del pagamento dei diritti di segreteria</b> per la presentazione pratica.
+        <br/>Effettuare il <a href="https://sportello.comune.trento.it/spontaneous-payments/?group=S55_09" target="_blank">pagamento spontaneo <i>Edilizia - Comunicazione opere libere</i></a> 
+        ed allegare qui la ricevuta di pagamento
         </p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_ric_dir_istr" name="numero_ric_dir_istr" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_ric_dir_istr" name="numero_ric_dir_istr" dynamic_value="!#inizio_lavori2.checked() ? 1 : 0" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_allegato_cM55561-A02-RIC-DIRITTI-SEGR" name="GLOBO_allegato_cM55561-A02-RIC-DIRITTI-SEGR" obbligatorio="!#inizio_lavori2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+
       </td>
     </tr>
     <tr>
       <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;">
-      <input id="SANZIONE_RITARDO" name="SANZIONE_RITARDO" dynamic_check="#inizio_lavori2.checked()" enabled="#inizio_lavori2.checked() " type="checkbox" value="OBBLIGATORIO" />
+      <input id="SANZIONE_RITARDO" name="SANZIONE_RITARDO" dynamic_check="#inizio_lavori2.checked()" enabled="#inizio_lavori2.checked()" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p>Modulo secondario - <b>Distinta di pagamento della sanzione</b> per la mancata presentazione della comunicazione</p>
+        <p><b>Ricevuta del pagamento dei diritti di segreteria e della sanzione</b> per la mancata presentazione della comunicazione
+        <br/>Effettuare il <a href="https://sportello.comune.trento.it/spontaneous-payments/?group=S55_08" target="_blank">pagamento spontaneo <i>Edilizia - Comunicazione di opere libere per opere già eseguite / diritti istruttoria</i></a> 
+        ed allegare qui la ricevuta di pagamento
+        </p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
        <p style="line-height: 1.6; text-align: center;">
-       <input class="" id="Sanzione_Importo" name="Sanzione_Importo" label="Importo sanzione" value="0" mandatory_enabled="true" dynamic_value="#inizio_lavori2.checked() ? 1 : 0" style="width: 90%; text-align: center;" readonly />
+       <input class="" id="numero_sanzione_importo" name="numero_sanzione_importo" label="Numero ricevuta sanzione" dynamic_value="#inizio_lavori2.checked() ? 1 : 0" style="width: 90%; text-align: center;" readonly />
+        <input id="GLOBO_allegato_cM55561-A03-PAGAMENTO-SANZIONE-DIRITTI-SEGR" name="GLOBO_allegato_cM55561-A03-PAGAMENTO-SANZIONE-DIRITTI-SEGR" obbligatorio="#inizio_lavori2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
      </td>
 	 </tr>
   </tbody>
