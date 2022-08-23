@@ -74,7 +74,7 @@ istruzioni="/modulistica/moduli/M1652-A04-CERTIFICATO-INVALIDITA"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf,image/jpeg"/> -->
+tipo_mime="application/pdf,image/jpeg"/>
 
 <meta codice_allegato="M1652-A05-DICHIARAZIONE-ICEF-EDILIZIA-PUBBLICA-ACCESSO"
 urn_allegato="document:c_l378:edilizia.abitativa.pubblica;domanda.locazione.alloggi.affitto;m1652.a05.dichiarazione.icef.ediliziapubblicaaccesso"
@@ -87,7 +87,7 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf,image/jpeg"/>
 
-<!-- <meta codice_allegato="M1652-A06-DOMANDA-RDC-PDC"
+<meta codice_allegato="M1652-A06-DOMANDA-RDC-PDC"
 urn_allegato="document:c_l378:edilizia.abitativa.pubblica;domanda.locazione.alloggi.affitto;m1652.a06.domanda.rdc.pdc"
 descrizione_estesa="Domanda reddito/pensione di cittadinanza"
 filename="domandaRDCPDC.jpg,domandaRDCPDC.pdf"
@@ -287,7 +287,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
       <input class="form-check-input" id="Cittadinanza_PermessoScadenza" name="Cittadinanza_Permesso" type="radio" value="2">
       <label class="form-check-label" for="Cittadinanza_PermessoScadenza"> 
         Permesso di soggiorno con scadenza il
-        <input type="date" name="Cittadinanza_PermessoDataScadenza" id="Cittadinanza_PermessoDataScadenza" mandatory_enabled="#Cittadinanza_PermessoScadenza.checked()" label="Data scadenza permesso di soggiorno">
+        <input class="form-control" type="date" name="Cittadinanza_PermessoDataScadenza" id="Cittadinanza_PermessoDataScadenza" mandatory_enabled="#Cittadinanza_PermessoScadenza.checked()" label="Data scadenza permesso di soggiorno" style="width: 30%;">
         <br>
         In caso di permesso scaduto indicare ID ricevuta postale di inoltro richiesta di rinnovo:
         <!--
@@ -296,7 +296,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
         -->
         <input type="checkbox" id="Verifica_Data" name="Verifica_Data" dynamic_check="giorni_differenza(#Cittadinanza_PermessoDataScadenza.value(),#Data_PDF.value()) > 0" style="display:none; pd4ml-display:none;">
         
-        <input id="Cittadinanza_PermessoRinnovo" name="Cittadinanza_PermessoRinnovo" label="ID ricevuta postale rinnovo permesso di soggiorno" mandatory="#Verifica_Data.checked()" enabled="#Cittadinanza_PermessoScadenza.checked()" style="width: 30%;"> 
+        <input class="form-control" id="Cittadinanza_PermessoRinnovo" name="Cittadinanza_PermessoRinnovo" label="ID ricevuta postale rinnovo permesso di soggiorno" mandatory="#Verifica_Data.checked()" enabled="#Cittadinanza_PermessoScadenza.checked()" style="width: 30%;"> 
       </label>
     </div>
 
@@ -521,16 +521,6 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
             <label for="Parametri_DataNas{{ prefix }}"> Data nascita </label>
             <input class="form-control" id="Parametri_DataNas{{ prefix }}" name="Parametri_DataNas{{ prefix }}" format="date" >
           </div>
-          <!-- <div class="form-group col-lg-3">
-            <label for="Parametri_CFFam{{ prefix }}"> Codice fiscale </label> -->
-            <input class="form-control" id="Parametri_CFFam{{ prefix }}" name="Parametri_CFFam{{ prefix }}" format="cf" type="hidden" >
-          <!-- </div> -->
-
-          <!--
-          </div>
-
-          <div class="form-row border-bottom">
-          -->
 
           <div class="form-group col-lg-2" mandatory_enabled="#Parametri_CognomeFam{{ prefix }}.value() != ''">
             <label for="ParametriStatoCivile{{ prefix }}">Stato civile</label>
@@ -588,6 +578,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
       
       {% for i in range(1, 10) %}
       {{ Tassonomia_Familiare(i) }}
+      <input type="hidden" id="Parametri_CFFam{{ i }}" name="Parametri_CFFam{{ i }}">
       <input type="hidden" id="Parametri_MatricolaAnagrafeFam{{ i }}" name="Parametri_MatricolaAnagrafeFam{{ i }}">
       <input type="hidden" id="Parametri_CodiceFamigliaFam{{ i }}" name="Parametri_CodiceFamigliaFam{{ i }}">
       <input type="hidden" id="Parametri_CodiceComuneNascitaFam{{ i }}" name="Parametri_CodiceComuneNascitaFam{{ i }}">
@@ -701,7 +692,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
 
     <div class="form-row">
       <label>
-      E' presente la <b><u>moglie/convivente che lavora</u></b> (il nucleo deve essere composto da coniugi/conviventi con figli minori/soggetti minori equiparati ai figli):
+      E' presente la <b><u>moglie o la convivente che lavora</u></b> (il nucleo deve essere composto da coniugi o conviventi con figli minori o soggetti minori equiparati ai figli):
       </label>
     </div>
     <div class="form-check indent-1 border-bottom">
@@ -883,26 +874,29 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
       </label>
     </div>
     <div class="form-row">
-      <div class="form-group col-lg-4">
+      <div class="form-group col-lg-6">
           <label for="CondizioneNucleo_CognomeAnniLavoro"> Cognome</label>
           <input class="form-control" id="CondizioneNucleo_CognomeAnniLavoro" name="CondizioneNucleo_CognomeAnniLavoro" mandatory_enabled="#CondizioneNucleo_PiuAnniLavoro2.checked()" label="Cognome della persona con più anni di lavoro">
       </div>
-      <div class="form-group col-lg-4">
+      <div class="form-group col-lg-6">
         <label for="CondizioneNucleo_NomeAnniLavoro"> Nome</label>
         <input class="form-control" id="CondizioneNucleo_NomeAnniLavoro" name="CondizioneNucleo_NomeAnniLavoro" mandatory_enabled="#CondizioneNucleo_PiuAnniLavoro2.checked()" label="Nome della persona con più anni di lavoro">
-      </div> 
-      <div class="form-group col-lg-2">
-        <label for="CondizioneNucleo_AnniLavoro">N. anni</label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-lg-4">
+        <label for="CondizioneNucleo_CFAnniLavoro">Codice fiscale</label>
+        <input class="form-control" id="CondizioneNucleo_CFAnniLavoro" name="CondizioneNucleo_CFAnniLavoro" mandatory_enabled="#CondizioneNucleo_PiuAnniLavoro2.checked()" label="Codice fiscale della persona con più anni di lavoro" format="cf" onkeyup="this.value = this.value.toUpperCase();"> 
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="CondizioneNucleo_AnniLavoro">N. anni di lavoro</label>
         <input class="form-control" id="CondizioneNucleo_AnniLavoro" type="number" name="CondizioneNucleo_AnniLavoro" mandatory_enabled="#CondizioneNucleo_PiuAnniLavoro2.checked()" label="Indicare gli anni di lavoro" expression="^[0-9]{1}$" min="0">
       </div>
-      <div class="form-group col-lg-2">
-        <label for="CondizioneNucleo_AnniLavoro">N. mesi</label>
+      <div class="form-group col-lg-4">
+        <label for="CondizioneNucleo_AnniLavoro">N. mesi di lavoro</label>
         <input class="form-control" id="CondizioneNucleo_MesiLavoro" type="number" name="CondizioneNucleo_MesiLavoro" mandatory_enabled="#CondizioneNucleo_PiuAnniLavoro2.checked()" label="Indicare i mesi di lavoro" expression="^[0-9]{1}$" min="0" max="12"> 
       </div>
-      <!-- <div class="form-group col-lg-3">
-        <label for="CondizioneNucleo_CF">Codice fiscale</label>
-        <input class="form-control" id="CondizioneNucleo_CFRientro" name="CondizioneNucleo_CFRientro" mandatory_enabled="#CondizioneNucleo_RientroDaStruttura1.checked()" label="Codice fiscale della persona rientrata da struttura" expression="^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$" maxlength="16" onkeyup="this.value = this.value.toUpperCase();"> 
-      </div>    -->
+      
     </div>
 
   </div>
@@ -937,7 +931,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
     </div>
     <div class="container border bg-light">
       <div class="form-row">
-          <input id="ResidenzaProvinciaAnni" name="ResidenzaProvinciaAnni" mandatory_enabled="true" label="Inserire il n. di anni di residenza in provincia" type="number" expression="^[0-9]{1}$" maxlength="1" style="width: 10%" min="0" >
+          <input class="form-control" id="ResidenzaProvinciaAnni" name="ResidenzaProvinciaAnni" mandatory_enabled="true" label="Inserire il n. di anni di residenza in provincia" type="number" expression="^[0-9]{1}$" maxlength="1" style="width: 10%" min="0" >
       </div>
     <div class="form-row">
         <div class="col-lg-12">
@@ -947,7 +941,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
           </div>
         </div>
         <div class="form-row">
-          <textarea class="inputNormal" id="ResidenzaProvinciaComuni" name="ResidenzaProvinciaComuni" label="Inserire i comuni di residenza in provincia" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
+          <textarea class="form-control" id="ResidenzaProvinciaComuni" name="ResidenzaProvinciaComuni" label="Inserire i comuni di residenza in provincia" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
       </div>
     </div>
 
@@ -987,7 +981,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
   <div class="form-row">
     <div class="col-lg-12">
       <span class="title"><b>8. Di essere in possesso di indicatore <u>ICEF EDILIZIA PUBBLICA anno 2022</u>, inferiore al valore di: 0,2300</b> 
-        <a href="https://sportello.comune.trento.it/faq:c_l378:leggere.dichiarazione.icef" target="_blank">(come trovare l'ID domanda sulla dichiarazione ICEF)</a>
+        <a href="https://sportello.comune.trento.it/faq:c_l378:leggere.dichiarazione.icefpubblica" target="_blank">(come trovare l'ID domanda sulla dichiarazione ICEF)</a>
       </span>
     </div>
   </div>
@@ -1066,26 +1060,15 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
     </div>
   </div>
 
-  <div class="container border bg-light">
-    <!-- <div class="form-check indent-1 border-bottom">
-      <div id="Alloggio_Tipologia" name="Alloggio_Tipologia" label="Indicare la tipologia di alloggio in cui risiede il nucleo"mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()"></div>
-        <input class="form-check-input" id="Alloggio_Tipologia1" name="Alloggio_Tipologia" type="radio" value="1"> -->
-        <label class="form-check-label" for="Alloggio_Tipologia1"> 
-          in alloggio dotato di numero stanze da letto (con superficie superiore a mq 8):
-          <input id="AlloggioNumStanze" name="AlloggioNumStanze" type="number" expression="^[0-9]{1}$" maxlength="1" style="width: 10%" min="0" label="Numero stanze da letto" mandatory_enabled="true">       
-          <br> e occupato da numero persone: <input id="AlloggioNumPersone" name="AlloggioNumPersone" min="0" label="Numero persone nucleo familiare" type="number" expression="^[0-9]{1}$" maxlength="1" style="width: 10%" min="0" mandatory_enabled="true">
-      </label>
-    </div>
-  
     <div id="AlloggioAdeguato" name="AlloggioAdeguato" label="Tipo di alloggio in cui risiede il nucleo"> </div>
-    <div class="form-check indent-2 border-bottom">
+    <div class="form-check indent-1 border-bottom">
       <input group="AlloggioAdeguato" class="form-check-input" id="AlloggioAdeguato_NoServizi" name="AlloggioAdeguato" type="checkbox" value="SI">
       <label class="form-check-label" for="AlloggioAdeguato_NoServizi"> 
-        privo di servizi igienici o con servizi igienici esterni
+        in alloggio privo di servizi igienici o con servizi igienici esterni
       </label>
     </div>
     <div id="AlloggioImproprio" name="AlloggioImproprio" label="Tipo di alloggio in cui risiede il nucleo"> </div>
-    <div class="form-check indent-2 border-bottom">
+    <div class="form-check indent-1 border-bottom">
       <input group="AlloggioImproprio" class="form-check-input" id="AlloggioImproprio_Tipologia" name="AlloggioImproprio" type="checkbox" value="SI">
       <label class="form-check-label" for="AlloggioImproprio_Tipologia"> 
         in luogo impropriamente adibito ad abitazione da almeno 2 anni alla data di presentazione della domanda, indicare la tipologia
@@ -1098,27 +1081,14 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
         </select>
       </label>
     </div>
-   <!--  <div class="form-check indent-2 border-bottom">
-      <div id="AlloggioAdeguato_Inagibile" name="AlloggioAdeguato_Inagibile" label="Tipo di alloggio in cui risiede il nucleo" enabled="#Alloggio_Tipologia1.checked()"> </div>
-      <input group="AlloggioAdeguato_Inagibile" class="form-check-input" id="AlloggioAdeguato_DichInagibile" name="AlloggioAdeguato_Inagibile" type="checkbox" value="1">
-      <label class="form-check-label" for="AlloggioAdeguato_Inagibile"> 
-        in alloggio dichiarato inagibile dalla compentente autorità
-      </label>
-    </div> -->
+   
+    <div class="container border bg-light">
+          in alloggio dotato di numero stanze da letto (con superficie superiore a mq 8):
+          <input class="form-control" id="AlloggioNumStanze" name="AlloggioNumStanze" type="number" expression="^[0-9]{1}$" maxlength="1" style="width: 10%" min="0" label="Numero stanze da letto" mandatory_enabled="!#AlloggioAdeguato_NoServizi.checked() and !#AlloggioImproprio_Tipologia.checked()">       
+          <br> e occupato da numero persone: <input class="form-control" id="AlloggioNumPersone" name="AlloggioNumPersone" min="0" label="Numero persone nucleo familiare" type="number" expression="^[0-9]{1}$" maxlength="1" style="width: 10%" min="0" mandatory_enabled="!#AlloggioAdeguato_NoServizi.checked() and !#AlloggioImproprio_Tipologia.checked()">
+    </div>
+  
 
-    <!-- <div class="form-check indent-1 border-bottom">
-      <input class="form-check-input" id="Alloggio_Tipologia2" name="Alloggio_Tipologia" type="radio" value="2">
-      <label class="form-check-label" for="Alloggio_Tipologia2"> 
-      in luogo impropriamente adibito ad abitazione da almeno 2 anni alla data di presentazione della domanda, indicare la tipologia:
-          <select class="form-control custom-select" id="AlloggioAdeguato_TipoDest" name="AlloggioAdeguato_TipoDest" mandatory_enabled="#Alloggio_Tipologia2.checked()">
-              <option value="Soffitta">Soffitta e simili</option>
-              <option value="Scantinati">Scantinati e simili</option>
-              <option value="Sottoscale">Sottoscale e simili</option>
-              <option value="Automobili">Automobili e simili</option>
-              <option value="AltraDestinazione">Locali accatastati con destinazione d'uso studio/negozio/ufficio</option>
-           </select>
-      </label>
-    </div> -->
   </div>
  <!--  </div>
   <div class="container border bg-light">
@@ -1513,11 +1483,11 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
           </div>
           <div class="form-group col-lg-3">
           <label for="Parametri_DataBolloAlloggio">Data di emissione</label>
-          <input class="inputNormal" id="Parametri_DataBolloAlloggio" name="Parametri_DataBolloAlloggio" style="width: 100%; text-align: right;" format="date" mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()"  label="Data di emissione marca da bollo">
+          <input class="form-control" id="Parametri_DataBolloAlloggio" name="Parametri_DataBolloAlloggio" style="width: 100%; text-align: right;" format="date" mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()"  label="Data di emissione marca da bollo">
           </div>
           <div class="form-group col-lg-3">
           <label for="Parametri_OraBolloAlloggio">Ora di emissione</label>
-          <input class="inputNormal" id="Parametri_OraBolloAlloggio" name="Parametri_OraBolloAlloggio" style="width: 100%; text-align: right;" format="time" mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()"  label="Ora di emissione marca da bollo">
+          <input class="form-control" id="Parametri_OraBolloAlloggio" name="Parametri_OraBolloAlloggio" style="width: 100%; text-align: right;" format="time" mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()"  label="Ora di emissione marca da bollo">
           </div>
       </div>
       <div class="form-row border-bottom">
@@ -1595,7 +1565,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
   <div class="form-row">
     <div class="col-lg-12">
       <span class="title"><b>16. Di essere in possesso di indicatore <u>ICEF EDILIZIA PUBBLICA anno 2022</u>, inferiore al valore di: 0,2100</b>
-        <a href="https://sportello.comune.trento.it/faq:c_l378:leggere.dichiarazione.icef" target="_blank">(come trovare l'ID domanda sulla dichiarazione ICEF)</a>
+        <a href="https://sportello.comune.trento.it/faq:c_l378:leggere.dichiarazione.icefpubblica" target="_blank">(come trovare l'ID domanda sulla dichiarazione ICEF)</a>
       </span>
     </div>
   </div>
@@ -1722,7 +1692,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
         <div id="Contratto_Intestato_prima_registrazione" name="Contratto_Intestato_prima_registrazione" label="Tutte le opzioni relative al contratto sono richieste" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()"></div>
         <input group="Contratto_Intestato_prima_registrazione" class="form-check-input" id="Contratto_Intestato5" name="Contratto_Intestato_prima_registrazione" type="checkbox" value="5">
         <label class="form-check-label" for="Contratto_Intestato5"> 
-          è stato registrato (prima registrazione) in data: <input id="ContrattoData" name="ContrattoData" type="date" mandatory_enabled="#Contratto_Intestato_prima_registrazione.checked()"> 
+          è stato registrato (prima registrazione) in data: <input class="form-control" id="ContrattoData" name="ContrattoData" type="date" mandatory_enabled="#Contratto_Intestato_prima_registrazione.checked()"> 
           <!-- <br>
           e segue le seguenti regole di registrazione:
         </label>
@@ -1771,14 +1741,14 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
       <label class="form-check-label" for="Contratto_Intestato_Altro"> 
         Altro specificare (durata minima 4 anni, anche comprensivi di rinnovo): 
         <br>
-        <input id="input_Contratto_altro" name="input_Contratto_altro" mandatory_enabled="#Contratto_Intestato_Altro.checked()" style="width: 40%">
+        <input class="form-control" id="input_Contratto_altro" name="input_Contratto_altro" mandatory_enabled="#Contratto_Intestato_Altro.checked()" style="width: 40%">
       </label>
     </div>
     </div><div class="form-check indent-1">
       <div id="Contratto_Intestato_Canone" name="Contratto_Intestato_Canone" label="Tutte le opzioni relative al contratto sono richieste" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()"></div>
       <input group="Contratto_Intestato_Canone" class="form-check-input" id="Contratto_Intestato7" name="Contratto_Intestato_Canone" type="checkbox" value="7">
       <label class="form-check-label" for="Contratto_Intestato7"> 
-        ha un canone di locazione mensile (<u>escluso di spese condominiali</u>) di Euro <input id="Input_canone_locazione" name="Input_canone_locazione" type="number" min="1" step=".01" mandatory_enabled="#Contratto_Intestato_Canone.checked()" style="width: 20%">
+        ha un canone di locazione mensile (<u>escluso di spese condominiali</u>) di Euro <input class="form-control" id="Input_canone_locazione" name="Input_canone_locazione" type="number" min="1" step=".01" mandatory_enabled="#Contratto_Intestato_Canone.checked()" style="width: 20%">
       </label>
     </div>
   </div>
@@ -1882,11 +1852,11 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
       </div>
       <div class="form-group col-lg-3">
           <label for="Parametri_DataBolloAffitto">Data della marca da bollo </label>
-          <input class="inputNormal" id="Parametri_DataBolloAffitto" name="Parametri_DataBolloAffitto" style="width: 100%; text-align: right;" format="date" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()"  label="Data di emissione marca da bollo">
+          <input class="form-control" id="Parametri_DataBolloAffitto" name="Parametri_DataBolloAffitto" style="width: 100%; text-align: right;" format="date" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()"  label="Data di emissione marca da bollo">
       </div>
       <div class="form-group col-lg-3">
           <label for="Parametri_OraBolloAffitto">Ora di emissione</label>
-          <input class="inputNormal" id="Parametri_OraBolloAffitto" name="Parametri_OraBolloAffitto" style="width: 100%; text-align: right;" format="time" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()"  label="Ora di emissione marca da bollo">
+          <input class="form-control" id="Parametri_OraBolloAffitto" name="Parametri_OraBolloAffitto" style="width: 100%; text-align: right;" format="time" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()"  label="Ora di emissione marca da bollo">
           </div>
       </div>
       <div class="form-row border-bottom">
@@ -1911,7 +1881,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
 
 <!-- INIZIO BLOCCO ALLEGATI -->
 
-<div class="container border bg-light">
+<!-- <div class="container border bg-light">
   <div class="form-row">
     <label class="title">
       <b>
@@ -1920,7 +1890,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
     </label>  
   </div>
   <div class="container border bg-light">
-    <!-- <div class="form-row">
+    <div class="form-row">
       <div class="form-check indent-1 border-bottom">
           <input class="form-check-input" id="Certificato_Invalidita" name="Certificato_Invalidita" type="checkbox" value="OBBLIGATORIO" enabled="#CondizioneNucleo_ConInvalidita2.checked()" dynamic_check="#CondizioneNucleo_ConInvalidita2.checked()">
           <label class="form-check-label" for="Certificato_Invalidita">Certificato di invalidità</b></label> 
@@ -1940,7 +1910,7 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
           <label class="form-check-label" for="Relazione_servizi_sociali">Relazione dell'assistente sociale</label>
           <input id="GLOBO_allegato_cM1652-A03-RELAZIONE-SERVIZI-SOCIALI" name="GLOBO_allegato_cM1652-A03-RELAZIONE-SERVIZI-SOCIALI" numero="0" obbligatorio="#Relazione_servizi_sociali.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" /> 
         </div>
-    </div> -->
+    </div>
     <div class="form-row">
       <div class="form-check indent-1">
           <input class="form-check-input" id="Dichiarazione_icef" name="Dichiarazione_icef" type="checkbox" dynamic_check="true" value="OBBLIGATORIO">
@@ -1948,15 +1918,15 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
           <input id="GLOBO_allegato_cM1652-A05-DICHIARAZIONE-ICEF-EDILIZIA-PUBBLICA-ACCESSO" name="GLOBO_allegato_cM1652-A05-DICHIARAZIONE-ICEF-EDILIZIA-PUBBLICA-ACCESSO" numero="1" obbligatorio="#Dichiarazione_icef.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" /> 
         </div>
     </div>
-    <!-- <div class="form-row">
+    <div class="form-row">
       <div class="form-check indent-1">
           <input class="form-check-input" id="Domanda_RDC_PDC" name="Domanda_RDC_PDC" type="checkbox" enabled="#NucleoRequisiti_DomandaRDCRPC.checked()" dynamic_check="#NucleoRequisiti_DomandaRDCRPC.checked()" value="OBBLIGATORIO">
           <label class="form-check-label" for="Domanda_RDC_PDC">Domanda reddito/pensione di cittadinanza <b>(prima pagina)</b></label>
           <input id="GLOBO_allegato_cM1652-A06-DOMANDA-RDC-PDC" name="GLOBO_allegato_cM1652-A06-DOMANDA-RDC-PDC" numero="1" obbligatorio="#Domanda_RDC_PDC.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" /> 
         </div>
-    </div> -->
+    </div>
   </div>
-</div>
+</div> -->
 
 <!-- FINE BLOCCO ALLEGATI -->
 
@@ -1994,9 +1964,8 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
     <div class="form-check indent-1">
       <div id="Per_Contatti" name="Per_Contatti" label="Di essere consapevole che per tutti i contatti verrà utilizzata la mail indicata è obbligatorio" mandatory="true"></div>
       <input group="Per_Contatti" class="form-check-input" id="Per_Contatti_check" name="Per_Contatti" type="checkbox" value="1">
-      <label class="form-check-label" for="Per_Contatti_check"><b>Di essere consapevole che tutte le comunicazioni inerenti il procedimento verranno inviate all'indirizzo e-mail indicato nella presente domanda. Eventuali cambi di e-mail dovranno essere tempestivamente comunicati:
-</b> 
-     <input class="inputNormal" id="Per_ContattoEmail" name="Per_ContattoEmail" maxlength="60" style="width: 100%;" label="Email per comunicazioni inerenti il procedimento" mandatory_enabled="#Per_Contatti_check.checked()" dynamic_value="#AventeTitolo_EMail.value()"> </label> 
+      <label class="form-check-label" for="Per_Contatti_check"><b>Di essere consapevole che tutte le comunicazioni inerenti il procedimento verranno inviate all'indirizzo e-mail indicato nella presente domanda. Eventuali cambi di e-mail dovranno essere tempestivamente comunicati.</b> 
+     </label> 
     </div>
   </div>
 </div>  
