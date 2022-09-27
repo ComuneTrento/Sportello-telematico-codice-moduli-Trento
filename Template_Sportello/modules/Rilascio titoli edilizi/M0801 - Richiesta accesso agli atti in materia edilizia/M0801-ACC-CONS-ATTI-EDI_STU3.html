@@ -57,13 +57,13 @@ tipo_mime="application/pdf"/>
 <meta codice_allegato="GEN-ALTRI-ALLEGATI"
 urn_allegato="document:c_l378:allegato.altri.allegati"
 descrizione_estesa="Altri allegati"
-filename="Altri allegati.pdf"
+filename="Altri allegati.jpeg,Altri allegati.pdf"
 firmato="NO"
 istruzioni="/modulistica/moduli/GEN-ALTRI-ALLEGATI"
 name="GLOBO_allegato"
 numero="0"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
+tipo_mime="application/pdf,image/jpeg"/>
 
 <meta codice_allegato="GEN-PROCURA"
 urn_allegato="document:c_l378:allegato.procura"
@@ -105,7 +105,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <input dynamic_value="'Domanda di accesso/consultazione - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ') - '
 + ((( #immobile1_tipo.value() == 'F' ? 'p.f. ' : 'p.ed. ') + #immobile1_cat_numero.value() + (#immobile1_cat_barra.value() != '' ? '/'+ #immobile1_cat_barra.value() : '') + ' CC ' +  #immobile1_cc.value()) 
 + (#immobile2_tipo.value() == '' ? '' : (( #immobile2_tipo.value() == 'F' ? ' | p.f. ' : ' | p.ed. ') + #immobile2_cat_numero.value() + (#immobile2_cat_barra.value() != '' ? '/'+ #immobile2_cat_barra.value() : '' ) + ' CC ' +  #immobile2_cc.value() )) 
-+ (#immobile3_tipo.value() == '' ? '' : (( #immobile3_tipo.value() == 'F' ? ' | p.f. ' : ' | p.ed. ') + #immobile3_cat_numero.value() + (#immobile3_cat_barra.value() != '' ? '/'+ #immobile3_cat_barra.value() : '' ) + ' CC '+ #immobile3_cc.value()))) + ((#Tipo_professionista2.checked() && #Referente_CodiceFiscale.value()!= '') ? ' - Delegato da '+ #Referente_CodiceFiscale.value().toUpperCase() : '')" id="Oggetto" name="Oggetto" type="hidden" />
++ (#immobile3_tipo.value() == '' ? '' : (( #immobile3_tipo.value() == 'F' ? ' | p.f. ' : ' | p.ed. ') + #immobile3_cat_numero.value() + (#immobile3_cat_barra.value() != '' ? '/'+ #immobile3_cat_barra.value() : '' ) + ' CC '+ #immobile3_cc.value()))) + (((#Tipo_professionista2.checked() || #Tipo_confinante2.checked()) && #Referente_CodiceFiscale.value()!= '') ? ' - Delegato da '+ #Referente_CodiceFiscale.value().toUpperCase() : '')" id="Oggetto" name="Oggetto" type="hidden" />
 
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
@@ -239,17 +239,63 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;" rowspan="5">
+      <td style="vertical-align: top; padding-top: 0.4em; text-align: center; width: 4%;" rowspan="11">
         <input group="Tipo_richiedente" id="Tipo_richiedente4" name="Tipo_richiedente" type="radio" value="4" />
       </td>
       <td colspan="11">
-        <p style="line-height:1.6;"><b>Confinante</b></p>
+        <p style="line-height:1.6;"><b>Confinante / Professionista incaricato dal confinante</b></p>
       </td>
     </tr>
     <input id="confinante_DatiCatastaliObbligatori" name="confinante_DatiCatastaliObbligatori" dynamic_value="#Tipo_richiedente4.checked() ? 'vero' : 'falso'" type="hidden"/>
     <input id="confinante_DatiCatastaliAbilitati" name="confinante_DatiCatastaliAbilitati" dynamic_value="#Tipo_richiedente4.checked() ? 'vero' : 'falso'" type="hidden"/>
-    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='confinante', intestazione="e proprietario del seguente immobile:", visibility_intestazione="display:visibility") }}
+    {{ immobili_trento_uniformata.immobile_semplice_novia(prefix='confinante', intestazione="proprietario del seguente immobile:", visibility_intestazione="display:visibility") }}
     
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.4em; text-align: center; width: 4%;">
+        <div id="Tipo_confinante" name="Tipo_confinante" label="Confinante o professionista delegato dal confinante richiesto" mandatory_enabled="#Tipo_richiedente4.checked()"> </div>
+        <input group="Tipo_confinante" id="Tipo_confinante1" name="Tipo_confinante" type="radio" value="1" />
+      </td>
+      <td colspan="10">di cui sono proprietario</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.4em; text-align: center; width: 4%;" rowspan="5">
+        <input group="Tipo_confinante" id="Tipo_confinante2" name="Tipo_confinante" type="radio" value="2" />
+      </td>
+      <td colspan="10">per il quale sono stato delegato:</td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="4">
+        <p class="Labelcella">Cognome confinante</p>
+      </td>
+      <td colspan="6">
+        <p class="Labelcella">Nome confinante</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <input class="" id="Referente_Cognome" name="Referente_Cognome" label="Cognome del proprietario dell'immobile" style="width:100%;" mandatory_enabled="#Tipo_confinante2.checked()"/>
+      </td>
+      <td colspan="6">
+        <input class="" id="Referente_Nome" name="Referente_Nome" label="Nome del proprietario dell'immobile" style="width:100%;" mandatory_enabled="#Tipo_confinante2.checked()"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="4">
+        <p class="Labelcella">Codice Fiscale confinante</p>
+      </td>
+      <td colspan="6">
+        <p class="Labelcella">Indirizzo confinante</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <input class="" id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" label="Codice fiscale del proprietario dell'immobile" style="width:100%;" mandatory_enabled="#Tipo_confinante2.checked()"/>
+      </td>
+      <td colspan="6">
+        <input class="" id="Referente_ViaResidenza" name="Referente_ViaResidenza" label="Indirizzo del proprietario dell'immobile" style="width:100%;" enabled="#Tipo_confinante2.checked()"/>
+      </td>
+    </tr>
+
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
         <input group="Tipo_richiedente" id="Tipo_richiedente5" name="Tipo_richiedente" type="radio" value="5" />
@@ -557,7 +603,7 @@ urn_report="report:CSP_SESSION_REPORT"
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
         <div id="tipo_motivaz" name="tipo_motivaz" label="Motivazione della richiesta" mandatory_enabled="true"> </div>
-        <input group="tipo_motivaz" id="tipo_motivaz1" name="tipo_motivaz1" type="checkbox" value="1" />
+        <input group="tipo_motivaz" id="tipo_motivaz1" name="tipo_motivaz1" type="checkbox" value="1"  enabled="!#Tipo_richiedente4.checked()"/>
       </td>
       <td>
         <p style="line-height:1.6;">Verifica degli standard urbanistici edilizi relativi all'intera realtà immobiliare sopra richiamata</p>
@@ -565,7 +611,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <input group="tipo_motivaz" id="tipo_motivaz2" name="tipo_motivaz2" type="checkbox" value="2" />
+        <input group="tipo_motivaz" id="tipo_motivaz2" name="tipo_motivaz2" type="checkbox" value="2" enabled="!#Tipo_richiedente4.checked()" />
       </td>
       <td>
         <p style="line-height:1.6;">Verifica dello stato autorizzato della realtà immobiliare di proprietà, compreso eventuali parti comuni</p>
@@ -573,7 +619,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <input group="tipo_motivaz" id="tipo_motivaz3" name="tipo_motivaz3" type="checkbox" value="3" />
+        <input group="tipo_motivaz" id="tipo_motivaz3" name="tipo_motivaz3" type="checkbox" value="3" enabled="!#Tipo_richiedente4.checked()" />
       </td>
       <td>
         <p style="line-height:1.6;">Compravendita/passaggio di proprietà</p>
@@ -581,7 +627,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;">
-        <input group="tipo_motivaz" id="tipo_motivaz5" name="tipo_motivaz5" type="checkbox" value="5" />
+        <input group="tipo_motivaz" id="tipo_motivaz4" name="tipo_motivaz4" type="checkbox" value="4" enabled="!#Tipo_richiedente4.checked()" />
       </td>
       <td>
         <p style="line-height:1.6;">Recupero SuperBonus 110%</p>
@@ -590,7 +636,20 @@ urn_report="report:CSP_SESSION_REPORT"
 
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;" rowspan="2">
-        <input group="tipo_motivaz" id="tipo_motivaz4" name="tipo_motivaz4" type="checkbox" value="4" />
+        <input group="tipo_motivaz" id="tipo_motivaz5" name="tipo_motivaz5" type="checkbox" value="5" dynamic_check="#Tipo_richiedente4.checked()" enabled="#Tipo_richiedente4.checked()"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Se confinante, indicazione puntuale inerente l'interesse all'accesso/consultazione di atti edilizi:</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <textarea class="inputNormal" id="motivazione_richiesta_confinante" name="motivazione_richiesta_confinante" label="Motivazione della richiesta del confinante" style="width:100%;height:2cm;" mandatory_enabled="#tipo_motivaz5.checked()"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.5em; text-align: center; width: 4%;" rowspan="2">
+        <input group="tipo_motivaz" id="tipo_motivaz6" name="tipo_motivaz6" type="checkbox" value="6" enabled="!#Tipo_richiedente4.checked()" />
       </td>
       <td>
         <p style="line-height:1.6;">Altro:</p>
@@ -598,7 +657,7 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td>
-        <textarea class="inputNormal" id="motivazione_richiesta" name="motivazione_richiesta" label="Motivazione della richiesta" style="width:100%;height:2cm;" mandatory_enabled="#tipo_motivaz4.checked()"></textarea>
+        <textarea class="inputNormal" id="motivazione_richiesta" name="motivazione_richiesta" label="Motivazione della richiesta" style="width:100%;height:2cm;" mandatory_enabled="#tipo_motivaz6.checked()"></textarea>
       </td>
     </tr>
   </tbody>
@@ -671,7 +730,9 @@ urn_report="report:CSP_SESSION_REPORT"
     </tr>
     <tr>
       <td style="vertical-align: top; padding-top: 0.5em; text-align: center;">
-        <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#Tipo_professionista2.checked() || #Tipo_professionista3.checked() || #Tipo_richiedente5.checked()" enabled="#Tipo_professionista2.checked() || #Tipo_professionista3.checked() || #Tipo_richiedente5.checked()" value="OBBLIGATORIO"/>
+        <input id="Modulo_delega" name="Modulo_delega" type="checkbox" 
+        dynamic_check="#Tipo_professionista2.checked() || #Tipo_professionista3.checked() || #Tipo_richiedente5.checked() || #Tipo_confinante2.checked()" 
+        enabled="#Tipo_professionista2.checked() || #Tipo_professionista3.checked() || #Tipo_richiedente5.checked() || #Tipo_confinante2.checked()" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
         <p style="line-height:1.6;">Modulo secondario - <b>Modulo di affidamento dell'incarico firmato dal delegante</b> nella seguente modalità: 
@@ -683,7 +744,7 @@ urn_report="report:CSP_SESSION_REPORT"
         </p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="(#Tipo_professionista2.checked() || #Tipo_professionista3.checked() || #Tipo_richiedente5.checked()) ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_mod_delega" name="numero_mod_delega" dynamic_value="(#Tipo_professionista2.checked() || #Tipo_professionista3.checked() || #Tipo_richiedente5.checked() || #Tipo_confinante2.checked()) ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
         <input id="GLOBO_modulofiglio_cM0801-MSEC01-MOD-DELEGA-AU" name="GLOBO_modulofiglio_cM0801-MSEC01-MOD-DELEGA-AU" obbligatorio="#Tipo_Firma_delega.value() == 'Firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" />
         <input id="GLOBO_modulofiglio_cM0801-MSEC02-MOD-DELEGA-EL" name="GLOBO_modulofiglio_cM0801-MSEC02-MOD-DELEGA-EL" obbligatorio="#Tipo_Firma_delega.value() == 'Firma elettronica' ? 'OBBLIGATORIO' : ''" type="hidden" />
       </td>
@@ -789,6 +850,7 @@ urn_report="report:CSP_SESSION_REPORT"
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
 <input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+{{ immobili_trento_uniformata.info_trasmissione_integrativa() }}
 
 
 
