@@ -973,8 +973,8 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
 
  <!-- *********** verifica che icef inserito sia effettivamente minore o ugale al valore ammissibile 0,23 *********** -->
  <div id="controllo_primo_ICEF" type="hidden" style="display:none; pd4ml-display:none;" >
-  <input id="ICEF_ValorePubblica_Verifica_Valore1" name="ICEF_ValorePubblica_Verifica_Valore1" type="checkbox" dynamic_check="parseFloat(#ICEF_ValorePubblica.value()) <= parseFloat(0.23) ? true:false"> Verifica inserimento ICEF minore di 0.23
-  <input id="Esito_controllo_1" name="Esito_controllo_1" dynamic_value="#ICEF_ValorePubblica_Verifica_Valore1.checked() ? 'OK':''" mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()" label="ICEF deve essere minore di 0.23">
+  <input id="ICEF_ValorePubblica_Verifica_Valore1" name="ICEF_ValorePubblica_Verifica_Valore1" type="checkbox" dynamic_check="parseFloat(#ICEF_ValorePubblica.value()) > parseFloat(0) and parseFloat(#ICEF_ValorePubblica.value()) <= parseFloat(0.23) ? true:false"> Verifica inserimento ICEF minore di 0.23
+  <input id="Esito_controllo_1" name="Esito_controllo_1" dynamic_value="#ICEF_ValorePubblica_Verifica_Valore1.checked() ? 'OK':''" mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()" label="ICEF per locazione alloggio deve essere minore di 0.23">
 </div>
 
 <div class="container border bg-light">
@@ -987,17 +987,40 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
   </div>
   <div class="container border bg-light">
     <div class="form-row">
-      <div class="form-group col-lg-6">
+      <div class="form-group col-lg-3">
         <label for="ICEF_IdDomandaPubblica">ID domanda:</label>
-        <input class="form-control" id="ICEF_IdDomandaPubblica" name="ICEF_IdDomandaPubblica"  mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()" format="regular_expression" expression="[0-9]{1,15}$" maxlength="15">
+        <input class="form-control" id="ICEF_IdDomandaPubblica" name="ICEF_IdDomandaPubblica"  mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()" format="number" maxlength="15">
       </div>
-      <div class="form-group col-lg-6">
+      <div>
+          <button type="button" class="btn btn-secondary pull-left" id="RecuperaIcefPubblica">Recupero ICEF</button> 
+      </div>
+      <div class="form-group col-lg-3">
         <label for="ICEF_ValorePubblica">Valore ICEF (“ICEF medio degli ultimi due anni – per l’accesso”): </label>
-        <input class="form-control" id="ICEF_ValorePubblica" name="ICEF_ValorePubblica"  mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()" label="Valore ICEF" type="number" max="0.2300" maxlength="4" min="0" value="0" step=".0001">
+        <input class="form-control" id="ICEF_ValorePubblica" name="ICEF_ValorePubblica"  mandatory_enabled="#Scelta_DomandaLocazione.checked() || #Scelta_DomandeEntrambe.checked()" label="Valore ICEF" type="number" max="0.2300" maxlength="4" min="0" value="0" step=".0001" readonly>
       </div>
     </div>
   </div>
 </div>
+
+<div class="container border bg-light" style="display:none">
+<input name="TipoDomanda" id="TipoDomanda" value="EPU-ACCESSO">
+<input name="AnnoDomanda" id="AnnoDomanda" value="2021">
+
+<input name="Parametri_TipoDomanda" id="Parametri_TipoDomanda">
+<input id="Parametri_NumeroDomanda" name="Parametri_NumeroDomanda"/>
+<input id="Parametri_CF" name="Parametri_CF"/>
+<input id="Parametri_Anno" name="Parametri_Anno"/>
+</div>
+
+{{ service.getIcefEpu('ICEF_IdDomandaPubblica','TipoDomanda', 'AnnoDomanda', {
+        'Parametri_TipoDomanda': 'tipo',
+        'ICEF_ValorePubblica': 'coefficienteIcef',
+        'Parametri_NumeroDomanda': 'numeroDomanda',
+        'Parametri_CF': 'codiceFiscale',
+        'Parametri_Anno': 'anno',
+        },
+        '#RecuperaIcefPubblica:click' ) }}
+
 
 <!-- FINE BLOCCO ICEF -->
 
@@ -1557,8 +1580,8 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
 
  <!-- *********** verifica che icef inserito sia effettivamente minore o ugale al valore ammissibile 0,21 *********** -->
  <div id="controllo_primo_ICEF" type="hidden" style="display:none; pd4ml-display:none;" >
-  <input id="ICEF_ValoreCanone_Verifica_Valore2" name="ICEF_ValoreCanone_Verifica_Valore2" type="checkbox" dynamic_check="parseFloat(#ICEF_ValoreCanone.value()) <= parseFloat(0.21) ? true:false"> Verifica inserimento ICEF minore di 0.21
-  <input id="Esito_controllo_2" name="Esito_controllo_2" dynamic_value="#ICEF_ValoreCanone_Verifica_Valore2.checked() ? 'OK':''" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()" label="ICEF deve essere minore di 0.21">
+  <input id="ICEF_ValoreCanone_Verifica_Valore2" name="ICEF_ValoreCanone_Verifica_Valore2" type="checkbox" dynamic_check="parseFloat(#ICEF_ValoreCanone.value()) > parseFloat(0) and parseFloat(#ICEF_ValoreCanone.value()) <= parseFloat(0.21) ? true:false"> Verifica inserimento ICEF minore di 0.21
+  <input id="Esito_controllo_2" name="Esito_controllo_2" dynamic_value="#ICEF_ValoreCanone_Verifica_Valore2.checked() ? 'OK':''" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()" label="ICEF per contributo integrativo deve essere minore di 0.21">
 </div>
 
 <div class="container border bg-light">
@@ -1571,18 +1594,37 @@ DOMANDA DI LOCAZIONE ALLOGGIO DI EDILIZIA RESIDENZIALE PUBBLICA E DI CONTRIBUTO 
   </div>
   <div class="container border bg-light">
     <div class="form-row">
-      <div class="form-group col-lg-6">
+      <div class="form-group col-lg-3">
         <label for="ICEF_IdDomandaCanone">ID domanda:</label>
         <input class="form-control" id="ICEF_IdDomandaCanone" name="ICEF_IdDomandaCanone"  mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()"  label="Inserire l'ID domanda ICEF per il contributo affitto" expression="[0-9]{1,15}$" maxlength="15">
       </div>
-      <div class="form-group col-lg-6">
+      <div>
+          <button type="button" class="btn btn-secondary pull-left" id="RecuperaIcefCanone">Recupero ICEF</button> 
+      </div>
+      <div class="form-group col-lg-3">
         <label for="ICEF_ValoreCanone">Valore ICEF: </label>
         <!--<input class="form-control" id="ICEF_ValoreCanone" name="ICEF_ValoreCanone" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()" label="Inserire il valore ICEF per il contributo affitto" type="text" maxlength="6" pattern="^[0-9]([.][0-9]{1,4})?$">-->
-        <input class="form-control" id="ICEF_ValoreCanone" name="ICEF_ValoreCanone" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()" label="Inserire il valore ICEF per il contributo affitto" type="number" max="0.2100" min="0" value="0" step=".0001">
+        <input class="form-control" id="ICEF_ValoreCanone" name="ICEF_ValoreCanone" mandatory_enabled="#Scelta_DomandaAffitto.checked() || #Scelta_DomandeEntrambe.checked()" label="Inserire il valore ICEF per il contributo affitto" type="number" max="0.2100" min="0" value="0" step=".0001" readonly>
       </div>
     </div>
   </div>
 </div>
+
+<div class="container border bg-light" style="display:none">
+<input name="Parametri_TipoDomanda1" id="Parametri_TipoDomanda1">
+<input id="Parametri_NumeroDomanda1" name="Parametri_NumeroDomanda1"/>
+<input id="Parametri_CF1" name="Parametri_CF1"/>
+<input id="Parametri_Anno1" name="Parametri_Anno1"/>
+</div>
+
+{{ service.getIcefEpu('ICEF_IdDomandaCanone','TipoDomanda', 'AnnoDomanda', {
+        'Parametri_TipoDomanda1': 'tipo',
+        'ICEF_ValoreCanone': 'coefficienteIcef',
+        'Parametri_NumeroDomanda1': 'numeroDomanda',
+        'Parametri_CF1': 'codiceFiscale',
+        'Parametri_Anno1': 'anno',
+        },
+        '#RecuperaIcefCanone:click' ) }}
 
 <!-- FINE BLOCCO ICEF -->
 
