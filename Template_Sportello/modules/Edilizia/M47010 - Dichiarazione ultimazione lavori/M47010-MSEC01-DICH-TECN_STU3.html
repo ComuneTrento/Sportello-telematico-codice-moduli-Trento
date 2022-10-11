@@ -14,7 +14,7 @@ dinamico="SI"
 email_a=""
 ente_abilitato="TUTTI"
 filigrana="NO"
-firmare="P7M_ELETTRONICA"
+firmare="P7M_DIGITALE"
 istruzioni_compilazione=""
 istruzioni_invio=""
 metodo_invio=""
@@ -27,6 +27,13 @@ verifica_pagamento="NO"
 versione="1.0|01/01/2015"/>
 
 <!-- INIZIO DICHIARAZIONE ALLEGATI E MOD SECONDARI -->
+
+<meta codice_modulo_figlio="GEN-ANAG-TECNICO-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.tecnico.firma.digitale"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
 
 <meta codice_allegato="M47010-A02-RELAZ-ULTIMAZ-PARZ"
 urn_allegato="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;a02.m47010.relazione.ultimazione.parziale"
@@ -117,6 +124,7 @@ name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
+
 
 <!--
 <meta codice_modulo_figlio="M47010-MSEC09-CONFORMITA-IMPIANTI"
@@ -404,18 +412,7 @@ tipo_mime="application/pdf"/>
         <tr>
           <td colspan="2">
             <select class="inputNormal" id="altroProg_Titolo" name="altroProg_Titolo" style="width:100%;" label="Titolo del tecnico abilitato incaricato della presentazione della SCAGI" mandatory_enabled="#present_scagi2.checked()">
-              <option value=""></option>
-              <option value="Sig.">Sig.</option>
-              <option value="Sig.ra">Sig.ra</option>
-              <option value="Dott.">Dott.</option>
-              <option value="Dott.ssa">Dott.ssa</option>
-              <option value="Prof.">Prof.</option>
-              <option value="Prof.ssa">Prof.ssa</option>
-              <option value="Arch.">Arch.</option>
-              <option value="Ing.">Ing.</option>
-              <option value="Comm.">Comm.</option>
-              <option value="Avv.">Avv.</option>
-              <option value="Geom.">Geom.</option>
+            {{ anagrafica_trento_uniformata.titoli_tecnici() }}
             </select>
           </td>
           <td>
@@ -630,7 +627,7 @@ tipo_mime="application/pdf"/>
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
+        <td style="vertical-align: top; padding-top: 0.4em; text-align: center; width: 4%;">
           <div id="Rischio_caduta" name="Rischio_caduta" label="Rischio cadute" enabled="true"> </div>
           <input group="Rischio_caduta" id="Rischio_caduta1" name="Rischio_caduta" type="radio" value="1" />
         </td>
@@ -639,16 +636,54 @@ tipo_mime="application/pdf"/>
         </td>
       </tr>
       <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
+        <td style="vertical-align: top; padding-top: 0.4em; text-align: center; width: 4%;" rowspan="3">
           <input group="Rischio_caduta" id="Rischio_caduta2" name="Rischio_caduta" type="radio" value="2"/>
         </td>
         <td colspan="4">
-          <p style="line-height:1.6;"><b>è richiesta</b> e pertanto si allega</p>
+          <p style="line-height:1.6;"><b>è richiesta</b> e pertanto si allega la documentazione firmata da</p>  
         </td>
       </tr>
+      <tr>
+        <td style="vertical-align: top; padding-top: 0.4em; text-align: center; width: 4%;">
+          <div id="Firmatario_caduta" name="Firmatario_caduta" label="Soggetto firmatario di documentazione sulla prevenzione di infortuni" mandatory_enabled="#Rischio_caduta2.checked()"> </div>
+          <input group="Firmatario_caduta" id="Firmatario_caduta1" name="Firmatario_caduta" type="radio" value="1"/>
+        </td>
+        <td colspan="3">
+          <p style="line-height:1.6;">il sottoscritto tecnico incaricato
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top; padding-top: 0.4em; text-align: center; width: 4%;">
+          <input group="Firmatario_caduta" id="Firmatario_caduta2" name="Firmatario_caduta" type="radio" value="2"/>
+        </td>
+        <td colspan="3">
+          <p style="line-height:1.6;">altro soggetto, di cui si forniscono le generalità: 
+        </td>
+      </tr>
+      
     </tbody>
   </table>
 </div>
+<input id="Referente_Attributi_Albo" name="Referente_Attributi_Albo" type="hidden" />
+<input id="Referente_Attributi_DellaProvincia" name="Referente_Attributi_DellaProvincia" type="hidden" />
+<input id="Referente_Attributi_AlNumero" name="Referente_Attributi_AlNumero" type="hidden" />
+
+
+<input id="Referente11_checkobbligatorio" name="Referente11_checkobbligatorio"  dynamic_check="#Firmatario_caduta2.checked()" type="hidden" />
+<input id="Referente11_checkabilitato" name="Referente11_checkabilitato" dynamic_check="#Firmatario_caduta2.checked()" type="hidden" />
+{{anagrafica_trento_uniformata.solo_nominativo_tecnico("Referente11","") }}
+
+<input id="Referente10_TitoloPersona" name="Referente10_TitoloPersona" dynamic_value="#Firmatario_caduta2.checked() ? #Referente11_TitoloPersona.value() : #Referente_TitoloPersona.value()" type="hidden" />
+<input id="Referente10_Cognome" name="Referente10_Cognome" dynamic_value="#Firmatario_caduta2.checked() ? #Referente11_Cognome.value() : #Referente_Cognome.value()" type="hidden" />
+<input id="Referente10_Nome" name="Referente10_Nome" dynamic_value="#Firmatario_caduta2.checked() ? #Referente11_Nome.value() : #Referente_Nome.value()" type="hidden" />
+<input id="Referente10_CodiceFiscale" name="Referente10_CodiceFiscale" dynamic_value="#Firmatario_caduta2.checked() ? #Referente11_CodiceFiscale.value() : #Referente_CodiceFiscale.value()" type="hidden" />
+<input id="Referente10_LuogoNascita" name="Referente10_LuogoNascita" dynamic_value="#Firmatario_caduta2.checked() ? '' : #Referente_LuogoNascita.value()" type="hidden" />
+<input id="Referente10_Attributi_Albo" name="Referente10_Attributi_Albo" dynamic_value="#Firmatario_caduta2.checked() ? '' : #Referente_Attributi_Albo.value()" type="hidden" />
+<input id="Referente10_Attributi_DellaProvincia" name="Referente10_Attributi_DellaProvincia" dynamic_value="#Firmatario_caduta2.checked() ? '' : #Referente_Attributi_DellaProvincia.value()" type="hidden" />
+<input id="Referente10_Attributi_AlNumero" name="Referente10_Attributi_AlNumero" dynamic_value="#Firmatario_caduta2.checked() ? '' : #Referente_Attributi_AlNumero.value()" type="hidden" />
+
+<!-- FINE BLOCCO DATI TECNICO IRRILEVANZA -->
+
 
 <!-- FINE BLOCCO PREV INFORTUNI -->
 
@@ -963,7 +998,7 @@ tipo_mime="application/pdf"/>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" type="number" id="num_fine_lav_parz" name="num_fine_lav_parz" min="1" max="100" label="Numero documenti di relazione fine lavori parziale" mandatory_enabled="#fine_lav_parz.checked()" style="width: 90%; text-align: center;"/></p>
-        <input firmare="'P7M_ELETTRONICA'" id="GLOBO_allegato_cM47010-A02-RELAZ-ULTIMAZ-PARZ" name="GLOBO_allegato_cM47010-A02-RELAZ-ULTIMAZ-PARZ" obbligatorio="#fine_lav_parz.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_fine_lav_parz.value()"/>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_cM47010-A02-RELAZ-ULTIMAZ-PARZ" name="GLOBO_allegato_cM47010-A02-RELAZ-ULTIMAZ-PARZ" obbligatorio="#fine_lav_parz.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_fine_lav_parz.value()"/>
       </td>
     </tr>
     <tr>
@@ -976,6 +1011,18 @@ tipo_mime="application/pdf"/>
       <td style="background-color: #eeeeee; vertical-align: center;">
         <p style="line-height: 1.6; text-align: center;"><input class="" id="num_Prev_cadute" name="num_Prev_cadute" dynamic_value="#Rischio_caduta2.checked() ? '1' : 'Non richiesto'" label="Numero documenti prevenzione rischio cadute" style="width: 90%; text-align: center;" readonly/></p>
         <input id="GLOBO_modulofiglio_cM47010-MSEC13-PREV-INF-CADUTA" name="GLOBO_modulofiglio_cM47010-MSEC13-PREV-INF-CADUTA" obbligatorio="#Prev_cadute.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_Prev_cadute.value()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width:4%">
+        <input id="Anag_tecnico_cadute" name="Anag_tecnico_cadute" type="checkbox" dynamic_check="#Firmatario_caduta2.checked()" enabled="#Firmatario_caduta2.checked()" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del soggetto che firma la documentazione sulla prevenzione di infortuni a seguito di cadute dall'alto</b></p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" id="num_Anag_tecnico_cadute" name="num_Anag_tecnico_cadute" dynamic_value="#Firmatario_caduta2.checked() ? '1' : 'Non richiesto'" label="Numero documenti anagrafica tecnico rischio cadute" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_modulofiglio_cGEN-ANAG-TECNICO-EL" name="GLOBO_modulofiglio_cGEN-ANAG-TECNICO-EL" obbligatorio="#Firmatario_caduta2.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_Anag_tecnico_cadute.value()"/>
       </td>
     </tr>
     <tr>
