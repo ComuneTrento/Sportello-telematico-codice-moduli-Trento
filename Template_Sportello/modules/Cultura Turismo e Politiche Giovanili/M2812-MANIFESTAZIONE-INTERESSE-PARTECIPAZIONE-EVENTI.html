@@ -52,14 +52,36 @@ numero="0"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf,image/jpeg"/>
 
-<meta codice_allegato="M2812-A03-INTEGRAZIONE-DOCUMENTAZIONE-ALLESTIMENTI"
-urn_allegato="document:c_l378:eventi.cultura;realizzazione.eventi.cultura;M2812.A02.integrazione.allestimenti"
-descrizione_estesa="Integrazione documentazione allestimenti"
-filename="integrzione_allestimenti.jpg,integrazione_allestimenti.pdf"
+<meta codice_allegato="M2812-A03-INTEGRAZIONE-CONTENUTI-INIZIATIVA"
+urn_allegato="document:c_l378:eventi.cultura;realizzazione.eventi.cultura;M2812.A03.integrazione.contenuti.iniziativa"
+descrizione_estesa="Integrazione contenuti iniziativa"
+filename="integrazione_contenuti.jpg,integrazione_contenuti.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/M2812-A03-INTEGRAZIONE-DOCUMENTAZIONE-ALLESTIMENTI"
+istruzioni="/modulistica/moduli/M2812-A03-INTEGRAZIONE-CONTENUTI-INIZIATIVA"
 name="GLOBO_allegato"
-numero="0"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M2812-A04-RELAZIONE-ACUSTICA"
+urn_allegato="document:c_l378:eventi.cultura;realizzazione.eventi.cultura;M2812.A04.relazione.acustica"
+descrizione_estesa="Relazione impatto acustico"
+filename="relazione_acustica.jpg,relazione_acustica.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M2812-A04-RELAZIONE-ACUSTICA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M2812-A05-DELEGA-LEGALE-RAPPRESENTANTE"
+urn_allegato="document:c_l378:eventi.cultura;realizzazione.eventi.cultura;M2812.A05.delega.legale.rappresentante"
+descrizione_estesa="Delega con firma autografa del legale rappresentante"
+filename="documento_delega.jpg,documento_delega.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M2812-A05-DELEGA-LEGALE-RAPPRESENTANTE"
+name="GLOBO_allegato"
+numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf,image/jpeg"/>
 
@@ -118,7 +140,7 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
         </div>
       </div>
       <div class="form-group col-lg-3 text-center">
-        <img alt="Marca da bollo" src="./appoggio/img/MarcaDaBollo.jpg">
+        <!-- <img alt="Marca da bollo" src="./appoggio/img/MarcaDaBollo.jpg"> -->
       </div>
     </div>
   </div>
@@ -174,7 +196,7 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
             <select class="form-control custom-select" id="Tipologia_Richiedente" name="Tipologia_Richiedente" label="Tipologia del soggetto che presenta la manifestazione di interesse">
               <option value=""></option>
               <option value="Legale rappresentante">Legale rappresentante</option>
-              <option value="Dipendente/collaboratore">Dipendente/collaboratore</option>
+              <option value="Dipendente/collaboratore delegato">Dipendente/collaboratore delegato</option>
             </select>
     </div>
   </div>
@@ -312,11 +334,11 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
   <div class="form-row">
       <div class="form-group col-lg-6">
         <label for="Soggetto_CF"> Codice fiscale </label>
-        <input class="form-control" id="Soggetto_CF" name="Soggetto_CF" label="Codice fiscale del soggetto rappresentato" format="cf" onkeyup="this.value = this.value.toUpperCase();"> 
+        <input class="form-control" id="Soggetto_CF" name="Soggetto_CF" label="Codice fiscale del soggetto rappresentato" mandatory="#Soggetto_PIVA.value() == ''" format="cf" onkeyup="this.value = this.value.toUpperCase();"> 
       </div>
       <div class="form-group col-lg-6">
         <label for="Soggetto_PIVA"> Partita IVA </label>
-        <input class="form-control" id="Soggetto_PIVA" name="Soggetto_PIVA" label="Partita IVA del soggetto rappresentato" mandatory="#Soggetto_CF.value() == ''" format="piva"> 
+        <input class="form-control" id="Soggetto_PIVA" name="Soggetto_PIVA" label="Partita IVA del soggetto rappresentato" format="piva"> 
       </div>  
   </div>
 
@@ -489,7 +511,9 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
 <div class="space-1"></div>
 <div class="space-1"></div>
 
-
+<div class="container">
+  <div class="title-3">Il legale rappresentante</div>
+</div>
 <div class="container">
   <div class="title-2"> DICHIARA </div>
 </div>
@@ -549,14 +573,14 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
       </div>
       <div class="form-row">
         <div class="form-group col-lg-12">
-          <label class="form-check-label" for="Dichiara_NonConforme">Descrizione non conformità</label>
+          <label class="form-check-label" for="Dichiara_NonConforme">Descrizione non conformità; richiesta e motivazione delle deroghe</label>
           <textarea class="form-control" id="Dichiara_NonConforme" name="Dichiara_NonConforme" mandatory_enabled="#Dichiara4_Conformita2.checked()" label="Descrizione non conformità dell'evento a criteri e condizioni di utilizzo degli spazi pubblici" style="width:100%;height:1cm"></textarea>
         </div>
       </div>
 </div>  
 
 <!-- FINE BLOCCO SUBITO DCHIARAZIONI -->
-  
+
 <div class="space-1"></div>
 <div class="space-1"></div>
 
@@ -638,21 +662,41 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
         <input class="form-control" id="Inziativa_Luogo" name="Inziativa_Luogo" mandatory="true" label="Luogo di svolgimento dell'iniziativa">
       </div> 
     </div>
-
+<div class="space-1"></div>
   <div class="form-row">
-      <div class="form-group col-lg-4">
-        <label for="Inziativa_Data"> Data di svolgimento </label>
-        <input class="form-control" id="Inziativa_Data" name="Inziativa_Data" format="date" mandatory="true" label="Data di svolgimento dell'iniziativa">
+      <div class="form-group col-lg-3">
+        <label for="Inziativa_DataInizio"> Data di inizio </label>
+        <input class="form-control" id="Inziativa_DataInizio" name="Inziativa_DataInizio" format="date" mandatory="true" label="Data di inizio svolgimento dell'iniziativa">
       </div>
-      <div class="form-group col-lg-4">
+      <div class="form-group col-lg-3">
+        <label for="Inziativa_DataFine"> Data di fine </label>
+        <input class="form-control" id="Inziativa_DataFine" name="Inziativa_DataFine" format="date" mandatory="true" label="Data di fine svolgimento dell'iniziativa">
+      </div>
+      <div class="form-group col-lg-3">
         <label for="Inziativa_DataAllestimento"> Data di allestimento </label>
         <input class="form-control" id="Inziativa_DataAllestimento" name="Inziativa_DataAllestimento" format="date" mandatory="true" label="Data di allestimento dell'iniziativa">
       </div>
-      <div class="form-group col-lg-4">
+      <div class="form-group col-lg-3">
         <label for="Inziativa_DataAllestimento"> Data di disallestimento </label>
         <input class="form-control" id="Inziativa_DataDisallestimento" name="Inziativa_DataDisallestimento" format="date" mandatory="true" label="Data di disallestimento dell'iniziativa">
       </div>
   </div>
+  <div class="form-row">
+      <div class="form-group col-lg-12">
+        <label for="Iniziativa_Periodo">Descrizione periodo di svolgimenti ed orari:</label>
+        <textarea class="form-control" id="Iniziativa_Periodo" name="Iniziativa_Periodo" label="Descrizione periodo di svolgimento ed orari" style="width:100%;height:1cm" mandatory="true"></textarea>
+      </div>
+  </div>
+  
+<div class="space-1"></div>
+  <div class="form-check indent-1">
+    <div id="Iniziativa_Musica" name="Iniziativa_Musica" label="Si prevede musica amplificata live o dj set"></div>
+    <input class="form-check-input" group="Iniziativa_Musica" id="Iniziativa_Musica1" name="Iniziativa_Musica" type="checkbox" value="SI">
+    <label class="form-check-label" for="Iniziativa_Musica1"> 
+      Si prevede musica amplificata live o dj set
+    </label>
+  </div>
+  <div class="space-1"></div>
 
   <div class="form-row">
       <div class="col-lg-12 mt-2">
@@ -711,44 +755,6 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
 <div class="space-1"></div>
 <div class="space-1"></div>
 
-<!-- INIZIO BLOCCO CARATTERISTICHE INIZIATIVA -->
-
-<div class="container border bg-light">
-   <div class="form-row border-bottom">
-        <div class="col-lg-12 mt-2">
-          <span class="title"> Elementi caratterizzanti dell'iniziativa </span>
-        </div>
-    </div>
-
-  <div id="Carattere_Tipo" name="Carattere_Tipo" mandatory="true" label="Elementi caratterizzanti l'iniziativa, indicare almeno un aspetto"></div>
-  <div class="form-check indent-1">
-      <input class="form-check-input" group="Carattere_Tipo" id="Carattere_Tipo1" name="Carattere_Tipo1" type="checkbox" value="SI">
-      <label class="form-check-label" for="Carattere_Tipo1"> forte impatto sociale/culturale/sportivo tale da rappresentare un richiamo per la città, in termini di visibilità e crescita </label>
-  </div>
-  <div class="form-check indent-1">
-      <input class="form-check-input" group="Carattere_Tipo" id="Carattere_Tipo2" name="Carattere_Tipo2" type="checkbox" value="SI">
-      <label class="form-check-label" for="Carattere_Tipo2"> eccezionale qualità, innovatività e valenza dei contenuti e capacità di coinvolgere pubblici eterogenei e diversificati </label>
-  </div>
-  <div class="form-check indent-1">
-      <input class="form-check-input" group="Carattere_Tipo" id="Carattere_Tipo3" name="Carattere_Tipo3" type="checkbox" value="SI">
-      <label class="form-check-label" for="Carattere_Tipo3"> collegamento con il territorio anche in chiave di cittadinanza attiva, di promozione della socialità e veicolo di aggregazione, anche attraverso l’utilizzo e la riappropriazione degli spazi pubblici </label>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group col-lg-12">
-      <label for="Carattere_Motivo">Motivazione della/e scelta/e:</label>
-        <textarea class="form-control" id="Carattere_Motivo" name="Carattere_Motivo" label="Motivazione degli elementi caratterizzanti l'iniziativa" style="width:100%;height:2cm"></textarea>
-    </div>
-  </div>
-</div>
-
-<!-- FINE BLOCCO CARATTERISTICHE INIZIATIVA -->
-
-<div class="space-1"></div>
-<div class="space-1"></div>
-<div class="space-1"></div>
-<div class="space-1"></div>
-
 <div class="container">
   <div class="title-2"> CHIEDE </div>
 </div>
@@ -763,13 +769,13 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
   <div class="form-row">
     <div class="col-lg-12">
       <!-- <span class="title"><b> Dichiara</b> </span> -->
-      <span class="title"> Riduzione pagamento COSAP </span>
+      <span class="title"> Riduzione pagamento canone di occupazione suolo pubblico </span>
     </div>
   </div>
   <div class="form-check indent-1">
-    <input class="form-check-input" id="Riduzione_Canone1" name="Riduzione_Canone1" type="checkbox" value="SI">
-    <label class="form-check-label" for="Riduzione_Canone1"> ai sensi dell’art. 51, comma 1, lettera
-      <select class="form-control custom-select w-75 d-inline-block" id="Riduzione_Lettera" name="Riduzione_Lettera" mandatory_enabled="#Riduzione_Canone1.checked()" label="In caso di riduzione COSAP indicare la lettera dell'articolo 51">
+    <input class="form-check-input" id="Riduzione_Canone1" name="Riduzione_Canone1" type="checkbox" value="SI" mandatory_enabled="#Iniziativa_Tipologia.value() != 'Commerciale' and !#Esenzione_Canone1.checked()">
+    <label class="form-check-label" for="Riduzione_Canone1"> ai sensi dell’art. 51 del <a href="https://www.comune.trento.it/Comune/Atti-e-albo-pretorio/Regolamenti/In-vigore/Regolamento-per-la-disciplina-del-canone-patrimoniale-di-concessione-autorizzazione-o-esposizione-pubblicitaria-e-del-canone-mercatale" target="_blank">Regolamento unico del canone</a>, comma 1, lettera
+      <select class="form-control custom-select w-75 d-inline-block" id="Riduzione_Lettera" name="Riduzione_Lettera" mandatory_enabled="#Riduzione_Canone1.checked()" label="In caso di riduzione canone di occupazione suolo pubblico indicare la lettera dell'articolo 51">
               <option value=""></option>
               <option value="B">B</option>
               <option value="F">F</option>
@@ -788,13 +794,13 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
 <div class="container border bg-light">
   <div class="form-row">
     <div class="col-lg-12">
-      <span class="title"> Esenzione pagamento COSAP </span>
+      <span class="title"> Esenzione pagamento canone di occupazione suolo pubblico </span>
     </div>
   </div>
   <div class="form-check indent-1">
-    <input class="form-check-input" id="Esenzione_Canone1" name="Esenzione_Canone1" type="checkbox" value="SI">
-    <label class="form-check-label" for="Esenzione_Canone1"> del pagamento COSAP ai sensi dell’art. 52, comma 1, lettera
-      <select class="form-control custom-select w-75 d-inline-block" id="Esenzione_Lettera" name="Esenzione_Lettera" mandatory_enabled="#Esenzione_Canone1.checked()" label="In caso di esenzione COSAP indicare la lettera dell'articolo 52">
+    <input class="form-check-input" id="Esenzione_Canone1" name="Esenzione_Canone1" type="checkbox" value="SI" mandatory_enabled="#Iniziativa_Tipologia.value() != 'Commerciale' and !#Riduzione_Canone1.checked()">
+    <label class="form-check-label" for="Esenzione_Canone1"> ai sensi dell’art. 52 del <a href="https://www.comune.trento.it/Comune/Atti-e-albo-pretorio/Regolamenti/In-vigore/Regolamento-per-la-disciplina-del-canone-patrimoniale-di-concessione-autorizzazione-o-esposizione-pubblicitaria-e-del-canone-mercatale" target="_blank">Regolamento unico del canone</a>, comma 1, lettera
+      <select class="form-control custom-select w-75 d-inline-block" id="Esenzione_Lettera" name="Esenzione_Lettera" mandatory_enabled="#Esenzione_Canone1.checked()" label="In caso di esenzione canone di occupazione suolo pubblico indicare la lettera dell'articolo 52">
               <option value=""></option>
               <option value="J">J</option>
               <option value="P">P</option>
@@ -806,18 +812,56 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
 
 <!-- FINE BLOCCO ESENZIONE -->
 
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<!-- INIZIO BLOCCO CARATTERISTICHE INIZIATIVA -->
+
+<div class="container border bg-light">
+   <div class="form-row border-bottom">
+        <div class="col-lg-12 mt-2">
+          <span class="title"> Elementi caratterizzanti dell'iniziativa al fine della riduzione/esenzione</span>
+        </div>
+    </div>
+
+  <div id="Carattere_Tipo" name="Carattere_Tipo" mandatory_enabled="#Riduzione_Canone1.checked() || #Esenzione_Canone1.checked()" label="Elementi caratterizzanti la riduzione/esenzione canone dell'iniziativa, indicare almeno un aspetto"></div>
+  <div class="form-check indent-1">
+      <input class="form-check-input" group="Carattere_Tipo" id="Carattere_Tipo1" name="Carattere_Tipo1" type="checkbox" value="SI">
+      <label class="form-check-label" for="Carattere_Tipo1"> forte impatto sociale/culturale/sportivo tale da rappresentare un richiamo per la città, in termini di visibilità e crescita </label>
+  </div>
+  <div class="form-check indent-1">
+      <input class="form-check-input" group="Carattere_Tipo" id="Carattere_Tipo2" name="Carattere_Tipo2" type="checkbox" value="SI">
+      <label class="form-check-label" for="Carattere_Tipo2"> eccezionale qualità, innovatività e valenza dei contenuti e capacità di coinvolgere pubblici eterogenei e diversificati </label>
+  </div>
+  <div class="form-check indent-1">
+      <input class="form-check-input" group="Carattere_Tipo" id="Carattere_Tipo3" name="Carattere_Tipo3" type="checkbox" value="SI">
+      <label class="form-check-label" for="Carattere_Tipo3"> collegamento con il territorio anche in chiave di cittadinanza attiva, di promozione della socialità e veicolo di aggregazione, anche attraverso l’utilizzo e la riappropriazione degli spazi pubblici </label>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-lg-12">
+      <label for="Carattere_Motivo">Motivazione della/e scelta/e:</label>
+        <textarea class="form-control" id="Carattere_Motivo" name="Carattere_Motivo" label="Motivazione degli elementi caratterizzanti al fine della riduzione/esenzione canone di occupazione suolo pubblico" style="width:100%;height:2cm" mandatory_enabled="#Carattere_Tipo.checked()"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- FINE BLOCCO CARATTERISTICHE INIZIATIVA -->
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<globo_salto_pagina></globo_salto_pagina>
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
 <!-- INIZIO BLOCCO PRESENTAZIONE DOMANDA PER SCADENZA TERMINI -->
 
 <input id="Salva_Modulo_Termini" mandatory="moment() > moment('2022-12-31')" type="hidden" label="Impossibile salvare il modulo. I termini per la presentazione della manifestazione di interesse sono conclusi.">
 
 <!-- FINE BLOCCO PRESENTAZIONE DOMANDA PER SCADENZA TERMINI -->
 
-<div class="space-1"></div>
-<div class="space-1"></div>
-<div class="space-1"></div>
-<div class="space-1"></div>
-<div class="space-1"></div>
-<div class="space-1"></div>
 
 <!-- INIZIO BLOCCO INFORMATIVA PRIVACY -->
 
@@ -826,28 +870,15 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
     <div class="form-check indent-1">
       <div id="Verifica_Presa_Visione" name="Verifica_Presa_Visione" label="Presa visione è obbligatorio" mandatory="true"></div>
       <input group="Verifica_Presa_Visione" class="form-check-input" id="Presa_visione_check" name="Verifica_Presa_Visione" type="checkbox" value="SI">
-      <label class="form-check-label" for="Presa_visione_check"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-cultura-turismo" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></label> 
+      <label class="form-check-label" for="Presa_visione_check"><b>Dichiara di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-cultura-turismo" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></label> 
     </div>
   </div>
 </div>  
 
 <!-- FINE BLOCCO INFORMATIVA PRIVACY -->
 
-
 <div class="space-1"></div>
 <div class="space-1"></div>
-
-<!-- INIZIO BLOCCO MARCA DA BOLLO -->
-
-{{ bollo.bolloRESP("display:none","display:none","display:none","display:none","false") }}
-
-<!-- FINE BLOCCO MARCA DA BOLLO --> 
-
-<div class="space-1"></div>
-<div class="space-1"></div>
-
-<globo_salto_pagina></globo_salto_pagina>
-
 <div class="space-1"></div>
 <div class="space-1"></div>
 
@@ -863,20 +894,28 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
   </div>
   
       <div class="form-check indent-1">
-          <input class="form-check-input" id="DOCUMENTO_DELEGATO" name="DOCUMENTO_DELEGATO" type="checkbox"  dynamic_check="#Tipologia_Richiedente.value() != 'Legale rappresentante'" enabled="#Tipologia_Richiedente.value() != 'Legale rappresentante'" value="OBBLIGATORIO">
-          <label class="form-check-label" for="DOCUMENTO_DELEGATO">Carta di identità del legale rappresentante (o carta di soggiorno/permesso di soggiorno)  </label>
-        </div>
+          <input class="form-check-input" id="DOCUMENTO_DELEGANTE" name="DOCUMENTO_DELEGANTE" type="checkbox" dynamic_check="#Tipologia_Richiedente.value() != 'Legale rappresentante'" enabled="#Tipologia_Richiedente.value() != 'Legale rappresentante'" value="OBBLIGATORIO">
+          <label class="form-check-label" for="DOCUMENTO_DELEGANTE">Carta di identità del legale rappresentante (o carta di soggiorno/permesso di soggiorno)  </label>
+      </div>
       <div class="form-check indent-1">
-        <input class="form-check-input" type="checkbox" id="RENDERING" name="RENDERING" dynamic_check="#Iniziativa_Tipologia.value() == 'Commerciale'" value="OBBLIGATORIO">
+          <input class="form-check-input" id="DOCUMENTO_DELEGA" name="DOCUMENTO_DELEGA" type="checkbox" dynamic_check="#Tipologia_Richiedente.value() != 'Legale rappresentante'" enabled="#Tipologia_Richiedente.value() != 'Legale rappresentante'" value="OBBLIGATORIO">
+          <label class="form-check-label" for="DOCUMENTO_DELEGA">Modulo di delega del legale rappresentante </label>
+      </div>
+      <div class="form-check indent-1">
+        <input class="form-check-input" id="RENDERING" name="RENDERING" type="checkbox" dynamic_check="#Iniziativa_Tipologia.value() !=''" enabled="#Iniziativa_Tipologia.value() !=''" value="OBBLIGATORIO">
         <label class="form-check-label" for="RENDERING">Rendering allestimenti con ingombri e tipologie strutture </label>
       </div>
       <div class="form-check indent-1">
-        <input class="form-check-input" type="checkbox" id="INTEGRAZIONE" name="INTEGRAZIONE" value="OBBLIGATORIO">
-        <label class="form-check-label" for="RENDERING">Integrazione dei contenuti dell'iniziativa </label>
+        <input class="form-check-input" id="RELAZIONE_ACUSTICA" name="RELAZIONE_ACUSTICA" type="checkbox" dynamic_check="#Iniziativa_Musica.checked()" enabled="#Iniziativa_Musica.checked()"value="OBBLIGATORIO">
+        <label class="form-check-label" for="RELAZIONE_ACUSTICA">Relazione acustica o indicare dettagliatamente le azioni e le misure concrete che si adotteranno per ridurre al minimo l’impatto acustico </label>
       </div>
       <div class="form-check indent-1">
-        <input class="form-check-input" type="checkbox" id="ALTRI-ALLEGATI" name="ALTRI-ALLEGATI" value="OBBLIGATORIO">
-        <label class="form-check-label" for="ALTRI-ALLEGATI">Altri allegati: </label>
+        <input class="form-check-input" id="INTEGRAZIONE" name="INTEGRAZIONE" type="checkbox" value="OBBLIGATORIO">
+        <label class="form-check-label" for="INTEGRAZIONE">Integrazione dei contenuti dell'iniziativa </label>
+      </div>
+      <div class="form-check indent-1">
+        <input class="form-check-input" id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO">
+        <label class="form-check-label" for="ALTRI_ALLEGATI">Altri allegati: </label>
         <input class="form-control w-75 d-inline-block" type="text" id="AltriAllegati" name="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()">
       </div>
 </div>
@@ -884,7 +923,6 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
 <!-- FINE BLOCCO ALLEGATI -->
 
 <div class="space-1"></div>
-
 <div class="space-1"></div>
 
 <!-- INIZIO BLOCCO FIRMA -->
@@ -922,10 +960,12 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
 
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_cM2812-MANIFESTAZIONE-INTERESSE-PARTECIPAZIONE-EVENTI-TERRITORIO-COMUNE" name="GLOBO_modulo_cM2812-MANIFESTAZIONE-INTERESSE-PARTECIPAZIONE-EVENTI-TERRITORIO-COMUNE" type="hidden" value="">
 
-<input id="GLOBO_allegato_cM2812-A01-DOCUMENTO-IDENTITA-LEGALE-RAPPRESENTANTE" name="GLOBO_allegato_cM2812-A01-DOCUMENTO-IDENTITA-LEGALE-RAPPRESENTANTE" type="hidden" value="" obbligatorio="#DOCUMENTO_DELEGATO.checked() ? 'OBBLIGATORIO' : ''">
+<input id="GLOBO_allegato_cM2812-A01-DOCUMENTO-IDENTITA-LEGALE-RAPPRESENTANTE" name="GLOBO_allegato_cM2812-A01-DOCUMENTO-IDENTITA-LEGALE-RAPPRESENTANTE" type="hidden" value="" obbligatorio="#DOCUMENTO_DELEGANTE.checked() ? 'OBBLIGATORIO' : ''">
 <input id="GLOBO_allegato_cM2812-A09-ALTRI-ALLEGATI" name="GLOBO_allegato_cM2812-A09-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
 <input id="GLOBO_allegato_cM2812-A02-RENDERING-ALLESTIMENTI" name="GLOBO_allegato_cM2812-A02-RENDERING-ALLESTIMENTI" obbligatorio="#RENDERING.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
-<input id="GLOBO_allegato_cM2812-A03-INTEGRAZIONE-DOCUMENTAZIONE-ALLESTIMENTI" name="GLOBO_allegato_cM2812-A03-INTEGRAZIONE-DOCUMENTAZIONE-ALLESTIMENTI" obbligatorio="#INTEGRAZIONE.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
+<input id="GLOBO_allegato_cM2812-A03-INTEGRAZIONE-CONTENUTI-INIZIATIVA" name="GLOBO_allegato_cM2812-A03-INTEGRAZIONE-CONTENUTI-INIZIATIVA" obbligatorio="#INTEGRAZIONE.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
+<input id="GLOBO_allegato_cM2812-A04-RELAZIONE-ACUSTICA" name="GLOBO_allegato_cM2812-A04-RELAZIONE-ACUSTICA" obbligatorio="#RELAZIONE_ACUSTICA.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
+<input id="GLOBO_allegato_cM2812-A05-DELEGA-LEGALE-RAPPRESENTANTE" name="GLOBO_allegato_cM2812-A05-DELEGA-LEGALE-RAPPRESENTANTE" obbligatorio="#DOCUMENTO_DELEGA.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
 
 
 <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden">
