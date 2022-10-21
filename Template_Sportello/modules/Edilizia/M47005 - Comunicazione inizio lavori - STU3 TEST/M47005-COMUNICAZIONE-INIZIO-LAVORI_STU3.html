@@ -34,7 +34,7 @@ segnatura="AventeTitolo"
 tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI"
 verifica_pagamento="NO"
-versione="1.0|09/02/2018" />
+versione="2.0|17/10/2022" />
 
 <meta codice_modulo_figlio="GEN-DELEGA-EDILIZIA-AU"
 urn_modulo_figlio="document:c_l378:modulo.secondario.delega.edilizia.au"
@@ -73,6 +73,11 @@ name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
 
+<meta codice_modulo_figlio="GEN-ANAG-TECNICO-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.tecnico.firma.digitale"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
 <!--
 <meta codice_allegato="GEN-CDI"
 urn_allegato="document:c_l378:allegato.copia.documento.identita"
@@ -142,8 +147,8 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_modulo_figlio="GEN-CERT-ENERG-EL"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.certificatore.energetico.firma.elettronica"
+<meta codice_modulo_figlio="GEN-CERTIFIC-ENERG-EL"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.certificatore.energetico.firma.digitale"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -237,6 +242,20 @@ urn_allegato="document:c_l378:allegato.doc.diritto.contrattuale"
 descrizione_estesa="Allegato - Documentazione comprovante il diritto contrattuale"
 filename="Doc_diritto_contrattuale.pdf"
 firmato="NO"
+istruzioni="/modulistica/moduli/GEN-DOC-DIRITTO-CONTRATTUALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+
+<meta codice_allegato="GEN-SISMA-BONUS"
+urn_allegato="document:c_l378:allegato.sisma.bonus"
+descrizione_estesa="Allegato - Certificazione sismica"
+filename="Sisma_bonus.pdf"
+firmato="SI"
+firmatari="Referente10_CodiceFiscale"
+firmatari_label="Il soggetto abilitato"
 istruzioni="/modulistica/moduli/GEN-DOC-DIRITTO-CONTRATTUALE"
 name="GLOBO_allegato"
 numero="1"
@@ -378,40 +397,6 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <h1 class="Modulo" style="text-align: center;">COMUNICAZIONE INIZIO LAVORI</h1>
 
-<!--
-<div class="simpatico-block simpatico-query-and-answer">
-  <h1 class="Modulo" style="text-align: center;">COMUNICAZIONE INIZIO LAVORI</h1>
-
-  <br>
-
-  <table class="Modulo" style="border: 1px solid grey">
-    <tbody>
-      <tr class="Rigaintestazione">
-        <td colspan="2">
-          <p style="line-height:1.6;"><b>La compilazione del modulo seguente viene eseguita da:</b></p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
-          <div id="Tipo_richiedente" name="Tipo_richiedente" label="Tipo richiedente" mandatory_enabled="true"> </div>
-          <input group="Tipo_richiedente" id="Tipo_richiedente1" name="Tipo_richiedente" type="radio" value="1" />
-        </td>
-        <td>
-          <p style="line-height:1.6;">Titolare del permesso di costruire</p>
-        </td>
-      </tr>
-      <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input group="Tipo_richiedente" id="Tipo_richiedente2" name="Tipo_richiedente" type="radio" value="2" />
-        </td>
-        <td>
-          <p style="line-height:1.6;">Progettista incaricato</p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
--->
 
 <!-------------------------VERIFICO IL TIPO DI RICHIEDENTE (TITOLARE O PROFESSIONISTA)---------------------->
 <input id="Tipo_richiedente1" name="Tipo_richiedente1" type="checkbox" style="display:none;pd4ml-display:unset" dynamic_check="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value()"/>
@@ -426,7 +411,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!-------------------------INIZIO ANAGRAFICA COMPRENSIVA DI RESIDENZA + RUOLO E REGIONE SOCIALE---------------------->
 <input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
 <input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
-{{anagrafica_trento_uniformata.titolare_segnatura("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+{{anagrafica_trento_uniformata.titolare_segnatura_guidata("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", ["Persona fisica","Legale rappresentante","Amministratore di condominio"], "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+
 <!-------------------------FINE ANAGRAFICA COMPRENSIVA DI RESIDENZA + RUOLO E REGIONE SOCIALE---------------------->
 
 <br>
@@ -478,9 +464,9 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <input group="Permesso_costr" id="Permesso_costr1" name="Permesso_costr" type="radio" value="1" />
       </td>
       <td>
-        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
-        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione2" name="Prot_concessione2" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione2" name="Data_concessione2" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Prot_concessione2.value() != ''"/></p>
-        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione3" name="Prot_concessione3" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione3" name="Data_concessione3" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Prot_concessione3.value() != ''"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione" name="Prot_concessione" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione" name="Data_concessione" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Permesso_costr1.checked()"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione2" name="Prot_concessione2" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione2" name="Data_concessione2" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Prot_concessione2.value() != ''"/></p>
+        <p style="line-height:1.8;">prot.nr.: <input class="" id="Prot_concessione3" name="Prot_concessione3" label="Numero di protocollo della concessione edilizia" size="16" enabled="#Permesso_costr1.checked()"/>&nbsp;&nbsp;&nbsp; di data <input class="" id="Data_concessione3" name="Data_concessione3" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Prot_concessione3.value() != ''"/></p>
       </td>
     </tr>
     <tr>
@@ -488,7 +474,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <input group="Permesso_costr" id="Permesso_costr2" name="Permesso_costr" type="radio" value="2" />
       </td>
       <td>
-        <p style="line-height:1.6;">formatosi per silenzio assenso prot.nr.: <input class="" id="Prot_concessione_sil_ass" name="Prot_concessione_sil_ass" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr2.checked()"/> di data <input class="" id="Data_concessione_sil_ass" name="Data_concessione_sil_ass" label="Data della concessione edilizia" format="date" size="8" mandatory_enabled="#Permesso_costr2.checked()"/></p>
+        <p style="line-height:1.6;">formatosi per silenzio assenso prot.nr.: <input class="" id="Prot_concessione_sil_ass" name="Prot_concessione_sil_ass" label="Numero di protocollo della concessione edilizia" size="16" mandatory_enabled="#Permesso_costr2.checked()"/> di data <input class="" id="Data_concessione_sil_ass" name="Data_concessione_sil_ass" label="Data della concessione edilizia" type="date" size="8" mandatory_enabled="#Permesso_costr2.checked()"/></p>
       </td>
     </tr>
   </tbody>
@@ -518,7 +504,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
   <input id="AventeTitolo_EMail" name="AventeTitolo_EMail" dynamic_value="#AventeTitolo_Segnatura_EMail.value()" type="hidden"/>
   <input id="AventeTitolo_EMailPEC" name="AventeTitolo_EMailPEC" dynamic_value="#Referente_EMailPEC.value()" type="hidden"/>
 
-  <table class="Modulo" style="border:1px solid grey;">
+  {# <table class="Modulo" style="border:1px solid grey;">
     <tbody>
       <tr>
         <td>
@@ -528,7 +514,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </tbody>
   </table>
 
-  <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi">
+  <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi"> #}
 
   <table class="Modulo" style="border:1px solid grey;">
     <tbody>
@@ -706,6 +692,58 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <br>
 <br>
+<!--------------------INIZIO RELAZIONE SISMICA (REFERENTE10)---------------------->
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;">SISMA BONUS</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.4rem; text-align: center; width: 4%;">
+        <div id="Sisma_bonus" name="Sisma_bonus" label="Sisma bonus" mandatory_enabled="true"> </div>
+        <input group="Sisma_bonus" id="Sisma_bonus1" name="Sisma_bonus" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">l'intervento non rientra in tale beneficio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; padding-top: 0.4rem; text-align: center; width: 4%;">
+        <input group="Sisma_bonus" id="Sisma_bonus2" name="Sisma_bonus" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">il titolare dichiara che l'intervento rientra nella richiesta per SISMA BONUS, pertanto allega apposita relazione</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="simpatico-block simpatico-query-and-answer">
+    
+  <input id="Referente10_checkobbligatorio" name="Referente10_checkobbligatorio" dynamic_check="#Sisma_bonus2.checked()" type="hidden" />
+  <input id="Referente10_checkabilitato" name="Referente10_checkabilitato" dynamic_check="#Sisma_bonus2.checked()" type="hidden" />
+  {{anagrafica_trento_uniformata.solo_nominativo("Referente10","<b>SOGGETTO FIRMATARIO DELLA RELAZIONE SISMICA</b> (se prevista):") }}
+
+  
+  <input id="Sisma_soggetto_div" name="Sisma_soggetto_div" dynamic_check="#Referente_CodiceFiscale.value() == #Referente10_CodiceFiscale.value()"  type="hidden" />  
+  <input id="Sisma_soggetto" name="Sisma_soggetto" dynamic_check="#Sisma_bonus2.checked() and !#Sisma_soggetto_div.checked()" type="hidden"/>
+
+
+
+  <!--
+  <input id="Metadati_CertificatoreEnergetico_TitoloPersona" name="Metadati_CertificatoreEnergetico_TitoloPersona" dynamic_value="#CertificatoreEnergetico_TitoloPersona.value()"/>
+  <input id="Metadati_CertificatoreEnergetico_Cognome" name="Metadati_CertificatoreEnergetico_Cognome" dynamic_value="#CertificatoreEnergetico_Cognome.value()" />
+  <input id="Metadati_CertificatoreEnergetico_Nome" name="Metadati_CertificatoreEnergetico_Nome" dynamic_value="#CertificatoreEnergetico_Nome.value()"/>
+  <input id="Metadati_CertificatoreEnergetico_CodiceFiscale" name="Metadati_CertificatoreEnergetico_CodiceFiscale" dynamic_value="#CertificatoreEnergetico_CodiceFiscale.value()"/>
+  -->
+</div>
+<!--------------------FINE RELAZIONE SISMICA (REFERENTE11)---------------------->
+
+<br>
+<br>
 
 <!--------------------INIZIO RACCOLTA ANAGRAFICA IMPRESE E LAVORATORI---------------------->
 
@@ -803,8 +841,11 @@ urn_report="report:CSP_SESSION_REPORT"/>
     </tbody>
   </table>
   -->
+    {{ immobili_trento_uniformata.immobile_titolarita(intestazione="per quanto riguarda la titolarità dell'intervento:", descrizione_proprietario_esclusivo="di avere titolarità esclusiva all’esecuzione dell’intervento in quanto proprietario", 
+    descrizione_altro_diritto_reale="di essere titolare di altro diritto reale", 
+    descrizione_diritto_contrattuale="di essere titolare di diritto contrattuale (locatario, titolare di leasing, etc.), allegando quindi:") }}
 
-  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+  {# <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="4">
@@ -879,7 +920,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> #}
 
 </div>
 <!--------------------FINE DICHIARAZIONE ESCLUSIVITA' TITOLO---------------------->
@@ -1104,7 +1145,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </td>
         <td style="background-color: #eeeeee;">
           <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_energ" name="numero_anag_energ" dynamic_value="#GEN_CERT_ENERG.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        </td>
+           </td>
       </tr>
       <!--
       <tr>
@@ -1175,7 +1216,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
       -->
       <tr>
         <td style="width:4%; vertical-align: top; text-align: center;" rowspan="3">
-          <input dynamic_check="#Parametri_Altro_titolo_reale1.checked()" enabled="#Parametri_Altro_titolo_reale1.checked()" id="altri_sogg_coinv" name="altri_sogg_coinv" type="checkbox" value="1"/>   
+          <input dynamic_check="#Parametri_Altro_titolo_reale1.checked() || #Parametri_Altro_titolo_reale2.checked() || #Parametri_Altro_titolo_reale3.checked()" enabled="#Parametri_Altro_titolo_reale1.checked() || #Parametri_Altro_titolo_reale2.checked() || #Parametri_Altro_titolo_reale3.checked()" id="altri_sogg_coinv" name="altri_sogg_coinv" type="checkbox" value="1"/>   
         </td>
         <td style="background-color: #eeeeee;" colspan="2">
             <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori soggetti coinvolti</b> nel procedimento edilizio (diversi dal titolare e/o dal progettista e/o dal direttore dei lavori)</p>
@@ -1288,6 +1329,18 @@ urn_report="report:CSP_SESSION_REPORT"/>
         </td>
       </tr>
       <tr>
+        <td style="vertical-align: top; text-align: center;" >
+          <input id="Anagrafica_certificatore_sismica" name="Anagrafica_certificatore_sismica" dynamic_check="#Sisma_soggetto.checked()" enabled="#Sisma_soggetto.checked()" type="checkbox" value="OBBLIGATORIO"/>   
+        </td>
+        <td style="background-color: #eeeeee;" colspan="2">
+          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del soggetto abilitato alla certificazione sismica</b></p>
+        </td>
+        <td style="background-color: #eeeeee;">
+          <p style="line-height: 1.6; text-align: center;"><input class="" id="Anag_cert_sisma" name="Anag_cert_sisma" label="Numero anagrafiche soggetto certicazione sismica" readonly dynamic_value="#Sisma_soggetto.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;"/></p>
+          <input id="GLOBO_modulofiglio_cGEN-ANAG-TECNICO-EL" name="GLOBO_modulofiglio_cGEN-ANAG-TECNICO-EL" numero="#Anag_cert_sisma.value()" obbligatorio="#Anag_cert_sisma.value() &gt; 0 ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
+        </td>
+      </tr>
+      <tr>
         <td style="width:4%; vertical-align: top; text-align: center;">
           <input id="Doc_notifica" name="Doc_notifica" type="checkbox" dynamic_check="#Scelta_alleg_o_estr_not1.checked()" enabled="#Scelta_alleg_o_estr_not1.checked()" value="OBBLIGATORIO" />
         </td>
@@ -1331,6 +1384,18 @@ urn_report="report:CSP_SESSION_REPORT"/>
         <td style="background-color: #eeeeee; vertical-align: center;">
           <p style="line-height: 1.6; text-align: center;"><input class="" type="number" id="num_dich_ass_tit" name="num_dich_ass_tit" min="1" max="100" label="Numero documenti dichiarazione di assenso dei terzi titolari di altri diritti reali o obbligatori" mandatory_enabled="#Dich_assenso_tit.checked()" style="width: 90%; text-align: center;"/></p>
           <input id="GLOBO_allegato_cGEN-DICH-ASSENSO-TITOLARI" name="GLOBO_allegato_cGEN-DICH-ASSENSO-TITOLARI" obbligatorio="#Dich_assenso_tit.checked() ? 'OBBLIGATORIO' : ''" numero="#num_dich_ass_tit.value()" type="hidden" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:4%; vertical-align: center; text-align: center;">
+          <input id="Certificazione_sismica" name="Certificazione_sismica" type="checkbox" dynamic_check="#Sisma_bonus2.checked()" enabled="#Sisma_bonus2.checked()" value="OBBLIGATORIO"/>
+        </td>
+        <td style="background-color: #eeeeee;" colspan="2">
+          <p style="line-height:1.6;"><b>Certificazione sismica</b></p>
+        </td>
+        <td style="background-color: #eeeeee; vertical-align: center;">
+          <p style="line-height: 1.6; text-align: center;"><input class="" type="number" id="num_cert_sismica" name="num_cert_sismica" min="1" max="100" label="Numero documenti certificazione sismica" dynamic_value="#Certificazione_sismica.checked() ? '1' : 'Non richiesto'" readonly style="width: 90%; text-align: center;"/></p>
+          <input id="GLOBO_allegato_cGEN-SISMA-BONUS" name="GLOBO_allegato_cGEN-SISMA-BONUS" obbligatorio="#Certificazione_sismica.checked() ? 'OBBLIGATORIO' : ''" numero="#num_cert_sismica.value()" type="hidden" value=""/>
         </td>
       </tr>
       <tr>
@@ -1506,7 +1571,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
 
-<input id="GLOBO_modulofiglio_cGEN-CERT-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERT-ENERG-EL" obbligatorio="#GEN_CERT_ENERG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="1"/>
+<input id="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" name="GLOBO_modulofiglio_cGEN-CERTIFIC-ENERG-EL" obbligatorio="#GEN_CERT_ENERG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="1"/>
 
 
 <input id="GLOBO_modulofiglio_cM47005-MSEC01-INTAGG-INIZIO-LAVORI-AU" name="GLOBO_modulofiglio_cM47005-MSEC01-INTAGG-INIZIO-LAVORI-AU" obbligatorio="#GEN_INTAGG_AU.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="#NschedeAllegateAu.value()"/>
