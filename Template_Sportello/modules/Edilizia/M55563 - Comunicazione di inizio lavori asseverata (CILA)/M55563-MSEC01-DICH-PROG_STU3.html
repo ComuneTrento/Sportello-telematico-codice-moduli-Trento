@@ -1,0 +1,637 @@
+{% set CodiceModulo =  "M55563-MSEC01-DICH-PROG" %}
+{% set Urn =  "document:c_l378:comunicazione.inizio.lavori.asseverata;cila;msec01.M55563.dichiarazioni.progettista" %}
+{% extends "base_trento_ok.html" %}
+
+{% block meta %}
+<meta campi_firma="Referente_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Modulo secondario - CILA Dichiarazioni del progettista"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_DIGITALE"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+segnatura="Referente"
+ufficio=""
+urlhelp="/modulistica/moduli/M55563-MSEC01-DICH-PROG"
+verifica_pagamento="NO"
+versione="1.0|01/01/2015"/>
+
+<!-- INIZIO DICHIARAZIONE MODULI SECONDARI E ALLEGATI -->
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.jpg,INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="image/jpeg,application/pdf"/>
+
+<meta codice_allegato="GEN-DOCUMENTAZIONE-FOTOGRAFICA"
+urn_allegato="document:c_l378:allegato.documentazione.fotografica.intervento"
+descrizione_estesa="Allegato - Documentazione fotografica"
+filename="GEN-DOC-FOTOGRAFICA.pdf"
+firmato="SI"
+firmatari="Referente_CodiceFiscale"
+firmatari_label="Progettista incaricato"
+istruzioni="/modulistica/moduli/GEN-DOCUMENTAZIONE-FOTOGRAFICA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-ELABORATI-PROGETTUALI"
+urn_allegato="document:c_l378:allegato.elaborati.progettuali"
+descrizione_estesa="Elaborati progettuali per interventi di manutenzione straordinaria"
+filename="Elaborati progettuali.pdf"
+firmato="SI"
+firmatari="Referente_CodiceFiscale"
+firmatari_label="Progettista incaricato"
+istruzioni="/modulistica/moduli/GEN-ELABORATI-PROGETTUALI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_allegato="GEN-ELAB-PROG-IMPIANTI"
+urn_allegato="document:c_l378:allegato.elab.prog.impianti"
+descrizione_estesa="Elaborato/i progettuale/i relativo/i agli impianti"
+filename="Elaborato progettuale impianti.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-ELAB-PROG-IMPIANTI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+
+<meta codice_allegato="GEN-ALTRI-ALLEGATI"
+urn_allegato="document:c_l378:allegato.altri.allegati"
+descrizione_estesa="Altri allegati"
+filename="ALTRI-ALLEGATI.jpg,ALTRI-ALLEGATI.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-ALTRI-ALLEGATI"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="image/jpeg,application/pdf"/>
+
+<!-- FINE DICHIARAZIONE MODULI SECONDARI E ALLEGATI -->
+
+{% endblock meta %}
+
+
+{% block title %}
+   Dichiarazioni del progettista
+{% endblock title %}
+
+{% block content %}
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+
+<input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="'Dichiarazioni del tecnico abilitato incaricato - Richiedente ' + #Referente_Cognome.value().toUpperCase() + ' ' + #Referente_Nome.value().toUpperCase() + ' (' + #Referente_CodiceFiscale.value().toUpperCase() + ')'"/>
+
+<br>
+
+<h1 class="Modulo">DICHIARAZIONI DEL PROGETTISTA</h1>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;">Il sottoscritto <b>progettista</b> delle opere, 
+          <!--<input id="Nominativo_progettista" name="Nominativo_progettista" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Cognome.value() + ' ' + #Referente_Nome.value()" size="55"/>-->
+          preso atto di assumere la qualità di persona esercente un servizio di pubblica necessità ai sensi degli artt. 359 e 481 cp, consapevole che le dichiarazioni false, le falsità negli atti e l'uso di atti falsi comportano l'applicazione delle sanzioni penali previste dagli art. 75 e 76 del d.p.r. 445/2000, sotto la propria responsabilità</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- *********** INIZIO MODULO ANAGRAFICA *********** -->
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+<input dynamic_check="true" id="Referente_DatiPersonaObbligatori" name="Referente_DatiPersonaObbligatori" type="hidden"/>
+{{ anagrafica_trento_uniformata.persona_fisica_editabile("Referente", "<small>(Clicca sull'icona omino per recuperare i dati anagrafici)</small>", "visibility:visibility", "cursor:pointer", "visibility:visibility", "visibility:none", "false", "", "true", "false", "false", " ", "true", "true", "display:none", "visibility:visibility" ) }}
+
+<!-- *********** FINE MODULO ANAGRAFICA *********** -->
+<br>
+
+<h1 class="Modulo">DICHIARA</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Tipologia di intervento e descrizione sintetica delle opere:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <div id="tipologia_intervento" name="tipologia_intervento" label="Dichiarazioni tipologia intervento"></div>
+        <input group="tipologia_intervento" id="tipologia_intervento1" name="tipologia_intervento1" type="checkbox" dynamic_check="true" value="1" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;">che i lavori riguardano l’immobile individuato nella comunicazione di inizio lavori di cui la presente dichiarazione costituisce parte integrante e sostanziale</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="2">
+        <input group="tipologia_intervento" id="tipologia_intervento2" name="tipologia_intervento2" type="checkbox" dynamic_check="true" value="2" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;">che le opere in progetto sono subordinate a comunicazione di inizio lavori di cui all’art. 78 bis della legge provinciale del 4 agosto 2015, n. 15 in quanto consistono in:</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <textarea class="inputNormal" id="Parametri_Esecuzione" name="Parametri_Esecuzione" label="Per esecuzione intervento di:" style="width:100%;height:3cm" mandatory_enabled="true" ></textarea>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Calcolo del contributo di costruzione</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p style="line-height:1.6;">che l'intervento da realizzare:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="contrib_costruz" name="contrib_costruz" label="Calcolo contributi di costruzione" mandatory_enabled="true"> </div>
+        <input group="contrib_costruz" id="contrib_costruz_no" name="contrib_costruz" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">è a titolo gratuito</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="contrib_costruz" id="contrib_costruz_si" name="contrib_costruz" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">è a titolo oneroso in quanto comporta aumento del carico urbanistico che pertanto richiede il calcolo del contributo di costruzione</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border:1px solid grey;">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>INQUADRAMENTO URBANISTICO</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td colspan="2">
+        <p style="line-height:1.6;">che l'intervento ricade all'interno delle seguenti zone:</p>
+      </td>
+    </tr>
+    <tr>
+	  <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="6">
+        <div id="Tassonomia_Prg" name="Tassonomia_Prg" label="Piano Regolatore" mandatory_enabled="true" > </div>
+        <input id="Trento_Prg_Vigente" name="Trento_Prg_Vigente" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">Piano Regolatore Generale (PRG) vigente Comune di Trento</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="font-size:70%"> Zona </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ immobili_trento_uniformata.piano_regolatore_generale_vigente("Trento_Vzona1","#Trento_Prg_Vigente.checked()","#Trento_Prg_Vigente.checked()") }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ immobili_trento_uniformata.piano_regolatore_generale_vigente("Trento_Vzona2","#PRG_Trento_Vzona1.value() != ''", "false") }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ immobili_trento_uniformata.piano_regolatore_generale_vigente("Trento_Vzona3","#PRG_Trento_Vzona2.value() != ''", "false") }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ immobili_trento_uniformata.piano_regolatore_generale_vigente("Trento_Vzona4","#PRG_Trento_Vzona3.value() != ''", "false") }}
+      </td>
+    </tr>
+<!-- Fine PRG vigente Trento -->
+<!-- Inizio PRG adottato Trento -->
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;" rowspan="6">
+        <input id="Trento_Prg_Adottato" name="Trento_Prg_Adottato" type="checkbox" value="2"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Piano Regolatore Generale (PRG) adottato Comune di Trento (Se in salvaguardia)</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="font-size:70%"> Zona </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ immobili_trento_uniformata.piano_regolatore_generale_adottato("Trento_Azona1","#Trento_Prg_Adottato.checked()","#Trento_Prg_Vigente.checked()") }}
+      </td>
+    </tr>
+    <tr>
+      <td>        
+        {{ immobili_trento_uniformata.piano_regolatore_generale_adottato("Trento_Azona2","#PRG_Trento_Azona1.value() != ''", "false") }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ immobili_trento_uniformata.piano_regolatore_generale_adottato("Trento_Azona3","#PRG_Trento_Azona2.value() != ''", "false") }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ immobili_trento_uniformata.piano_regolatore_generale_adottato("Trento_Azona4","#PRG_Trento_Azona3.value() != ''", "false") }}
+      </td>
+    </tr>
+<!-- Fine PRG adottato Trento -->
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p style="line-height:1.6;"><b>Atti di assenso già acquisiti</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p style="line-height:1.6;">che sono stati acquisiti i seguenti atti di assenso, necessari per la realizzazione dell’intervento edilizio e obbligatori ai sensi delle normative di settore:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:38%;" colspan="2">
+        <p style="font-size: 85%;"><b>Tipologia di atto</b></p>
+      </td>
+      <td style="width:30%;">
+        <p style="font-size: 85%;"><b>Autorità competente al rilascio</b></p>
+      </td>
+      <td style="width:20%;">
+        <p style="font-size: 85%;"><b>Protocollo/numero</b></p>
+      </td>
+      <td style="width:12%;">
+        <p style="font-size: 85%;"><b>Data di rilascio</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="atti_acquisiti" name="atti_acquisiti" label="Atti già acquisiti" enabled="true"> </div>
+        <input group="atti_acquisiti" id="atti_acquisiti1" name="atti_acquisiti1" type="checkbox" value="1" />
+      </td>
+      <td>
+        <p style="line-height: 1.6; font-size: 85%;">Autorizzazione paesaggistica</p>
+      </td>
+      <td>
+        <input class="" id="Aut_comp_atto1" name="Aut_comp_atto1" mandatory_enabled="#atti_acquisiti1.checked()" label="Autorità competente al rilascio atto 1" style="width:100%; font-size: 85%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_atto1" name="Prot_atto1" mandatory_enabled="#atti_acquisiti1.checked()" label="Numero protocollo atto 1" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_atto1" name="Data_atto1" mandatory_enabled="#atti_acquisiti1.checked()" label="Data atto 1" style="width:100%;" type="date"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="atti_acquisiti" id="atti_acquisiti2" name="atti_acquisiti2" type="checkbox" value="2" />
+      </td>
+      <td>
+        <p style="line-height: 1.6; font-size: 85%;">Parere/nulla osta da parte della Soprintendenza</p>
+      </td>
+      <td>
+        <input class="" id="Aut_comp_atto2" name="Aut_comp_atto2" mandatory_enabled="#atti_acquisiti2.checked()" label="Autorità competente al rilascio atto 2" style="width:100%; font-size: 85%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_atto2" name="Prot_atto2" mandatory_enabled="#atti_acquisiti2.checked()" label="Numero protocollo atto 2" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_atto2" name="Data_atto2" mandatory_enabled="#atti_acquisiti2.checked()" label="Data atto 2" style="width:100%;" type="date"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="atti_acquisiti" id="atti_acquisiti3" name="atti_acquisiti3" type="checkbox" value="3" />
+      </td>
+      <td>
+        <p style="line-height: 1.6; font-size: 85%;">Valutazione dei Vigili del Fuoco del progetto</p>
+      </td>
+      <td>
+        <input class="" id="Aut_comp_atto3" name="Aut_comp_atto3" mandatory_enabled="#atti_acquisiti3.checked()" label="Autorità competente al rilascio atto 3" style="width:100%; font-size: 85%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_atto3" name="Prot_atto3" mandatory_enabled="#atti_acquisiti3.checked()" label="Numero protocollo atto 3" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_atto3" name="Data_atto3" mandatory_enabled="#atti_acquisiti3.checked()" label="Data atto 3" style="width:100%;" type="date"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="atti_acquisiti" id="atti_acquisiti4" name="atti_acquisiti4" type="checkbox" value="4" />
+      </td>
+      <td>
+        <p style="line-height: 1.6; font-size: 85%;">Autorizzazione relativa al vincolo idrogeologico</p>
+      </td>
+      <td>
+        <input class="" id="Aut_comp_atto4" name="Aut_comp_atto4" mandatory_enabled="#atti_acquisiti4.checked()" label="Autorità competente al rilascio atto 4" style="width:100%; font-size: 85%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_atto4" name="Prot_atto4" mandatory_enabled="#atti_acquisiti4.checked()" label="Numero protocollo atto 4" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_atto4" name="Data_atto4" mandatory_enabled="#atti_acquisiti4.checked()" label="Data atto 4" style="width:100%;" type="date"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="atti_acquisiti" id="atti_acquisiti5" name="atti_acquisiti5" type="checkbox" value="5" />
+      </td>
+      <td>
+        <p style="line-height: 1.6; font-size: 85%;">Autorizzazione relativa al vincolo idraulico</p>
+      </td>
+      <td>
+        <input class="" id="Aut_comp_atto5" name="Aut_comp_atto5" mandatory_enabled="#atti_acquisiti5.checked()" label="Autorità competente al rilascio atto 5" style="width:100%; font-size: 85%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_atto5" name="Prot_atto5" mandatory_enabled="#atti_acquisiti5.checked()" label="Numero protocollo atto 5" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_atto5" name="Data_atto5" mandatory_enabled="#atti_acquisiti5.checked()" label="Data atto 5" style="width:100%;" type="date"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="atti_acquisiti" id="atti_acquisiti6" name="atti_acquisiti6" type="checkbox" value="6" />
+      </td>
+      <td>
+        <p style="line-height: 1.6; font-size: 85%;">Autorizzazione relativa al pericolo idrogeologico</p>
+      </td>
+      <td>
+        <input class="" id="Aut_comp_atto6" name="Aut_comp_atto6" mandatory_enabled="#atti_acquisiti6.checked()" label="Autorità competente al rilascio atto 6" style="width:100%; font-size: 85%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_atto6" name="Prot_atto6" mandatory_enabled="#atti_acquisiti6.checked()" label="Numero protocollo atto 6" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_atto6" name="Data_atto6" mandatory_enabled="#atti_acquisiti6.checked()" label="Data atto 6" style="width:100%;" type="date"/>
+      </td>
+    </tr>
+    {% macro altri_atti_acquisiti(prefix) %}
+    {% set prefix = prefix|string %}
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="atti_acquisiti" id="atti_acquisiti{{ prefix }}" name="atti_acquisiti{{ prefix }}" type="checkbox" value="1" />
+      </td>
+      <td>
+        <input class="" id="Tipo_Atto{{ prefix }}" name="Tipo_Atto{{ prefix }}" mandatory_enabled="#atti_acquisiti{{ prefix }}.checked()" label="Tipologia atto {{ prefix }}" style="width:100%; font-size: 85%;"/>
+      </td>
+      <td>
+        <input class="" id="Aut_comp_atto{{ prefix }}" name="Aut_comp_atto{{ prefix }}" mandatory_enabled="#atti_acquisiti{{ prefix }}.checked()" label="Autorità competente al rilascio atto {{ prefix }}" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_atto{{ prefix }}" name="Prot_atto{{ prefix }}" mandatory_enabled="#atti_acquisiti{{ prefix }}.checked()" label="Numero protocollo atto {{ prefix }}" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_atto{{ prefix }}" name="Data_atto{{ prefix }}" mandatory_enabled="#atti_acquisiti{{ prefix }}.checked()" label="Data atto {{ prefix }}" style="width:100%;" type="date"/>
+      </td>
+    </tr>
+    {%- endmacro %}
+        
+    {% for i in range(7, 11) %}
+      {{ altri_atti_acquisiti(i) }}
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<h1 class="Modulo">ATTESTAZIONE DEL PROGETTISTA</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;">Il <b>progettista</b>, in qualità di persona esercente un servizio di pubblica necessità ai sensi degli artt. 359 e 481 del Codice Penale, esperiti i necessari accertamenti di carattere urbanistico, edilizio, statico, igienico ed a seguito del sopralluogo,</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 class="Modulo">ATTESTA</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: top; text-align: center;">
+        <div id="attestazione_prog" name="attestazione_prog" label="Attestazioni obbligatorie"> </div>
+        <input group="attestazione_prog" id="attestazione1_prog_check" name="attestazione1_prog_check" type="checkbox" value="1" dynamic_check="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">sotto la propria responsabilità che i lavori sono conformi agli strumenti urbanistici e ai regolamenti edilizi vigenti e non sono in contrasto con quelli adottati, che sono conformi ad ogni altra normativa e disciplina relativa alla loro realizzazione e sono realizzati nel rispetto, in particolare, delle norme antisismiche, di quelle sulla sicurezza idrogeologica, delle norme igienico-sanitarie, di efficienza energetica, di paesaggio e beni culturali, di altezze e distanze</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top; text-align: center;">
+        <input group="attestazione_prog" id="attestazione3_prog_check" name="attestazione3_prog_check" type="checkbox" value="3" dynamic_check="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;"><b>la corrispondenza della copia digitale con l'eventuale copia cartacea</b> presentata in scala grafica ai sensi dell'art. 11 della L.P. n. 15/2015;</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: top; text-align: center;">
+        <input group="attestazione_prog" id="attestazione2_prog_check" name="attestazione2_prog_check" type="checkbox" value="1" dynamic_check="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">ai sensi dell'art. 15 comma 2) della L.P. n. 15/2015, la <b>correttezza dei contenuti del progetto rispetto alle disposizioni vigenti e la rispondenza dei relativi contenuti rispetto a studi o perizie allegati</b> quale parte integrante ai progetti medesimi, secondo quanto previsto alla normativa vigente</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 class="Modulo">ALLEGA</h1>
+
+<table class="Modulo" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width:4%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+      </td>
+      <td style="width:15%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="docum_fotog" name="docum_fotog" type="checkbox" value="OBBLIGATORIO" dynamic_check="true" checked="true"/>
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Documentazione fotografica</b></p>
+      </td>
+      <td>
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_doc_fotogr" name="numero_doc_fotogr" style="width: 90%; text-align: center;" mandatory_enabled="#docum_fotog.checked()" type="number" min="1" max="100" label="Allegati: numero documenti fotografici"/></p>
+        <input id="GLOBO_allegato_cGEN-DOCUMENTAZIONE-FOTOGRAFICA" name="GLOBO_allegato_cGEN-DOCUMENTAZIONE-FOTOGRAFICA" obbligatorio="'OBBLIGATORIO'" type="hidden" value="" numero="#numero_doc_fotogr.value()"/>
+      </td>
+    </tr>  
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input id="Elaborati_progettuali" name="Elaborati_progettuali" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Elaborati progettuali rappresentativi dell'intervento</p>
+      </td>
+      <td >
+        <p style="line-height: 1.6; text-align: center;"><input id="num_elab_prog" name="num_elab_prog" mandatory_enabled="#Elaborati_progettuali.checked()" style="width: 90%; text-align: center;" type="number" min="1" max="100"/></p>
+        <input id="GLOBO_allegato_cGEN-ELABORATI-PROGETTUALI" name="GLOBO_allegato_cGEN-ELABORATI-PROGETTUALI" obbligatorio="#Elaborati_progettuali.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_elab_prog.value()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: center; text-align: center;">
+        <input id="elaborato_progettuale_impianti" name="elaborato_progettuale_impianti" type="checkbox" value="OBBLIGATORIO" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Elaborato/i progettuale/i relativo/i agli impianti</b> di cui al D.M. 37/2008</p>
+      </td>
+      <td>
+        <p style="line-height: 1.6; text-align: center;"><input id="num_elab_progett" name="num_elab_progett" mandatory_enabled="#elaborato_progettuale_impianti.checked()" style="width: 90%; text-align: center;" type="number" min="1" max="100"/></p>
+        <input id="GLOBO_allegato_cGEN-ELAB-PROG-IMPIANTI" name="GLOBO_allegato_cGEN-ELAB-PROG-IMPIANTI" obbligatorio="#elaborato_progettuale_impianti.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_elab_progett.value()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: top; text-align: center;">
+        <input id="altro_allegato" name="altro_allegato" type="checkbox" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Altri allegati</b></p>
+      </td>
+      <td>
+        <p style="line-height: 1.6; text-align: center;"><input id="num_altro_allegato" name="num_altro_allegato" mandatory_enabled="#altro_allegato.checked()" style="width: 90%; text-align: center;" type="number" min="1" max="100"/></p>
+        <input id="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" name="GLOBO_allegato_cGEN-ALTRI-ALLEGATI" obbligatorio="#altro_allegato.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_altro_allegato.value()" />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione" name="Presa_visione" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione" id="Presa_visione_check" name="Presa_visione_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.6;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#Referente_TitoloPersona.value() + ' ' + #Referente_Nome.value().toUpperCase() + ' ' + #Referente_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il progettista/tecnico incaricato <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+<input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden"/>
+<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden"/>
+<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden"/>
+
+<input id="Referente_CodiceFiscale" name="Referente_CodiceFiscale" type="hidden"/>
+<input id="Referente_TitoloPersona" name="Referente_TitoloPersona" type="hidden"/>
+<input id="Referente_Cognome" name="Referente_Cognome" type="hidden"/>
+<input id="Referente_Nome" name="Referente_Nome" type="hidden"/>
+
+{% endblock content %}
