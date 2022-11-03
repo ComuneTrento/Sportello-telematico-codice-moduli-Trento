@@ -261,7 +261,7 @@ urn_report="report:CSP_SESSION_REPORT"
 {{ immobili_trento_uniformata.oggetto(titolo = "SCIA Edilizia") }}
 
 <!-- PARAMETRI PER IMPORTAZIONE IN GESTIONALE -->
-<input class="inputNormal" id="Import_BackEnd_Tipologia_Decodifica" name="Import_BackEnd_Tipologia_Decodifica"  dynamic_value="#Inizio_attivita.value() == 1 ? 55 : ( #Inizio_attivita.value() == 2 ? 56 : ( #Inizio_attivita.value() == 3 ? 54 : ( #Inizio_attivita.value() == 4 ? 57 : 999 )) )"  type="hidden"/>
+<input class="inputNormal" id="Import_BackEnd_Tipologia_Decodifica" name="Import_BackEnd_Tipologia_Decodifica"  dynamic_value="#Inizio_attivita.value() == 1 ? 55 : ( #Inizio_attivita.value() == 2 ? 56 : ( #Inizio_attivita.value() == 3 ? 54 : ( #Inizio_attivita.value() == 4 ? 57 :  ( #Inizio_attivita.value() == 5 ? 55 : 999 ) )) )"  type="hidden"/>
 <input class="inputNormal" id="Import_BackEnd_Definizione_Modulo" name="Import_BackEnd_Definizione_Modulo" style="width: 100%;" label="" value="M47500-SEGNALAZIONE-CERTIFICATA-INIZIO-ATTIVITA"  type="hidden" />
 <input class="inputNormal" id="Import_BackEnd_Descrizione" name="Import_BackEnd_Descrizione" style="width: 100%;" label="" value="SCIA"  type="hidden" />
 <input class="inputNormal" id="Import_BackEnd_Tipologia" name="Import_BackEnd_Tipologia" style="width: 100%;" label="" dynamic_value="#Inizio_attivita.value()"  type="hidden" />
@@ -273,8 +273,9 @@ urn_report="report:CSP_SESSION_REPORT"
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
-<h1 class="Modulo" style="text-align: center;">SEGNALAZIONE CERTIFICATA DI INIZIO ATTIVITA'<br>
-  <span style="font-size:75%">(artt. 85 e ss. della legge provinciale del 4 agosto 2015, n. 15)</span>
+<h1 class="Modulo" style="text-align: center;">SEGNALAZIONE CERTIFICATA DI INIZIO ATTIVIT&Agrave;<br>
+  <span style="font-size:75%">(artt. 85 e ss. della legge provinciale del 4 agosto 2015, n. 15)</span><br>
+  <span style="font-size:75%">(articolo 7, della legge provinciale 2 maggio 2022, n.4)</span>
 </h1>
 
 <input id="Tipo_compilante" name="Tipo_compilante" dynamic_value="'progettista/tecnico incaricato delegato'" style="width:30%;" type="hidden" readonly/>
@@ -464,6 +465,38 @@ urn_report="report:CSP_SESSION_REPORT"
       </td>
       <td>
         <p style="line-height:1.6;">ai sensi dell’art. 85, comma 1, lettera i) della legge provinciale del 4 agosto 2015, n. 15, per la realizzazione della parte di intervento non ultimata</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Inizio_attivita" id="Inizio_attivita0" name="Inizio_attivita" type="radio" value="0" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">nessuno dei precedenti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input id="Inizio_attivita5" name="Inizio_attivita" type="checkbox" value="5" dynamic_check="#Inizio_attivita0.checked()" enabled="true"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">ai sensi dell'art. 5 della legge provinciale del 2 maggio 2022, n.4: l'installazione di impianti di produzione di
+energia da fonti rinnovabili, i cui lavori inizieranno in data <input class="" id="Data_Inizio_attivita5" name="Data_Inizio_attivita5" label="Data di inizio lavori" type="date" mandatory_enabled="#Inizio_attivita5.checked()" /> 
+           <br>(i lavori non possono iniziare prima di 30 giorni dalla data di presentazione della presente Segnalazione Certificata di Inizio Attività, ai sensi del comma 2 dell’art.5 della Legge Provinciale 2 maggio 2022 n.4)
+          <input id="Trasforma_data5" name="Trasforma_data5" dynamic_value="#Data_Inizio_attivita5.value().replace(/-/g, '/');" type="hidden" >
+           <input id="sposta_data" name="sposta_data" dynamic_value="#Trasforma_data5.value().substring(8, 10) + '/' + #Trasforma_data5.value().substring(5, 8) + #Trasforma_data5.value().substring(0, 4)" type="hidden">
+          <!-- CONTROLLO CHE LA DATA DI INIZIO LAVORI SIA 10 GIORNI PRIMA DELLA DATA ODIERNA -->
+          <!-- il campo 'controllo_10gg' deve essere nascosto con 'display:none' in modo che sia raggiungibile dal validator quando il controllo è invalido  -->
+          <input id="controllo_30gg" type="hidden" label="Non rispettati i tempi di comunicazione tardiva o successiva ai lavori" name="controllo_30gg" dynamic_check="#Inizio_attivita5.checked() and DaysBetweenDate(#Data_PDF.value(), #sposta_data.value()) < 30"/>
+          <input id="correttezza_30gg" name="correttezza_30gg" enabled="#Inizio_attivita5.checked() and #sposta_data.value() != ''" dynamic_value="#controllo_30gg.checked() ? 'ATTENZIONE: comunicazione tardiva o successiva ai lavori --- sanzione' : 'Ok, rispettati i 30 giorni di preavviso necessari'" style="display:none; pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/>
+          <input id="check_controllo_30gg" name="check_controllo_30gg" label="La comunicazione deve essere presentata almeno 30 giorni prima dell'inizio lavori. Occorre posticipare la data di inizio lavori" dynamic_value="#controllo_30gg.checked() ? '' : 'OK'" mandatory="true" style="display:none; pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;" />
+          <input id="check_controllo_inizio" name="check_controllo_inizio" label="La data di inizio lavori deve essere successiva alla data di comunicazione" dynamic_value="#Inizio_attivita5.checked() and DaysBetweenDate(#Data_PDF.value(), #sposta_data.value()) >= 0 ? 'OK' : ''" mandatory="true" style="display:none; pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;"/>
+          </p>
       </td>
     </tr>
   </tbody>

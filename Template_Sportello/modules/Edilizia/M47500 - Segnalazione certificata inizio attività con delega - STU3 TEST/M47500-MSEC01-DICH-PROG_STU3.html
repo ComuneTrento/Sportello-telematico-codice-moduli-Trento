@@ -894,6 +894,141 @@ tipo_mime="application/pdf"/>
 </table>
 
 <br>
+ <br>
+
+<input id="Inizio_attivita5" name="Inizio_attivita5" type="hidden"/>
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+         <p style="line-height:1.6;">
+         <b>14 - </b>ai sensi dell'art. 5 della legge provinciale del 2 maggio 2022, n.4:
+         </p> 
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta" >
+      <td style="width:4%; border-right: none; border-left: none;">
+            {# regole di validazione di potenza #}
+           <input id="Potenza_impianto2_valid" name="Potenza_impianto2_valid" label="Indicare la potenza dell'impianto modificato" style="visibility:hidden;pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;width: 0;"
+          mandatory="#Inizio_attivita5.checked()" 
+          dynamic_value="#Impianto171.checked() || #Impianto181.checked() || #Impianto172.checked() 
+          || #Impianto182.checked() || #Impianto19.checked() || 
+          #Impianto20.checked() || #Impianto21.checked() || #Impianto22.checked() || 
+          #Impianto23.checked() || #Impianto24.checked() || #Impianto25.checked() || #Impianto26.checked() ? 'OK': ''"/>
+      </td>
+      <td style="width:30%; border-right: none; border-left: none;"><p style="text-align: center;"><b>TIPOLOGIA IMPIANTO</b></p></td>
+      {# <td style="width:15%; border-right: none; border-left: none;"><p style="text-align: center;margin-bottom:0rem;"><b>POTENZA EVENTUALE IMPIANTO IN SOSTITUZIONE (kW)</b></p></td> #}
+      <td style="width:40%; border-right: none; border-left: none;"><p style="text-align: center;"><b>POTENZA</b></p></td>
+      <td style="width:30%; border-right: none; border-left: none;"><p style="text-align: center;"><b>NOTE</b></p></td>
+    </tr>
+
+    {% macro richiesta_potenza(prefix, descr0, descrBold, descr1, pre=false, max, min=0, udm="kW") %}
+    {% set prefix = prefix|string %}
+
+    <tr id="Info_potenza{{ prefix }}" style="border:none;">
+        <td style="width:4%;vertical-align: top; padding-top: 0.5rem; text-align: center; border-right: none; border-left: none;">
+          <input class="" id="Impianto{{ prefix }}" name="Impianto{{ prefix }}" label="Tipologia impianto {{ prefix }}" type="checkbox" 
+          enabled="true" />
+        </td>
+        <td style="width:30%; vertical-align: top;border-right: none; border-left: none;"><p style="margin-bottom:1rem;">{{descr0}}<b>{{descrBold}}</b>{{descr1}}</p></td>
+        {# <td style="width:15%;vertical-align: top; padding-top: 0.5rem; text-align: center; border-right: none; border-left: none;"></td> #}
+        <td style="width:40%;vertical-align: top; padding-top: 0.5rem; text-align: center; border-right: none; border-left: none;">
+        <div style="display:flex;flex-direction:column;justify-content: space-around;">
+        <div style="text-align:left;margin-bottom:2rem;">
+        {% if pre %}
+          <p>POTENZA IMPIANTO ESISTENTE<br>
+          <input style="width:100%;" class="" id="Potenza_pre{{ prefix }}" name="Potenza_pre{{ prefix }}" label="Potenza impianto precedente alla modifica" type="number" placeholder="{{udm}}"  mandatory="#Impianto172.checked()" enabled="#Impianto{{ prefix }}.checked()"/>
+         </p></div>
+        <div style="margin-bottom:1rem;">
+          <p>POTENZA NUOVO IMPIANTO<br>
+         {% endif %}
+        <input style="width:100%;" class="" id="Potenza{{ prefix }}" name="Potenza{{ prefix }}" label="Potenza impianto" placeholder="{{udm}}" type="number" min="{{min}}" max="{{max}}" mandatory_enabled="#Impianto{{ prefix }}.checked()"/>
+        {% if pre %}</p>  {% endif %}</div>
+        <div>
+        </td>
+        <td style="width:30%;vertical-align: top; padding-top: 0.5rem; text-align: center; border-right: none; border-left: none;"><textarea rows="4" style="width:100%;height:100%;" class="" id="Note{{ prefix }}" name="Note{{ prefix }}" label="Note impianto" enabled="#Impianto{{ prefix }}.checked()"></textarea></td>
+    </tr>
+    {%- endmacro %}
+        
+      {{ richiesta_potenza(171, 'Installazione di ','impianti solari termici',' collocati a terra in aree diverse dalle pertinenze, 
+      aventi potenza inferiore a quella individuata nell’Allegato A della L.P. 4/2022.', max=50 ) }}
+      {{ richiesta_potenza(181, 'Installazione di ','impianti solari fotovoltaici','
+collocati a terra in aree diverse dalle
+pertinenze, aventi potenza inferiore a quella
+individuata nella tabella A del dlgs 387/2003', max=50) }}
+      {{ richiesta_potenza(172, '','Modifiche a impianti esistenti',' o progetti
+autorizzati non ancora realizzati che non
+rientrano nei limiti previsti per le variazioni
+in corso d’opera di cui all’art.92, c.3, lett.B
+della L.P. 15/2015', pre=true, max=50) }}
+      {{ richiesta_potenza(182, 'Installazione di ','pompe di calore (energia
+geotermica, idrotermica e arerotermica)','
+in interventi che prevedano alterazione di
+volumi, superfici, destinazione d’uso, che
+riguardano parti strutturali, comportino
+aumento di u.i, o incremento di parametri
+urbanistici, aventi potenza inferiore a quella
+individuata nell’Allegato A della L.P. 4/2022', max=100) }}
+      {{ richiesta_potenza(19, 'Installazione di ','generatori di calore',' con
+cambio di ombustibile o interventi che
+prevedano l’alterazione di volumi, superfici,
+destinazione d’uso, che riguardano parti
+strutturali, comportino aumento di u.i, o
+incremento di parametri urbanistici aventi
+potenza inferiore a quella individuata nella
+tabella A del dlgs 387/2003', max=50) }}
+      {{ richiesta_potenza(20, 'Installazione di ','impianti alimentati da
+biomassa organica, gas di discarica, gas
+residuati dai processi di depurazione e
+biogas',' aventi potenza inferiore a quella
+individuata nella tabella A del dlgs 387/2003', max=300) }}
+      {{ richiesta_potenza(21, 'Installazione di ','impianti alimentati da
+biomasse legnose operanti in assetto
+cogenerativo',' e realizzati in superfici
+esistenti aventi potenza compresa tra quella
+prevista dall’art.5 comma 2 lettera g del
+decreto del MiSe n.37/2008 quella
+individuata nella tabella A del dlgs 387/2003', max=200, min=50) }}
+      {{ richiesta_potenza(22, 'Installazione di ','impianti alimentati da
+biomasse legnose operanti in assetto
+termici',' e realizzati in superfici esistenti
+aventi potenza compresa tra quella prevista
+dall’art.5 comma 2 lettera g del decreto del
+MiSe n.37/2008 quella individuata
+dall’allegato D della L.P. 4/2022', max=1000, min=50) }}
+      {{ richiesta_potenza(23, 'Installazione di ','impianti eolici',', diversi da
+quelli previsti dall’allegato D della L.P.
+4/2022 aventi potenza inferiore a quella
+individuata nella tabella A del dlgs 387/2003', max=60) }}
+      {{ richiesta_potenza(24, 'Installazione di ','impianti di produzione di
+biometano',' a partire da fonti rinnovabili,
+avente caratteristiche e condizioni di utilizzo
+corrispondenti a quelle del gas naturale e
+idoneo all’immissione nella rete del gas
+naturale avente potenza inferiore alla soglia
+indicata all\'art. 8-bis del d.lgs. 28/2011,
+comma 1', max=500, min=0, udm="s/metri cubi/ora") }}
+      {{ richiesta_potenza(25, 'Installazione di ','elettrolizzatori per la
+produzione di idrogeno',' ovunque ubicati
+aventi potenza inferiore a quella individuata
+all’art.38 del Dlgs 199/2021', max=10, min=0, udm='MW') }}
+      {{ richiesta_potenza(26, 'Installazione di ','elettrolizzatori per la
+produzione di idrogeno',' ubicati all\'interno
+di aree industriali ovvero di aree ove sono
+situati impianti industriali anche per la
+produzione di energia da fonti rinnovabili,
+ancorché non più operativi o in corso di
+dismissione, la cui realizzazione non
+comporti occupazione in estensione delle
+aree stesse, né aumento degli ingombri in
+altezza rispetto alla situazione esistente e
+che non richiedano una variante agli
+strumenti urbanistici adottati con qualsiasi
+potenza.') }}
+
+  </tbody>
+</table>
+<br>
 <br>
 
 <h1 class="Modulo">RELAZIONE ai sensi dell’art. 86, comma 3, della L.P. n. 15/2015</h1>
@@ -959,6 +1094,7 @@ tipo_mime="application/pdf"/>
   </tbody>
 </table>
 
+ 
 <br>
 <br>
 
