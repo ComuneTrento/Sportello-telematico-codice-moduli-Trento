@@ -332,12 +332,16 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
     </div>
   </div>
   <div class="form-row">
-      <div class="form-group col-lg-6">
+      <div class="form-group col-lg-4">
         <label for="Soggetto_CF"> Codice fiscale </label>
-        <input class="form-control" id="Soggetto_CF" name="Soggetto_CF" label="Codice fiscale del soggetto rappresentato" mandatory="#Soggetto_PIVA.value() == ''" format="cf" onkeyup="this.value = this.value.toUpperCase();"> 
+        <input class="form-control" id="Soggetto_CF" name="Soggetto_CF" label="Codice fiscale del soggetto rappresentato" mandatory="#Soggetto_PIVA.value() == '' and #Soggetto_CFAss.value() == ''" format="cf" onkeyup="this.value = this.value.toUpperCase();"> 
       </div>
-      <div class="form-group col-lg-6">
-        <label for="Soggetto_PIVA"> Partita IVA/Codice fiscale associazione </label>
+      <div class="form-group col-lg-4">
+        <label for="Soggetto_CFAss"> Codice fiscale associazione </label>
+        <input class="form-control" id="Soggetto_CFAss" name="Soggetto_CFAss" label="Codice fiscale associazione del soggetto rappresentato" format="piva"> 
+      </div> 
+      <div class="form-group col-lg-4">
+        <label for="Soggetto_PIVA"> Partita IVA </label>
         <input class="form-control" id="Soggetto_PIVA" name="Soggetto_PIVA" label="Partita IVA del soggetto rappresentato" format="piva"> 
       </div>  
   </div>
@@ -549,7 +553,7 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
     <div id="Dichiara4" name="Dichiara4" label="Tutte le dichiarazioni sono obbligatorie" mandatory="true"></div>
     <input class="form-check-input" group="Dichiara4" id="Dichiara41" name="Dichiara4" type="checkbox" value="SI">
     <label class="form-check-label" for="Dichiara41"> 
-      di aver preso visione dell'<a href="https://www.comune.trento.it/Comune/Atti-e-albo-pretorio/Deliberazioni/Deliberazioni-di-Giunta/Delibera-19-del-2022-Giunta-Comunale" target="_blank">Allegato 1 "CRITERI E CONDIZIONI DI UTILIZZO SI SPAZI PUBBLICI ALL'APERTO"</a> della deliberazione di Giunta comunale n. 19 del 7.02.2022 e di dichiarare l'iniziativa:
+      di aver preso visione dell'<a href="https://www.comune.trento.it/Comune/Atti-e-albo-pretorio/Deliberazioni/Deliberazioni-di-Giunta/Delibera-19-del-2022-Giunta-Comunale" target="_blank">Allegato 1 "CRITERI E CONDIZIONI DI UTILIZZO DI SPAZI PUBBLICI ALL'APERTO"</a> della deliberazione di Giunta comunale n. 19 del 7.02.2022 e di dichiarare l'iniziativa:
     </label>
   </div>
     <div id="Dichiara4_Conformita" name="Dichiara4_Conformita" label="Specificare la conformità o meno dell'iniziativa rispetto a criteri e condizioni di utilizzo degli spazi pubblici" mandatory_enabled="#Dichiara41.checked()"> </div>
@@ -725,7 +729,7 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
   </div> -->
   <div class="form-row">
     <div class="form-group col-lg-12">
-      <label for="Iniziativa_Qualita">1. Breve descrizione dell'iniziativa, qualità ed accuratezza complessiva della progettazione sotto il profilo organizzativo, gestione, procedurale, compresi gli aspetti della sicurezza:</label>
+      <label for="Iniziativa_Qualita">1. Breve descrizione dell'iniziativa, qualità ed accuratezza complessiva della progettazione sotto il profilo organizzativo, gestionale, procedurale, compresi gli aspetti della sicurezza:</label>
         <textarea class="form-control" id="Iniziativa_Qualita" name="Iniziativa_Qualita" label="Qualità ed accuratezza della progettazione" style="width:100%;height:2cm" mandatory="true"></textarea>
     </div>
   </div>
@@ -922,39 +926,60 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
 
 <div class="container border bg-light">
   <div class="form-row">
-    <label class="title">
-      <b>
+    <div class="title-2 col-lg-10">
         ELENCO DEGLI ALLEGATI
-      </b>
-    </label>
+    </div>
+    <div class="title-2 col-lg-2">
+        NUMERO
+    </div>
   </div>
-  
-      <div class="form-check indent-1">
+    <div class="form-row">
+      <div class="form-check indent-1 col-lg-10">
           <input class="form-check-input" id="DOCUMENTO_DELEGANTE" name="DOCUMENTO_DELEGANTE" type="checkbox" dynamic_check="#Tipologia_Richiedente.value() != 'Legale rappresentante'" enabled="#Tipologia_Richiedente.value() != 'Legale rappresentante'" value="OBBLIGATORIO">
           <label class="form-check-label" for="DOCUMENTO_DELEGANTE">Carta di identità del legale rappresentante (o carta di soggiorno/permesso di soggiorno)  </label>
       </div>
-      <div class="form-check indent-1">
+      <div class="form-group col-lg-2">
+        <input class="form-control" type="number" id="DELEGANTE_NUM" name="DELEGANTE_NUM" mandatory_enabled="#DOCUMENTO_DELEGANTE.checked()" min="1" max="2" maxlength="2">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-check indent-1  col-lg-10">
           <input class="form-check-input" id="DOCUMENTO_DELEGA" name="DOCUMENTO_DELEGA" type="checkbox" dynamic_check="#Tipologia_Richiedente.value() != 'Legale rappresentante'" enabled="#Tipologia_Richiedente.value() != 'Legale rappresentante'" value="OBBLIGATORIO">
           <label class="form-check-label" for="DOCUMENTO_DELEGA">Modulo di delega del legale rappresentante </label>
       </div>
-      <div class="form-check indent-1">
+    </div>
+    <div class="form-row">
+      <div class="form-check indent-1  col-lg-10">
         <input class="form-check-input" id="RENDERING" name="RENDERING" type="checkbox" value="OBBLIGATORIO">
         <!-- <input class="form-check-input" id="RENDERING" name="RENDERING" type="checkbox" dynamic_check="#Iniziativa_Tipologia.value() !=''" enabled="#Iniziativa_Tipologia.value() !=''" value="OBBLIGATORIO"> -->
         <label class="form-check-label" for="RENDERING">Rendering/immagini/descrizione allestimenti con ingombri e tipologie strutture (allegato obbligatorio se presenti)
-</label>
+        </label>
       </div>
-      <div class="form-check indent-1">
+      <div class="form-group col-lg-2">
+        <input class="form-control" type="number" id="RENDERING_NUM" name="RENDERING_NUM" mandatory_enabled="#RENDERING.checked()" min="1" max="10" maxlength="2" value="0">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-check indent-1 col-lg-10">
         <input class="form-check-input" id="RELAZIONE_ACUSTICA" name="RELAZIONE_ACUSTICA" type="checkbox" dynamic_check="#Iniziativa_Musica2.checked()" enabled="#Iniziativa_Musica2.checked()"value="OBBLIGATORIO">
         <label class="form-check-label" for="RELAZIONE_ACUSTICA">Relazione acustica o documento analogo </label>
       </div>
-      <div class="form-check indent-1">
+    </div>
+    <div class="form-row">
+      <div class="form-check indent-1 col-lg-10">
         <input class="form-check-input" id="INTEGRAZIONE" name="INTEGRAZIONE" type="checkbox" value="OBBLIGATORIO">
         <label class="form-check-label" for="INTEGRAZIONE">Integrazione dei contenuti dell'iniziativa </label>
       </div>
-      <div class="form-check indent-1">
-        <input class="form-check-input" id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO">
-        <label class="form-check-label" for="ALTRI_ALLEGATI">Altri allegati: </label>
-        <input class="form-control w-75 d-inline-block" type="text" id="AltriAllegati" name="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()">
+    </div>
+      <div class="form-row">
+        <div class="form-check indent-1 col-lg-10">
+          <input class="form-check-input" id="ALTRI_ALLEGATI" name="ALTRI_ALLEGATI" type="checkbox" value="OBBLIGATORIO">
+          <label class="form-check-label" for="ALTRI_ALLEGATI">Altri allegati: </label>
+          <input class="form-control w-75 d-inline-block" type="text" id="AltriAllegati" name="AltriAllegati" mandatory_enabled="#ALTRI_ALLEGATI.checked()">
+        </div>
+        <div class="form-group col-lg-2">
+          <input class="form-control" type="number" id="ALTRI_NUM" name="ALTRI_NUM" mandatory_enabled="#ALTRI_ALLEGATI.checked()" min="1" max="10" maxlength="2" value="0">
+        </div>
       </div>
 </div>
 
@@ -998,9 +1023,9 @@ MANIFESTAZIONE INTERESSE PARTECIPAZIONE AD EVENTI
 
 <input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_cM2812-MANIFESTAZIONE-INTERESSE-PARTECIPAZIONE-EVENTI-TERRITORIO-COMUNE" name="GLOBO_modulo_cM2812-MANIFESTAZIONE-INTERESSE-PARTECIPAZIONE-EVENTI-TERRITORIO-COMUNE" type="hidden" value="">
 
-<input id="GLOBO_allegato_cM2812-A01-DOCUMENTO-IDENTITA-LEGALE-RAPPRESENTANTE" name="GLOBO_allegato_cM2812-A01-DOCUMENTO-IDENTITA-LEGALE-RAPPRESENTANTE" type="hidden" value="" obbligatorio="#DOCUMENTO_DELEGANTE.checked() ? 'OBBLIGATORIO' : ''">
-<input id="GLOBO_allegato_cM2812-A09-ALTRI-ALLEGATI" name="GLOBO_allegato_cM2812-A09-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
-<input id="GLOBO_allegato_cM2812-A02-RENDERING-ALLESTIMENTI" name="GLOBO_allegato_cM2812-A02-RENDERING-ALLESTIMENTI" obbligatorio="#RENDERING.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
+<input id="GLOBO_allegato_cM2812-A01-DOCUMENTO-IDENTITA-LEGALE-RAPPRESENTANTE" name="GLOBO_allegato_cM2812-A01-DOCUMENTO-IDENTITA-LEGALE-RAPPRESENTANTE" type="hidden" value="" obbligatorio="#DOCUMENTO_DELEGANTE.checked() ? 'OBBLIGATORIO' : ''" numero="#DELEGANTE_NUM.value()">
+<input id="GLOBO_allegato_cM2812-A09-ALTRI-ALLEGATI" name="GLOBO_allegato_cM2812-A09-ALTRI-ALLEGATI" obbligatorio="#ALTRI_ALLEGATI.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#ALTRI_NUM.value()">
+<input id="GLOBO_allegato_cM2812-A02-RENDERING-ALLESTIMENTI" name="GLOBO_allegato_cM2812-A02-RENDERING-ALLESTIMENTI" obbligatorio="#RENDERING.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#RENDERING_NUM.value()">
 <input id="GLOBO_allegato_cM2812-A03-INTEGRAZIONE-CONTENUTI-INIZIATIVA" name="GLOBO_allegato_cM2812-A03-INTEGRAZIONE-CONTENUTI-INIZIATIVA" obbligatorio="#INTEGRAZIONE.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
 <input id="GLOBO_allegato_cM2812-A04-RELAZIONE-ACUSTICA" name="GLOBO_allegato_cM2812-A04-RELAZIONE-ACUSTICA" obbligatorio="#RELAZIONE_ACUSTICA.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
 <input id="GLOBO_allegato_cM2812-A05-DELEGA-LEGALE-RAPPRESENTANTE" name="GLOBO_allegato_cM2812-A05-DELEGA-LEGALE-RAPPRESENTANTE" obbligatorio="#DOCUMENTO_DELEGA.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="">
