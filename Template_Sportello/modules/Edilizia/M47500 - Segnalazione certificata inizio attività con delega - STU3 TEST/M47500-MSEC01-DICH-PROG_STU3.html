@@ -912,21 +912,23 @@ tipo_mime="application/pdf"/>
            <input id="Potenza_impianto2_valid" name="Potenza_impianto2_valid" label="Tipologia e potenza dell'impianto di produzione di energia da fonti rinnovabili" 
             style="visibility:hidden;pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;width: 0;"
           mandatory="#Inizio_attivita5.value() == 5" 
-          dynamic_value="#Impianto183.checked() || #Impianto184.checked() || #Impianto24.checked() || #Impianto25.checked() || 
-          #Impianto26.checked() || #Impianto27.checked() || #Impianto28.checked() || 
-          #Impianto29.checked() || #Impianto30.checked() || #Impianto31.checked() || #Impianto32.checked() ? 'OK': ''"/>
+          dynamic_value="#Energia_TipoImpianto_183.checked() || #Energia_TipoImpianto_184.checked() || #Energia_TipoImpianto_24.checked() || #Energia_TipoImpianto_25.checked() || 
+          #Energia_TipoImpianto_26.checked() || #Energia_TipoImpianto_27.checked() || #Energia_TipoImpianto_28.checked() || 
+          #Energia_TipoImpianto_29.checked() || #Energia_TipoImpianto_30.checked() || #Energia_TipoImpianto_31.checked() || #Energia_TipoImpianto_32.checked() ? 'OK': ''"/>
       </td>
       <td style="width:30%;"><p style="text-align: center;"><b>TIPOLOGIA IMPIANTO</b></p></td>
       <td style="width:40%;"><p style="text-align: center;"><b>POTENZA</b></p></td>
       <td style="width:30%;"><p style="text-align: center;"><b>NOTE</b></p></td>
     </tr>
 
-    {% macro richiesta_potenza(prefix, descr0, descrBold, descr1, pre=false, max, min=0, udm="kW") %}
-    {% set prefix = prefix|string %}
+    {% macro richiesta_potenza(idImpianto, descr0, descrBold, descr1, pre=false, max, min=0, udm="kW") %}
+    {% set idImpianto = idImpianto|string %}
+    <input id="Internal_TipoImpianto_Enabled{{idImpianto}}" name="Internal_TipoImpianto_Enabled{{idImpianto}}" type="hidden" dynamic_check="true"/>
+    <input id="Energia_Descrizione_{{idImpianto}}" name="Energia_Descrizione_{{idImpianto}}" value="{{descr0}}{{descrBold}}{{descr1}}" style="visibility:hidden;pd4ml-display:none;-webkit-appearance: none;-moz-appearance: none;appearance: none;width: 0;"/>
 
-    <tr id="Info_potenza{{ prefix }}" style="">
+    <tr style="">
         <td style="width:4%;vertical-align: top; padding-top: 0.5rem; text-align: center; ">
-          <input class="" id="Impianto{{ prefix }}" name="Impianto{{ prefix }}" label="Tipologia impianto {{ prefix }}" type="checkbox" 
+          <input class="" id="Energia_TipoImpianto_{{ idImpianto }}" name="Energia_TipoImpianto_{{ idImpianto }}" label="Tipologia impianto {{ idImpianto }}" type="checkbox" 
           enabled="true" />
         </td>
         <td style="width:30%; vertical-align: top;"><p style="margin-bottom:1rem;">{{descr0}}<b>{{descrBold}}</b>{{descr1}}</p></td>
@@ -935,16 +937,16 @@ tipo_mime="application/pdf"/>
         <div style="text-align:left;margin-bottom:2rem;">
         {% if pre %}
           <p>POTENZA IMPIANTO ESISTENTE<br>
-          <input style="width:100%;" class="" id="Potenza_pre{{ prefix }}" name="Potenza_pre{{ prefix }}" label="Potenza impianto precedente alla modifica" type="number" placeholder="{{udm}}"  mandatory="#Impianto24.checked()" enabled="#Impianto{{ prefix }}.checked()"/>
+          <input style="width:100%;" class="" id="Energia_PotenzaPrec_{{ idImpianto }}" name="Energia_PotenzaPrec_{{ idImpianto }}" label="Potenza impianto precedente alla modifica" type="number" placeholder="{{udm}}"  mandatory="#Energia_TipoImpianto_24.checked()" enabled="#Energia_TipoImpianto_{{ idImpianto }}.checked()"/>
          </p></div>
         <div style="margin-bottom:1rem;">
           <p>POTENZA NUOVO IMPIANTO<br>
          {% endif %}
-        <input style="width:100%;" class="" id="Potenza{{ prefix }}" name="Potenza{{ prefix }}" label="Potenza impianto" placeholder="{{udm}}" type="number" min="{{min}}" max="{{max}}" mandatory_enabled="#Impianto{{ prefix }}.checked()"/>
+        <input style="width:100%;" class="" id="Energia_Potenza_{{ idImpianto }}" name="Energia_Potenza_{{ idImpianto }}" label="Potenza impianto" placeholder="{{udm}}" type="number" min="{{min}}" max="{{max}}" mandatory_enabled="#Energia_TipoImpianto_{{ idImpianto }}.checked()"/>
         {% if pre %}</p>  {% endif %}</div>
         <div>
         </td>
-        <td style="width:30%;vertical-align: top; padding-top: 0.5rem; text-align: center; border-right: none; border-left: none;"><textarea rows="4" style="width:100%;height:100%;" class="" id="Note{{ prefix }}" name="Note{{ prefix }}" label="Note impianto" enabled="#Impianto{{ prefix }}.checked()"></textarea></td>
+        <td style="width:30%;vertical-align: top; padding-top: 0.5rem; text-align: center; border-right: none; border-left: none;"><textarea rows="4" style="width:100%;height:100%;" class="" id="Energia_Note_{{ idImpianto }}" name="Energia_Note_{{ idImpianto }}" maxlength="2000" label="Note impianto" enabled="#Energia_TipoImpianto_{{ idImpianto }}.checked()"></textarea></td>
     </tr>
     {%- endmacro %}
         
