@@ -286,7 +286,7 @@
   {{ anagrafica_trento_uniformata.attributi_hidden(prefix) }}
 {% endmacro %}
 
-{% macro anagrafica_intestatario_aggiuntivo(prefix="AltroIntestatario", title="ULTERIORI INTESTATARI (firma autografa)", delega ="true") -%}
+{% macro anagrafica_intestatario_aggiuntivo(prefix="AltroIntestatario", title="ULTERIORI INTESTATARI (firma autografa)", delega ="true", firma_digitale="false") -%}
 {% do all_prefix.append( prefix ) %}
 {% set Temp = prefix|replace("NonImportare", "NI") %}
 {% if prefix != Temp %}
@@ -368,15 +368,17 @@
         <p style="line-height: 1.6; font-size: 85%; text-align: center;">Numero documenti</p>
       </td>
     </tr>
+     {% if firma_digitale == 'false' %}
     <tr>
       <td style="vertical-align: center; text-align: center;">
         <input id="Modulo_compilato_firmato_ult_int" name="Modulo_compilato_firmato_ult_int" type="checkbox" dynamic_check="true" enabled="true" value="OBBLIGATORIO"/>
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p style="line-height:1.6;"><b>Copia della domanda</b> firmata con firma autografa</p>
+        <p style="line-height:1.6;"><b>Scansione della stampa</b> di questo modulo firmata</p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo_ult_int" name="numero_copia_modulo_ult_int" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;">
+        <input id="numero_copia_modulo_ult_int" name="numero_copia_modulo_ult_int" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
         <input id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
       </td>
     </tr>
@@ -388,10 +390,12 @@
         <p style="line-height:1.6;">Copia del <b>documento d'identità</b></p>
       </td>
       <td style="background-color: #eeeeee;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_docident_ult_int" name="numero_copia_docident_ult_int" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
+        <p style="line-height: 1.6; text-align: center;">
+        <input id="numero_copia_docident_ult_int" name="numero_copia_docident_ult_int" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
         <input id="GLOBO_allegato_cGEN-CDI" name="GLOBO_allegato_cGEN-CDI" obbligatorio="#GEN_CDI_ult_int.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
       </td>
     </tr>
+     {% endif %}
     <tr>
       <td style="vertical-align: center; text-align: center;">
         <input id="Contr_locaz_ult_int" name="Contr_locaz_ult_int" type="checkbox" dynamic_check="#Parametri_Titolo3.checked()" enabled="#Parametri_Titolo3.checked()" value="OBBLIGATORIO"/>
