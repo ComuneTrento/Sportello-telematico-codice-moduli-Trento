@@ -2361,3 +2361,57 @@ function get_ufficio_dest() {
 <option value="Villamontagna">Villamontagna</option>
 <option value="Villazzano">Villazzano</option>
 {%- endmacro %}
+
+<!-- Schema_prog_impianti1 -->
+{% macro allegato_con_firmatario(id, preselezione, descrizione, codice, indice) -%}
+ <tr>
+        <td style="width: 4%; vertical-align: top; padding-top: 0.5em; text-align: center;" rowspan="3">
+          <input id="{{id}}" name="{{id}}" type="checkbox" value="OBBLIGATORIO" dynamic_check="#{{preselezione}}.checked()" enabled="#{{preselezione}}.checked()"/>
+        </td>
+        <td style="background-color: #eeeeee;" colspan="3">
+          <p style="line-height:1.8;">{{descrizione}}</p>
+          <div id="altro_firmatario_cf{{indice}}" name="altro_firmatario_cf{{indice}}" label="Firmatario allegato" 
+            mandatory_enabled="#{{id}}.checked()" value="ult_lavori"></div>
+            <p style="line-height: 1.8;"><b>firmato da </b><br>
+            <input id="altro_firmatario_cf{{indice}}_ult_lavori" name="altro_firmatario_cf{{indice}}" type="radio" value="ult_lavori"/> Progettista <input id="tecnico_firmatario{{indice}}" name="tecnico_firmatario{{indice}}" 
+            style="border:none!important; line-height:1.6; font-weight:400; color:rgb(33, 37, 41); background-color: rgb(238, 238, 238);" tabindex="-1" readonly 
+          dynamic_value="#Referente99_nominat_tecnico_abil.value()" size="50">
+            <br><input id="altro_firmatario_cf{{indice}}_altro" name="altro_firmatario_cf{{indice}}" type="radio" value="altro"/> Altro soggetto, i cui estremi sono di seguito riportati 
+          </p>
+        </td>
+        <td style="background-color: #eeeeee;" rowspan="3">
+          <p style="line-height: 1.6; text-align: center;"><input id="numero_{{id}}" name="numero_{{id}}" style="width: 90%; text-align: center;" mandatory_enabled="#{{id}}.checked()" type="number" min="1" max="100"/></p>
+          <input firmare="'P7M_DIGITALE'" id="GLOBO_allegato_c{{codice}}" name="GLOBO_allegato_c{{codice}}" obbligatorio="#{{id}}.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_{{id}}.value()"/>
+        </td>
+      </tr>
+      <tr>
+        <td style="background-color: #eeeeee;width: 25%;" >
+          <p style="text-align: left;">Nome
+            <input id="altro_tecnico_nome{{indice}}" name="altro_tecnico_nome{{indice}}" style="width: 100%;" mandatory_enabled="#altro_firmatario_cf{{indice}}.value() == 'altro'" label="inserire nome tecnico firmatario allegato">
+          </p>
+        </td>
+        <td style="background-color: #eeeeee;width: 25%;">
+          <p style="text-align: left;">Cognome
+            <input id="altro_tecnico_cognome{{indice}}" name="altro_tecnico_cognome{{indice}}" style="width: 100%;" mandatory_enabled="#altro_firmatario_cf{{indice}}.value() == 'altro'" label="inserire cognome tecnico firmatario allegato">
+          </p>
+        </td>
+        <td style="background-color: #eeeeee;" style="width: 50%;">
+          <p style="text-align: left;">Codice fiscale
+            <input id="altro_tecnico_cf{{indice}}" name="altro_tecnico_cf{{indice}}" style="width: 100%;" format="cf" mandatory_enabled="#altro_firmatario_cf{{indice}}.value() == 'altro'" label="inserire codice fiscale tecnico firmatario allegato">
+          </p>
+          <input id="cf_tecnico_firma_allegato{{indice}}" name="cf_tecnico_firma_allegato{{indice}}" dynamic_value="#altro_firmatario_cf{{indice}}.value() == 'ult_lavori' ? #Referente_CodiceFiscale.value() : (#altro_firmatario_cf{{indice}}.value() == 'altro' ? #altro_tecnico_cf{{indice}}.value() : '')" type="hidden">
+        </td>
+      </tr>
+      <tr>
+        <td style="background-color: #eeeeee;">
+          <p style="text-align: left;">Numero di telefono
+            <input id="altro_tecnico_num_telefono{{indice}}" name="altro_tecnico_num_telefono{{indice}}" format="number" style="width: 100%;" mandatory_enabled="#altro_firmatario_cf{{indice}}.value() == 'altro'" label="inserire numero di telefono tecnico firmatario allegato">
+          </p>
+        </td>
+        <td style="background-color: #eeeeee;" colspan="2">
+          <p style="text-align: left;">E-mail PEC
+            <input id="altro_tecnico_pec{{indice}}" name="altro_tecnico_pec{{indice}}" style="width: 100%;" format="pec"  mandatory_enabled="#altro_firmatario_cf{{indice}}.value() == 'altro'" label="inserire E-mail PEC tecnico firmatario allegato">
+          </p>
+        </td>
+      </tr>
+{%- endmacro %}
