@@ -1,0 +1,201 @@
+{% set CodiceModulo = "M3901-DOMANDA-BUONO-SCONTO-TAXI-GIALLI-22-6" %}
+{% set Urn = "document:c_l378:buoni.taxi;giallo;22.6" %}
+{% extends "base_trento_ok.html" %}
+
+{% block meta %}
+
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+campi_firma_label="il richiedente"
+classi_modulo="Sviluppo urbano, sport e sani stili di vita"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+sub_urn_list=""
+uo_globo_list=""
+contesto_procedurale="Turismo"
+descrizione="Domanda per buono taxi giallo - 22-6"
+destinatario_amministrazione=""
+destinatario_ufficio="AFM9MQ"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="SI"
+firmare="AUTENTICATO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="AventeTitolo"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/{{ CodiceModulo }}"
+verifica_pagamento="NO"
+versione="1.0|17/05/2023" />
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"/>
+
+{% endblock meta %}
+
+{% block title %}
+BUONO SCONTO TAXI GIALLI - dalle ore 22 alle 6
+{% endblock title %}
+
+{% block content %}
+
+<globo_fondo_pagina areaheight="150" scope="1">
+  {{ utils.firma() }}
+</globo_fondo_pagina>
+
+<input id="Parametri_Comune" name="Parametri_Comune" type="hidden" dynamic_value="#Ente.value()"/>
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="'Buoni taxi gialli - dalle 22 alle 6 - Richiedente ' + #AventeTitolo_Cognome.value().toUpperCase() + ' ' + #AventeTitolo_Nome.value().toUpperCase() + ' (' + #AventeTitolo_CodiceFiscale.value().toUpperCase() + ')'"/>
+
+<!-- INIZIO BLOCCO INTESTAZIONE -->
+
+<div class="container border-bottom" style="border-radius: unset;z-index: -1;">
+  <div class="form-row">
+    <div class="form-group col-lg-3 text-center">
+      <img alt="Ente" src="./appoggio/img/StemmaComune.png">
+    </div>
+    <div class="form-group col-lg-6 text-center mb-0">
+      <div class="heading">
+        <label for="Ente"> Al comune di </label>
+        <div class="space-0"></div>
+        <input class="form-control" style="background-color: white;" id="Ente" name="Ente" readonly disabled>
+      </div>
+      <div class="heading">
+        <label for="CodiceISTAT"> Codice ISTAT </label>
+        <div class="space-0"></div>
+        <input class="form-control" style="background-color: white;" id="CodiceISTAT" name="CodiceISTAT" readonly disabled>
+      </div>
+      <div class="heading">
+        <label for="UfficioDestinatario"> Ufficio destinatario </label>
+        <div class="space-0"></div>
+        <input class="form-control" style="background-color: white;" id="UfficioDestinatario" name="UfficioDestinatario" dynamic_value="#Parametri_UfficioDestinatario.value() ? get_ufficio_dest() : get_ufficio_dest()" readonly disabled>
+      </div>
+    </div>
+    <div class="form-group col-lg-3">
+      <div class="heading"></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- FINE BLOCCO INTESTAZIONE -->
+
+<div class="space-1"></div>
+<div class="space-1"></div>
+
+<div class="container">
+  <div class="title-1">
+    DOMANDA BUONO SCONTO TAXI GIALLI
+  </div>
+  <div class="title-2 mt-4">
+    Valido per DONNE RESIDENTI E NON RESIDENTI A TRENTO
+  </div>
+  <div class="title-3 mt-4">
+  UTILIZZO DEI TAXI dalle ore 22 alle ore 06.00
+  </div>
+  <div class="title-3 mt-4">
+    ANNO 2023
+  </div>
+</div>
+
+<div class="mt-4"></div>
+
+<!-- *********** INIZIO MODULO ANAGRAFICA *********** -->
+
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+
+      <!-- INIZIO BLOCCO INFORMATIVA PRIVACY -->
+
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="Presa_Visione" name="Presa_Visione" label="Presa visione è obbligatorio" mandatory="true"></div>
+      <input group="Presa_Visione" class="form-check-input" id="Presa_visione_check" name="Presa_Visione" type="checkbox" value="1">
+      <label class="form-check-label" for="Presa_visione_check"><b>Ho letto e compreso l'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-buoni-taxi" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></label> 
+    </div>
+  </div>
+</div> 
+
+<!-- FINE BLOCCO INFORMATIVA PRIVACY -->
+
+<div class="mt-4"></div>
+
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden" />
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden" />
+<div style="font-size:120%">
+{{anagrafica_macro.richiedente_fs_fisso_resp("AventeTitolo","Clicca sull'icona omino per iniziare", '', "cursor:pointer", "visibility:visibility")}} 
+</div>
+<input type="hidden" id="AventeTitolo_SoleDonne" name="AventeTitolo_SoleDonne" mandatory="true" dynamic_value="#AventeTitolo_Sesso.value() == 'F'? 'OK' : ''" label="Domanda riservata alle solo donne">
+
+<!-- *********** FINE MODULO ANAGRAFICA *********** -->
+<div class="space-1"></div>
+
+<!-- *********** INIZIO MODULO  ***********-->
+<div class="container"  style="font-size:100%">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title mr-3">Abbiamo compilato il tuo profilo utilizzando i dati di SPID o CPS/CNS.</span><br>
+    </div>
+  </div>
+<div>
+<div class="space-1"></div>
+
+<div class="container border bg-light mt-3">
+  <div class="form-row">
+    <div class="col-lg-12">
+      <div class="title-2" style="font-style: normal;">Puoi presentare questa domanda solo se sei donna.</div>
+    </div>
+  </div>
+</div>
+
+<!-- INIZIO BLOCCO FIRMA -->
+
+<div type="firma" class="mt-5">
+  <div class="container border bg-light" name="Firme">
+    <div class="form-row">
+      <div class="form-group col-lg-4 firma-custom">
+        <input class="form-control" style="text-align: center;" id="Luogo_PDF" name="Luogo_PDF">
+        <label for="Luogo_PDF"> Luogo </label>
+      </div>
+      <div class="form-group col-lg-4 firma-custom">
+        <input class="form-control" style="text-align: center;" id="Data_PDF" name="Data_PDF">
+        <label for="Data_PDF"> Data </label>
+      </div>
+      <div class="form-group col-lg-4 firma-custom">
+        <input class="form-control" style="text-align: center;" id="Firma_PDF" name="Firma_PDF" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()">
+        <label for="Firma_PDF"> Il/La richiedente<br><span><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></label>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<!-- FINE BLOCCO FIRMA -->
+
+<br>
+<br>
+
+<!-- *********** INIZIO MODULO INSERIMENTO ALLEGATI E MODULI SECONDARI *********** -->
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:40px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value="" />
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<!-- *********** FINE MODULO INSERIMENTO ALLEGATI E MODULI SECONDARI *********** -->
+
+<script>
+recuperaAnagrafica( 'AventeTitolo' );
+</script>
+
+{% endblock content %}
+

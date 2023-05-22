@@ -315,11 +315,11 @@
 
 <div class="container border bg-light">
 
-  <div class="simpatico-block simpatico-query-and-answer">
+  <div>
 
     <div class="form-row">
       <div class="col-lg-12">
-        <span class="title mr-3"> Il/La richiedente </span>
+        <span class="title mr-3">{{ intestazione }}</span>
         <div class="d-inline" style="cursor:pointer">
           <button type="button" class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility;" title="Carica dati da profilo utente" onclick="recuperaAnagrafica( '{{prefix}}' )">Carica dati personali</button>
         </div>
@@ -363,7 +363,7 @@
 
   <div class="space-1"></div>
 
-  <div class="simpatico-block simpatico-query-and-answer">
+  <div>
 
     <div class="container border bg-light">
       <div class="form-row">
@@ -559,4 +559,121 @@
   <input id="{{ prefix }}_Paternita" name="{{ prefix }}_Paternita"/>
   <input id="{{ prefix }}_Maternita" name="{{ prefix }}_Maternita"/>
 </div>
+{%- endmacro %}
+
+{% macro richiedente_fs_fisso_resp( prefix='{{prefix}}', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
+{% do all_prefix.append( prefix ) %}
+{% set Temp = prefix|replace("NonImportare", "NI") %}
+{% if prefix != Temp %}
+    {% do TitolareNonImportarePresente.append('0') %}
+{% endif %}
+
+<!-- INIZIO BLOCCO ANAGRAFICA RESPONSIVE-->
+<div class="container border bg-light">
+  <div class="form-row">
+    <div class="form-group col-lg-6" style="flex-direction: row">
+          <span>{{intestazione}}</span>
+          <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+          <img class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility" title="Carica i tuoi dati" src="./appoggio/img/carica_campi.png" onclick="recuperaAnagrafica( '{{prefix}}' )">
+          </span>
+    </div>
+    <div class="form-group col-lg-3">
+          <input class="" id="{{prefix}}_CodiceFiscale" name="{{prefix}}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true" readonly>
+    </div>
+    {% if visibility_carica_dati != '' %}
+
+    <div class="form-group col-lg-3">
+          <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
+           {{ service.getPersonaREST( prefix + '_CodiceFiscale','TipoContesto', 'TipoLista',  {
+          prefix + '_DataNascita':  'datanascita',
+          prefix + '_Nome':  'nome',
+          prefix + '_Cognome':  'cognome',
+          prefix + '_Sesso':  'sesso',
+          prefix + '_Nazionalita':  'stato',
+          prefix + '_Cittadinanza':  'nazionalita',
+          prefix + '_CodiceFamiglia':  'codiceFamiglia',
+          prefix + '_CodiceVia':  'codiceVia',
+          prefix + '_ProvinciaResidenza' : 'provincia',
+          prefix + '_ComuneResidenza' : 'citta',
+          prefix + '_ViaResidenza' : 'indirizzo',
+          prefix + '_CivicoResidenza' : 'numeroCivico',
+          prefix + '_BarraResidenza' : 'barra',
+          prefix + '_CAPResidenza' : 'cap',
+          prefix + '_Nazione' : 'nazione',
+          prefix + '_LuogoNascita' : 'comuneNascita',
+          prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
+          prefix + '_MatricolaAnagrafe' : 'matricola',
+        },
+        '#RecuperaDatiAnagr:click','true') }}
+    </div>
+  </div>
+</div>
+  <div ws-name="getPersonaREST" ws-param-in="contesto=TipoContesto;listaAut=TipoLista;codiceFiscale={{prefix}}_CodiceFiscale" ws-param-out="{{prefix}}_ProvinciaResidenza=provincia;{{prefix}}_ViaResidenza=indirizzo;{{prefix}}_CodiceComuneNascita=codiceComuneNascita;{{prefix}}_Cognome=cognome;{{prefix}}_CodiceFamiglia=codiceFamiglia;{{prefix}}_CodiceVia=codiceVia;{{prefix}}_CivicoResidenza=numeroCivico;{{prefix}}_MatricolaAnagrafe=matricola;{{prefix}}_Nazionalita=stato;{{prefix}}_Nazione=nazione;{{prefix}}_Cittadinanza=nazionalita;{{prefix}}_Sesso=sesso;{{prefix}}_ComuneResidenza=citta;{{prefix}}_CAPResidenza=cap;{{prefix}}_BarraResidenza=barra;{{prefix}}_LuogoNascita=comuneNascita;{{prefix}}_Nome=nome;{{prefix}}_DataNascita=datanascita" ws-on="#RecuperaDatiAnagr:click" ws-allow-edit="true">
+    </div>
+{% endif %}
+  <div class="space-1"></div>
+
+  <div class="container border bg-light">
+      <div class="form-row" mandatory_enabled="true">
+        <div class="form-group col-lg-4">
+          <label for="{{prefix}}_Cognome" style="font-size:80%"> Cognome </label>
+          <input class="form-control" id="{{prefix}}_Cognome" name="{{prefix}}_Cognome">
+        </div>
+        <div class="form-group col-lg-4">
+          <label for="{{prefix}}_Nome" style="font-size:80%"> Nome </label>
+          <input class="form-control" id="{{prefix}}_Nome" name="{{prefix}}_Nome">
+        </div>
+        <div class="form-group col-lg-3">
+          <label for="{{prefix}}_DataNascita" style="font-size:80%"> Data di nascita </label>
+          <input class="form-control" id="{{prefix}}_DataNascita" name="{{prefix}}_DataNascita" readonly>
+        </div>
+        <div class="form-group col-lg-1">
+          <label for="{{prefix}}_Sesso" style="font-size:80%"> Sesso </label>
+          <input class="form-control" id="{{prefix}}_Sesso" name="{{prefix}}_Sesso" readonly>
+        </div>
+      </div>
+    </div> 
+
+  <div class="space-1"></div>
+
+  <div class="container border bg-light" >
+    <div class="form-row">
+      <div class="form-group col-lg-4">
+        <label for="{{prefix}}_Cellulare" style="font-size:80%"> Cellulare </label>
+        <input class="form-control" id="{{prefix}}_TelefonoCellulare" name="{{prefix}}_TelefonoCellulare" mandatory="true" readonly>
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="{{prefix}}_EMail" style="font-size:80%"> E-mail (posta elettronica ordinaria) </label>
+        <input class="form-control" id="{{prefix}}_EMail" name="{{prefix}}_EMail" mandatory="#{{prefix}}_EMailPEC.value() == ''" format="email">
+      </div> 
+      <div class="form-group col-lg-4">
+        <label for="{{prefix}}_EMailPEC" style="font-size:80%"> E-mail PEC (domicilio digitale) </label>
+        <input class="form-control" id="{{prefix}}_EMailPEC" name="{{prefix}}_EMailPEC" format="pec">
+      </div>   
+    </div>
+  </div>
+
+  <div class="space-1"></div>
+
+</div>
+
+<div class="container border bg-light" style="display:none">
+  <input id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" type="hidden"/>
+  <input id="{{ prefix }}_ProvinciaNascita" name="{{ prefix }}_ProvinciaNascita" type="hidden"/>
+  <input id="{{ prefix }}_ProvinciaResidenza" name="{{ prefix }}_ProvinciaResidenza" type="hidden"/>
+  <input id="{{ prefix }}_ComuneResidenza" name="{{ prefix }}_ComuneResidenza" type="hidden"/>
+  <input id="{{ prefix }}_ViaResidenza" name="{{ prefix }}_ViaResidenza" maxlength="40" type="hidden" />
+  <input id="{{ prefix }}_CivicoResidenza" name="{{ prefix }}_CivicoResidenza" format="number" maxlength="10" type="hidden" />
+  <input id="{{ prefix }}_BarraResidenza" name="{{ prefix }}_BarraResidenza" maxlength="3" type="hidden" />
+  <input id="{{ prefix }}_CAPResidenza" name="{{ prefix }}_CAPResidenza"  format="cap" type="hidden" />
+  <input type="hidden" id="{{prefix}}_CodiceFamiglia" name="{{prefix}}_CodiceFamiglia">
+  <input type="hidden" id="{{prefix}}_CodiceVia" name="{{prefix}}_CodiceVia">
+  <input type="hidden" id="{{prefix}}_MatricolaAnagrafe" name="{{prefix}}_MatricolaAnagrafe">
+  <input type="hidden" id="{{prefix}}_CodiceComuneNascita" name="{{prefix}}_CodiceComuneNascita"> 
+
+</div>
+
+<!-- FINE BLOCCO ANAGRAFICA RESPONSIVE-->
+
+
 {%- endmacro %}
