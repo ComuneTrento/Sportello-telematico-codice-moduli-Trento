@@ -578,39 +578,12 @@
           </span>
     </div>
     <div class="form-group col-lg-3">
-          <input class="" id="{{prefix}}_CodiceFiscale" name="{{prefix}}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true" readonly>
+          <input class="" id="{{prefix}}_CodiceFiscale" name="{{prefix}}_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true" readonly >
+          {# onchange="document.getElementById('RecuperaDatiAnagr').click()"> #}
     </div>
-    {% if visibility_carica_dati != '' %}
 
-    <div class="form-group col-lg-3">
-          <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
-           {{ service.getPersonaREST( prefix + '_CodiceFiscale','TipoContesto', 'TipoLista',  {
-          prefix + '_DataNascita':  'datanascita',
-          prefix + '_Nome':  'nome',
-          prefix + '_Cognome':  'cognome',
-          prefix + '_Sesso':  'sesso',
-          prefix + '_Nazionalita':  'stato',
-          prefix + '_Cittadinanza':  'nazionalita',
-          prefix + '_CodiceFamiglia':  'codiceFamiglia',
-          prefix + '_CodiceVia':  'codiceVia',
-          prefix + '_ProvinciaResidenza' : 'provincia',
-          prefix + '_ComuneResidenza' : 'citta',
-          prefix + '_ViaResidenza' : 'indirizzo',
-          prefix + '_CivicoResidenza' : 'numeroCivico',
-          prefix + '_BarraResidenza' : 'barra',
-          prefix + '_CAPResidenza' : 'cap',
-          prefix + '_Nazione' : 'nazione',
-          prefix + '_LuogoNascita' : 'comuneNascita',
-          prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
-          prefix + '_MatricolaAnagrafe' : 'matricola',
-        },
-        '#RecuperaDatiAnagr:click','true') }}
-    </div>
   </div>
-</div>
-  <div ws-name="getPersonaREST" ws-param-in="contesto=TipoContesto;listaAut=TipoLista;codiceFiscale={{prefix}}_CodiceFiscale" ws-param-out="{{prefix}}_ProvinciaResidenza=provincia;{{prefix}}_ViaResidenza=indirizzo;{{prefix}}_CodiceComuneNascita=codiceComuneNascita;{{prefix}}_Cognome=cognome;{{prefix}}_CodiceFamiglia=codiceFamiglia;{{prefix}}_CodiceVia=codiceVia;{{prefix}}_CivicoResidenza=numeroCivico;{{prefix}}_MatricolaAnagrafe=matricola;{{prefix}}_Nazionalita=stato;{{prefix}}_Nazione=nazione;{{prefix}}_Cittadinanza=nazionalita;{{prefix}}_Sesso=sesso;{{prefix}}_ComuneResidenza=citta;{{prefix}}_CAPResidenza=cap;{{prefix}}_BarraResidenza=barra;{{prefix}}_LuogoNascita=comuneNascita;{{prefix}}_Nome=nome;{{prefix}}_DataNascita=datanascita" ws-on="#RecuperaDatiAnagr:click" ws-allow-edit="true">
-    </div>
-{% endif %}
+
   <div class="space-1"></div>
 
   <div class="container border bg-light">
@@ -654,6 +627,70 @@
   </div>
 
   <div class="space-1"></div>
+
+  <div class="container border bg-light">
+
+    <div class="form-row">
+      <div class="form-group col-lg-12 border-bottom">
+        <label> Residenza </label>
+      </div>
+    </div>
+      {% if visibility_carica_dati != '' %}
+  <div class="form-row mt-3" style="display: grid;">
+        <button type="button" class="btn btn-primary btn-lg pull-right" id="RecuperaDatiAnagr">Clicca qui per verificare la tua residenza</button>
+           {{ service.getPersonaREST( prefix + '_CodiceFiscale','TipoContesto', 'TipoLista',  {
+          prefix + '_DataNascita':  'datanascita',
+          prefix + '_Nome':  'nome',
+          prefix + '_Cognome':  'cognome',
+          prefix + '_Sesso':  'sesso',
+          prefix + '_Nazionalita':  'stato',
+          prefix + '_Cittadinanza':  'nazionalita',
+          prefix + '_CodiceFamiglia':  'codiceFamiglia',
+          prefix + '_CodiceVia':  'codiceVia',
+          prefix + '_ProvinciaResidenza' : 'provincia',
+          prefix + '_ComuneResidenza' : 'citta',
+          prefix + '_ViaResidenza' : 'indirizzo',
+          prefix + '_CivicoResidenza' : 'numeroCivico',
+          prefix + '_BarraResidenza' : 'barra',
+          prefix + '_CAPResidenza' : 'cap',
+          prefix + '_Nazione' : 'nazione',
+          prefix + '_LuogoNascita' : 'comuneNascita',
+          prefix + '_CodiceComuneNascita' : 'codiceComuneNascita',
+          prefix + '_MatricolaAnagrafe' : 'matricola',
+        },
+        '#RecuperaDatiAnagr:click','true') }}
+  </div>
+
+{% endif %}
+    <div class="form-row" mandatory_enabled="true">
+      <div class="form-group col-lg-1">
+        <label for="{{prefix}}_ProvinciaResidenza"> Provincia </label>
+        <input class="form-control" id="{{prefix}}_ProvinciaResidenza" name="{{prefix}}_ProvinciaResidenza" readonly value="-">
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="{{prefix}}_ComuneResidenza"> Comune </label>
+        <input class="form-control" id="{{prefix}}_ComuneResidenza" name="{{prefix}}_ComuneResidenza" readonly value="-">
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="{{prefix}}_ViaResidenza"> Indirizzo </label>
+        <input class="form-control" id="{{prefix}}_ViaResidenza" name="{{prefix}}_ViaResidenza" readonly value="-">
+      </div>
+      <div class="form-group col-lg-1">
+        <label for="{{prefix}}_CivicoResidenza"> Civico </label>
+        <input class="form-control" id="{{prefix}}_CivicoResidenza" name="{{prefix}}_CivicoResidenza" readonly value="-">
+      </div>
+      <div class="form-group col-lg-1">
+          <label for="{{prefix}}_BarraResidenza"> Barra </label>
+          <input class="form-control" id="{{prefix}}_BarraResidenza" name="{{prefix}}_BarraResidenza" mandatory="false" readonly value="-">
+      </div>
+      <div class="form-group col-lg-1">
+          <label for="{{prefix}}_CAPResidenza"> CAP </label>
+          <input class="form-control" id="{{prefix}}_CAPResidenza" name="{{prefix}}_CAPResidenza" format="cap" mandatory="true" readonly value="0">
+      </div>
+    </div>
+
+  </div>
+
 
 </div>
 
