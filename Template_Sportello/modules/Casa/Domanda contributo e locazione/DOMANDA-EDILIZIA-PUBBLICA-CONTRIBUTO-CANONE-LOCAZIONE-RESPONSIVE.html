@@ -189,6 +189,12 @@ DOMANDA DI CONTRIBUTO INTEGRATIVO AL CANONE DI LOCAZIONE
 
 {{anagrafica_macro.richiedente_resp("AventeTitolo","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
 
+<!-- *********** verifica residenza richidente - deve essere il Comune di Trento *********** -->
+<div id="controllo_residenza" type="hidden" style="display:none; pd4ml-display:none;" >
+  <input id="verifica_residenzaTN" name="verifica_residenzaTN" type="checkbox" dynamic_check="(#AventeTitolo_ComuneResidenza.value() == 'TRENTO' || #AventeTitolo_ComuneResidenza.value() == 'ALDENO' || #AventeTitolo_ComuneResidenza.value() == 'CIMONE' || #AventeTitolo_ComuneResidenza.value() == 'GARNIGA TERME' || #AventeTitolo_ComuneResidenza.value() == 'GARNIGA' || #AventeTitolo_ComuneResidenza.value() == 'Trento' || #AventeTitolo_ComuneResidenza.value() == 'Aldeno' || #AventeTitolo_ComuneResidenza.value() == 'Cimone' || #AventeTitolo_ComuneResidenza.value() == 'Garniga Terme' || #AventeTitolo_ComuneResidenza.value() == 'Garniga') ? true:false"> Verifica residenza nel Comune di Trento
+  <input id="Esito_controllo_residenza" name="Esito_controllo_residenza" dynamic_value="#verifica_residenzaTN.checked() ? 'OK':''" mandatory_enabled="true" label="Non è possibile presentare questa istanza perchè devi essere residente nei comuni di Trento, Aldeno, Cimone o Garniga">
+</div>
+
 
 <div class="space-1"></div>
 <div class="space-1"></div>
@@ -937,8 +943,8 @@ DOMANDA DI CONTRIBUTO INTEGRATIVO AL CANONE DI LOCAZIONE
 
 <!-- INIZIO MODULO POSSESSO ICEF -->
 
- <!-- *********** verifica che icef inserito sia effettivamente minore o ugale al valore ammissibile 0,21 *********** -->
- <div id="controllo_primo_ICEF" type="hidden" style="display:none; pd4ml-display:none;" >
+<!-- *********** verifica che icef inserito sia effettivamente minore o ugale al valore ammissibile 0,21 *********** -->
+<div id="controllo_primo_ICEF" type="hidden" style="display:none; pd4ml-display:none;" >
   <input id="ICEF_ValoreCanone_Verifica_Valore2" name="ICEF_ValoreCanone_Verifica_Valore2" type="checkbox" dynamic_check="parseFloat(#ICEF_ValoreCanone.value()) >= parseFloat(0) and parseFloat(#ICEF_ValoreCanone.value()) <= parseFloat(0.21) ? true:false"> Verifica inserimento ICEF minore di 0.21
   <input id="Esito_controllo_2" name="Esito_controllo_2" dynamic_value="#ICEF_ValoreCanone_Verifica_Valore2.checked() ? 'OK':''" mandatory_enabled="true" label="ICEF per contributo integrativo deve essere compreso tra 0.00 di 0.21">
 </div>
@@ -957,19 +963,22 @@ DOMANDA DI CONTRIBUTO INTEGRATIVO AL CANONE DI LOCAZIONE
         <label for="ICEF_IdDomandaCanone">ID domanda (SENZA BARRA E CIFRE SUCCESSIVE):</label>
         <input class="form-control" id="ICEF_IdDomandaCanone" name="ICEF_IdDomandaCanone"  mandatory_enabled="true"  label="Inserire l'ID domanda ICEF per il contributo al canone di locazione" format="number" maxlength="15">
       </div>
-      <!-- <div class="form-group col-lg-3" style="text-align: center;vertical-align: bottom;">
+      <div class="form-group col-lg-3" style="text-align: center;vertical-align: bottom;">
           <button type="button" class="btn btn-secondary pull-left" id="RecuperaIcefCanone">Recupero ICEF</button> 
-      </div> -->
+      </div>
       <div class="form-group col-lg-4">
         <label for="ICEF_ValoreCanone">Valore ICEF: </label>
-        <input class="form-control" id="ICEF_ValoreCanone" name="ICEF_ValoreCanone" mandatory_enabled="true" label="Inserire il valore ICEF per il contributo al canone di locazione" type="text" maxlength="6" pattern="^[0-9]([.][0-9]{1,4})?$">
-        <!-- <input class="form-control" id="ICEF_ValoreCanone" name="ICEF_ValoreCanone" mandatory_enabled="true" label="Inserire il valore ICEF per il contributo al canone di locazione" type="number" max="0.2100" min="0" value="0" readonly> -->
+        <!-- <input class="form-control" id="ICEF_ValoreCanone" name="ICEF_ValoreCanone" mandatory_enabled="true" label="Inserire il valore ICEF per il contributo al canone di locazione" type="text" maxlength="6" pattern="^[0-9]([.][0-9]{1,4})?$"> -->
+        <input class="form-control" id="ICEF_ValoreCanone" name="ICEF_ValoreCanone" mandatory_enabled="true" label="Inserire il valore ICEF per il contributo al canone di locazione" type="number" max="0.2100" min="0" value="0" readonly>
       </div>
     </div>
   </div>
 </div>
 
-<!-- <div class="container border bg-light" style="display:none">
+<div class="container border bg-light" style="display:none">
+<input name="TipoDomanda" id="TipoDomanda" value="EPU-ACCESSO">
+<input name="AnnoDomanda" id="AnnoDomanda" value="2021">
+
 <input name="Parametri_TipoDomanda1" id="Parametri_TipoDomanda1">
 <input id="Parametri_NumeroDomanda1" name="Parametri_NumeroDomanda1"/>
 <input id="Parametri_CF1" name="Parametri_CF1"/>
@@ -983,7 +992,7 @@ DOMANDA DI CONTRIBUTO INTEGRATIVO AL CANONE DI LOCAZIONE
         'Parametri_CF1': 'codiceFiscale',
         'Parametri_Anno1': 'anno',
         },
-        '#RecuperaIcefCanone:click' ) }} -->
+        '#RecuperaIcefCanone:click' ) }}
 
 <!-- FINE BLOCCO ICEF -->
 
