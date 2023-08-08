@@ -1,0 +1,964 @@
+{% set CodiceModulo = "M1301-RICHIESTA-CARICHI-DEFINIBILI" %}
+{% set Urn = "document:c_l378:richiesta;carichi.definibili;domanda;2023" %}
+{% extends "base_trento_OK.html" %}
+{% block meta %}
+
+<meta campi_firma="Titolare_CodiceFiscale"
+campi_firma_label="il/la dichiarante"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{% block urn %}{{ Urn }}{% endblock urn %}"
+sub_urn_list=""
+uo_globo_list=""
+descrizione="Richiesta Carichi Definibili"
+destinatario_amministrazione=""
+destinatario_ufficio="LAF2MA"
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="SI"
+firmare="AUTENTICATO"
+istruzioni_compilazione=""
+istruzioni_invio="mail_pec"
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+segnatura="Titolare"
+tipo_modulo="principale"
+urlhelp="/modulistica/moduli/M1301-RICHIESTA-CARICHI-DEFINIBILI"
+verifica_pagamento="NO"
+versione="1.0|01/01/2019"/>
+
+
+<meta codice_allegato="M1301-A01-ESISTENZA-SOGGETTO"
+urn_allegato="document:c_l378:carichi.definibili;M1301.a01.documentazione.esistenza.soggetto"
+descrizione_estesa="documentazione che certifica l'esistenza del soggetto estero e la sua iscrizione in un pubblico registro"
+filename="Documentazione_soggetto_estero.jpeg,Documentazione_soggetto_estero.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1301-A01-ESISTENZA-SOGGETTO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M1301-A02-PROVVEDIMENTO-NOMINA-NOMINA"
+urn_allegato="document:c_l378:carichi.definibili;M1301.a02.provvedimento.NOMINA.legale"
+descrizione_estesa="copia del provvedimento di nomina del rappresentante legale;"
+filename="Provvedimento_nomina.jpeg,Provvedimento_nomina.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1301-A02-PROVVEDIMENTO-NOMINA-NOMINA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M1301-A03-IDONEITA-ONG"
+urn_allegato="document:c_l378:carichi.definibili;M1301.a03.idoneita.ONG.legale"
+descrizione_estesa="copia del decreto con cui il Ministro degli affari Esteri e della Cooperazione  Internazionale  attesta  l'idoneità
+della ONG (in caso il richiedente sia un'organizzazione non governativa)"
+filename="Idoneita_ong.jpeg,Idoneita_ong.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1301-A03-IDONEITA-ONG"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M1301-A04-ATTO-COSTITUTIVO"
+urn_allegato="document:c_l378:carichi.definibili;M1301.a04.atto.costitutivo.legale"
+descrizione_estesa="Copia dell'atto costitutivo e dello Statuto in caso il richiedente sia un'associazione non riconosciuta/comitato"
+filename="Atto_costitutivo.jpeg,Atto_costitutivo.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1301-A04-ATTO-COSTITUTIVO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+ 
+
+<meta codice_allegato="M1301-A05-CERITIFCATO-SOGGETTO-ESTERO"
+urn_allegato="document:c_l378:carichi.definibili;M1301.a05.certificato.soggetto.estero"
+descrizione_estesa="Documentazione che certifica l'esistenza del soggetto estero e la sua iscrizione in un pubblico registro, ove esistente, presso lo Stato estero, munita di apostilla (*)3 e traduzione giurata4;"
+filename="Soggetto_estero.jpeg,Soggetto_estero.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1301-A05-CERITIFCATO-SOGGETTO-ESTERO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M1301-A06-NOMINA-FISCALE"
+urn_allegato="document:c_l378:carichi.definibili;M1301.a06.NOMINA.fiscale.italia"
+descrizione_estesa="Copia dell'atto di nomina del NOMINA fiscale in Italia"
+filename="Rappresentante_fiscale_ita.jpeg,Rappresentante_fiscale_ita.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1301-A06-NOMINA-FISCALE"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+<meta codice_allegato="M1301-A07-VERBALE-NOMINA-ASSEMBLEA"
+urn_allegato="document:c_l378:carichi.definibili;M1301.a07.verbale.nomina.assemblea"
+descrizione_estesa="Copia del verbale di nomina dell'Assemblea"
+filename="Nomina_assemblea.jpeg,Nomina_assemblea.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/M1301-A07-VERBALE-NOMINA-ASSEMBLEA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf,image/jpeg"/>
+
+
+<meta codice_report="CSP_SESSION_REPORT"
+generate_on="sending"
+name="GLOBO_report"
+urn_report="report:CSP_SESSION_REPORT"/>
+
+{% endblock meta %}
+
+{% block title %}Richiesta Carichi Definibili{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#Ente.value()" id="Parametri_Comune" name="Parametri_Comune" type="hidden" />
+<input id="Oggetto" name="Oggetto" type="hidden" dynamic_value="'Richiesta Carichi Definibili - Richiedente: ' + #Titolare_Cognome.value().toUpperCase() + ' ' + #Titolare_Nome.value().toUpperCase() + ' (' + #Titolare_CodiceFiscale.value().toUpperCase() + ')'">
+
+<!-- INIZIO BLOCCO INTESTAZIONE -->
+<div type="intestazione_moduloprincipale_senzabollo">
+    <div class="container border-bottom" style="border-radius: unset;z-index: -1;">
+      <div class="form-row">
+        <div class="form-group col-lg-3 text-center">
+          <img alt="Ente" src="./appoggio/img/StemmaComune.png">
+        </div>
+        <div class="form-group col-lg-6 text-center mb-0">
+          <div class="heading">
+            <label for="Ente"> Al comune di </label>
+            <div class="space-0"></div>
+            <input class="form-control" style="background-color: white;" id="Ente" name="Ente" readonly disabled>
+          </div>
+          <div class="heading">
+            <label for="CodiceISTAT"> Codice ISTAT </label>
+            <div class="space-0"></div>
+            <input class="form-control" style="background-color: white;" id="CodiceISTAT" name="CodiceISTAT" readonly disabled>
+          </div>
+          <div class="heading">
+            <label for="UfficioDestinatario"> Ufficio destinatario </label>
+            <div class="space-0"></div>
+            <input class="form-control" style="background-color: white;" id="UfficioDestinatario" name="UfficioDestinatario" dynamic_value="#Parametri_UfficioDestinatario.value() ? get_ufficio_dest() : get_ufficio_dest()" readonly disabled>
+          </div>
+        </div>
+        <div class="form-group col-lg-3 text-center">
+          <!-- <img alt="Marca da bollo" src="./appoggio/img/MarcaDaBollo.jpg"> -->
+        </div>
+      </div>
+    </div>
+  </div>
+   
+  <!-- FINE BLOCCO INTESTAZIONE -->
+
+<div class="space-1"></div>
+
+<div class="container">
+  <div class="title-1">
+    RICHIESTA CARICHI DEFINIBILI <br>
+    DICHIARAZIONE SOSTITUTIVA DI CERTIFICAZIONE/ATTO DI NOTORIETÀ
+  </div>
+</div>
+
+<div class="container">
+    <div class="title-2">
+      (resa ai sensi dell'art. 46 del DPR n. 445/2000)
+    </div>
+</div>
+
+  <div class="space-1"></div>
+  <input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+  <input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
+  <input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden">
+  <input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden">
+  <br>
+
+<!-- INIZIO BLOCCO Titolare RESPONSIVE-->
+
+  {{anagrafica_macro.richiedente_resp("Titolare","Il/La sottoscritto/a, avente codice fiscale:", "visibility:visibility", "cursor:pointer", "visibility:visibility")}} 
+  <div class="space-1"></div>
+
+<!-- FINE BLOCCO Titolare RESPONSIVE-->
+
+		<div class="container">
+			<div class="title-3">presa visione dell'Avviso in oggetto:</div>
+			<div class="space-1"></div>
+			<div class="space-1"></div>
+			<div class="title-2" style="font-style: normal;">CHIEDE</div>
+			<div class="space-1"></div>
+			<div class="space-1"></div>
+			<div class="form-row" style="text-align: justify;">
+				il prospetto informativo dei carichi definibili relativo ai debiti contenuti in atti/ingiunzioni di pagamento emesse dal 1.1.2000 al 30.6.2022 e in avvisi di accertamento esecutivi divenuti esecutivi alla data del 30.6.2022, di cui all'art.1, commi da 231 a 252, legge n. 197/2022
+			</div>
+			<div class="space-1"></div>
+
+
+			<div class="space-1"></div>
+
+
+			<!--<globo_salto_pagina></globo_salto_pagina>-->
+			<!-- INIZIO BLOCCO Titolare_Rapporto -->
+			<div class="title-2" style="font-style: normal;">DICHIARA:</div>
+			<div class="space-1"></div>
+
+			<div class="container border bg-light">
+				<div class="form-check indent-1 col-lg-12">
+						<div id="A_001_intestatario_1" name="A_001_intestatario_1" label="Specificare intestatario" mandatory="true"></div>
+						<input id="A_001_intestatario" name="A_001_intestatario_1" type="radio" value="1">
+						<label class="form-check-label" for="A_001_intestatario">
+							di essere intestatario dei carichi contenuti nel prospetto informativo
+						</label>
+				</div>
+			</div>
+
+			<div class="space-1"></div>
+			<div class="title-2" style="font-style: normal;">oppure</div>
+			<div class="space-1"></div>
+
+			<div class="container border bg-light">
+				<div class="form-check indent-1 col-lg-12">
+						<input id="A_002_intestatario_check" name="A_001_intestatario_1" type="radio" value="2">
+						<label class="form-check-label" for="A_002_intestatario_check">
+							con riferimento all'intestatario dei carichi contenuti nel prospetto informativo, di essere:
+						</label>
+				</div>
+				<div class="space-1"></div>
+			</div>
+
+			<div class="container border bg-light">
+				<div class="form-check indent-1 col-lg-12">
+					<div id="A_003_Genitore" name="A_003_Genitore" label="Specificare ruolo" mandatory_enabled="#A_002_intestatario_check.checked()"></div>
+					<input class="form-check-input" id="A_003_Genitore_1" name="A_003_Genitore" type="radio" value="Italiano">
+					<label class="form-check-label" for="A_003_Genitore_1">
+						genitore che esercita la responsabilità genitoriale sul minore
+					</label>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-lg-4">
+						<label for="A_003_Genitore_nome">
+							Nome</label>
+						<input class="form-control" id="A_003_Genitore_nome" name="A_003_Genitore_nome" label="Nome obbligatoria" mandatory_enabled="#A_003_Genitore_1.checked()">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="A_003_Genitore_cognome">
+							Cognome</label>
+						<input class="form-control" id="A_003_Genitore_cognome" name="A_003_Genitore_cognome" label="Cognome obbligatorio" mandatory_enabled="#A_003_Genitore_1.checked()">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="A_003_Genitore_cf">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_003_Genitore_cf" name="A_003_Genitore_cf" format="cf" label="CF obbligatorio 1" mandatory_enabled="#A_003_Genitore_1.checked()">
+					</div>
+				</div>
+			</div>
+
+			<div class="space-1"></div>
+		</div>
+
+		<div class="container border bg-light">
+			<div class="form-check indent-1 col-lg-12">
+				<div id="A_004_Tutore" name="A_004_Tutore" label="tutore obbligatorio"></div>
+				<input class="form-check-input" id="A_004_Tutore_1" name="A_003_Genitore" type="radio" value="Si, nel Comune di Residenza" mandatory_enabled="#A_002_intestatario_check.checked()">
+				<label class="form-check-label" for="A_004_Tutore_1">
+					tutore del/la minore/interdetto/a
+				</label>
+			</div>
+			<div class="form-check indent-1 col-lg-12">
+				<input class="form-check-input" id="A_005_Amministratore" name="A_003_Genitore" type="radio" value="amministratore" mandatory_enabled="#A_002_intestatario_check.checked()">
+				<label class="form-check-label" for="A_005_Amministratore">
+					amministratore di sostegno
+				</label>
+			</div>
+			<div class="form-check indent-1 col-lg-12">
+				<input class="form-check-input" id="A_006_Curatore" name="A_003_Genitore" type="radio" value="curatore" mandatory_enabled="#A_002_intestatario_check.checked()">
+				<label class="form-check-label" for="A_006_Curatore">
+					curatore dell'inabilitato/a
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-4">
+						<label for="A_006_Genitore_nome">
+							Nome</label>
+						<input class="form-control" id="A_006_Genitore_nome" name="A_006_Genitore_nome" label="Nome obbligatoria 2" mandatory_enabled="#A_006_Curatore.checked()">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="A_006_Genitore_cognome">
+							Cognome</label>
+						<input class="form-control" id="A_006_Genitore_cognome" name="A_006_Genitore_cognome" label="Cognome obbligatorio 2" mandatory_enabled="#A_006_Curatore.checked()">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="A_006_Genitore_cf">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_006_Genitore_cf" format="cf" name="A_006_Genitore_cf" label="CF obbligatorio 2" mandatory_enabled="#A_006_Curatore.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-lg-4">
+						<label for="A_006_Genitore_nominato">
+							nominato dal Tribunale di
+						</label>
+						<input class="form-control" id="A_006_Genitore_nominato" name="A_006_Genitore_nominato" label="Nominato obbligatoria" mandatory_enabled="#A_006_Curatore.checked()">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="A_006_Genitore_provvedimento">
+							con provvedimento n.
+						</label>
+						<input class="form-control" id="A_006_Genitore_provvedimento" name="A_006_Genitore_provvedimento" label="Provvedimento obbligatorio" mandatory_enabled="#A_006_Curatore.checked()">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="A_006_Genitore_provvedimento_del">
+							del</label>
+						<input class="form-control" id="A_006_Genitore_provvedimento_del" name="A_006_Genitore_provvedimento_del" label="Provvedimento del obbligatorio" mandatory_enabled="#A_006_Curatore.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+					<span>e di esercitare attualmente le relative funzioni.</span>
+				</div>
+				<div class="space-1"></div>
+
+			</div>
+		</div>
+
+		<div class="container border bg-light">
+			<div class="form-check indent-1">
+				<div id="A_007_Erede" name="A_007_Erede" label="Specificare erede"></div>
+				<input class="form-check-input" id="A_007_Erede_1" name="A_003_Genitore" type="radio" value="Italiano 2" mandatory_enabled="#A_002_intestatario_check.checked()">
+				<label class="form-check-label" for="A_007_Erede_1">
+					erede/chiamato all'eredità di
+				</label>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-lg-4">
+					<label for="A_007_Erede_nome">
+						Nome</label>
+					<input class="form-control" id="A_007_Erede_nome" name="A_007_Erede_nome" label=" 3" mandatory_enabled="#A_007_Erede_1.checked()">
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="A_007_Erede_cognome">
+						Cognome</label>
+					<input class="form-control" id="A_007_Erede_cognome" name="A_007_Erede_cognome" label="Cognome obbligatorio 3" mandatory_enabled="#A_007_Erede_1.checked()">
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="A_007_Erede_cf">
+						Codice Fiscale</label>
+					<input class="form-control" id="A_007_Erede_cf" name="A_007_Erede_cf" format="cf" label="CF obbligatorio 3" mandatory_enabled="#A_007_Erede_1.checked()">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-lg-3">
+					<label for="A_007_Erede_defunto">Deceduto in data</label>
+					<input class="form-control" id="A_007_Erede_defunto" name="A_007_Erede_defunto" label="Defunto obbligatoria" mandatory_enabled="#A_007_Erede_1.checked()">
+				</div>
+				<div class="form-group col-lg-3">
+					<label for="A_007_Erede_defunto_a">
+						a</label>
+					<input class="form-control" id="A_007_Erede_defunto_a" name="A_007_Erede_defunto_a" label="Defunto a obbligatorio" mandatory_enabled="#A_007_Erede_1.checked()">
+				</div>
+				<div class="form-group col-lg-3">
+					<label for="A_007_Erede_defunto_provincia">
+						prov.</label>
+					<input class="form-control" id="A_007_Erede_defunto_provincia" name="A_007_Erede_defunto_provincia" label="Defunto provincia obbligatorio" mandatory_enabled="#A_007_Erede_1.checked()">
+				</div>
+				<div class="form-group col-lg-3">
+					<label for="A_007_Erede_defunto_cap">CAP</label>
+					<input class="form-control" id="A_007_Erede_defunto_cap" name="A_007_Erede_defunto_cap" label="Defunto cap obbligatorio" mandatory_enabled="#A_007_Erede_1.checked()">
+				</div>
+				<div class="space-1"></div>
+
+			</div>
+		</div>
+
+
+		<div class="container border bg-light">
+			<div
+				class="form-check indent-1">
+				<!-- <div id="A_008_Legale" name="A_008_Legale" label="Specificare legale rappresentate" mandatory_enabled="#A_002_intestatario_check.checked()"> </div> -->
+				<input class="form-check-input" id="A_008_Legale_1" name="A_003_Genitore" type="radio" value="Italiano 3" mandatory_enabled="#A_002_intestatario_check.checked()">
+				<label class="form-check-label" for="A_008_Legale_1">
+					legale rappresentante del/della:
+				</label>
+			</div>
+
+			<div class="form-check indent-2 col-lg-12 border-bottom">
+				<div id="A_009_Societa" name="A_009_Societa" label="scocietà e cooperative" mandatory_enabled="#A_008_Legale_1.checked()"></div>
+				<input class="form-check-input" group="A_009_Societa" id="A_009_Societa_1" name="A_009_Societa" type="radio" value="Società">
+				<label class="form-check-label" for="A_009_Societa_1">
+					sezione da compilare in caso di
+					<b>società di persone, società di capitali, cooperative e di mutua assicurazione</b>
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-6">
+						<label for="A_009_Societa_Denominazione">
+							Denominazione</label>
+						<input class="form-control" id="A_009_Societa_Denominazione" name="A_009_Societa_Denominazione" label="Denominazione obbligatoria 1" mandatory_enabled="#A_009_Societa_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_009_Societa_CF">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_009_Societa_CF" name="A_009_Societa_CF" format="cf" label="CF obbligatorio 4" mandatory_enabled="#A_009_Societa_1.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+					<span>e di esercitare attualmente le relative funzioni.</span>
+					<div class="space-1"></div>
+				</div>
+			</div>
+
+			<div class="form-check indent-2 col-lg-12 border-bottom">
+				<div id="A_010_Societa_Trasform" name="A_010_Societa_Trasform" label="Società trasformate" mandatory_enabled="#A_008_Legale_1.checked()"></div>
+				<input class="form-check-input" group="A_009_Societa" id="A_010_Societa_Trasform_1" name="A_009_Societa" type="radio" value="Allegoto alla presente domanda">
+				<label class="form-check-label" for="A_010_Societa_Trasform_1">
+					sezione da compilare in caso di
+					<b>società trasformate, fuse o incorporate, scisse, cessionarie di ramo d'azienda</b>
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-6">
+						<label for="A_010_Societa_Trasform_Denomin">
+							Denominazione</label>
+						<input class="form-control" id="A_010_Societa_Trasform_Denomin" name="A_010_Societa_Trasform_Denomin" label="Denominazione obbligatoria 2" mandatory_enabled="#A_010_Societa_Trasform_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_010_Societa_Trasform_CF">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_010_Societa_Trasform_CF" name="A_010_Societa_Trasform_CF" format="cf" label="CF obbligatorio 5" mandatory_enabled="#A_010_Societa_Trasform_1.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+					<span>interessato/a da operazione di trasformazione/fusione/incorporazione/scissione/cessione di ramo d'azienda con atto</span>
+				</div>
+				<div class="form-row">
+
+					<div class="form-group col-lg-6">
+						<label for="A_010_Societa_Trasform_num">
+							n.</label>
+						<input class="form-control" id="A_010_Societa_Trasform_num" name="A_010_Societa_Trasform_num" label="n. obbligatoria" mandatory_enabled="#A_010_Societa_Trasform_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_010_Societa_Trasform_del">
+							del</label>
+						<input class="form-control" id="A_010_Societa_Trasform_del" name="A_010_Societa_Trasform_del" label="Del obbligatoria" mandatory_enabled="#A_010_Societa_Trasform_1.checked()">
+					</div>
+					<div class="space-1"></div>
+
+				</div>
+			</div>
+
+			<div class="form-check indent-2 col-lg-12 border-bottom">
+				<div id="A_011_Societa_diretta" name="A_011_Societa_diretta" mandatory_enabled="#A_008_Legale_1.checked()"></div>
+				<input class="form-check-input" group="A_009_Societa" id="A_011_Societa_diretta_1" name="A_009_Societa" type="radio" value="Allegato alla presente domanda">
+				<label class="form-check-label" for="A_011_Societa_diretta_1">
+					sezione da compilare in caso di
+					<b>società estera con identificazione diretta</b>
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-6">
+						<label for="A_011_Societa_diretta_denomi">
+							Denominazione</label>
+						<input class="form-control" id="A_011_Societa_diretta_denomi" name="A_011_Societa_diretta_denomi" label="Denominazione obbligatoria 3" mandatory_enabled="#A_011_Societa_diretta_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_011_Societa_diretta_CF">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_011_Societa_diretta_CF" name="A_011_Societa_diretta_CF" format="cf" label="CF obbligatorio 6" mandatory_enabled="#A_011_Societa_diretta_1.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-lg-12">
+						<label for="A_011_Societa_diretta_allegato">
+							<b>e a tal fine allega</b>
+						</label>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="indent-2 col-lg-12">
+						<div id="A_011_Societa_diretta_allegato" name="A_011_Societa_diretta_allegato" label="allegato società diretta"></div>
+						<input class="form-check-input" id="A_011_Societa_diretta_allegato_1" name="A_011_Societa_diretta_allegato" type="radio" value="Allegato alla presente domanda 2" mandatory_enabled="#A_011_Societa_diretta_1.checked()">
+						<label class="form-check-label" for="A_011_Societa_diretta_allegato_1">
+							documentazione che certifica l'esistenza del soggetto estero e la sua iscrizione in un pubblico registro, ove esistente, presso lo Stato estero, munita di "apostilla" (*)1 e traduzione giurata (*)2.
+						</label>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-check indent-2 col-lg-12 border-bottom">
+				<div id="A_012_associazioni_fondazioni" name="A_012_associazioni_fondazioni" label="Associazioni Fondazioni" mandatory_enabled="#A_008_Legale_1.checked()"></div>
+				<input class="form-check-input" group="A_009_Societa" id="A_012_associazioni_fondazioni_1" name="A_009_Societa" type="radio" value="associazione fondazione">
+				<label class="form-check-label" for="A_012_associazioni_fondazioni_1">
+					sezione da compilare in caso di
+					<b>associazioni riconosciute, Fondazioni, Enti ecclesiastici, Istituti di patronato e assistenza sociale</b>
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-6">
+						<label for="A_012_associazioni_fondazioni_denom">
+							Denominazione</label>
+						<input class="form-control" id="A_012_associazioni_fondazioni_denom" name="A_012_associazioni_fondazioni_denom" label="Denominazione obbligatoria 4" mandatory_enabled="#A_012_associazioni_fondazioni_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_012_associazioni_fondazioni_cf">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_012_associazioni_fondazioni_cf" name="A_012_associazioni_fondazioni_cf" format="cf" label="CF obbligatorio 7" mandatory_enabled="#A_012_associazioni_fondazioni_1.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+					<span>iscritto/a presso il Registro delle Persone giuridiche presso la Prefettura/Regione</span>
+				</div>
+				<div class="form-row">
+
+					<div class="form-group col-lg-4">
+						<label for="A_012_associazioni_fondazioni_di">
+							di</label>
+						<input class="form-control" id="A_012_associazioni_fondazioni_di" name="A_012_associazioni_fondazioni_di" label="Di obbligatoria" mandatory_enabled="#A_012_associazioni_fondazioni_1.checked()">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="A_012_associazioni_fondazioni_atto">
+							Con atto n.</label>
+						<input class="form-control" id="A_012_associazioni_fondazioni_atto" name="A_012_associazioni_fondazioni_atto" label="atto obbligatoria" mandatory_enabled="#A_012_associazioni_fondazioni_1.checked()">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="A_012_associazioni_fondazioni_del">
+							del</label>
+						<input class="form-control" id="A_012_associazioni_fondazioni_del" name="A_012_associazioni_fondazioni_del" label="del obbligatoria 2" mandatory_enabled="#A_012_associazioni_fondazioni_1.checked()">
+					</div>
+					<div class="space-1"></div>
+				</div>
+			</div>
+
+			<div class="form-check indent-2 col-lg-12 border-bottom">
+				<div id="A_013_volontariato" name="A_013_volontariato" label="Volontariato e cooperative" mandatory_enabled="#A_008_Legale_1.checked()"></div>
+				<input class="form-check-input" group="A_009_Societa" id="A_013_volontariato_1" name="A_009_Societa" type="radio" value="Volontariato">
+				<label class="form-check-label" for="A_013_volontariato_1">
+					sezione da compilare in caso di
+					<b>organizzazioni di volontariato e cooperative sociali</b>
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-6">
+						<label for="A_013_volontariato_denomi">
+							Denominazione</label>
+						<input class="form-control" id="A_013_volontariato_denomi" name="A_013_volontariato_denomi" label="Denominazione obbligatoria 5" mandatory_enabled="#A_013_volontariato_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_013_volontariato_CF">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_013_volontariato_CF" name="A_013_volontariato_CF" format="cf" label="CF obbligatorio 8" mandatory_enabled="#A_013_volontariato_1.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+					<span>iscritta presso l'Anagrafe Unica delle ONLUS, ovvero, in caso di organizzazioni di volontariato, presso il Registro delle organizzazioni di volontariato con</span>
+				</div>
+				<div class="form-row">
+
+					<div class="form-group col-lg-6">
+						<label for="A_013_volontariato_atto">atto n.</label>
+						<input class="form-control" id="A_013_volontariato_atto" name="A_013_volontariato_atto" label="atto obbligatoria 2" mandatory_enabled="#A_013_volontariato_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_013_volontariato_del">
+							del</label>
+						<input class="form-control" id="A_013_volontariato_del" name="A_013_volontariato_del" label="del obbligatoria 3" mandatory_enabled="#A_013_volontariato_1.checked()">
+					</div>
+					<div class="space-1"></div>
+
+				</div>
+			</div>
+
+			<div class="form-check indent-2 col-lg-12 ">
+				<div id="A_014_associizioni_ong" name="A_014_associizioni_ong" label="associazioni ong" mandatory_enabled="#A_008_Legale_1.checked()"></div>
+				<input class="form-check-input" group="A_009_Societa" id="A_014_associizioni_ong_1" name="A_009_Societa" type="radio" value="Associazioni ONG">
+				<label class="form-check-label" for="A_014_associizioni_ong_1">
+					sezione da compilare in caso di
+					<b>associazioni non riconosciute/comitati, ONG</b>
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-6">
+						<label for="A_014_associizioni_ong_denomi">
+							Denominazione</label>
+						<input class="form-control" id="A_014_associizioni_ong_denomi" name="A_014_associizioni_ong_denomi" label="Denominazione obbligatoria 6" mandatory_enabled="#A_014_associizioni_ong_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_014_associizioni_ong_CF">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_014_associizioni_ong_CF" name="A_014_associizioni_ong_CF" format="cf" label="CF obbligatorio 9" mandatory_enabled="#A_014_associizioni_ong_1.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+					<span>e di esercitare attualmente le relative funzioni.</span>
+				</div>
+				<div class="form-row col-lg-12">
+					<label for="A_014_associizioni_ong_allegato_1">
+						<b>e a tal fine allega</b>
+					</label>
+				</div>
+				<div class="form-check indent-2 col-lg-12">
+					<div id="A_014_associizioni_ong_allegato_1" name="A_014_associizioni_ong_allegato_1" label="Scelta produzione allegato"></div>
+					<input class="form-check-input" group="A_014_associizioni_ong_allegato_1" id="A_014_associizioni_ong_allegato_1_1" name="A_014_associizioni_ong_allegato_1_1" type="radio" value="Allegato alla presente domanda 3" mandatory_enabled="#A_014_associizioni_ong_1.checked()">
+					<label class="form-check-label" for="A_014_associizioni_ong_allegato_1_1">
+						copia del provvedimento di nomina del rappresentante legale;
+					</label>
+					<br>
+					<input class="form-check-input" group="A_014_associizioni_ong_allegato_1" id="A_014_associizioni_ong_allegato_2" name="A_014_associizioni_ong_allegato_2" type="radio" value="Allegato alla presente domanda 4" mandatory_enabled="#A_014_associizioni_ong_1.checked()">
+					<label class="form-check-label" for="A_014_associizioni_ong_allegato_2">
+						copia del decreto con cui il Ministro degli affari Esteri e della Cooperazione Internazionale attesta l'idoneità della ONG
+						<b>(in caso il richiedente sia un'organizzazione non governativa)</b>
+					</label>
+					<input class="form-check-input" group="A_014_associizioni_ong_allegato_1" id="A_014_associizioni_ong_allegato_3" name="A_014_associizioni_ong_allegato_3" type="radio" value="Allegato alla presente domanda 5" mandatory_enabled="#A_014_associizioni_ong_1.checked()">
+					<label class="form-check-label" for="A_014_associizioni_ong_allegato_3">
+						copia dell'atto costitutivo e dello Statuto
+						<b>(in caso il richiedente sia un'associazione non riconosciuta/comitato)</b>
+					</label>
+				</div>
+				<div class="space-1"></div>
+
+				<span>
+					<i>1. In alternativa, il documento può essere legalizzato dalla rappresentanza diplomatica o consolare italiana all'estero, ai sensi dell'art. 33 del D.P.R. n. 445/2000.</i>
+				</span>
+				<div class="space-1"></div>
+
+				<span>
+					<i>2 .In alternativa, sono valide anche le traduzioni fatte o asseverate dalle rappresentanze diplomatico-consolari del paese estero in Italia e legalizzate dalla Prefettura e le traduzioni effettuate dalle rappresentanze diplomatico-consolari italiane nel paese estero.</i>
+				</span>
+				<div class="space-1"></div>
+
+			</div>
+		</div>
+
+		<div class="container border bg-light">
+			<div class="form-check indent-1">
+				<input class="form-check-input" id="A_015_curatore_commissario_1" name="A_003_Genitore" type="radio" value="Curatore - commissario" mandatory_enabled="#A_002_intestatario_check.checked()">
+				<label class="form-check-label" for="A_015_curatore_commissario_1">
+					curatore/commissario liquidatore o commissario giudiziale/straordinario del/della
+				</label>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-lg-6">
+					<label for="A_015_curatore_commissario_denomi">
+						Denominazione</label>
+					<input class="form-control" id="A_015_curatore_commissario_denomi" name="A_015_curatore_commissario_denomi" label="Denominazione obbligatoria 7" mandatory_enabled="#A_015_curatore_commissario_1.checked()">
+				</div>
+				<div class="form-group col-lg-6">
+					<label for="A_015_curatore_commissario_CF">
+						Codice Fiscale</label>
+					<input class="form-control" id="A_015_curatore_commissario_CF" name="A_015_curatore_commissario_CF" format="cf" label="CF obbligatorio 10" mandatory_enabled="#A_015_curatore_commissario_1.checked()">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-lg-4">
+					<label for="A_015_curatore_commissario_nomina">nominato dal Tribunale di</label>
+					<input class="form-control" id="A_015_curatore_commissario_nomina" name="A_015_curatore_commissario_nomina" label="Nominato obbligatoria 2" mandatory_enabled="#A_015_curatore_commissario_1.checked()">
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="A_015_curatore_commissario_prov">con provvedimento n.</label>
+					<input class="form-control" id="A_015_curatore_commissario_prov" name="A_015_curatore_commissario_prov" label="Provvedimento a obbligatorio" mandatory_enabled="#A_015_curatore_commissario_1.checked()">
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="A_015_curatore_commissario_del">del</label>
+					<input class="form-control" id="A_015_curatore_commissario_del" name="A_015_curatore_commissario_del" label="Del provincia obbligatorio" mandatory_enabled="#A_015_curatore_commissario_1.checked()">
+				</div>
+			</div>
+			<div class="form-row">
+				<span>e di esercitare attualmente le relative funzioni.</span>
+			</div>
+		</div>
+
+		<div class="container border bg-light">
+			<div class="form-check indent-1">
+				<input class="form-check-input" id="A_016_estera_in_italia_1" name="A_003_Genitore" type="radio" value="Italiano 4" mandatory_enabled="#A_002_intestatario_check.checked()">
+				<label class="form-check-label" for="A_016_estera_in_italia_1">
+					stabile rappresentante del/della società estera con stabile organizzazione in Italia
+				</label>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-lg-6">
+					<label for="A_016_estera_in_italia_denomi">
+						Denominazione</label>
+					<input class="form-control" id="A_016_estera_in_italia_denomi" name="A_016_estera_in_italia_denomi" label="Denomina obbligatoria" mandatory_enabled="#A_016_estera_in_italia_1.checked()">
+				</div>
+				<div class="form-group col-lg-6">
+					<label for="A_016_estera_in_italia_CF">
+						Codice Fiscale</label>
+					<input class="form-control" id="A_016_estera_in_italia_CF" name="A_016_estera_in_italia_CF" format="cf" label="CF obbligatorio 11" mandatory_enabled="#A_016_estera_in_italia_1.checked()">
+				</div>
+			</div>
+		</div>
+
+		<div class="container border bg-light">
+			<div class="form-check indent-1 col-lg-12 border-bottom">
+				<input class="form-check-input" group="A_017_fisco_in_italia" id="A_017_fisco_in_italia_1" name="A_003_Genitore" type="radio" value="Allegato alla presente domanda 5" mandatory_enabled="#A_002_intestatario_check.checked()">
+				<label class="form-check-label" for="A_017_fisco_in_italia_1">
+					rappresentante fiscale del/della società estera con rappresentante fiscale in Italia
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-6">
+						<label for="A_017_fisco_in_italia_denomi">
+							Denominazione</label>
+						<input class="form-control" id="A_017_fisco_in_italia_denomi" name="A_017_fisco_in_italia_denomi" label="Denominazione obbligatoria 9" mandatory_enabled="#A_017_fisco_in_italia_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_017_fisco_in_italia_CF">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_017_fisco_in_italia_CF" name="A_017_fisco_in_italia_CF" format="cf" label="CF obbligatorio 12" mandatory_enabled="#A_017_fisco_in_italia_1.checked()">
+					</div>
+				</div>
+				<div class="form-row">
+
+					<div class="col-lg-12">
+						<label for="A_017_fisco_in_italia_allegato">
+							<b>e a tal fine allega</b>
+						</label>
+					</div>
+				</div>
+				<div class="form-row">
+
+
+					<div class="indent-2 col-lg-12">
+						<div id="A_017_fisco_in_italia_allegato" name="A_017_fisco_in_italia_allegato" label="Scelta produzione allegato" mandatory_enabled="#A_017_fisco_in_italia_1.checked()"></div>
+						<input class="form-check-input" group="A_017_fisco_in_italia_allegato" id="A_017_fisco_in_italia_allegato_1" name="A_017_fisco_in_italia_allegato" type="radio" value="Allegoto alla presente domanda" mandatory_enabled="#A_017_fisco_in_italia_1.checked()">
+						<label class="form-check-label" for="A_017_fisco_in_italia_allegato_1">
+							documentazione che certifica l'esistenza del soggetto estero e la sua iscrizione in un pubblico registro, ove esistente, presso lo Stato estero, munita di "apostilla" (*)3 e traduzione giurata (*)4;
+						</label>
+					</div>
+				</div>
+				<div class="form-row">
+
+					<div class="indent-2 col-lg-12">
+						<div id="A_017_fisco_in_italia_allegato_2" name="A_017_fisco_in_italia_allegato_2" label="Scelta produzione " mandatory_enabled="#A_017_fisco_in_italia_1.checked()"></div>
+						<input class="form-check-input" group="A_017_fisco_in_italia_allegato_2" id="A_017_fisco_in_italia_allegato_2" name="A_017_fisco_in_italia_allegato_2" type="radio" value="Allegoto alla presente domanda" mandatory_enabled="#A_017_fisco_in_italia_1.checked()">
+						<label class="form-check-label" for="A_017_fisco_in_italia_allegato_2">
+							copia dell'atto di nomina del rappresentante fiscale in Italia.
+						</label>
+					</div>
+
+				</div>
+				<span>
+					<i>3. Cfr. nota 1</i>
+				</span>
+				<br>
+				<span>
+					<i>4. Cfr. nota 2</i>
+				</span>
+			</div>
+		</div>
+
+
+		<div class="container border bg-light">
+			<div class="form-check indent-1 col-lg-12 border-bottom">
+				<div id="A_018_amministratore_condomini" name="A_018_amministratore_condomini" label="Scelta amministratore" mandatory_enabled="#A_002_intestatario_check.checked()"></div>
+				<input class="form-check-input" group="A_018_amministratore_condomini" id="A_018_amministratore_condomini_1" name="A_003_Genitore" type="radio" value="Allegoto alla presente domanda">
+				<label class="form-check-label" for="A_018_amministratore_condomini_1">
+					amministratore del condominio
+				</label>
+				<div class="form-row">
+					<div class="form-group col-lg-6">
+						<label for="A_018_amministratore_condomini_denomi">
+							Denominazione</label>
+						<input class="form-control" id="A_018_amministratore_condomini_denomi" name="A_018_amministratore_condomini_denomi" label="Denomi obbligatoria" mandatory_enabled="#A_018_amministratore_condomini_1.checked()">
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="A_018_amministratore_condomini_CF">
+							Codice Fiscale</label>
+						<input class="form-control" id="A_018_amministratore_condomini_CF" name="A_018_amministratore_condomini_CF" format="cf" label="CF obbligatorio 13" mandatory_enabled="#A_018_amministratore_condomini_1.checked()">
+					</div>
+					<div class="space-1"></div>
+				</div>
+
+				<div class="form-row">
+					<div class="indent-1 col-lg-12">
+						<label for="A_018_amministratore_condomini_allegato">
+							<b>e a tal fine allega</b>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="indent-2 col-lg-6">
+						<div id="A_018_amministratore_condomini_allegato" name="A_018_amministratore_condomini_allegato" label="Scelta produzione allegato " mandatory_enabled="#A_018_amministratore_condomini_1.checked()"></div>
+						<input class="form-check-input" group="A_018_amministratore_condomini_allegato" id="A_018_amministratore_condomini_allegato_1" name="A_018_amministratore_condomini_allegato" type="radio" value="Allegoto alla presente domanda">
+						<label class="form-check-label" for="A_018_amministratore_condomini_allegato_1">
+							copia del verbale di nomina dell'Assemblea del:
+						</label>
+					</div>
+
+				</div>
+				<div class="form-row">
+					<div class="indent-2 col-lg-6">
+						<input class="form-control" id="A_018_amministratore_condomini_allegato_2" name="A_018_amministratore_condomini_allegato_2" style="width:100%;" format="date" mandatory_enabled="#A_018_amministratore_condomini_allegato_1.checked()" label="Data conseguimento triennale" maxlength="10">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container border bg-light">
+		<div class="title-2" style="font-style: normal;">DICHIARA</div>
+		<div class="space-1"></div>
+		<div class="container border bg-light">
+			<div class="form-row">
+				<div class="form-check indent-1">
+					<div id="A_0030_Presa_Visione_Debiti" name="A_0030_Presa_Visione_Debiti" label="Presa visione dei debiti affidati a Societa di riscossione è obbligatorio" mandatory="true"></div>
+					<input group="A_0030_Presa_Visione_Debiti" class="form-check-input" id="A_0030_Presa_Visione_Debiti_check" name="A_0030_Presa_Visione_Debiti_check" type="checkbox" value="1">
+					<label class="form-check-label" for="A_0030_Presa_Visione_Debiti_check"></label>di prendere atto che, nell'ipotesi in cui risultassero debiti affidati alla Società di riscossione coattiva Trentino Riscossioni S.p.A., la presente richiesta sarà inoltrata dallo scrivente alla Società medesima, la quale provvederà a riscontrare nei termini e nelle modalità di cui al Regolamento comunale approvato con deliberazione di Consiglio comunale 18 luglio 2023 n. 81
+				</div>
+			</div>
+		</div>
+
+		<div class="container border bg-light">
+			<div class="title-2" style="font-style: normal;">DICHIARA INOLTRE</div>
+			<div class="space-1"></div>
+			<div class="container border bg-light">
+				<div class="form-row">
+					<div class="form-check indent-1">
+						<div id="A_0030_Presa_Visione_Debiti_2" name="A_0030_Presa_Visione_Debiti_2" label="Presa visione privacy" mandatory="true"></div>
+						<input group="A_0030_Presa_Visione_Debiti_2" class="form-check-input" id="A_0030_Presa_Visione_Debiti_2_check" name="A_0030_Presa_Visione_Debiti_2_check" type="checkbox" value="1">
+						<label class="form-check-label" for="A_0030_Presa_Visione_Debiti_2_check"></label>
+						di aver preso visione dell'informativa sul trattamento dei dati personali (artt. 13 e 14 Regolamento UE 679/2016)
+					</div>
+				</div>
+			</div>
+
+
+			<div class="container border bg-light">
+				<div class="title-2" style="font-style: normal;">CHIEDE INFINE</div>
+				<div class="space-1"></div>
+				<div class="container border bg-light">
+					<div class="form-row">
+						<div class="form-check indent-1">
+							<div id="A_0030_Presa_Visione_Debiti_3" name="A_0030_Presa_Visione_Debiti_3" label="Presa visione comunicazioni" mandatory="true"></div>
+							<input group="A_0030_Presa_Visione_Debiti_3" class="form-check-input" id="A_0030_Presa_Visione_Debiti_3_check" name="A_0030_Presa_Visione_Debiti_3_check" type="checkbox" value="1">
+							<label class="form-check-label" for="A_0030_Presa_Visione_Debiti_3_check"></label>
+							che il prospetto dei carichi definibili, come ogni altra comunicazione inerente la presente richiesta, venga inviato al seguente indirizzo di:</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-lg-6">
+							<label for="A_020_prospetto_dei_carichi_definibil">Posta elettronica</label>
+							<input class="form-control" id="A_020_prospetto_dei_carichi_definibil" group="Posta_email" name="A_020_prospetto_dei_carichi_definibil" label="Posta elettronica" enabled="#A_0030_Presa_Visione_Debiti_3_check.checked()">
+						</div>
+						<div class="form-group col-lg-6">
+							<label for="A_020_prospetto_dei_carichi_definibil_2">Posta elettronica certificata (PEC)</label>
+							<input class="form-control" id="A_020_prospetto_dei_carichi_definibil_2" group="Posta_email" name="A_020_prospetto_dei_carichi_definibil_2" label="PEC" enabled="#A_0030_Presa_Visione_Debiti_3_check.checked()">
+						</div>
+						<div class="space-1"></div>
+						<div class="form-row indent-1 col-lg-12"></div>
+					</div>
+				</div>
+			</div>
+
+
+<globo_salto_pagina></globo_salto_pagina>
+
+
+<!-- INIZIO BLOCCO ALLEGATI -->
+
+<div class="container border bg-light">
+<span>Elenco degli allegati  </span>
+
+<div class="form-check indent-1  col-lg-12">
+<input class="form-check-input" id="ESISTENZA" name="ESISITENZA" type="checkbox" value="OBBLIGATORIO" mandatory_enabled="#A_011_Societa_diretta_allegato_1.checked()" dynamic_check="#A_011_Societa_diretta_allegato_1.checked()">
+<label class="form-check-label" for="ESISITENZA"> 
+  Documentazione che certifica l'esistenza del soggetto estero e la sua iscrizione in un pubblico registro, ove esistente, presso lo Stato estero, munita di "apostilla" (*)1 e traduzione giurata 2. 
+</label>
+</div> 
+
+<div class="form-check indent-1  col-lg-12">
+<input class="form-check-input" id="NOMINA" name="NOMINA" type="checkbox" value="OBBLIGATORIO" mandatory_enabled="#A_014_associizioni_ong_allegato_1_1.checked()" dynamic_check="#A_014_associizioni_ong_allegato_1_1.checked()">
+<label class="form-check-label" for="NOMINA"> 
+  Copia del provvedimento di nomina del rappresentante legale;
+</label>
+</div> 
+
+<div class="form-check indent-1  col-lg-12">
+  <input class="form-check-input" id="IDONEITA" name="IDONEITA" type="checkbox" value="OBBLIGATORIO" mandatory_enabled="#A_014_associizioni_ong_allegato_2.checked()" dynamic_check="#A_014_associizioni_ong_allegato_2.checked()">
+  <label class="form-check-label" for="IDONEITA"> 
+    Copia del decreto con cui il Ministro degli affari Esteri e della Cooperazione  Internazionale  attesta  l'idoneità
+        della ONG <b>(in caso il richiedente sia un'organizzazione non governativa)</b>   
+  </label>
+</div> 
+
+<div class="form-check indent-1  col-lg-12">
+  <input class="form-check-input" id="ATTO_COST" name="ATTO_COST" type="checkbox" value="OBBLIGATORIO" mandatory_enabled="#A_014_associizioni_ong_allegato_3.checked()" dynamic_check="#A_014_associizioni_ong_allegato_3.checked()">
+  <label class="form-check-label" for="ATTO_COST"> 
+    Copia dell'atto costitutivo e dello Statuto <b>(in caso il richiedente sia un'associazione non riconosciuta/comitato)</b> 
+  </label>
+</div> 
+
+<div class="form-check indent-1  col-lg-12">
+  <input class="form-check-input" id="SOGGETTO_ESTERO" name="SOGGETTO_ESTERO" type="checkbox" value="OBBLIGATORIO" mandatory_enabled="#A_017_fisco_in_italia_allegato_1.checked()" dynamic_check="#A_017_fisco_in_italia_allegato_1.checked()">
+  <label class="form-check-label" for="SOGGETTO_ESTERO"> 
+    Documentazione che certifica l'esistenza del soggetto estero e la sua iscrizione in un pubblico registro, ove esistente, presso lo Stato estero, munita di "apostilla" (*)3 e traduzione giurata4
+  </label>
+</div>
+
+<div class="form-check indent-1  col-lg-12">
+  <input class="form-check-input" id="RAPPR_FISCALE" name="RAPPR_FISCALE" type="checkbox" value="OBBLIGATORIO" mandatory_enabled="#A_017_fisco_in_italia_allegato_2.checked()" dynamic_check="#A_017_fisco_in_italia_allegato_2.checked()">
+  <label class="form-check-label" for="RAPPR_FISCALE"> 
+    Copia dell'atto di nomina del NOMINA fiscale in Italia
+  </label>
+</div> 
+
+
+<div class="form-check indent-1  col-lg-12">
+  <input class="form-check-input" id="VERBALE" name="VERBALE" type="checkbox" value="OBBLIGATORIO" mandatory_enabled="#A_018_amministratore_condomini_allegato_1.checked()" dynamic_check="#A_018_amministratore_condomini_allegato_1.checked()">
+  <label class="form-check-label" for="VERBALE"> 
+    Copia del verbale di nomina dell'Assemblea
+  </label>
+</div> 
+
+</div>
+
+<!-- FINE BLOCCO ALLEGATI -->
+
+  <!-- INIZIO BLOCCO FIRMA -->
+  
+  <div type="firma" class="simpatico-block simpatico-query-and-answer">
+    <div class="container border bg-light" name="Firme">
+      <div class="form-row">
+        <div class="form-group col-lg-4 firma-custom">
+          <input class="form-control" style="text-align: center;" id="Luogo_PDF" name="Luogo_PDF">
+          <label for="Luogo_PDF"> Luogo </label>
+        </div>
+        <div class="form-group col-lg-4 firma-custom">
+          <input class="form-control" style="text-align: center;" id="Data_PDF" name="Data_PDF">
+          <label for="Data_PDF"> Data </label>
+        </div>
+        <div class="form-group col-lg-4 firma-custom">
+          <input class="form-control" style="text-align: center;" id="Firma_PDF" name="Firma_PDF" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()">
+          <label for="Firma_PDF"> Il richiedente<br><span><i>(accesso eseguito mediante SPID o CPS/CNS)</i></span></label>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="title-2" style="text-align: center; font-size: 12px;">
+          <i>I dati acquisiti saranno trattati in conformità alla normativa vigente sul trattamento dei dati personali (artt. 13 e 14 Regolamento UE n. 2016/679).</i>
+        </label>
+      </div>
+    </div>
+  </div>
+    
+  <!-- FINE BLOCCO FIRMA -->
+
+<div class="container">
+  <button type="submit" class="btn btn-success btn-lg btn-block" id="SalvaModulo" name="SalvaModulo" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza."> Salva modulo </button>
+</div>
+
+<input destinatario_amministrazione="getParameter('Ente')" id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<input id="GLOBO_allegato_cM1301-A01-ESISTENZA-SOGGETTO" name="GLOBO_allegato_cM1301-A01-ESISTENZA-SOGGETTO" type="hidden" value="" obbligatorio="#ESISTENZA.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM1301-A02-PROVVEDIMENTO-NOMINA-NOMINA" name="GLOBO_allegato_cM1301-A02-PROVVEDIMENTO-NOMINA-NOMINA" type="hidden" value="" obbligatorio="#NOMINA.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM1301-A03-IDONEITA-ONG" name="GLOBO_allegato_cM1301-A03-IDONEITA-ONG" type="hidden" value="" obbligatorio="#IDONEITA.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM1301-A04-ATTO-COSTITUTIVO" name="GLOBO_allegato_cM1301-A04-ATTO-COSTITUTIVO" type="hidden" value="" obbligatorio="#ATTO_COST.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM1301-A05-CERTIFICATO-SOGGETTO-ESTERO" name="GLOBO_allegato_cM1301-A05-CERTIFICATO-SOGGETTO-ESTERO" type="hidden" value="" obbligatorio="#SOGG_ESTERO.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM1301-A06-NOMINA-FISCALE" name="GLOBO_allegato_cM1301-A06-NOMINA-FISCALE" type="hidden" value="" obbligatorio="#RAPPR_FISCALE.checked() ? 'OBBLIGATORIO' : ''"/>
+<input id="GLOBO_allegato_cM1301-A07-VERBALE-NOMINA-ASSEMBLEA" name="GLOBO_allegato_cM1301-A07-VERBALE-NOMINA-ASSEMBLEA" type="hidden" value="" obbligatorio="#VERBALE.checked() ? 'OBBLIGATORIO' : ''"/>
+
+{% endblock content %}
+
