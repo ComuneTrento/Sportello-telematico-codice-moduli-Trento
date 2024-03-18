@@ -561,7 +561,7 @@
 </div>
 {%- endmacro %}
 
-{% macro richiedente_fs_fisso_resp( prefix='{{prefix}}', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="") -%}
+{% macro richiedente_fs_fisso_resp( prefix='{{prefix}}', intestazione="Il/La sottoscritto/a", visibility_carica_dati="visibility:visibility", pointer_carica_dati="cursor:pointer", visibility_intestazione="visibility:visibility", carica_campi="", visibility_residenza="visibility:visibility") -%}
 {% do all_prefix.append( prefix ) %}
 {% set Temp = prefix|replace("NonImportare", "NI") %}
 {% if prefix != Temp %}
@@ -626,10 +626,10 @@
     </div>
   </div>
 
-  <div class="space-1"></div>
+<div class="space-1"></div>
 
-  <div class="container border bg-light">
-
+{% if visibility_residenza == 'visibility:visibility' %}
+<div class="container border bg-light">
     <div class="form-row">
       <div class="form-group col-lg-12 border-bottom">
         <label> Residenza </label>
@@ -662,6 +662,7 @@
   </div>
 
 {% endif %}
+
     <div class="form-row" mandatory_enabled="true">
       <div class="form-group col-lg-1">
         <label for="{{prefix}}_ProvinciaResidenza"> Provincia </label>
@@ -689,10 +690,9 @@
       </div>
     </div>
 
-  </div>
-
-
 </div>
+{% endif %}
+
 
 <div class="container border bg-light" style="display:none">
   <input id="{{ prefix }}_LuogoNascita" name="{{ prefix }}_LuogoNascita" type="hidden"/>
