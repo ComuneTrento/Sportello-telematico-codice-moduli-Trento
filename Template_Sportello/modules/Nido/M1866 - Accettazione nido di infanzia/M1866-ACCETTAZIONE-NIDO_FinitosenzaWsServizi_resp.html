@@ -1,6 +1,6 @@
-{% set CodiceModulo = "M1866-ACCETTAZIONE-NIDO" %}
-{% set Urn =  "document:c_l378:asilo.nido;accettare.posto;accettazione.nido;m1866.accettazione.nido" %}
-{% extends "base_trento_ok.html" %}
+{% set CodiceModulo = "M1651-DOMANDA-LOCAZIONE-CANONE-MODERATO" %}
+{% set Urn = "document:c_l378:edilizia.abitativa.pubblica;domanda.locazione.canone.moderato;m1651.domanda.locazione.canone.moderato" %}
+{% extends "base_trento_OK.html" %}
 
 {% block meta %}
 
@@ -303,6 +303,29 @@ M1866-ACCETTAZIONE-NIDO
         <input class="form-control" name="ScadenzaAccettazioneFT" id="ScadenzaAccettazioneFT" dynamic_value="#Parametri_ScadenzaAccettazioneFT.value()" readonly/>
       </div>
     </div>
+
+    <!-- INIZIO BLOCCO ANTICIPO/POSTICIPO -->
+  <div class="form-row">
+    <div class="col-lg-12">
+      <span class="title-1"> Eventuale interesse all'estensione dell'orario giornaliero </span>
+    </div>
+  </div>
+    <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="Tassonomia_TipoOrarioAnt" name="Tassonomia_TipoOrarioAnt" label="Indicare anticipo" enabled="#Parametri_AccettazioneFT.value() == 'true' and !#Tassonomia_TipoFrequenza2.checked()"></div>
+      <input group="Tassonomia_TipoOrarioAnt" class="form-check-input" id="Tassonomia_TipoOrario1" name="Tassonomia_TipoOrarioAnt" type="checkbox" value="37">
+      <label class="form-check-label" for="Tassonomia_TipoOrario1">1^ ORA dalle ore 7:30 alle ore 8:30</label> 
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-check indent-1">
+      <div id="Tassonomia_TipoOrarioPost" name="Tassonomia_TipoOrarioPost" label="Indicare posticipo" enabled="#Parametri_AccettazioneFT.value() == 'true' and !#Tassonomia_TipoFrequenza2.checked()"></div>
+      <input group="Tassonomia_TipoOrarioPost" class="form-check-input" id="Tassonomia_TipoOrario2" name="Tassonomia_TipoOrarioPost" type="checkbox" value="38">
+      <label class="form-check-label" for="Tassonomia_TipoOrario2">2^ ORA dalle ore 16:30 alle ore 17:30</label> 
+    </div>
+  </div>
+    <!-- FINE BLOCCO ANTICIPO/POSTICIPO -->
+
 </div>
 <!-- FINE BLOCCO SCELTA TEMPO PIENO -->
 
@@ -349,6 +372,7 @@ M1866-ACCETTAZIONE-NIDO
 
 <div class="space-1"></div>
 <div class="space-1"></div>
+
 
 <!-- INIZIO SERVIZI OPZIONALI -->
 
@@ -398,9 +422,14 @@ M1866-ACCETTAZIONE-NIDO
         <input class="form-control" id="check_serv_agg" name="check_serv_agg" label="Controllo validità scelte per servizi aggiuntivi" dynamic_value="#TipoSceltaServizioAsilo0.checked() and (#TipoSceltaServizioAsilo1.checked() || #TipoSceltaServizioAsilo2.checked()) ? 'ATTENZIONE: Non è possibile selezionare entrambe le opzioni!' : ((#Tassonomia_TipoFrequenza1.checked() || #Tassonomia_TipoFrequenza2.checked()) and !#TipoSceltaServizioAsilo0.checked() and !#TipoSceltaServizioAsilo1.checked() and !#TipoSceltaServizioAsilo2.checked() ? 'Selezionare “Nessun servizio”, oppure una o entrambe le opzioni proposte (se presenti)' : '')">
     </div>    
   </div>
+  <div class="form-row">
+    <div class="col-lg-12">
+        <input class="form-control" id="check_serv_agg1" name="check_serv_agg1" label="Controllo validità scelte per servizi aggiuntivi" dynamic_value="#Tassonomia_TipoOrario2.value() != '38' and (#Parametri_CodiceServizioNido1.value() == '17' || #Parametri_CodiceServizioNido1.value() == '32' || #Parametri_CodiceServizioNido1.value() == '18' || #Parametri_CodiceServizioNido1.value() == '19' || #Parametri_CodiceServizioNido1.value() == '20' || #Parametri_CodiceServizioNido1.value() == '16' || #Parametri_CodiceServizioNido1.value() == '15' || #Parametri_CodiceServizioNido1.value() == '25' || #Parametri_CodiceServizioNido1.value() == '34' || #Parametri_CodiceServizioNido1.value() == '13' || #Parametri_CodiceServizioNido1.value() == '12' || #Parametri_CodiceServizioNido1.value() == '28' || #Parametri_CodiceServizioNido1.value() == '22' || #Parametri_CodiceServizioNido1.value() == '23' || #Parametri_CodiceServizioNido1.value() == '33') ? 'Attenzione! Non puoi selezionare il prolungamento se non hai scelto anche il posticipo dalle 16:30 alle 17:30' : ''">
+    </div>    
+  </div>
 </div>
 
-<input type="hidden" id="serv_agg_ok" name="serv_agg_ok" dynamic_value="#check_serv_agg.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del nido">
+<input type="hidden" id="serv_agg_ok" name="serv_agg_ok" dynamic_value="#check_serv_agg.value() == '' and #check_serv_agg1.value() == '' ? 'OK' : ''" mandatory="true" label="ATTENZIONE: è stata effettuata una scelta non corretta per i servizi aggiuntivi del nido">
 
 <div class="space-1"></div>
 <div class="space-1"></div>
