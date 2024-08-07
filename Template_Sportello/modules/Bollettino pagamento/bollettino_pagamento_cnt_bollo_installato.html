@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/libraries/validator/css/moduli.css">
 
 
-<meta campi_firma="TitolareNonImportare_CodiceFiscale" campi_firma_label="il dichiarante" classi_modulo="Generale" codice_modulo="BOLLETTINO_PAG" urn="document:c_l378:bollettino_pagamento" descrizione="Distinta di pagamento" destinatario_amministrazione="" destinatario_ufficio="" dinamico="SI" email_a="" ente_abilitato="TUTTI" filigrana="SI" firmare="P7M_ELETTRONICA" istruzioni_compilazione="" istruzioni_invio="" metodo_invio="mail" name="GLOBO_modulo" procura="NO,," tipo_modulo="secondario" urlhelp="/modulistica/moduli/BOLLETTINO_PAG" verifica_pagamento="NO" versione="2.5|15/10/2020">
+<meta campi_firma="TitolareNonImportare_CodiceFiscale" campi_firma_label="il dichiarante" classi_modulo="Generale" codice_modulo="BOLLETTINO_PAG" urn="document:c_l378:bollettino_pagamento" descrizione="Distinta di pagamento" destinatario_amministrazione="" destinatario_ufficio="" dinamico="SI" email_a="" ente_abilitato="TUTTI" filigrana="SI" firmare="P7M_DIGITALE" istruzioni_compilazione="" istruzioni_invio="" metodo_invio="mail" name="GLOBO_modulo" procura="NO,," tipo_modulo="secondario" urlhelp="/modulistica/moduli/BOLLETTINO_PAG" verifica_pagamento="NO" versione="2.5|15/10/2020">
 
 
 <meta codice_allegato="RIC-DIR-SEG-XML" descrizione_estesa="Ricevuta pagamento dei diritti di segreteria o istruttoria (formato XML)" filename="Ricevuta pagamento.xml" firmato="NO" istruzioni="/modulistica/moduli/RIC-DIR-SEG-XML" name="GLOBO_allegato" numero="1" obbligatorio="DINAMICO" tipo_mime="application/xml">
@@ -372,536 +372,676 @@ function get_ufficio_dest() {
   Distinta di pagamento dell'istanza <input style="color: black; border: 0px" name="Codice_istanza" id="Codice_istanza" readonly>
 </h1>
 
+<input type="hidden" name="TipoContesto" id="TipoContesto" value="GLOBO">
+<input type="hidden" name="TipoLista" id="TipoLista" value="PGLOBO">
 
+<input id="cellulare_obbligatorio" name="cellulare_obbligatorio" dynamic_check="true" type="hidden">
+<input id="mail_obbligatoria" name="mail_obbligatoria" dynamic_check="true" type="hidden">
 
-
-
-
-
-  <div type="Anagrafica_Società">
-
-    <input id="TitolareNonImportare_Titolo" name="TitolareNonImportare_Titolo" type="hidden" value="Richiedente">
+<div type="Anagrafica_Società">
+  <input id="TitolareNonImportare_Titolo" name="TitolareNonImportare_Titolo" type="hidden" value="Richiedente">
 	  <table class="Modulo" style="border:1px solid grey; margin-bottom:-6px">
-      <tbody>
-        <tr class="Rigaintestazione">
-          <td style="border-right:0px">
-            <p class="Labeltabella" style="vertical-align:middle"> Il sottoscritto </p>
-          </td>
-				  <td style="width:3%; cursor:pointer; border-left:0px">
-            <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td style="width: 40%; border-left:0px; border-right:0px">
+          <p class="Labeltabella" style="vertical-align:middle">Il/La sottoscritto/a, avente codice fiscale <br><span style="font-size:85%;"><i>(clicca sull'icona omino)</i></span></p>
+        </td>
+        <td style="width:3%; border-left:0px; border-right:0px">
+          <p class="Labeltabella"></p>
+        </td>
+        <td style="width: 3%; cursor:pointer; border-left:0px; border-right:0px">
+          <span style="pd4ml-visibility: hidden; pd4ml-display: none;">
 
 
 <img class="recupero-dati" alt="Carica dati da profilo" style="visibility:visibility" title="Carica i tuoi dati" src="./appoggio/img/carica_campi.png" onclick="recuperaAnagrafica( 'TitolareNonImportare' )">
 
+          </span>
+        </td>
+        <td style="width:27%; border-left:0px; border-right:0px">
+          <input class="" id="TitolareNonImportare_CodiceFiscale" name="TitolareNonImportare_CodiceFiscale" style="width:100%" format="cf" label="Il codice fiscale" mandatory_enabled="true" readonly>
+        </td>
+        <td style="width:25%; border-left:0px; border-right:0px">
+          <button type="button" class="real-button" id="RecuperaDatiAnagr">Carica dati anagrafici</button>
+        </td>
+      </tr>
+    </tbody>
 
-            </span>
+
+  <div ws-name="getPersonaREST" ws-param-in="contesto=TipoContesto;listaAut=TipoLista;codiceFiscale=TitolareNonImportare_CodiceFiscale" ws-param-out="TitolareNonImportare_ProvinciaResidenza=provincia;TitolareNonImportare_ViaResidenza=indirizzo;TitolareNonImportare_CodiceComuneNascita=codiceComuneNascita;TitolareNonImportare_Cognome=cognome;TitolareNonImportare_CodiceFamiglia=codiceFamiglia;TitolareNonImportare_CodiceVia=codiceVia;TitolareNonImportare_CivicoResidenza=numeroCivico;TitolareNonImportare_MatricolaAnagrafe=matricola;TitolareNonImportare_Nazionalita=stato;TitolareNonImportare_Nazione=nazione;TitolareNonImportare_Cittadinanza=nazionalita;TitolareNonImportare_Sesso=sesso;TitolareNonImportare_ComuneResidenza=citta;TitolareNonImportare_CAPResidenza=cap;TitolareNonImportare_BarraResidenza=barra;TitolareNonImportare_LuogoNascita=comuneNascita;TitolareNonImportare_Nome=nome;TitolareNonImportare_DataNascita=datanascita" ws-on="#RecuperaDatiAnagr:click" ws-allow-edit="true">
+  </div>
+  </table>
+
+  <br>
+
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="true">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="5">
+          <p style="line-height: 1.6;"><b>Dati anagrafici:</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td colspan="3">
+          <p class="Labelcella" style="line-height:1.6;">Cognome</p>
+        </td>
+        <td colspan="2">
+          <p class="Labelcella" style="line-height:1.6;">Nome</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <input class="" id="TitolareNonImportare_Cognome" name="TitolareNonImportare_Cognome" style="width:100%" label="Cognome">
+        </td>
+        <td colspan="2">
+          <input class="" id="TitolareNonImportare_Nome" name="TitolareNonImportare_Nome" style="width:100%" label="Nome">
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:15%;">
+          <p class="Labelcella" style="line-height:1.6;">Data di nascita</p>
+        </td>
+        <td style="width:9%;">
+          <p class="Labelcella" style="line-height:1.6;">Sesso</p>
+        </td>
+        <td style="width: 26%;">
+          <p class="Labelcella" style="line-height:1.6;">Cittadinanza</p>
+        </td>
+        <td style="width: 40%;">
+          <p class="Labelcella" style="line-height:1.6;">Luogo di nascita</p>
+        </td>
+        <td style="width: 10%;">
+          <p class="Labelcella" style="line-height:1.6;">Provincia</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="" id="TitolareNonImportare_DataNascita" name="TitolareNonImportare_DataNascita" style="width:100%;" format="date" label="Data di nascita">
+        </td>
+        <td>
+          <select class="inputNormal" id="TitolareNonImportare_Sesso" name="TitolareNonImportare_Sesso" style="width:100%;" label="Sesso">
+            <option value=""></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </td>
+        <!-- <td>
+          <input class="" id="TitolareNonImportare_Cittadinanza" name="TitolareNonImportare_Cittadinanza" style="width:100%;" label="Nazionalit&agrave;">
+        </td> -->
+        <td>
+          <select id="TitolareNonImportare_Cittadinanza" name="TitolareNonImportare_Cittadinanza" style="width:100%" label="Cittadinanza">
+            <option value=""></option>
+            <optgroup label="Unione Europea">
+                <option value="Italia">ITALIA</option>
+                <option value="Austria">AUSTRIA</option>
+                <option value="Belgio">BELGIO</option>
+                <option value="Bulgaria">BULGARIA</option>
+                <option value="Cipro">CIPRO</option>
+                <option value="Danimarca">DANIMARCA</option>
+                <option value="Eire">EIRE</option>
+                <option value="Estonia">ESTONIA</option>
+                <option value="Finlandia">FINLANDIA</option>
+                <option value="Francia">FRANCIA</option>
+                <option value="Germania">GERMANIA</option>
+                <option value="Grecia">GRECIA</option>
+                <option value="Lettonia">LETTONIA</option>
+                <option value="Lituania">LITUANIA</option>
+                <option value="Lussemburgo">LUSSEMBURGO</option>
+                <option value="Malta">MALTA</option>
+                <option value="Paesi Bassi">PAESI BASSI</option>
+                <option value="Polonia">POLONIA</option>
+                <option value="Portogallo">PORTOGALLO</option>
+                <option value="Regno Unito">REGNO UNITO</option>
+                <option value="Repubblica Ceca">REPUBBLICA CECA</option>
+                <option value="Romania">ROMANIA</option>
+                <option value="Slovacchia">SLOVACCHIA</option>
+                <option value="Slovenia">SLOVENIA</option>
+                <option value="Spagna">SPAGNA</option>
+                <option value="Svezia">SVEZIA</option>
+                <option value="Ungheria">UNGHERIA</option>
+            </optgroup>
+            <optgroup label="NON Unione Europea">
+                <option value="Afghanistan">AFGHANISTAN</option>
+                <option value="Albania">ALBANIA</option>
+                <option value="Algeria">ALGERIA</option>
+                <option value="Andorra">ANDORRA</option>
+                <option value="Angola">ANGOLA</option>
+                <option value="Anguilla">ANGUILLA</option>
+                <option value="Antartide">ANTARTIDE</option>
+                <option value="Antigua e Barbuda">ANTIGUA E BARBUDA</option>
+                <option value="Antille Olandesi">ANTILLE OLANDESI</option>
+                <option value="Arabia Saudita">ARABIA SAUDITA</option>
+                <option value="Argentina">ARGENTINA</option>
+                <option value="Armenia">ARMENIA</option>
+                <option value="Aruba">ARUBA</option>
+                <option value="Australia">AUSTRALIA</option>
+                <option value="Azerbaijan">AZERBAIJAN</option>
+                <option value="Bahamas">BAHAMAS</option>
+                <option value="Bahrain">BAHRAIN</option>
+                <option value="Bangladesh">BANGLADESH</option>
+                <option value="Barbados">BARBADOS</option>
+                <option value="Belize">BELIZE</option>
+                <option value="Benin">BENIN</option>
+                <option value="Bermuda">BERMUDA</option>
+                <option value="Bhutan">BHUTAN</option>
+                <option value="Bielorussia">BIELORUSSIA</option>
+                <option value="Bolivia">BOLIVIA</option>
+                <option value="Bosnia Erzegovina">BOSNIA ERZEGOVINA</option>
+                <option value="Botswana">BOTSWANA</option>
+                <option value="Brasile">BRASILE</option>
+                <option value="Brunei Darussalam">BRUNEI DARUSSALAM</option>
+                <option value="Burkina Faso">BURKINA FASO</option>
+                <option value="Burundi">BURUNDI</option>
+                <option value="Cambogia">CAMBOGIA</option>
+                <option value="Camerun">CAMERUN</option>
+                <option value="Canada">CANADA</option>
+                <option value="Capo Verde">CAPO VERDE</option>
+                <option value="Ciad">CIAD</option>
+                <option value="Cile">CILE</option>
+                <option value="Cina">CINA</option>
+                <option value="Città del Vaticano">CITTÀ DEL VATICANO</option>
+                <option value="Colombia">COLOMBIA</option>
+                <option value="Comore">COMORE</option>
+                <option value="Corea del Nord">COREA DEL NORD</option>
+                <option value="Corea del Sud">COREA DEL SUD</option>
+                <option value="Costa d'Avorio">COSTA D'AVORIO</option>
+                <option value="Costa Rica">COSTA RICA</option>
+                <option value="Croazia">CROAZIA</option>
+                <option value="Cuba">CUBA</option>
+                <option value="Dominica">DOMINICA</option>
+                <option value="Ecuador">ECUADOR</option>
+                <option value="Egitto">EGITTO</option>
+                <option value="El Salvador">EL SALVADOR</option>
+                <option value="Emirati Arabi Uniti">EMIRATI ARABI UNITI</option>
+                <option value="Eritrea">ERITREA</option>
+                <option value="Etiopia">ETIOPIA</option>
+                <option value="Federazione Russa">FEDERAZIONE RUSSA</option>
+                <option value="Fiji">FIJI</option>
+                <option value="Filippine">FILIPPINE</option>
+                <option value="Gabon">GABON</option>
+                <option value="Gambia">GAMBIA</option>
+                <option value="Georgia">GEORGIA</option>
+                <option value="Ghana">GHANA</option>
+                <option value="Giamaica">GIAMAICA</option>
+                <option value="Giappone">GIAPPONE</option>
+                <option value="Gibilterra">GIBILTERRA</option>
+                <option value="Gibuti">GIBUTI</option>
+                <option value="Giordania">GIORDANIA</option>
+                <option value="Grenada">GRENADA</option>
+                <option value="Groenlandia">GROENLANDIA</option>
+                <option value="Guadalupa">GUADALUPA</option>
+                <option value="Guam">GUAM</option>
+                <option value="Guatemala">GUATEMALA</option>
+                <option value="Guinea Equatoriale">GUINEA EQUATORIALE</option>
+                <option value="Guinea">GUINEA</option>
+                <option value="Guinea-Bissau">GUINEA-BISSAU</option>
+                <option value="Guyana Francese">GUYANA FRANCESE</option>
+                <option value="Guyana">GUYANA</option>
+                <option value="Haiti">HAITI</option>
+                <option value="Honduras">HONDURAS</option>
+                <option value="Hong Kong">HONG KONG</option>
+                <option value="India">INDIA</option>
+                <option value="Indonesia">INDONESIA</option>
+                <option value="Iran">IRAN</option>
+                <option value="Iraq">IRAQ</option>
+                <option value="Islanda">ISLANDA</option>
+                <option value="Isola Bouvet">ISOLA BOUVET</option>
+                <option value="Isola di Natale">ISOLA DI NATALE</option>
+                <option value="Isola Heard e Isole McDonald">ISOLA HEARD E ISOLE MCDONALD</option>
+                <option value="Isola Norfolk">ISOLA NORFOLK</option>
+                <option value="Isole Cayman">ISOLE CAYMAN</option>
+                <option value="Isole Cocos">ISOLE COCOS</option>
+                <option value="Isole Cook">ISOLE COOK</option>
+                <option value="Isole Falkland">ISOLE FALKLAND</option>
+                <option value="Isole Faroe">ISOLE FAROE</option>
+                <option value="Isole Marianne Settentrionali">ISOLE MARIANNE SETTENTRIONALI</option>
+                <option value="Isole Marshall">ISOLE MARSHALL</option>
+                <option value="Isole Minori degli Stati Uniti d'America">ISOLE MINORI DEGLI STATI UNITI D'AMERICA</option>
+                <option value="Isole Solomon">ISOLE SOLOMON</option>
+                <option value="Isole Turks e Caicos">ISOLE TURKS E CAICOS</option>
+                <option value="Isole Vergini Americane">ISOLE VERGINI AMERICANE</option>
+                <option value="Isole Vergini Britanniche">ISOLE VERGINI BRITANNICHE</option>
+                <option value="Israele">ISRAELE</option>
+                <option value="Kazakhistan">KAZAKHISTAN</option>
+                <option value="Kenya">KENYA</option>
+                <option value="Kirghizistan">KIRGHIZISTAN</option>
+                <option value="Kiribati">KIRIBATI</option>
+                <option value="Kossovo">KOSSOVO</option>
+                <option value="Kuwait">KUWAIT</option>
+                <option value="Laos">LAOS</option>
+                <option value="Lesotho">LESOTHO</option>
+                <option value="Libano">LIBANO</option>
+                <option value="Liberia">LIBERIA</option>
+                <option value="Libia">LIBIA</option>
+                <option value="Liechtenstein">LIECHTENSTEIN</option>
+                <option value="Macao">MACAO</option>
+                <option value="Macedonia">MACEDONIA</option>
+                <option value="Madagascar">MADAGASCAR</option>
+                <option value="Malawi">MALAWI</option>
+                <option value="Maldive">MALDIVE</option>
+                <option value="Malesia">MALESIA</option>
+                <option value="Mali">MALI</option>
+                <option value="Marocco">MAROCCO</option>
+                <option value="Martinica">MARTINICA</option>
+                <option value="Mauritania">MAURITANIA</option>
+                <option value="Maurizius">MAURIZIUS</option>
+                <option value="Mayotte">MAYOTTE</option>
+                <option value="Messico">MESSICO</option>
+                <option value="Moldavia">MOLDAVIA</option>
+                <option value="Monaco">MONACO</option>
+                <option value="Mongolia">MONGOLIA</option>
+                <option value="Montenegro">MONTENEGRO</option>
+                <option value="Montserrat">MONTSERRAT</option>
+                <option value="Mozambico">MOZAMBICO</option>
+                <option value="Myanmar">MYANMAR</option>
+                <option value="Namibia">NAMIBIA</option>
+                <option value="Nauru">NAURU</option>
+                <option value="Nepal">NEPAL</option>
+                <option value="Nicaragua">NICARAGUA</option>
+                <option value="Niger">NIGER</option>
+                <option value="Nigeria">NIGERIA</option>
+                <option value="Niue">NIUE</option>
+                <option value="Norvegia">NORVEGIA</option>
+                <option value="Nuova Caledonia">NUOVA CALEDONIA</option>
+                <option value="Nuova Zelanda">NUOVA ZELANDA</option>
+                <option value="Oman">OMAN</option>
+                <option value="Pakistan">PAKISTAN</option>
+                <option value="Palau">PALAU</option>
+                <option value="Panama">PANAMA</option>
+                <option value="Papua Nuova Guinea">PAPUA NUOVA GUINEA</option>
+                <option value="Paraguay">PARAGUAY</option>
+                <option value="Perù">PERÙ</option>
+                <option value="Pitcairn">PITCAIRN</option>
+                <option value="Polinesia Francese">POLINESIA FRANCESE</option>
+                <option value="Porto Rico">PORTO RICO</option>
+                <option value="Qatar">QATAR</option>
+                <option value="Repubblica Centroafricana">REPUBBLICA CENTROAFRICANA</option>
+                <option value="Repubblica del Congo">REPUBBLICA DEL CONGO</option>
+                <option value="Repubblica Democratica del Congo">REPUBBLICA DEMOCRATICA DEL CONGO</option>
+                <option value="Repubblica Dominicana">REPUBBLICA DOMINICANA</option>
+                <option value="Reunion">REUNION</option>
+                <option value="Ruanda">RUANDA</option>
+                <option value="Sahara Occidentale">SAHARA OCCIDENTALE</option>
+                <option value="Saint Kitts e Nevis">SAINT KITTS E NEVIS</option>
+                <option value="Saint Pierre e Miquelon">SAINT PIERRE E MIQUELON</option>
+                <option value="Saint Vincent e Grenadine">SAINT VINCENT E GRENADINE</option>
+                <option value="Samoa Americane">SAMOA AMERICANE</option>
+                <option value="Samoa">SAMOA</option>
+                <option value="San Marino">SAN MARINO</option>
+                <option value="Santa Lucia">SANTA LUCIA</option>
+                <option value="Sant'Elena">SANT'ELENA</option>
+                <option value="Sao Tome e Principe">SAO TOME E PRINCIPE</option>
+                <option value="Senegal">SENEGAL</option>
+                <option value="Serbia">SERBIA</option>
+                <option value="Seychelles">SEYCHELLES</option>
+                <option value="Sierra Leone">SIERRA LEONE</option>
+                <option value="Singapore">SINGAPORE</option>
+                <option value="Siria">SIRIA</option>
+                <option value="Somalia">SOMALIA</option>
+                <option value="Sri Lanka">SRI LANKA</option>
+                <option value="Stati Federati della Micronesia">STATI FEDERATI DELLA MICRONESIA</option>
+                <option value="Stati Uniti d'America">STATI UNITI D'AMERICA</option>
+                <option value="Sud Africa">SUD AFRICA</option>
+                <option value="Sud Georgia e Isole Sandwich">SUD GEORGIA E ISOLE SANDWICH</option>
+                <option value="Sudan">SUDAN</option>
+                <option value="Suriname">SURINAME</option>
+                <option value="Svalbard e Jan Mayen">SVALBARD E JAN MAYEN</option>
+                <option value="Svizzera">SVIZZERA</option>
+                <option value="Swaziland">SWAZILAND</option>
+                <option value="Tagikistan">TAGIKISTAN</option>
+                <option value="Thailandia">THAILANDIA</option>
+                <option value="Taiwan">TAIWAN</option>
+                <option value="Tanzania">TANZANIA</option>
+                <option value="Territori Britannici dell'Oceano Indiano">TERRITORI BRITANNICI DELL'OCEANO INDIANO</option>
+                <option value="Territori Francesi del Sud">TERRITORI FRANCESI DEL SUD</option>
+                <option value="Territori Palestinesi Occupati">TERRITORI PALESTINESI OCCUPATI</option>
+                <option value="Timor Est">TIMOR EST</option>
+                <option value="Togo">TOGO</option>
+                <option value="Tokelau">TOKELAU</option>
+                <option value="Tonga">TONGA</option>
+                <option value="Trinidad e Tobago">TRINIDAD E TOBAGO</option>
+                <option value="Tunisia">TUNISIA</option>
+                <option value="Turchia">TURCHIA</option>
+                <option value="Turkmenistan">TURKMENISTAN</option>
+                <option value="Tuvalu">TUVALU</option>
+                <option value="Ucraina">UCRAINA</option>
+                <option value="Uganda">UGANDA</option>
+                <option value="Uruguay">URUGUAY</option>
+                <option value="Uzbekistan">UZBEKISTAN</option>
+                <option value="Vanuatu">VANUATU</option>
+                <option value="Venezuela">VENEZUELA</option>
+                <option value="Vietnam">VIETNAM</option>
+                <option value="Wallis e Futuna">WALLIS E FUTUNA</option>
+                <option value="Yemen">YEMEN</option>
+                <option value="Zambia">ZAMBIA</option>
+                <option value="Zimbabwe">ZIMBABWE</option>
+                <option value="Apolide">APOLIDE</option>
+            </optgroup>
+        </select>
+        </td>
+        <td>
+          <input class="" id="TitolareNonImportare_LuogoNascita" name="TitolareNonImportare_LuogoNascita" style="width:100%;" label="Luogo di nascita">
+        </td>
+        <td>
+          <select id="TitolareNonImportare_ProvinciaNascita" name="TitolareNonImportare_ProvinciaNascita" style="width:100%" label="Provincia di nascita">
+      <option value=""></option>
+      <option value="AG">AG</option>
+      <option value="AL">AL</option>
+      <option value="AN">AN</option>
+      <option value="AO">AO</option>
+      <option value="AP">AP</option>
+      <option value="AQ">AQ</option>
+      <option value="AR">AR</option>
+      <option value="AT">AT</option>
+      <option value="AV">AV</option>
+      <option value="BA">BA</option>
+      <option value="BG">BG</option>
+      <option value="BI">BI</option>
+      <option value="BL">BL</option>
+      <option value="BN">BN</option>
+      <option value="BO">BO</option>
+      <option value="BR">BR</option>
+      <option value="BS">BS</option>
+      <option value="BT">BT</option>
+      <option value="BZ">BZ</option>
+      <option value="CA">CA</option>
+      <option value="CB">CB</option>
+      <option value="CE">CE</option>
+      <option value="CH">CH</option>
+      <option value="CI">CI</option>
+      <option value="CL">CL</option>
+      <option value="CN">CN</option>
+      <option value="CO">CO</option>
+      <option value="CR">CR</option>
+      <option value="CS">CS</option>
+      <option value="CT">CT</option>
+      <option value="CZ">CZ</option>
+      <option value="EN">EN</option>
+      <option value="FC">FC</option>
+      <option value="FE">FE</option>
+      <option value="FG">FG</option>
+      <option value="FI">FI</option>
+      <option value="FM">FM</option>
+      <option value="FR">FR</option>
+      <option value="GE">GE</option>
+      <option value="GO">GO</option>
+      <option value="GR">GR</option>
+      <option value="IM">IM</option>
+      <option value="IS">IS</option>
+      <option value="KR">KR</option>
+      <option value="LC">LC</option>
+      <option value="LE">LE</option>
+      <option value="LI">LI</option>
+      <option value="LO">LO</option>
+      <option value="LT">LT</option>
+      <option value="LU">LU</option>
+      <option value="MB">MB</option>
+      <option value="MC">MC</option>
+      <option value="ME">ME</option>
+      <option value="MI">MI</option>
+      <option value="MN">MN</option>
+      <option value="MO">MO</option>
+      <option value="MS">MS</option>
+      <option value="MT">MT</option>
+      <option value="NA">NA</option>
+      <option value="NO">NO</option>
+      <option value="NU">NU</option>
+      <option value="OG">OG</option>
+      <option value="OR">OR</option>
+      <option value="OT">OT</option>
+      <option value="PA">PA</option>
+      <option value="PC">PC</option>
+      <option value="PD">PD</option>
+      <option value="PE">PE</option>
+      <option value="PG">PG</option>
+      <option value="PI">PI</option>
+      <option value="PN">PN</option>
+      <option value="PO">PO</option>
+      <option value="PR">PR</option>
+      <option value="PT">PT</option>
+      <option value="PU">PU</option>
+      <option value="PV">PV</option>
+      <option value="PZ">PZ</option>
+      <option value="RA">RA</option>
+      <option value="RC">RC</option>
+      <option value="RE">RE</option>
+      <option value="RG">RG</option>
+      <option value="RI">RI</option>
+      <option value="RM">RM</option>
+      <option value="RN">RN</option>
+      <option value="RO">RO</option>
+      <option value="SA">SA</option>
+      <option value="SI">SI</option>
+      <option value="SO">SO</option>
+      <option value="SP">SP</option>
+      <option value="SR">SR</option>
+      <option value="SS">SS</option>
+      <option value="SV">SV</option>
+      <option value="TA">TA</option>
+      <option value="TE">TE</option>
+      <option value="TN">TN</option>
+      <option value="TO">TO</option>
+      <option value="TP">TP</option>
+      <option value="TR">TR</option>
+      <option value="TS">TS</option>
+      <option value="TV">TV</option>
+      <option value="UD">UD</option>
+      <option value="VA">VA</option>
+      <option value="VB">VB</option>
+      <option value="VC">VC</option>
+      <option value="VE">VE</option>
+      <option value="VI">VI</option>
+      <option value="VR">VR</option>
+      <option value="VS">VS</option>
+      <option value="VT">VT</option>
+      <option value="VV">VV</option>
+      <option value="EE">EE</option>
+  </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazione">
+          <td colspan="6">
+            <p style="line-height: 1.6;"><b>Residente a:</b></p>
           </td>
         </tr>
-		  </tbody>
-    </table>
-	  <table class="Modulo" style="border:1px solid grey" mandatory="true">
-      <tbody>
         <tr class="Rigaintestazioneridotta">
-          <td>
-            <p class="Labelcella">Cognome</p>
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Provincia</p>
           </td>
-          <td style="width:30%">
-            <p class="Labelcella">Nome</p>
+          <td style="width:33%;">
+            <p class="Labelcella" style="line-height:1.6;">Comune</p>
           </td>
-          <td style="width:34%">
-            <p class="Labelcella">Codice Fiscale</p>
+          <td style="width:33%;">
+            <p class="Labelcella" style="line-height:1.6;">Indirizzo</p>
           </td>
-        </tr>
-        <tr>
-          <td>
-            <input class="" id="TitolareNonImportare_Cognome" name="TitolareNonImportare_Cognome" style="width:100%" label="Cognome del Richiedente">
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Civico</p>
           </td>
-          <td>
-            <input class="" id="TitolareNonImportare_Nome" name="TitolareNonImportare_Nome" style="width:100%" label="Nome del Richiedente">
+          <td style="width:9%;">
+            <p class="Labelcella" style="line-height:1.6;">Barra</p>
           </td>
-          <td>
-            <input class="" id="TitolareNonImportare_CodiceFiscale" name="TitolareNonImportare_CodiceFiscale" style="width:100%;" format="cf" label="Il codice fiscale del Richiedente">
-          </td>
-        </tr>
-		  </tbody>
-    </table>
-	  <table class="Modulo" style="border:1px solid grey; margin-top: -1px;" mandatory="true">
-      <tbody>
-        <tr class="Rigaintestazioneridotta" style="border-top:0px">
-          <td style="width:18%;">
-            <p class="Labelcella">Data di nascita</p>
-          </td>
-          <td style="width:8%;">
-            <p class="Labelcella">Sesso</p>
-          </td>
-          <td>
-            <p class="Labelcella">Luogo di nascita</p>
-          </td>
-          <td style="width: 34%;">
-            <p class="Labelcella">Cittadinanza</p>
+          <td style="width:16%;">
+            <p class="Labelcella" style="line-height:1.6;">CAP</p>
           </td>
         </tr>
         <tr>
-          <td>
-            <input class="" id="TitolareNonImportare_DataNascita" name="TitolareNonImportare_DataNascita" style="width:100%;" format="date" label="Data di nascita del Richiedente" readonly>
+          <td mandatory_enabled="true">
+            <select id="TitolareNonImportare_ProvinciaResidenza" name="TitolareNonImportare_ProvinciaResidenza" style="width:100%" label="Provincia di residenza">
+      <option value=""></option>
+      <option value="AG">AG</option>
+      <option value="AL">AL</option>
+      <option value="AN">AN</option>
+      <option value="AO">AO</option>
+      <option value="AP">AP</option>
+      <option value="AQ">AQ</option>
+      <option value="AR">AR</option>
+      <option value="AT">AT</option>
+      <option value="AV">AV</option>
+      <option value="BA">BA</option>
+      <option value="BG">BG</option>
+      <option value="BI">BI</option>
+      <option value="BL">BL</option>
+      <option value="BN">BN</option>
+      <option value="BO">BO</option>
+      <option value="BR">BR</option>
+      <option value="BS">BS</option>
+      <option value="BT">BT</option>
+      <option value="BZ">BZ</option>
+      <option value="CA">CA</option>
+      <option value="CB">CB</option>
+      <option value="CE">CE</option>
+      <option value="CH">CH</option>
+      <option value="CI">CI</option>
+      <option value="CL">CL</option>
+      <option value="CN">CN</option>
+      <option value="CO">CO</option>
+      <option value="CR">CR</option>
+      <option value="CS">CS</option>
+      <option value="CT">CT</option>
+      <option value="CZ">CZ</option>
+      <option value="EN">EN</option>
+      <option value="FC">FC</option>
+      <option value="FE">FE</option>
+      <option value="FG">FG</option>
+      <option value="FI">FI</option>
+      <option value="FM">FM</option>
+      <option value="FR">FR</option>
+      <option value="GE">GE</option>
+      <option value="GO">GO</option>
+      <option value="GR">GR</option>
+      <option value="IM">IM</option>
+      <option value="IS">IS</option>
+      <option value="KR">KR</option>
+      <option value="LC">LC</option>
+      <option value="LE">LE</option>
+      <option value="LI">LI</option>
+      <option value="LO">LO</option>
+      <option value="LT">LT</option>
+      <option value="LU">LU</option>
+      <option value="MB">MB</option>
+      <option value="MC">MC</option>
+      <option value="ME">ME</option>
+      <option value="MI">MI</option>
+      <option value="MN">MN</option>
+      <option value="MO">MO</option>
+      <option value="MS">MS</option>
+      <option value="MT">MT</option>
+      <option value="NA">NA</option>
+      <option value="NO">NO</option>
+      <option value="NU">NU</option>
+      <option value="OG">OG</option>
+      <option value="OR">OR</option>
+      <option value="OT">OT</option>
+      <option value="PA">PA</option>
+      <option value="PC">PC</option>
+      <option value="PD">PD</option>
+      <option value="PE">PE</option>
+      <option value="PG">PG</option>
+      <option value="PI">PI</option>
+      <option value="PN">PN</option>
+      <option value="PO">PO</option>
+      <option value="PR">PR</option>
+      <option value="PT">PT</option>
+      <option value="PU">PU</option>
+      <option value="PV">PV</option>
+      <option value="PZ">PZ</option>
+      <option value="RA">RA</option>
+      <option value="RC">RC</option>
+      <option value="RE">RE</option>
+      <option value="RG">RG</option>
+      <option value="RI">RI</option>
+      <option value="RM">RM</option>
+      <option value="RN">RN</option>
+      <option value="RO">RO</option>
+      <option value="SA">SA</option>
+      <option value="SI">SI</option>
+      <option value="SO">SO</option>
+      <option value="SP">SP</option>
+      <option value="SR">SR</option>
+      <option value="SS">SS</option>
+      <option value="SV">SV</option>
+      <option value="TA">TA</option>
+      <option value="TE">TE</option>
+      <option value="TN">TN</option>
+      <option value="TO">TO</option>
+      <option value="TP">TP</option>
+      <option value="TR">TR</option>
+      <option value="TS">TS</option>
+      <option value="TV">TV</option>
+      <option value="UD">UD</option>
+      <option value="VA">VA</option>
+      <option value="VB">VB</option>
+      <option value="VC">VC</option>
+      <option value="VE">VE</option>
+      <option value="VI">VI</option>
+      <option value="VR">VR</option>
+      <option value="VS">VS</option>
+      <option value="VT">VT</option>
+      <option value="VV">VV</option>
+      <option value="EE">EE</option>
+  </select>
           </td>
           <td>
-            <select class="inputNormal" id="TitolareNonImportare_Sesso" name="TitolareNonImportare_Sesso" style="width:100%; pointer-events:none;" label="Sesso del Richiedente">
-              <option value=""></option>
-              <option value="M">M </option>
-              <option value="F"> F </option>
-            </select>
+            <input class="" id="TitolareNonImportare_ComuneResidenza" name="TitolareNonImportare_ComuneResidenza" style="width:100%" label="Comune di residenza" mandatory="#TitolareNonImportare_ProvinciaResidenza.value() != 'EE'">
           </td>
           <td>
-            <input class="" id="TitolareNonImportare_LuogoNascita" name="TitolareNonImportare_LuogoNascita" style="width:100%;" label="Luogo di nascita del Richiedente">
+            <input class="" id="TitolareNonImportare_ViaResidenza" name="TitolareNonImportare_ViaResidenza" maxlength="40" style="width:100%;" label="Via di residenza" mandatory_enabled="true">
           </td>
           <td>
-
-    <select id="TitolareNonImportare_Cittadinanza" name="TitolareNonImportare_Cittadinanza" style="width:100%; font-size:100%; " label="Cittadinanza">
-
-
-		<option value=""></option>
-    <optgroup label="Unione Europea">
-        <option value="Italia">Italia</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgio">Belgio</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Cipro">Cipro</option>
-        <option value="Danimarca">Danimarca</option>
-        <option value="Eire">Eire</option>
-        <option value="Estonia">Estonia</option>
-        <option value="Finlandia">Finlandia</option>
-        <option value="Francia">Francia</option>
-        <option value="Germania">Germania</option>
-        <option value="Grecia">Grecia</option>
-        <option value="Lettonia">Lettonia</option>
-        <option value="Lituania">Lituania</option>
-        <option value="Lussemburgo">Lussemburgo</option>
-        <option value="Malta">Malta</option>
-        <option value="Paesi Bassi">Paesi Bassi</option>
-        <option value="Polonia">Polonia</option>
-        <option value="Portogallo">Portogallo</option>
-        <option value="Regno Unito">Regno Unito</option>
-        <option value="Repubblica Ceca">Repubblica Ceca</option>
-        <option value="Romania">Romania</option>
-        <option value="Slovacchia">Slovacchia</option>
-        <option value="Slovenia">Slovenia</option>
-        <option value="Spagna">Spagna</option>
-        <option value="Svezia">Svezia</option>
-        <option value="Ungheria">Ungheria</option>
-    </optgroup>
-    <optgroup label="NON Unione Europea">
-        <option value="Afghanistan">Afghanistan</option>
-        <option value="Albania">Albania</option>
-        <option value="Algeria">Algeria</option>
-        <option value="Andorra">Andorra</option>
-        <option value="Angola">Angola</option>
-        <option value="Anguilla">Anguilla</option>
-        <option value="Antartide">Antartide</option>
-        <option value="Antigua e Barbuda">Antigua e Barbuda</option>
-        <option value="Antille Olandesi">Antille Olandesi</option>
-        <option value="Arabia Saudita">Arabia Saudita</option>
-        <option value="Argentina">Argentina</option>
-        <option value="Armenia">Armenia</option>
-        <option value="Aruba">Aruba</option>
-        <option value="Australia">Australia</option>
-        <option value="Azerbaijan">Azerbaijan</option>
-        <option value="Bahamas">Bahamas</option>
-        <option value="Bahrain">Bahrain</option>
-        <option value="Bangladesh">Bangladesh</option>
-        <option value="Barbados">Barbados</option>
-        <option value="Belize">Belize</option>
-        <option value="Benin">Benin</option>
-        <option value="Bermuda">Bermuda</option>
-        <option value="Bhutan">Bhutan</option>
-        <option value="Bielorussia">Bielorussia</option>
-        <option value="Bolivia">Bolivia</option>
-        <option value="Bosnia Erzegovina">Bosnia Erzegovina</option>
-        <option value="Botswana">Botswana</option>
-        <option value="Brasile">Brasile</option>
-        <option value="Brunei Darussalam">Brunei Darussalam</option>
-        <option value="Burkina Faso">Burkina Faso</option>
-        <option value="Burundi">Burundi</option>
-        <option value="Cambogia">Cambogia</option>
-        <option value="Camerun">Camerun</option>
-        <option value="Canada">Canada</option>
-        <option value="Capo Verde">Capo Verde</option>
-        <option value="Ciad">Ciad</option>
-        <option value="Cile">Cile</option>
-        <option value="Cina">Cina</option>
-        <option value="Città  del Vaticano">Città  del Vaticano</option>
-        <option value="Colombia">Colombia</option>
-        <option value="Comore">Comore</option>
-        <option value="Corea del Nord">Corea del Nord</option>
-        <option value="Corea del Sud">Corea del Sud</option>
-        <option value="Costa d'Avorio">Costa d'Avorio</option>
-        <option value="Costa Rica">Costa Rica</option>
-        <option value="Croazia">Croazia</option>
-        <option value="Cuba">Cuba</option>
-        <option value="Dominica">Dominica</option>
-        <option value="Ecuador">Ecuador</option>
-        <option value="Egitto">Egitto</option>
-        <option value="El Salvador">El Salvador</option>
-        <option value="Emirati Arabi Uniti">Emirati Arabi Uniti</option>
-        <option value="Eritrea">Eritrea</option>
-        <option value="Etiopia">Etiopia</option>
-        <option value="Federazione Russa">Federazione Russa</option>
-        <option value="Fiji">Fiji</option>
-        <option value="Filippine">Filippine</option>
-        <option value="Gabon">Gabon</option>
-        <option value="Gambia">Gambia</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Ghana">Ghana</option>
-        <option value="Giamaica">Giamaica</option>
-        <option value="Giappone">Giappone</option>
-        <option value="Gibilterra">Gibilterra</option>
-        <option value="Gibuti">Gibuti</option>
-        <option value="Giordania">Giordania</option>
-        <option value="Grenada">Grenada</option>
-        <option value="Groenlandia">Groenlandia</option>
-        <option value="Guadalupa">Guadalupa</option>
-        <option value="Guam">Guam</option>
-        <option value="Guatemala">Guatemala</option>
-        <option value="Guinea Equatoriale">Guinea Equatoriale</option>
-        <option value="Guinea">Guinea</option>
-        <option value="Guinea-Bissau">Guinea-Bissau</option>
-        <option value="Guyana Francese">Guyana Francese</option>
-        <option value="Guyana">Guyana</option>
-        <option value="Haiti">Haiti</option>
-        <option value="Honduras">Honduras</option>
-        <option value="Hong Kong">Hong Kong</option>
-        <option value="India">India</option>
-        <option value="Indonesia">Indonesia</option>
-        <option value="Iran">Iran</option>
-        <option value="Iraq">Iraq</option>
-        <option value="Islanda">Islanda</option>
-        <option value="Isola Bouvet">Isola Bouvet</option>
-        <option value="Isola di Natale">Isola di Natale</option>
-        <option value="Isola Heard e Isole McDonald">Isola Heard e Isole McDonald</option>
-        <option value="Isola Norfolk">Isola Norfolk</option>
-        <option value="Isole Cayman">Isole Cayman</option>
-        <option value="Isole Cocos">Isole Cocos</option>
-        <option value="Isole Cook">Isole Cook</option>
-        <option value="Isole Falkland">Isole Falkland</option>
-        <option value="Isole Faroe">Isole Faroe</option>
-        <option value="Isole Marianne Settentrionali">Isole Marianne Settentrionali</option>
-        <option value="Isole Marshall">Isole Marshall</option>
-        <option value="Isole Minori degli Stati Uniti d'America">Isole Minori degli Stati Uniti d'America</option>
-        <option value="Isole Solomon">Isole Solomon</option>
-        <option value="Isole Turks e Caicos">Isole Turks e Caicos</option>
-        <option value="Isole Vergini Americane">Isole Vergini Americane</option>
-        <option value="Isole Vergini Britanniche">Isole Vergini Britanniche</option>
-        <option value="Israele">Israele</option>
-        <option value="Kazakhistan">Kazakhistan</option>
-        <option value="Kenya">Kenya</option>
-        <option value="Kirghizistan">Kirghizistan</option>
-        <option value="Kiribati">Kiribati</option>
-        <option value="Kosovo">Kosovo</option>
-        <option value="Kuwait">Kuwait</option>
-        <option value="Laos">Laos</option>
-        <option value="Lesotho">Lesotho</option>
-        <option value="Libano">Libano</option>
-        <option value="Liberia">Liberia</option>
-        <option value="Libia">Libia</option>
-        <option value="Liechtenstein">Liechtenstein</option>
-        <option value="Macao">Macao</option>
-        <option value="Macedonia">Macedonia</option>
-        <option value="Madagascar">Madagascar</option>
-        <option value="Malawi">Malawi</option>
-        <option value="Maldive">Maldive</option>
-        <option value="Malesia">Malesia</option>
-        <option value="Mali">Mali</option>
-        <option value="Marocco">Marocco</option>
-        <option value="Martinica">Martinica</option>
-        <option value="Mauritania">Mauritania</option>
-        <option value="Maurizius">Maurizius</option>
-        <option value="Mayotte">Mayotte</option>
-        <option value="Messico">Messico</option>
-        <option value="Moldavia">Moldavia</option>
-        <option value="Monaco">Monaco</option>
-        <option value="Mongolia">Mongolia</option>
-        <option value="Montenegro">Montenegro</option>
-        <option value="Montserrat">Montserrat</option>
-        <option value="Mozambico">Mozambico</option>
-        <option value="Myanmar">Myanmar</option>
-        <option value="Namibia">Namibia</option>
-        <option value="Nauru">Nauru</option>
-        <option value="Nepal">Nepal</option>
-        <option value="Nicaragua">Nicaragua</option>
-        <option value="Niger">Niger</option>
-        <option value="Nigeria">Nigeria</option>
-        <option value="Niue">Niue</option>
-        <option value="Norvegia">Norvegia</option>
-        <option value="Nuova Caledonia">Nuova Caledonia</option>
-        <option value="Nuova Zelanda">Nuova Zelanda</option>
-        <option value="Oman">Oman</option>
-        <option value="Pakistan">Pakistan</option>
-        <option value="Palau">Palau</option>
-        <option value="Panamà¡">Panamà¡</option>
-        <option value="Papua Nuova Guinea">Papua Nuova Guinea</option>
-        <option value="Paraguay">Paraguay</option>
-        <option value="Perù">Perù</option>
-        <option value="Pitcairn">Pitcairn</option>
-        <option value="Polinesia Francese">Polinesia Francese</option>
-        <option value="Porto Rico">Porto Rico</option>
-        <option value="Qatar">Qatar</option>
-        <option value="Repubblica Centroafricana">Repubblica Centroafricana</option>
-        <option value="Repubblica del Congo">Repubblica del Congo</option>
-        <option value="Repubblica Democratica del Congo">Repubblica Democratica del Congo</option>
-        <option value="Repubblica Dominicana">Repubblica Dominicana</option>
-        <option value="Reunion">Reunion</option>
-        <option value="Ruanda">Ruanda</option>
-        <option value="Sahara Occidentale">Sahara Occidentale</option>
-        <option value="Saint Kitts e Nevis">Saint Kitts e Nevis</option>
-        <option value="Saint Pierre e Miquelon">Saint Pierre e Miquelon</option>
-        <option value="Saint Vincent e Grenadine">Saint Vincent e Grenadine</option>
-        <option value="Samoa Americane">Samoa Americane</option>
-        <option value="Samoa">Samoa</option>
-        <option value="San Marino">San Marino</option>
-        <option value="Santa Lucia">Santa Lucia</option>
-        <option value="Sant'Elena">Sant'Elena</option>
-        <option value="Sao Tome e Principe">Sao Tome e Principe</option>
-        <option value="Senegal">Senegal</option>
-        <option value="Serbia">Serbia</option>
-        <option value="Seychelles">Seychelles</option>
-        <option value="Sierra Leone">Sierra Leone</option>
-        <option value="Singapore">Singapore</option>
-        <option value="Siria">Siria</option>
-        <option value="Somalia">Somalia</option>
-        <option value="Sri Lanka">Sri Lanka</option>
-        <option value="Stati Federati della Micronesia">Stati Federati della Micronesia</option>
-        <option value="Stati Uniti d'America">Stati Uniti d'America</option>
-        <option value="Sud Africa">Sud Africa</option>
-        <option value="Sud Georgia e Isole Sandwich">Sud Georgia e Isole Sandwich</option>
-        <option value="Sudan">Sudan</option>
-        <option value="Suriname">Suriname</option>
-        <option value="Svalbard e Jan Mayen">Svalbard e Jan Mayen</option>
-        <option value="Svizzera">Svizzera</option>
-        <option value="Swaziland">Swaziland</option>
-        <option value="Tagikistan">Tagikistan</option>
-        <option value="Tailandia">Tailandia</option>
-        <option value="Taiwan">Taiwan</option>
-        <option value="Tanzania">Tanzania</option>
-        <option value="Territori Britannici dell'Oceano Indiano">Territori Britannici dell'Oceano Indiano</option>
-        <option value="Territori Francesi del Sud">Territori Francesi del Sud</option>
-        <option value="Territori Palestinesi Occupati">Territori Palestinesi Occupati</option>
-        <option value="Timor Est">Timor Est</option>
-        <option value="Togo">Togo</option>
-        <option value="Tokelau">Tokelau</option>
-        <option value="Tonga">Tonga</option>
-        <option value="Trinidad e Tobago">Trinidad e Tobago</option>
-        <option value="Tunisia">Tunisia</option>
-        <option value="Turchia">Turchia</option>
-        <option value="Turkmenistan">Turkmenistan</option>
-        <option value="Tuvalu">Tuvalu</option>
-        <option value="Ucraina">Ucraina</option>
-        <option value="Uganda">Uganda</option>
-        <option value="Uruguay">Uruguay</option>
-        <option value="Uzbekistan">Uzbekistan</option>
-        <option value="Vanuatu">Vanuatu</option>
-        <option value="Venezuela">Venezuela</option>
-        <option value="Vietnam">Vietnam</option>
-        <option value="Wallis e Futuna">Wallis e Futuna</option>
-        <option value="Yemen">Yemen</option>
-        <option value="Zambia">Zambia</option>
-        <option value="Zimbabwe">Zimbabwe</option>
-        <option value="Apolide">Apolide</option>
-    </optgroup>
-</select>
+            <input class="" id="TitolareNonImportare_CivicoResidenza" name="TitolareNonImportare_CivicoResidenza" style="width:100%;" format="number" label="Civico di residenza" maxlength="10" mandatory_enabled="true">
+          </td>
+          <td>
+            <input class="" id="TitolareNonImportare_BarraResidenza" name="TitolareNonImportare_BarraResidenza" style="width:100%;" label="Barra di residenza" maxlength="3" enabled="true">
+          </td>
+          <td>
+            <input class="" id="TitolareNonImportare_CAPResidenza" name="TitolareNonImportare_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza" enabled="#TitolareNonImportare_CodiceFiscale.value() != '' and #TitolareNonImportare_ProvinciaResidenza.value() != 'EE'" mandatory="#TitolareNonImportare_ProvinciaResidenza.value() != 'EE'">
           </td>
         </tr>
       </tbody>
     </table>
 
-      <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory="true">
-        <tbody>
-          <tr class="Rigaintestazioneridotta">
-            <td colspan="5">
-              <p class="Labelcella">Residenza</p>
-            </td>
-          </tr>
-          <tr class="Rigaintestazioneridotta">
-            <td style="width:8%;">
-              <p class="Labelcella"> Provincia </p>
-            </td>
-            <td style="width:28%;">
-              <p class="Labelcella"> Comune </p>
-            </td>
-            <td>
-              <p class="Labelcella"> Indirizzo </p>
-            </td>
-            <td style="width:8%;">
-              <p class="Labelcella"> Civico </p>
-            </td>
-            <td style="width:13%;">
-              <p class="Labelcella"> CAP </p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <select class="inputNormal" id="TitolareNonImportare_ProvinciaResidenza" name="TitolareNonImportare_ProvinciaResidenza" style="width:100%; " label="Provincia di residenza">
-    <option value=""></option>
-<optgroup label="Italia">
-	<option value="AG">AG</option>
-	<option value="AL">AL</option>
-	<option value="AN">AN</option>
-	<option value="AO">AO</option>
-	<option value="AP">AP</option>
-	<option value="AQ">AQ</option>
-	<option value="AR">AR</option>
-	<option value="AT">AT</option>
-	<option value="AV">AV</option>
-	<option value="BA">BA</option>
-	<option value="BG">BG</option>
-	<option value="BI">BI</option>
-	<option value="BL">BL</option>
-	<option value="BN">BN</option>
-	<option value="BO">BO</option>
-	<option value="BR">BR</option>
-	<option value="BS">BS</option>
-	<option value="BT">BT</option>
-	<option value="BZ">BZ</option>
-	<option value="CA">CA</option>
-	<option value="CB">CB</option>
-	<option value="CE">CE</option>
-	<option value="CH">CH</option>
-	<option value="CL">CL</option>
-	<option value="CN">CN</option>
-	<option value="CO">CO</option>
-	<option value="CR">CR</option>
-	<option value="CS">CS</option>
-	<option value="CT">CT</option>
-	<option value="CZ">CZ</option>
-	<option value="EN">EN</option>
-	<option value="FC">FC</option>
-	<option value="FE">FE</option>
-	<option value="FG">FG</option>
-	<option value="FI">FI</option>
-	<option value="FM">FM</option>
-	<option value="FR">FR</option>
-	<option value="GE">GE</option>
-	<option value="GO">GO</option>
-	<option value="GR">GR</option>
-	<option value="IM">IM</option>
-	<option value="IS">IS</option>
-	<option value="KR">KR</option>
-	<option value="LC">LC</option>
-	<option value="LE">LE</option>
-	<option value="LI">LI</option>
-	<option value="LO">LO</option>
-	<option value="LT">LT</option>
-	<option value="LU">LU</option>
-	<option value="MB">MB</option>
-	<option value="MC">MC</option>
-	<option value="ME">ME</option>
-	<option value="MI">MI</option>
-	<option value="MN">MN</option>
-	<option value="MO">MO</option>
-	<option value="MS">MS</option>
-	<option value="MT">MT</option>
-	<option value="NA">NA</option>
-	<option value="NO">NO</option>
-	<option value="NU">NU</option>
-	<option value="OR">OR</option>
-	<option value="PA">PA</option>
-	<option value="PC">PC</option>
-	<option value="PD">PD</option>
-	<option value="PE">PE</option>
-	<option value="PG">PG</option>
-	<option value="PI">PI</option>
-	<option value="PN">PN</option>
-	<option value="PO">PO</option>
-	<option value="PR">PR</option>
-	<option value="PT">PT</option>
-	<option value="PU">PU</option>
-	<option value="PV">PV</option>
-	<option value="PZ">PZ</option>
-	<option value="RA">RA</option>
-	<option value="RC">RC</option>
-	<option value="RE">RE</option>
-	<option value="RG">RG</option>
-	<option value="RI">RI</option>
-	<option value="RM">RM</option>
-	<option value="RN">RN</option>
-	<option value="RO">RO</option>
-	<option value="SA">SA</option>
-	<option value="SI">SI</option>
-	<option value="SO">SO</option>
-	<option value="SP">SP</option>
-	<option value="SR">SR</option>
-	<option value="SS">SS</option>
-	<option value="SU">SU</option>
-	<option value="SV">SV</option>
-	<option value="TA">TA</option>
-	<option value="TE">TE</option>
-	<option value="TN">TN</option>
-	<option value="TO">TO</option>
-	<option value="TP">TP</option>
-	<option value="TR">TR</option>
-	<option value="TS">TS</option>
-	<option value="TV">TV</option>
-	<option value="UD">UD</option>
-	<option value="VA">VA</option>
-	<option value="VB">VB</option>
-	<option value="VC">VC</option>
-	<option value="VE">VE</option>
-	<option value="VI">VI</option>
-	<option value="VR">VR</option>
-	<option value="VT">VT</option>
-	<option value="VV">VV</option>
-<optgroup label="NON Italia">
-    <option value="EE">EE</option>
-</optgroup>
-</optgroup></select>
-            </td>
-            <td>
-              <select class="inputNormal" id="TitolareNonImportare_ComuneResidenza" name="TitolareNonImportare_ComuneResidenza" style="width:100%" label="Comune di residenza del Richiedente" dynamic_value="getComuniFromProvincia( #TitolareNonImportare_ProvinciaResidenza.value(), 'TitolareNonImportare_ComuneResidenza')"> </select>
-            </td>
-            <td>
-              <input class="" id="TitolareNonImportare_ViaResidenza" name="TitolareNonImportare_ViaResidenza" style="width:100%;" label="Via di residenza del Richiedente" format="regular_expression" expression="^(.+)\s(.+)$">
-            </td>
-            <td>
-              <input class="" id="TitolareNonImportare_CivicoResidenza" name="TitolareNonImportare_CivicoResidenza" style="width:100%;" label="Civico di residenza del Richiedente" maxlength="10">
-            </td>
-            <td>
-              <input class="" id="TitolareNonImportare_CAPResidenza" name="TitolareNonImportare_CAPResidenza" style="width:100%;" format="cap" label="CAP di residenza del Richiedente" mandatory="#TitolareNonImportare_ProvinciaResidenza.value() != 'EE'">
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
+      <tbody>
+        <tr class="Rigaintestazioneridotta">
+           <td style="width:16.5%;">
+             <p class="Labelcella" style="line-height:1.6;">Telefono fisso</p>
+           </td>
+           <td style="width:16.5%;">
+             <p class="Labelcella" style="line-height:1.6;">Cellulare</p>
+           </td>
+           <td style="width:33%;">
+             <p class="Labelcella" style="line-height:1.6;">E-mail<i> (posta elettronica ordinaria)</i></p>
+           </td>
+           <td>
+             <p class="Labelcella" style="line-height:1.6;">E-mail PEC<i> (domicilio digitale)</i></p>
+           </td>
+         </tr>
+         <tr>
+          <td>
+            <input class="inputNormal" id="TitolareNonImportare_Fisso" name="TitolareNonImportare_Fisso" label="Telefono fisso" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#fisso_obbligatorio.checked()">
+          </td>
+          <td>
+            <input class="inputNormal" id="TitolareNonImportare_Telefono" name="TitolareNonImportare_Telefono" label="Telefono cellulare" style="width:100%;" format="number" maxlength="13" enabled="true" mandatory="#cellulare_obbligatorio.checked()">
+          </td>
+          <td>
+            <input class="inputNormal" id="TitolareNonImportare_EMail" name="TitolareNonImportare_EMail" label="E-mail ordinaria" style="width:100%;" format="email" maxlength="60" enabled="true" mandatory="#mail_obbligatoria.checked()">
+          </td>
+          <td>
+            <input class="inputNormal" id="TitolareNonImportare_EMailPEC" name="TitolareNonImportare_EMailPEC" label="E-mail PEC" style="width:100%;" format="pec" maxlength="60" enabled="true" mandatory="#pec_obbligatoria.checked()">
+          </td>
+         </tr>
+       </tbody>
+    </table>
 
-      <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
-        <tbody>
-          <tr class="Rigaintestazioneridotta">
-            <td style="width:18%;">
-              <p class="Labelcella"> Telefono fisso </p>
-            </td>
-            <td>
-              <p class="Labelcella"> Telefono cellulare </p>
-            </td>
-            <td style="width:30%;">
-              <p class="Labelcella"> Posta elettronica ordinaria </p>
-            </td>
-            <td style="width:34%;">
-              <p class="Labelcella"> Posta elettronica certificata  </p>
-            </td>
-          </tr>
-			<tr>
-            <td>
-              <input class="inputNormal" id="TitolareNonImportare_Telefono" label="Telefono fisso" name="TitolareNonImportare_Telefono" style="width:100%" mandatory="#TitolareNonImportare_TelefonoCellulare.value() == ''" format="regular_expression" expression="(^[0|3]{1}[0-9]{5,10}$)">
-            </td>
-            <td>
-              <input class="inputNormal" id="TitolareNonImportare_TelefonoCellulare" label="Telefono cellulare" name="TitolareNonImportare_TelefonoCellulare" style="width:100%" mandatory="#TitolareNonImportare_Telefono.value() == ''">
-            </td>
-			<td>
-               <input class="inputNormal" format="email" id="TitolareNonImportare_EMail" label="E-mail ordinaria del Richiedente" name="TitolareNonImportare_EMail" style="width:100%;" mandatory="true">
-            </td>
-            <td>
-                <input class="inputNormal" format="pec" id="TitolareNonImportare_EMailPEC" label="E-mail PEC del Richiedente" name="TitolareNonImportare_EMailPEC" style="width:100%;" mandatory="false">
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+  <br>
+
       <table class="Modulo" style="border:1px solid grey; margin-top:-1px;">
         <tbody>
           <tr class="Rigaintestazione">
@@ -930,6 +1070,10 @@ function get_ufficio_dest() {
 
                   <option value="Procuratore con potere di rappresentanza legale"> Procuratore con potere di rappresentanza legale </option>
 
+                  <option value="Tecnico"> Tecnico incaricato </option>
+
+                  <option value="Dipendente"> Dipendente/collaboratore di Studio professionale/notarile/società </option>
+
               </select>
             </td>
           </tr>
@@ -941,7 +1085,7 @@ function get_ufficio_dest() {
               <p class="Labelcella"> Tipologia </p>
             </td>
           </tr>
-          <tr mandatory_enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Gestore', 'Dipendente'])">
+          <tr mandatory_enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Procuratore con potere di rappresentanza legale', 'Dipendente'])">
             <td colspan="3">
               <input class="" id="TitolareNonImportare_Denominazione" name="TitolareNonImportare_Denominazione" style="width:100%" label="Denominazione/Ragione sociale">
             </td>
@@ -992,7 +1136,7 @@ function get_ufficio_dest() {
               <p class="Labelcella"> CAP </p>
             </td>
           </tr>
-          <tr mandatory_enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Gestore', 'Dipendente' ])">
+          <tr mandatory_enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Procuratore con potere di rappresentanza legale', 'Dipendente' ])">
             <td>
               <select class="inputNormal" id="TitolareNonImportare_ProvinciaSede" name="TitolareNonImportare_ProvinciaSede" style="width:100%; " label="Provincia della sede legale">
     <option value=""></option>
@@ -1124,7 +1268,7 @@ function get_ufficio_dest() {
           </tr>
         </tbody>
       </table>
-      <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Gestore', 'Dipendente' ])">
+      <table class="Modulo" style="border:1px solid grey; margin-top:-1px;" mandatory_enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Procuratore con potere di rappresentanza legale', 'Dipendente' ])">
         <tbody>
           <tr class="Rigaintestazioneridotta">
 
@@ -1167,18 +1311,19 @@ function get_ufficio_dest() {
             </td>
           </tr>
           <tr>
-            <td mandatory_enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Gestore', 'Dipendente'])">
+            <td mandatory_enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Procuratore con potere di rappresentanza legale', 'Dipendente'])">
               <input class="inputNormal" id="TitolareNonImportare_TelefonoSede" label="Telefono soggetto giuridico" name="TitolareNonImportare_TelefonoSede" style="width:100%" format="regular_expression" expression="(^[0|3]{1}[0-9]{5,10}$)">
             </td>
-            <td enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Gestore', 'Dipendente'])" mandatory="(#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Gestore', 'Dipendente' ])) and (#TitolareNonImportare_TipologiaImpresa.value() == 'associazione' || #TitolareNonImportare_TipologiaImpresa.value() == 'ente religioso')">
+            <td enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Procuratore con potere di rappresentanza legale', 'Dipendente'])" mandatory="(#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Procuratore con potere di rappresentanza legale', 'Dipendente' ])) and (#TitolareNonImportare_TipologiaImpresa.value() == 'associazione' || #TitolareNonImportare_TipologiaImpresa.value() == 'ente religioso')">
               <input class="inputNormal" format="email" id="TitolareNonImportare_EMailSede" label="E-mail soggetto giuridico" name="TitolareNonImportare_EMailSede" style="width:100%;">
             </td>
-            <td enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Gestore', 'Dipendente'])" mandatory="(#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Gestore', 'Dipendente' ])) and (#TitolareNonImportare_TipologiaImpresa.value() != 'associazione' and #TitolareNonImportare_TipologiaImpresa.value() != 'ente religioso')">
+            <td enabled="#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Erede o avente causa', 'Curatore fallimentare','Procuratore con potere di rappresentanza legale', 'Responsabile unico del procedimento', 'Incaricato dell\'impresa di onoranze funebri', 'Direttore tecnico', 'Tecnico', 'Gestore', 'Dipendente'])" mandatory="(#TitolareNonImportare_Ruolo.check_value([ 'Titolare','Legale rappresentante', 'Procuratore con potere di rappresentanza legale', 'Dipendente' ])) and (#TitolareNonImportare_TipologiaImpresa.value() != 'associazione' and #TitolareNonImportare_TipologiaImpresa.value() != 'ente religioso')">
               <input class="inputNormal" format="pec" id="TitolareNonImportare_EMailPECSede" label="E-mail PEC soggetto giuridico" name="TitolareNonImportare_EMailPECSede" style="width:100%;">
             </td>
           </tr>
         </tbody>
       </table>
+
 
   </div>
 
@@ -1193,7 +1338,7 @@ function get_ufficio_dest() {
     <tr class="Rigaintestazione">
       <td colspan="2">
         <p class="Labeltabella">
-          ha versato, tramite PagoPa, i seguenti importi
+          si impegna a versare tramite PagoPa i seguenti importi
         </p>
       </td>
     </tr>
@@ -1355,6 +1500,14 @@ function get_ufficio_dest() {
         </p>
       </td>
     </tr>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+          <input class="inputNormal" id="check_valore_bollo" name="check_valore_bollo" style="width: 100%;" label="Controllo valore bollo" dynamic_value="#Parametri_NumeroBollo.value() != '' and ((#Parametri_Causale1.value() != '' and #Parametri_Causale1.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo1.value()) == 0) || (#Parametri_Causale2.value() != '' and #Parametri_Causale2.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo2.value()) == 0) || (#Parametri_Causale3.value() != '' and #Parametri_Causale3.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo3.value()) == 0) || (#Parametri_Causale4.value() != '' and #Parametri_Causale4.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo4.value()) == 0) || (#Parametri_Causale5.value() != '' and #Parametri_Causale5.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo5.value()) == 0) || (#Parametri_Causale6.value() != '' and #Parametri_Causale6.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo6.value()) == 0) || (#Parametri_Causale7.value() != '' and #Parametri_Causale7.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo7.value()) == 0) || (#Parametri_Causale8.value() != '' and #Parametri_Causale8.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo8.value()) == 0) || (#Parametri_Causale9.value() != '' and #Parametri_Causale9.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo9.value()) == 0) || (#Parametri_Causale10.value() != '' and #Parametri_Causale10.value().indexOf('bollo')!=-1 and parseFloat(#Parametri_Importo10.value()) == 0)) ? 'ATTENZIONE: non puoi dichiarare esenzione per il bollo sul rilascio del provvedimento' : ''" readonly>
+          <input type="hidden" style="width: 100%;" id="errore_bollo" name="errore_bollo" label="ATTENZIONE: non puoi dichiarare esenzione per il bollo sul rilascio del provvedimento, devi scegliere imposta di bollo pari a 16 Euro." mandatory="true" dynamic_value="#check_valore_bollo.value() == 'ATTENZIONE: non puoi dichiarare esenzione per il bollo sul rilascio del provvedimento' ? '' : 'PROSEGUIRE LA COMPILAZIONE'">
+
+
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -1409,7 +1562,7 @@ function get_ufficio_dest() {
       -->
     </tr>
     <tr class="Rigaintestazioneridotta">
-      <td colspan="2">
+      <td>
         <p class="Labelcella">Numero seriale</p>
       </td>
       <td>
@@ -1418,22 +1571,28 @@ function get_ufficio_dest() {
       <td>
         <p class="Labelcella">Data di emissione</p>
       </td>
+      <td>
+        <p class="Labelcella">Ora di emissione</p>
+      </td>
     </tr>
     <tr>
-      <td colspan="2">
+      <td>
         <input type="text" name="Parametri_NumeroBollo" id="Parametri_NumeroBollo" mandatory_enabled="#Tassonomia_ImpostaBollo3.checked()" format="regular_expression" expression="^[0-9]{14}$" style="width:100%" label="Numero seriale marca da bollo">
       </td>
       <td>
-        <p style="text-align: right;"><input class="inputNormal" id="Parametri_MarcaBolloValoreUtente" name="Parametri_MarcaBolloValoreUtente" mandatory_enabled="#Tassonomia_ImpostaBollo3.checked()" style="width: 85%; text-align: right;" format="valuta_positiva" dynamic_value="#Parametri_MarcaBolloValore.value()" label="Importo marca da bollo"> €</p>
+        <input class="inputNormal" id="Parametri_MarcaBolloValoreUtente" name="Parametri_MarcaBolloValoreUtente" mandatory_enabled="#Tassonomia_ImpostaBollo3.checked()" style="width: 85%; text-align: right;" format="valuta_positiva" dynamic_value="#Parametri_MarcaBolloValore.value()" label="Importo marca da bollo"> €
       </td>
       <td>
-        <input class="inputNormal" id="Parametri_MarcaBolloValoreUtente_Data" name="Parametri_MarcaBolloValoreUtente_Data" style="width: 100%; text-align: right;" format="date" label="Data di emissione marca da bollo">
+        <input class="inputNormal" id="Parametri_MarcaBolloValoreUtente_Data" name="Parametri_MarcaBolloValoreUtente_Data" mandatory_enabled="#Tassonomia_ImpostaBollo3.checked()" style="width: 100%; text-align: right;" format="date" label="Data di emissione marca da bollo">
+      </td>
+      <td>
+        <input class="inputNormal" id="Parametri_MarcaBolloValoreUtente_Ora" name="Parametri_MarcaBolloValoreUtente_Ora" style="width: 100%; text-align: right;" format="time" label="Ora di emissione marca da bollo">
       </td>
     </tr>
 
     <tr>
         <td rowspan="3" style="vertical-align: top; width: 4%; background-color:white">
-          <input id="Tassonomia_ImpostaBollo2" name="Tassonomia_ImpostaBollo" type="radio" value="2" enabled="#MarcaBollo_Convenzione.value() == 'SI' and #Parametri_StatoMarcaBollo.value() == 'SI'">
+          <input id="Tassonomia_ImpostaBollo2" name="Tassonomia_ImpostaBollo" type="radio" value="2" enabled="#MarcaBollo_Convenzione.value() == 'NO' and #Parametri_StatoMarcaBollo.value() == 'SI'">
         </td>
         <td colspan="5">
           <p> l'imposta di bollo è stata assolta in modo virtuale</p>
@@ -1446,8 +1605,8 @@ function get_ufficio_dest() {
         </td>
         -->
       </tr>
-  
-  
+
+
       <tr class="Rigaintestazioneridotta">
         <td>
           <p class="Labelcella">Autorizzazione dell'Agenzia delle Entrate di</p>
@@ -1464,16 +1623,16 @@ function get_ufficio_dest() {
       </tr>
       <tr>
         <td>
-          <input type="text" style="width:100%" readonly name="MarcaBollo_ProvinciaConvenzione" id="MarcaBollo_ProvinciaConvenzione">
+          <input type="text" style="width:100%" mandatory_enabled="#Tassonomia_ImpostaBollo2.checked()" name="MarcaBollo_ProvinciaConvenzione" id="MarcaBollo_ProvinciaConvenzione">
         </td>
         <td>
-          <input class="inputNormal" id="Parametri_ValoreConvenzione" name="Parametri_ValoreConvenzione" style="width: 80%; text-align: right;" format="valuta_positiva" enabled="#Tassonomia_ImpostaBollo2.checked()" dynamic_value="#Parametri_MarcaBolloValore.value()"> €
+          <input class="inputNormal" id="Parametri_ValoreConvenzione" name="Parametri_ValoreConvenzione" style="width: 80%; text-align: right;" format="valuta_positiva" mandatory_enabled="#Tassonomia_ImpostaBollo2.checked()"> €
         </td>
         <td>
-          <input type="text" style="width:100%" readonly name="MarcaBollo_DataConvenzione" id="MarcaBollo_DataConvenzione">
+          <input type="text" style="width: 100%; text-align: right;" mandatory_enabled="#Tassonomia_ImpostaBollo2.checked()" name="MarcaBollo_NumeroConvenzione" id="MarcaBollo_NumeroConvenzione">
         </td>
         <td>
-          <input type="text" style="width:100%" readonly name="MarcaBollo_NumeroConvenzione" id="MarcaBollo_NumeroConvenzione">
+          <input type="text" style="width: 100%; text-align: right;" mandatory_enabled="#Tassonomia_ImpostaBollo2.checked()" format="date" name="MarcaBollo_DataConvenzione" id="MarcaBollo_DataConvenzione">
         </td>
       </tr>
 
@@ -1491,7 +1650,8 @@ function get_ufficio_dest() {
           </span>
         </p>
       </td>
-      <tr class="Rigaintestazioneridotta">
+      </tr>
+<tr class="Rigaintestazioneridotta">
             <td colspan="4">
               <p class="Labelcella">Motivazione esenzione</p>
             </td>
