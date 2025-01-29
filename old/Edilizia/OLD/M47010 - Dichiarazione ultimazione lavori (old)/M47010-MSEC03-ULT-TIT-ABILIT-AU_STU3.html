@@ -1,0 +1,197 @@
+{% set CodiceModulo =  "M47010-MSEC03-ULT-TIT-ABILIT-AU" %}
+{% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec03.m47010.ulteriori.titoli.abilitativi.firma.autografa" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="Metadati_AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Modulo secondario - Ulteriori titoli abilitativi (firma autografa)"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M47010-MSEC03-ULT-TIT-ABILIT-AU"
+verifica_pagamento="NO"
+versione="3.0|26/10/2022"/>
+
+<meta codice_allegato="GEN-COPIA-MODULO-FIRMA-AU"
+urn_allegato="document:c_l378:allegato.copia.modulo.firmato.con.firma.autografa"
+descrizione_estesa="Allegato - Scansione del modulo ulteriori particelle compilato e firmato manualmente"
+filename="Modulo_ult_part_compilato_firma_autografa.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-COPIA-MODULO-FIRMA-AU"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+
+{% block title %}
+   Ulteriori titoli abilitativi
+{% endblock title %}
+
+{% block content %}
+
+
+{{intestazioni.intestazione_modulosecondario_senzabollo()}}
+ <input id="Oggetto" name="Oggetto" type="hidden" value="" dynamic_value="#Metadati_AventeTitolo_Cognome.value().toUpperCase() + ' - ulteriori titoli abilitativi'"/>
+
+ <h1 class="Modulo">
+  Ulteriori titoli abilitativi
+ </h1>
+
+<div class="simpatico-block simpatico-query-and-answer">
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.6;">Il <b>titolare</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#Metadati_AventeTitolo_Cognome.value() + ' ' + #Metadati_AventeTitolo_Nome.value()" size="87"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 class="Modulo">DICHIARA</h1>
+</div>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p><b>che esistono gli ulteriori seguenti titoli abilitativi inerenti l'intervento:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:61%;">
+        <p style="font-size: 85%;"><b>Titolo abilitativo</b></p>
+      </td>
+      <td style="width:20%;">
+        <p style="font-size: 85%;"><b>Protocollo/numero</b></p>
+      </td>
+      <td style="width:15%;">
+        <p style="font-size: 85%;"><b>Data</b></p>
+      </td>
+    </tr>
+  
+    {% macro titoli_abilitativi_ult(prefix) %}
+    {% set prefix = prefix|string %}
+    <tr>
+      <td>
+        <input class="" id="Tipo_documento_ult{{ prefix }}" name="Tipo_documento_ult{{ prefix }}" enabled="true" label="Dati documento {{ prefix }}" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Prot_documento_ult{{ prefix }}" name="Prot_documento_ult{{ prefix }}" enabled="true" label="Numero protocollo documento {{ prefix }}" style="width:100%;"/>
+      </td>
+      <td>
+        <input class="" id="Data_documento_ult{{ prefix }}" name="Data_documento_ult{{ prefix }}" enabled="true" label="Data protocollo documento {{ prefix }}" style="width:100%;" format="date"/>
+      </td>
+    </tr>
+    {%- endmacro %}
+  
+      {% for i in range(1, 21) %}
+      {{ titoli_abilitativi_ult(i) }}
+      {% endfor %}
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width:4%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+      </td>
+      <td style="width:15%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Indicare il numero di documenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input id="Modulo_ult_titoli_abilit" name="Modulo_ult_titoli_abilit" dynamic_check="true" enabled="true" type="checkbox" value="OBBLIGATORIO"/>
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Scansione della stampa di questo modulo firmata</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input id="numero_copia_modulo" name="numero_copia_modulo" dynamic_value="'1'" style="width: 90%; text-align: center;" readonly/></p>
+        <input id="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" name="GLOBO_allegato_cGEN-COPIA-MODULO-FIRMA-AU" obbligatorio="'OBBLIGATORIO'" type="hidden" value=""/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<div class="simpatico-block">
+  <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 50%; text-align: center; height: 1.5cm;">
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella" style="text-align: center;">Luogo</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center;">Data</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center;">Il titolare <span style="font-size:95%"><i>(firma autografa)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <p class="Modulo">
+    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+  </p>
+</div>
+
+ <input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+ <input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+ <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+ <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+<br>
+
+{{ utils.passaggio_metadati() }}
+
+<input id="Metadati_AventeTitolo_CodiceFiscale" name="Metadati_AventeTitolo_CodiceFiscale" type="hidden"/>
+<input id="Metadati_AventeTitolo_Cognome" name="Metadati_AventeTitolo_Cognome" type="hidden"/>
+<input id="Metadati_AventeTitolo_Nome" name="Metadati_AventeTitolo_Nome" type="hidden"/>
+
+{% endblock content %}

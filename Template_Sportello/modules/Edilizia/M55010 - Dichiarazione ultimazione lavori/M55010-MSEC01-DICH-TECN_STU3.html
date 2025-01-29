@@ -1,5 +1,5 @@
-{% set CodiceModulo =  "M47010-MSEC01-DICH-TECN" %}
-{% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec01.m47010.dichiarazioni.tecnico" %}
+{% set CodiceModulo =  "M55010-MSEC01-DICH-TECN" %}
+{% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec01.m55010.dichiarazioni.tecnico" %}
 {% extends "base_trento_ok.html" %}
 
 {% block meta %}
@@ -22,9 +22,9 @@ name="GLOBO_modulo"
 procura="NO,,"
 tipo_modulo="secondario"
 ufficio=""
-urlhelp="/modulistica/moduli/M47010-MSEC01-DICH-TECN"
+urlhelp="/modulistica/moduli/M55010-MSEC01-DICH-TECN"
 verifica_pagamento="NO"
-versione="3.0|26/10/2022"/>
+versione="3.0|29/01/2025"/>
 
 <!-- INIZIO DICHIARAZIONE ALLEGATI E MOD SECONDARI -->
 
@@ -200,16 +200,16 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_allegato="GEN-DIR-SEG"
-urn_allegato="document:c_l378:allegato.diritti.segreteria"
-descrizione_estesa="Allegato - Ricevuta pagamento diritti di segreteria"
-filename="Ricevuta diritti segreteria.pdf"
+<meta codice_allegato="GEN-DIR-SEG-SCAGI"
+urn_allegato="document:c_l378:allegato.diritti.segreteria.scagi"
+descrizione_estesa="Allegato - Ricevuta telematica del pagamento SPONTANEO della segnalazione certificata di agibilità (vedere i per istruzioni)"
+filename="RicevutaSCAGI.jpeg,RicevutaSCAGI.pdf"
 firmato="NO"
-istruzioni="/modulistica/moduli/GEN-DIR-SEG"
+istruzioni="/modulistica/moduli/GEN-DIR-SEG-SCAGI"
 name="GLOBO_allegato"
 numero="1"
 obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
+tipo_mime="application/pdf,image/jpeg"/>
 
 <!-- FINE DICHIARAZIONE ALLEGATI E MOD SECONDARI -->
 	
@@ -1109,15 +1109,43 @@ tipo_mime="application/pdf"/>
       </td>
     </tr>
     <tr>
-      <td style="width: 4%; vertical-align: center; text-align: center;">
+      <td style="width: 4%; vertical-align: top; padding-top: 0.4em; text-align: center;" rowspan="3">
         <input id="RIC_DIR_SEG" name="RIC_DIR_SEG" dynamic_check="#scagi_richiesta_tit.checked()" enabled="#scagi_richiesta_tit.checked()" type="checkbox" value="OBBLIGATORIO" />
       </td>
       <td style="background-color: #eeeeee;" colspan="2">
-        <p>Ricevuta del pagamento dei diritti di segreteria: <b>Diritti di presentazione pratica</b></p>
+        <p style="line-height:1.6;">Ricevuta del pagamento spontaneo della <b>segnalazione certificata di agibilità</b>
+        <br>Indicare se il pagamento è dovuto:</p>
       </td>
       <td style="background-color: #eeeeee; vertical-align: center;">
-        <p style="line-height: 1.6; text-align: center;"><input id="numero_ric_dir_istr" name="numero_ric_dir_istr" mandatory_enabled="#RIC_DIR_SEG.checked()" style="width: 90%; text-align: center;" type="number" min="1" max="100"/></p>
-        <input id="GLOBO_allegato_cGEN-DIR-SEG" name="GLOBO_allegato_cGEN-DIR-SEG" obbligatorio="#RIC_DIR_SEG.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#numero_ric_dir_istr.value()"/>
+        <p style="line-height: 1.6; text-align: center;">
+        <input id="numero_ric_dir_istr" name="numero_ric_dir_istr" mandatory_enabled="#RIC_DIR_SEG.checked()" 
+        style="width: 90%; text-align: center;" dynamic_value="#RIC_DIR_SEG.checked() and #scagi_si.checked() and !#scagi_no.checked() ? '1' : 'Non richiesto'"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: top; padding-top: 0.4em; text-align: center;">
+        <div id="scagi_richiesto_pagamento" name="scagi_richiesto_pagamento" label="Indicare se sono presenti esenzioni al pagamento della SCAGI" mandatory_enabled="#RIC_DIR_SEG.checked()"></div>
+        <input group="scagi_richiesto_pagamento" id="scagi_si" name="scagi_richiesto_pagamento" type="radio" value="1" />
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height:1.6;">Sì
+        <br/>Effettuare il <a href="https://sportello.comune.trento.it/spontaneous-payments/?group=S55_11" target="_blank">pagamento spontaneo <i>Edilizia - Segnalazione certificata di agibilità SCAGI</i></a> 
+        ed allegare qui la ricevuta di pagamento</p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <input id="GLOBO_allegato_cGEN-DIR-SEG-SCAGI" name="GLOBO_allegato_cGEN-DIR-SEG-SCAGI" obbligatorio="#RIC_DIR_SEG.checked() and #scagi_si.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="1"/>
+        <p style="line-height: 1.6; text-align: center;"></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:4%; vertical-align: top; padding-top: 0.4em; text-align: center;">
+        <input group="scagi_richiesto_pagamento" id="scagi_no" name="scagi_richiesto_pagamento" type="radio" value="2" />
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height:1.6;">No, sono esente da SCAGI in quanto <b>ente pubblico</b></p>
+      </td>
+      <td style="background-color: #eeeeee; vertical-align: center;">
+        <p style="line-height: 1.6; text-align: center;"></p>
       </td>
     </tr>
     <tr>

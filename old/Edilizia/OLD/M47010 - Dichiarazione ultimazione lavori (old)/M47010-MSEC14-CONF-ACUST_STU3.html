@@ -1,0 +1,213 @@
+{% set CodiceModulo =  "M47010-MSEC14-CONF-ACUST" %}
+{% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec14.m47010.conform.acustica" %}
+{% extends "base_trento_ok.html" %}
+
+{% block meta %}
+<meta campi_firma="Altro_Progettista_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Modulo secondario - Dichiarazione del tecnico in merito alla conformità acustica"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_DIGITALE"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M47010-MSEC14-CONF-ACUST"
+verifica_pagamento="NO"
+versione="3.0|26/10/2022"/>
+
+
+{% endblock meta %}
+
+
+{% block title %}
+Dichiarazione del tecnico in merito alla conformità acustica
+{% endblock title %}
+
+{% block content %}
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+<input id="Oggetto" name="Oggetto" dynamic_value="'Dichiarazione del tecnico in merito alla conformità acustica - ' + #Altro_Progettista_Cognome.value().toUpperCase() + ' ' + #Altro_Progettista_Nome.value().toUpperCase() + ' (' + #Altro_Progettista_CodiceFiscale.value().toUpperCase() + ')'" type="hidden"/>
+
+<h1 class="Modulo" style="line-height:1.6;">DICHIARAZIONE DEL TECNICO IN MERITO ALLA CONFORMITA' ACUSTICA<br><span style="font-size:75%">(art. 15, comma 2 del D.P.G.P. 4 agosto 1992, n. 12-65/Leg.)</span></h1>
+
+
+
+  {{anagrafica_trento_uniformata.professionista_nomail("Altro_Progettista") }}
+
+
+<br>
+
+<h1 class="Modulo">IN QUALITA' DI TECNICO ABILITATO</h1>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>con riferimento ai seguenti titoli edilizi:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:50%;">
+        <p style="font-size: 85%;"><b>Titolo edilizio</b></p>
+      </td>
+      <td style="width:30%;">
+        <p style="font-size: 85%;"><b>Protocollo/numero</b></p>
+      </td>
+      <td style="width:20%;">
+        <p style="font-size: 85%;"><b>Data</b></p>
+      </td>
+    </tr>
+
+    {% macro titoli_edilizi(prefix) %}
+    {% set prefix = prefix|string %}
+    <tr>
+      <td>
+        <select class="inputNormal" id="Tipo_titolo_edilizio" name="Tipo_titolo_edilizio" style="width:100%;" label="Tipologia del titolo edilizio" enabled="true">
+          <option value=""></option>
+          <option value="Permesso di costruire">Permesso di costruire</option>
+          <option value="Variante">Variante</option>
+          <option value="SCIA">SCIA</option>
+        </select>
+      </td>
+      <td>
+        <input class="" id="Prot_titolo{{ prefix }}" name="Prot_titolo{{ prefix }}" enabled="true" label="Numero protocollo del titolo edilizio {{ prefix }}" style="width:100%; text-align: center;"/>
+      </td>
+      <td>
+        <input class="" id="Data_titolo{{ prefix }}" name="Data_titolo{{ prefix }}" enabled="true" label="Data protocollo titolo edilizio {{ prefix }}" style="width:100%; text-align: center;" type="date"/>
+      </td>
+    </tr>
+    {%- endmacro %}
+
+    {% for i in range(1, 4) %}
+    {{ titoli_edilizi(i) }}
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+
+<h1 class="Modulo">DATO ATTO</h1>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.4;"><b>che l'intervento è riconducibile alle seguenti tipologie</b> di cui al D.P.G.P. 4 agosto 1992, n. 12-65/Leg:</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Tipo_ricond_intervento" name="Tipo_ricond_intervento" label="Tipo intervento" mandatory_enabled="true"> </div>
+        <input group="Tipo_ricond_intervento" id="Tipo_ricond_intervento1" name="Tipo_ricond_intervento" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">edifici di nuova costruzione</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Tipo_ricond_intervento" id="Tipo_ricond_intervento2" name="Tipo_ricond_intervento" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">edifici sottoposti a demolizione e ricostruzione, qualunque sia il titolo abilitativo necessario</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="Tipo_ricond_intervento" id="Tipo_ricond_intervento3" name="Tipo_ricond_intervento" type="radio" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.4;">ampliamenti di edifici esistenti (limitatamente alla parte nuova)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h1 class="Modulo">DICHIARA</h1>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.8;">che le caratteristiche acustiche dei locali sono conformi alle disposizioni contenute nell'allegato D del regolamento di esecuzione approvato con D.P.G.P. 4 agosto 1992, n. 12-65/Leg.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione7" name="Presa_visione7" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione7" id="Presa_visione_check7" name="Presa_visione_check7" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 25%; text-align: center;">
+        <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+      </td>
+      <td style="width: 50%; text-align: center; height: 1.5cm;">
+        <input class="" id="nominativo_firmat_acust" name="nominativo_firmat_acust" dynamic_value="#Altro_Progettista_TitoloPersona.value() + ' ' + #Altro_Progettista_Nome.value().toUpperCase() + ' ' + #Altro_Progettista_Cognome.value().toUpperCase()" style="width:90%; text-align: center;" readonly/>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td>
+        <p class="Labelcella" style="text-align: center">Luogo</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Data</p>
+      </td>
+      <td>
+        <p class="Labelcella" style="text-align: center">Il tecnico abilitato <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<p class="Modulo">
+  <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+</p>
+
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+
+
+{% endblock content %}
