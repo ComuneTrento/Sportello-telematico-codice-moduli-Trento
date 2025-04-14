@@ -2,15 +2,10 @@
 {% set Urn =  "document:c_l378:inizio.lavori;comunicazione.inizio.lavori;m47005.comunicazioni.inizio.lavori" %}
 {% extends "base_trento_ok.html" %}
 
-<!--*********************************************************************
-*** DA MOFICARE CON DIR LAVORI COME REFERENTE E IL TECNICO REFERENTE1 ***
-******* ATTENDERE MAIL SAMUELE PER CAPIRE ESATTAMENTE CHI FA COSA *******
-*************************************************************************-->
-
 {% block meta %}
 
 <meta campi_firma="Referente_CodiceFiscale"
-campi_firma_label="Il progettista/tecnico incaricato delegato"
+campi_firma_label="Il direttore dei lavori delegato"
 classi_modulo="Tributi"
 codice_modulo="{{ CodiceModulo }}"
 urn="{{ Urn }}"
@@ -34,7 +29,7 @@ segnatura="AventeTitolo"
 tipo_modulo="principale"
 urlhelp="/modulistica/moduli/M47005-COMUNICAZIONE-INIZIO-LAVORI"
 verifica_pagamento="NO"
-versione="2.0|17/10/2022" />
+versione="3.0|14/04/2025" />
 
 <meta codice_modulo_figlio="GEN-DELEGA-EDILIZIA-AU"
 urn_modulo_figlio="document:c_l378:modulo.secondario.delega.edilizia.au"
@@ -61,14 +56,8 @@ numero="1"
 obbligatorio="DINAMICO"
 tipo_mime="application/pdf"/>
 
-<meta codice_modulo_figlio="GEN-PROGETTISTA"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
-
-<meta codice_modulo_figlio="GEN-PROGETTISTA-DIRLAV"
-urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.progettista.direttore.lavori"
+<meta codice_modulo_figlio="GEN-DIRETTORE-LAVORI"
+urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.direttore.lavori.firma.digitale"
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
@@ -78,41 +67,7 @@ urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.tecnico.firma.di
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
-<!--
-<meta codice_allegato="GEN-CDI"
-urn_allegato="document:c_l378:allegato.copia.documento.identita"
-descrizione_estesa="Copia del documento di identità del richiedente"
-filename="Documento identita.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/GEN-CDI"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
 
-
-<meta codice_allegato="GEN-Modulo_compilato_firma_autografa"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.autografa"
-descrizione_estesa="Scansione del modulo compilato e firmato manualmente"
-filename="Modulo_compilato_firma_autografa.pdf"
-firmato="NO"
-istruzioni="/modulistica/moduli/GEN-Modulo_compilato_firma_autografa"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
-
-<meta codice_allegato="GEN-Modulo_compilato_firma_elettronica"
-urn_allegato="document:c_l378:allegato.copia.modulo.firma.elettronica"
-descrizione_estesa="Modulo compilato e firmato elettronicamente"
-filename="Modulo_compilato_firma_elettronica.pdf"
-firmato="SI"
-istruzioni="/modulistica/moduli/GEN-Modulo_compilato_firma_elettronica"
-name="GLOBO_allegato"
-numero="1"
-obbligatorio="DINAMICO"
-tipo_mime="application/pdf"/>
--->
 
 <meta codice_allegato="GEN-DOC_NOTIFICA"
 urn_allegato="document:c_l378:allegato.documentazione.notifica"
@@ -152,26 +107,6 @@ urn_modulo_figlio="document:c_l378:modulo.secondario.anagrafica.certificatore.en
 name="GLOBO_modulofiglio"
 numero="1"
 obbligatorio="DINAMICO"/>
-
-<!--
-<meta codice_modulo_figlio="GEN-IMMAGG-AU"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.autografa"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
-
-<meta codice_modulo_figlio="GEN-IMMAGG-EL"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.firma.elettronica"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
-
-<meta codice_modulo_figlio="GEN-IMMAGG-CPS"
-urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle"
-name="GLOBO_modulofiglio"
-numero="1"
-obbligatorio="DINAMICO"/>
--->
 
 <meta codice_modulo_figlio="GEN-IMMAGG-DELEGA"
 urn_modulo_figlio="document:c_l378:modulo.secondario.ulteriori.particelle.con.delega"
@@ -296,7 +231,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 {{ immobili_trento_uniformata.oggetto(titolo = "Comunicazione inizio lavori") }}
 <!--------------- FINE IMPOSTAZIONE 'OGGETTO' OVVERO NOME DEL MODULO MOSTRATO ALL'UTENTE ------------------>
 
-<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+<input id="oggetto" name="oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
 
 {{ intestazioni.intestazione_moduloprincipale_senzabollo() }}
 
@@ -327,7 +262,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <!--------------------INIZIO CONTROLLO TIPO FIRMA TITOLARE---------------------->
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
@@ -359,7 +294,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!--------------------FINE CONTROLLO TIPO FIRMA TITOLARE---------------------->
 <br>
 <!--------------------INIZIO INSERIMENTO PROTOCOLLO PER QUALIFICA PERMESSO---------------------->
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
@@ -404,129 +339,24 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <br>
 
 <!--------------------INIZIO ANAGRAFICA PROFESSIONISTA (REFERENTE)---------------------->
-<div class="simpatico-block simpatico-query-and-answer">
+<div>
   <input id="Referente_checkobbligatorio" name="Referente_checkobbligatorio" dynamic_check="true" type="hidden" />
   <input id="Referente_checkabilitato" name="Referente_checkabilitato" dynamic_check="true" type="hidden" />
-  {{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente","<b>DATI DEL PROGETTISTA</b>:","Progettista") }}
+  {{anagrafica_trento_uniformata.professionista_direttore_lavori("Referente","<b>DATI DEL DIRETTORE DEI LAVORI  </b>:","Direttore dei lavori") }}
   <!------PREDISPONGO MAIL PER LA SEGNATURA------>
   <input id="AventeTitolo_EMail" name="AventeTitolo_EMail" dynamic_value="#AventeTitolo_Segnatura_EMail.value()" type="hidden"/>
   <input id="AventeTitolo_EMailPEC" name="AventeTitolo_EMailPEC" dynamic_value="#Referente_EMailPEC.value()" type="hidden"/>
-
-  {# <table class="Modulo" style="border:1px solid grey;">
-    <tbody>
-      <tr>
-        <td>
-          <input style="width:100%" class="Modulo" id="coerenza_richiedente" name="coerenza_richiedente" dynamic_value="#Tipo_richiedente2.checked() and #AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'ATTENZIONE: il richiedente e il professionista indicati sono la medesima persona!' : 'OK: proseguire la compilazione'">
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <input type="hidden" class="Modulo" id="verifica_coerenza_richiedente" name="verifica_coerenza_richiedente" dynamic_value="#coerenza_richiedente.value() == 'ATTENZIONE: il richiedente e il progettista indicato sono la medesima persona!' ? '' : 'OK'" mandatory="true" label="Compilazione eseguita come professionista ma i CF di richiedente e professionista coincidono, verificare correttezza dei dati immessi"> #}
-
-  <table class="Modulo" style="border:1px solid grey;">
-    <tbody>
-      <tr>
-        <td style="vertical-align: center; text-align: center; width: 4%;">
-          <input id="Progettista_direttorelavori" name="Progettista_direttorelavori" type="checkbox" enabled="true"/>
-        </td>
-        <td>
-          <p style="line-height:1.6;"><b>Il progettista è anche il direttore dei lavori</b></p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
+ 
 <input id="AventeTitolo_verifica_titol_prog" name="AventeTitolo_verifica_titol_prog" dynamic_value="#AventeTitolo_CodiceFiscale.value() == #Referente_CodiceFiscale.value() ? 'stessa persona' : 'persone diverse'" type="hidden" readonly/>
 
-<!--------------------FINE ANAGRAFICA PROFESSIONISTA (REFERENTE)---------------------->
 
-
-  <!--
-  <input id="Metadati_Progettista_TitoloPersona" name="Metadati_Progettista_TitoloPersona" dynamic_value="#Progettista_TitoloPersona.value()" />
-  <input id="Metadati_Progettista_Cognome" name="Metadati_Progettista_Cognome" dynamic_value="#Progettista_Cognome.value()" />
-  <input id="Metadati_Progettista_Nome" name="Metadati_Progettista_Nome" dynamic_value="#Progettista_Nome.value()" />
-  <input id="Metadati_Referente_CodiceFiscale" name="Metadati_Referente_CodiceFiscale" dynamic_value="#Referente_CodiceFiscale.value()" />
-  -->
 </div>
-
-<br>
-<br>
-
-<!--------------------INIZIO ANAGRAFICA DIRETTORE LAVORI (REFERENTE1)---------------------->
-<div class="simpatico-block simpatico-query-and-answer">
-    
-
-  <div type="nominativo_interessato">
-
-      <table class="Modulo" style="border:1px solid grey; margin-top:-1px" mandatory_enabled="!#Progettista_direttorelavori.checked()">
-        <tbody>
-          <tr class="Rigaintestazione">
-            <td style="border-right:0px" colspan="4">
-              <p class="Labeltabella"  style="vertical-align:middle"><b>DATI DEL DIRETTORE DEI LAVORI</b>:
-              </p>
-            </td>
-          </tr>
-          <tr class="Rigaintestazioneridotta">
-            <td style="width:13%">
-              <p class="Labelcella" style="line-height:1.6;">Titolo</p>
-            </td>
-            <td style="width:33%">
-              <p class="Labelcella" style="line-height:1.6;">Cognome</p>
-            </td>
-            <td style="width:32%">
-              <p class="Labelcella" style="line-height:1.6;">Nome</p>
-            </td>
-            <td style="width:22%">
-              <p class="Labelcella" style="line-height:1.6;">Codice Fiscale</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <select class="inputNormal" id="Referente1_TitoloPersona" name="Referente1_TitoloPersona" style="width:100%;" label="Titolo del DirettoreLavori">
-                <option value=""></option>
-                <option value="Sig.">Sig.</option>
-                <option value="Sig.ra">Sig.ra</option>
-                <option value="Avv.">Avv.</option>
-                <option value="Dott.">Dott.</option>
-                <option value="Dott.ssa">Dott.ssa</option>
-                <option value="Arch.">Arch.</option>
-                <option value="Ing.">Ing.</option>
-                <option value="P.ind.">Perito</option>
-                <option value="Geom.">Geom.</option>
-              </select>
-            </td>
-            <td>
-              <input class="" id="Referente1_Cognome" name="Referente1_Cognome" style="width:100%" label="Cognome del soggetto interessato"/>
-            </td>
-            <td>
-              <input class="" id="Referente1_Nome" name="Referente1_Nome" style="width:100%" label="Nome del soggetto interessato"/>
-            </td>
-            <td>
-              <input class="" id="Referente1_CodiceFiscale" name="Referente1_CodiceFiscale" style="width:100%" format="cf" label="Codice fiscale del soggetto interessato"/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-<!--------------------FINE ANAGRAFICA DIRETTORE LAVORI (REFERENTE1)---------------------->
-
-  <!--
-  <input id="Metadati_Referente1_TitoloPersona" name="Metadati_Referente1_TitoloPersona" dynamic_value="#Referente1_TitoloPersona.value()" />
-  <input id="Metadati_Referente1_Cognome" name="Metadati_Referente1_Cognome" dynamic_value="#Referente1_Cognome.value()" />
-  <input id="Metadati_Referente1_Nome" name="Metadati_Referente1_Nome" dynamic_value="#Referente1_Nome.value()" />
-  <input id="Metadati_Referente1_CodiceFiscale" name="Metadati_Referente1_CodiceFiscale" dynamic_value="#Referente1_CodiceFiscale.value()" />
-  -->
-</div>
-
-<br>
 <br>
 
 <h1 class="Modulo">COMUNICA</h1>
-<!-- creare l'hidden type="checkbox" id="{{ prefix }}_DatiCatastaliObbligatori" per settare l'obbligatorietà dei dati catastali fuori dal <div> -->
 
   <!--------------------INIZIO LOCALIZZAZIONE INTERVENTO + PARTICELLA---------------------->
-  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+  <table class="Modulo" style="border:1px solid grey;">
   <tbody>
     <tr class="Rigaintestazione">
       <td style="border-right:0px">
@@ -554,7 +384,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <!--------------------INIZIO SOGGETTO ABILITATO ALLA CERT ENERGETICA (REFERENTE8)---------------------->
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
@@ -589,12 +419,6 @@ urn_report="report:CSP_SESSION_REPORT"/>
   <input id="Referente8_checkabilitato" name="Referente8_checkabilitato" dynamic_check="#Incarico_soggetto_certificatore2.checked()" type="hidden" />
   {{anagrafica_trento_uniformata.solo_nominativo("Referente8","<b>SOGGETTO ABILITATO ALLA CERTIFICAZIONE ENERGETICA</b> (se presente):") }}
 
-  <!--
-  <input id="Metadati_CertificatoreEnergetico_TitoloPersona" name="Metadati_CertificatoreEnergetico_TitoloPersona" dynamic_value="#CertificatoreEnergetico_TitoloPersona.value()"/>
-  <input id="Metadati_CertificatoreEnergetico_Cognome" name="Metadati_CertificatoreEnergetico_Cognome" dynamic_value="#CertificatoreEnergetico_Cognome.value()" />
-  <input id="Metadati_CertificatoreEnergetico_Nome" name="Metadati_CertificatoreEnergetico_Nome" dynamic_value="#CertificatoreEnergetico_Nome.value()"/>
-  <input id="Metadati_CertificatoreEnergetico_CodiceFiscale" name="Metadati_CertificatoreEnergetico_CodiceFiscale" dynamic_value="#CertificatoreEnergetico_CodiceFiscale.value()"/>
-  -->
 </div>
 <!--------------------FINE SOGGETTO ABILITATO ALLA CERT ENERGETICA (REFERENTE8)---------------------->
 
@@ -602,7 +426,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <br>
 <!--------------------INIZIO RELAZIONE SISMICA (REFERENTE10)---------------------->
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="2">
@@ -642,10 +466,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 
   <!--
-  <input id="Metadati_CertificatoreEnergetico_TitoloPersona" name="Metadati_CertificatoreEnergetico_TitoloPersona" dynamic_value="#CertificatoreEnergetico_TitoloPersona.value()"/>
-  <input id="Metadati_CertificatoreEnergetico_Cognome" name="Metadati_CertificatoreEnergetico_Cognome" dynamic_value="#CertificatoreEnergetico_Cognome.value()" />
-  <input id="Metadati_CertificatoreEnergetico_Nome" name="Metadati_CertificatoreEnergetico_Nome" dynamic_value="#CertificatoreEnergetico_Nome.value()"/>
-  <input id="Metadati_CertificatoreEnergetico_CodiceFiscale" name="Metadati_CertificatoreEnergetico_CodiceFiscale" dynamic_value="#CertificatoreEnergetico_CodiceFiscale.value()"/>
+  <input id="CertificatoreEnergetico_TitoloPersona" name="CertificatoreEnergetico_TitoloPersona" dynamic_value="#CertificatoreEnergetico_TitoloPersona.value()"/>
+  <input id="CertificatoreEnergetico_Cognome" name="CertificatoreEnergetico_Cognome" dynamic_value="#CertificatoreEnergetico_Cognome.value()" />
+  <input id="CertificatoreEnergetico_Nome" name="CertificatoreEnergetico_Nome" dynamic_value="#CertificatoreEnergetico_Nome.value()"/>
+  <input id="CertificatoreEnergetico_CodiceFiscale" name="CertificatoreEnergetico_CodiceFiscale" dynamic_value="#CertificatoreEnergetico_CodiceFiscale.value()"/>
   -->
 </div>
 <!--------------------FINE RELAZIONE SISMICA (REFERENTE11)---------------------->
@@ -655,7 +479,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <!--------------------INIZIO RACCOLTA ANAGRAFICA IMPRESE E LAVORATORI---------------------->
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr class="Rigaintestazione">
       <td colspan="6">
@@ -709,7 +533,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!--------------------INIZIO DICHIARAZIONE ESCLUSIVITA' TITOLO---------------------->
 
 <div class="Modulo">
-  <table class="Modulo simpatico-block simpatico-query-and-answer" name="Nota_bene" style="border: 1px solid grey">
+  <table class="Modulo" name="Nota_bene" style="border: 1px solid grey">
     <tbody>
       <tr class="Rigaintestazione">
         <td>
@@ -722,7 +546,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
   <h1 class="Modulo">DICHIARA</h1>
 
   <!--
-  <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+  <table class="Modulo" style="border:1px solid grey;">
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="2">
@@ -753,7 +577,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
     descrizione_altro_diritto_reale="di essere titolare di altro diritto reale", 
     descrizione_diritto_contrattuale="di essere titolare di diritto contrattuale (locatario, titolare di leasing, etc.), allegando quindi:") }}
 
-  {# <table class="Modulo simpatico-block simpatico-query-and-answer" style="border:1px solid grey;">
+  {# <table class="Modulo" style="border:1px solid grey;">
     <tbody>
       <tr class="Rigaintestazione">
         <td colspan="4">
@@ -997,8 +821,8 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <input id="Modulo_delega" name="Modulo_delega" type="checkbox" dynamic_check="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" value="OBBLIGATORIO"/>
         </td>
         <td style="background-color: #eeeeee;" colspan="2">
-          <p style="line-height:1.8;">Modulo secondario - <b>Delega al progettista/tecnico incaricato</b> firmato:
-            <br>- dal progettista/tecnico incaricato
+          <p style="line-height:1.8;">Modulo secondario - <b>Delega al tecnico incaricato</b> firmato:
+            <br>- dal tecnico incaricato
             <br>- dal titolare 
             <input class="" id="Tipo_Firma_delega" name="Tipo_Firma_delega" style="width: 40%;" label="Tipo firma modulo di delega" dynamic_value="#tit_firma_digit1.checked() ? 'firma autografa' : (#tit_firma_digit2.checked() ? 'firma digitale' : '')" enabled="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse'" type="hidden" />
             <input id="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" name="GLOBO_modulofiglio_cGEN-DELEGA-EDILIZIA-AU" obbligatorio="#AventeTitolo_verifica_titol_prog.value() == 'persone diverse' and #Tipo_Firma_delega.value() == 'firma autografa' ? 'OBBLIGATORIO' : ''" type="hidden" />
@@ -1027,21 +851,10 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <input dynamic_check="#Tipo_richiedente2.checked() || (#Tipo_richiedente1.checked() and #AventeTitolo_CodiceFiscale.value() != #Referente_CodiceFiscale.value() and #Referente_CodiceFiscale.value() != '')" enabled="#Tipo_richiedente2.checked() || (#Tipo_richiedente1.checked() and #AventeTitolo_CodiceFiscale.value() != #Referente_CodiceFiscale.value() and #Referente_CodiceFiscale.value() != '')" id="GEN_PROG_INC" name="GEN_PROG_INC" type="checkbox" value="OBBLIGATORIO"/>
         </td>
         <td style="background-color: #eeeeee;" colspan="2">
-          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del progettista</b> firmato con <b>firma digitale</b></p>
+          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del professionista incaricato</b> firmato con <b>firma digitale</b></p>
         </td>
         <td style="background-color: #eeeeee;">
           <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_prog" name="numero_anag_prog" dynamic_value="#GEN_PROG_INC.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:4%; vertical-align: top; text-align: center;">
-          <input id="GEN_DIR_LAV" name="GEN_DIR_LAV" dynamic_check="#Referente1_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" enabled="#Referente1_CodiceFiscale.value() != '' and !#Progettista_direttorelavori.checked()" type="checkbox" value="OBBLIGATORIO"/>
-        </td>
-        <td style="background-color: #eeeeee;" colspan="2">
-          <p style="line-height:1.6;">Modulo secondario - <b>Anagrafica del direttore lavori</b>, firmato con <b>firma digitale</b></p>
-        </td>
-        <td style="background-color: #eeeeee;">
-          <p style="line-height: 1.6; text-align: center;"><input id="numero_anag_dirlav" name="numero_anag_dirlav" dynamic_value="#GEN_DIR_LAV.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
         </td>
       </tr>
       <tr>
@@ -1080,7 +893,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <input id="GEN_IMMAGG" name="GEN_IMMAGG" type="checkbox" value="OBBLIGATORIO" dynamic_check="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" enabled="(parseInt(#Immobile_NumeroAltriImmobili.value()) / 10) &gt; 0" />
         </td>
         <td style="background-color: #eeeeee;" colspan="2">
-          <p style="line-height:1.8;">Modulo secondario - <b>Ulteriori particelle</b> oggetto del procedimento, firmato con <b>firma digitale</b> dal progettista/tecnico incaricato delegato dal titolare</p>
+          <p style="line-height:1.8;">Modulo secondario - <b>Ulteriori particelle</b> oggetto del procedimento, firmato con <b>firma digitale</b> dal tecnico incaricato delegato dal titolare</p>
         </td>
         <td style="background-color: #eeeeee;">
           <p style="line-height: 1.6; text-align: center;"><input id="numero_ult_part_del" name="numero_ult_part_del" dynamic_value="#Immobile_NumeroAltriImmobili.value() >= 1 ? Math.ceil(parseInt(#Immobile_NumeroAltriImmobili.value()) /10) : 'Non richiesto'" style="width: 90%; text-align: center;" readonly/></p>
@@ -1127,7 +940,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <input dynamic_check="#Parametri_Altro_titolo_reale1.checked() || #Parametri_Altro_titolo_reale2.checked() || #Parametri_Altro_titolo_reale3.checked()" enabled="#Parametri_Altro_titolo_reale1.checked() || #Parametri_Altro_titolo_reale2.checked() || #Parametri_Altro_titolo_reale3.checked()" id="altri_sogg_coinv" name="altri_sogg_coinv" type="checkbox" value="1"/>   
         </td>
         <td style="background-color: #eeeeee;" colspan="2">
-            <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori soggetti coinvolti</b> nel procedimento edilizio (diversi dal titolare e/o dal progettista e/o dal direttore dei lavori)</p>
+            <p style="line-height:1.6;">Modulo secondario - <b>Ulteriori soggetti coinvolti</b> nel procedimento edilizio (diversi dal titolare e/o dal direttore dei lavori)</p>
         </td>
         <td style="background-color: #eeeeee; vertical-align: center;"></td>
       </tr>
@@ -1340,7 +1153,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 
 <!--------------------INIZIO DICHIARAZIONE CONSERVAZIONE ORIGINALE---------------------->
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+<table class="Modulo" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="width: 4%; vertical-align: center; text-align: center;">
@@ -1362,7 +1175,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <br>
 <!--------------------INIZIO PRESA VISIONE---------------------->
 
-<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+<table class="Modulo" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
   <tbody>
     <tr>
       <td style="width: 4%; vertical-align: top;">
@@ -1457,7 +1270,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
           <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il/la titolare<br><span style="font-size:95%"><i><input id="tipo_firma_tit" name="tipo_firma_tit" dynamic_value="#tit_firma_digit1.checked() ? '(firma autografa)' : (#tit_firma_digit2.checked() ? '(firma digitale)' : '')" style="width: 80%; text-align: center;"/></i></span></p>
         </td>
         <td>
-          <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il progettista/tecnico incaricato delegato<br><span style="font-size:95%"><i>(firma digitale)</i></span></p>
+          <p class="Labelcella" style="text-align: center; line-height: 1.6;">Il tecnico incaricato delegato<br><span style="font-size:95%"><i>(firma digitale)</i></span></p>
         </td>
       </tr>
     </tbody>
@@ -1481,8 +1294,7 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
 <input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
 
-<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA" name="GLOBO_modulofiglio_cGEN-PROGETTISTA" obbligatorio="#GEN_PROG_INC.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="1"/>
-<input id="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" name="GLOBO_modulofiglio_cGEN-PROGETTISTA-DIRLAV" obbligatorio="#GEN_DIR_LAV.checked() ? 'OBBLIGATORIO' : ''" type="hidden" numero="1"/>
+<input id="GLOBO_modulofiglio_cGEN-DIRETTORE-LAVORI" name="GLOBO_modulofiglio_cGEN-DIRETTORE-LAVORI" obbligatorio="'OBBLIGATORIO'" type="hidden" numero="1"/>
 
 <input id="GLOBO_allegato_cGEN-DOC_NOTIFICA" name="GLOBO_allegato_cGEN-DOC_NOTIFICA" obbligatorio="#Doc_notifica.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value=""/>
 
@@ -1510,9 +1322,14 @@ urn_report="report:CSP_SESSION_REPORT"/>
 <!--------------------INIZIO DICHIARAZIONE METADATI---------------------->
 
 {{ utils.passaggio_metadati() }}
-<input id="Referente99_DirLav_CodiceFiscale" name="Referente99_DirLav_CodiceFiscale" dynamic_value="#Progettista_direttorelavori.checked() ? #Referente_CodiceFiscale.value():#Referente1_CodiceFiscale.value()" type="hidden" />
-<input id="Referente99_DirLav_Cognome" name="Referente99_DirLav_Cognome" dynamic_value="#Progettista_direttorelavori.checked() ? #Referente_Cognome.value():#Referente1_Cognome.value()" type="hidden" />
-<input id="Referente99_DirLav_Nome" name="Referente99_DirLav_Nome" dynamic_value="#Progettista_direttorelavori.checked() ? #Referente_Nome.value():#Referente1_Nome.value()" type="hidden"/>
+<input id="Referente99_DirLav_CodiceFiscale" name="Referente99_DirLav_CodiceFiscale" dynamic_value="#Referente_CodiceFiscale.value()" type="hidden" />
+<input id="Referente99_DirLav_Cognome" name="Referente99_DirLav_Cognome" dynamic_value="#Referente_Cognome.value()" type="hidden" />
+<input id="Referente99_DirLav_Nome" name="Referente99_DirLav_Nome" dynamic_value="#Referente_Nome.value()" type="hidden"/>
+<input id="Referente1_TitoloPersona" name="Referente1_TitoloPersona" dynamic_value="#Referente_TitoloPersona.value()"  type="hidden"/>
+<input id="Referente1_Cognome" name="Referente1_Cognome" dynamic_value="#Referente_Cognome.value()"  type="hidden"/>
+<input id="Referente1_Nome" name="Referente1_Nome" dynamic_value="#Referente_Nome.value()"  type="hidden"/>
+<input id="Referente1_CodiceFiscale" name="Referente1_CodiceFiscale" dynamic_value="#Referente_CodiceFiscale.value()"  type="hidden"/>
+ 
 <!--------------------FINE DICHIARAZIONE METADATI---------------------->
 
 {% endblock content %}
