@@ -1,0 +1,601 @@
+{% set CodiceModulo = "M47010-MSEC05-SCAGI-SEZIONE-A" %}
+{% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec05.m47010.scagi.seza" %}
+{% extends "base_trento_new.html" %}
+
+{% block meta %}
+<meta campi_firma="AventeTitolo_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Modulo secondario - Segnalazione certificata di agibilità - sezione A"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="NO"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio="mail"
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M47010-MSEC05-SCAGI-SEZIONE-A"
+verifica_pagamento="NO"
+versione="3.0|26/10/2022" />
+
+<meta codice_allegato="GEN-SALDO-CONTRIBUTO"
+urn_allegato="document:c_l378:allegato.saldo.contributo"
+descrizione_estesa="Allegato - Documentazione versamento del saldo del contributo"
+filename="Versamento saldo contributo.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/GEN-SALDO-CONTRIBUTO"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+<meta codice_modulo_figlio="M47010-MSEC14-CONF-ACUST"
+urn_modulo_figlio="document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec14.m47010.conform.acustica"
+name="GLOBO_modulofiglio"
+numero="1"
+obbligatorio="DINAMICO"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+
+{% endblock meta %}
+
+
+{% block title %}SEGNALAZIONE CERTIFICATA DI AGIBILITA'{% endblock title %}
+
+{% block content %}
+
+<input dynamic_value="#AventeTitolo_Cognome.value().toUpperCase() + ' - Segnalazione certificata di agibilità - sezione A'" id="Oggetto" name="Oggetto" type="hidden" />
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+
+<div class="simpatico-block simpatico-query-and-answer">
+<h1 class="Modulo" style="line-height:1.6;">SEGNALAZIONE CERTIFICATA DI AGIBILITA' - sezione A<br><span style="font-size:75%">(art. 93, comma2, della legge provinciale 4 agosto 2015, n. 15)</span></h1>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height:1.6;">Il <b>titolare,</b> <input id="Nominativo_titolare" name="Nominativo_titolare" dynamic_value="#AventeTitolo_Cognome.value() + ' ' + #AventeTitolo_Nome.value()" size="97"/></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="2">
+        <p style="line-height:1.6;"><b>Con riferimento alla dichiarazione di ultimazione lavori:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="altre_particelle" name="altre_particelle" label="particelle coinvolte" mandatory_enabled="true"> </div>
+        <input group="altre_particelle" id="altre_particelle1" name="altre_particelle" type="radio" value="1" dynamic_check="#Immobile_check_numero_particelle.value() == '1'"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Il procedimento riguarda <b>una sola particella</b>, indicata nella tabella seguente</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="altre_particelle" id="altre_particelle2" name="altre_particelle" type="radio" value="2" dynamic_check="#Immobile_check_numero_particelle.value() == '2'"/>
+      </td>
+      <td>
+        <p style="line-height:1.6;">Il procedimento <b>riguarda più particelle</b>.<br>La prima di esse è indicata nella tabella seguente, mentre le restanti n. <input id="NumeroAltriImmobili" name="NumeroAltriImmobili" style="width:5%; text-align:center;" label="Numero altre particelle" enabled="#altre_particelle2.checked()" dynamic_value="#Immobile_NumeroAltriImmobili.value()" readonly/> particelle sono state indicate nell'apposito modulo secondario <i>Ulteriori particelle o subalterni oggetto del procedimento</i></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+  
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="6">
+        <p style="line-height:1.6;"><b>Dati catastali</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 30%;">
+        <p class="Labelcella">Tipo</p>
+      </td>
+      <td style="width: 30%;">
+        <p class="Labelcella">Comune catastale</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Numero</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Barra</p>
+      </td>
+      <td style="width: 10%;">
+        <p class="Labelcella">Porzione Materiale</p>
+      </td>
+      <td style="width: 10%;">
+        <p  class="Labelcella">Subalterno</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%;" class="" id="Tipo_particella_intervento" name="Tipo_particella_intervento" label="Tipo particella intervento" dynamic_value="#Immobile_TipologiaImmobile.value()">
+      </td>
+      <td>
+        <input style="width:100%;" class="" id="Comune_cat_particella_intervento" name="Comune_cat_particella_intervento" label="Comune catastale particella intervento" dynamic_value="#Immobile_ComuneCatastale_esteso.value()">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Numero_particella_intervento" name="Numero_particella_intervento" label="Numero particella intervento" dynamic_value="#Immobile_CatNumero.value()">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Barra_particella_intervento" name="Barra_particella_intervento" label="Barra particella intervento" dynamic_value="#Immobile_CatBarra.value()">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Porz_mat_particella_intervento" name="Porz_mat_particella_intervento" label="Porzione materiale particella intervento" dynamic_value="#Immobile_CatPM.value()">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Subalterno_particella_intervento" name="Subalterno_particella_intervento" label="Subalterno particella intervento" dynamic_value="#Immobile_CatSubalterno.value()">
+      </td>  
+    </tr>
+  </tbody>
+</table>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="8">
+        <p style="line-height:1.6;"><b>Ubicazione</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width: 5%;">
+        <p class="Labelcella">Prov.</p>
+      </td>
+      <td style="width: 20%;">
+        <p class="Labelcella">Comune</p>
+      </td>
+      <td style="width: 35%;">
+        <p class="Labelcella">Indirizzo</p>
+      </td>
+      <td style="width: 8%;">
+        <p class="Labelcella">Civico</p>
+      </td>
+      <td style="width: 8%;">
+        <p class="Labelcella">Barra</p>
+      </td>
+      <td style="width: 8%;">
+        <p class="Labelcella">Interno</p>
+      </td>
+      <td style="width: 8%;">
+        <p class="Labelcella">Piano</p>
+      </td>
+      <td style="width: 8%;">
+        <p class="Labelcella">Scala</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Prov_particella_intervento" name="Prov_particella_intervento" label="Provincia particella intervento" dynamic_value="#Immobile_Provincia.value()">
+      </td>
+      <td>
+        <input style="width:100%;" class="" id="Comune_particella_intervento" name="Comune_particella_intervento" label="Comune particella intervento" dynamic_value="#Immobile_Comune.value()">
+      </td>
+      <td>
+        <input style="width:100%;" class="" id="Indirizzo_particella_intervento" name="Indirizzo_particella_intervento" label="Indirizzo particella intervento" dynamic_value="#Immobile_Nomecompleto_via.value()">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Civico_particella_intervento" name="Civico_particella_intervento" label="Civico particella intervento" dynamic_value="#Immobile_numeroCivico.value()">
+      </td>
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="Barra_civ_particella_intervento" name="Barra_civ_particella_intervento" label="Barra civico particella intervento" dynamic_value="#Immobile_Barracivico.value()">
+      </td>  
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="interno" name="interno" label="Interno immobile intervento" enabled="true">
+      </td>  
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="piano" name="piano" label="Piano immobile intervento" enabled="true">
+      </td>  
+      <td>
+        <input style="width:100%; text-align: center;" class="" id="scala" name="scala" label="Scala immobile intervento" enabled="true">
+      </td>  
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="3">
+          <p style="line-height:1.6;"><b>e relativa ai titoli edilizi già elencati nella dichiarazione di ultimazione lavori:</b></p>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td style="width:65%;">
+          <p style="font-size: 85%;"><b>Titolo abilitativo</b></p>
+        </td>
+        <td style="width:20%;">
+          <p style="font-size: 85%;"><b>Protocollo/numero</b></p>
+        </td>
+        <td style="width:15%;">
+          <p style="font-size: 85%;"><b>Data</b></p>
+        </td>
+      </tr>
+  
+      {% macro titoli_edilizi(prefix) %}
+      {% set prefix = prefix|string %}
+      <tr>
+        <td>
+          <input class="" id="Tipo_documento{{ prefix }}" name="Tipo_documento{{ prefix }}" style="width:100%;" readonly/>
+        </td>
+        <td>
+          <input class="" id="Prot_documento{{ prefix }}" name="Prot_documento{{ prefix }}"  style="width:100%; text-align: center;" readonly/>
+        </td>
+        <td>
+          <input class="" id="Data_documento{{ prefix }}" name="Data_documento{{ prefix }}" style="width:100%; text-align: center;" readonly/>
+        </td>
+      </tr>
+      {%- endmacro %}
+  
+      {% for i in range(1, 11) %}
+      {{ titoli_edilizi(i) }}
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <table class="Modulo" style="border:1px solid grey; margin-top:-1px">
+    <tbody>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p>e agli ulteriori <input id="NumeroAltriTitoli" name="NumeroAltriTitoli" style="width:5%; text-align: center;" readonly/> titoli abitativi relativi all'intervento indicati nell'apposito allegato</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <h1 class="Modulo" style="line-height:1.6;">PRESENTA</h1>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="3">
+          <p style="line-height:1.6;"><b>Segnalazione certificata di agibilità per:</b> (come indicato nelle dichiarazioni del tecnico abilitato)</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="Tipologia_opere" name="Tipologia_opere" label="Motivo richiesta scagi" mandatory_enabled="true"> </div>
+          <input group="Tipologia_opere" id="Tipologia_opere1" name="Tipologia_opere" type="radio" value="1" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">nuove costruzioni</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Tipologia_opere" id="Tipologia_opere2" name="Tipologia_opere" type="radio" value="2" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">lavori di recupero di edifici esistenti che interessino parti strutturali degli edifici</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="Tipologia_opere" id="Tipologia_opere3" name="Tipologia_opere" type="radio" value="3" />
+        </td>
+        <td>
+          <p style="line-height:1.6;">cambi di destinazione d'uso con o senza opere, anche di singole unità immobiliari</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>la Segnalazione certificata di agibilità si riferisce a:</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="Riferim_scagi" name="Riferim_scagi" label="Riferimento segnalazione scagi" mandatory_enabled="true"> </div>
+        <input group="Riferim_scagi" id="Riferim_scagi1" name="Riferim_scagi" type="radio" value="1" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">l’agibilità dell’intero immobile oggetto dell’intervento edilizio</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Riferim_scagi" id="Riferim_scagi2" name="Riferim_scagi" type="radio" value="2" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">l'agibilità parziale di singoli edifici o porzioni della costruzione, se funzionalmente autonomi, se sono state realizzate e collaudate le opere di urbanizzazione primaria relative all'intero intervento edilizio, sono state completate e collaudate le parti strutturali connesse, sono stati collaudati e certificati gli impianti relativi alle parti comuni (art. 93, comma 4, lettera a) LP 15/2015)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center; width: 4%;">
+        <input group="Riferim_scagi" id="Riferim_scagi3" name="Riferim_scagi" type="radio" value="3" />
+      </td>
+      <td>
+        <p style="line-height:1.6;">l'agibilità parziale di singole unità immobiliari se sono state completate e collaudate le opere strutturali connesse, sono certificati gli impianti, sono completate le parti comuni e le opere di urbanizzazione primaria dichiarate funzionali rispetto all'edificio oggetto di agibilità parziale (art. 93, comma 4, lettera b) LP 15/2015) . Il sottoscritto titolare dichiara di aver verificato l'avvenuta prosciugatura dei muri e la salubrità degli ambienti</p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione"><td colspan="3"></td></tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Dich_salubr_amb" name="Dich_salubr_amb" label="Dichiarazione verifica salubrità ambienti" dynamic_check="true"> </div>
+        <input group="Dich_salubr_amb" id="Dich_salubr_amb_check" name="Dich_salubr_amb_check" type="checkbox" value="1" />
+      </td>
+      <td colspan="2">
+        <p style="line-height:1.6;">Il sottoscritto titolare dichiara di aver verificato l'avvenuta prosciugatura dei muri e la salubrità degli ambienti</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block simpatico-query-and-answer">
+  <table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td>
+          <p style="line-height:1.6;"><b>Si ALLEGA la documentazione individuata nell'apposito elenco posto al termine del presente modulo, come richiesto dalle specifiche disposizioni normative applicabili all'intervento in oggetto</b></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+
+  <h2 class="Modulo" style="line-height:1.6;">Al fine di individuare gli allegati obbligatori, comunica inoltre le seguenti informazioni</h2>
+
+  <table class="Modulo" style="border: 1px solid grey">
+    <tbody>
+      <tr class="Rigaintestazione">
+        <td colspan="5">
+          <p style="line-height:1.6;"><b>per quanto riguarda la rateizzazione del saldo del contributo (se il regolamento edilizio comunale ammette la rateizzazione):</b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <div id="rich_saldo" name="rich_saldo" label="Richiesta rateizzazione" enabled="true"> </div>
+          <input group="rich_saldo" id="rich_saldo1" name="rich_saldo" type="radio" value="1" />
+        </td>
+        <td colspan="4">
+          <p style="line-height:1.6;"><b>si richiede</b> e pertanto si allega la documentazione attestante il versamento del saldo del contributo</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: center; text-align: center; width: 4%;">
+          <input group="rich_saldo" id="rich_saldo2" name="rich_saldo" type="radio" value="2"/>
+        </td>
+        <td colspan="4">
+          <p style="line-height:1.6;"><b>non si richiede</b> la rateizzazione del saldo del contributo</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="5">
+        <p style="line-height:1.6;"><b>Trattasi di nuove costruzioni o ampliamenti</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <div id="nuove_costr" name="nuove_costr" label="Trattasi di nuove costruzioni o ampliamenti" enabled="true"> </div>
+        <input group="nuove_costr" id="nuove_costr1" name="nuove_costr" type="radio" dynamic_check="#Tipologia_opere1.checked()" value="1" />
+      </td>
+      <td colspan="4">
+        <p style="line-height:1.6;"><b>sì</b> e pertanto si allega la dichiarazione del tecnico abilitato in merito alla conformità acustica</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: center; text-align: center; width: 4%;">
+        <input group="nuove_costr" id="nuove_costr2" name="nuove_costr" type="radio" value="2"/>
+      </td>
+      <td colspan="4">
+        <p style="line-height:1.6;"><b>no</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Allegati" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="4">
+        <p style="text-align: center; line-height: 1.6;"><b>Elenco degli allegati</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazione">
+      <td style="width:4%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Si allega</p>
+      </td>
+      <td colspan="2">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Titolo allegato</p>
+      </td>
+      <td style="width:15%;">
+        <p style="line-height: 1.6; font-size: 85%; text-align: center;">Indicare il numero di documenti</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="saldo_contr" name="saldo_contr" type="checkbox" dynamic_check="#rich_saldo1.checked()" enabled="#rich_saldo1.checked()" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Documentazione attestante il versamento del saldo del contributo se il regolamento edilizio comunale ammette la rateizzazione</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" type="number" id="num_saldo_contr" name="num_saldo_contr" min="1" max="100" label="Numero documenti saldo contributo" mandatory_enabled="#saldo_contr.checked()" style="width: 90%; text-align: center;"/></p>
+        <input id="GLOBO_allegato_cGEN-SALDO-CONTRIBUTO" name="GLOBO_allegato_cGEN-SALDO-CONTRIBUTO" obbligatorio="#saldo_contr.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" numero="#num_saldo_contr.value()"/>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <input id="dich_tecm_conf_acust" name="dich_tecm_conf_acust" type="checkbox" dynamic_check="#nuove_costr1.checked()" enabled="#nuove_costr1.checked()" value="OBBLIGATORIO" />
+      </td>
+      <td style="background-color: #eeeeee;" colspan="2">
+        <p style="line-height:1.6;">Modulo secondario - Dichiarazione del tecnico abilitato in merito alla conformità acustica ai sensi dell'art. 15, comma2, del D.P.G.P. 4 agosto 1992, n. 12-65 Leg.</p>
+      </td>
+      <td style="background-color: #eeeeee;">
+        <p style="line-height: 1.6; text-align: center;"><input class="" id="num_dich_tecm_conf_acust" name="num_dich_tecm_conf_acust" label="Numero documenti conformità acustica" dynamic_value="#dich_tecm_conf_acust.checked() ? '1' : 'Non richiesto'" style="width: 90%; text-align: center;"/></p>
+        <input firmare="'P7M_DIGITALE'" id="GLOBO_modulofiglio_cM47010-MSEC14-CONF-ACUST" name="GLOBO_modulofiglio_cM47010-MSEC14-CONF-ACUST" obbligatorio="#dich_tecm_conf_acust.checked() ? 'OBBLIGATORIO' : ''" type="hidden" value="" />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione2" name="Presa_visione2" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione2" id="Presa_visione_check2" name="Presa_visione_check2" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.6;"><b>Dichiaro di aver ricevuto e preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+
+<div class="simpatico-block">
+  <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 50%; text-align: center; height: 1.5cm;">
+          <input class="" id="nominativo_richiedente" name="nominativo_richiedente" dynamic_value="#AventeTitolo_Nome.value().toUpperCase() + ' ' + #AventeTitolo_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella" style="text-align: center">Luogo</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Data</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Il titolare <i>(accesso eseguito mediante SPID o CPS/CNS)</i></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <p class="Modulo">
+    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+  </p>
+</div>
+
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden" />
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden" />
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}" />
+<input id="Metadati_oggetto" name="Metadati_oggetto" dynamic_value="#Oggetto.value()" type="hidden"/>
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+<!-- Passaggio dati dal principale senza usare metadati -->
+<input id="AventeTitolo_CodiceFiscale" name="AventeTitolo_CodiceFiscale" type="hidden" readonly/>
+<input id="AventeTitolo_Cognome" name="AventeTitolo_Cognome" type="hidden" readonly/>
+<input id="AventeTitolo_Nome" name="AventeTitolo_Nome" type="hidden" readonly/>
+
+<input id="Progettista_CodiceFiscale" name="Progettista_CodiceFiscale" type="hidden"  readonly/>
+<input id="Progettista_TitoloPersona" name="Progettista_TitoloPersona" type="hidden"  readonly/>
+<input id="Progettista_Cognome" name="Progettista_Cognome" type="hidden"  readonly/>
+<input id="Progettista_Nome" name="Progettista_Nome" type="hidden"  readonly/>
+<input id="Progettista_LuogoNascita" name="Progettista_LuogoNascita" type="hidden"  readonly/>
+<input id="Progettista_Attributi_Albo" name="Progettista_Attributi_Albo" type="hidden"  readonly/>
+<input id="Progettista_Attributi_AlNumero" name="Progettista_Attributi_AlNumero" type="hidden"  readonly/>
+<input id="Progettista_Attributi_DellaProvincia" name="Progettista_Attributi_DellaProvincia" type="hidden"  readonly/>
+<input id="Progettista_Indirizzocompleto" name="Progettista_Indirizzocompleto" type="hidden"  readonly/>
+
+<input id="Immobile_TipologiaImmobile" name="Immobile_TipologiaImmobile" type="hidden" readonly/>
+<input id="Immobile_ComuneCatastale_esteso" name="Immobile_ComuneCatastale_esteso" type="hidden" readonly/>
+<input id="Immobile_CatNumero" name="Immobile_CatNumero" type="hidden" readonly/>
+<input id="Immobile_CatBarra" name="Immobile_CatBarra" type="hidden" readonly/>
+<input id="Immobile_CatPM" name="Immobile_CatPM" type="hidden" readonly/>
+<input id="Immobile_CatSubalterno" name="Immobile_CatSubalterno" type="hidden" readonly/>
+<input id="Immobile_Provincia" name="Immobile_Provincia" type="hidden" readonly/>
+<input id="Immobile_Comune" name="Immobile_Comune" type="hidden" readonly/>
+<input id="Immobile_Nomecompleto_via" name="Immobile_Nomecompleto_via" type="hidden" readonly/>
+<input id="Immobile_numeroCivico" name="Immobile_numeroCivico" type="hidden" readonly/>
+<input id="Immobile_Barracivico" name="Immobile_Barracivico" type="hidden" readonly/>
+
+<input id="Immobile_NumeroAltriImmobili" name="Immobile_NumeroAltriImmobili" type="hidden"/>
+
+<input id="Immobile_check_numero_particelle" name="Immobile_check_numero_particelle" type="hidden"/>
+
+<input id="cf_tecnico_firmatario_scagi" name="cf_tecnico_firmatario_scagi" type="hidden" readonly/>
+
+<input id="nominativo_tecnico_firmatario_scagi" name="nominativo_tecnico_firmatario_scagi" type="hidden" readonly/>
+<input id="cognome_tecnico_firmatario_scagi" name="cognome_tecnico_firmatario_scagi" type="hidden" readonly/>
+
+<input id="prova_passaggio_dati_padre" name="prova_passaggio_dati_padre" readonly/>
+
+{{utils.passaggio_metadati()}}
+<input id="Metadati_prova" name="Metadati_prova"/>
+<input id="Metadati_provafiglio" name="Metadati_provafiglio"/>
+
+{% endblock content %}

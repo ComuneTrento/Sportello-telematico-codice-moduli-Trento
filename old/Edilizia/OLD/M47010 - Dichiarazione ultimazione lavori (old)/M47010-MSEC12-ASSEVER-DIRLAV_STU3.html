@@ -1,0 +1,284 @@
+{% set CodiceModulo =  "M47010-MSEC12-ASSEVER-DIRLAV" %}
+{% set Urn =  "document:c_l378:ultimazione.lavori;dichiarazione.ultimazione.lavori;msec12.m47010.asseverazione.direttore.lavori" %}
+{% extends "base_trento_ok.html" %}
+
+{% block meta %}
+<meta campi_firma="Referente1_CodiceFiscale"
+classi_modulo="Generale"
+codice_modulo="{{ CodiceModulo }}"
+urn="{{ Urn }}"
+descrizione="Modulo secondario - Relazione tecnica di asseverazione"
+destinatario_amministrazione=""
+destinatario_ufficio=""
+dinamico="SI"
+email_a=""
+ente_abilitato="TUTTI"
+filigrana="NO"
+firmare="P7M_DIGITALE"
+istruzioni_compilazione=""
+istruzioni_invio=""
+metodo_invio=""
+name="GLOBO_modulo"
+procura="NO,,"
+tipo_modulo="secondario"
+ufficio=""
+urlhelp="/modulistica/moduli/M47010-MSEC12-ASSEVER-DIRLAV"
+verifica_pagamento="NO"
+versione="3.0|26/10/2022"/>
+
+<meta codice_allegato="INFORM-TRATT-DATI-EDILIZIA"
+urn_allegato="document:c_l378:allegato.informativa.trattamento.dati.edilizia"
+descrizione_estesa="Informativa trattamento dati EDILIZIA"
+filename="INFORM-TRATT-DATI-EDILIZIA.pdf"
+firmato="NO"
+istruzioni="/modulistica/moduli/INFORM-TRATT-DATI-EDILIZIA"
+name="GLOBO_allegato"
+numero="1"
+obbligatorio="DINAMICO"
+tipo_mime="application/pdf"/>
+	
+{% endblock meta %}
+
+
+{% block title %}
+   Relazione tecnica di asseverazione
+{% endblock title %}
+
+{% block content %}
+
+{{ intestazioni.intestazione_modulosecondario_senzabollo() }}
+<input id="Oggetto" name="Oggetto" dynamic_value="'Relazione tecnica di asseverazione - Delegato ' + #Referente1_Cognome.value().toUpperCase() + ' ' + #Referente1_Nome.value().toUpperCase() + ' (' + #Referente1_CodiceFiscale.value().toUpperCase() + ')'" type="hidden"/>
+
+<h1 class="Modulo" style="line-height:1.6;">RELAZIONE TECNICA DI ASSEVERAZIONE<br><span style="font-size:85%;">(art. 8, comma 2, D.lgs 26 agosto 2005, n. 192)</span></h1>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <input id="Tipo_residenza1" name="Tipo_residenza1" type="radio" value="1" dynamic_check="true" style="display:none; pd4ml-display:none;"/>
+        <p style="line-height:1.8; text-align: left;">Il sottoscritto &nbsp; &nbsp;<input id="Nominativo_dirlav" name="Nominativo_dirlav" dynamic_value="#Referente1_TitoloPersona.value() + ' ' + #Referente1_Cognome.value() + ' ' + #Referente1_Nome.value() + ' ' + '(' + #Referente1_CodiceFiscale.value() + ')'" size="92"/>
+        <br>iscritto al Collegio/Ordine &nbsp; &nbsp;<input id="iscrizione_collegio_ordine" name="iscrizione_collegio_ordine" label="Collegio/Ordine di iscrizione" style="width:45%;" mandatory="true"/> &nbsp; &nbsp; della provincia di &nbsp; &nbsp; {{ utils.provincie_cambio_res( 'iscrizione_provincia', 'Provincia di iscrizione al Collegio/Ordine' )}}
+        <br> al n. &nbsp; &nbsp;<input id="iscrizione_numero" name="iscrizione_numero" label="Numero iscrizione al Collegio/Ordine" style="width:30%" mandatory="true"/> &nbsp; &nbsp; consapevole che le dichiarazioni mendaci o non veritiere sono punite ai sensi dell'art. 481 del Codice Penale</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2 class="Modulo" style="line-height:1.6;">IN QUALITA' DI DIRETTORE DEI LAVORI</h2>
+
+<br>
+
+<table class="Modulo" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td colspan="3">
+        <p style="line-height:1.6;"><b>con riferimento ai seguenti titoli edilizi:</b></p>
+      </td>
+    </tr>
+    <tr class="Rigaintestazioneridotta">
+      <td style="width:50%;">
+        <p style="font-size: 85%;"><b>Titolo edilizio</b></p>
+      </td>
+      <td style="width:30%;">
+        <p style="font-size: 85%;"><b>Protocollo/numero</b></p>
+      </td>
+      <td style="width:20%;">
+        <p style="font-size: 85%;"><b>Data</b></p>
+      </td>
+    </tr>
+
+    {% macro titoli_edilizi(prefix) %}
+    {% set prefix = prefix|string %}
+    <tr>
+      <td>
+        <select class="inputNormal" id="Tipo_titolo_edilizio" name="Tipo_titolo_edilizio" style="width:100%;" label="Tipologia del titolo edilizio" enabled="true">
+          <option value=""></option>
+          <option value="Permesso di costruire">Permesso di costruire</option>
+          <option value="Variante">Variante</option>
+          <option value="SCIA">SCIA</option>
+        </select>
+      </td>
+      <td>
+        <input class="" id="Prot_titolo{{ prefix }}" name="Prot_titolo{{ prefix }}" enabled="true" label="Numero protocollo del titolo edilizio {{ prefix }}" style="width:100%; text-align: center;"/>
+      </td>
+      <td>
+        <input class="" id="Data_titolo{{ prefix }}" name="Data_titolo{{ prefix }}" enabled="true" label="Data protocollo titolo edilizio {{ prefix }}" style="width:100%; text-align: center;" type="date"/>
+      </td>
+    </tr>
+    {%- endmacro %}
+
+    {% for i in range(1, 4) %}
+    {{ titoli_edilizi(i) }}
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.8;">
+          <b>→</b> Vista la comunicazione di avvenuta conclusione dei lavori cui si riferisce la presente relazione tecnica di asseverazione
+          <br>
+          <b>→</b> Preso atto che la comunicazione di fine lavori, se priva della presente asseverazione, è dichiarata	irricevibile ai sensi dell'art. 8.2 D.lgs. 19 agosto 2005, n. 192</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2 class="Modulo" style="line-height:1.6;">ASSEVERA</h2>
+
+<br>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.8;">ai sensi dell’art. 8, comma 2, del D.Lgs. 19 agosto 2005, n. 192, che le opere, in materia di miglioramento delle prestazioni energetiche degli edifici, sono state realizzate in conformità al progetto ed alle sue eventuali varianti ed alla relazione tecnica di cui all’art. 28, comma 1 della Legge 9 gennaio 1991, n. 10 presentata presso questa Amministrazione prot. nr. &nbsp; &nbsp;<input class="" id="Prot_relazione_tecnica" name="Prot_relazione_tecnica" mandatory_enabled="true" label="Numero protocollo della relazione tecnica" style="width:30%; text-align: center;"/>&nbsp; &nbsp;del&nbsp; &nbsp;<input class="" id="data_relazione_tecnica" name="data_relazione_tecnica" mandatory_enabled="true" label="Data protocollo della relazione tecnica" style="width:20%; text-align: center;" type="date"/></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<h2 class="Modulo" style="line-height:1.6;">NOTE</h2>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.8;">
+          <b>Interventi riconducibili alle seguenti tipologie di cui al DM 26 giugno 2015 per le quali è richiesta asseverazione da parte del D.L.:</b><br>
+          <b>→</b> nuova costruzione;<br>
+          <b>→</b> edifici sottoposti a demolizione e ricostruzione, qualunque sia il titolo abilitativo necessario;<br>
+          <b>→</b> ampliamento di edifici esistenti dotati di nuovi impianti tecnici, nuovo volume lordo climatizzato >15% del volume lordo climatizzato o nuovo volume lordo climatizzato >500 metri cubi;<br>
+          <b>→</b> cambio di destinazione d'uso, recupero di volumi esistenti non climatizzati e dotati di nuovi impianti tecnici (ad es. recupero sottotetti, depositi, magazzini);<br>
+          <b>→</b> ristrutturazione importante di primo livello, superficie disperdente oggetto di intervento > 50% della superficie disperdente lorda complessiva dell'edificio e ristrutturazione del servizio di climatizzazione (invernale e/o estiva), asservito all'intero edificio;<br>
+          <b>→</b> ristrutturazione importante di secondo livello, superficie disperdente oggetto di intervento > 25% della superficie disperdente lorda complessiva dell'edificio; può interessare il servizio di climatizzazione (invernale e/o estiva);<br>
+          <b>→</b> ampliamento di edifici esistenti collegati all'impianto tecnico esistente, nuovo volume lordo climatizzato > 15% del volume lordo climatizzato o nuovo volume lordo climatizzato > 500 metri cubi;<br>
+          <b>→</b> riqualificazione energetica, superficie disperdente oggetto di intervento ≤ 25% della superficie disperdente lorda complessiva dell'edificio;<br>
+          <b>→</b> ampliamento di edifici esistenti collegati all'impianto tecnico esistente, nuovo volume lordo climatizzato ≤ 15% del volume lordo climatizzato o nuovo volume lordo climatizzato ≤ 500 metri cubi.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.8;">
+          <b>Interventi riconducibili alle seguenti tipologie di cui al DM 26 giugno 2015 per le quali non è richiesta asseverazione da parte del D.L.:</b><br>
+          <b>→</b>> nuova installazione di impianti tecnici asserviti all’edificio per i servizi di riscaldamento, raffrescamento e produzione di ACS;<br>
+          <b>→</b> ristrutturazione di impianti tecnici asserviti all’edificio per i servizi di riscaldamento, raffrescamento e produzione di ACS;<br>
+          <b>→</b> sostituzione generatore di calore ed installazione di generatori e/o altri impianti tecnici per il soddisfacimento dei servizi dell’edificio (per potenza nominale del focolare ≥ 50 kW), ad esclusione di scaldacqua unifamiliari.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table class="Modulo" name="consapevolezza_sanz_penali" style="border: 1px solid grey">
+  <tbody>
+    <tr class="Rigaintestazione">
+      <td>
+        <p style="line-height:1.8;">
+          <b>Interventi ESCLUSI dall’applicazione del D.Lgs 19 agosto 2005, n. 192 in quanto l’edificio:</b><br>
+          <b>→</b> ricade nell'ambito del codice dei beni culturali e del paesaggio e il rispetto delle prescrizioni implica un'alterazione sostanziale del loro carattere o aspetto, con particolare riferimento ai profili storici, artistici e paesaggistici;<br>
+          <b>→</b> è a destinazione d’uso industriale o artigianale e gli ambienti sono riscaldati per esigenze del processo produttivo o utilizzando reflui energetici del processo produttivo non altrimenti utilizzabili;<br>
+          <b>→</b> è rurale, non residenziale e non è dotato di impianti di climatizzazione;<br>
+          <b>→</b> è un fabbricato isolato, con una superficie utile totale inferiore a 50 metri quadrati;<br>
+          <b>→</b> non è compreso nelle categorie del DPR 412/93, il cui utilizzo standard non prevede l'installazione e l'impiego di sistemi tecnici, quali box, cantine, autorimesse, parcheggi multipiano, depositi, strutture stagionali a protezione degli impianti sportivi, fatto salvo le porzioni eventualmente adibite ad uffici e assimilabili, purché scorporabili ai fini della valutazione di efficienza energetica;<br>
+          <b>→</b> è adibito a luogo di culto e allo svolgimento di attività religiose;<br>
+          <b>→</b> è oggetto di interventi su strati di finitura ininfluenti dal punto di vista termico;<br>
+          <b>→</b> è oggetto di rifacimento di porzioni di intonaco su superficie di intervento < 10% della superficie disperdente;<br>
+          <b>→</b> è oggetto di mera sostituzione di generatore di calore di potenza nominale del focolare inferiore a 50 kW senza cambio di combustibile o tipologia di generatore (tecnologia di combustione).
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table class="Modulo simpatico-block simpatico-query-and-answer" name="Accettazione_Informativa_dati" style="border: 1px solid grey">
+  <tbody>
+    <tr>
+      <td style="width: 4%; vertical-align: center; text-align: center;">
+        <div id="Presa_visione5" name="Presa_visione5" label="Dichiarazione presa visione" mandatory_enabled="true"> </div>
+        <input group="Presa_visione5" id="Presa_visione_check5" name="Presa_visione_check5" type="checkbox" value="1" />
+      </td>
+      <td colspan="2" style="background-color: #eeeeee;">
+        <p style="line-height:1.4;"><b>Dichiaro di aver preso visione dell'<a href="https://sportello.comune.trento.it/document/inform-tratt-dati-edilizia" target="_blank">informativa sul trattamento dei dati personali</a></b> <br><span style="font-size:85%"><i>(artt. 13 e 14 Regolamento UE n. 2016/679)</i></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<div class="simpatico-block">
+  <table class="Modulo" name="Luogo_e_data" style="border: 1px solid grey">
+    <tbody>
+      <tr>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Luogo_PDF" name="Luogo_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 25%; text-align: center;">
+          <input class="" id="Data_PDF" name="Data_PDF" style="width:80%; text-align: center;" type="text"/>
+        </td>
+        <td style="width: 50%; text-align: center; height: 1.5cm;">
+          <input class="" id="nominativo_firma_dirlav" name="nominativo_firma_dirlav" dynamic_value="#Referente1_TitoloPersona.value() + ' ' + #Referente1_Nome.value().toUpperCase() + ' ' + #Referente1_Cognome.value().toUpperCase()" style="width:90%; text-align: center;"/>
+        </td>
+      </tr>
+      <tr class="Rigaintestazioneridotta">
+        <td>
+          <p class="Labelcella" style="text-align: center">Luogo</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Data</p>
+        </td>
+        <td>
+          <p class="Labelcella" style="text-align: center">Il Direttore dei lavori <span style="font-size:95%"><i>(firma digitale)</i></span></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <p class="Modulo">
+    <input id="SalvaModulo" name="SalvaModulo" style="height:30px;width:120px;" title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell'istanza." type="submit" value="Salva modulo" />
+  </p>
+</div>
+
+<input id="GLOBO_modulo_c{{ CodiceModulo }}" name="GLOBO_modulo_c{{ CodiceModulo }}" type="hidden" value=""/>
+<input id="GLOBO_id_padre" name="GLOBO_id_padre" type="hidden"/>
+<input id="GLOBO_recupera_dati" name="GLOBO_recupera_dati" type="hidden"/>
+<input id="GLOBO_codice_modulo" name="GLOBO_codice_modulo" type="hidden" value="{{ CodiceModulo }}"/>
+ 
+
+<input id="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" name="GLOBO_allegato_cINFORM-TRATT-DATI-EDILIZIA" obbligatorio="''" type="hidden" value=""/>
+
+<input id="Referente1_CodiceFiscale" name="Referente1_CodiceFiscale" type="hidden" readonly/>
+<input id="Referente1_TitoloPersona" name="Referente1_TitoloPersona" type="hidden" readonly/>
+<input id="Referente1_Cognome" name="Referente1_Cognome" type="hidden" readonly/>
+<input id="Referente1_Nome" name="Referente1_Nome" type="hidden" readonly/>
+
+{% endblock content %}
